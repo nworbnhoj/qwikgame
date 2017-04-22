@@ -1,0 +1,532 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="qwik.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="qwik.js"></script>
+	<script>
+		function checkActive(){
+			if($('#keen-form').attr('accountActive')){
+				return true;
+			}
+			alert("Please activate your account.\nAn email has been sent with an activation link.");
+			return false;
+		}
+		function checkQuit(){
+			return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
+		}
+		
+	</script>
+</head>
+
+<body>
+
+
+<h1><t>qwik_game_org</t></h1>
+
+<p class='center'>
+	<t>Welcome</t><br><br>
+	<b><v>playerName</v></b><br><br>
+	<v>message</v><br>
+</p><br>
+
+<div id='menu' class='menu'>
+	<a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
+	<a id='reload-icon' class='<v>RELOAD_ICON</v>' 
+		href='player.php'></a>
+	<a id='logout-icon' class='<v>LOGOUT_ICON</v>' 
+		href='player.php?qwik=logout'></a>
+</div>
+
+<h2 name='matches'><t>Matches</t></h2>
+
+<p class='centre'>
+<b><t>keen</t> ⇨ <t>invitation</t> ⇨ <t>accepted</t> ⇨ <t>confirmed</t> ⇨ <t>feedback</t></b>
+</p>
+
+
+<repeat id='cancelled'>
+<form action='player.php#matches'  method='post' class='center record shadow cancelled'>
+    <input type='hidden' name='id' value='<v>id</v>'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <button type='submit' name='qwik' value='delete' class='action <v>CROSS_ICON</v>'></button>
+    <span class='help' hidden><t>Unfortunately_cancelled...</t></span>
+    <p class='record'>
+        <span class='tag cancelled'><s><t>cancelled</t></s></span>
+        <t>Cancelled_Game_at...</t>
+    </p>
+</form>
+</repeat>
+
+<repeat id='feedback'>
+<form action='player.php#matches'  method='post' class='center record shadow feedback'>
+    <input type='hidden' name='id' value='<v>id</v>'>
+	<input type='hidden' id='rep' name='rep' value='+1'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <button type='submit' name='qwik' value='feedback' class='action <v>TICK_ICON</v>'></button>
+    <span class='help' hidden><t>Your_feedback_is...</t></span>
+    <p class='record'>
+        <span class='tag feedback'><t>feedback</t></span>
+        <t>Feedback_Game_at...</t>
+		<select name='parity'>
+        	<option value='2'>much stronger</option>
+			<option value='1'>stronger</option>
+			<option value='0' selected>well matched</option>
+			<option value='-1'>weaker</option>
+			<option value='-2'>much weaker</option>
+		</select>
+        <button type='button' id='rep-thumb' class='<v>THUMB_UP_ICON</v>'></button>
+		<t>player</t>
+    </p>
+</form>
+</repeat>
+
+<repeat id='confirmed'>
+<form action='player.php#matches'  method='post' class='center record shadow confirmed'>
+    <input type='hidden' name='id' value='<v>id</v>'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
+    <span class='help' hidden><t>Your_game_confirmed...</t></span>
+    <p class='record'>
+        <span class='tag confirmed'><t>confirmed</t></span>
+        <t>Confirmed_Game_at...</t><br>
+		<input type='text' name='msg' placeholder='<t>prompt_msg</t>'>
+		<button type='submit' name='qwik' value='msg' class='thumb <v>SEND_ICON</v>'></button>
+    </p>
+</form>
+</repeat>
+
+<repeat id='accepted'>
+<form action='player.php#matches'  method='post' class='center record shadow accepted'>
+    <input type='hidden' name='id' value='<v>id</v>'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
+    <span class='help' hidden><t>Wait_for_confirmation...</t></span>
+    <p class='record'>
+        <span class='tag accepted'><t>accepted</t></span>
+        <t>Accepted_Game_at...</t>
+    </p>
+</form>
+</repeat>
+
+<repeat id='invitation'>
+<form action='player.php#matches'  method='post' class='center record shadow invitation'>
+    <input type='hidden' name='id' value='<v>id</v>'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
+    <button type='submit' name='qwik' value='accept' class='action <v>TICK_ICON</v>'></button>
+    <span class='help' hidden><t>Select_a_time...</t></span>
+    <p class='record'>
+        <span class='tag invitation'><t>invitation</t></span>
+        <t>Invitation_Game_at...</t>
+    </p>
+</form>
+</repeat>
+
+<repeat id='keen'>
+<form action='player.php#matches'  method='post' class='center record shadow keen'>
+	<input type='hidden' name='id' value='<v>id</v>'>
+	<button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
+	<span class='help' hidden><t>Available_rivals_have...</t></span>
+	<p class='record'>
+		<span class='tag keen'><t>keen</t></span>
+		<t>Keen_Game_at...</t>
+		<br>
+		<span class='count nowrap'><v>rivalCount</v> <t>potential_rivals</t></span>
+	</p>
+</form>
+</repeat>
+
+
+
+<form id='keen-form' action="locate.php" method="post" class="center commit shadow keen" 
+	onsubmit='return checkActive()'  
+	accountActive='1'>
+	<input type="hidden" name="qwik" value="keen">
+	<input type='hidden' name='repost' value='player.php'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<span class='help' hidden>
+		<t>This_will_alert...</t>
+	</span>
+
+	<br>
+	<p>
+		<t>I_am_keen_to...</t>
+		<a id='map-icon' class='thumb <v>MAP_ICON</v>' href='venues.php?game=squash'></a>
+	</p>
+	<table class="time center wide">
+		<tr>
+			<th></th>
+			<th></th>
+			<th><t>am</t></th>
+			<th colspan=9><t>today_or_tomorrow</t></th>
+			<th><t>pm</t></th>
+			<th></th>
+			<th></th>
+		</tr>
+		<tr id='hrs_trunc'>
+		<input name='today' type='hidden' value='0'>
+			<td class='toggle' hr='0' bit='1' hidden>0</td>
+			<td class='toggle' hr='1' bit='2' hidden>1</td>
+			<td class='toggle' hr='2' bit='4' hidden>2</td>
+			<td class='toggle' hr='3' bit='8' hidden>3</td>
+			<td class='toggle' hr='4' bit='16' hidden>4</td>
+			<td class='toggle' hr='5' bit='32' hidden>5</td>
+			<td class='toggle' hr='6' bit='64'>6</td>
+			<td class='toggle' hr='7' bit='128'>7</td>
+			<td class='toggle' hr='8' bit='256'>8</td>
+			<td class='toggle' hr='9' bit='512'>9</td>
+			<td class='toggle' hr='10' bit='1024'>10</td>
+			<td class='toggle' hr='11' bit='2048'>11</td>
+			<td class='toggle' hr='12' bit='4096'>12</td>
+			<td class='toggle' hr='13' bit='8192'>1</td>
+			<td class='toggle' hr='14' bit='16384'>2</td>
+			<td class='toggle' hr='15' bit='32768'>3</td>
+			<td class='toggle' hr='16' bit='65536'>4</td>
+			<td class='toggle' hr='17' bit='131072'>5</td>
+			<td class='toggle' hr='18' bit='262144'>6</td>
+			<td class='toggle' hr='19' bit='524288'>7</td>
+			<td class='toggle' hr='20' bit='1048576'>8</td>
+			<td class='toggle' hr='21' bit='2097152' hidden>9</td>
+			<td class='toggle' hr='22' bit='4194304' hidden>10</td>
+			<td class='toggle' hr='23' bit='8388608' hidden>11</td>
+		</tr>
+		<tr>
+		<input name='tomorrow' type='hidden' value='0'>
+			<td class='toggle' bit='1' hidden>0</td>
+			<td class='toggle' bit='2' hidden>1</td>
+			<td class='toggle' bit='4' hidden>2</td>
+			<td class='toggle' bit='8' hidden>3</td>
+			<td class='toggle' bit='16' hidden>4</td>
+			<td class='toggle' bit='32' hidden>5</td>
+			<td class='toggle' bit='64' >6</td>
+			<td class='toggle' bit='128'>7</td>
+			<td class='toggle' bit='256'>8</td>
+			<td class='toggle' bit='512'>9</td>
+			<td class='toggle' bit='1024'>10</td>
+			<td class='toggle' bit='2048'>11</td>
+			<td class='toggle' bit='4096'>12</td>
+			<td class='toggle' bit='8192'>1</td>
+			<td class='toggle' bit='16384'>2</td>
+			<td class='toggle' bit='32768'>3</td>
+			<td class='toggle' bit='65536'>4</td>
+			<td class='toggle' bit='131072'>5</td>
+			<td class='toggle' bit='262144'>6</td>
+			<td class='toggle' bit='524288'>7</td>
+			<td class='toggle' bit='1048576'>8</td>
+			<td class='toggle' bit='2097152' hidden>9</td>
+			<td class='toggle' bit='4194304' hidden>10</td>
+			<td class='toggle' bit='8388608' hidden>11</td>
+		</tr>
+	</table>
+	<div id='invite-familiars' <v>familiarHidden</v>>
+		<span class='nowrap'>
+			<input type='checkbox'  autocomplete='off'>
+			<t>invite_familiar_rivals</t>
+		</span>
+	</div>
+	<div id='familiar-invites' hidden>
+		<span class='nowrap'>
+        	<input type='checkbox' name='invite-available' autocomplete='off' checked>
+			<t>invite_available_rivals</t>
+		</span>
+		<hr>
+		<repeat id='rivalEmail'>	
+		<span class='nowrap'>
+			<input type='checkbox' name='invite[]' value='<v>email</v>'>
+			<v>email</v>
+		</span>
+		</repeat>
+	</div>
+	<br>
+	<input type="submit" class='keen' value="<t>Submit</t>"><br>
+	<br>
+</form>
+
+
+<span id='available'></span>
+
+<h2 name='available' class='available center'><t>Available</t></h2>
+
+<p class='center'><t>...will_let_you_know...</t></p>
+
+<repeat id='available'>
+<form class='center record shadow available'>
+	<button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<button class='action cross fa <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
+	<input type='hidden' name='id' value='<v>id</v>'>
+	<span class='help' hidden>
+		<t>Make_yourself_available...</t>
+	</span>
+	<p class='record'>
+		<t>Available_game_with...</t><br>
+		<v>weekSpan</v><br>
+	</p>
+</form>
+</repeat>
+
+
+<form action="locate.php" method="post" class="commit center shadow available">
+	<input type="hidden" name="qwik" value="available">
+    <input type='hidden' name='repost' value='player.php'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<span class='help' hidden>
+		<p><t>Make_yourself_available...</t>
+		</p>
+	</span>
+	<br>
+	<p>
+	<t>Let_me_know_when...</t>
+	<a id='map-icon' class='<v>MAP_ICON</v>' href='venues.php?game=squash'></a>
+	<span class='nowrap'>
+		<input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked><t>anytime</t>
+	</span>
+	</p>
+	<div id='hr' style='display:none'>
+		<div id='hr-check' hidden>
+			<button type='button' class='fa fa-th hr-toggle'></button>
+            <div class='col'>
+				<fieldset class='hrs'>
+					<legend>week days</legend>
+					<input type='checkbox' name='time' checked>day-time<br>
+					<input type='checkbox' name='time'>night-time<br>
+		            <input type='checkbox' name='time'>business-hours<br>
+		            <input type='checkbox' name='time'>after-hours<br>
+		            <input type='checkbox' name='time'>school-hours<br>
+		            <input type='checkbox' name='time'>early<br>
+		            <input type='checkbox' name='time'>mornings<br>
+		            <input type='checkbox' name='time'>afternoons<br>
+		            <input type='checkbox' name='time'>evenings<br>
+				</fieldset>
+			</div>
+			<div class='col'>
+		        <fieldset class='hrs'>
+					<legend>Friday</legend>
+		            <input type='checkbox' name='time'>evening<br>
+				</fieldset>
+		
+				<fieldset class='hrs'>
+					<legend>Saturday</legend>
+		            <input type='checkbox' name='time' checked>morning<br>
+		            <input type='checkbox' name='time' checked>afternoon<br>
+		            <input type='checkbox' name='time'>evening<br>
+				</fieldset>
+		
+				<fieldset class='hrs'>
+					<legend>Sunday</legend>
+		            <input type='checkbox' name='time' checked>morning<br>
+		            <input type='checkbox' name='time' checked>afternoon<br>
+		            <input type='checkbox' name='time' checked>evening<br>
+		        </fieldset>
+			</div>
+		</div>
+
+
+		<div id='hr-grid'>
+	        <button type='button' class='fa fa-qrcode hr-toggle' disabled></button>
+	
+			<table id='hour_table' class="time center wide">
+			<tr>
+				<th></th>
+				<th><<</th>
+				<th colspan='2'><t>am</t></th>
+				<th colspan='9'></th>
+				<th colspan='2'><t>pm</t></th>
+				<th>>></th>
+			</tr>
+			<v>hourRows</v>
+			</table>
+		</div>
+	</div>
+	<input type="submit" class="available" value="Submit">
+	<br><br>
+</form>
+
+
+<div id='familiar'></div>
+
+<h2><t>Familiar</t></h2>
+
+<p class="center">
+    <t>Familiar_players_help...</t>
+</p>
+
+<repeat id='familiar'>
+<form action='player.php#familiar' method='post' class='center record familiar'>
+	<button class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
+	<input type='hidden' name='id' value='<v>id</v>'>
+	<p class='record'>
+		<t>email_is_familiar</t>
+	</p>
+</form>
+</repeat>
+
+
+
+<form action="player.php#familiar" method='post' class='commit center shadow familiar'>
+    <input type="hidden" name="qwik" value='familiar'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+    <span class='help' hidden>
+        <p><t>This_is_an_effective...</t></p>
+        <p><t>Your_rivals_will_not...</t></p>
+    </span>
+    <p>
+        <t>rival_is_a...</t>
+		<br>
+        <input type='submit' class='familiar' value='<t>Submit</t>'><br>
+    </p>
+</form>
+
+
+
+
+<div id='region'><br></div>
+
+<h2><t>Ability</t></h2>
+
+<p class="center"><t>Reckon_your_own...</t></p>
+
+<repeat id='ability'>
+<form action='player.php#reckon' method='post' class='center record ability'>
+	<button class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
+	<input type='hidden' name='id' value='<v>id</v>'>
+	<p class='record'><t>parity_game_player...</t></p>
+</form>
+</repeat>
+
+<form action="player.php#region" method="post" class="commit center shadow ability">
+	<input type="hidden" name="qwik" value='region'>
+    <button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<span class='help' hidden><t>Be_as_specific...</t></span>
+	<p><t>I_am_a...</t><br>
+		<input type="submit" class='ability' value='<t>Submit</t>'>
+	</p>
+</form>
+
+
+    <h2><t>Jump_Start</t></h2>
+
+    <div class='center shadow'>
+        <p><t>Here_are_a_few_things...</t></p>
+        <p><b><t>Get_the_word_out</t></b>
+            <t>Encourage_your_rivals...</t>
+            <a class='twitter-share-button'
+                href='https://twitter.com/share?
+                    size=small&
+                    u=http://www.qwikgame.org/&
+                    via=qwikgame&
+                    hashtags=qwik&
+                    text=<v>tagline</v>'
+                target='_blank'>
+                <img src='twitter.png' alt='twitter' class='socialmedia'></a>
+            <a id='email-share-link'
+                href='mailto:?subject=<t>emailShareSubject</t>&target=_blank&body=<t>emailShareBody</t>'>
+                <img src='email.png' alt='email' class='socialmedia'></a>
+            <span class='fb-share-button' 
+                data-href='http://www.qwikgame.org/' 
+                data-layout='button_count' 
+                data-size='small' 
+                data-mobile-iframe='false'>
+                <a class='fb-xfbml-parse-ignore' 
+                    target='_blank' 
+                    href='https://www.facebook.com/sharer/sharer.php?
+                        u=https%3A%2F%2Fwww.qwikgame.org%2F&amp;src=sdkpreparse'>
+                <img src='facebook.png' alt='facebook' class='socialmedia'></a>
+            </span>
+        </p>
+        <p><t>Reckon_your_ability...</t></p>
+        <p><b><a href='upload.php'><t>Upload</t></a></b><t>a_list_of...</t></p>
+		<br>
+        </span>
+    </div>
+
+
+
+<div id='history'><br></div>
+
+
+<h2 id='history' <v>historyHidden</v>><t>History</t></h2>
+
+<repeat id='history'>
+<form action='player.php#matches'  method='post' class='center record shadow history'>
+	<input type='hidden' name='id' value='<v>id</v>'>
+	<button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<button type='submit' class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
+	<input type='hidden' name='qwik' value='delete'>
+	<span class='help' hidden><t>You_can_disown...</t></span>
+	<p class='record'><t>History_game_at...</t></p>
+</form>
+</repeat>
+
+
+
+<div id='account'><br></div>
+
+<h2><t>Account</t></h2>
+
+<form class='center shadow commit account' action='player.php#account'>
+	<div>
+		<input type="hidden" name="qwik" value='account'>
+		<button type='button' class='action help <v>INFO_ICON</v>'></button>
+		<span class='help' hidden><t>Your_nickname_will...</t></span>
+		<h4><t>public</t></h4>
+		<p>
+        <t>You_have_a...</t>
+        <br>
+		<v>thumbs</v>
+		<br>
+		<input name="nick" type="text" class='center' value="<v>playerNick</v>" placeholder='<t>nickname</t>'>
+		<input name='url' type='url' class='center' value="<v>playerURL</v>"  placeholder='http://your.page.com'>
+		<br>
+		<input type="submit" class="account" value="<t>Submit</t>"><br>
+	</div>
+</form>
+
+<form class='center shadow commit account' action='player.php#account'>
+	<input type="hidden" name="qwik" value='account'>
+	<button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<h4><t>private</t></h4>
+	<span class='help' hidden><t>You_will_receive_validation...</t></span>
+	<input name="new-email" type="email" class='center' value="<v>playerEmail</v>" required><br>
+	<select name='lang'>
+		<repeat id='language'>
+		<option value='<v>code</v>' <v>selected</v>><v>language</v></option>
+		</repeat>
+	</select>
+	<br>
+	<input type="submit" class="account" value="<t>Submit</t>"><br>
+</form>
+
+<form class="center shadow commit account"  onsubmit='return checkQuit()'>
+	<input type="hidden" name="qwik" value='account'>
+	<button type='button' class='action help <v>INFO_ICON</v>'></button>
+	<span class='help' hidden><t>Your_anonymous_match...</t></span>
+	<p class="center"><t>Quit_qwikgame.org</t></p>
+	<input type="hidden" name="account" value='quit'>
+	<input id='quit-qwik' type="submit" class="account" value="<t>Quit</t>"><br>
+	<p class="center"><t>This_will_immediately...</t></p>
+</form>
+
+<br><br><br><br><br><br><br>
+
+
+<div id='footer' class='center'>
+	<t>license</t>
+</div>
+
+
+</body>
+
+<v>datalists</v>
+
+
+</html>
+
+
+

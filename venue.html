@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="UTF-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><t>venuePageTitle</t></title>
+	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="qwik.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="qwik.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=initMap">
+    </script>
+
+</head>
+
+<body>
+	<h1><t>qwik_game_org</t></h1>
+
+	<div id='menu' class='menu'>
+	    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
+	    <a id='back-icon' class='<v>HOME_ICON</v>' href='<v>homeURL</v>'></a>
+	</div>
+
+	<p class='center'><v>message</v></p>
+
+	<h2><v>venueName</v></h2>
+
+	<div id='display-venue-div' >
+		<div class='center'>
+			<span class='huge'><v>playerCount</v></span><br>
+			<t>players_available</t><br>
+			<br>
+		</div>
+
+		<p id='venue-display' class='center' <v>displayHidden</v>>
+			<v>venueAddress</v><br>
+			<v>venueSuburb</v><br>
+			<v>venueState</v>, 
+			<v>venueCountry</v><br>
+			<v>venuePhone</v><br>
+			<a href='<v>venueURL</v>' target='_blank'>homepage</a><br>
+			<v>venueNote</v><br>
+			<button class='show-edit-venue' type='button' >Edit</button>
+			<br>
+			<br>
+		</p>
+	</div>
+
+    <div id="map" class='center wide'></div>
+	<br>
+	<div id='edit-venue-div' class='center wide' <v>editHidden</v>>
+		<v>venueRevertDiv</v>
+		<form id='edit-venue-form' action='venue.php' method='post' class='commit center vwide shadow venue'>
+			<input type='hidden' name='vid' value='<v>vid</v>'>
+			<input id='venue-game' name='game' class='center' type='hidden' 
+				value='<v>game</v>'>
+			<input type='hidden' name='lat' value='<v>venueLat</v>' id='venue-lat'>
+            <input type='hidden' name='lng' value='<v>venueLng</v>' id='venue-lng'>
+
+			<v>repostInputs</v>
+			<span class='help' hidden>
+				<t>Please_correct...</t><br>
+				<t>You_can_easily_revert...</t>
+			</span>
+			<button type='button' class='action help <v>INFO_ICON</v>'></button>
+			<p class='center'>
+				<input id='venue-name' name='name' class='center' 
+					value='<v>venueName</v>' placeholder='Name' autocomplete="off">
+				<input id='venue-address' name='address' class='center geocode' 
+					value='<v>venueAddress</v>' placeholder='Address' autocomplete="off">
+				<input id='venue-suburb' name='suburb' class='center geocode' 
+					value='<v>venueSuburb</v>' placeholder='<v>suburb</v>'  autocomplete="off">
+				<input id='venue-state' name='state' class='center geocode' 
+					value='<v>venueState</v>' placeholder='State/Provence' autocomplete="off">
+				<select id='venue-country' name='country' class='center geocode' required>
+					<v>countryOptions</v>
+				</select>
+				<br>
+				<br>
+				<input id='venue-phone' name='phone' class='center'
+					value='<v>venuePhone</v>' placeholder='phone'>
+				<input id='venue-url' name='url' type='url' class='center' 
+					value='<v>venueURL</v>' placeholder='http://'><br>
+				<select id='tz' name='tz' class='center' required>
+					<option disabled value><t>timezone</t></option>
+					<option value='<v>venueTZ</v>'><v>venueTZ</v></option>
+				</select>
+				<br>
+				<br>
+				<textarea id='venue-note' name='note' class='center' placeholder='..notes...' ><v>venueNote</v></textarea>
+			</p>
+			<br>
+			<input id='venue-cancel' type='button' value='Cancel'>
+			<input id='venue-submit' type='submit' value='Submit'>
+			<br>
+			<br>
+		</form>
+	</div>
+
+
+
+    <h2><t>Jump_Start</t></h2>
+
+    <div class='center shadow'>
+        <p><t>Here_are_a_few_things...</t></p>
+        <p><b><t>Get_the_word_out</t></b>
+            <t>Encourage_your_rivals...</t>
+            <a class='twitter-share-button'
+                href='https://twitter.com/share?
+                    size=small&
+                    u=http://www.qwikgame.org/&
+                    via=qwikgame&
+                    hashtags=qwik&
+                    text=<v>tagline</v>'
+                target='_blank'>
+                <img src='twitter.png' alt='twitter' class='socialmedia'></a>
+            <a id='email-share-link'
+                href='mailto:?subject=<t>emailShareSubject</t>&target=_blank&body=<t>emailShareBody</t>'>
+                <img src='email.png' alt='email' class='socialmedia'></a>
+            <span class='fb-share-button' 
+                data-href='http://www.qwikgame.org/' 
+                data-layout='button_count' 
+                data-size='small' 
+                data-mobile-iframe='false'>
+                <a class='fb-xfbml-parse-ignore' 
+                    target='_blank' 
+                    href='https://www.facebook.com/sharer/sharer.php?
+                        u=https%3A%2F%2Fwww.qwikgame.org%2F&amp;src=sdkpreparse'>
+                <img src='facebook.png' alt='facebook' class='socialmedia'></a>
+            </span>
+        </p>
+        <p><t>Put_this_link...</t></p>
+        <p><t>Reckon_your_ability...</t></p>
+        <p><b><a href='upload.php'><t>Upload</t></a></b><t>a_list_of...</t></p>
+    </div>
+    <br>
+    <br><br><br><br><br><br>
+    <div id='footer' class='center'>
+        <t>license</t>
+    </div>
+
+</body>
+
+</html>

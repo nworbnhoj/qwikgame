@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Info, Bugs, Feedback and New Features</title>
+<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="qwik.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="qwik.js"></script>
+</head>
+
+
+<body>
+
+<h1>qwik game org</h1>
+
+<div id='menu' class='menu'>
+    <form id='lang-form' action='index.php' method='post'>
+        <select id='lang-select' name='lang' hidden>
+            <repeat id='language'>
+                <option value='<v>code</v>' <v>selected</v>><v>language</v></option>
+            </repeat>
+        </select>
+    </form>
+    <a id='home-icon' class='<v>HOME_ICON</v>' href='index.php'></a>
+    <a id='lang-icon' class='<v>LANG_ICON</v>'></a>
+    <a id='logout-icon' class='<v>LOGOUT_ICON</v>' href='index.php?qwik=logout'></a>
+</div>
+
+
+<div class='center shadow'>
+	<p><t>qwikgame.org_was_launched...</t></p>
+	<p><t>Please_let_me...</t></p>
+    <a class='fa fa-twitter twitter' href='https://twitter.com/qwikgame' target='_blank'></a>
+</p>
+<p>
+    <a href='<v>termsURL</v>' target='_blank'>Terms & Conditions</a>
+	: 
+	<a href='<v>privacyURL</v>' target='_blank'>Privacy policy</a>
+</p>
+</div>
+
+<h2><t>Account_Recovery</t></h2>
+
+<form action="info.php" method="post" class="commit center shadow account">
+    <input type="hidden" name="qwik" value="recover">
+    <br><t>...link_to_login</t><br>
+    <input name="email" type="email" class="email" placeholder="<t>prompt_address</t>"></input>
+    <br>
+    <input type="submit" class='email-alert' value="Submit">
+    <br><br>
+</form>
+
+
+
+
+<h2><t>Feedback</t></h2>
+
+
+<form action="info.php" method="post"  class="commit center shadow feedback">
+<br>
+<input type='hidden' name='qwik' value='feedback' class='center'>
+<textarea type="text" name="message" class='center' placeholder='<t>prompt_feedback</t>'></textarea><br>
+<input type="email" name="reply-email" placeholder='<t>prompt_address</t>'><br>
+<input value="Submit" type="submit">
+</form>
+
+
+<h2><t>Thanks</t></h2>
+
+<div class='center shadow'>
+<br>
+<ul>
+	<li><a href='https://www.facebook.com/DavidCleggPSA/about/?__xt__=33.%7B%22logging_data%22%3A%7B%22page_id%22%3A114379538585735%2C%22event_type%22%3A%22clicked_view_page_about%22%7D%7D&tab=page_info' target='_blank'>David Clegg</a> 
+		<a href='https://psaworldtour.com/players/view/3476/david%20clegg' target='_blank'>PSA</a> Squash player.</li>
+	<li>Font Awesome by Dave Gandy - <a href='http://fontawesome.io' target='_blank'>http://fontawesome.io</a></li>
+	<li><a href="http://www.geoplugin.com/geolocation/" target="_new">IP Geolocation</a> by <a href="http://www.geoplugin.com/" target="_new">geoPlugin</a></li>
+</ul>
+<br>
+
+</div>
+
+
+
+<h2 id='invitations'><t>Invitations</t></h2>
+
+<div class='center shadow'>
+    <p><t>When_you_are_keen...</t></p>
+	<p><t>After_the_game...</t></p>
+</div>
+
+
+
+
+
+<h2 id='reputation'><t>Reputation</t></h2>
+
+<div class='center shadow'>
+	<p>
+		<t>Reputation_is_based...</t>
+	</p>
+	<table class='center'>
+		<tr><th><t>superb</t></th><td><t>Better_than_49...</t></td></tr>
+        <tr><th><t>excellent</t></th><td><t>Better_than_19...</t></td></tr>
+        <tr><th><t>great</t></th><td><t>Better_than_9...</t></td></tr>
+        <tr><th><t>good</t></th><td><t>Better_than_4...</t></td></tr>
+        <tr><th><t>mixed</t></th><td><t>...in_every_5_games</t></td></tr>
+        <tr><th><t>poor</t></th><td><t>...in_every_3_games</t></td></tr>
+        <tr><th><t>dreadful</t></th><td><t>...in_every_2_games</t></td></tr>
+	</table>
+    <p><t>New_players_with...</t></p>
+</div>
+
+
+
+
+<h2><t>Known_Bugs</t></h2>
+
+<div class='center shadow'>
+	<p><t>No_known_bugs...</t>
+		<ul class='center narrow'>
+		</ul>
+	</p>
+</div>
+
+
+<h2><t>Development</t></h2>
+
+<div class='center shadow'>
+	<p><t>There_are_so...</t></p>
+	<h3><t>To Do</t></h3>
+	<ol class='center'>
+		<li>multi-game venue support</li>
+        <li>Venue duplicate management</li>
+		<li>Español tidy-up</li>
+        <li>中文</li>
+        <li>ﺎﻠﻠﻏﺓ ﺎﻠﻋﺮﺒﻳﺓ</li>
+        <li>हिन्दी भाषा'</li>
+		<li>group familiar players</li>
+		<li>Ability Reckoning</li>
+		<li>Available click day to select row</li>
+		<li>Available click header to select column</li>
+		<li>Feedback reminder email</li>
+		<li>Open hours for venue</li>
+		<li>Access night hours</li>
+		<li>block nasty players</li>
+		<li>gender filter option</li>
+		<li>Venue agregate rival availability</li>
+		<li>Venue edit alert to available players</li>
+		<li>Put match on personal calender.</li>    
+		<li>qwikgame App</li>
+	</ol>
+	<br><br>
+</div>
+
+<br><br><br><br><br><br><br>
+
+<div class='center'>
+<t>license</t>
+</div>
+
+</body>
+
+</html>
+
+

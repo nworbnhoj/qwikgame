@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="UTF-8">  
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Upload player ranking</title>
+	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="qwik.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="qwik.js"></script>
+</head>
+
+
+<body>
+
+    <div id='menu' class='menu'>
+	    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
+	    <a id='home-icon' class='<v>HOME_ICON</v>' href='player.php'></a>
+    </div>
+
+
+	<h1>qwik game org</h1>
+
+	<p class='center'>
+		<t>Upload_a_list...</t><br>
+		<v>please_login</v>
+	</p>
+
+	<h2><t>Upload_Rankings</t></h2>
+
+	<repeat id='uploads'>
+	<form action='upload.php' method='post' class='center record <v>status</v>' <v>uploadHidden</v>>
+    	<input type='hidden' name='filename' value='<v>fileName</v>'>
+		<button type='button' class='action help <v>INFO_ICON</v>' id='help-reckon'></button>
+        <button class='action <v>CROSS_ICON</v>' name='qwik' value='<v>crossAct</v>'></button>
+		<button class='action <v>tickIcon</v>' name='qwik' value='activate' ></button>
+		
+        <span class='help' hidden><t>Once_you_have_uploaded...</t></span>
+        <span class='tag <t><v>status</v></t>'><v>status</v></span>
+    	<v>title</v><br>
+    	<b><v>game</v></b> <v>time</v>
+    </form>
+	</repeat>
+
+
+	<form action="upload.php" 
+		method="post" 
+		enctype="multipart/form-data" 
+		class='commit center wide shadow upload'
+		<br>
+		<input type='hidden' name='qwik' value='upload'>
+		<select name="game" class="game">
+        	<repeat id='games'>
+        	<option value='<v>game</v>' <v>selected</v>> <v>name</v></option>
+			</repeat>
+		</select>
+		<input required	type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' <v>uploadDisabled</v>>
+		<br>
+		<input required	name='title' type='text' class='center' placeholder='<t>prompt_title</t>' <v>uploadDisabled</v>>
+		<br>
+		<input type="submit" value="Upload" name="submit" <v>uploadDisabled</v>>
+		<br>
+	</form>
+<br>
+
+	<p class='center'><t>A_comma_delimited...</t></p>
+
+	<p class='center'><t>There_is_a_simple...</t></p>
+<br><br>
+
+<h2>How does this work?</h2>
+
+<div class='center shadow'>
+	<p><t>needs_a_unique...</t>
+	<p><t>The_sha256...</t></p>
+	<p><t>uses_match_feedback...</t></p>
+	<p><t>If_a_player_chooses...</t></p>
+	<p><t>When_player_rankings...</t></p>
+</div>
+
+<br><br>
+
+
+<h2>Requirements</h2>
+
+<div class='center shadow left'>
+		<br>
+		<ol>
+			<li><t>Every_line_must...</t>
+				<code class='csv'>
+					<span class='csv rank'>18</span>
+					<span class='csv comma'>,</span>
+					<span class='csv hash'>d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9</span>
+				</code>
+			</li>
+		    <li><t>The_first_line...</t></li>
+		    <li><t>The_file_size...</t></li>
+		</ol>
+		<br>
+	</div>
+
+<br><br><br><br><br><br>
+
+<div class='center'>
+	<t>license</t>
+</div>
+
+</body>
+
+</html>
+

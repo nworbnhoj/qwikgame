@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="UTF-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><t>venues</t></title>
+	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="qwik.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="qwik.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=venuesMap">
+    </script>
+
+</head>
+
+<body>
+
+<div id='menu' class='menu'>
+    <form id='lang-form' action='index.php' method='post'>
+        <select id='lang-select' name='lang' hidden>
+            <repeat id='language'>
+                <option value='<v>code</v>' <v>selected</v>><v>language</v></option>
+            </repeat>
+        </select>
+    </form>
+    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
+    <a id='lang-icon' class='<v>LANG_ICON</v>'></a>
+	<a id='back-icon' class='<v>HOME_ICON</v>' href='<v>homeURL</v>'></a>
+    <a id='logout-icon' class='<v>LOGOUT_ICON</v>' href='index.php?qwik=logout'></a>
+</div>
+
+	<h1>qwik game org</h1>
+
+    <h2><v>game</v> Venues</h2>
+	
+	<div class='center'>
+		<form action='venues.php' method='post' class='repost'>
+		Showing # available 
+	    <select id='game' name="game" class="game repost">
+	        <repeat id='games'>
+	        <option value='<v>game</v>' <v>selected</v>> <v>name</v></option>
+	        </repeat>
+	    </select> players.
+		</form>
+	</div>
+	<br>
+    <div id="map" class='center wide'></div>
+
+
+<h2 id="please help"><t>spread_the_word</t></h2>
+
+<div class='center shadow'>
+    <p>
+        <a class='twitter-share-button'
+            href='https://twitter.com/share?
+            size=small&
+            u=http://www.qwikgame.org/&
+            via=qwikgame&
+            hashtags=qwik&
+            text=find someone to play your favourite game at a time and place that suits you'
+            target='_blank'>
+            <img src='twitter.png' alt='twitter' class='socialmedia'></a>
+        <a id='email-share-link'
+            href='mailto:?subject=www.qwikgame.org&target=_blank&
+            body=www.qwikgame.org%20makes%20it%20easy%20to%20find%20someone%20to%20play%20
+            your%20favourite%20game%20at%20a%20time%20and%20place%20that%20suits%20you.'>
+            <img src='email.png' alt='email' class='socialmedia'></a>
+        <span class='fb-share-button' 
+            data-href='http://www.qwikgame.org/' 
+            data-layout='button_count' 
+            data-size='small' 
+            data-mobile-iframe='false'>
+            <a class='fb-xfbml-parse-ignore' 
+                target='_blank' 
+                href='https://www.facebook.com/sharer/sharer.php?
+                    u=https%3A%2F%2Fwww.qwikgame.org%2F&amp;src=sdkpreparse'>
+                <img src='facebook.png' alt='facebook' class='socialmedia'></a>
+        </span>
+    </p>
+</div>
+
+
+	
+
+
+    <br><br><br><br><br>
+    <br>
+    <div id='footer' class='center'>
+		<t>license</t>
+    </div>
+
+
+</body>
+
+</html>
+
+

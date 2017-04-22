@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta charset="UTF-8">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title><v>game</v> venue</title>
+	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="qwik.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="qwik.js"></script>
+</head>
+
+<body>
+
+
+<h1>qwik game org</h1>
+    <div id='menu' class='menu'>
+        <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
+        <a id='back-icon' class='<v>HOME_ICON</v>' href='<v>homeURL</v>'></a>
+    </div>
+
+	<div class='center'>
+		<p><t>Please_click_an...</t></p>
+
+    	<h3><t>Similar_Venues</t></h3>
+    	<form action='<v>repost</v>' method='post' class='transparent'>
+			<repeat id='repost'>
+			<input type='hidden' name='<v>name</v>' value='<v>value</v>'>
+			</repeat>
+			<repeat id='similarVenues'>
+			<button type='submit' class='venue' name='vid' value='<v>vid</v>'>
+				<b><v>players</v></b> players @ <v>name</v>
+			</button>
+			</repeat>
+   	    </form>
+
+		<br>
+		<h3><t>New_Venue</t></h3>
+
+		<form id='edit-venue-form' action='locate.php' method='post' 
+			class='commit center vwide shadow venue'>
+			<input type='hidden' id='vid' name='vid' value='<v>vid</v>'>
+            <input id='venue-game' name='game' class='center' type='hidden' 
+                value='<v>game</v>'>
+            <input type='hidden' name='lat' value='<v>venueLat</v>' id='venue-lat'>
+            <input type='hidden' name='lng' value='<v>venueLng</v>' id='venue-lng'>
+            <repeat id='repost'>
+                <input type='hidden' name='<v>name</v>' value='<v>value</v>'>
+            </repeat>
+            <span class='help' hidden>
+            </span>
+            <button type='button' class='action help <v>INFO_ICON</v>'></button>
+            <p class='center'>
+                <input id='venue-name' name='name' class='center' 
+                    value='<v>venueName</v>' placeholder='<t>name</t>' autocomplete="off">
+                <input id='venue-address' name='address' class='center geocode' 
+                    value='<v>venueAddress</v>' placeholder='<t>address</t>' autocomplete="off">
+                <input id='venue-suburb' name='suburb' class='center geocode' 
+                    value='<v>venueSuburb</v>' placeholder='<t>suburb</t>'  autocomplete="off">
+                <input id='venue-state' name='state' class='center geocode' 
+                    value='<v>venueState</v>' placeholder='<t>state/provence</t>' autocomplete="off">
+                <select id='venue-country' name='country' class='center geocode' required>
+                    <v>countryOptions</v>
+                </select>
+                <br>
+                <br>
+                <input id='venue-phone' name='phone' class='center'
+                    value='<v>venuePhone</v>' placeholder='<t>phone</t>'>
+                <input id='venue-url' name='url' type='url' class='center' 
+                    value='<v>venueURL</v>' placeholder='http://'><br>
+                <select id='tz' name='tz' class='center' required>
+                    <option disabled value><t>timezone</t></option>
+                    <option value='<v>venueTZ</v>'><v>venueTZ</v></option>
+                </select>
+                <br>
+                <br>
+                <textarea id='venue-note' name='note' class='center' placeholder='<t>notes</t>' ><v>venueNote</v></textarea>
+            </p>
+            <br>
+            <input id='venue-cancel' type='button' value='<t>Cancel</t>'>
+            <input id='venue-submit' type='submit' value='<t>Submit</t>'>
+            <br>
+            <br>
+        </form>
+
+	</div>
+
+
+<br><br><br><br><br><br><br>
+
+
+    <div id='footer' class='center'>
+        <t>license</t>
+    </div>
+
+</body>
+
+</html>
+
+

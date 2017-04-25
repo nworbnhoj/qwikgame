@@ -19,6 +19,8 @@ $languages = array(
 //	'jp'=>'日本語'
 );
 
+
+// include language translations
 foreach($languages as $code => $language){
 	include "$code/lang.php";
 }
@@ -249,22 +251,27 @@ function post($url, $data){
 }
 
 
+/********************************************************************************
+Return the XML data for the current logged in player (if any)
+
+$req	ArrayMap	url parameters from post&get
+********************************************************************************/
 function login($req){
 	global $DAY, $MONTH;
 	session_start();
 
-	if (isset($req['pid'])){
+	if (isset($req['pid'])){				// check for a pid & token in the parameter
 		$pid = $req['pid'];
 		$token = $req['token'];
-    } elseif (isset($_SESSION['pid'])){
+    } elseif (isset($_SESSION['pid'])){		// chck for a pid in the $_SESSION variable
 		$pid = $_SESSION['pid'];
 		$openSession = true;
-	} elseif (isset($_COOKIE['pid'])){
+	} elseif (isset($_COOKIE['pid'])){		// check for a pid & token in a $_COOKIE
 		$pid = $_COOKIE['pid'];
 		$token = $_COOKIE['token'];
-    } elseif (isset($req['email'])){
+    } elseif (isset($req['email'])){		// check for and email address in the parameter.
         $email = $req['email'];
-        $pid = anonID($email);
+        $pid = anonID($email);				// and derive the pid from the email
     } else {	// anonymous session: no player identifier
 		return;												// RETURN login fail
 	}
@@ -305,7 +312,9 @@ function login($req){
 }
 
 
-
+/********************************************************************************
+Logout the current player by deleting both the $_SESSION and the longer term $_COOKIE
+********************************************************************************/
 function logout(){
 	global $qwikURL, $DAY;
 	unset($_SESSION['pid']);
@@ -315,7 +324,12 @@ function logout(){
 }
 
 
+/********************************************************************************
+Return the current player language or default
 
+$req	ArrayMap	url parameters from post&get
+$player	XML			player data
+********************************************************************************/
 function language($req, $player){
 	global $languages;
 	header('Cache-control: private'); // IE 6 FIX
@@ -346,6 +360,14 @@ function language($req, $player){
 
 
 
+/********************************************************************************
+Return the html template after replacing <t>variables</t> with the requested 
+language (or with the fallback language as required)
+
+$html	String	html template with variables of the form <t>name</t>
+$lang	String	language to replace <t>variables</t> with
+$fb		String	fallback language for when a translation is missing	
+********************************************************************************/
 function translate($html, $lang, $fb='en'){
 //echo "<br>TRANSLATE $lang<br>";
 	$strings = $GLOBALS[$lang];
@@ -369,7 +391,12 @@ function translate($html, $lang, $fb='en'){
 }
 
 
+/********************************************************************************
+Return the html template after replacing <v>variables</v> with the values provided.
 
+$html		String		html template with variables of the form <v>key</v>
+$variables	ArrayMap	variable name => $value
+********************************************************************************/
 function populate($html, $variables){
 //echo "<br>POPULATE<br>";
 //print_r($variables);
@@ -382,7 +409,13 @@ function populate($html, $variables){
 }
 
 
+/********************************************************************************
+Return the html template after replicating <r>elements</r> with data from $player & $req.
 
+$html	String		html template with variables of the form <v>key</v>
+$player	XML			player data
+$req	ArrayMap	url parameters from post&get
+********************************************************************************/
 function replicate($html, $player, $req){
 //echo "<br>REPLICATE<br>";
     $tr = function($match) use ($player, $req){
@@ -508,9 +541,6 @@ function replicateSimilarVenues($html, $req){
 }
 
 
-
-
-
 function replicateMatches($player, $html, $status){
 	global $ICONS;
 	if(!$player){ return; }
@@ -587,8 +617,6 @@ function replicateFamiliar($player, $html){
 	}
 	return $group;
 }
-
-
 
 
 function replicateAbility($player, $html){
@@ -671,7 +699,11 @@ function replicateUploads($player, $html){
 
 
 
+/********************************************************************************
+Return a new DataTime object representing the $match time.
 
+$match	XML	match data
+********************************************************************************/
 function matchDateTime($match){
 	if(empty($match->venue['tz'])){
         return new datetime();
@@ -688,7 +720,12 @@ function matchDateTime($match){
 }
 	
 
+/**
+Returns a new DateTime object for the time string and time-zone requested
 
+$str	String	time & date
+$tz		String	time-zone
+**/
 function tzDateTime($str='now', $tz){
 //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
     if(empty($tz)){
@@ -698,7 +735,12 @@ function tzDateTime($str='now', $tz){
 }
 
 
+/**
+Returns a new DateTime object for a time at the $venue requested
 
+$str	String	A time & date
+$venue	XML		venue data
+**/
 function venueDateTime($str='now', $venue){
 //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
 	return tzDateTime($str, $venue['tz']);
@@ -738,8 +780,11 @@ function reclaw($data){
 }
 
 
+/********************************************************************************
+Return the $data string with all but a small set of safe characters removed
 
-// remove all but a tight group of valid characters
+$data	String	An arbitrary string
+********************************************************************************/
 function scrub($data){
     if (is_array($data)){
         foreach($data as $key => $val){
@@ -752,7 +797,12 @@ function scrub($data){
 }
 
 
+/********************************************************************************
+Return the $req data iff ALL variables are valid, or FALSE otherwise
 
+$req	ArrayMap	url parameters from post&get
+$player	XML			player data
+********************************************************************************/
 function validate($req){
 //echo "<br>VALIDATE<br>";
 //error_reporting(E_ALL | E_STRICT);
@@ -880,6 +930,12 @@ function validateToken($val){
 
 
 
+/********************************************************************************
+Post an explanation of a failed post&get request to error.php
+
+$req	ArrayMap	url parameters from post&get
+$msg	String		An explanatory message to display to the user at error.php
+********************************************************************************/
 
 function invalidRequest($post, $get, $msg){
 	$str = '<b>POST</b><br>';
@@ -909,8 +965,12 @@ $clip = array(
 	'venue' 		=> 150
 );
 
+/********************************************************************************
+Returns $val truncated to a maximum length specified in the global $clip array
 
-// Clips the length of a String based on values held in global $clip
+$key	String	the $key of the global $clip array specifying the truncated length
+$val	String	A string to be truncated according to global $clip array
+********************************************************************************/
 function clip($key, $val){
 	global $clip;
 	return array_key_exists($key, $clip) ? substr($val, 0, $clip[$key]) : $val ;
@@ -922,7 +982,36 @@ function clip($key, $val){
 ////////// PARITY //////////////////////////////////////////
 
 
+/********************************************************************************
+Returns an estimate of the parity of two players for a given $game. 
+A positive parity indicates that $player is stronger than $rival.
 
+$player	XML		player data for player #1
+$rival	XML		player data for player #2
+$game	String	A string ID of a game.
+
+Each player is "related" to other players by the reports they have made of the 
+other player's relative ability in a game (ie player-A reports that A>B A=C A<D A>>E). 
+This sphere of relations is referred to as the players *orb*. 
+
+A players *orb* can be *expanded* to include secondary relationships 
+(ie B=C B>E C=A D=F A>>F) and so on for 3rd, 4th & 5th degree relationships and so on.
+
+The parity estimate is made by expanding the orbs of both players until there is an
+overlap, and then using these relationships to estimate the parity between the two players.
+For example there is no overlap between 
+	Orb-A = (A>B A=C A<D A>>E)
+	Orb-F = (F=G F>H) 
+but if both orbs are expanded then there is an overlap
+	Orb-A = (A>B A=C A<D A>>E B=G C=I C>J C>K D>H) 
+	Orb-F = (F=G F>H G=B H=L)
+and the following relationships are used to estimate parity between player-A and player-F
+	A>B B=G F=G G=B A<D D>H F>H
+
+
+Note that each player's orb can be traversed outwards from one report to the next; 
+but not in inwards direction (of course there are loops). Function orbCrumbs() is called to construct bread-crumb trails back to the center.
+********************************************************************************/
 function parity($player, $rival, $game){
 //echo "<br>PARITY $game<br>\n";
 
@@ -931,17 +1020,21 @@ function parity($player, $rival, $game){
 //echo "player: $playerID<br>\n";
 //echo "rival: $rivalID<br>\n";
 
+	// obtain the direct orb for each of the players
 	$playerOrb = playerOrb($playerID, $game);
 	$rivalOrb = playerOrb($rivalID, $game);
 
+	// generate 'bread-crumb' trails for both orbs
 	$playerOrbCrumbs = orbCrumbs($playerOrb, $playerID);
 	$rivalOrbCrumbs = orbCrumbs($rivalOrb, $rivalID);
 
+	// compute the intersection between the two orbs
 	$orbIntersect = array_intersect(
 						array_keys($playerOrbCrumbs), 
 						array_keys($rivalOrbCrumbs)
 					);
 
+	// check if the orbs are isolated (ie no possible further expansion)
 	$playerIsolated = ($playerOrbSize == 1);
 	$rivalIsolated = ($rivalOrbSize == 1);
 
@@ -953,6 +1046,8 @@ function parity($player, $rival, $game){
 
         $members = array();
 	    $flipflop = !$flipflop;
+	    
+	    // expand one orb and then the other seeking some intersection
 		if ($flipflop){
 	        $prePlayerOrbSize = $playerOrbSize;
 	        $playerOrbCrumbs = expandOrb($playerOrb, $playerOrbCrumbs, $game);
@@ -965,6 +1060,8 @@ function parity($player, $rival, $game){
 	        $rivalIsolated = ($rivalOrbSize == $preRivalOrbSize);
 		}
 
+
+		// compute the intersection between the two orbs
 		$orbIntersect = array_intersect(
 							array_keys($playerOrbCrumbs), 
 							array_keys($rivalOrbCrumbs)
@@ -1002,7 +1099,7 @@ function parity($player, $rival, $game){
 //echo "<br><br><br>\n";
 
 
-
+	// prune both orbs back to retain just the paths to the intersection points
 	pruneOrb($playerOrb, $orbIntersect);
     pruneOrb($rivalOrb, $orbIntersect);
 
@@ -1013,8 +1110,11 @@ function parity($player, $rival, $game){
 //echo "<br><br><br>rivalOrb=";
 //print_r($rivalOrb);
 //echo "<br><br><br>\n";
+
+	// extend both orbs directly back to the root of the other from the intersection points
 	extendOrb($playerOrb, $rivalOrbCrumbs, $game);
 	extendOrb($rivalOrb, $playerOrbCrumbs, $game);
+
 //echo "<hr><br><br><br>playerOrb=";
 //print_r($playerOrb);
 //echo "<br><br><br>\n";
@@ -1023,6 +1123,7 @@ function parity($player, $rival, $game){
 //print_r($rivalOrb);
 //echo "<br><br><br>\n";
 
+	// estimate the parity of the players from both directions
 	$playerParity = parityOrb($playerOrb, $rivalID);
 	$rivalParity = parityOrb($rivalOrb, $playerID);
 
@@ -1065,10 +1166,24 @@ function printOrb($orb, $tabs="\t"){
 }
 
 
-/* Computes the numeric Parity of the root of the $orb to the $rivalID.
+/********************************************************************************
+Returns an estimate of the parity of a player to $rival
 
+$orb	ArrayMap	The orb of the player, pre-pruned to contain paths only to the $rival
+$rival	XML			player data of the rival
 
-*/
+Computes the numeric Parity of the root of the $orb to the $rivalID.
+Some examples:
+	A>B & B<A implies A>B
+	A>B & B=C implies A>C
+	A>B & B=C & C=D implies A>D
+	
+This is a recursive function that computes the weighted average of each parity
+path to the rival. Each path is weighted by the reliability of the player (node)
+who reported the parity. Also longer chains become progressively weaker in
+influence.
+	
+********************************************************************************/
 function parityOrb($orb, $rivalID){
 //echo "<br>PARITYORB rid=$rivalID<br>";
 	$relyChainDecay = 0.7;
@@ -1096,7 +1211,14 @@ function ssq($n){
 }
 
 
+/********************************************************************************
+Retuns the $orb extended out along the trail of 'bread-crumbs'
 
+$orb	ArrayMap	the orb to be extended
+$crumbs	ArrayMap	node => a more central node
+$game	String		the game
+
+********************************************************************************/
 function extendOrb(&$orb, $crumbs, $game){
 //echo "<br>EXTENDORB</br>";
 	foreach($orb as &$node){
@@ -1111,10 +1233,15 @@ function extendOrb(&$orb, $crumbs, $game){
 }
 
 
-/* An ORB represents the sphere of PARITY around a PLAYER in a PARITY graph linked by estimates
-* from MATCH FEEDBACK, uploaded RANKS, and RECKONS. An ORB is held in an associative array
-* of arrays with key=PLAYER-ID and value=array of PARITY link ID's. 
-*/
+/********************************************************************************
+Returns a player orb extended out to include one addition set of relations from 
+the edge.
+
+$orb	ArrayMap	the orb to be extended
+$crumbs	ArrayMap	node => a more central node
+$game	String		the game
+ 
+********************************************************************************/
 function expandOrb(&$orb, $crumbs, $game){
 //echo "EXPANDORB $game<br><br>\n";
 
@@ -1133,8 +1260,15 @@ function expandOrb(&$orb, $crumbs, $game){
 
 
 
-/* removes all leaves that are not in $keepers, and all denuded branches
-*/
+/********************************************************************************
+Returns the $orb with all nodes removed that are not in $keepers, 
+and all denuded branches.
+
+
+$orb		ArrayMap	the orb to be pruned
+$keepers	Array		nodes to be retained				
+
+********************************************************************************/
 function pruneOrb(&$orb, $keepers){
 //echo "PRUNEORB<br><br>\n";
     foreach($orb as $key => &$node){
@@ -1158,6 +1292,21 @@ return $id;
 }
 
 
+
+/********************************************************************************
+Returns the player orb extended to include only the direct ability reports made 
+by the player
+
+$playerID		String	The unique player ID
+$game			String	The game of interest
+$filter			Array	An array of nodes to keep or discard
+$positiveFilter	Boolean	TRUE to include nodes in the $filter; FALSE to discard
+
+An ORB represents the sphere of PARITY around a PLAYER in a PARITY graph linked by
+estimates from MATCH FEEDBACK, uploaded RANKS, and RECKONS. An ORB is held in an 
+associative array of arrays with key=PLAYER-ID and value=array of PARITY link ID's.
+ 
+********************************************************************************/
 function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 //echo "PLAYERORB $game $playerID<br>\n";
 	$orb=NULL;
@@ -1184,7 +1333,6 @@ function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 								$par['date']);
 			}
 		}
-
 	}
 //print_r($orb);
 //echo "<br><br>";
@@ -1192,8 +1340,16 @@ function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 }
 
 
+/********************************************************************************
+Returns an ArrayMap of node => node next closest to orb center.
 
-// breadcrumbs back to the root of the orb
+$orb	ArrayMap	the player orb
+$orbID	String		The player ID at the root of the $orb
+
+Each player's orb can be traversed outwards from one node to the next; 
+but not in inwards direction (of course there are loops). This function
+constructs bread-crumb trails back to the center.
+********************************************************************************/
 function orbCrumbs($orb, $orbID){
 //echo "<br>ORBCRUMBS $orbID<br>\n";
 //echo "orb : ";
@@ -1244,8 +1400,30 @@ function ebb($rely, $date){
 
 //////////////////// Ranking ///////////////////////////////
 
+/********************************************************************************
+Processes a user request to upload a set of player rankings and 
+Returns a status message
 
+$player XML		player data for the player uploading the rankings
+$game	String	The game in the uploaded rankings
+$title	String	A player provided title for the rankings
 
+A player can upload a file containing player rankings which qwikgame can 
+utilize to infer relative player ability. A comma delimited file is 
+required containing the rank and sha256 hash of each player's email address.
+
+A set of rankings has a status: [ uploaded | active ] 
+
+Requirements:
+1.	Every line must contain an integer rank and the sha256 hash of an email 
+	address separated by a comma.
+	18 , d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
+2.	The first line of the uploaded file must contain the sha256 hash of 
+	facilitator@qwikgame.org with rank=0. This provides a basic check that 
+	the sha256 hashes in the file are compatible with those in use at qwik game org.
+3.	The file size must not exceed 200k (or about 2000 ranks).
+
+********************************************************************************/
 function uploadRanking($player, $game, $title){
 		global $tick;
         $ok = TRUE;
@@ -1389,7 +1567,15 @@ function getUpload($player, $fileName){
 }
 
 
+/*******************************************************************************
+Process a User request to activate a set of uploaded player rankings. 
 
+$ranking	XML	The uploaded rankings
+
+The rankings are inserted into the XML data of the ranked players
+(creating new anon players as required)
+
+********************************************************************************/
 function insertRanking($ranking){
 	global $rankParity;
 
@@ -1436,7 +1622,12 @@ function insertRanking($ranking){
 }
 
 
+/*******************************************************************************
+Process a User request to de-activate a set of uploaded player rankings. 
 
+$ranking	XML	The uploaded rankings
+
+********************************************************************************/
 function extractRanking($ranking){
     $rankingID = $ranking['id'];
     $anonIDs = $ranking->xpath("sha256");
@@ -1463,8 +1654,9 @@ function extractRanking($ranking){
 ////////////////////// TIME //////////////////////////////
 
 
+/*******************************************************************************
 
-
+*******************************************************************************/
 function hours2bits($request, $day){
 	$bitfield = 0;
 	for ($hour = 0; $hour < 24; $hour++){
@@ -1537,6 +1729,18 @@ function hr($hr){
 }
 
 
+/*******************************************************************************
+Returns the sha256 hash of the $email address provided
+
+$email	String	an email address
+
+The unique player ID is chosen by taking the sha256 hash of the email address. 
+This has a number of advantages:
+- The player ID will be unique because the email address will be unique
+- Qwikgame can accept and use a sha256 hash to store anonymous player data
+- A new email address can be linked to existing anonymous player data
+
+*******************************************************************************/
 function anonID($email){
 	return hash('sha256', $email);
 }
@@ -1580,6 +1784,18 @@ function validPlayerToken($player, $token){
 }
 
 
+/*******************************************************************************
+Returns the sha256 hash of the $token provided
+
+$token	String	an token
+
+When it is necessary to send a token to a user (e.g. via email as a proof of 
+identity) then only the sha256 hash of the token is stored by qwikgame.
+This has a number of advantages:
+- the sha256 hash can be computed on presented tokens and validated against the 
+stored hash
+- if the system is compromised then the user held token remain secure.
+*******************************************************************************/
 function nekot($token){
 	return hash('sha256', $token);
 }
@@ -2548,7 +2764,8 @@ function qwikMsg($player, $req){
 }
 
 
-/*
+/*******************************************************************************
+
 qwikgame attempts to estimate the PARITY of possible RIVALs prior to each MATCH.
 
 After each MATCH both RIVALSs rate the PARITY of their RIVAL's ability:
@@ -2567,9 +2784,10 @@ The CONFIDENCE in each PARITY rating is used to resolve DISPARITY during estimat
 Each PARITY rating has a CONFIDENCE which is high when two rivals with 
 high CONGRUENCE rate each other with no DISPARITY (and vice versa).
 
-*/
 
-// refine CONGRUENCE and CERTAINTY when RIVAL Feedback also exists 
+// refine CONGRUENCE and CERTAINTY when RIVAL Feedback also exists
+********************************************************************************/
+
 function updateCongCert($player, $pMatch, $rival){
 	$matchID = $pMatch['id'];
 	$rivalMatchs = $rival->xpath("match[@id='$matchID']");

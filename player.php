@@ -160,7 +160,7 @@
 		'SEND_ICON'			=> $SEND_ICON,
     );
 
-    $html = file_get_contents("$lang/player.html");
+    $html = file_get_contents("lang/$lang/player.html");
 //	do{
 		$html = replicate($html, $player);
 	    $html = populate($html, $variables);

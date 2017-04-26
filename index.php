@@ -62,7 +62,7 @@
         'FACEBOOK_ICON'     => $FACEBOOK_ICON,
     );
 
-    $html = file_get_contents("$lang/index.html");
+    $html = file_get_contents("lang/$lang/index.html");
     $html = replicate($html, $player);
     $html = populate($html, $variables);
     $html = translate($html, $lang);

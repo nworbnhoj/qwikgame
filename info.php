@@ -36,7 +36,7 @@
 		'privacyURL'		=> $privacyURL,
     );
 
-    $html = file_get_contents("$lang/info.html");
+    $html = file_get_contents("lang/$lang/info.html");
     $html = replicate($html, $player);
     $html = populate($html, $variables);
     $html = translate($html, $lang);

@@ -90,7 +90,7 @@
         'FACEBOOK_ICON'     => $FACEBOOK_ICON,
     );
 
-    $html = file_get_contents("$lang/locate.html");
+    $html = file_get_contents("lang/$lang/locate.html");
 	$html = replicate($html, $player, $req);
     $html = populate($html, $variables);
     $html = translate($html, $lang);

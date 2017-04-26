@@ -89,27 +89,25 @@ qwikgame makes estimates of the **relative ability** of potential rivals based o
 
 General html templates prior to translation. 
 
-- **error.html** error handling
-- **index.html** homepage
-- **info.html** user help and info
-- **locate.html** locate a game venue
-- **player.html** player specific homepage
-- **upload.html** upload player rankings
-- **venue.html** venue details
-- **venues.html**
+- html/**error.html** error handling
+- html/**index.html** homepage
+- html/**info.html** user help and info
+- html/**locate.html** locate a game venue
+- html/**player.html** player specific homepage
+- html/**upload.html** upload player rankings
+- html/**venue.html** venue details
+- html/**venues.html**
 
 language translation files
 
-- **/en/lang.php** english translation
-- **/es/lang.php** spanish translation
-- **/zh/lang.php** chinese translation
+- lang/**/en.php** english translation
+- lang/**/es.php** spanish translation
+- lang/**/zh.php** chinese translation
 
 json
 
-- **hours.php** generate a table with specific cells hilighted.
-- **regions.php** populate a select list with geographic region options.
-- **timezone.php** populate a select list with timezone options.
-- **venue-map-data** generate pins for a google map.
+- json/**timezone.php** populate a select list with timezone options.
+- json/**venue-map-data** generate pins for a google map.
 
 php to generate dynamic html from language specific html templates. 
 

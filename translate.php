@@ -4,13 +4,13 @@
 
     static $langs = array('en', 'es', 'zh');
     static $files = array( 
-        'index.html', 
-        'player.html',
-        'venue.html',
-		'venues.html',
+        'index.html',
 		'info.html',
+		'locate.html',
+        'player.html',
 		'upload.html',
-		'locate.html');
+        'venue.html',
+		'venues.html');
 
 
 	$tick = "<button class='TICK_ICON'></button>";
@@ -115,9 +115,9 @@
     foreach($langs as $lang){
 		echo "<h3>$lang translation</h3>";
         foreach($files as $file){
-            $path = "$lang/$file";
+            $path = "lang/$lang/$file";
 			echo "<br><a href='$path'>$file</a>";
-            $html = file_get_contents($file);
+            $html = file_get_contents("html/$file");
             $html = translate($html, $lang);			// sentences with differing word order
 			$html = populate($html, $variables);		// select elements in sentences
 			$html = translate($html, $lang);			// translate all remaining

@@ -291,7 +291,7 @@ function isNumeric(n) {
 
 // https://stackoverflow.com/questions/6921827/best-way-to-populate-a-select-box-with-timezones
 function jsonTZoptions(country, selectElement){
-	$.getJSON("timezone.php",{country_iso: country}, function(j){
+	$.getJSON("json/timezone.php",{country_iso: country}, function(j){
 		var selected = (j.length === 1) ? '' : 'selected';
     	var options = '<option disabled ' + selected + ' value>timezone</option>';
 		selected = (j.length === 1) ? 'selected' : '';
@@ -305,7 +305,7 @@ function jsonTZoptions(country, selectElement){
 
 
 function jsonVenueMarkers(game, map){
-    $.getJSON("venue-map-data.php",{game: game}, function(j){
+    $.getJSON("json/venue-map-data.php",{game: game}, function(j){
         for (var i = 0; i < j.length; i++) {
 			var mark = j[i];
 			var lat = mark.lat;

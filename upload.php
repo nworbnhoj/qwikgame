@@ -61,7 +61,7 @@
         'LOGOUT_ICON'   => isset($player) ? $LOGOUT_ICON : '',
     );
 
-    $html = file_get_contents("$lang/upload.html");
+    $html = file_get_contents("lang/$lang/upload.html");
     $html = replicate($html, $player);
     $html = populate($html, $variables);
     $html = translate($html, $lang);

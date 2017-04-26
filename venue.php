@@ -96,7 +96,7 @@
 		'FACEBOOK_ICON'	=> $FACEBOOK_ICON,
 	);
 
-	$html = file_get_contents("$lang/venue.html");
+	$html = file_get_contents("lang/$lang/venue.html");
 	$html = populate($html, $variables);
 	$html = translate($html, $lang);
 	echo ($html);

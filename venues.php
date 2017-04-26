@@ -31,7 +31,7 @@
         'FACEBOOK_ICON'     => $FACEBOOK_ICON,
         'HOME_ICON'        => $HOME_ICON,
     );
-    $html = file_get_contents("$lang/venues.html");
+    $html = file_get_contents("lang/$lang/venues.html");
     $html = replicate($html, $player, $req);
     $html = populate($html, $variables);
     $html = translate($html, $lang);

@@ -22,7 +22,7 @@ $languages = array(
 
 // include language translations
 foreach($languages as $code => $language){
-	include "$code/lang.php";
+	include "lang/$code.php";
 }
 
 
@@ -31,9 +31,9 @@ $accept = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 @.";
 
 $cc = "<div class='center'><a rel='license' href='http://creativecommons.org/licenses/by/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by/4.0/88x31.png' /></a><br />This work by <a xmlns:cc='http://creativecommons.org/ns#' href='qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a> is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International License</a>.</div>";
 
-$flyerURL = "$qwikURL/qwikgame.org%20flyer.pdf";
-$termsURL = "$qwikURL/qwikgame.org%20terms%20and%20conditions.pdf";
-$privacyURL = "$qwikURL/qwikgame.org%20privacy%20policy.pdf";
+$flyerURL = "$qwikURL/pdf/qwikgame.org%20flyer.pdf";
+$termsURL = "$qwikURL/pdf/qwikgame.org%20terms%20and%20conditions.pdf";
+$privacyURL = "$qwikURL/pdf/qwikgame.org%20privacy%20policy.pdf";
 
 
 $INFO_ICON 		= 'fa fa-question-circle icon';
@@ -3634,7 +3634,7 @@ function familiarEmailLink($venue, $game, $name){
         href='mailto:?subject=$name is keen for $game at $venueName&target=_blank&
         body=www.qwikgame.org%20makes%20it%20easy%20to%20find%20someone%20to%20play%20your%20
         favourite%20game%20at%20a%20time%20and%20place%20that%20suits%20you.\n\n\n'>
-        <img src='email.png' alt='email' class='socialmedia'></a>";
+        <img src='img/email.png' alt='email' class='socialmedia'></a>";
     return $link;
 }
 

@@ -11,9 +11,9 @@ You can use qwikgame for free at [qwikgame.org](https://qwikgame.org)
 >
 >After the game please revisit qwikgame.org to rate your rivals **ability** as stronger, weaker or well matched. Choose **well matched** when you had an enjoyable challenging match, regardless of who actually 'won'. You should also give your rival the 👍 if they were nice to be around, regardless of who was the stronger player.
 
-***
-***
-
+  
+  
+  
 ## Development
 
 qwikgame is currently developed with html, css, php, json, javascript, jquery and xml data files.
@@ -59,7 +59,7 @@ Each match has a current status: *keen*, *invitation*, *accepted*, *confirmed*, 
 
 ### multilingual
 
-qwikgame supports multiple user languages. Variables in html templates are replaced (php) to generate a html document in each of the available languages. Static html is generated periodically as required, while the remaining dynamic elements are inserted on-the-fly. Each language translation exists as a file defining each of the variables to be inserted into the html template (eg $zh['tagline'] = '找人玩你最喜欢的游戏，在一个适合你的时间和地点';). There are currently translations for en, es & zh (additional translations most welcome).
+qwikgame supports multiple user languages. Variables in html templates are replaced (by php) to generate a language specific html template (periodically as required). The remaining dynamic elements are inserted (by php) on-the-fly. Each language translation exists as a file defining each of the variables to be inserted into the html template (eg $zh['tagline'] = '找人玩你最喜欢的游戏，在一个适合你的时间和地点';). There are currently translations for en, es & zh (additional translations most welcome).
 
 ### relative ability
 
@@ -98,17 +98,6 @@ General html templates prior to translation.
 - **venue.html** venue details
 - **venues.html**
 
-php to generate dynamic html from language specific html templates. These php files have have a common php structure: validate and sanatize *post&get* data; identify logged-in player (if any); obtain player language; process *post&get* data to set variables; obtain the html template; replicate repeating elements (ie lists, rows, options etc); and translate dynamic variables.
-
-- **error.php** 
-- **index.php** 
-- **info.php** 
-- **locate.php** 
-- **player.php** 
-- **upload.php** 
-- **venue.php** 
-- **venues.php** 
-
 language translation files
 
 - **/en/lang.php** english translation
@@ -122,8 +111,25 @@ json
 - **timezone.php** populate a select list with timezone options.
 - **venue-map-data** generate pins for a google map.
 
+php to generate dynamic html from language specific html templates. 
 
+- **error.php** 
+- **index.php** 
+- **info.php** 
+- **locate.php** 
+- **player.php** 
+- **upload.php** 
+- **venue.php** 
+- **venues.php** 
 
+These php files have have a common php structure: 
+- validate and sanitize *post&get* data
+- identify logged-in player (if any)
+- obtain player language
+- process *post&get* data to set variables
+- obtain the html template
+- replicate repeating elements (ie lists, rows, options etc)
+- translate dynamic variables.
 
 
 

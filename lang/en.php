@@ -258,6 +258,7 @@ $en['New_players_with...'] = '<b>New players</b> with less than 5 games can only
 $en['Known_Bugs'] = 'Known Bugs';
 $en['No_known_bugs...'] = 'No known bugs at the moment.';
 $en['Development'] = 'Development';
+$en['Github'] = 'qwikgame source is available under GPL-3.0 at <a href="https://github.com/nworbnhoj/qwikgame">Github</a>.';
 $en['There_are_so...'] = 'There are so many little tweeks to make qwikgame better!<br>This To Do list is in rough focus order; but let me know if the order is wrong, or something is missing.';
 $en['To_Do'] = 'To Do';
 

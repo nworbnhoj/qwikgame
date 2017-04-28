@@ -26,7 +26,8 @@ Each registered **player** has a single xml file in the `/player` directory.
 
 A player registers by nominating a game, a venue and an email address. The player is effectively registering that they are available to play Squash at the Milawa Courts (for example) and wish to be alerted when some-one else is keen to play. An email registration confirmation contains a link to the players home page and a cookie is set to maintain the user-login beyond a single session. If the user manually logs-out then another email can be requested with a new login link (ie the user passwords are replaced by persistent sessions and a simple password-reset email process). 
 
-The internal player ID is chosen by taking the sha256 hash of the email address. This has a number of advantages:
+The internal player ID (pid) is chosen by taking the sha256 hash of the email address. 
+This has a number of advantages:
 - The player ID will be unique because the email address will be unique
 - Qwikgame can accept and use a sha256 hash to store anonymous player data
 - A new email address can be linked to existing anonymous player data
@@ -48,6 +49,11 @@ A player may optionally nominate:
 Each game **venue** has a single xml file in the `/venue` directory.
 
 Players are able to add and maintain information about suitable venues to play each game including Name, Address, GPS location etc.
+
+A unique Venue ID (vid) is constructed from the venue's name and address in the form:
+	name|address|suburb|state|country
+This is used as the XML file name which allows qwikgame to use rapid file-system tools
+to locate a venue without having to parse an XML file or utilize a database.
 
 ### matches
 

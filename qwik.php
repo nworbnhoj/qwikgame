@@ -26,9 +26,6 @@ foreach($languages as $code => $language){
 }
 
 
-$accept = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 @.";
-
-
 $cc = "<div class='center'><a rel='license' href='http://creativecommons.org/licenses/by/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by/4.0/88x31.png' /></a><br />This work by <a xmlns:cc='http://creativecommons.org/ns#' href='qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a> is licensed under a <a rel='license' href='http://creativecommons.org/licenses/by/4.0/'>Creative Commons Attribution 4.0 International License</a>.</div>";
 
 $flyerURL = "$qwikURL/pdf/qwikgame.org%20flyer.pdf";
@@ -75,9 +72,6 @@ $CC_LICENCE_LINK = "
 	</a>";
 
 $homeURL = "player.php?pid=$pid&token=$token&qwik=login";
-
-
-
 
 
 $geo;
@@ -214,10 +208,6 @@ function logMsg($msg){
 
 
 
-
-$accept = '/[^(abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 @.)]*/';
-
-
 # SECURITY escape all parameters to prevent malicious code insertion
 # http://au.php.net/manual/en/function.htmlentities.php
 function SECURITYsanitizeHTML($data){
@@ -247,7 +237,6 @@ function post($url, $data){
 	if ($result === FALSE) { /* Handle error */ }
 	
 	var_dump($result);
-	
 }
 
 
@@ -272,7 +261,7 @@ function login($req){
     } elseif (isset($req['email'])){		// check for and email address in the parameter.
         $email = $req['email'];
         $pid = anonID($email);				// and derive the pid from the email
-    } else {	// anonymous session: no player identifier
+    } else {								// anonymous session: no player identifier
 		return;												// RETURN login fail
 	}
 															// OK playerID
@@ -313,7 +302,8 @@ function login($req){
 
 
 /********************************************************************************
-Logout the current player by deleting both the $_SESSION and the longer term $_COOKIE
+Logout the current player by deleting both the $_SESSION and the longer term 
+$_COOKIE
 ********************************************************************************/
 function logout(){
 	global $qwikURL, $DAY;
@@ -369,13 +359,11 @@ $lang	String	language to replace <t>variables</t> with
 $fb		String	fallback language for when a translation is missing	
 ********************************************************************************/
 function translate($html, $lang, $fb='en'){
-//echo "<br>TRANSLATE $lang<br>";
 	$strings = $GLOBALS[$lang];
 	$fallback = $GLOBALS[$fb];
     $pattern = '!(?s)\<t\>([^\<]+)\<\/t\>!';
 	$tr = function($match) use ($strings, $fallback){
 		$key = $match[1];
-//echo "$key<br>";
 		$st = $strings[$key];
 		if(isset($strings[$key])){
 			return $strings[$key];
@@ -398,8 +386,6 @@ $html		String		html template with variables of the form <v>key</v>
 $variables	ArrayMap	variable name => $value
 ********************************************************************************/
 function populate($html, $variables){
-//echo "<br>POPULATE<br>";
-//print_r($variables);
     $pattern = '!(?s)\<v\>([^\<]+)\<\/v\>!';
     $tr = function($match) use (&$variables){
         $m = $match[1];
@@ -417,16 +403,14 @@ $player	XML			player data
 $req	ArrayMap	url parameters from post&get
 ********************************************************************************/
 function replicate($html, $player, $req){
-//echo "<br>REPLICATE<br>";
     $tr = function($match) use ($player, $req){
 		$id = $match[3];
-//echo "<br>$id";
         $html = $match[4];
 		switch ($id){
-			case 'repost':		return replicatePost($html, $req);	break;
-            case 'language':    return replicateLanguages($html);	break;
-			case 'games':		return replicateGames($html, $req);		break;
-			case 'venues':		return replicateVenues($html);		break;
+			case 'repost':		return replicatePost($html, $req);				break;
+            case 'language':    return replicateLanguages($html);				break;
+			case 'games':		return replicateGames($html, $req);				break;
+			case 'venues':		return replicateVenues($html);					break;
 			case 'similarVenues': return replicateSimilarVenues($html, $req);	break;
 			case 'keen':
 			case 'invitation':
@@ -460,7 +444,6 @@ $ICONS = array (
 
 
 function replicatePost($html, $req){
-//echo "<br>REPLICATEPOST<br>$html";
     $group = '';
     foreach($req as $name => $value){
 		if(is_array($value)){
@@ -487,7 +470,6 @@ function replicatePost($html, $req){
 
 
 function replicateGames($html, $req){
-//echo "<br>REPLICATEGAMES<br>$html";
 	global $games;
 	$default = $req['game'];
 	$group = '';
@@ -504,6 +486,7 @@ function replicateGames($html, $req){
 
 
 function replicateVenues($html, $default){
+	return "replicateVenues() has not been implemented";
 echo "<br>REPLICATEVENUES<br>$html";
     $group = '';
     $venueIDs = listVenues('squash'); //$game);
@@ -551,8 +534,6 @@ function replicateMatches($player, $html, $status){
     	$matchVars = matchVariables($match);
 		$vars = $playerVars + $matchVars + $ICONS;
 		$vars['venueLink'] = venueLink($match->venue, $player, $match['game']);
-//print_r($vars);
-//echo "<br><br>";
 		$group .= populate($html, $vars);
 	}
 	return $group;
@@ -594,8 +575,6 @@ function replicateEmailCheck($player, $html){
 	}
 	return $group;
 }
-
-
 
 
 function replicateFamiliar($player, $html){
@@ -675,7 +654,6 @@ function replicateReckons($player, $html){
 
 
 function replicateUploads($player, $html){
-//echo "<br>REPLICATEUPLOADS<br>";
     if(!$player){ return; }
 	$uploadIDs = $player->xpath("upload");
 	$group = '';
@@ -720,12 +698,12 @@ function matchDateTime($match){
 }
 	
 
-/**
+/********************************************************************************
 Returns a new DateTime object for the time string and time-zone requested
 
 $str	String	time & date
 $tz		String	time-zone
-**/
+********************************************************************************/
 function tzDateTime($str='now', $tz){
 //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
     if(empty($tz)){
@@ -735,12 +713,12 @@ function tzDateTime($str='now', $tz){
 }
 
 
-/**
+/********************************************************************************
 Returns a new DateTime object for a time at the $venue requested
 
 $str	String	A time & date
 $venue	XML		venue data
-**/
+********************************************************************************/
 function venueDateTime($str='now', $venue){
 //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
 	return tzDateTime($str, $venue['tz']);
@@ -761,7 +739,6 @@ function declaw($data){
     } else {
         $data = htmlentities(trim($data), ENT_QUOTES | ENT_HTML5, "UTF-8");
     }
-echo "<br>$data";
     return $data;
 }
 
@@ -784,6 +761,10 @@ function reclaw($data){
 Return the $data string with all but a small set of safe characters removed
 
 $data	String	An arbitrary string
+
+Safe character set:
+	abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
+	
 ********************************************************************************/
 function scrub($data){
     if (is_array($data)){
@@ -801,7 +782,6 @@ function scrub($data){
 Return the $req data iff ALL variables are valid, or FALSE otherwise
 
 $req	ArrayMap	url parameters from post&get
-$player	XML			player data
 ********************************************************************************/
 function validate($req){
 //echo "<br>VALIDATE<br>";
@@ -811,7 +791,7 @@ function validate($req){
 		return FALSE;
 	}
 
-	$req = scrub($req);
+	$req = scrub($req);		// remove all but a small set of safe characters.
 
 	$ability_opt = array('min_range' => 0, 'max_range' => 4);
     $parity_opt = array('min_range' => -2, 'max_range' => 2);
@@ -936,7 +916,6 @@ Post an explanation of a failed post&get request to error.php
 $req	ArrayMap	url parameters from post&get
 $msg	String		An explanatory message to display to the user at error.php
 ********************************************************************************/
-
 function invalidRequest($post, $get, $msg){
 	$str = '<b>POST</b><br>';
     foreach($post as $key => $val){
@@ -1610,11 +1589,8 @@ function insertRanking($ranking){
                 $parity->addAttribute('game', $game);
                 $parity->addAttribute('date', $date);
 				$parity->addAttribute('parity', $pty);
-//echo "$anonRank $rivalRank $pty $rivalID<br>";
 			}
 		}	
-// print_r($anon);
-//echo "<br><br>";
         writePlayerXML($anon);
 	}
 	$ranking['status'] = 'active';
@@ -1626,7 +1602,6 @@ function insertRanking($ranking){
 Process a User request to de-activate a set of uploaded player rankings. 
 
 $ranking	XML	The uploaded rankings
-
 ********************************************************************************/
 function extractRanking($ranking){
     $rankingID = $ranking['id'];
@@ -2029,10 +2004,6 @@ function removePlayer($id){
 }
 
 
-
-
-
-
 function writeVenueXML($venue){
 //echo "<br>WRITEVENUEXML<br>";
 	$cwd = getcwd();
@@ -2202,14 +2173,10 @@ function pids($game){
 }
 
 
-
-
-
 function trim_value(&$value) 
 { 
     $value = trim($value); 
 }
-
 
 
 function similarVenues($description, $game){
@@ -2232,9 +2199,6 @@ function similarVenues($description, $game){
 	arsort($similar);
     return array_keys($similar);
 }
-
-
-
 
 
 function listVenues($game){
@@ -2265,8 +2229,6 @@ function venueList($game){
 }
 
 
-
-
 function repostInputs($repost, $tabs){
 //echo "<br>REPOSTINPUTS<br>";
 	$inputs = '';
@@ -2276,10 +2238,6 @@ function repostInputs($repost, $tabs){
 	}
 	return $inputs;
 }
-
-
-
-
 
 
 function keenMatch($player, $game, $venue, $date, $hours) {
@@ -2335,10 +2293,6 @@ function getPlayers($venue){
 }
 
 
-
-
-
-
 function getCandidates($player, $venue, $matchHours){
 //echo "SENDINVITES<br>";
 	$candidates = array();
@@ -2384,7 +2338,6 @@ function availableHours($rival, $player, $match){
 }
 
 
-
 // check rival keeness in the given hours
 function keenHours($rival, $player, $match){
 //echo "<br>KEENHOURS<br>";
@@ -2398,8 +2351,6 @@ function keenHours($rival, $player, $match){
     }
     return $keenHours;
 }
-
-
 
 
 //scans and processes past matches
@@ -2438,8 +2389,6 @@ function concludeMatches($player){
 }
 
 
-
-
 //scans and removes edits over 1 week old
 function concludeReverts($venue){
 	return;
@@ -2455,15 +2404,10 @@ function concludeReverts($venue){
 }
 
 
-
-
-
-
 // https://stackoverflow.com/questions/4356289/php-random-string-generator/31107425#31107425 
 function generateRandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
-
 
 
 function newID($len = 6){
@@ -2474,7 +2418,6 @@ function newID($len = 6){
 function newToken($len = 10){
     return generateRandomString($len);
 }
-
 
 
 function removeElement($xml){
@@ -2513,7 +2456,6 @@ function qwikAvailable($player, $request, $venue){
 		venuePlayer($venue, $player['id']);	
 	}
 }
-
 
 
 function qwikKeen($player, $req, $venue){
@@ -2626,7 +2568,6 @@ function qwikDecline($player, $request){
 }
 
 
-
 function venuePlayer($venue, $playerID){
 	if (count($venue->xpath("/venue[player='$playerID']")) == 0){
 		$venue->addChild('player', "$playerID");
@@ -2657,8 +2598,6 @@ echo "<br><br>";
     $vid = $venue['id'];
 //	deleteFile("venue/$game/$vid.xml");
 }
-
-
 
 
 function qwikAccept($player, $request){
@@ -2819,8 +2758,6 @@ function updateCongCert($player, $pMatch, $rival){
 }
 
 
-
-
 // update the reputation records for a player (not written to file.xml)
 function updateRep(&$player, $feedback){
 	$rep = isset($player->rep) ? $player->rep : $player->addChild('rep', '');
@@ -2836,12 +2773,10 @@ function updateRep(&$player, $feedback){
 }
 
 
-
 // Updates an EXPonential moving AVeraGe with a new data POINT.
 function expMovingAvg($avg, $point, $exp){
 	return ($avg * ($exp-1) + $point) / $exp;
 }
-
 
 
 function qwikFamiliar($player, $request){
@@ -2868,8 +2803,6 @@ function qwikFamiliar($player, $request){
 		}
     }
 }
-
-
 
 
 function qwikRegion($player, $request){
@@ -2976,8 +2909,6 @@ function changeEmail($player, $newEmail){
 		}
 	}
 }
-
-
 
 
 function qwikCancel($player, $req){
@@ -3117,10 +3048,6 @@ function emailStash($email, $page, $req, $id, $token){
 }
 
 
-
-
-
-
 function emailChange($email, $id, $token){
     global $qwikURL;
 
@@ -3137,7 +3064,6 @@ function emailChange($email, $id, $token){
     qwikEmail($email, $subject, $msg, $id, $token);
     logEmail('email', $id);
 }
-
 
 
 function emailInvite($rival, $match, $email){
@@ -3173,7 +3099,6 @@ function emailInvite($rival, $match, $email){
 }
 
 
-
 function emailConfirm($player, $match){
     global $subdomain, $DAY;
 
@@ -3200,8 +3125,6 @@ function emailConfirm($player, $match){
 }
 
 
-
-
 function emailQuit($player){
     global $subdomain, $YEAR;
 	$lang = (string) $player['lang'];
@@ -3214,7 +3137,6 @@ function emailQuit($player){
     qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
 	logEmail('quit', $playerID);
 }
-
 
 
 function emailCancel($player, $match, $venue){
@@ -3238,7 +3160,6 @@ function emailCancel($player, $match, $venue){
 }
 
 
-
 function emailRival($player, $message, $match){
     global $qwikURL, $games;
 
@@ -3260,8 +3181,6 @@ function emailRival($player, $message, $match){
 
     qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
 }
-
-
 
 
 function qwikEmail($to, $subject, $msg, $id, $token){
@@ -3320,6 +3239,12 @@ function datalists(){
 	return $datalists;
 }
 
+
+/*******************************************************************************
+Returns the Name & Suburb of a Venue as a human convenient reference.
+
+$vid	String	Venue ID
+*******************************************************************************/
 function shortVenueID($vid){
 	$address = explode('|', $vid);
 	return $address[0] . ' | ' . $address[2];
@@ -3338,6 +3263,14 @@ function venueDatalist($game){
 }
 
 
+/*******************************************************************************
+Returns and Array of Venue ID's (vid) that match the $svid provided.
+
+$svid	String	The Short Venue ID includes only the Name & Suburb of the Venue.
+
+The Short Venue ID $svid is a non-unique human convenient way of referring to a
+Venue. This functions finds zero or more $vid that match the $svid
+*******************************************************************************/
 function matchShortVenueID($svid){
 	$match = array();
 	$vids =venues($game);
@@ -3348,8 +3281,6 @@ function matchShortVenueID($svid){
 	}
 	return $match;
 }
-
-
 
 
 function daySpan($bits, $day=''){
@@ -3384,14 +3315,10 @@ function daySpan($bits, $day=''){
 }
 
 
-
-
 function clock($hr){
 	global $clock24hr;
 	return (($hr > 12) && !$clock24hr) ? $hr-12 : $hr;
 }
-
-
 
 
 function weekSpan($xml){
@@ -3403,8 +3330,6 @@ function weekSpan($xml){
 
     return $html;
 }
-
-
 
 
 function hourSelect($hrs){
@@ -3465,8 +3390,6 @@ function keenTable($min, $max){
 }
 
 
-
-
 function cmpMatch($matchA, $matchB){
 	global $status;	
 	$a = $matchA['status'];
@@ -3479,8 +3402,6 @@ function cmpMatch($matchA, $matchB){
 		return 0;
 	}
 }
-
-
 
 
 function venueLink($vid, $player, $game){
@@ -3625,9 +3546,6 @@ function matchVariables($match){
 }
 
 
-
-
-
 function familiarEmailLink($venue, $game, $name){
 	$venueName = $venue['name'];
     $link = "<a id='email-share'
@@ -3637,7 +3555,6 @@ function familiarEmailLink($venue, $game, $name){
         <img src='img/email.png' alt='email' class='socialmedia'></a>";
     return $link;
 }
-
 
 
 function venueRevertDiv($venue){
@@ -3720,7 +3637,6 @@ function venueEditForm($action, $venue, $game, $repost, $pid, $token){
 }
 
 
-
 function repostIns($repost, $tabs=''){
 //echo "<br>REPOSTINPUTS<br>";
 	$braces = '[]';
@@ -3738,10 +3654,6 @@ function repostIns($repost, $tabs=''){
     }
     return $inputs;
 }
-
-
-
-
 
 
 function venueSimilarDiv($venue, $game, $repost){
@@ -3786,7 +3698,6 @@ function similarVenueInputs($venue, $game, $tabs=''){
 }
 
 
-
 function similarVenueButtons($venue, $game, $tabs=''){
     $similar = similarVenues($venue['name'], $game);
 
@@ -3803,7 +3714,6 @@ function similarVenueButtons($venue, $game, $tabs=''){
 }
 
 
-
 function familiarCheckboxes($player){
 	$checkboxes = '';
 	$reckons = $player->xpath('reckon[@email]');
@@ -3818,7 +3728,6 @@ function familiarCheckboxes($player){
 	}
 	return $checkboxes;
 }
-
 
 
 function gameOptions($game='squash', $tabs=''){
@@ -3871,10 +3780,7 @@ function regionOptions($player, $tabs){
 	foreach($regions as $region){
        	$options .= "$tabs<option value='$region'>$region</option>\n";
     }
-
-	
     return $options;
-
 }
 
 
@@ -3890,8 +3796,6 @@ function countryOptions($country, $tabs=''){
     }
     return $options;
 }
-
-
 
 
 function geolocate($key){

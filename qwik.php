@@ -1629,6 +1629,9 @@ function extractRanking($ranking){
 ////////////////////// TIME //////////////////////////////
 
 
+// $HRS24 = PHP_MAX_INT;
+$HRS6amto8pm = 16777215;
+
 /*******************************************************************************
 
 *******************************************************************************/
@@ -2073,6 +2076,11 @@ function writeXML($path, $file, $xml){
 function readXML($path, $file){
 	$path = reclaw($path);
 	$file = reclaw($file);
+	
+	if (!file_exists("$path/$file")) {
+	    return FALSE;
+	}
+	
 	$cwd = getcwd();
 	if(chdir($path)){
 		$xml=simpleXML_load_file($file);
@@ -2094,11 +2102,11 @@ function deleteFile($file){
 //echo "<br>DELETEFILE $file<br>";
 //	$fileName = realpath("$file");
 
-//	if (is_writable($file)){
+	if (is_writable($file)){
 //echo "<br>$file is writeable<br>";
 		return unlink($file);
-//	}
-//	return false;
+	}
+	return false;
 }
 
 
@@ -2983,15 +2991,23 @@ function qwikContact($msg, $from){
 
 ////// EMAIL TEMPLATES ///////////////////////////////////////////////////////
 
+function authURL($email, $token) {
+    global $qwikURL;
+    
+    return "$qwikURL/player.php?qwik=login&email=$email&token=$token'";
+}
+
 
 function emailWelcome($email, $id, $token){
     global $qwikURL, $termsURL;
+
+	$authURL = authURL($email, $token);
 
 	$subject = "Welcome to qwikgame.org";
 
     $msg  = "<p>\n";
     $msg .= "\tPlease click this link to <b>activate</b> your qwikgame account:<br>\n";
-    $msg .= "\t<a href='$qwikURL/player.php?qwik=login&email=$email&token=$token' target='_blank'>$qwikURL/player.php?qwik=login&email=$email&token=$token</a>\n";
+    $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
     $msg .= "\t\t\t</p>\n";
     $msg .= "\t\t\t<p>\n";
     $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
@@ -3011,11 +3027,13 @@ function emailWelcome($email, $id, $token){
 function emailLogin($email, $id, $token){
     global $qwikURL;
 
+	$authURL = authURL($email, $token);
+
     $subject = 'qwikgame.org login link';
 
     $msg  = "<p>\n";
     $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
-    $msg .= "\t<a href='$qwikURL/player.php?qwik=login&pid=$id&token=$token' target='_blank'>$qwikURL/player.php?qwik=login&pid=$id&token=$token</a>\n";
+    $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
     $msg .= "\t\t\t</p>\n";
     $msg .= "<p>\n";
     $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";

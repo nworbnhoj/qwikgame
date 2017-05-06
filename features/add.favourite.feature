@@ -4,13 +4,15 @@ Feature: I like to play my game at my local venue
 	Players need to be able to register their favourite games, venues and suitable times
 	
 	Scenario: Register at qwikgame
-	  Given that my email is not registered with qwikgame
+	  Given my email "new.player@qwikgame.org" is not registered with qwikgame
 	  When I like to play Squash at Milawa
-	  And I provide my email address
+	  And I provide my email "new.player@qwikgame.org"
 	  And I click on the link in the confirmation email
-	  Then I will be available to play Squash at Milawa
+	  Then my email "new.player@qwikgame.org" is registered with qwikgame
+	  And I will be available to play Squash at Milawa
 	
 	Scenario: Register to play Squash at Milawa Squash Courts
-	  Given that my email is registered with qwikgame
-	  When I like to play Squash at Milawa on Saturday
+	  Given my email "A.player@qwikgame.org" is registered with qwikgame
+	  When I like to play Squash at Milawa
+	  And I like to play on Saturday
 	  Then I will be available to play Squash at Milawa on Saturday

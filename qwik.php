@@ -71,8 +71,6 @@ $CC_LICENCE_LINK = "
 		<t>Creative Commons Attribution 4.0 International License</t>
 	</a>";
 
-$homeURL = "player.php?pid=$pid&token=$token&qwik=login";
-
 
 $geo;
 $star = '★';
@@ -1628,9 +1626,9 @@ function extractRanking($ranking){
 
 ////////////////////// TIME //////////////////////////////
 
-
-// $HRS24 = PHP_MAX_INT;
-$HRS6amto8pm = 16777215;
+// handy bitfield constants
+$Hrs24 = 33554431;
+$Hrs6amto8pm = 16777215;
 
 /*******************************************************************************
 
@@ -1748,7 +1746,7 @@ function newPlayer($id){
 
 function newPlayerToken($player, $term){
 	$token = newToken(10);
-	$nekot = $player->addChild('nekot', nekot($token));
+	$nekot = $player->addChild('nekot', nekot($token));	
 	$nekot->addAttribute('exp', time() + $term);
 	writePlayerXML($player);
 	return $token;
@@ -2326,6 +2324,15 @@ function getCandidates($player, $venue, $matchHours){
 
 
 // check rival availability in the given hours
+/**
+ * Computes the hours that a $rival is available to have a $match with $player
+ *
+ * @param xml $rival The $rival who may be available
+ * @param xml $player The keen $player who has initiates the $match
+ * @param xml @match The $match being proposed for the $rival
+ *
+ * @return bitfield representing the hours at the $rival is available
+ */
 function availableHours($rival, $player, $match){
 //echo "<br>AVAILABLEHOURS<br>";
 	$availableHours = 0;
@@ -2994,7 +3001,7 @@ function qwikContact($msg, $from){
 function authURL($email, $token) {
     global $qwikURL;
     
-    return "$qwikURL/player.php?qwik=login&email=$email&token=$token'";
+    return "$qwikURL/player.php?qwik=login&email=$email&token=$token";
 }
 
 
@@ -3282,16 +3289,16 @@ function venueDatalist($game){
 
 
 /*******************************************************************************
-Returns and Array of Venue ID's (vid) that match the $svid provided.
+Returns an Array of Venue ID's (vid) that match the $svid provided.
 
 $svid	String	The Short Venue ID includes only the Name & Suburb of the Venue.
 
 The Short Venue ID $svid is a non-unique human convenient way of referring to a
 Venue. This functions finds zero or more $vid that match the $svid
 *******************************************************************************/
-function matchShortVenueID($svid){
+function matchShortVenueID($svid, $game){
 	$match = array();
-	$vids =venues($game);
+	$vids =venues(strtolower($game));
     foreach($vids as $vid){
 		if($svid == shortVenueID($vid)){
 			$match[] = $vid;

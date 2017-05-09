@@ -5,14 +5,14 @@ Feature: I like to play my game at my local venue
 	
 	Scenario: Register at qwikgame
 	  Given my email "new.player@qwikgame.org" is not registered with qwikgame
-	  When I like to play Squash at Milawa
+	  When I like to play Squash at "Milawa Squash Courts | Milawa"
 	  And I provide my email "new.player@qwikgame.org"
 	  And I click on the link in the confirmation email
 	  Then my email "new.player@qwikgame.org" is registered with qwikgame
-	  And I will be available to play Squash at Milawa
+	  And I will be available to play Squash at "Milawa Squash Courts | Milawa"
 	
-	Scenario: Register to play Squash at Milawa Squash Courts
+	Scenario: Register to play Squash at "Milawa Squash Courts | Milawa"
 	  Given my email "A.player@qwikgame.org" is registered with qwikgame
-	  When I like to play Squash at Milawa
+	  When I like to play Squash at "Milawa Squash Courts | Milawa"
 	  And I like to play on Saturday
-	  Then I will be available to play Squash at Milawa on Saturday
+	  Then I will be available to play Squash at "Milawa Squash Courts | Milawa" on Saturday

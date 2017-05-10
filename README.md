@@ -16,7 +16,7 @@ You can use qwikgame for free at [qwikgame.org](https://qwikgame.org)
   
 ## Development
 
-qwikgame is currently developed with html, css, php, json, javascript, jquery and xml data files.
+qwikgame is currently developed with html, css, php, json, javascript, jquery and xml data files. [Behat](http://behat.org/) is used for testing.
 
 In qwikgame parlace; **matches** are played between **rival** **players** at **venues**.
 

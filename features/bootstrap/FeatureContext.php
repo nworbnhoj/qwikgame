@@ -200,9 +200,13 @@ class FeatureContext implements Context
 
 
     /**
-     * @Then I will be available to play :game at :venue on :day
+     * @Then I will be available to play :game at :venue on :day at :hour
      */
-    public function iWillBeAvailableToPlaySquashAtMilawaOnSaturday($game, $svid, $day)
+    public function iWillBeAvailableToPlaySquashAtMilawaOnSaturdayAt3pm(
+        $game, 
+        $svid, 
+        $day, 
+        $hour)
     {
         global $Hrs6amto8pm;
         Assert::assertEquals($game, $this->game);
@@ -220,28 +224,18 @@ class FeatureContext implements Context
 
 
     /**
-     * @When I like to play on :day
-     */
-    public function iLikeToPlayOnSaturday($day)
-    {
-	    global $Hrs6amto8pm;
-        $this->req["$day"] = $Hrs6amto8pm;
-    }
-    
-    
-    /**
      * @When I like to play on :day at :hour
      */
     public function iLikeToPlayOnSaturdayAt3pm($day, $hour)
     {
-    	switch ($hour){
-    	    case '12am': 
+    	$day = date("D", strtotime("$day");        // convert Saturday to Sat.    	
+    	$hour = date("H", strtotime("$hour"));   // convert 12hr to 24hr format    	
     	
-    	}
-        $this->req["$day"] = PHP_INT_MAX;
-        throw new PendingException();
+    	if (isset($this->req["$day"])) {
+    	    $this->req["$day"] = $this->req["$day"] || hour2bit($hour);
+        } else {
+        	$this->req["$day"] = hour2bit($hour);
+        }
     }
-
-
-
+    
 }

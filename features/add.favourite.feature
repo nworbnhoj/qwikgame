@@ -11,8 +11,8 @@ Feature: I like to play my game at my local venue
 	  Then my email "new.player@qwikgame.org" is registered with qwikgame
 	  And I will be available to play Squash at "Milawa Squash Courts | Milawa"
 	
-	Scenario: Register to play Squash at "Milawa Squash Courts | Milawa"
+	Scenario: Register to play a Game at a Venue
 	  Given my email "A.player@qwikgame.org" is registered with qwikgame
 	  When I like to play Squash at "Milawa Squash Courts | Milawa"
-	  And I like to play on Saturday
-	  Then I will be available to play Squash at "Milawa Squash Courts | Milawa" on Saturday
+	  And I like to play on Saturday at 3pm
+	  Then I will be available to play Squash at "Milawa Squash Courts | Milawa" on Saturday at 3pm

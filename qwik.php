@@ -1630,6 +1630,24 @@ function extractRanking($ranking){
 $Hrs24 = 33554431;
 $Hrs6amto8pm = 16777215;
 
+
+function hour2bit($hour){
+	if ($hour < 0 || $hour >= 24) {
+	    return 0;
+	}
+    return 2 ^ $hour;
+}
+
+function bit2hour(){
+	$mask = 1;
+	for ($hour = 0; $hour < 24; $hour++){
+		if ($bits & $mask){
+			return $hour;
+		}
+		$mask = $mask * 2;
+	}	
+}
+
 /*******************************************************************************
 
 *******************************************************************************/

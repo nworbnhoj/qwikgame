@@ -236,53 +236,28 @@ class FeatureContext implements Context
     
     
     
+
     /**
-     * @Then I will be available to play :game at :venue
+     * @Then I will be available to play my favourite game
      */
-    public function iWillBeAvailableToPlaySquashAtMilawa($game, $svid)
-    {
-        Assert::assertEquals($game, $this->game);
-        Assert::assertEquals($svid, $this->svid);        
-                
+    public function iWillBeAvailableToPlayMyFavouriteGame()
+    {        
         $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-        
         foreach ($days as $day) {
-            Assert::assertTrue(
-    	        $this->isAvailable(
-    	            $this->Hrs6amto8pm, 
-    	            $game, 
-    	            $this->venue, 
-    	            venueDateTime($day, $this->venue)
-    	        )
-    	    );   
+            if (isset($this->req[$day])){            
+                Assert::assertTrue(
+                    $this->isAvailable(
+                        $this->req[$day], 
+                        $this->game, 
+                        $this->venue, 
+                        venueDateTime($day, $this->venue)
+                    )
+                );
+            }        
         }
     }
-
-
-    /**
-     * @Then I will be available to play :game at :venue on :day at :hour
-     */
-    public function iWillBeAvailableToPlaySquashAtMilawaOnSaturdayAt3pm(
-        $game, 
-        $svid, 
-        $day, 
-        $hour)
-    {
-        Assert::assertEquals($game, $this->game);
-        Assert::assertEquals($svid, $this->svid);   
-    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
-    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format        
-        
-        Assert::assertTrue(
-            $this->isAvailable(
-                hour2bit($hour), 
-                $game, 
-                $this->venue, 
-                venueDateTime($day, $this->venue)
-            )
-        );
-    }
     
+ 
     
     /**
      * @Then I will NOT be available to play :game at :venue on :day at :hour
@@ -309,5 +284,8 @@ class FeatureContext implements Context
     }
 
 
+
+
   
+
 }

@@ -24,6 +24,7 @@ class FeatureContext implements Context
     private $authURL;
 	private $email;
 	private $game;
+	private $id;
 	private $parity;
 	private $pid;
 	private $player;
@@ -93,7 +94,6 @@ class FeatureContext implements Context
     	$this->vid = $this->locateVenue($svid, $game);
     	$this->venue = readVenueXML($this->vid);
     	
-    	$this->req['qwik'] = 'available';
     	$this->req['parity'] = 'all';
     	$this->req['game'] = $game;
     	$this->req['vid'] = $this->vid;
@@ -145,21 +145,23 @@ class FeatureContext implements Context
     
 
     /**
-     * @When I click Submit
+     * @When I Submit this favourite
      */
-    public function iClickSubmit()
+    public function iSubmitThisFavourite()
     {
-        $qwik = $this->req['qwik'];
-        switch ($qwik) {
-            case "available":
-                qwikAvailable($this->player, $this->req, $this->venue);
-			    break;
-    		case 'delete':
-           	    qwikDelete($this->player, $this->req);
-          		break;
-            default:
-                Assert::assertTrue(FALSE, "qwik $qwik is not implemented for this feature.");
-	    }
+      	$this->req['qwik'] = 'available';
+        $this->id = qwikAvailable($this->player, $this->req, $this->venue);
+    }      
+
+
+    /**
+     * @When I delete this favourite
+     */
+    public function iDeleteThisFavourite()
+    {    
+    	$this->req['qwik'] = 'delete';
+    	$this->req['id'] = $this->id;
+   	    $this->id = qwikDelete($this->player, $this->req);
     }
     
 
@@ -307,6 +309,5 @@ class FeatureContext implements Context
     }
 
 
-    
-
+  
 }

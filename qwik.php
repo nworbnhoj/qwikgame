@@ -2470,8 +2470,9 @@ function removeAtt($xml, $att){
 
 function qwikAvailable($player, $request, $venue){
 	if(isset($request['game']) & isset($request['vid']) & isset($request['parity'])){
-		$element = $player->addChild('available', '');
-	    $element->addAttribute('id', newID());
+	    $newID = newID();
+		$element = $player->addChild('available', '');		
+	    $element->addAttribute('id', $newID);
 	    $element->addAttribute('game', $request['game']);
         $element->addAttribute('parity', $request['parity']);
 	    $v = $element->addChild('venue', $request['vid']);
@@ -2490,6 +2491,7 @@ function qwikAvailable($player, $request, $venue){
 		}
 		writePlayerXML($player);
 		venuePlayer($venue, $player['id']);	
+		return $newID;
 	}
 }
 

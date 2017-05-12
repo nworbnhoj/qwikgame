@@ -1635,7 +1635,7 @@ function hour2bit($hour){
 	if ($hour < 0 || $hour >= 24) {
 	    return 0;
 	}
-    return 2 ^ $hour;
+	return 2 ** $hour;
 }
 
 function bit2hour(){
@@ -2341,13 +2341,12 @@ function getCandidates($player, $venue, $matchHours){
 }
 
 
-// check rival availability in the given hours
 /**
  * Computes the hours that a $rival is available to have a $match with $player
  *
  * @param xml $rival The $rival who may be available
- * @param xml $player The keen $player who has initiates the $match
- * @param xml @match The $match being proposed for the $rival
+ * @param xml $player The keen $player who has initiated the $match
+ * @param xml @match The $match being proposed to the $rival
  *
  * @return bitfield representing the hours at the $rival is available
  */
@@ -2356,9 +2355,10 @@ function availableHours($rival, $player, $match){
 	$availableHours = 0;
 	$vid = $match->venue;
 	$game = $match['game'];
-	$day = matchDateTime($match)->format('D');
+	$day = matchDateTime($match)->format('D');	
 	$available = $rival->xpath("available[venue='$vid' and @game='$game']");
-	foreach ($available as $avail){
+	foreach ($available as $avail){	
+	
 		$hours = $avail->xpath("hrs[@day='$day']");
 
 		foreach ($hours as $hrs){
@@ -2366,8 +2366,6 @@ function availableHours($rival, $player, $match){
 		}		
 	}
 	return $availableHours;
-
-	// return php_int_max;
 }
 
 
@@ -2471,19 +2469,24 @@ function removeAtt($xml, $att){
 
 
 function qwikAvailable($player, $request, $venue){
-	if(isset($request['game']) & isset($request['venue']) & isset($request['parity'])){
+	if(isset($request['game']) & isset($request['vid']) & isset($request['parity'])){
 		$element = $player->addChild('available', '');
 	    $element->addAttribute('id', newID());
 	    $element->addAttribute('game', $request['game']);
         $element->addAttribute('parity', $request['parity']);
 	    $v = $element->addChild('venue', $request['vid']);
 		$v->addAttribute('tz', $venue['tz']);
-		$all7days = $request['smtwtfs'];
+		$all7days = isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE;
 		$days = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
 		foreach($days as $day){
-			$requestHrs = $all7days ? $all7days : $request[$day];
-			$hrs = $element->addChild('hrs', $requestHrs);
-	        $hrs->addAttribute('day', $day);
+		    $requestHrs = $all7days;
+		    if (!$requestHrs && isset($request[$day])) {
+		        $requestHrs = $request[$day];
+			}
+			if ($requestHrs) {
+			    $hrs = $element->addChild('hrs', $requestHrs);
+	            $hrs->addAttribute('day', $day);
+	        }
 		}
 		writePlayerXML($player);
 		venuePlayer($venue, $player['id']);	

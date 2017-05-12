@@ -67,8 +67,6 @@ class FeatureContext implements Context
     {
     	$this->pid = anonID($address);
         removePlayer($this->pid);
-    	$this->player=readPlayerXML($this->pid);
-		Assert::assertFalse($this->player);
     }
 
 
@@ -77,13 +75,11 @@ class FeatureContext implements Context
      */
     public function myEmailIsRegisteredWithQwikgame($address)
     {
-    	$this->pid = anonID($address);
-    	$this->player=readPlayerXML($this->pid);
-    	if (!$this->player) {
-    	    $this->player = newPlayer($this->pid);
+    	$this->pid = anonID($address);    	
+        removePlayer($this->pid);
+   	    $this->player = newPlayer($this->pid);
+		$this->player->addChild('email', $address);
     	writePlayerXML($this->player);
-    	}
-		Assert::assertNotNull($this->player);
     }
 
 
@@ -97,9 +93,37 @@ class FeatureContext implements Context
     	$this->vid = $this->locateVenue($svid, $game);
     	$this->venue = readVenueXML($this->vid);
     	
+    	$this->req['qwik'] = 'available';
+    	$this->req['parity'] = 'all';
     	$this->req['game'] = $game;
     	$this->req['vid'] = $this->vid;
     }
+    
+
+    /**
+     * @When I do not specify a time
+     */
+    public function iDoNotSpecifyATime()
+    {   
+    	$this->req['smtwtfs'] = "16777215";
+    }
+    
+    
+    /**
+     * @When I like to play on :day at :hour
+     */
+    public function iLikeToPlayOnSaturdayAt3pm($day, $hour)
+    {    
+    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
+    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format    	
+    	
+    	if (isset($this->req[$day])) {
+    	    $this->req[$day] = $this->req[$day] | hour2bit($hour);
+        } else {
+        	$this->req[$day] = hour2bit($hour);
+        }
+    }
+    
 
     /**
      * @When I provide my email :address
@@ -116,6 +140,28 @@ class FeatureContext implements Context
         $this->token = newPlayerToken($this->player, $MONTH);
 	    $this->authURL = authURL($address, $this->token);
     }
+    
+    
+    
+
+    /**
+     * @When I click Submit
+     */
+    public function iClickSubmit()
+    {
+        $qwik = $this->req['qwik'];
+        switch ($qwik) {
+            case "available":
+                qwikAvailable($this->player, $this->req, $this->venue);
+			    break;
+    		case 'delete':
+           	    qwikDelete($this->player, $this->req);
+          		break;
+            default:
+                Assert::assertTrue(FALSE, "qwik $qwik is not implemented for this feature.");
+	    }
+    }
+    
 
     /**
      * @When I click on the link in the confirmation email
@@ -138,6 +184,18 @@ class FeatureContext implements Context
     }
     
     
+    
+
+    /**
+     * @Then my email :address will be registered with qwikgame
+     */
+    public function myEmailWillBeRegisteredWithQwikgame($address)
+    {
+    	Assert::assertEquals($this->email, $address);
+        Assert::assertNotNull(readPlayerXML($this->pid));
+    }
+    
+    
     /**
      * Confirms that $this->player is Available to play at ALL of the $hours
      *
@@ -156,20 +214,20 @@ class FeatureContext implements Context
          $date, 
          $parity = 'any')
     {
-	     global $Hrs24;
-        
-        // create a dummy rival
+	    // create a dummy rival
         $rival = newPlayer(anonID("rival@qwikgame.org"));
         
         // Set this player as a familiar of the rival, with matching parity
         // qwikFamiliar($rival, array('game'=>$game, 'rival'=>$this->email, 'parity'=>0)); 
         
         // The rival is keen for a match
-        $match = keenMatch($rival, $game, $venue, $date, $Hrs24);
-
+        $match = keenMatch($rival, $game, $venue, $date, $this->Hrs24);
+        
         // check when this player is available to play the keen rival
         $availableHours = availableHours($this->player, $rival, $match);
-        
+              
+//printf("hours %1$32b = %1$2d\navail %2$32b = %2$2d\n\n", $hours, $availableHours);
+
         // check that $player is avaiable at ALL of the requested hours
         return $hours == ($hours & $availableHours);
     }
@@ -181,19 +239,19 @@ class FeatureContext implements Context
      */
     public function iWillBeAvailableToPlaySquashAtMilawa($game, $svid)
     {
-        global $Hrs6amto8pm;
         Assert::assertEquals($game, $this->game);
-        Assert::assertEquals($svid, $this->svid);
-                
-        // qwikAvailable is called when a player posts their availability
-        qwikAvailable($this->player, $this->req, $this->venue);
+        Assert::assertEquals($svid, $this->svid);        
                 
         $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
         
         foreach ($days as $day) {
-            $date = venueDateTime($day, $this->venue);
-	        Assert::assertTrue(
-    	        $this->isAvailable($Hrs6amto8pm, $game, $this->venue, $date)
+            Assert::assertTrue(
+    	        $this->isAvailable(
+    	            $this->Hrs6amto8pm, 
+    	            $game, 
+    	            $this->venue, 
+    	            venueDateTime($day, $this->venue)
+    	        )
     	    );   
         }
     }
@@ -208,34 +266,47 @@ class FeatureContext implements Context
         $day, 
         $hour)
     {
-        global $Hrs6amto8pm;
         Assert::assertEquals($game, $this->game);
-        Assert::assertEquals($svid, $this->svid);
-                
-        // qwikAvailable is called when a player posts their availability
-        qwikAvailable($this->player, $this->req, $this->venue);
-        
-        $date = venueDateTime($day, $this->venue);
+        Assert::assertEquals($svid, $this->svid);   
+    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
+    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format        
         
         Assert::assertTrue(
-            $this->isAvailable($Hrs6amto8pm, $game, $this->venue, $date)
+            $this->isAvailable(
+                hour2bit($hour), 
+                $game, 
+                $this->venue, 
+                venueDateTime($day, $this->venue)
+            )
+        );
+    }
+    
+    
+    /**
+     * @Then I will NOT be available to play :game at :venue on :day at :hour
+     */
+    public function iWillNotBeAvailableToPlaySquashAtOnSaturdayAt4pm(
+        $game, 
+        $svid, 
+        $day, 
+        $hour)
+    {
+        Assert::assertEquals($game, $this->game);
+        Assert::assertEquals($svid, $this->svid);   
+    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
+    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format 
+        
+        Assert::assertFalse(
+            $this->isAvailable(
+                hour2bit($hour), 
+                $game, 
+                $this->venue, 
+                venueDateTime($day, $this->venue)
+            )
         );
     }
 
 
-    /**
-     * @When I like to play on :day at :hour
-     */
-    public function iLikeToPlayOnSaturdayAt3pm($day, $hour)
-    {
-    	$day = date("D", strtotime("$day");        // convert Saturday to Sat.    	
-    	$hour = date("H", strtotime("$hour"));   // convert 12hr to 24hr format    	
-    	
-    	if (isset($this->req["$day"])) {
-    	    $this->req["$day"] = $this->req["$day"] || hour2bit($hour);
-        } else {
-        	$this->req["$day"] = hour2bit($hour);
-        }
-    }
     
+
 }

@@ -32,3 +32,13 @@ Feature: I like to play my game at my local venue
 	  And I submit this favourite
 	  Then I will be available to play my favourite game
 	  And I will not be available otherwise
+	  
+	Scenario: Add a favourite with matched ability
+	  Given my email "C.player@qwikgame.org" is registered with qwikgame
+	  And I am not available to play
+	  When I like to play Squash at "Milawa Squash Courts | Milawa"
+	  And I like to play on Friday at 6pm
+	  And I like to play a rival of similar ability
+	  And I submit this favourite
+	  Then I will be available to play my favourite game
+	  And I will not be available otherwise

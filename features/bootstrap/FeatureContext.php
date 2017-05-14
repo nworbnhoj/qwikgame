@@ -134,7 +134,7 @@ class FeatureContext implements Context
     	$this->vid = $this->locateVenue($svid, $game);
     	$this->venue = readVenueXML($this->vid);
     	
-    	$this->req['parity'] = 'all';
+    	$this->req['parity'] = 'any';
     	$this->req['game'] = $game;
     	$this->req['vid'] = $this->vid;
     }
@@ -162,6 +162,17 @@ class FeatureContext implements Context
         } else {
         	$this->req[$day] = hour2bit($hour);
         }
+    }   
+    
+    
+
+    /**
+     * @When I like to play a rival of :parity ability
+     */
+    public function iLikeToPlayARivalOfSimilarAbility($parity)
+    {
+        Assert::assertContainsOnly('string', ['matched', 'similar', 'any']);
+    	$this->req['parity'] = $parity;
     }
     
 
@@ -246,7 +257,7 @@ class FeatureContext implements Context
      *
      * @throws 
      */
-    private function iWillBeAvailableToPlay($req, $venue, $test = 'ALL')
+    private function iWillBeAvailableToPlay($req, $venue, $rivalParity='any', $test='ALL')
     {        
         $game = $req['game'];
         $rival = newPlayer(anonID("rival@qwikgame.org"));  //dummy rival
@@ -256,9 +267,14 @@ class FeatureContext implements Context
                 $date  = venueDateTime($day, $this->venue);            
                 $hours = $req[$day];
                 
-                // Set this player as a familiar of the rival, with matching parity
-                // $famReq = array('game'=>$game, 'rival'=>$this->email, 'parity'=>0);
-                // qwikFamiliar($rival, famReq); 
+                // Set this player as a familiar of the rival, with suitable parity
+                qwikFamiliar(
+                    $rival, 
+                    array(
+                        'game'=>$game, 
+                        'rival'=>$this->email,
+                        'parity'=>$rivalParity)
+                    ); 
         
                 // The rival is keen for a match
                 $match = keenMatch($rival, $game, $venue, $date, $this->Hrs24);
@@ -293,12 +309,13 @@ class FeatureContext implements Context
     }    
     
     
+    
     /**
      * @Then I will be available to play my favourite game
      */
     public function iWillBeAvailableToPlayMyFavouriteGame()
     {       
-        $this->iWillBeAvailableToPlay($this->req, $this->venue, 'ALL');
+        $this->iWillBeAvailableToPlay($this->req, $this->venue, 'any', 'ALL');
     }
   
 
@@ -313,7 +330,20 @@ class FeatureContext implements Context
         foreach ($this->days as $day) {
             $req[$day] = $this->Hrs24 ^ (isset($req[$day]) ? $req[$day] : 0);
         }
-    	$this->iWillBeAvailableToPlay($req, $this->venue, 'NONE');
+    	$this->iWillBeAvailableToPlay($req, $this->venue, 'any', 'NONE');
+
+    	// Check other abilities for this game and venue
+    	 if ($this->req['parity'] == 'matched') {
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'weaker', 'NONE');
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-weaker', 'NONE');
+    	} elseif ($this->req['parity'] == 'similar') {
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-weaker', 'NONE');
+    	} else {
+    	    // no alternate to check for parity==all
+    	}
         
         // Check other games for this venue
     	$req = $this->req;         
@@ -323,7 +353,7 @@ class FeatureContext implements Context
         foreach ($this->games as $game) {
             if ($game != $this->game) { 
                 $req['game'] = $game;            
-                $this->iWillBeAvailableToPlay($req, $this->venue, 'NONE');
+                $this->iWillBeAvailableToPlay($req, $this->venue, 'any', 'NONE');
             }
         }    
         
@@ -342,4 +372,5 @@ class FeatureContext implements Context
         }
         $this->iWillNotBeAvailableOtherwise();
     }
+
 }

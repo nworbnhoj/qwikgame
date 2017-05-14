@@ -2346,7 +2346,7 @@ function getCandidates($player, $venue, $matchHours){
  *
  * @param xml $rival The $rival who may be available
  * @param xml $player The keen $player who has initiated the $match
- * @param xml @match The $match being proposed to the $rival
+ * @param xml @match The $match proposed by the $player to the $rival
  *
  * @return bitfield representing the hours at the $rival is available
  */

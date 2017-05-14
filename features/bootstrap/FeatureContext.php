@@ -12,6 +12,9 @@ require 'phpunit.phar';
 use PHPUnit\Framework\TestCase as Assert;
 
 
+
+
+
 /**
  * Defines application features from the specific context.
  */
@@ -20,6 +23,32 @@ class FeatureContext implements Context
     
 	private $Hrs6amto8pm =  2097088;
 	private $Hrs24       = 33554431;
+    private $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
+	private $games = array(
+    	'Backgammon',
+    	'Badminton',
+    	'Boules',
+    	'Billards',
+    	'Checkers',
+    	'Chess',
+    	'Cycle',
+    	'Darts',
+    	'Dirt',
+    	'Fly',
+    	'Go',
+    	'Golf',
+        'Lawn',
+    	'Mtnbike',
+    	'Pool',
+    	'Racquetball',
+    	'Run',
+    	'Snooker',
+    	'Squash',
+    	'Table',
+    	'Tennis',
+	    'Tenpin',
+	    'Walk'
+	);
 
     private $authURL;
 	private $email;
@@ -81,6 +110,17 @@ class FeatureContext implements Context
    	    $this->player = newPlayer($this->pid);
 		$this->player->addChild('email', $address);
     	writePlayerXML($this->player);
+    }
+    
+     /**
+     * @Given I am not available to play
+     */
+    public function iAmNotAvailableToPlay()
+    {    
+        $available = $this->player->xpath('available');
+	    foreach($available as $avail){
+			removeElement($available);
+	    }
     }
 
 
@@ -185,8 +225,6 @@ class FeatureContext implements Context
         );
     }
     
-    
-    
 
     /**
      * @Then my email :address will be registered with qwikgame
@@ -199,93 +237,109 @@ class FeatureContext implements Context
     
     
     /**
-     * Confirms that $this->player is Available to play at ALL of the $hours
+     * 
+     * @param Array $req A get/post query representing a Match
+     * @param XML $venue The game Venue for the vid field in $req
+     * @param boolean $willBe a toogle for (willBeAvailable | willNotBeAvailable)
      *
-     * @param Bitfield $hours The hours to chesk for availability
-     * @param String $game The game to check availability for
-     * @param XML $venue The Venue to check availability at
-     * @param DateTime $date The date to check availability on
-     * @param String $parity The parity of the rival
+     * @return void
      *
-     * @return Boolean TRUE if $this->player is available at ALL of the $hours
+     * @throws 
      */
-    private function isAvailable(
-         $hours,
-         $game, 
-         $venue, 
-         $date, 
-         $parity = 'any')
-    {
-	    // create a dummy rival
-        $rival = newPlayer(anonID("rival@qwikgame.org"));
+    private function iWillBeAvailableToPlay($req, $venue, $test = 'ALL')
+    {        
+        $game = $req['game'];
+        $rival = newPlayer(anonID("rival@qwikgame.org"));  //dummy rival
         
-        // Set this player as a familiar of the rival, with matching parity
-        // qwikFamiliar($rival, array('game'=>$game, 'rival'=>$this->email, 'parity'=>0)); 
+        foreach ($this->days as $day) {
+            if (isset($req[$day])){
+                $date  = venueDateTime($day, $this->venue);            
+                $hours = $req[$day];
+                
+                // Set this player as a familiar of the rival, with matching parity
+                // $famReq = array('game'=>$game, 'rival'=>$this->email, 'parity'=>0);
+                // qwikFamiliar($rival, famReq); 
         
-        // The rival is keen for a match
-        $match = keenMatch($rival, $game, $venue, $date, $this->Hrs24);
+                // The rival is keen for a match
+                $match = keenMatch($rival, $game, $venue, $date, $this->Hrs24);
         
-        // check when this player is available to play the keen rival
-        $availableHours = availableHours($this->player, $rival, $match);
-              
-//printf("hours %1$32b = %1$2d\navail %2$32b = %2$2d\n\n", $hours, $availableHours);
-
-        // check that $player is avaiable at ALL of the requested hours
-        return $hours == ($hours & $availableHours);
-    }
+                // check when this player is available to play the keen rival
+                $availableHours = availableHours($this->player, $rival, $match);
+                                     
+//print_r("$game at $venue[id]\n");              
+//printf("hours %1$25b = %1$2d\navail %2$25b = %2$2d\n\n", $hours, $availableHours);
+                
+                switch ($test) {
+                    case 'ALL':
+                        Assert::assertEquals(
+                            $hours,
+                            $hours & $availableHours,
+                            "Player not Available when they should be: $game $day $hours"
+                        );
+                        break;                    
+                    case 'NONE':                    
+                        Assert::assertEquals(
+                            0,
+                            $hours & $availableHours,
+                            "Player Available when they should not be: $game $day $hours"
+                        );
+    	                break;
+                    default:
+                        Assert::assertTrue(FALSE, "Invalid test: $test");
+                
+                }
+            }        
+        }
+    }    
     
     
-    
-
     /**
      * @Then I will be available to play my favourite game
      */
     public function iWillBeAvailableToPlayMyFavouriteGame()
-    {        
-        $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
-        foreach ($days as $day) {
-            if (isset($this->req[$day])){            
-                Assert::assertTrue(
-                    $this->isAvailable(
-                        $this->req[$day], 
-                        $this->game, 
-                        $this->venue, 
-                        venueDateTime($day, $this->venue)
-                    )
-                );
-            }        
-        }
+    {       
+        $this->iWillBeAvailableToPlay($this->req, $this->venue, 'ALL');
     }
-    
- 
-    
-    /**
-     * @Then I will NOT be available to play :game at :venue on :day at :hour
-     */
-    public function iWillNotBeAvailableToPlaySquashAtOnSaturdayAt4pm(
-        $game, 
-        $svid, 
-        $day, 
-        $hour)
-    {
-        Assert::assertEquals($game, $this->game);
-        Assert::assertEquals($svid, $this->svid);   
-    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
-    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format 
-        
-        Assert::assertFalse(
-            $this->isAvailable(
-                hour2bit($hour), 
-                $game, 
-                $this->venue, 
-                venueDateTime($day, $this->venue)
-            )
-        );
-    }
-
-
-
-
   
 
+
+    /**
+     * @When I will not be available otherwise
+     */
+    public function iWillNotBeAvailableOtherwise()
+    {
+        // Check other times for this game and venue
+    	$req = $this->req;
+        foreach ($this->days as $day) {
+            $req[$day] = $this->Hrs24 ^ (isset($req[$day]) ? $req[$day] : 0);
+        }
+    	$this->iWillBeAvailableToPlay($req, $this->venue, 'NONE');
+        
+        // Check other games for this venue
+    	$req = $this->req;         
+        foreach ($this->days as $day) {
+            $req[$day] = $this->Hrs24;
+        }
+        foreach ($this->games as $game) {
+            if ($game != $this->game) { 
+                $req['game'] = $game;            
+                $this->iWillBeAvailableToPlay($req, $this->venue, 'NONE');
+            }
+        }    
+        
+        // Check other venues  
+    }
+
+
+
+    /**
+     * @Then I will not be available to play
+     */
+    public function iWillNotBeAvailableToPlay()
+    {    
+        foreach ($this->days as $day) {
+            unset($this->req[$day]);
+        }
+        $this->iWillNotBeAvailableOtherwise();
+    }
 }

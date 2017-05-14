@@ -13,20 +13,22 @@ Feature: I like to play my game at my local venue
 	  Then my email "new.player@qwikgame.org" will be registered with qwikgame
 	  And I will be available to play my favourite game
 	
-	Scenario: Register to play a Game at a Venue
+	Scenario: Add a favourite and delete
 	  Given my email "A.player@qwikgame.org" is registered with qwikgame
+	  And I am not available to play
 	  When I like to play Squash at "Milawa Squash Courts | Milawa"
 	  And I like to play on Saturday at 3pm
 	  And I submit this favourite
-	  And I will be available to play my favourite game
+	  Then I will be available to play my favourite game
 	  When I delete this favourite
-	  Then I will not be available to play Squash at "Milawa Squash Courts | Milawa" on Saturday at 3pm
+	  Then I will not be available to play
 	  
-	Scenario: Register to play at multiple times
+	Scenario: Add a favourite with multiple times
 	  Given my email "B.player@qwikgame.org" is registered with qwikgame
+	  And I am not available to play
 	  When I like to play Squash at "Milawa Squash Courts | Milawa"
 	  And I like to play on Saturday at 3pm
-	  And I like to play on Saturday at 5pm
+	  And I like to play on Sunday at 5pm
 	  And I submit this favourite
-	  And I will be available to play my favourite game
-	  And I will not be available to play Squash at "Milawa Squash Courts | Milawa" on Saturday at 4pm
+	  Then I will be available to play my favourite game
+	  And I will not be available otherwise

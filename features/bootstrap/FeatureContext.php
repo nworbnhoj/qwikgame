@@ -12,9 +12,6 @@ require 'phpunit.phar';
 use PHPUnit\Framework\TestCase as Assert;
 
 
-
-
-
 /**
  * Defines application features from the specific context.
  */
@@ -73,6 +70,8 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
+        global $log;
+        $log = new Logging();
     }
     
     
@@ -373,4 +372,113 @@ class FeatureContext implements Context
         $this->iWillNotBeAvailableOtherwise();
     }
 
+
+        private $rivals = array();
+
+    /**
+     * @Given a community of Players
+     */
+    public function aCommunityOfPlayers()
+    {
+        foreach (range('A', 'Z') as $char) {
+            $email = $char . "@qwikgame.org";
+            $id = anonID($email);
+            $player = newPlayer($id);
+            $player->addAttribute('nick', "player.$char");
+            writePlayerXML($player);
+            $this->rivals[$char] = $id;
+		}
+    }
+
+
+    private $paritySymbol = array('<<'=>-2, '<'=>-1, '='=>0, '>'=>1, '>>'=>2);
+
+
+    /**
+     * @When /([A-Z]) reports ([A-Z])(<<|<|=|>|>>)([A-Z]) from match on day ([0-9]+)/
+     */
+    public function playerReportsParityFromMatchOnDay(
+        $player,
+        $samePlayer,
+        $parity,
+        $rival,
+        $day)
+    {
+        Assert::assertEquals($player, $samePlayer,
+            "Step should be of the form 'A reports A>B on day D'");
+
+        $pidA = $this->rivals[$player];
+        $pidB = $this->rivals[$rival];
+
+        $playerA = readPlayerXML($pidA);
+        $playerB = readPlayerXML($pidB);
+
+        $matches = $playerA->xpath("match[@status='confirmed' and rival='$pidB']");
+
+        if (count($matches) == 1) {
+            $matchA = $matches[0];
+        } else {    // set up a dummy match between A & B, ready for feedback
+            $vid = $this->locateVenue("Milawa Squash Courts | Milawa");
+            $venue = readVenueXML($vid);
+            $date = date_add(
+                venueDateTime("today", $venue),
+                date_interval_create_from_date_string("$day days")
+            );
+            $hours = 1;
+
+            $keenMatch = keenMatch($playerA, 'Squash', $venue, $date, $hours);
+            $matchA = inviteMatch($playerB, $keenMatch, $playerA, $hours);
+            $matchB = inviteMatch($playerA, $keenMatch, $playerB, $hours);
+            $matchA['status'] = 'confirmed';
+	        $matchB['status'] = 'confirmed';
+		    removeElement($keenMatch);
+		    writePlayerXML($playerA);
+		    writePlayerXML($playerB);
+		}
+
+        qwikFeedback(
+            $playerA, 
+            array(
+                'id'=>$matchA['id'],
+                'rep'=>'0',
+                'parity'=>$this->paritySymbol[$parity]
+            )
+        );
+    }
+
+
+    /**
+     * @Then /([A-Z])(<<|<|=|>|>>)([A-Z]) on day ([0-9]+)/
+     */
+    public function playerParityOnDay($player, $parity, $rival, $day)
+    {
+        $pidA = $this->rivals[$player];
+        $pidB = $this->rivals[$rival];
+
+        $playerA = readPlayerXML($pidA);
+        $playerB = readPlayerXML($pidB);
+
+        $estimate = parity($playerA, $playerB, 'Squash');
+
+        switch ($parity) {
+            case '<<':
+                Assert::assertGreaterThan($estimate, 1);
+                break;
+            case '<':
+                Assert::assertGreaterThan($estimate, 0);
+                break;
+            case '=':
+                Assert::assertEquals(0, $estimate);
+                break;
+            case '>':
+                Assert::assertGreaterThan(0, $estimate);
+                break;
+            case '>>':
+                Assert::assertGreaterThan(-1, $estimate);
+                break;
+        }
+    }
+    
+    
+    
 }

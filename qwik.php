@@ -1012,11 +1012,11 @@ function parity($player, $rival, $game){
 					);
 
 	// check if the orbs are isolated (ie no possible further expansion)
-	$playerIsolated = ($playerOrbSize == 1);
-	$rivalIsolated = ($rivalOrbSize == 1);
-
+    $playerOrbSize = count($playerOrbCrumbs);
+    $rivalOrbSize = count($rivalOrbCrumbs);    
+	$playerIsolated = FALSE;
+	$rivalIsolated = FALSE;
 	$flipflop = FALSE;
-
 	while (!($playerIsolated && $rivalIsolated)
 		&& count($orbIntersect) < 3
         && ($playerOrbSize + $rivalOrbSize) < 100){
@@ -1109,14 +1109,14 @@ function parity($player, $rival, $game){
 
 //echo "PARITY $playerParity : $rivalParity<br>";
 
-	if(is_finite($playerParity) && is_finite($rivalParity)){
+	if(!is_null($playerParity) && !is_null($rivalParity)){
 		$parity = ($playerParity - $rivalParity) / 2; 
-	} elseif(is_finite($playerParity)){
+	} elseif(!is_null($playerParity)){
 		$parity = $playerParity;
-    } elseif(is_finite($rivalParity)){
+    } elseif(!is_null($rivalParity)){
 		$parity = - $rivalParity;
 	} else {
-		$parity = 1/0;
+		$parity = null;
 	}
 
 	$parity = $parity * 2; //fudge factor
@@ -1172,13 +1172,13 @@ function parityOrb($orb, $rivalID){
 			$n++;
 		} elseif (isset($node['orb'])){
             $parityOrb = parityOrb($node['orb'], $rivalID);
-			if (is_finite($parityOrb)){
+			if (is_null($parityOrb)){
 				$sum += ($node['parity'] + $parityOrb * $relyChainDecay) * $node['rely'];
 				$n++;				
 			}
 		}
 	}
-	return $sum / ($n * 5.0);
+	return $n==0 ? null : $sum / ($n * 5.0);
 }
 
 
@@ -1290,9 +1290,7 @@ function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 	$player = readPlayerXML($playerID);
 	if ($player){
 		$orb = array();
-		$parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game']");
-
-//			$player->xpath("match[@status='history' & @game='$game']")
+		$parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game'] | feedback[@game='$game']");
 
 		foreach($parities as $par){
 			$rivalID = subID($par['rival']);
@@ -2709,7 +2707,6 @@ function qwikFeedback($player, $request){
             $match->addAttribute('rep', $request['rep']);
 			$match->addAttribute('parity', $request['parity']);
 			$match->addAttribute('rely', $player->rely['val']); //default value
-
             $rival = readPlayerXML($match->rival);
 			if (isset($rival)){
 	            updateRep($rival, $request['rep']);
@@ -2767,10 +2764,10 @@ high CONGRUENCE rate each other with no DISPARITY (and vice versa).
 
 function updateCongCert($player, $pMatch, $rival){
 	$matchID = $pMatch['id'];
-	$rivalMatchs = $rival->xpath("match[@id='$matchID']");
-	if (count($rivalMatchs) > 0){
+	$rivalMatches = $rival->xpath("match[@id='$matchID']");
+	if (count($rivalMatches) > 0){
 		$rMatch = $rivalMatches[0];
-		if(strcmp($rivalMatch['status'], 'history') == 0){
+		if(strcmp($rMatch['status'], 'history') == 0){
 			$pParity = $pMatch->parity;
 			$rParity = $rMatch->parity;
 

@@ -2833,7 +2833,7 @@ function qwikFamiliar($player, $request){
 		$reckon->addAttribute('parity', $request['parity']);
 		$reckon->addAttribute('game', $request['game']);
 		$date = date_create();
-		$reckon->addAttribute('time', $date->format("d-m-Y H:i"));
+		$reckon->addAttribute('date', $date->format("d-m-Y"));
 		$reckon->addAttribute('id', newID());
 		$reckon->addAttribute('rely', $player->rely['val']); //default value
 		writePlayerXML($player);
@@ -2855,7 +2855,7 @@ function qwikRegion($player, $request){
 			$reckon->addAttribute('region', $request['region']);
             $reckon->addAttribute('game', $request['game']);
 			$date = date_create();
-            $reckon->addAttribute('time', $date->format("d-m-Y H:i"));
+            $reckon->addAttribute('date', $date->format("d-m-Y"));
             $reckon->addAttribute('id', newID());
             $reckon->addAttribute('rely', $player->rely['val']); //default value
             writePlayerXML($player);

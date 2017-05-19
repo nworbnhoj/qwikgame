@@ -1290,7 +1290,7 @@ function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 	$player = readPlayerXML($playerID);
 	if ($player){
 		$orb = array();
-		$parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game'] | feedback[@game='$game']");
+		$parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
 
 		foreach($parities as $par){
 			$rivalID = subID($par['rival']);
@@ -2704,9 +2704,15 @@ function qwikFeedback($player, $request){
         $match = $player->xpath("match[@id='$matchID']")[0];
         if (isset($match)){
             $match['status'] = 'history';
-            $match->addAttribute('rep', $request['rep']);
-			$match->addAttribute('parity', $request['parity']);
-			$match->addAttribute('rely', $player->rely['val']); //default value
+            $outcome = $player->addChild('outcome', '');
+            $outcome->addAttribute('game', $match['game']);
+            $outcome->addAttribute('rival', $match['rival']);
+            $date = date_create($match['time']);
+            $outcome->addAttribute('date', $date->format("d-m-Y"));
+            $outcome->addAttribute('parity', $request['parity']);
+            $outcome->addAttribute('rep', $request['rep']);
+            $outcome->addAttribute('rely', $player->rely['val']); //default value
+            $outcome->addAttribute('id', $matchID);
             $rival = readPlayerXML($match->rival);
 			if (isset($rival)){
 	            updateRep($rival, $request['rep']);
@@ -3557,6 +3563,7 @@ function matchVariables($match){
 	$rivalElement = $match->xpath("rival")[0];
 	$parity = $rivalElement['parity'];
 	$hrs = $match['hrs'];
+	$matchID = (string)$match['id'];
 	$game = (string)$match['game'];
 	$rivalLink = playerLink($rivalElement);
 	$repWord = $rivalElement['rep'];
@@ -3569,7 +3576,7 @@ function matchVariables($match){
 		'day'		=> matchDay($match),
 		'hrs'		=> (string)$match['hrs'],
 		'hour'		=> hr(hours($hrs)[0]),
-		'id'		=> (string)$match['id'],
+		'id'		=> $matchID,
 		'parity'	=> parityStr($parity),
         'rivalLink'	=> empty($rivalLink) ? '' : ", $rivalLink",
 		'rivalRep'	=> strlen($repWord)==0 ? '' : " with a $repWord reputation"
@@ -3583,9 +3590,12 @@ function matchVariables($match){
 			$vars['hour'] = hourSelect(hours($hrs));
 			break;
 		case 'history':
-            $vars['parity'] = parityStr($match['parity']);
-			$vars['thumb'] = $match['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
-			break;
+            $outcome = $player->xpath("outcome(@id='$matchID')")[0];
+            if (isset($outcome)) {
+                $vars['parity'] = parityStr($outcome['parity']);
+                $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
+            }
+            break;
 	}
 	return $vars;
 }

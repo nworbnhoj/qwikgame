@@ -2030,10 +2030,14 @@ function writeVenueXML($venue){
     if(chdir("venue")){
 		$games = $venue->xpath('game');
 		foreach($games as $game){
-			if(chdir("$game")){
-				symlink("../$filename", $filename); 
-				chdir("..");
-			}
+            if(!file_exists("$game/$filename")){
+                if(file_exists($game) && chdir($game)){
+                    symlink("../$filename", $filename);
+		            chdir("..");
+                } else {
+                   logMsg("Unable to create symlink for $game/$filename");
+                }
+            }
 		}
 	}
 	chdir($cwd);

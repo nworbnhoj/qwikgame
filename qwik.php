@@ -2706,7 +2706,7 @@ function qwikFeedback($player, $request){
             $match['status'] = 'history';
             $outcome = $player->addChild('outcome', '');
             $outcome->addAttribute('game', $match['game']);
-            $outcome->addAttribute('rival', $match['rival']);
+            $outcome->addAttribute('rival', $match->rival);
             $date = date_create($match['time']);
             $outcome->addAttribute('date', $date->format("d-m-Y"));
             $outcome->addAttribute('parity', $request['parity']);

@@ -11,9 +11,9 @@ Feature: I like to play my game with rivals of similar ability
 	Other shorthand includes A<<B A<B A=B A>B A>>B.
 
 
-	Scenario: 2 Player Parity reports in agreement (matched)
+	Scenario: 2 Player Parity reports in agreement (stronger)
 	  Given a community of Players
-	  When A reports A=B from match on day 1
-	  And B reports B=A from match on day 1
-	  Then A=B on day 2
-	  And B=A on day 2
+	  When A reports A>B from match on day 1
+	  And B reports B<A from match on day 1
+	  Then A>B on day 2
+	  And B<A on day 2

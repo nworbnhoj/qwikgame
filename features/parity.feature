@@ -10,10 +10,15 @@ Feature: I like to play my game with rivals of similar ability
 	Match and player-A provided Feedback that she was the Stronger Player.
 	Other shorthand includes A<<B A<B A=B A>B A>>B.
 
-
-	Scenario: 2 Player Parity reports in agreement (stronger)
+	Scenario: 2 Player Parity outcomes in agreement (stronger)
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And B reports B<A from match on day 1
 	  Then A>B on day 2
-	  And B<A on day 2
+	  And B<A on day 2	  
+
+	Scenario: 3 Player Parity outcomes in agreement (stronger)
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And C reports C<B from match on day 2
+	  Then A>C on day 3

@@ -1043,8 +1043,8 @@ function parity($player, $rival, $game){
 							array_keys($playerOrbCrumbs), 
 							array_keys($rivalOrbCrumbs)
 						);
-		$orbIntersect[] = $playerID;
-		$orbIntersect[] = $rivalID;
+		$orbIntersect[] = (string)$playerID;
+		$orbIntersect[] = (string)$rivalID;
 
 //echo "playerIsolated=$playerIsolated<br>\n";
 //echo "rivalIsolated=$rivalIsolated<br>\n";
@@ -1335,7 +1335,7 @@ function orbCrumbs($orb, $orbID){
 	$depth = crumbDepth($orbID, $crumbs);
 	foreach($orb as $node){  
 		$rid = subID($node['rival']);
-		if($depth < crumbDepth($rid, $crumbs)){		// use shortest path
+		if($depth <= crumbDepth($rid, $crumbs)){		// use shortest path
             $crumbs[$rid] = $orbID;
         }
 		if(isset($node['orb'])){

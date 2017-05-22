@@ -458,7 +458,10 @@ class FeatureContext implements Context
         $playerA = readPlayerXML($pidA);
         $playerB = readPlayerXML($pidB);
 
-        $parityStr = parityStr(parity($playerA, $playerB, 'Squash'));
+        $parityEstimate = parity($playerA, $playerB, 'Squash');
+        $parityStr = parityStr($parityEstimate);
+
+print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':

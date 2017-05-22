@@ -35,3 +35,11 @@ Feature: I like to play my game with rivals of similar ability
 	  And B reports B>C from match on day 2
 	  And C reports C>D from match on day 3
 	  Then A>>D on day 4
+
+	Scenario: 4 players, 3 outcomes, 2 direct chain, agreed (stronger)
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And A reports A>C from match on day 1
+	  And B reports B>D from match on day 2
+	  And C reports C>D from match on day 2
+	  Then A>D on day 3

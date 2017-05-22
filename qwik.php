@@ -1043,8 +1043,8 @@ function parity($player, $rival, $game){
 							array_keys($playerOrbCrumbs), 
 							array_keys($rivalOrbCrumbs)
 						);
-		$orbIntersect[] = (string)$playerID;
-		$orbIntersect[] = (string)$rivalID;
+		$orbIntersect[] = subID($playerID);
+		$orbIntersect[] = subID($rivalID);
 
 //echo "playerIsolated=$playerIsolated<br>\n";
 //echo "rivalIsolated=$rivalIsolated<br>\n";
@@ -1104,6 +1104,9 @@ function parity($player, $rival, $game){
 	$playerParity = parityOrb($playerOrb, $rivalID);
 	$rivalParity = parityOrb($rivalOrb, $playerID);
 
+//print_r("playerParity: $playerParity\n");
+//print_r("rivalParity : $rivalParity\n");
+
 	logMsg("parity ".snip($playerID)." ".snip($rivalID)." $playerParity".printOrb($playerOrb));
 	logMsg("parity ".snip($rivalID)." ".snip($playerID)." $rivalParity".printOrb($rivalOrb));
 
@@ -1156,29 +1159,34 @@ Some examples:
 	A>B & B=C & C=D implies A>D
 	
 This is a recursive function that computes the weighted average of each parity
-path to the rival. Each path is weighted by the reliability of the player (node)
-who reported the parity. Also longer chains become progressively weaker in
-influence.
-	
+path to the rival. There are two computations happening here; one of breadth
+(multiple paths) and one of length (long parity chains).
+- Depth. Each of several outcome are combined by weighted average, where the
+weight is the reliability of the player (node)
+- Length. A long chain of outcomes linking one player to another is combined
+by adding the parities to account for stronger outcomes (+1), and much-weaker
+(-2) outcomes for example. However shorter chains are given more weight than
+longer chains by introducing a decay (=0.7) at each link.
 ********************************************************************************/
 function parityOrb($orb, $rivalID){
-//echo "<br>PARITYORB rid=$rivalID<br>";
-	$relyChainDecay = 0.7;
-	$sum = 0;
-	$n=0;
-	foreach($orb as $node){
-		if ($node['rival'] == $rivalID){
-			$sum += $node['parity'] * $node['rely'];
-			$n++;
-		} elseif (isset($node['orb'])){
+//echo "<br>PARITYORB rid=$rivalID<br>\n";
+    $rivalID = subID($rivalID);
+    $relyChainDecay = 0.7;
+    $sum = 0;
+    $n=0;
+    foreach($orb as $node){
+        $parity = $node['parity'];
+        if (($node['rival'] != $rivalID)
+        & (isset($node['orb'])){
             $parityOrb = parityOrb($node['orb'], $rivalID);
-			if (is_null($parityOrb)){
-				$sum += ($node['parity'] + $parityOrb * $relyChainDecay) * $node['rely'];
-				$n++;				
-			}
-		}
-	}
-	return $n==0 ? null : $sum / ($n * 5.0);
+            if (!is_null($parityOrb)){
+                $parity += $parityOrb * $relyChainDecay;
+            }
+        }
+        $sum += $parity * $node['rely'];      // note range rely is [1,5]
+        $n++;
+    }
+    return $n==0 ? null : $sum / ($n * 5.0);  // divide rely by 5 for range [0,1]
 }
 
 
@@ -1239,7 +1247,7 @@ function expandOrb(&$orb, $crumbs, $game){
 
 /********************************************************************************
 Returns the $orb with all nodes removed that are not in $keepers, 
-and all denuded branches.
+and all denuded branches removed.
 
 
 $orb		ArrayMap	the orb to be pruned
@@ -1253,9 +1261,7 @@ function pruneOrb(&$orb, $keepers){
             if(pruneOrb($node['orb'], $keepers)){
 				unset($node['orb']);
 			}
-        } 
-
-		if(!in_array($node['rival'], $keepers)){
+        } elseif(!in_array($node['rival'], $keepers)){
 			unset($orb[$key]);
         }
     }
@@ -1264,7 +1270,7 @@ function pruneOrb(&$orb, $keepers){
 
 
 function subID($id){
-return $id;
+return (string)$id;
 	return substr("$id",0, 10);
 }
 
@@ -1288,8 +1294,8 @@ function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
 //echo "PLAYERORB $game $playerID<br>\n";
 	$orb=NULL;
 	$player = readPlayerXML($playerID);
+	$orb = array();
 	if ($player){
-		$orb = array();
 		$parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
 
 		foreach($parities as $par){
@@ -1329,6 +1335,7 @@ function orbCrumbs($orb, $orbID){
 //echo "<br>ORBCRUMBS $orbID<br>\n";
 //echo "orb : ";
 //print_r($orb);
+
 	$crumbs = array();
 	$orbID = subID("$orbID");
 //	$crumbs[$orbID] = $orbID;			// include self/root

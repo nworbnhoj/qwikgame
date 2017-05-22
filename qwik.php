@@ -1122,7 +1122,7 @@ function parity($player, $rival, $game){
         $parity = null;
     }
 
-    $parity = $parity * 2; //fudge factor
+    $parity = $parity * 2.3; //fudge factor
 
 //echo "<br> Parity estimate = $parity<br>";    
 
@@ -3425,7 +3425,7 @@ function parityStr($parity){
     if($pf <= -2){
         return "<t>much_weaker</t>";
     } elseif($pf <= -1){
-        return "<t>weaker</t></t>";
+        return "<t>weaker</t>";
     } elseif($pf < 1){
         return "<t>well_matched</t>";
     } elseif($pf < 2){

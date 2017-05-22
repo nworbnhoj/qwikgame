@@ -458,27 +458,26 @@ class FeatureContext implements Context
         $playerA = readPlayerXML($pidA);
         $playerB = readPlayerXML($pidB);
 
-        $estimate = parity($playerA, $playerB, 'Squash');
+        $parityStr = parityStr(parity($playerA, $playerB, 'Squash'));
 
         switch ($parity) {
             case '<<':
-                Assert::assertGreaterThan($estimate, 1);
+                Assert::assertSame($parityStr, "<t>much_weaker</t>");
                 break;
             case '<':
-                Assert::assertGreaterThan($estimate, 0);
+                Assert::assertSame($parityStr, "<t>weaker</t>");
                 break;
             case '=':
-                Assert::assertEquals(0, $estimate);
+                Assert::assertSame($parityStr, "<t>well_matched</t>");
                 break;
             case '>':
-                Assert::assertGreaterThan(0, $estimate);
+                Assert::assertSame($parityStr, "<t>stronger</t>");
                 break;
             case '>>':
-                Assert::assertGreaterThan(-1, $estimate);
+                Assert::assertSame($parityStr, "<t>much_stronger</t>");
                 break;
         }
-    }
-    
+    }   
     
     
 }

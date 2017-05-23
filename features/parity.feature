@@ -10,33 +10,34 @@ Feature: I like to play my game with rivals of similar ability
 	Match and player-A provided Feedback that she was the Stronger Player.
 	Other shorthand includes A<<B A<B A=B A>B A>>B.
 
-	Scenario: 2 players, 2 outcomes, 2 direct chains, agreed (stronger)
+	Scenario: A>B & B<A ⁂ A>B & B<A
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And B reports B<A from match on day 1
 	  Then A>B on day 2
 	  And B<A on day 2	  
 
-	Scenario: 3 players, 2 outcomes, 1 indirect chain, agreed (stronger)
+	Scenario: A>B & C<B ⁂ A>C
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And C reports C<B from match on day 2
 	  Then A>C on day 3
 
-	Scenario: 3 players, 2 outcomes, 1 direct chain, agreed (stronger)
+	Scenario: A>B & B>C ⁂ A>C
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And B reports B>C from match on day 2
 	  Then A>C on day 3
 
-	Scenario: 4 players, 3 outcomes, 1 direct chain, agreed (stronger)
+	Scenario: A>B & B>D & C>D & D>E ⁂ A>>E
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And B reports B>C from match on day 2
 	  And C reports C>D from match on day 3
-	  Then A>>D on day 4
+	  And D reports D>E from match on day 4
+	  Then A>>E on day 5
 
-	Scenario: 4 players, 3 outcomes, 2 direct chain, agreed (stronger)
+	Scenario: A>B & B>D & C>D ⁂ A>D
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And A reports A>C from match on day 1

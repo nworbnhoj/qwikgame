@@ -44,3 +44,32 @@ Feature: I like to play my game with rivals of similar ability
 	  And B reports B>D from match on day 2
 	  And C reports C>D from match on day 2
 	  Then A>D on day 3
+
+	Scenario: A>B & B<C ⁂ A=C
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And B reports B<C from match on day 2
+	  Then A=C on day 3
+
+	Scenario: A>B & B>C & C<<D ⁂ A=D
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And B reports B>C from match on day 2
+	  And C reports C<<D from match on day 3
+	  Then A=D on day 4
+
+	Scenario: A>B & B=C C=D ⁂ A>D
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And B reports B=C from match on day 2
+	  And C reports C=D from match on day 3
+	  Then A>D on day 4
+
+	Scenario: A>B & B>C & C<B ⁂ A>C
+	  Given a community of Players
+	  When A reports A>B from match on day 1
+	  And B reports B=A from match on day 1
+	  And B reports B>C from match on day 2
+	  And C reports C<B from match on day 2
+	  Then A>C on day 3
+

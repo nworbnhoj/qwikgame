@@ -461,7 +461,7 @@ class FeatureContext implements Context
         $parityEstimate = parity($playerA, $playerB, 'Squash');
         $parityStr = parityStr($parityEstimate);
 
-print_r("$parity\t$parityEstimate\t$parityStr\n");
+//print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':

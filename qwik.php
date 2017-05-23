@@ -1122,7 +1122,7 @@ function parity($player, $rival, $game){
         $parity = null;
     }
 
-    $parity = $parity * 2.3; //fudge factor
+    $parity = $parity * 1.7; //fudge factor
 
 //echo "<br> Parity estimate = $parity<br>";    
 
@@ -1166,12 +1166,12 @@ weight is the reliability of the player (node)
 - Length. A long chain of outcomes linking one player to another is combined
 by adding the parities to account for stronger outcomes (+1), and much-weaker
 (-2) outcomes for example. However shorter chains are given more weight than
-longer chains by introducing a decay (=0.7) at each link.
+longer chains by introducing a decay (=0.9) at each link.
 ********************************************************************************/
 function parityOrb($orb, $rivalID){
 //echo "<br>PARITYORB rid=$rivalID<br>\n";
     $rivalID = subID($rivalID);
-    $relyChainDecay = 0.7;
+    $relyChainDecay = 0.9;
     $sum = 0;
     $n=0;
     foreach($orb as $node){

@@ -1122,7 +1122,7 @@ function parity($player, $rival, $game){
         $parity = null;
     }
 
-    $parity = $parity * 1.7; //fudge factor
+    $parity = $parity * 2.5; //fudge factor
 
 //echo "<br> Parity estimate = $parity<br>";    
 
@@ -1183,10 +1183,10 @@ function parityOrb($orb, $rivalID){
                 $parity += $parityOrb * $relyChainDecay;
             }
         }
-        $sum += $parity * $node['rely'];      // note range rely is [1,5]
+        $sum += $parity * $node['rely'];      // note rely range [0,4]
         $n++;
     }
-    return $n==0 ? null : $sum / ($n * 5.0);  // divide rely by 5 for range [0,1]
+    return $n==0 ? null : $sum / ($n * 4.0);  // divide rely by 4 for range [0,1]
 }
 
 
@@ -1357,7 +1357,7 @@ function orbCrumbs($orb, $orbID){
 
 
 function crumbDepth($id, $crumbs){
-    return array_key_exists($id, $crumbs) ? crumbDepth($crumbs[$id]) + 1 : 0 ;
+    return array_key_exists($id, $crumbs) ? crumbDepth($crumbs[$id], $crumbs) + 1 : 0 ;
 }
 
 
@@ -1756,7 +1756,7 @@ function newPlayer($id){
         $debut = $now->format('d-m-Y');
         $record  = "<player id='$id' debut='$debut' lang='en'>";
         $record .= "<rep pos='0' neg='0'/>";
-        $record .= "<rely val='3.0'/>";
+        $record .= "<rely val='2.0'/>";
         $record .= "</player>";
 
         $xml = new SimpleXMLElement($record);
@@ -2727,7 +2727,7 @@ function qwikFeedback($player, $request){
             $rival = readPlayerXML($match->rival);
             if (isset($rival)){
                 updateRep($rival, $request['rep']);
-                updateCongCert($player, $match, $rival);
+                updateCongCert($player, $matchID, $rival);
                 writePlayerXML($rival);
             }
             writePlayerXML($player);
@@ -2759,7 +2759,7 @@ function qwikMsg($player, $req){
 
 qwikgame attempts to estimate the PARITY of possible RIVALs prior to each MATCH.
 
-After each MATCH both RIVALSs rate the PARITY of their RIVAL's ability:
+After each MATCH both PLAYERSs rate the PARITY of their RIVAL's ability:
     +2  much stronger
     +1  stronger
      0  well matched
@@ -2767,9 +2767,11 @@ After each MATCH both RIVALSs rate the PARITY of their RIVAL's ability:
     -2  much weaker
 There may be DISPARITY between the two ratings. 
 
-A player's CONGRUENCE measures their consistency in rating their RIVALs.
-The CONGRUENCE rating rises when DISPARITY is low (and vice-versa).
-The RIVAL with the lower CONGRUENCE is most impacted by any DISPARITY.
+A player's RELYability measures their consistency in rating their RIVALs.
+There can be DISPARITY between two Players rating of each other. DISPARITY causes
+a Players RELYability to drop, but the PLayer with the lower historical RELYability
+will suffer most from any DISPARITY (on the assumption that they are the probable
+cause)
 
 The CONFIDENCE in each PARITY rating is used to resolve DISPARITY during estimates.
 Each PARITY rating has a CONFIDENCE which is high when two rivals with 
@@ -2779,33 +2781,31 @@ high CONGRUENCE rate each other with no DISPARITY (and vice versa).
 // refine CONGRUENCE and CERTAINTY when RIVAL Feedback also exists
 ********************************************************************************/
 
-function updateCongCert($player, $pMatch, $rival){
-    $matchID = $pMatch['id'];
-    $rivalMatches = $rival->xpath("match[@id='$matchID']");
-    if (count($rivalMatches) > 0){
-        $rMatch = $rivalMatches[0];
-        if(strcmp($rMatch['status'], 'history') == 0){
-            $pParity = $pMatch->parity;
-            $rParity = $rMatch->parity;
+function updateCongCert($player, $matchID, $rival){
+    $playerOutcomes = $player->xpath("outcome[@id='$matchID']");
+    $rivalOutcomes = $rival->xpath("outcome[@id='$matchID']");
 
-            $disparity = abs($rParity + $pParity);    // note '+' sign
-            $congruence = 5 - $disparity;
+    if (count($playerOutcomes) > 0
+    && count($rivalOutcomes) > 0){
+        $pOutcome = $playerOutcomes[0];
+        $rOutcome = $rivalOutcomes[0];
 
-            $pCongruence = $player->rely['val'];
-            $rCongruence = $rival->rely['val'];
+        $pParity = intval($pOutcome['parity']);
+        $rParity = intval($rOutcome['parity']);
 
-            $pShare = $pCongruence / ($pCongruence + $rCongruence);
-            $rShare = $rCongruence / ($pCongruence + $rCongruence);
+        $pRely = floatval($player->rely['val']);
+        $rRely = floatval($rival->rely['val']);
 
-            $player->rely['val'] = expMovingAvg($pCongruence, $pShare * $congruence, 5);
-            $rival->rely['val'] = expMovingAvg($rCongruence, $rShare * $congruence, 5);
+        $disparity = abs($rParity + $pParity);    // note '+' sign & range [0,4]
+        $pDisparity = ($disparity * $rRely * $rRely) / 16;
+        $rDisparity = ($disparity * $pRely * $rRely) / 16;
 
-            $pCertainty = ($pCongruence * $congruence) / 5;
-            $rCertainty = ($rCongruence * $congruence) / 5;
+        $player->rely['val'] = expMovingAvg($pRely, 4 - $pDisparity, 3);
+        $rival->rely['val']  = expMovingAvg($rRely, 4 - $rDisparity, 3);
 
-            $pMatch->parity['rely'] = $pCertainty;
-            $rMatch->parity['rely'] = $rCertainty;
-        }
+        $congruence = 4 - $disparity;             // range [0,4]
+        $pOutcome['rely'] = ($pRely * $congruence) / 4;
+        $rOutcome['rely'] = ($rRely * $congruence) / 4;
     }
 }
 
@@ -2827,6 +2827,9 @@ function updateRep(&$player, $feedback){
 
 // Updates an EXPonential moving AVeraGe with a new data POINT.
 function expMovingAvg($avg, $point, $exp){
+    $avg = floatval($avg);
+    $point = floatval($point);
+    $exp = intval($exp);
     return ($avg * ($exp-1) + $point) / $exp;
 }
 

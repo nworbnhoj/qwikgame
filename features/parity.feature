@@ -51,12 +51,13 @@ Feature: I like to play my game with rivals of similar ability
 	  And B reports B<C from match on day 2
 	  Then A=C on day 3
 
-	Scenario: A>B & B>C & C<<D ⁂ A=D
+	Scenario: A>B & B>C & C<D & E>>D ⁂ A=D
 	  Given a community of Players
 	  When A reports A>B from match on day 1
 	  And B reports B>C from match on day 2
-	  And C reports C<<D from match on day 3
-	  Then A=D on day 4
+	  And C reports C>D from match on day 2
+	  And E reports E>>D from match on day 3
+	  Then A=E on day 4
 
 	Scenario: A>B & B=C C=D ⁂ A>D
 	  Given a community of Players
@@ -72,4 +73,35 @@ Feature: I like to play my game with rivals of similar ability
 	  And B reports B>C from match on day 2
 	  And C reports C<B from match on day 2
 	  Then A>C on day 3
+
+	Scenario: A is reliable, Z is unreliable
+	  Given a community of Players
+	  When A reports A=B from match on day 1
+	  And B reports B=A from match on day 1
+      And A reports A>C from match on day 1
+	  And C reports C<A from match on day 1
+      And A reports A<D from match on day 1
+	  And D reports D<A from match on day 1
+      And A reports A=E from match on day 1
+	  And E reports E=A from match on day 1
+
+	  When A reports A=Z from match on day 2
+	  And Z reports Z>>A from match on day 2
+	  Then A=Z on day 3
+	  When A reports A=Z from match on day 3
+	  And Z reports Z>>A from match on day 3
+	  Then A=Z on day 4
+	  When A reports A=Z from match on day 4
+	  And Z reports Z>>A from match on day 4
+	  Then A=Z on day 5
+	  When A reports A=Z from match on day 5
+	  And Z reports Z>>A from match on day 5
+	  Then A=Z on day 6
+	  When A reports A=Z from match on day 6
+	  And Z reports Z>>A from match on day 6
+	  Then A=Z on day 7
+	  When A reports A=Z from match on day 7
+	  And Z reports Z>>A from match on day 7
+	  Then A=Z on day 8
+
 

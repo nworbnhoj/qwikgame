@@ -1097,7 +1097,7 @@ function parity($player, $rival, $game){
 
     $parity = parityOrb($spliceOrb, $rivalID);
 
-    $parity = $parity * 2.5; //fudge factor
+    $parity = $parity; //fudge factor
 
     logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity".printOrb($playerOrb));
 
@@ -1146,8 +1146,9 @@ longer chains by introducing a decay (=0.9) at each link.
 function parityOrb($orb, $rivalID){
 //echo "<br>PARITYORB rid=$rivalID<br>\n";
     $rivalID = subID($rivalID);
-    $relyChainDecay = 0.9;
-    $sum = 0;
+    $relyChainDecay = 0.7;
+    $parityTotal = 0;
+    $relyTotal = 0;
     $n=0;
     foreach($orb as $node){
         $parity = $node['parity'];
@@ -1158,10 +1159,18 @@ function parityOrb($orb, $rivalID){
                 $parity += $parityOrb * $relyChainDecay;
             }
         }
-        $sum += $parity * $node['rely'];      // note rely range [0,4]
+        $rely = $node['rely'];
+        $relyTotal += $rely;
+        $parityTotal += $parity * $rely;      // note rely range [0,4]
         $n++;
     }
-    return $n==0 ? null : $sum / ($n * 4.0);  // divide rely by 4 for range [0,1]
+    if ($n>0) {
+        $relyAverage = $relyTotal / $n;
+        $parityAverage = $parityTotal / ($n * $relyAverage);
+    } else {
+        $parityAverage = null;
+    }
+    return $parityAverage;
 }
 
 

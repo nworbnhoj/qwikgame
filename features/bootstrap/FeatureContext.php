@@ -461,6 +461,13 @@ class FeatureContext implements Context
         $parityEstimate = parity($playerA, $playerB, 'Squash');
         $parityStr = parityStr($parityEstimate);
 
+//$nickA = $playerA['nick'];
+//$nickB = $playerB['nick'];
+//$relyA=$playerA->rely['val'];
+//$relyB=$playerB->rely['val'];
+//$rely = $playerA->rely;
+//print_r("$nickA rely=$relyA\n");
+//print_r("$nickB rely=$relyB\n");
 //print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {

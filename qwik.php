@@ -1088,43 +1088,18 @@ function parity($player, $rival, $game){
 //print_r($rivalOrb);
 //echo "<br><br><br>\n";
 
-    // extend both orbs directly back to the root of the other from the intersection points
-    extendOrb($playerOrb, $rivalOrbCrumbs, $game);
-    extendOrb($rivalOrb, $playerOrbCrumbs, $game);
+   $invRivalOrb = orbInv($rivalOrb, $rivalID);
+   $spliceOrb = spliceOrb($playerOrb, $playerID, $invRivalOrb);
 
-//echo "<hr><br><br><br>playerOrb=";
-//print_r($playerOrb);
+//echo "<br><br><br>splicedOrb=";
+//print_r($spliceOrb);
 //echo "<br><br><br>\n";
 
-//echo "<br><br><br>rivalOrb=";
-//print_r($rivalOrb);
-//echo "<br><br><br>\n";
-
-    // estimate the parity of the players from both directions
-    $playerParity = parityOrb($playerOrb, $rivalID);
-    $rivalParity = parityOrb($rivalOrb, $playerID);
-
-//print_r("playerParity: $playerParity\n");
-//print_r("rivalParity : $rivalParity\n");
-
-    logMsg("parity ".snip($playerID)." ".snip($rivalID)." $playerParity".printOrb($playerOrb));
-    logMsg("parity ".snip($rivalID)." ".snip($playerID)." $rivalParity".printOrb($rivalOrb));
-
-//echo "PARITY $playerParity : $rivalParity<br>";
-
-    if(!is_null($playerParity) && !is_null($rivalParity)){
-        $parity = ($playerParity - $rivalParity) / 2; 
-    } elseif(!is_null($playerParity)){
-        $parity = $playerParity;
-    } elseif(!is_null($rivalParity)){
-        $parity = - $rivalParity;
-    } else {
-        $parity = null;
-    }
+    $parity = parityOrb($spliceOrb, $rivalID);
 
     $parity = $parity * 2.5; //fudge factor
 
-//echo "<br> Parity estimate = $parity<br>";    
+    logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity".printOrb($playerOrb));
 
     return $parity;
 
@@ -1196,25 +1171,78 @@ function ssq($n){
 }
 
 
-/********************************************************************************
-Retuns the $orb extended out along the trail of 'bread-crumbs'
 
-$orb    ArrayMap    the orb to be extended
-$crumbs    ArrayMap    node => a more central node
-$game    String        the game
+/********************************************************************************
+Retuns an Array mapping each rivalID to an array of 'inverted' nodes suitable to
+be passed to function spiceOrb()
+
+$orb    ArrayMap  the orb to be inverted
+$pid    String    The unique PlayerID at the root of the $orb
+
+An Orb contains a tree like structure of nodes. This function returns an Array
+indexed by each of the rivalID's found in the Orb. Each rivalID is mapped to an
+Array of Nodes found in the Tree and 'inverted' by swapping the ID's of Player
+and Rival, and by negating the parity. These 'inverted' nodes are suitable for
+passing to function spliceOrb() to be inserted into the corresponding rival orb.
 
 ********************************************************************************/
-function extendOrb(&$orb, $crumbs, $game){
-//echo "<br>EXTENDORB</br>";
-    foreach($orb as &$node){
-        $rivalID = $node['rival'];
+function orbInv($orb, $pid){
+//echo "function orbInv()";
+    $orbInv = array();
+    foreach($orb as $node){
+        $rid = (string)$node['rival'];
+        if (!array_key_exists($rid, $orbInv)){
+            $orbInv[$rid] = array();
+        }
+        $orbInv[$rid][] = orbNode($pid, -1 * $node['parity'], $node['rely']);
+
+        // recursion
         if(isset($node['orb'])){
-            extendOrb($node['orb'], $crumbs, $game);
-        } elseif(array_key_exists($rivalID, $crumbs)) {
-            $node['orb'] = playerOrb($rivalID, $game, array($crumbs[$rivalID]), TRUE);
-            extendOrb($node['orb'], $crumbs, $game);
+            $subOrbInv = orbInv($node['orb'], $node['rival']);
+            foreach ($subOrbInv as $rid => $subNode) {
+                if (!array_key_exists($rid, $orbInv)){
+                    $orbInv[$rid] = array();
+                }
+                $orbInv[$rid] = array_merge($orbInv[$rid], $subNode);
+            }
         }
     }
+    return $orbInv;
+}
+
+
+
+/********************************************************************************
+Splices 2 orbs together by inserting 'inverted' Nodes from a Rivel Orb into $orb.
+
+$orb    ArrayMap  the orb to be spliced
+$pid    String    the unique PlayerID at the root of the $orb
+$invOrb Arraymap  an Array mapping each rivalID to an array of nodes
+
+This function traverses the $orb and inserts the Nodes from $invOrb into the
+structure. The function orbInv() can prepar the nodes by swapping Player and Rival
+and by negating Parity.
+
+********************************************************************************/
+function spliceOrb(&$orb, $pid, $invOrb){
+//echo "<br>SPLICEORB</br>";
+
+    $pid = (string)$pid;
+    if (array_key_exists($pid, $invOrb)){
+        $invNodes = $invOrb[$pid];
+        foreach ($invNodes as $invNode) {
+            $orb[] = $invNode;
+        }
+    }
+
+    foreach($orb as &$node){
+        $rid = (string)$node['rival'];
+        if(!isset($node['orb'])){
+            $node['orb'] = array();
+        }
+        spliceOrb($node['orb'], $rid, $invOrb);
+    }
+    return $orb;
 }
 
 

@@ -247,24 +247,25 @@ function login($req){
     global $DAY, $MONTH;
     session_start();
 
-    if (isset($req['pid'])){                // check for a pid & token in the parameter
+    if (isset($req['pid'])){            // check for a pid & token in the parameter
         $pid = $req['pid'];
         $token = $req['token'];
-    } elseif (isset($_SESSION['pid'])){        // chck for a pid in the $_SESSION variable
+    } elseif (isset($_SESSION['pid'])){ // check for a pid in the $_SESSION variable
         $pid = $_SESSION['pid'];
         $openSession = true;
-    } elseif (isset($_COOKIE['pid'])){        // check for a pid & token in a $_COOKIE
+    } elseif (isset($_COOKIE['pid'])){  // check for a pid & token in a $_COOKIE
         $pid = $_COOKIE['pid'];
         $token = $_COOKIE['token'];
-    } elseif (isset($req['email'])){        // check for and email address in the parameter.
+    } elseif (isset($req['email'])){    // check for and email address in the param
         $email = $req['email'];
-        $pid = anonID($email);                // and derive the pid from the email
-    } else {                                // anonymous session: no player identifier
-        return;                                                // RETURN login fail
+        $pid = anonID($email);          // and derive the pid from the email
+        $token = $req['token'];
+    } else {                            // anonymous session: no player identifier
+        return;                         // RETURN login fail
     }
-                                                            // OK playerID
+                                        // OK playerID
     $player=readPlayerXML($pid);
-    if(!$player){                                            // NEW anon player
+    if(!$player){                       // NEW anon player
         logMsg("login: new player $pid");
         $player = newPlayer($pid);
     }
@@ -273,13 +274,15 @@ function login($req){
         return $player;
     }
 
-    if(validPlayerToken($player, $token)){                    // LOGIN with token
+    if(validPlayerToken($player, $token)){                 // LOGIN with token
         logMsg("login: valid token " . snip($pid));
         $_SESSION['pid'] = $pid;
         $_SESSION['lang'] = (string) $player['lang'];
         setcookie("pid", "$pid", time() + 3*$MONTH, "/");
         setcookie("token", "$token", time() + 3*$MONTH, "/");
         return $player;
+    } else {
+        logMsg("login: invalid token pid=" . snip($pid));
     }
 
     if(empty($player->email) && isset($email)){            // LOGIN anon player
@@ -304,6 +307,8 @@ Logout the current player by deleting both the $_SESSION and the longer term
 $_COOKIE
 ********************************************************************************/
 function logout(){
+    $pid = $_SESSION['pid'];
+    logMsg("logout $pid");
     global $qwikURL, $DAY;
     unset($_SESSION['pid']);
     setcookie("pid", "", time() - $DAY);

@@ -21,36 +21,37 @@
 <h3>Players</h3>
 
 <?php
-	$pids = pids();
-	$rows = array();
-	foreach($pids as $pid){
-		$player = readPlayerXML($pid);
-		if(isset($player)){
-		    print_r($player['id']);
+    $pids = pids();
+    foreach($pids as $pid){
+        $player = readPlayerXML($pid);
+        if(isset($player)){
+            echo "$pid ";
             $matchHist = $player->xpath("match[@status='history']");
             foreach ($matchHist as $match) {
-                if(isset($match['rep']) 
+                if(isset($match['rep'])
                 & isset($match['parity'])) {
-            
-                    print_r($match['id']);
-            
+                    $mid = $match['id'];
+                    echo "$mid ";
+
                     $request = array();
-                    $request['id'] = $match['id'];
-                    $request['rep'] = $match['rep'];
-                    $request['parity'] = $match['parity'];            
-            
-                    qwikFeedback($player, $request);
-                    
+                    $request['id'] = (string)$match['id'];
+                    $request['rep'] = (string)$match['rep'];
+                    $request['parity'] = (string)$match['parity'];
+
                     removeAtt($match, 'rep');
                     removeAtt($match, 'parity');
                     removeAtt($match, 'rely');
-                } 
+
+                    qwikFeedback($player, $request);
+                }
             }
+            echo "<br>";
         }
-	}
+    }
 
 
 ?>
+
 
 </body>
 

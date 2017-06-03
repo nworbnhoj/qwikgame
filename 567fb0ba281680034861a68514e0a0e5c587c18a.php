@@ -8,7 +8,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>retrofit data for git commit 149376a7e134862514b0773d76d76b6fc2a2f3dd</title>
+	<title>retrofit data for git commit 567fb0ba281680034861a68514e0a0e5c587c18a</title>
 </head>
 
 <body>
@@ -21,27 +21,26 @@
 <h3>Players</h3>
 
 <?php
-	$pids = pids();
-	$rows = array();
-	foreach($pids as $pid){
-		$player = readPlayerXML($pid);
-		if(isset($player)){
-		    print_r($player['id']);
+    $pids = pids();
+    foreach($pids as $pid){
+        $player = readPlayerXML($pid);
+        if(isset($player)){
+            echo "$pid ";
             $reckons = $player->xpath("reckon");
             foreach ($reckons as $reckon) {
                 if(isset($reckon['time'])) {
-            
-                    print_r($match['id']);
-            
-                    $date = create_date($reckon['time']);
-                    $reckon['date'] = $date->format("d-m-Y");
-                    
+                    $mid = $reckon['id'];
+                    echo "$mid ";
+
+                    $date = date_create((string)$reckon['time']);
+                    $reckon->addAttribute('date', $date->format("d-m-Y"));
                     removeAtt($reckon, 'time');
                 } 
             }
             writePlayerXML($player); 
+            echo "<br>";
         }
-	}
+    }
 
 
 ?>

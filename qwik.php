@@ -31,7 +31,10 @@ $cc = "<div class='center'><a rel='license' href='http://creativecommons.org/lic
 $flyerURL = "$qwikURL/pdf/qwikgame.org%20flyer.pdf";
 $termsURL = "$qwikURL/pdf/qwikgame.org%20terms%20and%20conditions.pdf";
 $privacyURL = "$qwikURL/pdf/qwikgame.org%20privacy%20policy.pdf";
+$twitterURL = "https://twitter.com/intent/tweet?text=<t>tagline</t>&url=$qwikURL";
 
+$twitterImg = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
+$twitterLink = "<a href='$twitterURL' target='_blank'>$twitterImg</a>",
 
 $INFO_ICON      = 'fa fa-question-circle icon';
 $HOME_ICON      = 'fa fa-home icon';

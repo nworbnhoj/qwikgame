@@ -534,7 +534,7 @@ function replicateMatches($player, $html, $status){
     $playerVars = playerVariables($player);
     $matches = $player->xpath("match[@status='$status']");
     foreach($matches as $match) {
-        $matchVars = matchVariables($match);
+        $matchVars = matchVariables($player, $match);
         $vars = $playerVars + $matchVars + $ICONS;
         $vars['venueLink'] = venueLink($match->venue, $player, $match['game']);
         $group .= populate($html, $vars);
@@ -3610,7 +3610,7 @@ function playerVariables($player){
 }
 
 
-function matchVariables($match){
+function matchVariables($player, $match){
 //echo "<br>MATCHVARIABLES<br>";
     global $THUMB_UP_ICON, $THUMB_DN_ICON, $games;
     $status = $match['status'];
@@ -3646,8 +3646,9 @@ function matchVariables($match){
             $vars['hour'] = hourSelect(hours($hrs));
             break;
         case 'history':
-            $outcome = $player->xpath("outcome(@id='$matchID')")[0];
-            if (isset($outcome)) {
+            $outcomes = $player->xpath("outcome[@id='$matchID']");
+            if (isset($outcomes[0])) {
+                $outcome = $outcome[0]; 
                 $vars['parity'] = parityStr($outcome['parity']);
                 $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
             }

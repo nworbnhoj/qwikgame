@@ -88,6 +88,7 @@
         'privacyLink'		=> "<a href='$privacyURL'><t>privacy policy</t></a>",
         'flyerLink'         => "<a href='$flyerURL'><t>flyer</t></a>",
         'twitterLink'       => $twitterLink,
+        'facebookLink'      => $facebookLink,
 		'inputVenue'		=> $inputVenue,
 		'inputRival'		=> $inputRival,
         'selectGame'        => $selectGame,

@@ -32,9 +32,13 @@ $flyerURL = "$qwikURL/pdf/qwikgame.org%20flyer.pdf";
 $termsURL = "$qwikURL/pdf/qwikgame.org%20terms%20and%20conditions.pdf";
 $privacyURL = "$qwikURL/pdf/qwikgame.org%20privacy%20policy.pdf";
 $twitterURL = "https://twitter.com/intent/tweet?text=<t>tagline</t>&url=$qwikURL";
+$facebookURL = "https://www.facebook.com/sharer/sharer.php?u=$qwikURL";
 
-$twitterImg = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
+$twitterImg = "<img src='img/twitter.png' alt='twitter' height='30'>";
+$facebookImg = "<img src='img/facebook.png' alt='facebook' height=30'>";
+
 $twitterLink = "<a href='$twitterURL' target='_blank'>$twitterImg</a>";
+$facebookLink = "<a href='$facebookURL' target='_blank'>$facebookImg</a>";
 
 $INFO_ICON      = 'fa fa-question-circle icon';
 $HOME_ICON      = 'fa fa-home icon';

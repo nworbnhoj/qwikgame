@@ -3648,7 +3648,7 @@ function matchVariables($player, $match){
         case 'history':
             $outcomes = $player->xpath("outcome[@id='$matchID']");
             if (isset($outcomes[0])) {
-                $outcome = $outcome[0]; 
+                $outcome = $outcomes[0]; 
                 $vars['parity'] = parityStr($outcome['parity']);
                 $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
             }

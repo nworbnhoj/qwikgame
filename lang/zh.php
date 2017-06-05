@@ -11,7 +11,7 @@ $zh = &$GLOBALS['zh'];
 
 $zh['qwik_game_org'] = 'qwik game org';
 $zh['tagline'] = '找人玩你最喜欢的游戏，在一个适合你的时间和地点';
-$zh['license'] = "<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='知识共享许可协议' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/88x31.png' /></a><br />本作品由<a xmlns:cc='http://creativecommons.org/ns#' href='https://qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a>创作，采用<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。";
+$zh['license'] = "<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='知识共享许可协议' style='border-width:0' src='img/creativecommons.png' /></a><br />本作品由<a xmlns:cc='http://creativecommons.org/ns#' href='https://qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a>创作，采用<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。";
 $zh['Submit'] = '提交';
 $zh['Upload'] = 'Upload';
 $zh['Cancel'] = 'Cancel';

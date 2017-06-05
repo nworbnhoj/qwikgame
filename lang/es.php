@@ -11,7 +11,7 @@ $es = &$GLOBALS['es'];
 
 $es['qwik_game_org'] = 'qwik game org';
 $es['tagline'] = 'encontrar a alguien para jugar su juego favorito en un momento y lugar que más le convenga';
-$es['license'] = "<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Permesilo Krea Komunaĵo' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/88x31.png' /></a><br />Ĉi tiu verko fare de <a xmlns:cc='http://creativecommons.org/ns#' href='https://qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a> estas disponebla laŭ la permesilo <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Krea Komunaĵo Atribuite-Samkondiĉe 4.0 Tutmonda</a>.";
+$es['license'] = "<a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Permesilo Krea Komunaĵo' style='border-width:0' src='creativecommons.png' /></a><br />Ĉi tiu verko fare de <a xmlns:cc='http://creativecommons.org/ns#' href='https://qwikgame.org' property='cc:attributionName' rel='cc:attributionURL'>qwikgame.org</a> estas disponebla laŭ la permesilo <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Krea Komunaĵo Atribuite-Samkondiĉe 4.0 Tutmonda</a>.";
 $es['Submit'] = 'Enviar';
 $es['Upload'] = 'Subir';
 $es['Cancel'] = 'Cancelar';

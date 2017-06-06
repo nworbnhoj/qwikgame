@@ -122,7 +122,7 @@ blockquote, q {
 }
 
 .socialmedia {
-	height:30;
+	height:30px;
 }
 
 .twitter {
@@ -334,7 +334,7 @@ li.naked	{ padding:0px;	}
 table {
 	text-align:center;
 	padding:12px;
-//	border:solid #666666 1px;
+/*	border:solid #666666 1px; */
 	border:none;
 	border-collapse:collapse;	}
 
@@ -378,7 +378,7 @@ table.time td.past {
 
 table.week {
 	empty-cells: show;
-	border=1;
+	border:1;
 }
 
 table.week th {		
@@ -399,7 +399,7 @@ table.week td {
 table.day {
 	empty-cells: show;
 	display:inline;
-	border=1;
+	border:1;
 }
 
 table.day th {		
@@ -419,7 +419,7 @@ table.day td {
 /************** <th> *********************/
 
 th {
-//	padding:0.2em;
+/*	padding:0.2em; */
 	font-weight:bold;
 	text-align:center;
 }
@@ -427,7 +427,7 @@ th {
 /************** <td> *********************/
 
 td {
-//  padding:0.2em;
+/*  padding:0.2em; */
 }
 
 
@@ -460,7 +460,7 @@ a.icon {
 	float:right;
 	text-decoration:none;
 	font-size:1.3em;
-	font-color:DarkOrange;
+	color:DarkOrange;
 	margin:0.2em;
 }
 
@@ -504,7 +504,7 @@ input {
 }
 
 
-// https://stackoverflow.com/questions/7381446/center-html-input-text-field-placeholder
+/* https://stackoverflow.com/questions/7381446/center-html-input-text-field-placeholder */
 ::-webkit-input-placeholder {
 	text-align: center;
 }
@@ -631,7 +631,7 @@ code {
     margin-left:auto;
     margin-right:auto;
 
-	font:arial;
+	font-family:arial;
 	border: solid 1px DarkGrey;
 	background-color:Gainsboro;
 	text-align:left;

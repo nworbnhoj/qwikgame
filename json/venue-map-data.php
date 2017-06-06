@@ -1,9 +1,9 @@
 <?php
-	 require 'qwik.php';
+	 require '../qwik.php';
 	$game = $_GET['game'];
 	$mapData = '';
 	if($game){
-		$xml = readXML('venue', 'venues.xml');
+		$xml = readXML('../venue', 'venues.xml');
 		$venues = $xml->xpath("/meta/venue[game='$game']");
 		foreach($venues as $venue){ 
 			$vid = $venue['id'];

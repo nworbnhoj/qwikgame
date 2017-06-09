@@ -126,7 +126,7 @@ class FeatureContext implements Context
     /**
      * @When I like to play :game at :venue
      */
-    public function iLikeToPlaySquashAtMilawa($game, $svid)
+    public function iLikeToPlaySquashAtQwikgame($game, $svid)
     {
     	$this->game = $game;
     	$this->svid = $svid;
@@ -418,7 +418,7 @@ class FeatureContext implements Context
         if (count($matches) == 1) {
             $matchA = $matches[0];
         } else {    // set up a dummy match between A & B, ready for feedback
-            $vid = $this->locateVenue("Milawa Squash Courts | Milawa");
+            $vid = $this->locateVenue("Qwikgame Venue | Milawa");
             $venue = readVenueXML($vid);
             $date = date_add(
                 venueDateTime("today", $venue),

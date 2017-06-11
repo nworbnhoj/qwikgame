@@ -54,6 +54,7 @@ class FeatureContext implements Context
 	private $parity;
 	private $pid;
 	private $player;
+	private $rankingFilename;
 	private $req = [];     // a post or get request
 	private $time;
 	private $token;
@@ -488,6 +489,31 @@ class FeatureContext implements Context
                 break;
         }
     }   
+    
+    
+    
+    /**
+     * @Given a ranking file :filename from :player
+     */
+    public function aRankingFile($filename, $player)
+    {
+        $this->rankingFilename = $filename;
+        $pid = $this->rivals[$player];
+        $this->player = readPlayerXML($pid);
+    }
+
+
+
+    /**
+     * @When the ranking is Activated
+     */
+    public function theRankingIsActivated()
+    {
+//        $ranking = getUpload($this->player, $this->rankingFilename);
+//        insertRanking($ranking);
+    }
+
+
     
     
 }

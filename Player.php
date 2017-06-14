@@ -1,0 +1,1062 @@
+<?php
+
+
+class Player {
+
+    const PATH_PLAYER   = 'player';
+    const PATH_UPLOAD = 'uploads';
+
+    const SECOND = 1;
+    const MINUTE = 60;
+    const HOUR   = 3600;
+    const DAY    = 86400;
+    const WEEK   = 604800;
+    const MONTH  = 2678400;
+    const YEAR   = 31536000;
+
+    private $id;
+    private $xml;
+    private $log;
+
+    public function __construct($pid, $log){
+        $this->id = $pid;
+        $this->log = $log;
+        $path = self::PATH_PLAYER;
+        if (!file_exists("$path/$pid.xml")) {
+            $this->xml = $this->newXML($pid);
+            $this->save();
+	        $this->logMsg("login: new player " . snip($pid));
+        }
+        $this->xml = $this->readXML($pid);
+    }
+
+
+    private function newXML(){
+        $id = $this->id;
+        $now = new DateTime('now');
+        $debut = $now->format('d-m-Y');
+        $record  = "<player id='$id' debut='$debut' lang='en'>";
+        $record .= "<rep pos='0' neg='0'/>";
+        $record .= "<rely val='2.0'/>";
+        $record .= "</player>";
+        return new SimpleXMLElement($record);
+    }
+
+
+    public function save(){
+        $cwd = getcwd();
+        $path = self::PATH_PLAYER;
+        if(chdir($path)){
+            $pid = $this->xml['id'];
+            $this->xml->saveXML("$pid.xml");
+            if(chdir($cwd)){
+                $this->logMsg("unable to change working directory to $cwd");
+                return false;
+            }
+        } else {
+            logMsg("unable to change working directory to $path");
+            return false;
+        }
+    }
+
+
+    public function readXML($id){
+        $id = $this->id;
+        $path = self::PATH_PLAYER;
+        $filename = "$id.xml";
+        if (!file_exists("$path/$filename")) {
+            $this->logMsg("unable to read player XML " . snip($id));
+            return $this->newXML($id);
+        }
+
+        $cwd = getcwd();
+        if(chdir($path)){
+            $xml = simpleXML_load_file($filename);
+            if(!chdir($cwd)){
+                $this->logMsg("unable to change working directory to $cwd");
+            }
+            return $xml;
+        } else {
+            $this->logMsg("unable to change working directory to $path");
+        }
+    }
+
+
+    private function logMsg($msg){
+        $this->log->lwrite($msg);
+        $this->log->lclose();
+    }
+
+
+    public function id(){
+        return $this->id;
+    }
+
+
+    public function debut(){
+        return $this->debut;
+    }
+
+
+    public function lang($lang=NULL){
+        if (isset($lang)){
+            $this->xml['lang'] = $lang;
+        }
+        return (string) $this->xml['lang'];
+    }
+
+
+    public function nick($nick=NULL){
+        if (isset($nick)){
+            if (isset($this->xml['nick'])){
+                $this->xml['nick'] = $nick;
+            } else {
+                $this->xml->addAttribute('nick', $nick);
+            }
+        }
+        return (string) $this->xml['nick'];
+    }
+
+
+    public function rely($disparity=NULL){            // note disparity range [0,4]
+        $rely = $this->xml->rely['val'];
+        if (isset($disparity)){
+            $this->xml->rely['val'] = $this->expMovingAvg($rely, 4-$disparity, 3);
+        }
+        return (float) $this->xml->rely['val'];
+    }
+
+
+    public function rep(){
+        return $this->xml->rep[0];
+    }
+
+
+    public function url($url=NULL){
+        if (isset($url)){
+            if (isset($this->xml['url'])){
+                $this->xml['url'] = $url;
+            } else {
+                $this->addAttribute('url', $url);
+            }
+        }
+        return (string) $this->xml['url'];
+    }
+
+
+
+    public function email($newEmail=NULL){
+        if (isset($newEmail)){
+            if(empty($this->xml->email)){
+                $this->xml->addChild('email', $newEmail);
+            } else {
+                $oldEmail = $this->xml->email[0];
+                if ($oldEmail != $newEmail) {
+                    $newID = anonID($newEmail);
+                    if (false){ // if newID already exists then log and abort
+                        logMsg("abort change email from $oldEmail to $newEmail.");
+                    } else {
+                        changeEmail($newEmail);
+                    }
+                }
+            }
+        }
+        return (string) $this->xml->email;
+    }
+
+
+    private function changeEmail($newEmail){
+        $preID = $this->id();
+        $newID = anonID($newEmail);
+        removeElement($this->xml->email);
+        $this->xml->addChild('email', $newEmail);
+        $this->id = $newID;
+        $this->xml['id'] = $newID;
+
+        // replace old player file with a symlink to the new file
+        $path = self::PATH_PLAYER;
+        deleteFile("$path/$preID.xml");
+        symlink("$path/$newID.xml", "$path/$preID.xml");
+    }
+
+
+
+    public function token($term){
+        $token = newToken(10);
+        $nekot = $this->xml->addChild('nekot', nekot($token));
+        $nekot->addAttribute('exp', time() + $term);
+        $this->save();;
+        return $token;
+    }
+
+
+    public function available(){
+        return $this->xml->xpath("available");
+    }
+
+
+    public function matchStatus($status){
+        return $this->xml->xpath("match[@status='$status']");
+    }
+
+
+    public function matchID($id){
+        return $this->xml->xpath("match[@id='$id']")[0];
+    }
+
+
+
+
+    public function outcome($id, $rely=NULL){
+        $outcomes = $this->xml->xpath("outcome[@id='$id']");
+        if (empty($outcomes)){
+            return null;
+        }
+
+        $outcome = $outcomes[0];
+
+        if (is_null($rely)){
+            return $outcome;
+        }
+
+        $outcome['rely'] = $rely;
+        $this->save();
+        return $outcome;
+    }
+
+
+    public function reckon($id){
+        return $this->xpath("reckon[@$id]");
+    }
+
+
+    public function matchQuery($query){
+        return $this->xml->xpath("$query");
+    }
+
+
+    public function matchCancel($id){
+        $match = $this->matchID($id);
+//echo "<br>CANCELMATCH $id<br>";
+        $played = array('feedback','history');
+        if (in_array($match['status'], $played)){
+            return;
+        }
+        $rivalIDs = $match->xpath('rival');
+        foreach($rivalIDs as $rivalID){
+            $rival = new Player($rivalID);
+            if(isset($rival)){
+                $rivalMatch = $rival->matchID($id);
+                if(!in_array($rivalMatch['status'], $played)){
+                    $rivalMatch['status'] = 'cancelled';
+//                  emailCancel($rival, $rivalMatch, $rival->venue);
+                    $write = TRUE;
+                }
+                if($write){
+                    $rival->save();
+                }
+            }
+        }
+        removeElement($match);
+        $this->save();
+    }
+
+
+    public function isValidToken($token){
+        $nekot = nekot($token);
+        return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
+    }
+
+
+    //scans and processes past matches
+    public function concludeMatches(){
+    //echo "<br>CONCLUDEMATCHES<br>";
+        $oneHour = date_interval_create_from_date_string("1 hour");
+        $matches = $this->xml->xpath('match');
+        foreach($matches as $match){
+            $tz = $match->venue['tz'];
+            $now = tzDateTime('now', $tz);
+            $dateStr = $match['date'];
+            $hour = max(hours($match['hrs']));
+            switch ($match['status']){
+                case 'cancelled':
+                    $hour = min($hour+6, 24);
+                case 'keen':
+                case 'invitation':
+                case 'accepted':
+                    if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
+                        removeElement($match);
+                    }
+                    break;
+                case 'confirmed':
+                    if ($now > date_add(matchDateTime($match), $oneHour)){
+                        $match['status'] = 'feedback';
+                    }
+                    break;
+                case 'feedback':
+                    // send email reminder after a couple of days
+                    break;
+                default:
+                    // nothing to do
+            }
+        }
+        $this->save();
+    }
+
+
+
+    public function venueRename($vid, $newID){
+        $matches = $player->xpath("available[venue='$vid'] | match[venue='$vid']");
+        foreach($matches as $match){
+            $match->venue = $newID;
+        }
+        $this->save();
+    }
+
+
+    // https://stackoverflow.com/questions/262351/remove-a-child-with-a-specific-attribute-in-simplexml-for-php/16062633#16062633
+    public function delete($id){
+        $rubbish = $this->xml->xpath("//*[@id='$id']");
+        foreach($rubbish as $junk){
+            removeElement($junk);
+        }
+        $this->save();
+    }
+
+    public function quit(){
+        $matches = $this->xml->xpath("match[@status!='history']");
+        foreach($matches as $match){
+            cancelMatch($match);
+        }
+        $records = $this->xml->xpath("available | reckon");
+        foreach($records as $record){
+            removeElement($record);
+        }
+        $emails = $this->xml->xpath("email");
+        foreach($emails as $email){
+            removeElement($email);
+        }
+
+        $this->nick(null);
+        $this->url(null);
+
+        $this->save();
+    }
+
+
+
+////////// HELPER /////////////////////////////////////
+
+
+    private function removeElement($xml){
+        $dom=dom_import_simpleXML($xml);
+        $dom->parentNode->removeChild($dom);
+    }
+
+    private function removeAtt($xml, $att){
+        $dom=dom_import_simpleXML($xml);
+        $dom->removeAttribute($att);
+    }
+
+
+    // Updates an EXPonential moving AVeraGe with a new data POINT.
+    private function expMovingAvg($avg, $point, $exp){
+        $avg = floatval($avg);
+        $point = floatval($point);
+        $exp = intval($exp);
+        return ($avg * ($exp-1) + $point) / $exp;
+    }
+
+
+
+////////// RECKON ///////////////////////////////////////
+
+    public function familiar($game, $rivalEmail, $parity, $log){
+        $rid = anonID($rivalEmail);
+
+        $reckon = $this->xml->addChild('reckon', '');
+        $reckon->addAttribute('rival', $rid);
+        $reckon->addAttribute('email', $rivalEmail);
+        $reckon->addAttribute('parity', $parity);
+        $reckon->addAttribute('game', $game);
+        $date = date_create();
+        $reckon->addAttribute('date', $date->format("d-m-Y"));
+        $reckon->addAttribute('id', newID());
+        $reckon->addAttribute('rely', $this->rely()); //default value
+        $this->save();
+
+        $rival =  new Player($rid, $log);
+    }
+
+
+    public function region($game, $ability, $region){
+            $reckon = $this->xml->addChild('reckon', '');
+            $reckon->addAttribute('ability', $ability);
+            $reckon->addAttribute('region', $region);
+            $reckon->addAttribute('game', $game);
+            $date = date_create();
+            $reckon->addAttribute('date', $date->format("d-m-Y"));
+            $reckon->addAttribute('id', newID());
+            $reckon->addAttribute('rely', $this->rely()); //default value
+            $this->save();
+    }
+
+
+
+////////// AVAILABLE //////////////////////////////////////
+
+    public function availableAdd($game, $vid, $parity, $tz, $all7days, $req){
+        $newID = newID();
+        $element = $this->xml->addChild('available', '');
+        $element->addAttribute('id', $newID);
+        $element->addAttribute('game', $game);
+        $element->addAttribute('parity', $parity);
+        $v = $element->addChild('venue', $vid);
+        $v->addAttribute('tz', $tz);
+        $days = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
+        foreach($days as $day){
+            $requestHrs = $all7days;
+            if (!$requestHrs && isset($req[$day])) {
+                $requestHrs = $req[$day];
+            }
+            if ($requestHrs) {
+                $hrs = $element->addChild('hrs', $requestHrs);
+                $hrs->addAttribute('day', $day);
+            }
+        }
+        $this->save();
+        return $newID;
+    }
+
+
+    /**
+     * Computes the hours that a $rival is available to have a $match with $player
+     *
+     * @param xml $rival The $rival who may be available
+     * @param xml $player The keen $player who has initiated the $match
+     * @param xml @match The $match proposed by the $player to the $rival
+     *
+     * @return bitfield representing the hours at the $rival is available
+     */
+    public function availableHours($rival, $match){
+    //echo "<br>AVAILABLEHOURS<br>";
+        $availableHours = 0;
+        $vid = $match->venue;
+        $game = $match['game'];
+        $day = matchDateTime($match)->format('D');
+        $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
+        foreach ($available as $avail){
+
+            $hours = $avail->xpath("hrs[@day='$day']");
+
+            foreach ($hours as $hrs){
+                $availableHours = $availableHours | $hrs;
+            }
+        }
+        return $availableHours;
+    }
+
+
+    // check rival keeness in the given hours
+    public function keenHours($rival, $match){
+    //echo "<br>KEENHOURS<br>";
+        $keenHours = 0;
+        $venue = $match->venue;
+        $game = $match['game'];
+        $day = matchDateTime($match)->format('D');
+        $keens = $this->xml->xpath("match[status='keen' and venue='$venue' and game='$game']");
+        foreach ($keens as $keen){
+            $keenHours = $keenHours | $keen['hrs'];
+        }
+        return $keenHours;
+    }
+
+
+
+
+
+
+////////// MATCH //////////////////////////////////////////
+
+    public function matchKeen($game, $venue, $date, $hours) {
+    //echo "<br>KEENMATCH<br>";
+        $match = $this->xml->addChild('match', '');
+        $match->addAttribute('status', 'keen');
+        $match->addAttribute('id', newID());
+        $match->addAttribute('game', $game);
+        $match->addAttribute('date', $date->format('d-m-Y'));
+        $match->addAttribute('hrs', $hours);
+        $v = $match->addChild('venue', $venue['id']);
+        $v->addAttribute('tz', $venue['tz']);
+        $this->save();
+        return $match;
+    }
+
+
+    public function matchInvite($rival, $match, $hours){
+    //echo "INVITEMATCH<br>";
+        $inviteMatch = $this->xml->addChild('match', '');
+        $inviteMatch->addAttribute('status', 'invitation');
+        $inviteMatch->addAttribute('id', $match['id']);
+        $inviteMatch->addAttribute('game', $match['game']);
+        $inviteMatch->addAttribute('date', $match['date']);
+        $inviteMatch->addAttribute('hrs', $match['hrs']);
+        $pl = $inviteMatch->addChild('rival', $rival->id());
+        $pl->addAttribute('parity', $this->parity($rival, $match['game']));
+        $pl->addAttribute('rep', repWord($rival));
+        $pl->addAttribute('name', $rival->nick());
+        $v = $inviteMatch->addChild('venue', $match->venue);
+        $v->addAttribute('tz', $match->venue['tz']);
+
+        $this->save();
+        return $inviteMatch;
+    }
+
+
+
+
+
+////////// OUTCOME //////////////////////////////////////////
+
+    public function outcomeAdd($mid, $parity, $rep){
+        $match = $this->matchID($mid);
+        if (isset($match)){
+            $match['status'] = 'history';
+
+            $outcome = $this->xml->addChild('outcome', '');
+            $outcome->addAttribute('game', $match['game']);
+            $outcome->addAttribute('rival', $match->rival);
+            $date = date_create($match['time']);
+            $outcome->addAttribute('date', $date->format("d-m-Y"));
+            $outcome->addAttribute('parity', $parity);
+            $outcome->addAttribute('rep', $rep);
+            $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
+            $outcome->addAttribute('id', $mid);
+            $this->save();
+
+            return new Player($match->rival, $this->log);
+        } else {
+            header("Location: error.php?msg=unable to locate match.");
+        }
+    }
+
+
+    // update the reputation records for a player
+    public function updateRep($feedback){
+        $rep = isset($this->xml->rep) ? $this->xml->rep : $this->xml->addChild('rep', '');
+
+        switch ($feedback){
+            case '+1':
+                $rep['pos'] = $rep['pos'] + 1;
+                break;
+            case '-1':
+                $rep['neg'] = $rep['neg'] + 1;
+                break;
+        }
+        $this->save();
+    }
+
+
+
+////////// UPLOAD //////////////////////////////////////////
+
+
+    public function uploadIDs(){
+        return $this->xml->xpath("upload");
+    }
+
+
+    public function uploadAdd($fileName){
+        $up = $player->addChild('upload', $fileName);
+//      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
+        $this->save();
+    }
+
+
+    public function uploadGet($fileName){
+    //echo "<br>GETUPLOAD<br>";
+        $upload = readUploadXML($fileName);
+        if(!$upload){
+            $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
+            foreach($missing as $miss){
+                $this->removeElement($miss);
+            }
+            $this->save();
+            return FALSE;
+        }
+        return $upload;
+    }
+
+
+    public function uploadDelete($fileName){
+        $path = self::PATH_UPLOAD;
+        deleteFile("$path/$fileName.csv");
+        deleteFile("$path/$fileName.xml");
+
+        $delete = $this->xml->xpath("/player/upload[text()='$fileName']");
+       foreach($delete as $del){
+           $this->removeElement($del);
+       }
+       $this->save();
+    }
+
+
+
+////////// PARITY //////////////////////////////////////////
+
+
+    /********************************************************************************
+    Returns an estimate of the parity of two players for a given $game.
+    A positive parity indicates that $player is stronger than $rival.
+
+    $player    XML        player data for player #1
+    $rival    XML        player data for player #2
+    $game    String    A string ID of a game.
+
+    Each player is "related" to other players by the reports they have made of the
+    other player's relative ability in a game (ie player-A reports that A>B A=C A<D A>>E).
+    This sphere of relations is referred to as the players *orb*.
+
+    A players *orb* can be *expanded* to include secondary relationships
+    (ie B=C B>E C=A D=F A>>F) and so on for 3rd, 4th & 5th degree relationships and so on.
+
+    The parity estimate is made by expanding the orbs of both players until there is an
+    overlap, and then using these relationships to estimate the parity between the two players.
+    For example there is no overlap between
+        Orb-A = (A>B A=C A<D A>>E)
+        Orb-F = (F=G F>H)
+    but if both orbs are expanded then there is an overlap
+        Orb-A = (A>B A=C A<D A>>E B=G C=I C>J C>K D>H)
+        Orb-F = (F=G F>H G=B H=L)
+    and the following relationships are used to estimate parity between player-A and player-F
+        A>B B=G F=G G=B A<D D>H F>H
+
+
+    Note that each player's orb can be traversed outwards from one report to the next;
+    but not in inwards direction (of course there are loops). Function orbCrumbs() is called to     construct bread-crumb trails back to the center.
+    ********************************************************************************/
+    public function parity($rival, $game){
+//echo "<br>PARITY $game<br>\n";
+
+    $playerID = $this->id();
+    $rivalID = $rival->id();
+//echo "player: $playerID<br>\n";
+//echo "rival: $rivalID<br>\n";
+
+    // obtain the direct orb for each of the players
+    $playerOrb = $this->orb($game);
+    $rivalOrb = $rival->orb($game);
+
+    // generate 'bread-crumb' trails for both orbs
+    $playerOrbCrumbs = $this->orbCrumbs($playerOrb, $playerID);
+    $rivalOrbCrumbs = $this->orbCrumbs($rivalOrb, $rivalID);
+
+    // compute the intersection between the two orbs
+    $orbIntersect = array_intersect(
+                        array_keys($playerOrbCrumbs),
+                        array_keys($rivalOrbCrumbs)
+                    );
+
+    // check if the orbs are isolated (ie no possible further expansion)
+    $playerOrbSize = count($playerOrbCrumbs);
+    $rivalOrbSize = count($rivalOrbCrumbs);
+    $playerIsolated = FALSE;
+    $rivalIsolated = FALSE;
+    $flipflop = FALSE;
+    while (!($playerIsolated && $rivalIsolated)
+        && count($orbIntersect) < 3
+        && ($playerOrbSize + $rivalOrbSize) < 100){
+
+        $members = array();
+        $flipflop = !$flipflop;
+
+        // expand one orb and then the other seeking some intersection
+        if ($flipflop){
+            $prePlayerOrbSize = $playerOrbSize;
+            $playerOrbCrumbs = $this->expandOrb($playerOrb, $playerOrbCrumbs, $game);
+            $playerOrbSize = count($playerOrbCrumbs);
+            $playerIsolated = ($playerOrbSize == $prePlayerOrbSize);
+        } else {
+            $preRivalOrbSize = $rivalOrbSize;
+            $rivalOrbCrumbs = $this->expandOrb($rivalOrb, $rivalOrbCrumbs, $game);
+            $rivalOrbSize = count($rivalOrbCrumbs);
+            $rivalIsolated = ($rivalOrbSize == $preRivalOrbSize);
+        }
+
+
+        // compute the intersection between the two orbs
+        $orbIntersect = array_intersect(
+                            array_keys($playerOrbCrumbs),
+                            array_keys($rivalOrbCrumbs)
+                        );
+        $orbIntersect[] = $this->subID($playerID);
+        $orbIntersect[] = $this->subID($rivalID);
+
+//echo "playerIsolated=$playerIsolated<br>\n";
+//echo "rivalIsolated=$rivalIsolated<br>\n";
+//$cmc = count($orbIntersect);
+//echo "commonMemberCount=$cmc<br>\n";
+//echo "playerOrbSize=$playerOrbSize<br>\n";
+//echo "rivalOrbSize=$rivalOrbSize<br><br>\n\n";
+    }
+
+//echo "playerOrbCrumbs = ";
+//print_r($playerOrbCrumbs);
+//echo "<br><br>";
+
+//echo "rivalOrbCrumbs = ";
+//print_r($rivalOrbCrumbs);
+//echo "<br><br>";
+
+
+//echo "orbIntersect Crumbs=";
+//print_r($orbIntersect);
+//echo "<br><br>\n";
+
+//echo "<br><br><br>playerOrb=";
+//print_r($playerOrb);
+//echo "<br><br><br>\n";
+
+//echo "<br><br><br>rivalOrb=";
+//print_r($rivalOrb);
+//echo "<br><br><br>\n";
+
+
+    // prune both orbs back to retain just the paths to the intersection points
+    $this->pruneOrb($playerOrb, $orbIntersect);
+    $this->pruneOrb($rivalOrb, $orbIntersect);
+
+//echo "<br><br><br>playerOrb=";
+//print_r($playerOrb);
+//echo "<br><br><br>\n";
+
+//echo "<br><br><br>rivalOrb=";
+//print_r($rivalOrb);
+//echo "<br><br><br>\n";
+
+   $invRivalOrb = $this->orbInv($rivalOrb, $rivalID);
+   $spliceOrb = $this->spliceOrb($playerOrb, $playerID, $invRivalOrb);
+
+//echo "<br><br><br>splicedOrb=";
+//print_r($spliceOrb);
+//echo "<br><br><br>\n";
+
+    $parity = $this->parityOrb($spliceOrb, $rivalID);
+
+    $this->logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity". $this->printOrb($playerOrb));
+
+    return $parity;
+
+}
+
+
+    private function printOrb($orb, $tabs="\t"){
+    $str = '';
+    foreach($orb as $node){
+        $rid = $node['rival'];
+        $parity = $node['parity'];
+        $rely = $node['rely'];
+        $str .= "\n$tabs" . snip($rid) . " $parity $rely";
+        if(isset($node['orb'])){
+            $str .= $this->printOrb($node['orb'], "$tabs\t");
+        }
+    }
+    return $str;
+}
+
+
+/********************************************************************************
+Returns an estimate of the parity of a player to $rival
+
+$orb    ArrayMap    The orb of the player, pre-pruned to contain paths only to the $rival
+$rival    XML            player data of the rival
+
+Computes the numeric Parity of the root of the $orb to the $rivalID.
+Some examples:
+    A>B & B<A implies A>B
+    A>B & B=C implies A>C
+    A>B & B=C & C=D implies A>D
+
+This is a recursive function that computes the weighted average of each parity
+path to the rival. There are two computations happening here; one of breadth
+(multiple paths) and one of length (long parity chains).
+- Depth. Each of several outcome are combined by weighted average, where the
+weight is the reliability of the player (node)
+- Length. A long chain of outcomes linking one player to another is combined
+by adding the parities to account for stronger outcomes (+1), and much-weaker
+(-2) outcomes for example. However shorter chains are given more weight than
+longer chains by introducing a decay (=0.9) at each link.
+********************************************************************************/
+    private function parityOrb($orb, $rivalID){
+//echo "<br>PARITYORB rid=$rivalID<br>\n";
+    $rivalID = subID($rivalID);
+    $relyChainDecay = 0.7;
+    $parityTotal = 0.0;
+    $relyTotal = 0.0;
+    $n=0;
+    foreach($orb as $node){
+        $parity = $node['parity'];
+        if (($node['rival'] != $rivalID)
+        && (isset($node['orb']))){
+            $parityOrb = $this->parityOrb($node['orb'], $rivalID);
+            if (!is_null($parityOrb)){
+                $parity += $parityOrb * $relyChainDecay;
+            }
+        }
+        $rely = $node['rely'];
+        $relyTotal += $rely;
+        $parityTotal += $parity * $rely;      // note rely range [0,4]
+        $n++;
+    }
+    if ($n>0 && $relyTotal>0) {
+        $relyAverage = $relyTotal / $n;
+        $parityAverage = $parityTotal / ($n * $relyAverage);
+    } else {
+        $parityAverage = null;
+    }
+    return $parityAverage;
+}
+
+
+// signed square of a number
+    private function ssq($n){
+    return gmp_sign($n) * $n * $n;
+}
+
+
+
+/********************************************************************************
+Retuns an Array mapping each rivalID to an array of 'inverted' nodes suitable to
+be passed to function spiceOrb()
+
+$orb    ArrayMap  the orb to be inverted
+$pid    String    The unique PlayerID at the root of the $orb
+
+An Orb contains a tree like structure of nodes. This function returns an Array
+indexed by each of the rivalID's found in the Orb. Each rivalID is mapped to an
+Array of Nodes found in the Tree and 'inverted' by swapping the ID's of Player
+and Rival, and by negating the parity. These 'inverted' nodes are suitable for
+passing to function spliceOrb() to be inserted into the corresponding rival orb.
+
+********************************************************************************/
+private function orbInv($orb, $pid){
+//echo "function orbInv()";
+    $orbInv = array();
+    foreach($orb as $node){
+        $rid = (string)$node['rival'];
+        if (!array_key_exists($rid, $orbInv)){
+            $orbInv[$rid] = array();
+        }
+        $orbInv[$rid][] = $this->orbNode($pid, -1 * $node['parity'], $node['rely']);
+
+        // recursion
+        if(isset($node['orb'])){
+            $subOrbInv = $this->orbInv($node['orb'], $node['rival']);
+            foreach ($subOrbInv as $rid => $subNode) {
+                if (!array_key_exists($rid, $orbInv)){
+                    $orbInv[$rid] = array();
+                }
+                $orbInv[$rid] = array_merge($orbInv[$rid], $subNode);
+            }
+        }
+    }
+    return $orbInv;
+}
+
+
+
+/********************************************************************************
+Splices 2 orbs together by inserting 'inverted' Nodes from a Rivel Orb into $orb.
+
+$orb    ArrayMap  the orb to be spliced
+$pid    String    the unique PlayerID at the root of the $orb
+$invOrb Arraymap  an Array mapping each rivalID to an array of nodes
+
+This function traverses the $orb and inserts the Nodes from $invOrb into the
+structure. The function orbInv() can prepar the nodes by swapping Player and Rival
+and by negating Parity.
+
+********************************************************************************/
+private function spliceOrb(&$orb, $pid, $invOrb){
+//echo "<br>SPLICEORB</br>";
+
+    $pid = (string)$pid;
+    if (array_key_exists($pid, $invOrb)){
+        $invNodes = $invOrb[$pid];
+        foreach ($invNodes as $invNode) {
+            $orb[] = $invNode;
+        }
+    }
+
+    foreach($orb as &$node){
+        $rid = (string)$node['rival'];
+        if(!isset($node['orb'])){
+            $node['orb'] = array();
+        }
+        $this->spliceOrb($node['orb'], $rid, $invOrb);
+    }
+    return $orb;
+}
+
+
+/********************************************************************************
+Returns a player orb extended out to include one addition set of relations from 
+the edge.
+
+$orb    ArrayMap    the orb to be extended
+$crumbs    ArrayMap    node => a more central node
+$game    String        the game
+ 
+********************************************************************************/
+private function expandOrb(&$orb, $crumbs, $game){
+//echo "EXPANDORB $game<br><br>\n";
+
+    foreach($orb as &$node){
+        $rivalID = $node['rival'];
+        if(isset($node['orb'])){
+            $crumbs = array_merge($this->expandOrb($node['orb'], $crumbs, $game), $crumbs);
+        } elseif(!in_array($rivalID, $crumbs)){
+            $rival = new Player($rivalID, $this->log);
+            $node['orb'] = $rival->orb($game, $crumbs, FALSE);
+            $crumbs = array_merge($this->orbCrumbs($node['orb'], $rivalID), $crumbs);
+        }
+    }
+    return $crumbs;
+}
+
+
+
+
+/********************************************************************************
+Returns the $orb with all nodes removed that are not in $keepers,
+and all denuded branches removed.
+
+
+$orb        ArrayMap    the orb to be pruned
+$keepers    Array        nodes to be retained
+
+********************************************************************************/
+    private function pruneOrb(&$orb, $keepers){
+//echo "PRUNEORB<br><br>\n";
+    foreach($orb as $key => &$node){
+        if(isset($node['orb'])){
+            if($this->pruneOrb($node['orb'], $keepers)){
+                unset($node['orb']);
+            }
+        } elseif(!in_array($node['rival'], $keepers)){
+            unset($orb[$key]);
+        }
+    }
+    return count($orb) == 0; //denuded branch
+}
+
+
+    private function subID($id){
+return (string)$id;
+    return substr("$id",0, 10);
+}
+
+
+
+    /********************************************************************************
+    Returns the player orb extended to include only the direct ability reports made
+    by the player
+
+    $game            String    The game of interest
+    $filter            Array   An array of nodes to keep or discard
+    $positiveFilter    Boolean    TRUE to include nodes in the $filter; FALSE to discard
+
+    An ORB represents the sphere of PARITY around a PLAYER in a PARITY graph linked by
+    estimates from MATCH FEEDBACK, uploaded RANKS, and RECKONS. An ORB is held in an
+    associative array of arrays with key=PLAYER-ID and value=array of PARITY link ID's.
+
+    ********************************************************************************/
+    private function orb($game, $filter=FALSE, $positiveFilter=FALSE){
+    //echo "PLAYERORB $game $playerID<br>\n";
+        $orb=NULL;
+        $orb = array();
+        $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
+
+        foreach($parities as $par){
+            $rivalID = subID($par['rival']);
+            if (!$filter){
+                $include=TRUE;
+            } elseif($positiveFilter){
+                $include = in_array($rivalID, $filter);
+            } else {
+                $include = ! in_array($rivalID, $filter);
+            }
+            if($include){
+                $orb[] = $this->orbNode($rivalID,
+                                $par['parity'],
+                                $par['rely'],
+                                $par['date']);
+            }
+        }
+        //print_r($orb);
+        //echo "<br><br>";
+        return $orb;
+    }
+
+
+/********************************************************************************
+Returns an ArrayMap of node => node next closest to orb center.
+
+$orb    ArrayMap    the player orb
+$orbID    String        The player ID at the root of the $orb
+
+Each player's orb can be traversed outwards from one node to the next;
+but not in inwards direction (of course there are loops). This function
+constructs bread-crumb trails back to the center.
+********************************************************************************/
+    private function orbCrumbs($orb, $orbID){
+//echo "<br>ORBCRUMBS $orbID<br>\n";
+//echo "orb : ";
+//print_r($orb);
+
+    $crumbs = array();
+    $orbID = subID("$orbID");
+//    $crumbs[$orbID] = $orbID;                // include self/root
+    $depth = $this->crumbDepth($orbID, $crumbs);
+    foreach($orb as $node){
+        $rid = subID($node['rival']);
+        if($depth <= $this->crumbDepth($rid, $crumbs)){    // use shortest path
+            $crumbs[$rid] = $orbID;
+        }
+        if(isset($node['orb'])){
+            $crumbs = array_merge(orbCrumbs($node['orb'], $rid), $crumbs);
+        }
+    }
+//echo "<br>crumbs: ";
+//print_r($crumbs);
+//echo "<br><br>";
+    return $crumbs;
+}
+
+
+    private function crumbDepth($id, $crumbs){
+    return array_key_exists($id, $crumbs) ? $this->crumbDepth($crumbs[$id], $crumbs) + 1 : 0 ;
+}
+
+
+    private function orbNode($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
+    $node = array();
+    $node['rival'] = "$rivalID";
+    $node['parity'] = "$parity";
+    $ebb = $this->ebb($rely, $date);
+    $node['rely'] = "$ebb";
+    return $node;
+}
+
+
+private function ebb($rely, $date){
+    if (isset($date)){
+        // depreciate reliability with age;
+    }
+    return $rely;
+}
+
+}
+
+
+?>

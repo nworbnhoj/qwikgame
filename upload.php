@@ -42,7 +42,7 @@
             case 'delete':
                 if(isset($req['filename'])){
                     $fileName = $req['filename'];
-                    deleteUpload($player, $fileName);
+                    $player->uploadDelete($fileName);
                 }
             	break;
 		}

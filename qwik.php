@@ -4,6 +4,7 @@ $subdomain = 'www';
 $qwikURL = "http://$subdomain.qwikgame.org";
 
 
+include 'Player.php';
 include 'logging.php'; 
 $log = new Logging();
 $log->lfile("/tmp/$subdomain.qwikgame.org.log");
@@ -162,15 +163,6 @@ $status = array(
 );
 
 
-$SECOND    = 1;
-$MINUTE    = 60;
-$HOUR    = 3600;
-$DAY    = 86400;
-$WEEK    = 604800;
-$MONTH    = 2678400;
-$YEAR    = 31536000;
-
-
 
 function logg($msg){
     global $log;
@@ -253,7 +245,6 @@ Return the XML data for the current logged in player (if any)
 $req    ArrayMap    url parameters from post&get
 ********************************************************************************/
 function login($req){
-    global $DAY, $MONTH;
     session_start();
 
     if (isset($req['pid'])){            // check for a pid & token in the parameter
@@ -273,40 +264,36 @@ function login($req){
         return;                         // RETURN login fail
     }
                                         // OK playerID
-    $player=readPlayerXML($pid);
-    if(!$player){                       // NEW anon player
-        logMsg("login: new player $pid");
-        $player = newPlayer($pid);
-    }
+    $player = new Player($pid, $log);
 
     if($openSession){
         return $player;
     }
 
-    if(validPlayerToken($player, $token)){                 // LOGIN with token
+    if($player->isValidToken($token)){                 // LOGIN with token
         logMsg("login: valid token " . snip($pid));
         $_SESSION['pid'] = $pid;
-        $_SESSION['lang'] = (string) $player['lang'];
-        setcookie("pid", "$pid", time() + 3*$MONTH, "/");
-        setcookie("token", "$token", time() + 3*$MONTH, "/");
+        $_SESSION['lang'] = (string) $player->lang();
+        setcookie("pid", "$pid", time() + 3*Player::MONTH, "/");
+        setcookie("token", "$token", time() + 3*Player::MONTH, "/");
         return $player;
     } else {
         logMsg("login: invalid token pid=" . snip($pid));
     }
 
-    if(empty($player->email) && isset($email)){            // LOGIN anon player
+    if(empty($player->email()) && isset($email)){            // LOGIN anon player
         logMsg("login: anon player " . snip($pid));
-        emailWelcome($email, $pid, newPlayerToken($player, $MONTH));
-        setcookie("pid", '', time()-$DAY, "/");
-        setcookie("token", '', time()-$DAY, "/");
+        emailWelcome($email, $pid, $player->token(Player::MONTH));
+        setcookie("pid", '', time()-Player::DAY, "/");
+        setcookie("token", '', time()-Player::DAY, "/");
         $_SESSION['pid'] = $pid;
-        $_SESSION['lang'] = (string) $player['lang'];
+        $_SESSION['lang'] = (string) $player->lang();
         return $player;
     }
 
     if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
         logMsg("login: recover account " . snip($pid));                 // todo rate limit
-        emailLogin($email, $pid, newPlayerToken($player, $DAY));
+        emailLogin($email, $pid, $player->token(Player::DAY));
     }
 }
 
@@ -318,10 +305,10 @@ $_COOKIE
 function logout(){
     $pid = $_SESSION['pid'];
     logMsg("logout $pid");
-    global $qwikURL, $DAY;
+    global $qwikURL;
     unset($_SESSION['pid']);
-    setcookie("pid", "", time() - $DAY);
-    setcookie("token", "", time() - $DAY);    
+    setcookie("pid", "", time() - Player::DAY);
+    setcookie("token", "", time() - Player::DAY);
     header("location: $qwikURL");
 }
 
@@ -340,16 +327,16 @@ function language($req, $player){
     && array_key_exists($req['lang'], $languages)){
         $lang = $req['lang'];
         if (isset($player)){
-            $player['lang'] = $lang;
-            writePlayerXML($player);
+            $player->lang($lang);
+            $player->save();
         }
     } elseif (isset($_SESSION['lang'])                // SESSION language
     && array_key_exists($_SESSION['lang'], $languages)){
         $lang = $_SESSION['lang'];
     } elseif ($player                                 // USER language
-    && isset($player['lang'])
-    && array_key_exists($player['lang'], $languages)){
-        $lang = (string) $player['lang'];
+    && (null !== $player->lang())
+    && array_key_exists($player->lang(), $languages)){
+        $lang = (string) $player->lang();
     } elseif (false){                                // geolocate language
         // todo code
     } else {                                        // default english
@@ -541,7 +528,7 @@ function replicateMatches($player, $html, $status){
     if(!$player){ return; }
     $group = '';
     $playerVars = playerVariables($player);
-    $matches = $player->xpath("match[@status='$status']");
+    $matches = $player->matchStatus($status);
     foreach($matches as $match) {
         $matchVars = matchVariables($player, $match);
         $vars = $playerVars + $matchVars + $ICONS;
@@ -557,7 +544,7 @@ function replicateAvailable($player, $html){
     if(!$player){ return; }
     $group = '';
     $playerVars = playerVariables($player);
-    $available = $player->xpath('available');
+    $available = $player->available();
     foreach($available as $avail){
         $game = $avail['game'];
         $availVars = array(
@@ -578,7 +565,7 @@ function replicateEmailCheck($player, $html){
     if(!$player){ return; }
     $group = '';
     $playerVars = playerVariables($player);
-    $reckoning = $player->xpath('reckon[@email]');
+    $reckoning = $player->reckon("email");
     foreach($reckoning as $reckon){
         $game = $reckon['game'];
         $reckonVars = array('email' => $reckon['email']);
@@ -594,7 +581,7 @@ function replicateFamiliar($player, $html){
     if(!$player){ return; }
     $group = '';
     $playerVars = playerVariables($player);
-    $reckoning = $player->xpath('reckon[@rival]');
+    $reckoning = $player->reckon("rival");
     foreach($reckoning as $reckon){
         $game = $reckon['game'];
         $reckonVars = array(
@@ -616,7 +603,7 @@ function replicateAbility($player, $html){
     $group = '';
     $abilities = array('<t>very_weak</t>', '<t>weak</t>', '<t>competent</t>', '<t>strong</t>', '<t>very_strong</t>');
     $playerVars = playerVariables($player);
-    $reckoning = $player->xpath('reckon[@region]');
+    $reckoning = $player->reckon("region");
     foreach($reckoning as $reckon){
         $game = $reckon['game'];
         $ability = $reckon['ability'];
@@ -667,19 +654,19 @@ function replicateReckons($player, $html){
 
 function replicateUploads($player, $html){
     if(!$player){ return; }
-    $uploadIDs = $player->xpath("upload");
+    $uploadIDs = $player->uploadIDs();
     $group = '';
     foreach($uploadIDs as $uploadID) {
-        $upload = getUpload($player, $uploadID);
+        $upload = uploadGet($player, $uploadID);
         $status = $upload['status'];
         $vars = array(
-            'status'    => $status,
-            'fileName'    => $upload['fileName'],
-            'crossAct'    => $status == 'uploaded' ? 'delete' : 'deactivate',
-            'tickIcon'    => $status == 'uploaded' ? '<v>TICK_ICON</v>' : '',
-            'title'        => $upload['title'],
-            'game'        => $upload['game'],
-            'time'        => $upload['time'] 
+            'status'   => $status,
+            'fileName' => $upload['fileName'],
+            'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
+            'tickIcon' => $status == 'uploaded' ? '<v>TICK_ICON</v>' : '',
+            'title'    => $upload['title'],
+            'game'     => $upload['game'],
+            'time'     => $upload['time'] 
         );
         $group .= populate($html, $vars);
     }
@@ -969,467 +956,10 @@ function clip($key, $val){
 
 
 
-
-////////// PARITY //////////////////////////////////////////
-
-
-/********************************************************************************
-Returns an estimate of the parity of two players for a given $game. 
-A positive parity indicates that $player is stronger than $rival.
-
-$player    XML        player data for player #1
-$rival    XML        player data for player #2
-$game    String    A string ID of a game.
-
-Each player is "related" to other players by the reports they have made of the 
-other player's relative ability in a game (ie player-A reports that A>B A=C A<D A>>E). 
-This sphere of relations is referred to as the players *orb*. 
-
-A players *orb* can be *expanded* to include secondary relationships 
-(ie B=C B>E C=A D=F A>>F) and so on for 3rd, 4th & 5th degree relationships and so on.
-
-The parity estimate is made by expanding the orbs of both players until there is an
-overlap, and then using these relationships to estimate the parity between the two players.
-For example there is no overlap between 
-    Orb-A = (A>B A=C A<D A>>E)
-    Orb-F = (F=G F>H) 
-but if both orbs are expanded then there is an overlap
-    Orb-A = (A>B A=C A<D A>>E B=G C=I C>J C>K D>H) 
-    Orb-F = (F=G F>H G=B H=L)
-and the following relationships are used to estimate parity between player-A and player-F
-    A>B B=G F=G G=B A<D D>H F>H
-
-
-Note that each player's orb can be traversed outwards from one report to the next; 
-but not in inwards direction (of course there are loops). Function orbCrumbs() is called to construct bread-crumb trails back to the center.
-********************************************************************************/
-function parity($player, $rival, $game){
-//echo "<br>PARITY $game<br>\n";
-
-    $playerID = $player['id'];
-    $rivalID = $rival['id'];
-//echo "player: $playerID<br>\n";
-//echo "rival: $rivalID<br>\n";
-
-    // obtain the direct orb for each of the players
-    $playerOrb = playerOrb($playerID, $game);
-    $rivalOrb = playerOrb($rivalID, $game);
-
-    // generate 'bread-crumb' trails for both orbs
-    $playerOrbCrumbs = orbCrumbs($playerOrb, $playerID);
-    $rivalOrbCrumbs = orbCrumbs($rivalOrb, $rivalID);
-
-    // compute the intersection between the two orbs
-    $orbIntersect = array_intersect(
-                        array_keys($playerOrbCrumbs), 
-                        array_keys($rivalOrbCrumbs)
-                    );
-
-    // check if the orbs are isolated (ie no possible further expansion)
-    $playerOrbSize = count($playerOrbCrumbs);
-    $rivalOrbSize = count($rivalOrbCrumbs);    
-    $playerIsolated = FALSE;
-    $rivalIsolated = FALSE;
-    $flipflop = FALSE;
-    while (!($playerIsolated && $rivalIsolated)
-        && count($orbIntersect) < 3
-        && ($playerOrbSize + $rivalOrbSize) < 100){
-
-        $members = array();
-        $flipflop = !$flipflop;
-        
-        // expand one orb and then the other seeking some intersection
-        if ($flipflop){
-            $prePlayerOrbSize = $playerOrbSize;
-            $playerOrbCrumbs = expandOrb($playerOrb, $playerOrbCrumbs, $game);
-            $playerOrbSize = count($playerOrbCrumbs);
-            $playerIsolated = ($playerOrbSize == $prePlayerOrbSize);
-        } else {
-            $preRivalOrbSize = $rivalOrbSize;
-            $rivalOrbCrumbs = expandOrb($rivalOrb, $rivalOrbCrumbs, $game);
-            $rivalOrbSize = count($rivalOrbCrumbs);
-            $rivalIsolated = ($rivalOrbSize == $preRivalOrbSize);
-        }
-
-
-        // compute the intersection between the two orbs
-        $orbIntersect = array_intersect(
-                            array_keys($playerOrbCrumbs), 
-                            array_keys($rivalOrbCrumbs)
-                        );
-        $orbIntersect[] = subID($playerID);
-        $orbIntersect[] = subID($rivalID);
-
-//echo "playerIsolated=$playerIsolated<br>\n";
-//echo "rivalIsolated=$rivalIsolated<br>\n";
-//$cmc = count($orbIntersect);
-//echo "commonMemberCount=$cmc<br>\n";
-//echo "playerOrbSize=$playerOrbSize<br>\n";
-//echo "rivalOrbSize=$rivalOrbSize<br><br>\n\n";
-    }
-
-//echo "playerOrbCrumbs = ";
-//print_r($playerOrbCrumbs);
-//echo "<br><br>";
-
-//echo "rivalOrbCrumbs = ";
-//print_r($rivalOrbCrumbs);
-//echo "<br><br>";
-
-
-//echo "orbIntersect Crumbs=";
-//print_r($orbIntersect);
-//echo "<br><br>\n";
-
-//echo "<br><br><br>playerOrb=";
-//print_r($playerOrb);
-//echo "<br><br><br>\n";
-
-//echo "<br><br><br>rivalOrb=";
-//print_r($rivalOrb);
-//echo "<br><br><br>\n";
-
-
-    // prune both orbs back to retain just the paths to the intersection points
-    pruneOrb($playerOrb, $orbIntersect);
-    pruneOrb($rivalOrb, $orbIntersect);
-
-//echo "<br><br><br>playerOrb=";
-//print_r($playerOrb);
-//echo "<br><br><br>\n";
-
-//echo "<br><br><br>rivalOrb=";
-//print_r($rivalOrb);
-//echo "<br><br><br>\n";
-
-   $invRivalOrb = orbInv($rivalOrb, $rivalID);
-   $spliceOrb = spliceOrb($playerOrb, $playerID, $invRivalOrb);
-
-//echo "<br><br><br>splicedOrb=";
-//print_r($spliceOrb);
-//echo "<br><br><br>\n";
-
-    $parity = parityOrb($spliceOrb, $rivalID);
-
-    $parity = $parity; //fudge factor
-
-    logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity".printOrb($playerOrb));
-
-    return $parity;
-
-}
-
-
-function printOrb($orb, $tabs="\t"){
-    $str = '';
-    foreach($orb as $node){
-        $rid = $node['rival'];
-        $parity = $node['parity'];
-        $rely = $node['rely'];
-        $str .= "\n$tabs" . snip($rid) . " $parity $rely";
-        if(isset($node['orb'])){
-            $str .= printOrb($node['orb'], "$tabs\t");
-        }
-    }
-    return $str;
-}
-
-
-/********************************************************************************
-Returns an estimate of the parity of a player to $rival
-
-$orb    ArrayMap    The orb of the player, pre-pruned to contain paths only to the $rival
-$rival    XML            player data of the rival
-
-Computes the numeric Parity of the root of the $orb to the $rivalID.
-Some examples:
-    A>B & B<A implies A>B
-    A>B & B=C implies A>C
-    A>B & B=C & C=D implies A>D
-    
-This is a recursive function that computes the weighted average of each parity
-path to the rival. There are two computations happening here; one of breadth
-(multiple paths) and one of length (long parity chains).
-- Depth. Each of several outcome are combined by weighted average, where the
-weight is the reliability of the player (node)
-- Length. A long chain of outcomes linking one player to another is combined
-by adding the parities to account for stronger outcomes (+1), and much-weaker
-(-2) outcomes for example. However shorter chains are given more weight than
-longer chains by introducing a decay (=0.9) at each link.
-********************************************************************************/
-function parityOrb($orb, $rivalID){
-//echo "<br>PARITYORB rid=$rivalID<br>\n";
-    $rivalID = subID($rivalID);
-    $relyChainDecay = 0.7;
-    $parityTotal = 0;
-    $relyTotal = 0;
-    $n=0;
-    foreach($orb as $node){
-        $parity = $node['parity'];
-        if (($node['rival'] != $rivalID)
-        && (isset($node['orb']))){
-            $parityOrb = parityOrb($node['orb'], $rivalID);
-            if (!is_null($parityOrb)){
-                $parity += $parityOrb * $relyChainDecay;
-            }
-        }
-        $rely = $node['rely'];
-        $relyTotal += $rely;
-        $parityTotal += $parity * $rely;      // note rely range [0,4]
-        $n++;
-    }
-    if ($n>0) {
-        $relyAverage = $relyTotal / $n;
-        $parityAverage = $parityTotal / ($n * $relyAverage);
-    } else {
-        $parityAverage = null;
-    }
-    return $parityAverage;
-}
-
-
-// signed square of a number
-function ssq($n){
-    return gmp_sign($n) * $n * $n;
-}
-
-
-
-/********************************************************************************
-Retuns an Array mapping each rivalID to an array of 'inverted' nodes suitable to
-be passed to function spiceOrb()
-
-$orb    ArrayMap  the orb to be inverted
-$pid    String    The unique PlayerID at the root of the $orb
-
-An Orb contains a tree like structure of nodes. This function returns an Array
-indexed by each of the rivalID's found in the Orb. Each rivalID is mapped to an
-Array of Nodes found in the Tree and 'inverted' by swapping the ID's of Player
-and Rival, and by negating the parity. These 'inverted' nodes are suitable for
-passing to function spliceOrb() to be inserted into the corresponding rival orb.
-
-********************************************************************************/
-function orbInv($orb, $pid){
-//echo "function orbInv()";
-    $orbInv = array();
-    foreach($orb as $node){
-        $rid = (string)$node['rival'];
-        if (!array_key_exists($rid, $orbInv)){
-            $orbInv[$rid] = array();
-        }
-        $orbInv[$rid][] = orbNode($pid, -1 * $node['parity'], $node['rely']);
-
-        // recursion
-        if(isset($node['orb'])){
-            $subOrbInv = orbInv($node['orb'], $node['rival']);
-            foreach ($subOrbInv as $rid => $subNode) {
-                if (!array_key_exists($rid, $orbInv)){
-                    $orbInv[$rid] = array();
-                }
-                $orbInv[$rid] = array_merge($orbInv[$rid], $subNode);
-            }
-        }
-    }
-    return $orbInv;
-}
-
-
-
-/********************************************************************************
-Splices 2 orbs together by inserting 'inverted' Nodes from a Rivel Orb into $orb.
-
-$orb    ArrayMap  the orb to be spliced
-$pid    String    the unique PlayerID at the root of the $orb
-$invOrb Arraymap  an Array mapping each rivalID to an array of nodes
-
-This function traverses the $orb and inserts the Nodes from $invOrb into the
-structure. The function orbInv() can prepar the nodes by swapping Player and Rival
-and by negating Parity.
-
-********************************************************************************/
-function spliceOrb(&$orb, $pid, $invOrb){
-//echo "<br>SPLICEORB</br>";
-
-    $pid = (string)$pid;
-    if (array_key_exists($pid, $invOrb)){
-        $invNodes = $invOrb[$pid];
-        foreach ($invNodes as $invNode) {
-            $orb[] = $invNode;
-        }
-    }
-
-    foreach($orb as &$node){
-        $rid = (string)$node['rival'];
-        if(!isset($node['orb'])){
-            $node['orb'] = array();
-        }
-        spliceOrb($node['orb'], $rid, $invOrb);
-    }
-    return $orb;
-}
-
-
-/********************************************************************************
-Returns a player orb extended out to include one addition set of relations from 
-the edge.
-
-$orb    ArrayMap    the orb to be extended
-$crumbs    ArrayMap    node => a more central node
-$game    String        the game
- 
-********************************************************************************/
-function expandOrb(&$orb, $crumbs, $game){
-//echo "EXPANDORB $game<br><br>\n";
-
-    foreach($orb as &$node){
-        $rivalID = $node['rival'];
-        if(isset($node['orb'])){
-            $crumbs = array_merge(expandOrb($node['orb'], $crumbs, $game), $crumbs);
-        } elseif(!in_array($rivalID, $crumbs)){
-            $node['orb'] = playerOrb($rivalID, $game, $crumbs, FALSE);
-            $crumbs = array_merge(orbCrumbs($node['orb'], $rivalID), $crumbs);
-        }
-    }
-    return $crumbs;
-}
-
-
-
-
-/********************************************************************************
-Returns the $orb with all nodes removed that are not in $keepers, 
-and all denuded branches removed.
-
-
-$orb        ArrayMap    the orb to be pruned
-$keepers    Array        nodes to be retained                
-
-********************************************************************************/
-function pruneOrb(&$orb, $keepers){
-//echo "PRUNEORB<br><br>\n";
-    foreach($orb as $key => &$node){
-        if(isset($node['orb'])){
-            if(pruneOrb($node['orb'], $keepers)){
-                unset($node['orb']);
-            }
-        } elseif(!in_array($node['rival'], $keepers)){
-            unset($orb[$key]);
-        }
-    }
-    return count($orb) == 0; //denuded branch
-}
-
-
 function subID($id){
-return (string)$id;
+    return (string)$id;
     return substr("$id",0, 10);
 }
-
-
-
-/********************************************************************************
-Returns the player orb extended to include only the direct ability reports made 
-by the player
-
-$playerID        String    The unique player ID
-$game            String    The game of interest
-$filter            Array   An array of nodes to keep or discard
-$positiveFilter    Boolean    TRUE to include nodes in the $filter; FALSE to discard
-
-An ORB represents the sphere of PARITY around a PLAYER in a PARITY graph linked by
-estimates from MATCH FEEDBACK, uploaded RANKS, and RECKONS. An ORB is held in an 
-associative array of arrays with key=PLAYER-ID and value=array of PARITY link ID's.
- 
-********************************************************************************/
-function playerOrb($playerID, $game, $filter=FALSE, $positiveFilter=FALSE){
-//echo "PLAYERORB $game $playerID<br>\n";
-    $orb=NULL;
-    $player = readPlayerXML($playerID);
-    $orb = array();
-    if ($player){
-        $parities = $player->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
-
-        foreach($parities as $par){
-            $rivalID = subID($par['rival']);
-            if (!$filter){
-                $include=TRUE;
-            } elseif($positiveFilter){
-                $include = in_array($rivalID, $filter);
-            } else {
-                $include = ! in_array($rivalID, $filter);
-            }
-            if($include){
-                $orb[] = orbNode($rivalID, 
-                                $par['parity'], 
-                                $par['rely'], 
-                                $par['date']);
-            }
-        }
-    }
-//print_r($orb);
-//echo "<br><br>";
-    return $orb;
-}
-
-
-/********************************************************************************
-Returns an ArrayMap of node => node next closest to orb center.
-
-$orb    ArrayMap    the player orb
-$orbID    String        The player ID at the root of the $orb
-
-Each player's orb can be traversed outwards from one node to the next; 
-but not in inwards direction (of course there are loops). This function
-constructs bread-crumb trails back to the center.
-********************************************************************************/
-function orbCrumbs($orb, $orbID){
-//echo "<br>ORBCRUMBS $orbID<br>\n";
-//echo "orb : ";
-//print_r($orb);
-
-    $crumbs = array();
-    $orbID = subID("$orbID");
-//    $crumbs[$orbID] = $orbID;                // include self/root
-    $depth = crumbDepth($orbID, $crumbs);
-    foreach($orb as $node){  
-        $rid = subID($node['rival']);
-        if($depth <= crumbDepth($rid, $crumbs)){    // use shortest path
-            $crumbs[$rid] = $orbID;
-        }
-        if(isset($node['orb'])){
-            $crumbs = array_merge(orbCrumbs($node['orb'], $rid), $crumbs);
-        }
-    }
-//echo "<br>crumbs: ";
-//print_r($crumbs);
-//echo "<br><br>";
-    return $crumbs;
-}
-
-
-function crumbDepth($id, $crumbs){
-    return array_key_exists($id, $crumbs) ? crumbDepth($crumbs[$id], $crumbs) + 1 : 0 ;
-}
-
-
-function orbNode($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
-    $node = array();
-    $node['rival'] = "$rivalID";
-    $node['parity'] = "$parity";
-    $ebb = ebb($rely, $date);
-    $node['rely'] = "$ebb";
-    return $node;
-}
-
-
-function ebb($rely, $date){
-    if (isset($date)){
-        // depreciate reliability with age;
-    }
-    return $rely;
-}
-
-
 
 //////////////////// Ranking ///////////////////////////////
 
@@ -1505,7 +1035,7 @@ function uploadRanking($player, $game, $title){
 
             $upload = new SimpleXMLElement("<upload></upload>");
             $upload->addAttribute('time', $date->format('d-m-Y H:i:s'));
-            $upload->addAttribute('player', $player['id']);
+            $upload->addAttribute('player', $player->id());
             $upload->addAttribute('uploadName', $fileToUpload);
             $upload->addAttribute('uploadHash', $uploadHash);
             $upload->addAttribute('fileName', $fileName);
@@ -1560,9 +1090,7 @@ function uploadRanking($player, $game, $title){
         fclose($file);
 
         if ($ok){
-            $up = $player->addChild('upload', $fileName);
-//            $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
-            writePlayerXML($player);
+            $player->uploadAdd($fileName);
         }
 
         if ($ok){
@@ -1585,19 +1113,6 @@ function uploadRanking($player, $game, $title){
 
 
 
-function getUpload($player, $fileName){
-//echo "<br>GETUPLOAD<br>";
-    $upload = readUploadXML($fileName);
-    if(!$upload){
-        $missing = $player->xpath("/player/upload[text()='$fileName']");
-        foreach($missing as $miss){
-            removeElement($miss);
-        }
-        writePlayerXML($player);
-        return FALSE;
-    }
-    return $upload;
-}
 
 
 /*******************************************************************************
@@ -1627,10 +1142,7 @@ function insertRanking($ranking){
     foreach($anonIDs as $anonID){
         $anonRank = (int) $anonID['rank'];
 
-        $anon = readPlayerXML($anonID);
-        if (!$anon){
-            $anon = newPlayer($anonID);
-        }
+        $anon = new Player($anonID, $log);
 
         foreach($rankParity as $rnk => $pty){
             $rivalRank = $anonRank + (int) $rnk;
@@ -1645,7 +1157,7 @@ function insertRanking($ranking){
                 $parity->addAttribute('parity', $pty);
             }
         }    
-        writePlayerXML($anon);
+        $anon->save();
     }
     $ranking['status'] = 'active';
     writeUploadXML($ranking);
@@ -1661,9 +1173,9 @@ function extractRanking($ranking){
     $rankingID = $ranking['id'];
     $anonIDs = $ranking->xpath("sha256");
     foreach($anonIDs as $anonID){
-        $anon = readPlayerXML($anonID);
+        $anon = new Player($anonID);
         if ($anon){
-            if(empty($anon->email)){
+            if(empty($anon->email())){
                 removePlayer($anonID);
             } else {
                 $ranks = $anon->xpath("rank[@id=$rankingID]"); 
@@ -1802,38 +1314,6 @@ function snip($str){
 
 
 
-function newPlayer($id){
-        $now = new DateTime('now');
-        $debut = $now->format('d-m-Y');
-        $record  = "<player id='$id' debut='$debut' lang='en'>";
-        $record .= "<rep pos='0' neg='0'/>";
-        $record .= "<rely val='2.0'/>";
-        $record .= "</player>";
-
-        $xml = new SimpleXMLElement($record);
-        writePlayerXML($xml);
-        return $xml;
-}
-
-
-
-
-function newPlayerToken($player, $term){
-    $token = newToken(10);
-    $nekot = $player->addChild('nekot', nekot($token));    
-    $nekot->addAttribute('exp', time() + $term);
-    writePlayerXML($player);
-    return $token;
-}
-
-
-function validPlayerToken($player, $token){
-    $nekot = nekot($token);
-    $nekots = $player->xpath("/player/nekot[text()='$nekot']");
-    return count($nekots) > 0;
-}
-
-
 /*******************************************************************************
 Returns the sha256 hash of the $token provided
 
@@ -1889,12 +1369,8 @@ function renameVenue(&$venue, $newID){
 
         $pids = $venue->xpath('player');
         foreach($pids as $pid){
-            $player = readPlayerXML($pid);
-            $matches = $player->xpath("available[venue='$preID'] | match[venue='$preID']");
-            foreach($matches as $match){
-                $match->venue = $newID;
-            }
-            writePlayerXML($player);
+            $player = new Player($pid);
+            $player->venueRename($preID, $newID);
         }
 
         $games = $venue->xpath('game');
@@ -2044,33 +1520,6 @@ function pickVenue($req, $sourceUrl){
 }
 
 
-
-
-
-
-function writePlayerXML($player){
-"<br>WRITEPLAYERXML<br>";
-    $path = 'player';
-    $pid = $player['id'];
-    $filename = "$pid.xml";
-    writeXML($path, $filename, $player);
-}
-
-
-
-
-
-function readPlayerXML($id){
-    $path = 'player';
-    $filename = "$id.xml";
-    $player = readXML($path, $filename);
-    if(!isset($player)){
-        logMsg("unable to read player XML " . snip($id));
-    }
-    return $player;
-}
-
-
 function removePlayer($id){
 //echo "REMOVEPLAYER $id<br>";
     $path = 'player';
@@ -2122,17 +1571,6 @@ function writeUploadXML($upload){
 }
 
 
-function deleteUpload($player, $fileName){
-    $path = 'uploads';
-    deleteFile("$path/$fileName.csv");
-    deleteFile("$path/$fileName.xml");
-
-    $delete = $player->xpath("/player/upload[text()='$fileName']");
-    foreach($delete as $del){
-        removeElement($del);
-    }
-    writePlayerXML($player);
-}
 
 
 
@@ -2324,40 +1762,6 @@ function repostInputs($repost, $tabs){
 }
 
 
-function keenMatch($player, $game, $venue, $date, $hours) {
-//echo "<br>KEENMATCH<br>";
-    $match = $player->addChild('match', '');
-    $match->addAttribute('status', 'keen');
-    $match->addAttribute('id', newID());
-    $match->addAttribute('game', $game);
-    $match->addAttribute('date', $date->format('d-m-Y'));
-    $match->addAttribute('hrs', $hours);
-    $v = $match->addChild('venue', $venue['id']);
-    $v->addAttribute('tz', $venue['tz']);
-    writePlayerXML($player);
-    return $match;
-}
-
-
-function inviteMatch($player, $match, $rival, $hours){
-//echo "INVITEMATCH<br>";
-    $inviteMatch = $rival->addChild('match', '');
-    $inviteMatch->addAttribute('status', 'invitation');
-    $inviteMatch->addAttribute('id', $match['id']);
-    $inviteMatch->addAttribute('game', $match['game']);
-    $inviteMatch->addAttribute('date', $match['date']);
-    $inviteMatch->addAttribute('hrs', $match['hrs']);
-    $pl = $inviteMatch->addChild('rival', $player['id']);
-    $pl->addAttribute('parity', parity($rival, $player, $match['game']));
-    $pl->addAttribute('rep', repWord($player));
-    $pl->addAttribute('name', $player['nick']);
-    $v = $inviteMatch->addChild('venue', $match->venue);
-    $v->addAttribute('tz', $match->venue['tz']);
-
-    writePlayerXML($rival);
-    return $inviteMatch;
-}
-
 
 
 function getPlayers($venue){
@@ -2365,7 +1769,7 @@ function getPlayers($venue){
     $players = array();
     $pids = $venue->xpath('player');
     foreach($pids as $pid){                         // all available players at venue
-        $player = readPlayerXML($pid);
+        $player = new Player($pid);
         if ($player){
             $players[] = $player;
         } else {    // opportunitic maintainence
@@ -2380,14 +1784,14 @@ function getPlayers($venue){
 function getCandidates($player, $venue, $matchHours){
 //echo "SENDINVITES<br>";
     $candidates = array();
-    $playerID = $player['id'];
+    $playerID = $player->id();
     $rivalIDs = $venue->xpath('player');
     unset($rivalIDs[array_search($playerID, $rivalIDs)]);    // exclude self
     foreach($rivalIDs as $rivalID){                            // all available rivals at venue
-        $rival = readPlayerXML($rivalID);
+        $rival = new Player($rivalID);
         if ($rival){
-            $availableHours = availableHours($rival, $player, $match);
-            $keenHours = keenHours($rival, $player, $match);
+            $availableHours = $rival->availableHours($player, $match);
+            $keenHours = $rival->keenHours($player, $match);
             $inviteHours = $matchHours & ($availableHours | $keenHours);
             if ($inviteHours > 0){
                 $candidates[$rival] = $inviteHours;
@@ -2401,83 +1805,6 @@ function getCandidates($player, $venue, $matchHours){
 }
 
 
-/**
- * Computes the hours that a $rival is available to have a $match with $player
- *
- * @param xml $rival The $rival who may be available
- * @param xml $player The keen $player who has initiated the $match
- * @param xml @match The $match proposed by the $player to the $rival
- *
- * @return bitfield representing the hours at the $rival is available
- */
-function availableHours($rival, $player, $match){
-//echo "<br>AVAILABLEHOURS<br>";
-    $availableHours = 0;
-    $vid = $match->venue;
-    $game = $match['game'];
-    $day = matchDateTime($match)->format('D');    
-    $available = $rival->xpath("available[venue='$vid' and @game='$game']");
-    foreach ($available as $avail){    
-    
-        $hours = $avail->xpath("hrs[@day='$day']");
-
-        foreach ($hours as $hrs){
-            $availableHours = $availableHours | $hrs;
-        }        
-    }
-    return $availableHours;
-}
-
-
-// check rival keeness in the given hours
-function keenHours($rival, $player, $match){
-//echo "<br>KEENHOURS<br>";
-    $keenHours = 0;
-    $venue = $match->venue;
-    $game = $match['game'];
-    $day = matchDateTime($match)->format('D');
-    $keens = $rival->xpath("match[status='keen' and venue='$venue' and game='$game']");
-    foreach ($keens as $keen){
-        $keenHours = $keenHours | $keen['hrs'];
-    }
-    return $keenHours;
-}
-
-
-//scans and processes past matches
-function concludeMatches($player){
-//echo "<br>CONCLUDEMATCHES<br>";
-    $oneHour = date_interval_create_from_date_string("1 hour");
-    $matches = $player->xpath('match');
-    foreach($matches as $match){
-        $tz = $match->venue['tz'];
-        $now = tzDateTime('now', $tz);
-        $dateStr = $match['date'];
-        $hour = max(hours($match['hrs']));
-        switch ($match['status']){
-            case 'cancelled':
-                $hour = min($hour+6, 24);
-            case 'keen':
-            case 'invitation':
-            case 'accepted':
-                if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
-                    removeElement($match);
-                }
-                break;
-            case 'confirmed':
-                if ($now > date_add(matchDateTime($match), $oneHour)){
-                    $match['status'] = 'feedback';
-                }
-                break;
-            case 'feedback':
-                // send email reminder after a couple of days                
-                break;
-            default:
-                // nothing to do
-        }
-    }
-    writePlayerXML($player);
-}
 
 
 //scans and removes edits over 1 week old
@@ -2530,27 +1857,15 @@ function removeAtt($xml, $att){
 
 function qwikAvailable($player, $request, $venue){
     if(isset($request['game']) & isset($request['vid']) & isset($request['parity'])){
-        $newID = newID();
-        $element = $player->addChild('available', '');        
-        $element->addAttribute('id', $newID);
-        $element->addAttribute('game', $request['game']);
-        $element->addAttribute('parity', $request['parity']);
-        $v = $element->addChild('venue', $request['vid']);
-        $v->addAttribute('tz', $venue['tz']);
-        $all7days = isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE;
-        $days = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
-        foreach($days as $day){
-            $requestHrs = $all7days;
-            if (!$requestHrs && isset($request[$day])) {
-                $requestHrs = $request[$day];
-            }
-            if ($requestHrs) {
-                $hrs = $element->addChild('hrs', $requestHrs);
-                $hrs->addAttribute('day', $day);
-            }
-        }
-        writePlayerXML($player);
-        venuePlayer($venue, $player['id']);    
+        $newID = $player->availableAdd(
+            $request['game'], 
+            $request['vid'], 
+            $request['parity'],
+            $venue['tz'],
+            isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE,
+            $request
+        );
+        venuePlayer($venue, $player->id());
         return $newID;
     }
 }
@@ -2565,7 +1880,7 @@ function qwikKeen($player, $req, $venue){
         logMsg("qwikKeen() missing required arguments");
         return;
     }
-    $pid = (string) $player['id'];
+    $pid = (string) $player->id();
     $game = $req['game'];
 
     $emails = isset($req['invite']) ? $req['invite'] : array();
@@ -2594,26 +1909,26 @@ function qwikKeen($player, $req, $venue){
         $date = venueDateTime($day, $venue);
         $hours = (int) $req[$day];
         if ($hours > 0){
-            $match = keenMatch($player, $game, $venue, $date, $hours);
+            $match = $player->matchKeen($game, $venue, $date, $hours);
 
             foreach($invite as $rid => $email){
-                $rival = readPlayerXML($rid);
+                $rival = new Player($rid);
                 if (isset($rival)){
-                      $inviteMatch = inviteMatch($player, $match, $rival, $hours);
-                       emailInvite($rival, $inviteMatch, $email);
-                       $match->addChild('rival', $rid);
+                    $inviteMatch = $rival->matchInvite($player, $match, $hours);
+                    emailInvite($rival, $inviteMatch, $email);
+                    $match->addChild('rival', $rid);
                 }
             }
 
             foreach($rids as $rid){
-                $rival = readPlayerXML($rid);
+                $rival = new Player($rid);
                 if(isset($rival)
-                && !empty("$rival->email")){
-                    $availableHours = availableHours($rival, $player, $match);
-                    $keenHours = keenHours($rival, $player, $match);
+                && !empty("$rival->email()")){
+                    $availableHours = $rival->availableHours($player, $match);
+                    $keenHours = $rival->keenHours($player, $match);
                     $inviteHours = $hours & ($availableHours | $keenHours);
                     if ($inviteHours > 0){
-                            $inviteMatch = inviteMatch($player, $match, $rival, $inviteHours);
+                        $inviteMatch = $rival->matchInvite($player, $match, $inviteHours);
                         emailInvite($rival, $inviteMatch);
                         $match->addChild('rival', $rid);
                     }
@@ -2621,47 +1936,43 @@ function qwikKeen($player, $req, $venue){
             }
         }
     }
-    writePlayerXML($player);
-    venuePlayer($venue, $player['id']);
+    $player->save();
+    venuePlayer($venue, $player->id());
 }
 
 
 function qwikDecline($player, $request){
 //echo "<br>QWIKDCLINE<br>";
-    $playerID = $player['id'];
+    $playerID = $player->id();
     if(isset($request['id'])){
         $matchID = $request['id'];
-        $matches = $player->xpath("match[@id='$matchID']");
-        foreach($matches as $match){
-            $rivalIDs = $match->xpath("rival");
-            foreach($rivalIDs as $rivalID){
-                $rival = readPlayerXML($rivalID);
-                if(isset($rival)){
-                    $rivalMatches = $rival->xpath("match[@id='$matchID']");
-                    foreach($rivalMatches as $rivalMatch){
-                        switch ($rivalMatch['status']){
-                            case 'accepted':
-                                cancelMatch($rivalMatch);
-                                writePlayerXML($rival);
-                            break;
-                            case 'keen':
-//                                $invites = $keenMatch->xpath("rival='$playerID'");
-//                                removeElement($invite);
-                                $invites = $rivalMatch->xpath("rival");
-                                foreach($invites as $invite){
-                                    if("$invite" == $playerID){
-                                        removeElement($invite);
-                                        writePlayerXML($rival);    
-                                    }    
-                                }            
-                            break;
+        $match = $player->matchID($matchID);
+        $rivalIDs = $match->xpath("rival");
+        foreach($rivalIDs as $rivalID){
+            $rival = new Player($rivalID);
+            if(isset($rival)){
+                $rivalMatch = $rival->match($matchID);
+                switch ($rivalMatch['status']){
+                    case 'accepted':
+                        cancelMatch($rivalMatch);
+                        $rival->save();
+                    break;
+                    case 'keen':
+//                          $invites = $keenMatch->xpath("rival='$playerID'");
+//                        removeElement($invite);
+                        $invites = $rivalMatch->xpath("rival");
+                        foreach($invites as $invite){
+                            if("$invite" == $playerID){
+                                removeElement($invite);
+                                $rival->save();
+                            }
                         }
-                    }    
+                    break;
                 }
             }
             removeElement($match);
         }
-        writePlayerXML($player);
+        $player->save();
     }
 }
 
@@ -2686,11 +1997,11 @@ function venueAddGame($venue, $game){
 
 function venueRemoveGame($venue, $game){
     $elements = $venue->xpath("/venue[game='$game']");
-echo "aborted request to delete $game";
+//echo "aborted request to delete $game";
 
     foreach($elements as $element){    
-print_r($element);
-echo "<br><br>";
+//print_r($element);
+//echo "<br><br>";
 //        removeElement($element);
     }
     $vid = $venue['id'];
@@ -2710,7 +2021,7 @@ function qwikAccept($player, $request){
 
     if(isset($request['id']) & isset($request['hour'])){
         $matchID = $request['id'];
-        $match = $player->xpath("match[@id='$matchID']")[0];
+        $match = $player->matchID($matchID);
         if (!isset($match)){
             header("Location: error.php?msg=unable to locate match.");
             return;
@@ -2719,13 +2030,13 @@ function qwikAccept($player, $request){
 //print_r($match);
 //echo "<br><br>";
 
-        $rival = readPlayerXML($match->rival);
+        $rival = new Player($match->rival);
         if (!$rival){
             cancelMatch($match);
             return;
         }
 
-        $rivalMatch = $rival->xpath("match[@id='$matchID']")[0];
+        $rivalMatch = $rival->matchID($matchID);
         if (!isset($rivalMatch)){
             cancelMatch($match);
             return;
@@ -2738,7 +2049,7 @@ function qwikAccept($player, $request){
                 $match['status'] = 'accepted';
                 $match['id'] = newID(); //make independent from keenMatch
                 $match['hrs'] = $acceptHour;
-                inviteMatch($player, $match, $rival, $acceptHour);
+                $rival->matchInvite($player, $match, $acceptHour);
                 emailInvite($rival, $match);
                 break;
             case 'accepted':
@@ -2754,36 +2065,24 @@ function qwikAccept($player, $request){
                 break;
             default:
         }
-        writePlayerXML($player);
-        writePlayerXML($rival);
+        $player->save();
+        $rival->save();
     }
 }
 
 
 function qwikFeedback($player, $request){
     if(isset($request['id']) & isset($request['rep']) & isset($request['parity'])){
-        $matchID = $request['id'];
-        $match = $player->xpath("match[@id='$matchID']")[0];
-        if (isset($match)){
-            $match['status'] = 'history';
-            $outcome = $player->addChild('outcome', '');
-            $outcome->addAttribute('game', $match['game']);
-            $outcome->addAttribute('rival', $match->rival);
-            $date = date_create($match['time']);
-            $outcome->addAttribute('date', $date->format("d-m-Y"));
-            $outcome->addAttribute('parity', $request['parity']);
-            $outcome->addAttribute('rep', $request['rep']);
-            $outcome->addAttribute('rely', $player->rely['val']); //default value
-            $outcome->addAttribute('id', $matchID);
-            $rival = readPlayerXML($match->rival);
-            if (isset($rival)){
-                updateRep($rival, $request['rep']);
-                updateCongCert($player, $matchID, $rival);
-                writePlayerXML($rival);
-            }
-            writePlayerXML($player);
-        } else {
-            header("Location: error.php?msg=unable to locate match.");
+        $rival = $player->outcomeAdd(
+            $request['id'], 
+            $request['parity'], 
+            $request['rep']
+        );
+
+        if (isset($rival)){
+            $rival->updateRep($request['rep']);
+            updateCongCert($player, $request['id'], $rival);
+            $rival->save();
         }
     } else {
         header("Location: error.php?msg=malformed feedback.");
@@ -2794,10 +2093,10 @@ function qwikFeedback($player, $request){
 function qwikMsg($player, $req){
     if(isset($req['id']) & isset($req['msg'])){
         $matchID = $req['id'];
-        $match = $player->xpath("match[@id='$matchID']")[0];
+        $match = $player->matchID($matchID);
         if (isset($match)){
             $rid = $match->rival[0];
-            $rival = readPlayerXML($rid);
+            $rival = new Player($rid);
             if(isset($rival)){
                 emailRival($rival, $req['msg'], $match);
             }
@@ -2833,80 +2132,35 @@ high CONGRUENCE rate each other with no DISPARITY (and vice versa).
 ********************************************************************************/
 
 function updateCongCert($player, $matchID, $rival){
-    $playerOutcomes = $player->xpath("outcome[@id='$matchID']");
-    $rivalOutcomes = $rival->xpath("outcome[@id='$matchID']");
+    $pOutcome = $player->outcome($matchID);
+    $rOutcome = $rival->outcome($matchID);
 
-    if (count($playerOutcomes) > 0
-    && count($rivalOutcomes) > 0){
-        $pOutcome = $playerOutcomes[0];
-        $rOutcome = $rivalOutcomes[0];
+    if (null !== $pOutcome && null !== $rOutcome){
 
         $pParity = intval($pOutcome['parity']);
         $rParity = intval($rOutcome['parity']);
 
-        $pRely = floatval($player->rely['val']);
-        $rRely = floatval($rival->rely['val']);
+        $pRely = $player->rely();
+        $rRely = $rival->rely();
 
         $disparity = abs($rParity + $pParity);    // note '+' sign & range [0,4]
-        $pDisparity = ($disparity * $rRely * $rRely) / 16;
-        $rDisparity = ($disparity * $pRely * $rRely) / 16;
-
-        $player->rely['val'] = expMovingAvg($pRely, 4 - $pDisparity, 3);
-        $rival->rely['val']  = expMovingAvg($rRely, 4 - $rDisparity, 3);
+        $player->rely(($disparity * $rRely * $rRely) / 16);
+        $rival->rely(($disparity * $pRely * $pRely) / 16);
 
         $congruence = 4 - $disparity;             // range [0,4]
-        $pOutcome['rely'] = ($pRely * $congruence) / 4;
-        $rOutcome['rely'] = ($rRely * $congruence) / 4;
+        $player->outcome($matchID, ($pRely * $congruence) / 4);
+        $rival->outcome($matchID, ($rRely * $congruence) / 4);
     }
 }
 
 
-// update the reputation records for a player (not written to file.xml)
-function updateRep(&$player, $feedback){
-    $rep = isset($player->rep) ? $player->rep : $player->addChild('rep', '');
-
-    switch ($feedback){
-        case '+1': 
-            $rep['pos'] = $rep['pos'] + 1; 
-            break;
-        case '-1': 
-            $player['neg'] = $rep['neg'] + 1; 
-            break;
-    }
-}
-
-
-// Updates an EXPonential moving AVeraGe with a new data POINT.
-function expMovingAvg($avg, $point, $exp){
-    $avg = floatval($avg);
-    $point = floatval($point);
-    $exp = intval($exp);
-    return ($avg * ($exp-1) + $point) / $exp;
-}
 
 
 function qwikFamiliar($player, $request){
     if(isset($request['game'])
     && isset($request['rival'])
     && isset($request['parity'])){
-        $rivalEmail = $request['rival'];
-        $rid = anonID($rivalEmail);
-
-        $reckon = $player->addChild('reckon', '');
-        $reckon->addAttribute('rival', $rid);
-        $reckon->addAttribute('email', $rivalEmail);
-        $reckon->addAttribute('parity', $request['parity']);
-        $reckon->addAttribute('game', $request['game']);
-        $date = date_create();
-        $reckon->addAttribute('date', $date->format("d-m-Y"));
-        $reckon->addAttribute('id', newID());
-        $reckon->addAttribute('rely', $player->rely['val']); //default value
-        writePlayerXML($player);
-
-        $rival = readPlayerXML($rid);
-        if(empty($rival)){
-            $rival = newPlayer($rid);
-        }
+        $player->familiar($request['game'], $request['rival'], $request['parity'], $log);
     }
 }
 
@@ -2915,15 +2169,7 @@ function qwikRegion($player, $request){
     if(isset($request['game'])
         && isset($request['ability']) 
         && isset($request['region'])){
-            $reckon = $player->addChild('reckon', '');
-            $reckon->addAttribute('ability', $request['ability']);
-            $reckon->addAttribute('region', $request['region']);
-            $reckon->addAttribute('game', $request['game']);
-            $date = date_create();
-            $reckon->addAttribute('date', $date->format("d-m-Y"));
-            $reckon->addAttribute('id', newID());
-            $reckon->addAttribute('rely', $player->rely['val']); //default value
-            writePlayerXML($player);
+            $player->region($request['game'], $request['ability'], $request['region']);
     }
 }
 
@@ -2932,55 +2178,27 @@ function qwikAccount($player, $request){
 //echo "<br>QWIKACCOUNT<br>";
     global $qwikURL, $DAY;
     if(isset($request['nick'])){
-        if(isset($player['nick'])){
-            $player['nick'] = $request['nick'];
-        } else {
-            $player->addAttribute('nick', $request['nick']);
-        }
+        $player->nick($request['nick']);
     }
 
     if(isset($request['url'])){
-        if(isset($player['url'])){
-            $player['url'] = $request['url'];
-        } else {
-            $player->addAttribute('url', $request['url']);
-        }
+        $player->url($request['url']);
     } 
 
     if(isset($request['email'])){
         $email = $request['email'];
-        if(empty($player->email)){
-            $player->addChild('email', $email);
-        } elseif ($email != (string) $player->email[0]){
-            emailChange($email, $player['id'], newPlayerToken($player, $DAY));
+        if ($email != $player->email()){
+            emailChange($email, $player->id(), $player->token(Player::DAY));
         }
     }
 
     if(isset($request['lang'])){
-        $player['lang'] = $request['lang'];
+        $player->lang($request['lang']);
     } 
 
     if(isset($request['account']) && ($request['account'] === 'quit')) {
         emailQuit($player);
-
-        $matches = $player->xpath("match[@status!='history']");
-        foreach($matches as $match){
-            cancelMatch($match);
-        }
-        $records = $player->xpath("available | reckon");
-        foreach($records as $record){
-            removeElement($record);
-        }
-        $emails = $player->xpath("email");
-        foreach($emails as $email){
-            removeElement($email);
-        }
-
-        $player['nick'] = "";
-        $player['url'] = '';
-
-        writePlayerXML($player);
-
+        $player->quit();
         logout();
     
         header("Location: $qwikURL");
@@ -2988,84 +2206,16 @@ function qwikAccount($player, $request){
 }
 
 
-
-function changeEmail($player, $newEmail){
-    global $MINUTE, $MONTH;
-    if(empty($player->email)){
-        $player->addChild('email', $newEmail);
-    } else {
-        $newID = anonID($newEmail);
-        $oldEmail = $player->email[0];
-        if (false){ // if newID already exists then log and abort
-            logMsg("abort change email from $oldEmail to $newEmail.");
-        } else {
-            $preID = $player['id'];
-            $newID = anonID($newEmail);
-            removeElement($player->email);
-            $player->addChild('email', $newEmail);
-            $player['id'] = $newID;
-            $token = newPlayerToken($player, $MINUTE);    // includes writePlayerXML
-//            writePlayerXML($player);
-
-            // replace old player id file with a symlink to the new file 
-            deleteFile("player/$preID.xml");
-            symlink("player/$newID.xml", "player/$preID.xml");
-
-            header("Location: $qwikURL/player.php?qwik=login&pid=$newID&token=$token'");
-        }
-    }
-}
-
-
 function qwikCancel($player, $req){
     if(isset($req['id'])){
-        $matchID = $req['id'];
-        $matches = $player->xpath("match[@id='$matchID']");
-        foreach($matches as $match){
-            cancelMatch($match);
-        }
-        writePlayerXML($player);
+        $player->matchCancel($req['id']);
     }
 }
 
 
-function cancelMatch($match){
-    $matchID = $match['id'];
-//echo "<br>CANCELMATCH $matchID<br>";
-    $played = array('feedback','history');
-    if (in_array($match['status'], $played)){
-        return;
-    }
-    $rivalIDs = $match->xpath('rival');
-    foreach($rivalIDs as $rivalID){
-        $rival = readPlayerXML($rivalID);
-        if(isset($rival)){
-            $rivalMatches = $rival->xpath("match[@id='$matchID']");
-            foreach($rivalMatches as $rivalMatch){
-                if(!in_array($rivalMatch['status'], $played)){
-                    $rivalMatch['status'] = 'cancelled';
-//                    emailCancel($rival, $rivalMatch, $rival->venue);
-                    $write = TRUE;
-                }
-            }
-            if($write){
-                writePlayerXML($rival);
-            }
-        }
-    }
-    removeElement($match);
-}
 
-// https://stackoverflow.com/questions/262351/remove-a-child-with-a-specific-attribute-in-simplexml-for-php/16062633#16062633
 function qwikDelete($player, $request){
-    if(isset($request['id'])){
-        $id = $request['id'];
-        $rubbish = $player->xpath("//*[@id='$id']");
-        foreach($rubbish as $junk){
-            removeElement($junk);
-        }
-        writePlayerXML($player);
-    }
+    $player->delete($request['id']);
 }
 
 
@@ -3187,15 +2337,15 @@ function emailInvite($rival, $match, $email){
     $date = matchDateTime($match);
     $day = matchDay($match);
     $game = $match['game'];
-    $rid = (string) $rival['id'];
-    $token = newPlayerToken($rival, 2*$DAY);
+    $rid = (string) $rival->id();
+    $token = $rival->token(2*Player::DAY);
     $venueName = explode('|', $match->venue)[0];
     $data = array();
     $data['token'] = $token;
     $data['qwik'] = 'login';
     if(empty($email)){
         $data['pid'] = $rid;
-        $email = (string) $rival->email;
+        $email = (string) $rival->email();
     } else {
         $data['email'] = $email;
     }
@@ -3221,8 +2371,8 @@ function emailConfirm($player, $match){
     $datetime = matchDateTime($match);
     $time = date_format($datetime, "ga D");
     $game = $match['game'];
-    $playerID = $player['id'];
-    $playerToken = newplayerToken($player, $DAY);
+    $playerID = $player->id();
+    $playerToken = $player->token(Player::DAY);
     $venueName = explode('|', $match->venue)[0];
 
     $subject = "Confirmed: $game $time at $venueName";
@@ -3236,21 +2386,21 @@ function emailConfirm($player, $match){
     $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
     $msg .= "</p>\n";
 
-    qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
+    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
     logEmail('confirm', $playerID, $game, $venueName, $time);
 }
 
 
 function emailQuit($player){
     global $subdomain, $YEAR;
-    $lang = (string) $player['lang'];
+    $lang = (string) $player->lang();
 
     $subject = $GLOBALS[$lang]["emailQuitSubject"];
     $msg = $GLOBALS[$lang]["emailQuitBody"];
-    $playerID = $player['id'];
-    $playerToken = newPlayerToken($player, $YEAR);
+    $playerID = $player->id();
+    $playerToken = $player->token(Player::YEAR);
 
-    qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
+    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
     logEmail('quit', $playerID);
 }
 
@@ -3261,8 +2411,8 @@ function emailCancel($player, $match, $venue){
     $datetime = matchDateTime($match);
     $time = date_format($datetime, "ha D");
     $game = $match['game'];
-    $playerID = $player['id'];
-    $playerToken = newPlayerToken($player, 2*$DAY);
+    $playerID = $player->id();
+    $playerToken = $player->token(2*Player::DAY);
     $venueName = $venue['name'];
 
     $subject = "Cancelled: $game $time at $venueName";
@@ -3271,7 +2421,7 @@ function emailCancel($player, $match, $venue){
     $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
     $msg .= "</p>\n";
 
-    qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
+    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
     logEmail('cancel', $playerID, $game, $venueName, $time);
 }
 
@@ -3283,8 +2433,8 @@ function emailRival($player, $message, $match){
     $time = date_format($datetime, "ha D");
     $game = $match['game'];
     $gameName = $games["$game"];
-    $playerID = $player['id'];
-    $playerToken = newPlayerToken($player, 2*$DAY);
+    $playerID = $player->id();
+    $playerToken = $player->token(2*Player::DAY);
     $venueName = shortVenueID($match->venue);
 
     $subject = 'Message from qwikgame rival';
@@ -3295,7 +2445,7 @@ function emailRival($player, $message, $match){
     $msg .= "Please <a href='$qwikURL/player.php'>login</a> to reply.";
     $msg .= "</p>\n";
 
-    qwikEmail($player->email, $subject, $msg, $playerID, $playerToken);
+    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
 }
 
 
@@ -3536,10 +2686,10 @@ function playerLink($player){
     }
     $name = $player['name'];
 
-    if(empty($player['url'])){
+    if(empty($player->url())){
         return $name;
     }
-    $url = $player['url'];
+    $url = $player->url();
 
     return "<a href='$url' target='_blank'><b>$name</b></a>";
 }
@@ -3547,7 +2697,7 @@ function playerLink($player){
 
 function repWord($player){
 
-    $rep = $player->rep[0];
+    $rep = $player->rep();
     $repPos = intval($rep['pos']);
     $repNeg = intval($rep['neg']);
     $repTot = $repPos + $repNeg;
@@ -3592,7 +2742,7 @@ function repStr($player){
 
 
 function repFraction($player){
-    $rep = $player->rep[0];
+    $rep = $player->rep();
     $repPos = intval($rep['pos']);
     $repNeg = intval($rep['neg']);
     $repTot = $repPos + $repNeg;
@@ -3602,7 +2752,7 @@ function repFraction($player){
 
 
 function repThumbs($player){
-    $rep = $player->rep[0];
+    $rep = $player->rep();
     $repPos = intval($rep['pos']);
     $repNeg = intval($rep['neg']);
     $thumbUp = "<span class='fa fa-thumbs-o-up green'></span>";
@@ -3655,9 +2805,8 @@ function matchVariables($player, $match){
             $vars['hour'] = hourSelect(hours($hrs));
             break;
         case 'history':
-            $outcomes = $player->xpath("outcome[@id='$matchID']");
-            if (isset($outcomes[0])) {
-                $outcome = $outcomes[0]; 
+            $outcome = $player->outcome($matchID);
+            if (null !== $outcome) { 
                 $vars['parity'] = parityStr($outcome['parity']);
                 $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
             }
@@ -3837,7 +2986,7 @@ function similarVenueButtons($venue, $game, $tabs=''){
 
 function familiarCheckboxes($player){
     $checkboxes = '';
-    $reckons = $player->xpath('reckon[@email]');
+    $reckons = $player->reckon("email");
     foreach($reckons as $reckon){
         $email = $reckon['email'];
         $rid = $reckon['rival'];
@@ -3870,7 +3019,7 @@ function gameOptions($game='squash', $tabs=''){
 
 
 function regions($player){
-    $available = $player->xpath('available');
+    $available = $player->available();
     $countries = array();
     $states = array();
     $towns = array();

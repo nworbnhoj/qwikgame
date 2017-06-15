@@ -500,7 +500,7 @@ class FeatureContext implements Context
     {
         $this->rankingFilename = $filename;
         $pid = $this->rivals[$player];
-        $this->player = readPlayerXML($pid);
+        $this->player = new Player($pid, $this->log);
     }
 
 
@@ -510,8 +510,8 @@ class FeatureContext implements Context
      */
     public function theRankingIsActivated()
     {
-//        $ranking = getUpload($this->player, $this->rankingFilename);
-//        insertRanking($ranking);
+        $ranking = $this->player->uploadGet($this->rankingFilename);
+        insertRanking($ranking);
     }
 
 

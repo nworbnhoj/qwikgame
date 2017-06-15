@@ -1125,7 +1125,7 @@ The rankings are inserted into the XML data of the ranked players
 
 ********************************************************************************/
 function insertRanking($ranking){
-    global $rankParity;
+    global $rankParity, $log;
 
     $datetime = date_create();
     $date = $datetime->format('d-m-Y');

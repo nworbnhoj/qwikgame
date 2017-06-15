@@ -61,6 +61,7 @@ class FeatureContext implements Context
 	private $svid;
 	private $venue;
 	private $vid;
+	private $log;
 
     /**
      * Initializes context.
@@ -71,8 +72,7 @@ class FeatureContext implements Context
      */
     public function __construct()
     {
-        global $log;
-        $log = new Logging();
+        $this->log = new Logging();
     }
     
     
@@ -107,9 +107,9 @@ class FeatureContext implements Context
     {
     	$this->pid = anonID($address);    	
         removePlayer($this->pid);
-   	    $this->player = newPlayer($this->pid);
-		$this->player->addChild('email', $address);
-    	writePlayerXML($this->player);
+   	    $this->player = new Player($this->pid, $this->log);
+        $this->player->email($address);
+        $this->player->save();
     }
     
      /**
@@ -117,7 +117,7 @@ class FeatureContext implements Context
      */
     public function iAmNotAvailableToPlay()
     {    
-        $available = $this->player->xpath('available');
+        $available = $this->player->available();
 	    foreach($available as $avail){
 			removeElement($available);
 	    }
@@ -185,10 +185,10 @@ class FeatureContext implements Context
     	
 		if(!$this->player){
  		    $this->pid = anonID($address);
-			$this->player = newPlayer($this->pid);			
+			$this->player = new Player($this->pid, $this->log);
         }
         global $MONTH;
-        $this->token = newPlayerToken($this->player, $MONTH);
+        $this->token = $this->player->token(Player::MONTH);
 	    $this->authURL = authURL($address, $this->token);
     }
     
@@ -243,7 +243,7 @@ class FeatureContext implements Context
     public function myEmailWillBeRegisteredWithQwikgame($address)
     {
     	Assert::assertEquals($this->email, $address);
-        Assert::assertNotNull(readPlayerXML($this->pid));
+        Assert::assertNotNull(new Player($this->pid));
     }
     
     
@@ -260,7 +260,7 @@ class FeatureContext implements Context
     private function iWillBeAvailableToPlay($req, $venue, $rivalParity='any', $test='ALL')
     {        
         $game = $req['game'];
-        $rival = newPlayer(anonID("rival@qwikgame.org"));  //dummy rival
+        $rival = new Player(anonID("rival@qwikgame.org"), $this->log);  //dummy rival
         
         foreach ($this->days as $day) {
             if (isset($req[$day])){
@@ -277,10 +277,9 @@ class FeatureContext implements Context
                     ); 
         
                 // The rival is keen for a match
-                $match = keenMatch($rival, $game, $venue, $date, $this->Hrs24);
-        
+                $match = $rival->matchKeen($game, $venue, $date, $this->Hrs24);
                 // check when this player is available to play the keen rival
-                $availableHours = availableHours($this->player, $rival, $match);
+                $availableHours = $this->player->availableHours($rival, $match);
                                      
 //print_r("$game at $venue[id]\n");              
 //printf("hours %1$25b = %1$2d\navail %2$25b = %2$2d\n\n", $hours, $availableHours);
@@ -304,6 +303,7 @@ class FeatureContext implements Context
                         Assert::assertTrue(FALSE, "Invalid test: $test");
                 
                 }
+                $rival->delete($match['id']);
             }        
         }
     }    
@@ -384,9 +384,10 @@ class FeatureContext implements Context
         foreach (range('A', 'Z') as $char) {
             $email = $char . "@qwikgame.org";
             $id = anonID($email);
-            $player = newPlayer($id);
-            $player->addAttribute('nick', "player.$char");
-            writePlayerXML($player);
+            removePlayer($id);
+            $player = new Player($id, $this->log);
+            $player->nick("player.$char");
+            $player->save();
             $this->rivals[$char] = $id;
 		}
     }
@@ -411,10 +412,10 @@ class FeatureContext implements Context
         $pidA = $this->rivals[$player];
         $pidB = $this->rivals[$rival];
 
-        $playerA = readPlayerXML($pidA);
-        $playerB = readPlayerXML($pidB);
+        $playerA = new Player($pidA, $this->log);
+        $playerB = new Player($pidB, $this->log);
 
-        $matches = $playerA->xpath("match[@status='confirmed' and rival='$pidB']");
+        $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
 
         if (count($matches) == 1) {
             $matchA = $matches[0];
@@ -427,14 +428,14 @@ class FeatureContext implements Context
             );
             $hours = 1;
 
-            $keenMatch = keenMatch($playerA, 'Squash', $venue, $date, $hours);
-            $matchA = inviteMatch($playerB, $keenMatch, $playerA, $hours);
-            $matchB = inviteMatch($playerA, $keenMatch, $playerB, $hours);
+            $keenMatch = $playerA->matchKeen('Squash', $venue, $date, $hours);
+            $matchA = $playerA->matchInvite($playerB, $keenMatch, $hours);
+            $matchB = $playerB->matchInvite($playerA, $keenMatch, $hours);
             $matchA['status'] = 'confirmed';
 	        $matchB['status'] = 'confirmed';
 		    removeElement($keenMatch);
-		    writePlayerXML($playerA);
-		    writePlayerXML($playerB);
+		    $playerA->save();
+		    $playerB->save();
 		}
 
         qwikFeedback(
@@ -456,10 +457,10 @@ class FeatureContext implements Context
         $pidA = $this->rivals[$player];
         $pidB = $this->rivals[$rival];
 
-        $playerA = readPlayerXML($pidA);
-        $playerB = readPlayerXML($pidB);
+        $playerA = new Player($pidA, $this->log);
+        $playerB = new Player($pidB, $this->log);
 
-        $parityEstimate = parity($playerA, $playerB, 'Squash');
+        $parityEstimate = $playerA->parity($playerB, 'Squash');
         $parityStr = parityStr($parityEstimate);
 
 //$nickA = $playerA['nick'];

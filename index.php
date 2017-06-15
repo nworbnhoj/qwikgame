@@ -21,9 +21,9 @@
 	&& isset($req['email'])){
 		$email = $req['email'];
 		$pid = anonID($email);
-		$anon = readPlayerXML($pid);
+		$anon = new Player($pid);
 		if(isset($anon)){
-			$token = newPlayerToken($anon, 2*$DAY);
+			$token = $anon->token(2*Player::DAY);
 			$req['pid'] = $pid;
 			$req['token'] = $token;
 			$req['repost'] = 'player.php#available';

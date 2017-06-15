@@ -60,13 +60,13 @@
 	foreach($pids as $pid){
 		$row = '<tr>';
 		$playerTotal += 1;
-		$player = readPlayerXML($pid);
-		if(isset($player->email)){
+		$player = new Player($pid);
+		if(null !== $player->email()){
 			$playerActive += 1;
-            $available = $player->xpath("available");
-            $matchConf = $player->xpath("match[@status='confirmed']");
-			$matchFeed = $player->xpath("match[@status='feedback']");
-            $matchHist = $player->xpath("match[@status='history']");
+            $available = $player->available();
+            $matchConf = $player->matchStatus("confirmed");
+			$matchFeed = $player->matchStatus("feedback");
+            $matchHist = $player->matchStatus("history");
             $avaiCount = count($available);
 			$confCount = count($matchConf);
             $feedCount = count($matchFeed);
@@ -76,8 +76,8 @@
             $feedCount = $feedCount == 0 ? '' : $feedCount;
             $histCount = $histCount == 0 ? '' : $histCount;
 			$row .= "<td>" . substr($pid, 0, 4) . "</td>";
-            $row .= "<td>" . $player['nick'] . "</td>";
-			$row .= "<td>" . $player['debut'] . "</td>";
+            $row .= "<td>" . $player->nick() . "</td>";
+			$row .= "<td>" . $player->debut() . "</td>";
 			$row .= "<td>" . repWord($player) . "</td>";
             $row .= "<td>$avaiCount</td>";
             $row .= "<td>$confCount</td>";
@@ -87,7 +87,7 @@
 		$row .= "</tr>\n";
 		$index = sprintf('%04d' , $histCount);
 		$index .= ' ' . sprintf('%04d', $avaiCount);
-		$index .= ' ' . $player['id'];
+		$index .= ' ' . $player->id();
 		$rows[$index] = $row;
 	}
 

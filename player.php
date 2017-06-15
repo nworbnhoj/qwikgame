@@ -81,9 +81,13 @@
       	case 'login':
 			if(isset($req['email'])){
 				$email = $req['email'];
-				if($email != "$player->email"){
-					changeEmail($player, $email);
-				}
+                if($email != (string) $player->email()){
+                    $player->email($email);
+                    $token = $player->token(Player::MINUTE);
+                    $newID = $player->id();
+                    $query = "qwik=login&pid=$newID&token=$token'";
+                    header("Location: $qwikURL/player.php?$query");
+                }
 			}
 			break;
 		case 'logout':
@@ -93,7 +97,7 @@
 //     		header("Location: error.php?msg=<b>Invalid post:<b> $qwik<br>");
 	}
 
-	concludeMatches($player);
+	$player->concludeMatches();
 
     $rnd = mt_rand(1,8);
 	$message = isset($player->email) ? 

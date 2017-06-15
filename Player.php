@@ -1,6 +1,9 @@
 <?php
 
 
+include 'Orb.php';
+
+
 class Player {
 
     const PATH_PLAYER   = 'player';
@@ -633,7 +636,7 @@ class Player {
 
 
     Note that each player's orb can be traversed outwards from one report to the next;
-    but not in inwards direction (of course there are loops). Function orbCrumbs() is called to     construct bread-crumb trails back to the center.
+    but not in inwards direction (of course there are loops). Function crumbs() is called to     construct bread-crumb trails back to the center.
     ********************************************************************************/
     public function parity($rival, $game){
 //echo "<br>PARITY $game<br>\n";
@@ -648,8 +651,8 @@ class Player {
     $rivalOrb = $rival->orb($game);
 
     // generate 'bread-crumb' trails for both orbs
-    $playerOrbCrumbs = $this->orbCrumbs($playerOrb, $playerID);
-    $rivalOrbCrumbs = $this->orbCrumbs($rivalOrb, $rivalID);
+    $playerOrbCrumbs = $playerOrb->crumbs($playerID);
+    $rivalOrbCrumbs = $rivalOrb->crumbs($rivalID);
 
     // compute the intersection between the two orbs
     $orbIntersect = array_intersect(
@@ -673,12 +676,12 @@ class Player {
         // expand one orb and then the other seeking some intersection
         if ($flipflop){
             $prePlayerOrbSize = $playerOrbSize;
-            $playerOrbCrumbs = $this->expandOrb($playerOrb, $playerOrbCrumbs, $game);
+            $playerOrbCrumbs = $playerOrb->expand($playerOrbCrumbs, $game);
             $playerOrbSize = count($playerOrbCrumbs);
             $playerIsolated = ($playerOrbSize == $prePlayerOrbSize);
         } else {
             $preRivalOrbSize = $rivalOrbSize;
-            $rivalOrbCrumbs = $this->expandOrb($rivalOrb, $rivalOrbCrumbs, $game);
+            $rivalOrbCrumbs = $rivalOrb->expand($rivalOrbCrumbs, $game);
             $rivalOrbSize = count($rivalOrbCrumbs);
             $rivalIsolated = ($rivalOrbSize == $preRivalOrbSize);
         }
@@ -723,8 +726,8 @@ class Player {
 
 
     // prune both orbs back to retain just the paths to the intersection points
-    $this->pruneOrb($playerOrb, $orbIntersect);
-    $this->pruneOrb($rivalOrb, $orbIntersect);
+    $playerOrb->prune($orbIntersect);
+    $rivalOrb->prune($orbIntersect);
 
 //echo "<br><br><br>playerOrb=";
 //print_r($playerOrb);
@@ -734,88 +737,21 @@ class Player {
 //print_r($rivalOrb);
 //echo "<br><br><br>\n";
 
-   $invRivalOrb = $this->orbInv($rivalOrb, $rivalID);
-   $spliceOrb = $this->spliceOrb($playerOrb, $playerID, $invRivalOrb);
+   $invRivalOrb = $rivalOrb->inv($rivalID);
+   $spliceOrb = $playerOrb->splice($playerID, $invRivalOrb);
 
 //echo "<br><br><br>splicedOrb=";
 //print_r($spliceOrb);
 //echo "<br><br><br>\n";
 
-    $parity = $this->parityOrb($spliceOrb, $rivalID);
+    $parity = $spliceOrb->parity($rivalID);
 
-    $this->logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity". $this->printOrb($playerOrb));
+    $this->logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity". $playerOrb->print());
 
     return $parity;
 
 }
 
-
-    private function printOrb($orb, $tabs="\t"){
-    $str = '';
-    foreach($orb as $node){
-        $rid = $node['rival'];
-        $parity = $node['parity'];
-        $rely = $node['rely'];
-        $str .= "\n$tabs" . snip($rid) . " $parity $rely";
-        if(isset($node['orb'])){
-            $str .= $this->printOrb($node['orb'], "$tabs\t");
-        }
-    }
-    return $str;
-}
-
-
-/********************************************************************************
-Returns an estimate of the parity of a player to $rival
-
-$orb    ArrayMap    The orb of the player, pre-pruned to contain paths only to the $rival
-$rival    XML            player data of the rival
-
-Computes the numeric Parity of the root of the $orb to the $rivalID.
-Some examples:
-    A>B & B<A implies A>B
-    A>B & B=C implies A>C
-    A>B & B=C & C=D implies A>D
-
-This is a recursive function that computes the weighted average of each parity
-path to the rival. There are two computations happening here; one of breadth
-(multiple paths) and one of length (long parity chains).
-- Depth. Each of several outcome are combined by weighted average, where the
-weight is the reliability of the player (node)
-- Length. A long chain of outcomes linking one player to another is combined
-by adding the parities to account for stronger outcomes (+1), and much-weaker
-(-2) outcomes for example. However shorter chains are given more weight than
-longer chains by introducing a decay (=0.9) at each link.
-********************************************************************************/
-    private function parityOrb($orb, $rivalID){
-//echo "<br>PARITYORB rid=$rivalID<br>\n";
-    $rivalID = subID($rivalID);
-    $relyChainDecay = 0.7;
-    $parityTotal = 0.0;
-    $relyTotal = 0.0;
-    $n=0;
-    foreach($orb as $node){
-        $parity = $node['parity'];
-        if (($node['rival'] != $rivalID)
-        && (isset($node['orb']))){
-            $parityOrb = $this->parityOrb($node['orb'], $rivalID);
-            if (!is_null($parityOrb)){
-                $parity += $parityOrb * $relyChainDecay;
-            }
-        }
-        $rely = $node['rely'];
-        $relyTotal += $rely;
-        $parityTotal += $parity * $rely;      // note rely range [0,4]
-        $n++;
-    }
-    if ($n>0 && $relyTotal>0) {
-        $relyAverage = $relyTotal / $n;
-        $parityAverage = $parityTotal / ($n * $relyAverage);
-    } else {
-        $parityAverage = null;
-    }
-    return $parityAverage;
-}
 
 
 // signed square of a number
@@ -823,132 +759,6 @@ longer chains by introducing a decay (=0.9) at each link.
     return gmp_sign($n) * $n * $n;
 }
 
-
-
-/********************************************************************************
-Retuns an Array mapping each rivalID to an array of 'inverted' nodes suitable to
-be passed to function spiceOrb()
-
-$orb    ArrayMap  the orb to be inverted
-$pid    String    The unique PlayerID at the root of the $orb
-
-An Orb contains a tree like structure of nodes. This function returns an Array
-indexed by each of the rivalID's found in the Orb. Each rivalID is mapped to an
-Array of Nodes found in the Tree and 'inverted' by swapping the ID's of Player
-and Rival, and by negating the parity. These 'inverted' nodes are suitable for
-passing to function spliceOrb() to be inserted into the corresponding rival orb.
-
-********************************************************************************/
-private function orbInv($orb, $pid){
-//echo "function orbInv()";
-    $orbInv = array();
-    foreach($orb as $node){
-        $rid = (string)$node['rival'];
-        if (!array_key_exists($rid, $orbInv)){
-            $orbInv[$rid] = array();
-        }
-        $orbInv[$rid][] = $this->orbNode($pid, -1 * $node['parity'], $node['rely']);
-
-        // recursion
-        if(isset($node['orb'])){
-            $subOrbInv = $this->orbInv($node['orb'], $node['rival']);
-            foreach ($subOrbInv as $rid => $subNode) {
-                if (!array_key_exists($rid, $orbInv)){
-                    $orbInv[$rid] = array();
-                }
-                $orbInv[$rid] = array_merge($orbInv[$rid], $subNode);
-            }
-        }
-    }
-    return $orbInv;
-}
-
-
-
-/********************************************************************************
-Splices 2 orbs together by inserting 'inverted' Nodes from a Rivel Orb into $orb.
-
-$orb    ArrayMap  the orb to be spliced
-$pid    String    the unique PlayerID at the root of the $orb
-$invOrb Arraymap  an Array mapping each rivalID to an array of nodes
-
-This function traverses the $orb and inserts the Nodes from $invOrb into the
-structure. The function orbInv() can prepar the nodes by swapping Player and Rival
-and by negating Parity.
-
-********************************************************************************/
-private function spliceOrb(&$orb, $pid, $invOrb){
-//echo "<br>SPLICEORB</br>";
-
-    $pid = (string)$pid;
-    if (array_key_exists($pid, $invOrb)){
-        $invNodes = $invOrb[$pid];
-        foreach ($invNodes as $invNode) {
-            $orb[] = $invNode;
-        }
-    }
-
-    foreach($orb as &$node){
-        $rid = (string)$node['rival'];
-        if(!isset($node['orb'])){
-            $node['orb'] = array();
-        }
-        $this->spliceOrb($node['orb'], $rid, $invOrb);
-    }
-    return $orb;
-}
-
-
-/********************************************************************************
-Returns a player orb extended out to include one addition set of relations from 
-the edge.
-
-$orb    ArrayMap    the orb to be extended
-$crumbs    ArrayMap    node => a more central node
-$game    String        the game
- 
-********************************************************************************/
-private function expandOrb(&$orb, $crumbs, $game){
-//echo "EXPANDORB $game<br><br>\n";
-
-    foreach($orb as &$node){
-        $rivalID = $node['rival'];
-        if(isset($node['orb'])){
-            $crumbs = array_merge($this->expandOrb($node['orb'], $crumbs, $game), $crumbs);
-        } elseif(!in_array($rivalID, $crumbs)){
-            $rival = new Player($rivalID, $this->log);
-            $node['orb'] = $rival->orb($game, $crumbs, FALSE);
-            $crumbs = array_merge($this->orbCrumbs($node['orb'], $rivalID), $crumbs);
-        }
-    }
-    return $crumbs;
-}
-
-
-
-
-/********************************************************************************
-Returns the $orb with all nodes removed that are not in $keepers,
-and all denuded branches removed.
-
-
-$orb        ArrayMap    the orb to be pruned
-$keepers    Array        nodes to be retained
-
-********************************************************************************/
-    private function pruneOrb(&$orb, $keepers){
-//echo "PRUNEORB<br><br>\n";
-    foreach($orb as $key => &$node){
-        if(isset($node['orb'])){
-            if($this->pruneOrb($node['orb'], $keepers)){
-                unset($node['orb']);
-            }
-        } elseif(!in_array($node['rival'], $keepers)){
-            unset($orb[$key]);
-        }
-    }
-    return count($orb) == 0; //denuded branch
-}
 
 
     private function subID($id){
@@ -971,26 +781,22 @@ return (string)$id;
     associative array of arrays with key=PLAYER-ID and value=array of PARITY link ID's.
 
     ********************************************************************************/
-    private function orb($game, $filter=FALSE, $positiveFilter=FALSE){
+    public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
     //echo "PLAYERORB $game $playerID<br>\n";
-        $orb=NULL;
-        $orb = array();
+        $orb = new Orb($this->log);
         $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
 
         foreach($parities as $par){
-            $rivalID = subID($par['rival']);
+            $rid = subID($par['rival']);
             if (!$filter){
                 $include=TRUE;
             } elseif($positiveFilter){
-                $include = in_array($rivalID, $filter);
+                $include = in_array($rid, $filter);
             } else {
-                $include = ! in_array($rivalID, $filter);
+                $include = ! in_array($rid, $filter);
             }
             if($include){
-                $orb[] = $this->orbNode($rivalID,
-                                $par['parity'],
-                                $par['rely'],
-                                $par['date']);
+                $orb->addNode($rid, $par['parity'], $par['rely'], $par['date']);
             }
         }
         //print_r($orb);
@@ -998,63 +804,6 @@ return (string)$id;
         return $orb;
     }
 
-
-/********************************************************************************
-Returns an ArrayMap of node => node next closest to orb center.
-
-$orb    ArrayMap    the player orb
-$orbID    String        The player ID at the root of the $orb
-
-Each player's orb can be traversed outwards from one node to the next;
-but not in inwards direction (of course there are loops). This function
-constructs bread-crumb trails back to the center.
-********************************************************************************/
-    private function orbCrumbs($orb, $orbID){
-//echo "<br>ORBCRUMBS $orbID<br>\n";
-//echo "orb : ";
-//print_r($orb);
-
-    $crumbs = array();
-    $orbID = subID("$orbID");
-//    $crumbs[$orbID] = $orbID;                // include self/root
-    $depth = $this->crumbDepth($orbID, $crumbs);
-    foreach($orb as $node){
-        $rid = subID($node['rival']);
-        if($depth <= $this->crumbDepth($rid, $crumbs)){    // use shortest path
-            $crumbs[$rid] = $orbID;
-        }
-        if(isset($node['orb'])){
-            $crumbs = array_merge(orbCrumbs($node['orb'], $rid), $crumbs);
-        }
-    }
-//echo "<br>crumbs: ";
-//print_r($crumbs);
-//echo "<br><br>";
-    return $crumbs;
-}
-
-
-    private function crumbDepth($id, $crumbs){
-    return array_key_exists($id, $crumbs) ? $this->crumbDepth($crumbs[$id], $crumbs) + 1 : 0 ;
-}
-
-
-    private function orbNode($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
-    $node = array();
-    $node['rival'] = "$rivalID";
-    $node['parity'] = "$parity";
-    $ebb = $this->ebb($rely, $date);
-    $node['rely'] = "$ebb";
-    return $node;
-}
-
-
-private function ebb($rely, $date){
-    if (isset($date)){
-        // depreciate reliability with age;
-    }
-    return $rely;
-}
 
 }
 

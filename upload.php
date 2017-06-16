@@ -20,29 +20,25 @@
 			    && isset($req['title'])){
 			        $game = $req['game'];
 			        $title = $req['title'];
-			        $msg = uploadRanking($player, $game, $title);
+			        $player->rankingUpload($game, $title);
 				}
 	            break;
-
             case "activate":
                 if(isset($req['filename'])){
 					$fileName = $req['filename'];
-					$ranking = getUpload($player, $fileName);
-					insertRanking($ranking);
+					$player->rankingActivate($fileName);
 				}
     	        break;
 			case 'deactivate':
                 if(isset($req['filename'])){
                     $fileName = $req['filename'];
-                    $ranking = getUpload($player, $fileName);
-                    extractRanking($ranking);
+					$player->rankingDeactivate($fileName);
                 }
 				break;
-
             case 'delete':
                 if(isset($req['filename'])){
                     $fileName = $req['filename'];
-                    $player->uploadDelete($fileName);
+                    $player->rankingDelete($fileName);
                 }
             	break;
 		}

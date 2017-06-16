@@ -108,23 +108,6 @@ $parityExp[2]    = 'much stronger';
 $parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
 
 
-$rankParity=array();
-$rankParity[128] = -2;    //much-weaker
-$rankParity[64] = -2;     // much-weaker
-$rankParity[32] = -1;     // weaker
-$rankParity[16] = -1;     // weaker
-$rankParity[8] = 0;       // well matched
-$rankParity[4] = 0;       // well matched
-$rankParity[2] = 0;       // well matched
-$rankParity[1] = 0;       // well matched
-$rankParity[-1] = 0;      // well matched
-$rankParity[-2] = 0;      // well matched
-$rankParity[-4] = 0;      // well matched
-$rankParity[-8] = 0;      // well matched
-$rankParity[-16] = 1;     // stronger
-$rankParity[-32] = 1;     // stronger
-$rankParity[-64] = 2;     // much stronger
-$rankParity[-128] = 2;    // much stronger
 
 $games = array(
     'backgammon'    => '<t>Backgammon</t>',
@@ -657,8 +640,8 @@ function replicateUploads($player, $html){
     $uploadIDs = $player->uploadIDs();
     $group = '';
     foreach($uploadIDs as $uploadID) {
-        $upload = uploadGet($player, $uploadID);
-        $status = $upload['status'];
+        $ranking = $player->rankingGet($uploadID);
+        $status = $ranking->status('active');
         $vars = array(
             'status'   => $status,
             'fileName' => $upload['fileName'],
@@ -963,231 +946,7 @@ function subID($id){
 
 //////////////////// Ranking ///////////////////////////////
 
-/********************************************************************************
-Processes a user request to upload a set of player rankings and 
-Returns a status message
 
-$player XML     player data for the player uploading the rankings
-$game    String    The game in the uploaded rankings
-$title    String    A player provided title for the rankings
-
-A player can upload a file containing player rankings which qwikgame can 
-utilize to infer relative player ability. A comma delimited file is 
-required containing the rank and sha256 hash of each player's email address.
-
-A set of rankings has a status: [ uploaded | active ] 
-
-Requirements:
-1.    Every line must contain an integer rank and the sha256 hash of an email 
-    address separated by a comma.
-    18 , d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
-2.    The first line of the uploaded file must contain the sha256 hash of 
-    facilitator@qwikgame.org with rank=0. This provides a basic check that 
-    the sha256 hashes in the file are compatible with those in use at qwik game org.
-3.    The file size must not exceed 200k (or about 2000 ranks).
-
-********************************************************************************/
-function uploadRanking($player, $game, $title){
-        global $tick;
-        $ok = TRUE;
-        $msg = "<b>Thank you</b><br>";
-
-        $fileName = $_FILES["filename"]["name"];
-        if (strlen($fileName) > 0){
-            $msg .= "$fileName<br>";
-        } else {
-            $msg .= "missing filename";
-            $ok = FALSE;
-        }
-
-        if($ok && $_FILES["filename"]["size"] > 200000){
-            $msg .= 'Max file size (100k) exceeded.';
-            $ok = FALSE;
-        }
-
-
-        $date = date_create();
-        $directory = "uploads/";
-        $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $fileExt = '.csv';
-        $path = $directory . $fileName . $fileExt;
-        $basename = basename($_FILES["filename"]["name"]);
-
-        if ($ok && move_uploaded_file($_FILES["filename"]["tmp_name"], $path)) {
-            $msg .= "uploaded OK<br>";
-        } else {
-            $msg .= "there was a weird error uploading your file<br>";
-            $ok = FALSE;
-        }
-
-        if ($ok){   // open the uploaded file
-            $file = fopen($path, "r");
-            if ($file){
-                $msg .= "opened OK<br>";
-            } else {
-                $msg .= "unable to open file<br>";
-                $ok = FALSE;
-            }
-        }
-
-        if($ok){    // anlayse the uploaded file
-            $uploadHash = hash_file('sha256', $path);
-
-            $upload = new SimpleXMLElement("<upload></upload>");
-            $upload->addAttribute('time', $date->format('d-m-Y H:i:s'));
-            $upload->addAttribute('player', $player->id());
-            $upload->addAttribute('uploadName', $fileToUpload);
-            $upload->addAttribute('uploadHash', $uploadHash);
-            $upload->addAttribute('fileName', $fileName);
-            $upload->addAttribute('game', $game);
-            $upload->addAttribute('title', $title);
-            $upload->addAttribute('status', 'uploaded');
-            $upload->addAttribute('id', newID());
-
-            $facilitatorSHA256 = hash('sha256', 'facilitator@qwikgame.org');
-
-//            $line = SECURITYsanitizeHTML(fgets($file));
-            $line = fgets($file);
-
-            $testSHA256 = trim(explode(',', $line)[1]);
-    
-            if((strlen($testSHA256) != 64)
-            || (strcmp($facilitatorSHA256, $testSHA256) != 0)){
-                $msg .= "facilitator@qwikgame.org hash mismatch<br>";
-                $ok = FALSE;
-            } else {
-                $msg .= "facilitator@qwikgame.org hash OK<br>";
-            }
-        }
-
-        if($ok){
-            $lineNo = 0;
-            $ranks = array();
-            $rankCount = 0;
-            while($ok && !feof($file)) {
-//                $line = SECURITYsanitizeHTML(fgets($file));
-                $line = fgets($file);
-
-                $lineNo++;
-                $tupple = explode(',', $line);
-                $rank = (int) trim($tupple[0]);
-                $sha256 = trim($tupple[1]);
-                if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
-                    $ranks[$rank] = $sha256;
-                    $child = $upload->addChild('sha256', $sha256);
-                    $child->addAttribute('rank', $rank);
-                    $rankCount++;
-                } else {
-                    $msg .= "data on line $lineNo ignored<br>$line";
-                }
-            }
-            $msg .= "$rankCount player rankings found<br>";
-            writeUploadXML($upload);
-            if(!$ok){
-                $msg = 'some weird error saving the data :-(     )';
-            }
-        }
-        fclose($file);
-
-        if ($ok){
-            $player->uploadAdd($fileName);
-        }
-
-        if ($ok){
-            $existingCount = 0;
-            foreach($ranks as $sha256){
-                if (file_exists("player/$sha256.xml")){
-                    $existingCount++;
-                }
-            }
-            $msg .= "$existingCount players have existing qwikgame records.<br>";
-        }
-    
-        if($ok){
-            $msg .= "<br>Click $tick to activate these rankings";
-        } else {
-            $msg .= "<br>Please try again.<br>";
-        }
-    return $msg;
-}
-
-
-
-
-
-/*******************************************************************************
-Process a User request to activate a set of uploaded player rankings. 
-
-$ranking    XML    The uploaded rankings
-
-The rankings are inserted into the XML data of the ranked players
-(creating new anon players as required)
-
-********************************************************************************/
-function insertRanking($ranking){
-    global $rankParity;
-
-    $datetime = date_create();
-    $date = $datetime->format('d-m-Y');
-    $rankingID = $ranking['id'];
-    $game = $ranking['game'];
-
-    $ranks = array();
-    $anonIDs = $ranking->xpath("sha256");
-    foreach($anonIDs as $anonID){
-        $anonRank = $anonID['rank'];
-        $ranks["$anonRank"] = "$anonID";
-    }
-
-    foreach($anonIDs as $anonID){
-        $anonRank = (int) $anonID['rank'];
-
-        $anon = new Player($anonID, $log);
-
-        foreach($rankParity as $rnk => $pty){
-            $rivalRank = $anonRank + (int) $rnk;
-            $rivalID = $ranks["$rivalRank"];
-            if (isset($rivalID)){
-                $parity = $anon->addChild('rank', '');
-                $parity->addAttribute('rely', '3.0');
-                $parity->addAttribute('id', $rankingID);
-                $parity->addAttribute('rival', $rivalID);
-                $parity->addAttribute('game', $game);
-                $parity->addAttribute('date', $date);
-                $parity->addAttribute('parity', $pty);
-            }
-        }    
-        $anon->save();
-    }
-    $ranking['status'] = 'active';
-    writeUploadXML($ranking);
-}
-
-
-/*******************************************************************************
-Process a User request to de-activate a set of uploaded player rankings. 
-
-$ranking    XML    The uploaded rankings
-********************************************************************************/
-function extractRanking($ranking){
-    $rankingID = $ranking['id'];
-    $anonIDs = $ranking->xpath("sha256");
-    foreach($anonIDs as $anonID){
-        $anon = new Player($anonID);
-        if ($anon){
-            if(empty($anon->email())){
-                removePlayer($anonID);
-            } else {
-                $ranks = $anon->xpath("rank[@id=$rankingID]"); 
-                foreach($ranks as $rank){
-                    removeElement($rank);
-                }
-            }
-        }
-    }
-    $ranking['status'] = 'uploaded';
-    writeUploadXML($ranking);
-}
 
 
 
@@ -1554,23 +1313,6 @@ function writeVenueXML($venue){
 function readVenueXML($vid){
     return readXML('venue', "$vid.xml");
 }
-
-
-function readUploadXML($uploadID){
-    $path = "uploads";
-    $filename = "$uploadID.xml";
-    return readXML($path, $filename);
-}
-
-
-
-function writeUploadXML($upload){
-    $path = "uploads";
-    $fileName = $upload['fileName'] . ".xml";
-    return writeXML($path, $fileName, $upload);
-}
-
-
 
 
 

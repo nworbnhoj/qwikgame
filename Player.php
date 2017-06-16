@@ -60,6 +60,7 @@ class Player {
             logMsg("unable to change working directory to $path");
             return false;
         }
+        return true;
     }
 
 
@@ -574,12 +575,13 @@ class Player {
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
         $this->save();
     }
+    
 
 
-    public function uploadGet($fileName){
+    public function rankingGet($fileName){
     //echo "<br>GETUPLOAD<br>";
-        $upload = readUploadXML($fileName);
-        if(!$upload){
+        $ranking = new Ranking($fileName);
+        if(!$ranking){
             $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
             foreach($missing as $miss){
                 $this->removeElement($miss);
@@ -587,11 +589,11 @@ class Player {
             $this->save();
             return FALSE;
         }
-        return $upload;
+        return $ranking;
     }
 
 
-    public function uploadDelete($fileName){
+    public function rankingDelete($fileName){
         $path = self::PATH_UPLOAD;
         deleteFile("$path/$fileName.csv");
         deleteFile("$path/$fileName.xml");
@@ -602,6 +604,92 @@ class Player {
        }
        $this->save();
     }
+
+
+    public function rankingActivate($fileName){
+        $ranking = $player->rankingGet($fileName);
+        $ranking->insert($log);
+    }
+
+
+    public function rankingDeactivate($fileName){
+        $ranking = $player->rankingGet($fileName);
+        $ranking->extract($log);
+    }
+
+/********************************************************************************
+Processes a user request to upload a set of player rankings and
+Returns a status message
+
+$player XML     player data for the player uploading the rankings
+$game    String    The game in the uploaded rankings
+$title    String    A player provided title for the rankings
+
+A player can upload a file containing player rankings which qwikgame can
+utilize to infer relative player ability. A comma delimited file is
+required containing the rank and sha256 hash of each player's email address.
+
+A set of rankings has a status: [ uploaded | active ]
+
+Requirements:
+1.    Every line must contain an integer rank and the sha256 hash of an email
+    address separated by a comma.
+    18 , d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
+2.    The first line of the uploaded file must contain the sha256 hash of
+    facilitator@qwikgame.org with rank=0. This provides a basic check that
+    the sha256 hashes in the file are compatible with those in use at qwik game org.
+3.    The file size must not exceed 200k (or about 2000 ranks).
+
+********************************************************************************/
+function rankingUpload($game, $title){
+        global $tick;
+        $ok = TRUE;
+        $msg = "<b>Thank you</b><br>";
+
+        $fileName = $_FILES["filename"]["name"];
+        if (strlen($fileName) > 0){
+            $msg .= "$fileName<br>";
+        } else {
+            $msg .= "missing filename";
+            $ok = FALSE;
+        }
+
+        if($ok && $_FILES["filename"]["size"] > 200000){
+            $msg .= 'Max file size (100k) exceeded.';
+            $ok = FALSE;
+        }
+
+        $ranking = new Ranking(
+            NULL,
+            $game,
+            $this->id(),
+            $title);
+        $ok = $ranking->valid;
+        $msg .= $ranking->transcript;
+
+        if ($ok){
+            $this->uploadAdd($game, $fileName);
+        }
+
+        if ($ok){
+            $existingCount = 0;
+            foreach($ranks as $sha256){
+                if (file_exists("player/$sha256.xml")){
+                    $existingCount++;
+                }
+            }
+            $msg .= "$existingCount players have existing qwikgame records.<br>";
+        }
+
+        if($ok){
+            $msg .= "<br>Click $tick to activate these rankings";
+        } else {
+            $msg .= "<br>Please try again.<br>";
+        }
+    return $msg;
+}
+
+
 
 
 

@@ -21,7 +21,7 @@
 	&& isset($req['email'])){
 		$email = $req['email'];
 		$pid = anonID($email);
-		$anon = new Player($pid);
+		$anon = new Player($pid, $log, TRUE);
 		if(isset($anon)){
 			$token = $anon->token(2*Player::DAY);
 			$req['pid'] = $pid;

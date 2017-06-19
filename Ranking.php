@@ -223,7 +223,7 @@ class Ranking {
         foreach($anonIDs as $anonID){
             $anonRank = (int) $anonID['rank'];
 
-            $anon = new Player($anonID, $log);
+            $anon = new Player($anonID, $log, TRUE);
 
             foreach($rankParity as $rnk => $pty){
                 $rivalRank = $anonRank + (int) $rnk;

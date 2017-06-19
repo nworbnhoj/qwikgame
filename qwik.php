@@ -247,7 +247,7 @@ function login($req){
         return;                         // RETURN login fail
     }
                                         // OK playerID
-    $player = new Player($pid, $log);
+    $player = new Player($pid, $log, TRUE);
 
     if($openSession){
         return $player;
@@ -511,11 +511,11 @@ function replicateMatches($player, $html, $status){
     if(!$player){ return; }
     $group = '';
     $playerVars = playerVariables($player);
-    $matches = $player->matchStatus($status);
-    foreach($matches as $match) {
-        $matchVars = matchVariables($player, $match);
+    foreach($player->matchStatus($status) as $matchXML) {
+        $match = new Match($player, $matchXML);
+        $matchVars = $match->variables();
         $vars = $playerVars + $matchVars + $ICONS;
-        $vars['venueLink'] = venueLink($match->venue, $player, $match['game']);
+        $vars['venueLink'] = venueLink($match->vid(), $player, $match->game());
         $group .= populate($html, $vars);
     }
     return $group;
@@ -658,26 +658,6 @@ function replicateUploads($player, $html){
 
 
 
-
-/********************************************************************************
-Return a new DataTime object representing the $match time.
-
-$match    XML    match data
-********************************************************************************/
-function matchDateTime($match){
-    if(empty($match->venue['tz'])){
-        return new datetime();
-    }
-
-    if(isset($match['time'])){
-        $time = $match['time'];
-    } elseif(isset($match['date'])){
-        $time = $match['date'];
-    } else {
-        $time = 'now';
-    }
-    return new DateTime($time, timezone_open($match->venue['tz']));
-}
     
 
 /********************************************************************************
@@ -1028,9 +1008,6 @@ function day($tz, $dateStr){
 }
 
 
-function matchDay($match){
-    return day($match->venue['tz'], $match['date']);
-}
 
 
 function hr($hr){
@@ -1128,7 +1105,7 @@ function renameVenue(&$venue, $newID){
 
         $pids = $venue->xpath('player');
         foreach($pids as $pid){
-            $player = new Player($pid);
+            $player = new Player($pid, $log);
             $player->venueRename($preID, $newID);
         }
 
@@ -1511,7 +1488,7 @@ function getPlayers($venue){
     $players = array();
     $pids = $venue->xpath('player');
     foreach($pids as $pid){                         // all available players at venue
-        $player = new Player($pid);
+        $player = new Player($pid, $log);
         if ($player){
             $players[] = $player;
         } else {    // opportunitic maintainence
@@ -1530,7 +1507,7 @@ function getCandidates($player, $venue, $matchHours){
     $rivalIDs = $venue->xpath('player');
     unset($rivalIDs[array_search($playerID, $rivalIDs)]);    // exclude self
     foreach($rivalIDs as $rivalID){                            // all available rivals at venue
-        $rival = new Player($rivalID);
+        $rival = new Player($rivalID, $log);
         if ($rival){
             $availableHours = $rival->availableHours($player, $match);
             $keenHours = $rival->keenHours($player, $match);
@@ -1651,70 +1628,21 @@ function qwikKeen($player, $req, $venue){
         $date = venueDateTime($day, $venue);
         $hours = (int) $req[$day];
         if ($hours > 0){
-            $match = $player->matchKeen($game, $venue, $date, $hours);
-
-            foreach($invite as $rid => $email){
-                $rival = new Player($rid);
-                if (isset($rival)){
-                    $inviteMatch = $rival->matchInvite($player, $match, $hours);
-                    emailInvite($rival, $inviteMatch, $email);
-                    $match->addChild('rival', $rid);
-                }
-            }
-
-            foreach($rids as $rid){
-                $rival = new Player($rid);
-                if(isset($rival)
-                && !empty("$rival->email()")){
-                    $availableHours = $rival->availableHours($player, $match);
-                    $keenHours = $rival->keenHours($player, $match);
-                    $inviteHours = $hours & ($availableHours | $keenHours);
-                    if ($inviteHours > 0){
-                        $inviteMatch = $rival->matchInvite($player, $match, $inviteHours);
-                        emailInvite($rival, $inviteMatch);
-                        $match->addChild('rival', $rid);
-                    }
-                }    
-            }
+            $match = $player->matchKeen($game, $venue, $date, $hours, $invite, $rids);
         }
     }
-    $player->save();
     venuePlayer($venue, $player->id());
 }
+
+
+
 
 
 function qwikDecline($player, $request){
 //echo "<br>QWIKDCLINE<br>";
     $playerID = $player->id();
     if(isset($request['id'])){
-        $matchID = $request['id'];
-        $match = $player->matchID($matchID);
-        $rivalIDs = $match->xpath("rival");
-        foreach($rivalIDs as $rivalID){
-            $rival = new Player($rivalID);
-            if(isset($rival)){
-                $rivalMatch = $rival->match($matchID);
-                switch ($rivalMatch['status']){
-                    case 'accepted':
-                        cancelMatch($rivalMatch);
-                        $rival->save();
-                    break;
-                    case 'keen':
-//                          $invites = $keenMatch->xpath("rival='$playerID'");
-//                        removeElement($invite);
-                        $invites = $rivalMatch->xpath("rival");
-                        foreach($invites as $invite){
-                            if("$invite" == $playerID){
-                                removeElement($invite);
-                                $rival->save();
-                            }
-                        }
-                    break;
-                }
-            }
-            removeElement($match);
-        }
-        $player->save();
+        $player->matchDecline($request['id']);
     }
 }
 
@@ -1772,43 +1700,8 @@ function qwikAccept($player, $request){
 //print_r($match);
 //echo "<br><br>";
 
-        $rival = new Player($match->rival);
-        if (!$rival){
-            cancelMatch($match);
-            return;
-        }
-
-        $rivalMatch = $rival->matchID($matchID);
-        if (!isset($rivalMatch)){
-            cancelMatch($match);
-            return;
-        }
-
-        $acceptHour = $request['hour'];
-        $rivalStatus = $rivalMatch['status'];
-        switch ($rivalStatus) {
-            case 'keen':
-                $match['status'] = 'accepted';
-                $match['id'] = newID(); //make independent from keenMatch
-                $match['hrs'] = $acceptHour;
-                $rival->matchInvite($player, $match, $acceptHour);
-                emailInvite($rival, $match);
-                break;
-            case 'accepted':
-                $hour = hours($acceptHour)[0];
-                $date = $match['date'];
-                $match['status'] = 'confirmed';
-                $match->addAttribute('time', "$date $hour:00");
-                emailConfirm($player, $match);
-
-                $rivalMatch['status'] = 'confirmed';
-                $rivalMatch->addAttribute('time', "$date $hour:00");
-                emailConfirm($rival, $rivalMatch);
-                break;
-            default:
-        }
+        $match->accept($request['hour']);
         $player->save();
-        $rival->save();
     }
 }
 
@@ -1834,15 +1727,7 @@ function qwikFeedback($player, $request){
 
 function qwikMsg($player, $req){
     if(isset($req['id']) & isset($req['msg'])){
-        $matchID = $req['id'];
-        $match = $player->matchID($matchID);
-        if (isset($match)){
-            $rid = $match->rival[0];
-            $rival = new Player($rid);
-            if(isset($rival)){
-                emailRival($rival, $req['msg'], $match);
-            }
-        }
+        $player->matchMsg($req['id'], $req['msg']);
     }
 }
 
@@ -1939,7 +1824,7 @@ function qwikAccount($player, $request){
     } 
 
     if(isset($request['account']) && ($request['account'] === 'quit')) {
-        emailQuit($player);
+        $player->emailQuit();
         $player->quit();
         logout();
     
@@ -2074,121 +1959,7 @@ function emailChange($email, $id, $token){
 }
 
 
-function emailInvite($rival, $match, $email){
-    global $qwikURL, $DAY;
-    $date = matchDateTime($match);
-    $day = matchDay($match);
-    $game = $match['game'];
-    $rid = (string) $rival->id();
-    $token = $rival->token(2*Player::DAY);
-    $venueName = explode('|', $match->venue)[0];
-    $data = array();
-    $data['token'] = $token;
-    $data['qwik'] = 'login';
-    if(empty($email)){
-        $data['pid'] = $rid;
-        $email = (string) $rival->email();
-    } else {
-        $data['email'] = $email;
-    }
-    $url = "$qwikURL/player.php?" . http_build_query($data);
 
-    $subject = "Invitation: $game at $venueName";
-
-    $msg  = "<p>\n";
-    $msg .= "\tYou have been invited to play <b>$game $day</b> at $venueName.<br>\n";
-    $msg .= "\t<br>\n";
-    $msg .= "\tPlease <a href='$url' target='_blank'>login</a>\n";
-    $msg .= "\tand <b>accept</b> if you would like to play.\n";
-    $msg .= "</p>\n";
-
-    qwikEmail($email, $subject, $msg, $rid, $token);
-    logEmail('invite', $rid, $game, $venueName);
-}
-
-
-function emailConfirm($player, $match){
-    global $subdomain, $DAY;
-
-    $datetime = matchDateTime($match);
-    $time = date_format($datetime, "ga D");
-    $game = $match['game'];
-    $playerID = $player->id();
-    $playerToken = $player->token(Player::DAY);
-    $venueName = explode('|', $match->venue)[0];
-
-    $subject = "Confirmed: $game $time at $venueName";
-
-    $msg  = "<p>\n";
-    $msg .= "\tYour game of <b>$game</b> is set for <b>$time</b> at $venueName.<br>\n";
-    $msg .= "\t<br>\n";
-    $msg .= "\tIf you need to cancel for some reason, please <a href='http://$subdomain.qwikgame.org/player.php?pid=$playerID&token=$playerToken&qwik=login' target='_blank'>login</a> as soon as possible to let your rival know.\n";
-    $msg .= "</p>\n";
-    $msg .= "<p>\n";
-    $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
-    $msg .= "</p>\n";
-
-    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
-    logEmail('confirm', $playerID, $game, $venueName, $time);
-}
-
-
-function emailQuit($player){
-    global $subdomain, $YEAR;
-    $lang = (string) $player->lang();
-
-    $subject = $GLOBALS[$lang]["emailQuitSubject"];
-    $msg = $GLOBALS[$lang]["emailQuitBody"];
-    $playerID = $player->id();
-    $playerToken = $player->token(Player::YEAR);
-
-    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
-    logEmail('quit', $playerID);
-}
-
-
-function emailCancel($player, $match, $venue){
-    global $subdomain, $DAY;
-
-    $datetime = matchDateTime($match);
-    $time = date_format($datetime, "ha D");
-    $game = $match['game'];
-    $playerID = $player->id();
-    $playerToken = $player->token(2*Player::DAY);
-    $venueName = $venue['name'];
-
-    $subject = "Cancelled: $game $time at $venueName";
-
-    $msg  = "<p>\n";
-    $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
-    $msg .= "</p>\n";
-
-    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
-    logEmail('cancel', $playerID, $game, $venueName, $time);
-}
-
-
-function emailRival($player, $message, $match){
-    global $qwikURL, $games;
-
-    $datetime = matchDateTime($match);
-    $time = date_format($datetime, "ha D");
-    $game = $match['game'];
-    $gameName = $games["$game"];
-    $playerID = $player->id();
-    $playerToken = $player->token(2*Player::DAY);
-    $venueName = shortVenueID($match->venue);
-
-    $subject = 'Message from qwikgame rival';
-
-    $msg  = "<p>\n";
-    $msg .= "<b>$gameName</b> at $time at $venueName<br><br><br>";
-    $msg .= "\tYour rival says: \"<i>$message</i>\"<br><br><br>\n";
-    $msg .= "Please <a href='$qwikURL/player.php'>login</a> to reply.";
-    $msg .= "</p>\n";
-
-    qwikEmail($player->email(), $subject, $msg, $playerID, $playerToken);
-}
 
 
 function qwikEmail($to, $subject, $msg, $id, $token){
@@ -2418,63 +2189,9 @@ function venueLink($vid, $player, $game){
     $first = $words[0];
     $words[0] = "<b>$first</b>";
     $name = implode(' ', $words);
-    return "<a href='venue.php?vid=$vid&game=$game'>$name</a>";
 }
 
 
-function playerLink($player){
-    if(empty($player['name'])){
-        return '';
-    }
-    $name = $player['name'];
-
-    if(empty($player->url())){
-        return $name;
-    }
-    $url = $player->url();
-
-    return "<a href='$url' target='_blank'><b>$name</b></a>";
-}
-
-
-function repWord($player){
-
-    $rep = $player->rep();
-    $repPos = intval($rep['pos']);
-    $repNeg = intval($rep['neg']);
-    $repTot = $repPos + $repNeg;
-
-    if($repTot <= 0){
-        return;
-    } elseif($repTot < 5){
-        if($repPos > $repNeg){
-            $word = '<t>good</t>';
-        } elseif($repPos < $repNeg){
-            $word = '<t>poor</t>';
-        } else {
-            $word = '<t>mixed</t>';
-        }
-    } else {
-        $pct = $repPos/$repTot;
-        if($pct >= 0.98){            // 1:50
-            $word = '<t>supurb</t>';
-        } elseif($pct > 0.95){        // 1:20
-            $word = '<t>excellent</t>';
-        } elseif($pct >= 0.90){     // 1:10
-            $word = '<t>great</t>';
-        } elseif($pct >= 0.80){        // 1:5
-            $word = '<t>good</t>';    
-        } elseif ($pct >= 0.66){    // 1:3
-            $word = '<t>mixed</t>';
-        } elseif ($pct >= 0.50){    // 1:2
-            $word = '<t>poor</t>';
-        } else {
-            $word = '<t>dreadful</t>';
-        }
-    }
-
-    return $word;
-}
 
 
 function repStr($player){
@@ -2510,52 +2227,6 @@ function playerVariables($player){
     );
 }
 
-
-function matchVariables($player, $match){
-//echo "<br>MATCHVARIABLES<br>";
-    global $THUMB_UP_ICON, $THUMB_DN_ICON, $games;
-    $status = $match['status'];
-    $vid = $match->venue;
-    $venue = readVenueXML($vid);
-    $rivalElement = $match->xpath("rival")[0];
-    $parity = $rivalElement['parity'];
-    $hrs = $match['hrs'];
-    $matchID = (string)$match['id'];
-    $game = (string)$match['game'];
-    $rivalLink = playerLink($rivalElement);
-    $repWord = $rivalElement['rep'];
-    $vars = array(
-        'vid'        => $vid,
-        'venueName'    => isset($venue) ? $venue['name'] : explode('|', $vid)[0],
-        'status'    => $status,
-        'game'        => $game,
-        'gameName'    => $games[$game],
-        'day'        => matchDay($match),
-        'hrs'        => (string)$match['hrs'],
-        'hour'        => hr(hours($hrs)[0]),
-        'id'        => $matchID,
-        'parity'    => parityStr($parity),
-        'rivalLink'    => empty($rivalLink) ? '' : ", $rivalLink",
-        'rivalRep'    => strlen($repWord)==0 ? '' : " with a $repWord reputation"
-    );
-    switch ($status){
-        case 'keen':
-            $vars['hour'] = daySpan($hrs);
-            $vars['rivalCount'] = count($match->xpath('rival'));
-            break;
-        case 'invitation':
-            $vars['hour'] = hourSelect(hours($hrs));
-            break;
-        case 'history':
-            $outcome = $player->outcome($matchID);
-            if (null !== $outcome) { 
-                $vars['parity'] = parityStr($outcome['parity']);
-                $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
-            }
-            break;
-    }
-    return $vars;
-}
 
 
 function familiarEmailLink($venue, $game, $name){

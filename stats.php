@@ -60,7 +60,7 @@
 	foreach($pids as $pid){
 		$row = '<tr>';
 		$playerTotal += 1;
-		$player = new Player($pid);
+		$player = new Player($pid, $log);
 		if(null !== $player->email()){
 			$playerActive += 1;
             $available = $player->available();

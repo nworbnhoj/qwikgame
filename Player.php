@@ -21,11 +21,11 @@ class Player {
     private $xml;
     private $log;
 
-    public function __construct($pid, $log){
+    public function __construct($pid, $log, $forge=FALSE){
         $this->id = $pid;
         $this->log = $log;
         $path = self::PATH_PLAYER;
-        if (!file_exists("$path/$pid.xml")) {
+        if (!file_exists("$path/$pid.xml") && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
 	        $this->logMsg("login: new player " . snip($pid));
@@ -60,6 +60,7 @@ class Player {
             logMsg("unable to change working directory to $path");
             return false;
         }
+        return true;
     }
 
 
@@ -69,7 +70,7 @@ class Player {
         $filename = "$id.xml";
         if (!file_exists("$path/$filename")) {
             $this->logMsg("unable to read player XML " . snip($id));
-            return $this->newXML($id);
+            return null;
         }
 
         $cwd = getcwd();
@@ -240,28 +241,7 @@ class Player {
 
     public function matchCancel($id){
         $match = $this->matchID($id);
-//echo "<br>CANCELMATCH $id<br>";
-        $played = array('feedback','history');
-        if (in_array($match['status'], $played)){
-            return;
-        }
-        $rivalIDs = $match->xpath('rival');
-        foreach($rivalIDs as $rivalID){
-            $rival = new Player($rivalID);
-            if(isset($rival)){
-                $rivalMatch = $rival->matchID($id);
-                if(!in_array($rivalMatch['status'], $played)){
-                    $rivalMatch['status'] = 'cancelled';
-//                  emailCancel($rival, $rivalMatch, $rival->venue);
-                    $write = TRUE;
-                }
-                if($write){
-                    $rival->save();
-                }
-            }
-        }
-        removeElement($match);
-        $this->save();
+        $match->cancel();
     }
 
 
@@ -274,36 +254,11 @@ class Player {
     //scans and processes past matches
     public function concludeMatches(){
     //echo "<br>CONCLUDEMATCHES<br>";
-        $oneHour = date_interval_create_from_date_string("1 hour");
-        $matches = $this->xml->xpath('match');
-        foreach($matches as $match){
-            $tz = $match->venue['tz'];
-            $now = tzDateTime('now', $tz);
-            $dateStr = $match['date'];
-            $hour = max(hours($match['hrs']));
-            switch ($match['status']){
-                case 'cancelled':
-                    $hour = min($hour+6, 24);
-                case 'keen':
-                case 'invitation':
-                case 'accepted':
-                    if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
-                        removeElement($match);
-                    }
-                    break;
-                case 'confirmed':
-                    if ($now > date_add(matchDateTime($match), $oneHour)){
-                        $match['status'] = 'feedback';
-                    }
-                    break;
-                case 'feedback':
-                    // send email reminder after a couple of days
-                    break;
-                default:
-                    // nothing to do
-            }
+        $matchXMLs = $this->xml->xpath('match');
+        foreach($matchXMLs as $xml){
+            $match = new Match($this, $xml);
+            $match->conclude();
         }
-        $this->save();
     }
 
 
@@ -329,7 +284,7 @@ class Player {
     public function quit(){
         $matches = $this->xml->xpath("match[@status!='history']");
         foreach($matches as $match){
-            cancelMatch($match);
+            $match->cancel();
         }
         $records = $this->xml->xpath("available | reckon");
         foreach($records as $record){
@@ -393,15 +348,15 @@ class Player {
 
 
     public function region($game, $ability, $region){
-            $reckon = $this->xml->addChild('reckon', '');
-            $reckon->addAttribute('ability', $ability);
-            $reckon->addAttribute('region', $region);
-            $reckon->addAttribute('game', $game);
-            $date = date_create();
-            $reckon->addAttribute('date', $date->format("d-m-Y"));
-            $reckon->addAttribute('id', newID());
-            $reckon->addAttribute('rely', $this->rely()); //default value
-            $this->save();
+        $reckon = $this->xml->addChild('reckon', '');
+        $reckon->addAttribute('ability', $ability);
+        $reckon->addAttribute('region', $region);
+        $reckon->addAttribute('game', $game);
+        $date = date_create();
+        $reckon->addAttribute('date', $date->format("d-m-Y"));
+        $reckon->addAttribute('id', newID());
+        $reckon->addAttribute('rely', $this->rely()); //default value
+        $this->save();
     }
 
 
@@ -444,14 +399,12 @@ class Player {
     public function availableHours($rival, $match){
     //echo "<br>AVAILABLEHOURS<br>";
         $availableHours = 0;
-        $vid = $match->venue;
-        $game = $match['game'];
-        $day = matchDateTime($match)->format('D');
+        $vid = $match->venue();
+        $game = $match->game();
+        $day = match->dateTime()->format('D');
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
-
             $hours = $avail->xpath("hrs[@day='$day']");
-
             foreach ($hours as $hrs){
                 $availableHours = $availableHours | $hrs;
             }
@@ -464,9 +417,9 @@ class Player {
     public function keenHours($rival, $match){
     //echo "<br>KEENHOURS<br>";
         $keenHours = 0;
-        $venue = $match->venue;
-        $game = $match['game'];
-        $day = matchDateTime($match)->format('D');
+        $venue = $match->venue();
+        $game = $match->game();
+        $day = match->dateTime()->format('D');
         $keens = $this->xml->xpath("match[status='keen' and venue='$venue' and game='$game']");
         foreach ($keens as $keen){
             $keenHours = $keenHours | $keen['hrs'];
@@ -481,39 +434,213 @@ class Player {
 
 ////////// MATCH //////////////////////////////////////////
 
-    public function matchKeen($game, $venue, $date, $hours) {
-    //echo "<br>KEENMATCH<br>";
-        $match = $this->xml->addChild('match', '');
-        $match->addAttribute('status', 'keen');
-        $match->addAttribute('id', newID());
-        $match->addAttribute('game', $game);
-        $match->addAttribute('date', $date->format('d-m-Y'));
-        $match->addAttribute('hrs', $hours);
-        $v = $match->addChild('venue', $venue['id']);
-        $v->addAttribute('tz', $venue['tz']);
+    private newMatch(){
+        $match = new Match(
+            $this, 
+            $this->xml->addChild('match', '')
+        );
         $this->save();
         return $match;
     }
 
 
-    public function matchInvite($rival, $match, $hours){
-    //echo "INVITEMATCH<br>";
-        $inviteMatch = $this->xml->addChild('match', '');
-        $inviteMatch->addAttribute('status', 'invitation');
-        $inviteMatch->addAttribute('id', $match['id']);
-        $inviteMatch->addAttribute('game', $match['game']);
-        $inviteMatch->addAttribute('date', $match['date']);
-        $inviteMatch->addAttribute('hrs', $match['hrs']);
-        $pl = $inviteMatch->addChild('rival', $rival->id());
-        $pl->addAttribute('parity', $this->parity($rival, $match['game']));
-        $pl->addAttribute('rep', repWord($rival));
-        $pl->addAttribute('name', $rival->nick());
-        $v = $inviteMatch->addChild('venue', $match->venue);
-        $v->addAttribute('tz', $match->venue['tz']);
+    public function matchKeen($game, $venue, $date, $hours, $invitfe, $rids) {
+        $match = $this->newMatch();
+        $match->init('keen', $game, $venue, $date, $hours);
 
+        foreach($invite as $rid => $email){
+            $rival = new Player($rid, $this->log);
+            if (isset($rival)){
+                $inviteMatch = $rival->matchInvite($match);
+                $inviteMatch->addRival($rid);
+                $rival->emailInvite($invitematch->id());
+            }
+        }
+
+        foreach($rids as $rid){
+            $rival = new Player($rid, $this->log);
+            if(isset($rival)
+            && !empty("$rival->email()")){
+                $availableHours = $rival->availableHours($this, $match);
+                $keenHours = $rival->keenHours($this, $match);
+                $inviteHours = $hours & ($availableHours | $keenHours);
+                if ($inviteHours > 0){
+                    $inviteMatch = $rival->matchInvite($match, $inviteHours);
+                    $inviteMatch->addRival($rid);
+                    $rival->emailInvite($invitematch->id());
+                }
+            }
+        }
         $this->save();
-        return $inviteMatch;
+        return $match;
     }
+
+
+    public function matchInvite($rivalMatch, $hours=NULL){
+        $rid = $rivalMatch->pid();
+        $rival = new Player($rid, $log);
+        $game = $rivalMatch->game();
+        $hours = is_null($hours) ? $rivalMatch->hrs(): $hours;
+        $match = $this->newMatch();
+        $match->init(
+            'invitation',
+            $game,
+            $rivalMatch->venue(),
+            $rivalMatch->date(),
+            $hours,
+            $rivalMatch->id()
+        );
+        $match->addRival(
+            $rid,
+            $this->parity($rival, $game),
+            $rival->repWord(),
+            $rival->nick()
+        );
+        return $match;
+    }
+
+
+    function matchDecline($mid){
+        $match = $this->matchID($mid);
+        $match->decline();
+        $player->save();
+    }
+
+
+    function matchMsg($mid, $msg){
+        $match = $this->matchID($mid);
+        if (isset($match)){
+            $rid = $match->rival();
+            $rival = new Player($rid, $log);
+            if(isset($rival)){
+                $rival->emailMsg($msg, $match);
+            }
+        }
+    }
+
+
+
+
+
+    function loginURL($shelfLife){
+        global $qwikURL;
+        $pid = $this->id();
+        $token = $rival->token($shelfLife);
+        $data = array('qwik'=>'login', 'pid'=>$pid, 'token'=>$token);
+        return "$qwikURL/player.php?" . http_build_query($data);
+    }
+
+
+    function emailInvite($mid){
+        $match = $this->matchID($mid);
+        $date = $match->dateTime();
+        $day = $match->day();
+        $game = $match->game();
+        $venueName = $match->venueName();
+        $email = $this->email();
+        $url = loginURL(2*self::DAY);
+
+        $subject = "Invitation: $game at $venueName";
+
+        $msg  = "<p>\n";
+        $msg .= "\tYou have been invited to play <b>$game $day</b> at $venueName.<br>\n";
+        $msg .= "\t<br>\n";
+        $msg .= "\tPlease <a href='$url' target='_blank'>login</a>\n";
+        $msg .= "\tand <b>accept</b> if you would like to play.\n";
+        $msg .= "</p>\n";
+
+        qwikEmail($email, $subject, $msg, $pid, $token);
+        logEmail('invite', $pid, $game, $venueName);
+    }
+
+
+    function emailConfirm($mid){
+        $match = $this->matchID($mid);
+        $datetime = $match->dateTime();
+        $time = date_format($datetime, "ga D");
+        $game = $match->game();
+        $pid = $this->id();
+        $venueName = $match->venueName();
+        $url = loginURL(self::DAY);
+
+        $subject = "Confirmed: $game $time at $venueName";
+
+        $msg  = "<p>\n";
+        $msg .= "\tYour game of <b>$game</b> is set for <b>$time</b> at $venueName.<br>\n";
+        $msg .= "\t<br>\n";
+        $msg .= "\tIf you need to cancel for some reason, please ";
+        $msg .= "<a href='$url' target='_blank'>login</a> ";
+        $msg .= "as soon as possible to let your rival know.\n";
+        $msg .= "</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
+        $msg .= "</p>\n";
+
+        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        logEmail('confirm', $pid, $game, $venueName, $time);
+    }
+
+
+
+    function emailMsg($message, $match){
+        global $games;
+
+        $datetime = $match->dateTime();
+        $time = date_format($datetime, "ha D");
+        $game = $match['game'];
+        $gameName = $games["$game"];
+        $pid = $this->id();
+        $token = $this->token(2*Player::DAY);
+        $venueName = shortVenueID($match->venue());
+        $url = loginURL(self::DAY);
+
+        $subject = 'Message from qwikgame rival';
+
+        $msg  = "<p>\n";
+        $msg .= "<b>$gameName</b> at $time at $venueName<br><br><br>";
+        $msg .= "\tYour rival says: \"<i>$message</i>\"<br><br><br>\n";
+        $msg .= "Please <a href='$url'>login</a> to reply.";
+        $msg .= "</p>\n";
+
+        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+    }
+
+
+    function emailCancel($match){
+        $datetime = $match->dateTime();
+        $time = date_format($datetime, "ha D");
+        $game = $match->game();
+        $pid = $this->id();
+        $token = $player->token(2*self::DAY);
+        $vid = $match->vid();
+        $venueName = $match->venueName();
+
+        $subject = "Cancelled: $game $time at $venueName";
+
+        $msg  = "<p>\n";
+        $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
+        $msg .= "</p>\n";
+
+        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        logEmail('cancel', $pid, $game, $venueName, $time);
+    }
+
+
+    function emailQuit($player){
+        global $subdomain, $YEAR;
+        $lang = $this->lang();
+
+        $subject = $GLOBALS[$lang]["emailQuitSubject"];
+        $msg = $GLOBALS[$lang]["emailQuitBody"];
+        $pid = $this->id();
+        $token = $this->token(self::YEAR);
+
+        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        logEmail('quit', $pid);
+    }
+
+
+
 
 
 
@@ -574,12 +701,13 @@ class Player {
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
         $this->save();
     }
+    
 
 
-    public function uploadGet($fileName){
+    public function rankingGet($fileName){
     //echo "<br>GETUPLOAD<br>";
-        $upload = readUploadXML($fileName);
-        if(!$upload){
+        $ranking = new Ranking($fileName);
+        if(!$ranking){
             $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
             foreach($missing as $miss){
                 $this->removeElement($miss);
@@ -587,11 +715,11 @@ class Player {
             $this->save();
             return FALSE;
         }
-        return $upload;
+        return $ranking;
     }
 
 
-    public function uploadDelete($fileName){
+    public function rankingDelete($fileName){
         $path = self::PATH_UPLOAD;
         deleteFile("$path/$fileName.csv");
         deleteFile("$path/$fileName.xml");
@@ -602,6 +730,133 @@ class Player {
        }
        $this->save();
     }
+
+
+    public function rankingActivate($fileName){
+        $ranking = $player->rankingGet($fileName);
+        $ranking->insert($log);
+    }
+
+
+    public function rankingDeactivate($fileName){
+        $ranking = $player->rankingGet($fileName);
+        $ranking->extract($log);
+    }
+
+/********************************************************************************
+Processes a user request to upload a set of player rankings and
+Returns a status message
+
+$player XML     player data for the player uploading the rankings
+$game    String    The game in the uploaded rankings
+$title    String    A player provided title for the rankings
+
+A player can upload a file containing player rankings which qwikgame can
+utilize to infer relative player ability. A comma delimited file is
+required containing the rank and sha256 hash of each player's email address.
+
+A set of rankings has a status: [ uploaded | active ]
+
+Requirements:
+1.    Every line must contain an integer rank and the sha256 hash of an email
+    address separated by a comma.
+    18 , d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
+2.    The first line of the uploaded file must contain the sha256 hash of
+    facilitator@qwikgame.org with rank=0. This provides a basic check that
+    the sha256 hashes in the file are compatible with those in use at qwik game org.
+3.    The file size must not exceed 200k (or about 2000 ranks).
+
+********************************************************************************/
+function rankingUpload($game, $title){
+        global $tick;
+        $ok = TRUE;
+        $msg = "<b>Thank you</b><br>";
+
+        $fileName = $_FILES["filename"]["name"];
+        if (strlen($fileName) > 0){
+            $msg .= "$fileName<br>";
+        } else {
+            $msg .= "missing filename";
+            $ok = FALSE;
+        }
+
+        if($ok && $_FILES["filename"]["size"] > 200000){
+            $msg .= 'Max file size (100k) exceeded.';
+            $ok = FALSE;
+        }
+
+        $ranking = new Ranking(
+            NULL,
+            $game,
+            $this->id(),
+            $title);
+        $ok = $ranking->valid;
+        $msg .= $ranking->transcript;
+
+        if ($ok){
+            $this->uploadAdd($game, $fileName);
+        }
+
+        if ($ok){
+            $existingCount = 0;
+            foreach($ranks as $sha256){
+                if (file_exists("player/$sha256.xml")){
+                    $existingCount++;
+                }
+            }
+            $msg .= "$existingCount players have existing qwikgame records.<br>";
+        }
+
+        if($ok){
+            $msg .= "<br>Click $tick to activate these rankings";
+        } else {
+            $msg .= "<br>Please try again.<br>";
+        }
+    return $msg;
+}
+
+
+
+
+
+    function repWord(){
+
+        $rep = $this->rep();
+        $repPos = intval($rep['pos']);
+        $repNeg = intval($rep['neg']);
+        $repTot = $repPos + $repNeg;
+
+        if($repTot <= 0){
+            return;
+        } elseif($repTot < 5){
+            if($repPos > $repNeg){
+                $word = '<t>good</t>';
+            } elseif($repPos < $repNeg){
+                $word = '<t>poor</t>';
+            } else {
+                $word = '<t>mixed</t>';
+            }
+        } else {
+            $pct = $repPos/$repTot;
+            if($pct >= 0.98){            // 1:50
+                $word = '<t>supurb</t>';
+            } elseif($pct > 0.95){        // 1:20
+                $word = '<t>excellent</t>';
+           } elseif($pct >= 0.90){     // 1:10
+                $word = '<t>great</t>';
+            } elseif($pct >= 0.80){        // 1:5
+                $word = '<t>good</t>';
+            } elseif ($pct >= 0.66){    // 1:3
+            $word = '<t>mixed</t>';
+            } elseif ($pct >= 0.50){    // 1:2
+                $word = '<t>poor</t>';
+            } else {
+                $word = '<t>dreadful</t>';
+            }
+        }
+        return $word;
+    }
+
 
 
 
@@ -803,6 +1058,23 @@ return (string)$id;
         //echo "<br><br>";
         return $orb;
     }
+
+
+    function htmlLink(){
+    $name = $this->nick();
+    if(empty($name)){
+        return '';
+    }
+
+    $url = $player->url();
+    if(empty($url)){
+        return $name;
+    }
+
+    return "<a href='$url' target='_blank'><b>$name</b></a>";
+}
+
+
 
 
 }

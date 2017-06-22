@@ -206,6 +206,7 @@ and by negating Parity.
                 if ($rival->exists()){
                     $subOrb->addNodes($rival->orb($game, $crumbs, FALSE));
                     $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
+                    $rival->save();
                 }
             }
         }

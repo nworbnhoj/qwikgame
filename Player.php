@@ -195,7 +195,6 @@ class Player {
         $token = newToken(10);
         $nekot = $this->xml->addChild('nekot', nekot($token));
         $nekot->addAttribute('exp', time() + $term);
-        $this->save();;
         return $token;
     }
 
@@ -228,7 +227,6 @@ class Player {
         }
 
         $outcome['rely'] = $rely;
-        $this->save();
         return $outcome;
     }
 
@@ -278,7 +276,6 @@ class Player {
         foreach($matches as $match){
             $match->venue = $newID;
         }
-        $this->save();
     }
 
 
@@ -288,7 +285,6 @@ class Player {
         foreach($rubbish as $junk){
             removeElement($junk);
         }
-        $this->save();
     }
 
     public function quit(){
@@ -307,8 +303,6 @@ class Player {
 
         $this->nick(null);
         $this->url(null);
-
-        $this->save();
     }
 
 
@@ -351,9 +345,9 @@ class Player {
         $reckon->addAttribute('date', $date->format("d-m-Y"));
         $reckon->addAttribute('id', newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
-        $this->save();
 
         $rival =  new Player($rid, $log);
+        $rival->save();
     }
 
 
@@ -366,7 +360,6 @@ class Player {
         $reckon->addAttribute('date', $date->format("d-m-Y"));
         $reckon->addAttribute('id', newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
-        $this->save();
     }
 
 
@@ -392,7 +385,6 @@ class Player {
                 $hrs->addAttribute('day', $day);
             }
         }
-        $this->save();
         return $newID;
     }
 
@@ -449,7 +441,6 @@ class Player {
             $this, 
             $this->xml->addChild('match', '')
         );
-        $this->save();
         return $match;
     }
 
@@ -492,8 +483,7 @@ class Player {
     function matchMsg($mid, $msg){
         $match = $this->matchID($mid);
         if (isset($match)){
-            $rid = $match->rival();
-            $rival = new Player($rid, $log);
+            $rival = $match->rival();
             if($rival->exists()){
                 $rival->emailMsg($msg, $match);
             }
@@ -644,7 +634,6 @@ class Player {
             $outcome->addAttribute('rep', $rep);
             $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
             $outcome->addAttribute('id', $mid);
-            $this->save();
 
             return new Player($match->rival, $this->log);
         } else {
@@ -664,7 +653,6 @@ class Player {
                 $rep['neg'] = $rep['neg'] + 1;
                 break;
         }
-        $this->save();
     }
 
 
@@ -680,7 +668,6 @@ class Player {
     public function uploadAdd($fileName){
         $up = $player->addChild('upload', $fileName);
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
-        $this->save();
     }
     
 
@@ -693,7 +680,6 @@ class Player {
             foreach($missing as $miss){
                 $this->removeElement($miss);
             }
-            $this->save();
             return FALSE;
         }
         return $ranking;
@@ -709,7 +695,6 @@ class Player {
        foreach($delete as $del){
            $this->removeElement($del);
        }
-       $this->save();
     }
 
 

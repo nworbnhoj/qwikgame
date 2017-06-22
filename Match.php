@@ -26,7 +26,6 @@ class Match {
         $this->xml->addAttribute('hrs', $hours);
         $v = $this->xml->addChild('venue', $venue['id']);
         $v->addAttribute('tz', $venue['tz']);
-        $this->save();
     }
 
 
@@ -38,12 +37,6 @@ class Match {
         $this->xml->addAttribute('hrs', $match->hrs());
         $v = $this->xml->addChild('venue', $match->vid());
         $v->addAttribute('tz', $match->tz());
-        $this->save();
-    }
-
-
-    private function save(){
-        $this->player->save();
     }
 
 
@@ -52,7 +45,6 @@ class Match {
         $rival->addAttribute('parity', $parity);
         $rival->addAttribute('rep', $rep);
         $rival->addAttribute('name', $name);
-        $this->save();
     }
 
 
@@ -64,7 +56,6 @@ class Match {
     public function status($status=NULL){
         if(!is_null($status)){
             $this->xml['status'] = $status;
-            $this->save();
         }
         return (string) $this->xml['status'];
     }
@@ -78,7 +69,6 @@ class Match {
     public function id($id=NULL){
         if(!is_null($id)){
             $this->xml['id'] = $id;
-            $this->save();
         }
         return (string) $this->xml['id'];
     }
@@ -87,7 +77,6 @@ class Match {
     public function hrs($hrs=NULL){
         if(!is_null($hrs)){
             $this->xml['hrs'] = $hrs;
-            $this->save();
         }
         return $this->xml['hrs'];
     }
@@ -136,7 +125,6 @@ class Match {
     public function time($date=NULL, $hour=NULL){
         if(!is_null($date) && !is_null($time)){
             $this->xml->addAttribute('time', "$date $hour:00");
-            $this->save();
         }
         return $this->xml['time'];
     }
@@ -155,7 +143,7 @@ class Match {
     public function invite($rids, $interrupt=FALSE){
         foreach($rids as $rid){
             $rival = new Player($rid, $this->log);
-            if(isset($rival)
+            if(!is_null($rival)
             && !empty($rival->email())){
                 $inviteHours = $this->hrs();
                 if (!interrupt){
@@ -168,6 +156,7 @@ class Match {
                     $inviteMatch->addRival($rid);
                     $rival->emailInvite($invitematch->id());
                 }
+                $rival->save();
             }
         }
     }
@@ -199,10 +188,10 @@ class Match {
                 $date = $this->date();
                 $this->confirm($date, $hour);
                 $rivalMatch->confirm($date, $hour);
-                $rivalMatch->save();
                 break;
             default:
         }
+        $rival->save();
     }
 
 
@@ -210,7 +199,6 @@ class Match {
         $this->status('confirmed');
         $this->time($date, $hour);
         $this->player->emailConfirm($this->id());
-        $this->save();
     }
 
 
@@ -228,10 +216,10 @@ class Match {
                         $this->removeRival($rid);
                     break;
                 }
+                $rival->save();
             }
             removeElement($this->xml);
         }
-        $this->save();
     }
 
 
@@ -259,7 +247,6 @@ class Match {
             }
         }
 //        removeElement($this);
-        $this->save();
     }
 
 
@@ -276,14 +263,12 @@ class Match {
             case 'accepted':
                 if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
                     removeElement($this->xml);
-                    $this->save();
                 }
                 break;
             case 'confirmed':
                $oneHour = date_interval_create_from_date_string("1 hour");
                 if ($now > date_add($this->dateTime(), $oneHour)){
                     $this->status('feedback');
-                    $this->save();
                 }
                 break;
             case 'feedback':

@@ -1103,6 +1103,7 @@ function renameVenue(&$venue, $newID){
         foreach($pids as $pid){
             $player = new Player($pid, $log);
             $player->venueRename($preID, $newID);
+            $player->save();
         }
 
         $games = $venue->xpath('game');

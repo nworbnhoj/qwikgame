@@ -98,6 +98,7 @@
 	}
 
 	$player->concludeMatches();
+	$player->save();
 
     $rnd = mt_rand(1,8);
 	$message = isset($player->email) ? 

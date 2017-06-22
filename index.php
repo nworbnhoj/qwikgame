@@ -24,6 +24,7 @@
 		$anon = new Player($pid, $log, TRUE);
 		if(isset($anon)){
 			$token = $anon->token(2*Player::DAY);
+			$anon->save();
 			$req['pid'] = $pid;
 			$req['token'] = $token;
 			$req['repost'] = 'player.php#available';

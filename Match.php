@@ -11,6 +11,7 @@ class Match {
     public function __construct($player, $xml){
         $this->player = $player;
         $this->xml = $xml;
+        $this->log = $player->log();
     }
 
 
@@ -25,6 +26,18 @@ class Match {
         $this->xml->addAttribute('hrs', $hours);
         $v = $this->xml->addChild('venue', $venue['id']);
         $v->addAttribute('tz', $venue['tz']);
+        $this->save();
+    }
+
+
+    public function copy($match){
+        $this->xml->addAttribute('id', $match->id());
+        $this->xml->addAttribute('status', $match->status());
+        $this->xml->addAttribute('game', $match->game());
+        $this->xml->addAttribute('date', $match->date());
+        $this->xml->addAttribute('hrs', $match->hrs());
+        $v = $this->xml->addChild('venue', $match->vid());
+        $v->addAttribute('tz', $match->tz());
         $this->save();
     }
 
@@ -58,7 +71,7 @@ class Match {
 
 
     public function pid(){
-        return (string) $this->player->pid();
+        return (string) $this->player->id();
     }
 
 
@@ -139,8 +152,29 @@ class Match {
     }
 
 
+    public function invite($rids, $interrupt=FALSE){
+        foreach($rids as $rid){
+            $rival = new Player($rid, $this->log);
+            if(isset($rival)
+            && !empty($rival->email())){
+                $inviteHours = $this->hrs();
+                if (!interrupt){
+                    $availableHours = $rival->availableHours($this, $match);
+                    $keenHours = $rival->keenHours($this, $match);
+                    $inviteHours = $hours & ($availableHours | $keenHours);
+                }
+                if ($inviteHours > 0){
+                    $inviteMatch = $rival->matchInvite($match, $inviteHours);
+                    $inviteMatch->addRival($rid);
+                    $rival->emailInvite($invitematch->id());
+                }
+            }
+        }
+    }
+
+
     public function accept($acceptHour){
-        $rival = new Player($this->rival(), $log);
+        $rival = new Player($this->rival(), $this->log);
         if (!$rival){
             return FALSE;
         }
@@ -165,6 +199,7 @@ class Match {
                 $date = $this->date();
                 $this->confirm($date, $hour);
                 $rivalMatch->confirm($date, $hour);
+                $rivalMatch->save();
                 break;
             default:
         }
@@ -181,7 +216,7 @@ class Match {
 
     public function decline(){
         foreach($this->rids() as $rid){
-            $rival = new Player($rid, $log);
+            $rival = new Player($rid, $this->log);
             if(isset($rival)){
                 $match = $rival->match($mid);
                 switch ($match->status()){
@@ -190,20 +225,19 @@ class Match {
                         $rival->save();
                     break;
                     case 'keen':
-//                        $invites = $keenMatch->xpath("rival='$playerID'");
-//                        removeElement($invite);
-                        foreach($match->rivals() as $invite){
-                            if("$invite" == $this->pid()){
-                                removeElement($invite);
-                                $rival->save();
-                            }
-                        }
+                        $this->removeRival($rid);
                     break;
                 }
             }
-            removeElement($this);
+            removeElement($this->xml);
         }
         $this->save();
+    }
+
+
+    private function removeRival($rid){
+        $rivalElement = $this->xml->xpath("rival='$rid'");
+        removeElement($rivalElement[0]);
     }
 
 
@@ -213,7 +247,7 @@ class Match {
             return FALSE;
         }
         $this->status('cancelled');
-        $mid = this->id();
+        $mid = $this->id();
         foreach($this->rids() as $rid){
             $rival = new Player($rid, $this->log);
             if(isset($rival)){
@@ -241,7 +275,7 @@ class Match {
             case 'invitation':
             case 'accepted':
                 if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
-                    removeElement($this);
+                    removeElement($this->xml);
                     $this->save();
                 }
                 break;
@@ -319,7 +353,7 @@ class Match {
 
     $match    XML    match data
     ********************************************************************************/
-    public function dateTime($match){
+    public function dateTime(){
         if(empty($this->tz())){
             return new datetime();
         }

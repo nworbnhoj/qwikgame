@@ -2,6 +2,7 @@
 
 
 include 'Orb.php';
+include 'Match.php';
 
 
 class Player {
@@ -92,6 +93,11 @@ class Player {
     }
 
 
+    public function exists(){
+        return !is_null($this->xml);
+    }
+
+
     public function id(){
         return $this->id;
     }
@@ -103,7 +109,7 @@ class Player {
 
 
     public function lang($lang=NULL){
-        if (isset($lang)){
+        if (!is_null($lang)){
             $this->xml['lang'] = $lang;
         }
         return (string) $this->xml['lang'];
@@ -111,7 +117,7 @@ class Player {
 
 
     public function nick($nick=NULL){
-        if (isset($nick)){
+        if (!is_null($nick)){
             if (isset($this->xml['nick'])){
                 $this->xml['nick'] = $nick;
             } else {
@@ -123,21 +129,21 @@ class Player {
 
 
     public function rely($disparity=NULL){            // note disparity range [0,4]
-        $rely = $this->xml->rely['val'];
+        $rely = $this->xml['rely']['val'];
         if (isset($disparity)){
             $this->xml->rely['val'] = $this->expMovingAvg($rely, 4-$disparity, 3);
         }
-        return (float) $this->xml->rely['val'];
+        return (float) $this->xml['rely']['val'];
     }
 
 
     public function rep(){
-        return $this->xml->rep[0];
+        return $this->xml['rep'][0];
     }
 
 
     public function url($url=NULL){
-        if (isset($url)){
+        if (!is_null($url)){
             if (isset($this->xml['url'])){
                 $this->xml['url'] = $url;
             } else {
@@ -150,11 +156,11 @@ class Player {
 
 
     public function email($newEmail=NULL){
-        if (isset($newEmail)){
-            if(empty($this->xml->email)){
+        if (!is_null($newEmail)){
+            if(empty($this->xml['email'])){
                 $this->xml->addChild('email', $newEmail);
             } else {
-                $oldEmail = $this->xml->email[0];
+                $oldEmail = $this->xml['email'][0];
                 if ($oldEmail != $newEmail) {
                     $newID = anonID($newEmail);
                     if (false){ // if newID already exists then log and abort
@@ -165,14 +171,14 @@ class Player {
                 }
             }
         }
-        return (string) $this->xml->email;
+        return (string) $this->xml['email'];
     }
 
 
     private function changeEmail($newEmail){
         $preID = $this->id();
         $newID = anonID($newEmail);
-        removeElement($this->xml->email);
+        removeElement($this->xml['email']);
         $this->xml->addChild('email', $newEmail);
         $this->id = $newID;
         $this->xml['id'] = $newID;
@@ -209,8 +215,6 @@ class Player {
     }
 
 
-
-
     public function outcome($id, $rely=NULL){
         $outcomes = $this->xml->xpath("outcome[@id='$id']");
         if (empty($outcomes)){
@@ -230,12 +234,17 @@ class Player {
 
 
     public function reckon($id){
-        return $this->xpath("reckon[@$id]");
+        return $this->xml->xpath("reckon[@$id]");
     }
 
 
     public function matchQuery($query){
         return $this->xml->xpath("$query");
+    }
+
+
+    public function log(){
+        return $this->log;
     }
 
 
@@ -258,6 +267,7 @@ class Player {
         foreach($matchXMLs as $xml){
             $match = new Match($this, $xml);
             $match->conclude();
+            $match->save();
         }
     }
 
@@ -399,9 +409,9 @@ class Player {
     public function availableHours($rival, $match){
     //echo "<br>AVAILABLEHOURS<br>";
         $availableHours = 0;
-        $vid = $match->venue();
+        $vid = $match->vid();
         $game = $match->game();
-        $day = match->dateTime()->format('D');
+        $day = $match->dateTime()->format('D');
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
             $hours = $avail->xpath("hrs[@day='$day']");
@@ -419,7 +429,7 @@ class Player {
         $keenHours = 0;
         $venue = $match->venue();
         $game = $match->game();
-        $day = match->dateTime()->format('D');
+        $day = $match->dateTime()->format('D');
         $keens = $this->xml->xpath("match[status='keen' and venue='$venue' and game='$game']");
         foreach ($keens as $keen){
             $keenHours = $keenHours | $keen['hrs'];
@@ -434,7 +444,7 @@ class Player {
 
 ////////// MATCH //////////////////////////////////////////
 
-    private newMatch(){
+    private function newMatch(){
         $match = new Match(
             $this, 
             $this->xml->addChild('match', '')
@@ -444,52 +454,24 @@ class Player {
     }
 
 
-    public function matchKeen($game, $venue, $date, $hours, $invitfe, $rids) {
+    public function matchKeen($game, $venue, $date, $hours) {
         $match = $this->newMatch();
         $match->init('keen', $game, $venue, $date, $hours);
-
-        foreach($invite as $rid => $email){
-            $rival = new Player($rid, $this->log);
-            if (isset($rival)){
-                $inviteMatch = $rival->matchInvite($match);
-                $inviteMatch->addRival($rid);
-                $rival->emailInvite($invitematch->id());
-            }
-        }
-
-        foreach($rids as $rid){
-            $rival = new Player($rid, $this->log);
-            if(isset($rival)
-            && !empty("$rival->email()")){
-                $availableHours = $rival->availableHours($this, $match);
-                $keenHours = $rival->keenHours($this, $match);
-                $inviteHours = $hours & ($availableHours | $keenHours);
-                if ($inviteHours > 0){
-                    $inviteMatch = $rival->matchInvite($match, $inviteHours);
-                    $inviteMatch->addRival($rid);
-                    $rival->emailInvite($invitematch->id());
-                }
-            }
-        }
-        $this->save();
+        venuePlayer($venue, $this->id());
         return $match;
     }
 
 
     public function matchInvite($rivalMatch, $hours=NULL){
         $rid = $rivalMatch->pid();
-        $rival = new Player($rid, $log);
+        $rival = new Player($rid, $this->log);
         $game = $rivalMatch->game();
-        $hours = is_null($hours) ? $rivalMatch->hrs(): $hours;
         $match = $this->newMatch();
-        $match->init(
-            'invitation',
-            $game,
-            $rivalMatch->venue(),
-            $rivalMatch->date(),
-            $hours,
-            $rivalMatch->id()
-        );
+        $match->copy($rivalMatch);
+        $match->status('invitation');
+        if (!is_null($hours)){
+            $match->hrs($hours);
+        }
         $match->addRival(
             $rid,
             $this->parity($rival, $game),
@@ -512,7 +494,7 @@ class Player {
         if (isset($match)){
             $rid = $match->rival();
             $rival = new Player($rid, $log);
-            if(isset($rival)){
+            if($rival->exists()){
                 $rival->emailMsg($msg, $match);
             }
         }
@@ -673,8 +655,7 @@ class Player {
 
     // update the reputation records for a player
     public function updateRep($feedback){
-        $rep = isset($this->xml->rep) ? $this->xml->rep : $this->xml->addChild('rep', '');
-
+        $rep = null !== $this->rep() ? $this->rep() : $this->xml->addChild('rep', '');
         switch ($feedback){
             case '+1':
                 $rep['pos'] = $rep['pos'] + 1;

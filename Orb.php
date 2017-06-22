@@ -203,8 +203,10 @@ and by negating Parity.
                 $crumbs = array_merge($subOrb->expand($crumbs, $game), $crumbs);
             } elseif(!in_array($rid, $crumbs)){
                 $rival = new Player($rid, $this->log);
-                $subOrb->addNodes($rival->orb($game, $crumbs, FALSE));
-                $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
+                if ($rival->exists()){
+                    $subOrb->addNodes($rival->orb($game, $crumbs, FALSE));
+                    $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
+                }
             }
         }
         return $crumbs;

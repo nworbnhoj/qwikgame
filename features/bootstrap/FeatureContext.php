@@ -107,9 +107,9 @@ class FeatureContext implements Context
     {
     	$this->pid = anonID($address);    	
         removePlayer($this->pid);
-   	    $this->player = new Player($this->pid, $this->log);
+        $this->player = new Player($this->pid, $this->log, TRUE);
         $this->player->email($address);
-        $this->player->save();
+        $this->player->save(); 
     }
     
      /**
@@ -185,7 +185,7 @@ class FeatureContext implements Context
     	
 		if(!$this->player){
  		    $this->pid = anonID($address);
-			$this->player = new Player($this->pid, $this->log);
+			$this->player = new Player($this->pid, $this->log, TRUE);
         }
         global $MONTH;
         $this->token = $this->player->token(Player::MONTH);
@@ -260,7 +260,7 @@ class FeatureContext implements Context
     private function iWillBeAvailableToPlay($req, $venue, $rivalParity='any', $test='ALL')
     {        
         $game = $req['game'];
-        $rival = new Player(anonID("rival@qwikgame.org"), $this->log);  //dummy rival
+        $rival = new Player(anonID("rival@qwikgame.org"), $this->log, TRUE);  //dummy rival
         
         foreach ($this->days as $day) {
             if (isset($req[$day])){
@@ -278,6 +278,7 @@ class FeatureContext implements Context
         
                 // The rival is keen for a match
                 $match = $rival->matchKeen($game, $venue, $date, $this->Hrs24);
+                $match->invite(array($this->email));
                 // check when this player is available to play the keen rival
                 $availableHours = $this->player->availableHours($rival, $match);
                                      
@@ -303,7 +304,7 @@ class FeatureContext implements Context
                         Assert::assertTrue(FALSE, "Invalid test: $test");
                 
                 }
-                $rival->delete($match['id']);
+                $rival->delete($match->id());
             }        
         }
     }    
@@ -385,7 +386,7 @@ class FeatureContext implements Context
             $email = $char . "@qwikgame.org";
             $id = anonID($email);
             removePlayer($id);
-            $player = new Player($id, $this->log);
+            $player = new Player($id, $this->log, TRUE);
             $player->nick("player.$char");
             $player->save();
             $this->rivals[$char] = $id;
@@ -418,7 +419,7 @@ class FeatureContext implements Context
         $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
 
         if (count($matches) == 1) {
-            $matchA = $matches[0];
+            $matchA = new Match($playerA, $matches[0]);
         } else {    // set up a dummy match between A & B, ready for feedback
             $vid = $this->locateVenue("Qwikgame Venue | Milawa");
             $venue = readVenueXML($vid);
@@ -429,11 +430,12 @@ class FeatureContext implements Context
             $hours = 1;
 
             $keenMatch = $playerA->matchKeen('Squash', $venue, $date, $hours);
-            $matchA = $playerA->matchInvite($playerB, $keenMatch, $hours);
-            $matchB = $playerB->matchInvite($playerA, $keenMatch, $hours);
-            $matchA['status'] = 'confirmed';
-	        $matchB['status'] = 'confirmed';
-		    removeElement($keenMatch);
+            $matchB = $playerB->matchInvite($keenMatch, $hours);
+            $matchA = $playerA->matchInvite($matchB, $hours);
+            $matchA->status('confirmed');
+            $matchB->status('confirmed');
+            $keenMatch->cancel();
+//		    removeElement($keenMatch);
 		    $playerA->save();
 		    $playerB->save();
 		}
@@ -441,7 +443,7 @@ class FeatureContext implements Context
         qwikFeedback(
             $playerA, 
             array(
-                'id'=>$matchA['id'],
+                'id'=>$matchA->id(),
                 'rep'=>'0',
                 'parity'=>$this->paritySymbol[$parity]
             )
@@ -470,7 +472,7 @@ class FeatureContext implements Context
 //$rely = $playerA->rely;
 //print_r("$nickA rely=$relyA\n");
 //print_r("$nickB rely=$relyB\n");
-//print_r("$parity\t$parityEstimate\t$parityStr\n");
+print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':

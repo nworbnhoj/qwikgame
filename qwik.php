@@ -1595,27 +1595,33 @@ function qwikKeen($player, $req, $venue){
         logMsg("qwikKeen() missing required arguments");
         return;
     }
-    $pid = (string) $player->id();
+
     $game = $req['game'];
 
-    $emails = isset($req['invite']) ? $req['invite'] : array();
-    $invite = array();
-    foreach($emails as $email){
-        $rid = anonID($email);
-        if ($pid != $rid){            //exclude self
-            $invite[$rid] = $email;
+    // build an array of Familiar Rivals to invite
+    $pid = $this->id();
+    $familiarRids = array();
+    if (isset($req['invite'])){
+        $emails = $req['invite'];
+        if (is_array($emails)){
+            foreach($emails as $email){
+                $familiarRids[] = anonID($email);
+            }
         }
     }
+    unset($familiarRids[$pid]);    // exclude self;
 
+
+    // build an array of other available Rivals to invite
     $rids = $req['invite-available'] 
         ? array_diff(
             array_map(
                 function($obj){return "$obj";},
                 $venue->xpath('player')
-                ),
-            array_keys($invite),             // exclude explicit invitations
-            array($pid)                        // exclude self
-            ) 
+            ),
+            $familiarRids,             // exclude explicit invitations
+            array($pid)                // exclude self
+        )
         : array();
 
 
@@ -1624,14 +1630,13 @@ function qwikKeen($player, $req, $venue){
         $date = venueDateTime($day, $venue);
         $hours = (int) $req[$day];
         if ($hours > 0){
-            $match = $player->matchKeen($game, $venue, $date, $hours, $invite, $rids);
+             $match = $player->matchKeen($game, $venue, $date, $hours);
+             $match->invite($familiarRids, TRUE);
+             $match->invite($anonRids);
+             $match->save();
         }
     }
-    venuePlayer($venue, $player->id());
 }
-
-
-
 
 
 function qwikDecline($player, $request){
@@ -1710,7 +1715,7 @@ function qwikFeedback($player, $request){
             $request['rep']
         );
 
-        if (isset($rival)){
+        if ($rival->exists()){
             $rival->updateRep($request['rep']);
             updateCongCert($player, $request['id'], $rival);
             $rival->save();

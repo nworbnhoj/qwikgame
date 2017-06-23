@@ -435,9 +435,7 @@ class FeatureContext implements Context
             $matchA->status('confirmed');
             $matchB->status('confirmed');
             $keenMatch->cancel();
-//		    removeElement($keenMatch);
-		    $playerA->save();
-		    $playerB->save();
+		    $keenMatch->remove();
 		}
 
         qwikFeedback(
@@ -448,6 +446,8 @@ class FeatureContext implements Context
                 'parity'=>$this->paritySymbol[$parity]
             )
         );
+        $playerA->save();
+        $playerB->save();
     }
 
 
@@ -462,6 +462,9 @@ class FeatureContext implements Context
         $playerA = new Player($pidA, $this->log);
         $playerB = new Player($pidB, $this->log);
 
+//print_r($playerA);
+//print_r($playerB);
+
         $parityEstimate = $playerA->parity($playerB, 'Squash');
         $parityStr = parityStr($parityEstimate);
 
@@ -472,7 +475,7 @@ class FeatureContext implements Context
 //$rely = $playerA->rely;
 //print_r("$nickA rely=$relyA\n");
 //print_r("$nickB rely=$relyB\n");
-print_r("$parity\t$parityEstimate\t$parityStr\n");
+//print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':

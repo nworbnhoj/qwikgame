@@ -278,6 +278,11 @@ class Match {
                 // nothing to do
         }
     }
+    
+    
+    public function remove(){
+        removeElement($this->xml);
+    }
 
 
 

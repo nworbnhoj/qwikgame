@@ -265,7 +265,6 @@ class Player {
         foreach($matchXMLs as $xml){
             $match = new Match($this, $xml);
             $match->conclude();
-            $match->save();
         }
     }
 
@@ -621,21 +620,21 @@ class Player {
 ////////// OUTCOME //////////////////////////////////////////
 
     public function outcomeAdd($mid, $parity, $rep){
-        $match = $this->matchID($mid);
+        $match = new Match($this, $this->matchID($mid));
         if (isset($match)){
-            $match['status'] = 'history';
+            $match->status('history');
 
             $outcome = $this->xml->addChild('outcome', '');
-            $outcome->addAttribute('game', $match['game']);
-            $outcome->addAttribute('rival', $match->rival);
-            $date = date_create($match['time']);
+            $outcome->addAttribute('game', $match->game());
+            $outcome->addAttribute('rival', $match->rid());
+            $date = $match->dateTime();
             $outcome->addAttribute('date', $date->format("d-m-Y"));
             $outcome->addAttribute('parity', $parity);
             $outcome->addAttribute('rep', $rep);
             $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
             $outcome->addAttribute('id', $mid);
 
-            return new Player($match->rival, $this->log);
+            return new Player($match->rid(), $this->log);
         } else {
             header("Location: error.php?msg=unable to locate match.");
         }

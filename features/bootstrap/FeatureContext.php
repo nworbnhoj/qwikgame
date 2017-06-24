@@ -12,6 +12,9 @@ require 'phpunit.phar';
 use PHPUnit\Framework\TestCase as Assert;
 
 
+include 'Ranking.php';
+
+
 /**
  * Defines application features from the specific context.
  */
@@ -54,7 +57,7 @@ class FeatureContext implements Context
 	private $parity;
 	private $pid;
 	private $player;
-	private $rankingFilename;
+	private $rankingFileName;
 	private $req = [];     // a post or get request
 	private $time;
 	private $token;
@@ -462,9 +465,6 @@ class FeatureContext implements Context
         $playerA = new Player($pidA, $this->log);
         $playerB = new Player($pidB, $this->log);
 
-//print_r($playerA);
-//print_r($playerB);
-
         $parityEstimate = $playerA->parity($playerB, 'Squash');
         $parityStr = parityStr($parityEstimate);
 
@@ -475,7 +475,7 @@ class FeatureContext implements Context
 //$rely = $playerA->rely;
 //print_r("$nickA rely=$relyA\n");
 //print_r("$nickB rely=$relyB\n");
-//print_r("$parity\t$parityEstimate\t$parityStr\n");
+print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':
@@ -501,9 +501,11 @@ class FeatureContext implements Context
     /**
      * @Given a ranking file :filename from :player
      */
-    public function aRankingFile($filename, $player)
+    public function aRankingFile($fileName, $player)
     {
-        $this->rankingFilename = $filename;
+        $this->rankingFileName = "$fileName.xml";
+        $path = Ranking::PATH . "/$fileName.xml";
+        $file = fopen($path, "r");
         $pid = $this->rivals[$player];
         $this->player = new Player($pid, $this->log);
     }
@@ -515,8 +517,10 @@ class FeatureContext implements Context
      */
     public function theRankingIsActivated()
     {
-        $ranking = $this->player->uploadGet($this->rankingFilename);
-        insertRanking($ranking);
+        $fileName = $this->rankingFileName;
+        $player = $this->player;
+        $ranking = $player->uploadAdd($fileName);
+        $player->rankingActivate($fileName);
     }
 
 

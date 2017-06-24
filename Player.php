@@ -231,7 +231,20 @@ class Player {
     }
 
 
-    public function reckon($id){
+    public function rankAdd($id, $game, $rid, $parity){
+        $rank = $this->xml->addChild('rank', '');
+        $rank->addAttribute('id', $id);
+        $rank->addAttribute('game', $game);
+        $rank->addAttribute('rival', $rid);
+        $rank->addAttribute('parity', $parity);
+        $rank->addAttribute('rely', '3.0');
+        $datetime = date_create();
+        $date = $datetime->format('d-m-Y');
+        $rank->addAttribute('date', $date);
+    }
+
+        
+    public function reckon($id){ 
         return $this->xml->xpath("reckon[@$id]");
     }
 
@@ -665,7 +678,7 @@ class Player {
 
 
     public function uploadAdd($fileName){
-        $up = $player->addChild('upload', $fileName);
+        $up = $this->xml->addChild('upload', $fileName);
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
     }
     
@@ -673,7 +686,7 @@ class Player {
 
     public function rankingGet($fileName){
     //echo "<br>GETUPLOAD<br>";
-        $ranking = new Ranking($fileName);
+        $ranking = new Ranking($this->log, $fileName);
         if(!$ranking){
             $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
             foreach($missing as $miss){
@@ -698,14 +711,14 @@ class Player {
 
 
     public function rankingActivate($fileName){
-        $ranking = $player->rankingGet($fileName);
-        $ranking->insert($log);
+        $ranking = $this->rankingGet($fileName);
+        $ranking->insert($this->log);
     }
 
 
     public function rankingDeactivate($fileName){
-        $ranking = $player->rankingGet($fileName);
-        $ranking->extract($log);
+        $ranking = $this->rankingGet($fileName);
+        $ranking->extract($this->log);
     }
 
 /********************************************************************************
@@ -1005,7 +1018,6 @@ return (string)$id;
     //echo "PLAYERORB $game $playerID<br>\n";
         $orb = new Orb($this->log);
         $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
-
         foreach($parities as $par){
             $rid = subID($par['rival']);
             if (!$filter){

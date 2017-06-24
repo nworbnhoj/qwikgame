@@ -4,7 +4,8 @@
 class Ranking {
 
     const PATH = 'uploads';
-    const EXT = '.csv';
+    const CSV = '.csv';
+    const XML = '.xml';
     const RANK_PARITY = array(128=>-2, 64=>-2, 32=>-1, 16=>-1, 8=>0, 4=>0, 2=>0, 1=>0, -1=>0, -2=>0, -4=>0, -8=>0, -16=>1, -32=>1, -64=>2, -128=>2);
 
 
@@ -13,13 +14,20 @@ class Ranking {
     public $valid;
     private $log;
 
-    public function __construct($fileName=NULL, $game=NULL, $pid=NULL, $title=NULL){
+    public function __construct($log, $fileName=NULL, $game=NULL, $pid=NULL, $title=NULL){
+        $this->log = $log;
         $this->valid = true;
-        if(is_null($filename)){
-            $this->processUpload($game, $pid, $title);
+        if(is_null($fileName)){
+            $this->xml = $this->processUpload($game, $pid, $title);
         } else {
-            $this->readXML($fileName);
+            $this->xml = $this->readXML($fileName);
         }
+    }
+
+
+    private function logMsg($msg){
+        $this->log->lwrite($msg);
+        $this->log->lclose();
     }
 
 
@@ -27,7 +35,7 @@ class Ranking {
         $date = date_create();
         $tmp_name = $_FILES["filename"]["tmp_name"];
         $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $path = self::PATH . "/" . $fileName . self::EXT;
+        $path = self::PATH . "/" . $fileName . self::CSV;
 
         $this->moveUpload($tmp_name, $path);
         $file = $this->openUpload($path);
@@ -141,10 +149,10 @@ class Ranking {
         $path = self::PATH;
         if(chdir($path)){
             $fileName = $this->fileName();
-            $ext = self::EXT;
-            $this->xml->saveXML("$fileName.$ext");
+            $ext = self::XML;
+            $this->xml->saveXML("$fileName$ext");
             if(chdir($cwd)){
-                $this->log->logMsg("unable to change working directory to $cwd");
+                $this->logMsg("unable to change working directory to $cwd");
                 return false;
             }
         } else {
@@ -155,18 +163,16 @@ class Ranking {
     }
 
 
-    public function readXML($id){
-        $id = $this->id;
+    public function readXML($fileName){
         $path = self::PATH;
-        $filename = "$id.xml";
-        if (!file_exists("$path/$filename")) {
+        if (!file_exists("$path/$fileName")) {
             $this->logMsg("unable to read ranking XML " . snip($id));
             return null;
         }
 
         $cwd = getcwd();
         if(chdir($path)){
-            $xml = simpleXML_load_file($filename);
+            $xml = simpleXML_load_file($fileName);
             if(!chdir($cwd)){
                 $this->logMsg("unable to change working directory to $cwd");
             }
@@ -184,6 +190,11 @@ class Ranking {
 
     private function id(){
         return $this->xml['id'];
+    }
+
+
+    private function game(){
+        return $this->xml['game'];
     }
 
 
@@ -205,37 +216,27 @@ class Ranking {
     (creating new anon players as required)
 
     ********************************************************************************/
-    public function insert($log){
+    public function insert(){
         $rankParity = self::RANK_PARITY;
 
-        $datetime = date_create();
-        $date = $datetime->format('d-m-Y');
-        $rankingID = $ranking['id'];
-        $game = $ranking['game'];
+        $rankingID = $this->id();
+        $game = $this->game();
 
         $ranks = array();
-        $anonIDs = $ranking->xpath("sha256");
-        foreach($anonIDs as $anonID){
-            $anonRank = $anonID['rank'];
-            $ranks["$anonRank"] = "$anonID";
-        }
-
+        $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
             $anonRank = (int) $anonID['rank'];
+            $ranks[$anonRank] = "$anonID";
+        }
 
-            $anon = new Player($anonID, $log, TRUE);
+        foreach($ranks as $anonRank => $anonID){
+            $anon = new Player($anonID, $this->log, TRUE);
 
-            foreach($rankParity as $rnk => $pty){
+            foreach($rankParity as $rnk => $parity){
                 $rivalRank = $anonRank + (int) $rnk;
-                $rivalID = $ranks["$rivalRank"];
-                if (isset($rivalID)){
-                    $parity = $anon->addChild('rank', '');
-                    $parity->addAttribute('rely', '3.0');
-                    $parity->addAttribute('id', $rankingID);
-                    $parity->addAttribute('rival', $rivalID);
-                    $parity->addAttribute('game', $game);
-                    $parity->addAttribute('date', $date);
-                    $parity->addAttribute('parity', $pty);
+                if (isset($ranks[$rivalRank])){
+                    $rid = $ranks[$rivalRank];
+                    $anon->rankAdd($rankingID, $game, $rid, $parity);
                 }
             }
             $anon->save();

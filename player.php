@@ -24,12 +24,12 @@
 	$game = $req['game'];
 
 	if(isset($req['vid'])){
-    	$venue = readVenueXML($req['vid']);
+        $venue = new Venue($req['vid']);
 	}
 
     if (isset($venue)){
-        if(venueAddGame($venue, $game)){
-            writeVenueXML($venue);
+        if($venue->addGame($game)){
+            $venue->save();
             logMsg("Added $game to $vid");
         }
     } elseif (!empty($req['venue'])){

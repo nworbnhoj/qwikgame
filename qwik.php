@@ -5,7 +5,10 @@ $qwikURL = "http://$subdomain.qwikgame.org";
 
 
 include 'Player.php';
-include 'logging.php'; 
+include 'Venue.php';
+include 'logging.php';
+
+
 $log = new Logging();
 $log->lfile("/tmp/$subdomain.qwikgame.org.log");
 
@@ -675,18 +678,6 @@ function tzDateTime($str='now', $tz){
 }
 
 
-/********************************************************************************
-Returns a new DateTime object for a time at the $venue requested
-
-$str    String    A time & date
-$venue    XML        venue data
-********************************************************************************/
-function venueDateTime($str='now', $venue){
-//echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
-    return tzDateTime($str, $venue['tz']);
-}
-
-
 
 ////////// VALIDATE ////////////////////////////////////////
 
@@ -1063,119 +1054,10 @@ function nekot($token){
 }
 
 
-function venueID($name, $address, $suburb, $state, $country){
-    return "$name|$address|$suburb|$state|$country";
-}
 
 
 
-function updateVenueID(&$venue){
-// echo "<br>UPDATEVENUEID<br>";
-    if(empty($venue)){
-        return false;
-    }
 
-    $vid = venueID(
-        $venue['name'], 
-        $venue['address'], 
-        $venue['suburb'], 
-        $venue['state'], 
-        $venue['country']
-    );
-    renameVenue($venue, $vid);
-}
-
-
-// may introduce inconsistent results under hi multi-user load
-
-function renameVenue(&$venue, $newID){
-// echo "<br>RENAMEVENUE to $newID<br>";
-    $preID = (string) $venue['id'];
-    if($newID != $preID){
-        $venue['id'] = $newID;
-        writeVenueXML($venue);
-
-        // temporarily replace oldfile with a symlink
-        deleteFile("venue/$preID.xml");
-        symlink("venue/$newID.xml", "venue/$preID.xml");
-
-        $pids = $venue->xpath('player');
-        foreach($pids as $pid){
-            $player = new Player($pid, $log);
-            $player->venueRename($preID, $newID);
-            $player->save();
-        }
-
-        $games = $venue->xpath('game');
-        foreach($games as $game){
-            symlink("venue/$newID.xml", "venue/$game/$newID.xml");
-            deleteFile("venue/$game/$preID.xml");
-        }
-        deleteFile("venue/$preID.xml");    // delete temp symlink
-    }
-}
-
-
-
-function newVenue($description){
-
-        $field = explode(',', $description);
-        $record = "<venue ";
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " name='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " address='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " suburb='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " state='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " country='$f'";
-        }
-
-        $record .= " />";
-
-        $venue = new simplexmlelement($record);
-        return $venue;
-}
-
-
-
-function updateVenueAtt(&$venue, $key, $update){
-//echo "<br>UPDATEVENUEATT $key ";
-    if (isset($update[$key])){
-        $newVal = $update[$key];
-        $datetime = venueDateTime('now', $venue);
-        $date = $datetime->format('d-m-y H:i');
-        $oldVal = $venue[$key];
-        if ($oldVal != $newVal){
-            if ( strlen(trim($oldVal)) > 0){
-                $edit = $venue->addChild('edit', '');
-                $edit->addAttribute('date', $date);
-                $edit->addAttribute('id', newID());
-                $edit->addChild('key', $key);
-                $edit->addChild('val', $oldVal);                
-            }
-            $venue[$key] = $newVal;    
-            return true;
-        }
-    }
-    return false;
-}
 
 
 function updateVenueArray($venue, $key, $update){
@@ -1183,27 +1065,7 @@ function updateVenueArray($venue, $key, $update){
 }
 
 
-function updateVenue(&$venue, $update){
-//echo "<br>UPDATEVENUE<br>";
-    $save = updateVenueAtt($venue, 'name', $update);
-    $save = updateVenueAtt($venue, 'address', $update) || $save;
-    $save = updateVenueAtt($venue, 'suburb', $update) || $save;
-    $save = updateVenueAtt($venue, 'state', $update) || $save;
-    $save = updateVenueAtt($venue, 'country', $update) || $save;
-    if($save){
-        updateVenueID($venue);
-    }
-    $save = updateVenueAtt($venue, 'phone', $update) || $save;
-    $save = updateVenueAtt($venue, 'url', $update)  || $save;
-    $save = updateVenueAtt($venue, 'tz', $update) || $save;
-    $save = updateVenueAtt($venue, 'note', $update) || $save;
-    $save = updateVenueAtt($venue, 'lat', $update) || $save;
-    $save = updateVenueAtt($venue, 'lng', $update) || $save;
-//    || updateVenueArray($venue, 'games', $update)
-    if($save){
-        writeVenueXML($venue);
-    }
-}
+
 
 // https://secure.php.net/manual/en/class.simplexmlelement.php
 // Must be tested with ===, as in if(isXML($xml) === true){}
@@ -1260,67 +1122,6 @@ function removePlayer($id){
     return deleteFile("$path/$filename");
 }
 
-
-function writeVenueXML($venue){
-//echo "<br>WRITEVENUEXML<br>";
-    $cwd = getcwd();
-    $vid = $venue['id'];
-    $filename = "$vid.xml";
-    writeXML("venue", $filename, $venue);
-    if(chdir("venue")){
-        $games = $venue->xpath('game');
-        foreach($games as $game){
-            if(!file_exists("$game/$filename")){
-                if(file_exists($game) && chdir($game)){
-                    symlink("../$filename", $filename);
-                    chdir("..");
-                } else {
-                   logMsg("Unable to create symlink for $game/$filename");
-                }
-            }
-        }
-    }
-    chdir($cwd);
-}
-
-
-function readVenueXML($vid){
-    return readXML('venue', "$vid.xml");
-}
-
-
-
-function writeXML($path, $file, $xml){
-    $cwd = getcwd();
-    if(chdir($path)){
-        $xml->asXML($file);
-        if(chdir($cwd)){
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
-
-
-function readXML($path, $file){
-    $path = reclaw($path);
-    $file = reclaw($file);
-    
-    if (!file_exists("$path/$file")) {
-        return FALSE;
-    }
-    
-    $cwd = getcwd();
-    if(chdir($path)){
-        $xml=simpleXML_load_file($file);
-        if(!chdir($cwd)){
-            echo "readxml() error changing to cwd";
-        }
-        return $xml;
-    }
-    return;
-}
 
 
 function countFiles($path){
@@ -1523,20 +1324,6 @@ function getCandidates($player, $venue, $matchHours){
 
 
 
-//scans and removes edits over 1 week old
-function concludeReverts($venue){
-    return;
-
-    $edits = $venue->xpath('edit');
-    foreach($edits as $edit){
-        $date = venueDateTime($edit->date['date'], $venue);
-        if ($date > strtotime('+1 week')){
-            removeElement($edit);
-        }
-    }
-    writeVenueXML($venue);
-}
-
 
 // https://stackoverflow.com/questions/4356289/php-random-string-generator/31107425#31107425 
 function generateRandomString($length = 10) {
@@ -1577,11 +1364,11 @@ function qwikAvailable($player, $request, $venue){
             $request['game'], 
             $request['vid'], 
             $request['parity'],
-            $venue['tz'],
+            $venue->tz(),
             isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE,
             $request
         );
-        venuePlayer($venue, $player->id());
+        $venue->addPlayer($player->id());
         return $newID;
     }
 }
@@ -1614,21 +1401,19 @@ function qwikKeen($player, $req, $venue){
 
 
     // build an array of other available Rivals to invite
-    $rids = $req['invite-available'] 
-        ? array_diff(
-            array_map(
-                function($obj){return "$obj";},
-                $venue->xpath('player')
-            ),
-            $familiarRids,             // exclude explicit invitations
-            array($pid)                // exclude self
-        )
-        : array();
+    $anonRids = array();
+    if ($req['invite-available']){
+        $anonRids = array_diff(
+            $venue->playerIDs(),
+            $familiarRids        // exclude explicit invitations
+        );
+    }
+    unset($anonRids[$pid]);    // exclude self;
 
 
     $days = array('today','tomorrow');
     foreach($days as $day){
-        $date = venueDateTime($day, $venue);
+        $date = $venue->dateTime($day);
         $hours = (int) $req[$day];
         if ($hours > 0){
              $match = $player->matchKeen($game, $venue, $date, $hours);
@@ -1649,22 +1434,9 @@ function qwikDecline($player, $request){
 }
 
 
-function venuePlayer($venue, $playerID){
-    if (count($venue->xpath("/venue[player='$playerID']")) == 0){
-        $venue->addChild('player', "$playerID");
-        writeVenueXML($venue);
-    }
-}
 
 
-function venueAddGame($venue, $game){
-//echo "<br>VENUEADDGAME $game<br>";
-    if(count($venue->xpath("/venue[game='$game']")) == 0){
-        $venue->addChild('game', $game);
-        return true;
-    }
-    return false;
-}
+
 
 
 function venueRemoveGame($venue, $game){
@@ -2239,27 +2011,6 @@ function familiarEmailLink($venue, $game, $name){
         favourite%20game%20at%20a%20time%20and%20place%20that%20suits%20you.\n\n\n'>
         <img src='img/email.png' alt='email' class='socialmedia'></a>";
     return $link;
-}
-
-
-function venueRevertDiv($venue){
-    global $revert;
-    $edits = $venue->xpath('edit');
-    if (count($edits) == 0){
-        return '';
-    }
-
-    $div .= "<div id='edit-revert-div' class='middle'>\n";
-    $div .= "\tClick to revert a prior edit.<br>\n";
-    foreach($edits as $edit){
-        $revertID = $edit['id'];
-        $div .= "\t<button class='revert' id='#venue-$edit->key' val='$edit->val'>";
-        $div .= "\t\t$revert <s>$edit->val</s>\n";
-        $div .= "\t</button>\n";
-    }
-    $div .= "\t<br>\n";
-    $div .= "</div>\n";
-    return $div;
 }
 
 

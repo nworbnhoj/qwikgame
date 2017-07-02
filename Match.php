@@ -24,8 +24,8 @@ class Match {
         $this->xml->addAttribute('game', $game);
         $this->xml->addAttribute('date', $date->format('d-m-Y'));
         $this->xml->addAttribute('hrs', $hours);
-        $v = $this->xml->addChild('venue', $venue['id']);
-        $v->addAttribute('tz', $venue['tz']);
+        $v = $this->xml->addChild('venue', $venue->id());
+        $v->addAttribute('tz', $venue->tz());
     }
 
 

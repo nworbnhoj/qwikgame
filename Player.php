@@ -49,6 +49,7 @@ class Player {
 
     public function save(){
         $cwd = getcwd();
+
         $path = self::PATH_PLAYER;
         if(chdir($path)){
             $pid = $this->xml['id'];
@@ -460,7 +461,7 @@ class Player {
     public function matchKeen($game, $venue, $date, $hours) {
         $match = $this->newMatch();
         $match->init('keen', $game, $venue, $date, $hours);
-        venuePlayer($venue, $this->id());
+        $venue->addPlayer($this->id());
         return $match;
     }
 
@@ -686,7 +687,7 @@ class Player {
 
     public function rankingGet($fileName){
     //echo "<br>GETUPLOAD<br>";
-        $ranking = new Ranking($this->log, $fileName);
+        $ranking = new Ranking($fileName, $this->log);
         if(!$ranking){
             $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
             foreach($missing as $miss){
@@ -745,7 +746,7 @@ Requirements:
 3.    The file size must not exceed 200k (or about 2000 ranks).
 
 ********************************************************************************/
-function rankingUpload($game, $title){
+    function rankingUpload($game, $title){
         global $tick;
         $ok = TRUE;
         $msg = "<b>Thank you</b><br>";
@@ -763,17 +764,18 @@ function rankingUpload($game, $title){
             $ok = FALSE;
         }
 
-        $ranking = new Ranking(
-            NULL,
-            $game,
-            $this->id(),
-            $title);
+        $date = date_create();
+        $tmp_name = $_FILES["filename"]["tmp_name"];
+        $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
+        $path = self::PATH_UPLOAD . "/" . $fileName . Ranking::CSV;
+        $this->moveUpload($tmp_name, $path);
+
+        $ranking = importRanking($game, $path, $fileName);
         $ok = $ranking->valid;
         $msg .= $ranking->transcript;
 
-        if ($ok){
-            $this->uploadAdd($game, $fileName);
-        }
+        $ranking->attribute("title", $title);
+        $ranking->attribute("uploadName", $uploadName);
 
         if ($ok){
             $existingCount = 0;
@@ -790,11 +792,20 @@ function rankingUpload($game, $title){
         } else {
             $msg .= "<br>Please try again.<br>";
         }
-    return $msg;
-}
+        return $msg;
+    }
 
 
-
+    public function importRanking($game, $path, $fileName){
+        $ranking = new Ranking($fileName, $this->log, $game, $path);
+        if ($ranking->valid){
+            $ranking->attribute("player", $this->id());
+            $ranking->attribute('uploadHash', hash_file('sha256', $path));
+            $this->uploadAdd($game, $fileName);
+            return $ranking;
+        }
+        return null;
+    }
 
 
     function repWord(){
@@ -976,7 +987,6 @@ function rankingUpload($game, $title){
 //echo "<br><br><br>splicedOrb=";
 //print_r($spliceOrb);
 //echo "<br><br><br>\n";
-
     $parity = $spliceOrb->parity($rivalID);
 
     $this->logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity". $playerOrb->print());

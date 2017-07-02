@@ -6,7 +6,7 @@ class Ranking {
     const PATH = 'uploads';
     const CSV = '.csv';
     const XML = '.xml';
-    const RANK_PARITY = array(128=>-2, 64=>-2, 32=>-1, 16=>-1, 8=>0, 4=>0, 2=>0, 1=>0, -1=>0, -2=>0, -4=>0, -8=>0, -16=>1, -32=>1, -64=>2, -128=>2);
+    const RANK_PARITY = array(128=>-12.8, 64=>-6.4, 32=>-3.2, 16=>-1.6, 8=>-0.8, 4=>-0.4, 2=>-0.2, 1=>-0.1, -1=>0.1, -2=>0.2, -4=>0.4, -8=>0.8, -16=>1.6, -32=>3.2, -64=>6.4, -128=>12.8);
 
 
     private $xml;
@@ -14,13 +14,24 @@ class Ranking {
     public $valid;
     private $log;
 
-    public function __construct($log, $fileName=NULL, $game=NULL, $pid=NULL, $title=NULL){
+    public function __construct($fileName, $log, $game=NULL, $path=NULL){
         $this->log = $log;
         $this->valid = true;
-        if(is_null($fileName)){
-            $this->xml = $this->processUpload($game, $pid, $title);
-        } else {
+        if(is_null($path)){
             $this->xml = $this->readXML($fileName);
+        } else {
+            $this->xml = new SimpleXMLElement("<upload></upload>");
+            $this->xml->addAttribute('fileName', $fileName);
+            $this->processUpload($game, $path);
+            if ($this->valid){
+                $date = date_create();
+                $this->xml->addAttribute('time', $date->format('d-m-Y H:i:s'));
+                $this->xml->addAttribute('path', $path);
+                $this->xml->addAttribute('game', $game);
+                $this->xml->addAttribute('status', 'uploaded');
+                $this->xml->addAttribute('id', newID());
+                $this->save();
+            }
         }
     }
 
@@ -31,22 +42,11 @@ class Ranking {
     }
 
 
-    private function processUpload($game, $pid, $title){
-        $date = date_create();
-        $tmp_name = $_FILES["filename"]["tmp_name"];
-        $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $path = self::PATH . "/" . $fileName . self::CSV;
-
-        $this->moveUpload($tmp_name, $path);
+    private function processUpload($game, $path){
         $file = $this->openUpload($path);
-        $this->metadata($game, $tmp_name, $pid, $title, $data, $fileName, $path);
         $this->checkHash($file);
         $this->parse($file);
         fclose($file);
-
-        if($this->valid){
-            $this->valid = $this->save();
-        }
 
         if(!$this->valid){
             $this->transcript .= 'some weird error saving the data :-(     )';
@@ -80,19 +80,15 @@ class Ranking {
     }
 
 
-    private function metadata($game, $baseName, $pid, $title,$data, $fileName, $path){
-        if($this->valid){
-            $this->xml = new SimpleXMLElement("<upload></upload>");
-            $this->xml->addAttribute('time', $date->format('d-m-Y H:i:s'));
-            $this->xml->addAttribute('player', $pid);
-            $this->xml->addAttribute('uploadName', $fileToUpload);
-            $this->xml->addAttribute('uploadHash', hash_file('sha256', $path));
-            $this->xml->addAttribute('fileName', $fileName);
-            $this->xml->addAttribute('game', $game);
-            $this->xml->addAttribute('title', $title);
-            $this->xml->addAttribute('status', 'uploaded');
-            $this->xml->addAttribute('id', newID());
-        }
+    public function attribute($name, $value=NULL){
+       	if(!is_null($value)){
+            if(empty($this->xml['$name'])){
+       	        $this->xml->addAttribute($name, $value);
+       	    } else {
+       	        $this->xml['$name'] = $value;
+       	    }
+       	}
+        return $this->xml[$name];
     }
 
 
@@ -117,7 +113,7 @@ class Ranking {
 
 
 
-    private function parse(){
+    private function parse($file){
         if($this->valid){
             $lineNo = 0;
             $ranks = array();
@@ -128,15 +124,17 @@ class Ranking {
 
                 $lineNo++;
                 $tupple = explode(',', $line);
-                $rank = (int) trim($tupple[0]);
-                $sha256 = trim($tupple[1]);
-                if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
-                    $ranks[$rank] = $sha256;
-                    $child = $upload->addChild('sha256', $sha256);
-                    $child->addAttribute('rank', $rank);
-                    $rankCount++;
-                } else {
-                    $this->transcript .= "data on line $lineNo ignored<br>$line";
+                if (count($tupple) == 2){
+                    $rank = (int) trim($tupple[0]);
+                    $sha256 = trim($tupple[1]);
+                    if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
+                        $ranks[$rank] = $sha256;
+                        $child = $this->xml->addChild('sha256', $sha256);
+                        $child->addAttribute('rank', $rank);
+                        $rankCount++;
+                    } else {
+                        $this->transcript .= "data on line $lineNo ignored<br>$line";
+                    }
                 }
             }
             $this->transcript .= "$rankCount player rankings found<br>";

@@ -135,7 +135,7 @@ class FeatureContext implements Context
     	$this->game = $game;
     	$this->svid = $svid;
     	$this->vid = $this->locateVenue($svid, $game);
-    	$this->venue = readVenueXML($this->vid);
+        $this->venue = new Venue($this->vid, $this->log);
     	
     	$this->req['parity'] = 'any';
     	$this->req['game'] = $game;
@@ -267,7 +267,7 @@ class FeatureContext implements Context
         
         foreach ($this->days as $day) {
             if (isset($req[$day])){
-                $date  = venueDateTime($day, $this->venue);            
+                $date  = $venue->dateTime($day);
                 $hours = $req[$day];
                 
                 // Set this player as a familiar of the rival, with suitable parity
@@ -386,11 +386,12 @@ class FeatureContext implements Context
     public function aCommunityOfPlayers()
     {
         foreach (range('A', 'Z') as $char) {
-            $email = $char . "@qwikgame.org";
+            $name = "player.$char";
+            $email = "$name@qwikgame.org";
             $id = anonID($email);
             removePlayer($id);
             $player = new Player($id, $this->log, TRUE);
-            $player->nick("player.$char");
+            $player->nick($name);
             $player->save();
             $this->rivals[$char] = $id;
 		}
@@ -425,9 +426,9 @@ class FeatureContext implements Context
             $matchA = new Match($playerA, $matches[0]);
         } else {    // set up a dummy match between A & B, ready for feedback
             $vid = $this->locateVenue("Qwikgame Venue | Milawa");
-            $venue = readVenueXML($vid);
+            $venue = new Venue($vid, $this->log);
             $date = date_add(
-                venueDateTime("today", $venue),
+                $venue->dateTime("today"),
                 date_interval_create_from_date_string("$day days")
             );
             $hours = 1;
@@ -499,15 +500,17 @@ print_r("$parity\t$parityEstimate\t$parityStr\n");
     
     
     /**
-     * @Given a ranking file :filename from :player
+     * @Given a :game ranking file :fileName from :plyr
      */
-    public function aRankingFile($fileName, $player)
+    public function aRankingFile($game, $fileName, $plyr)
     {
+        $pid = $this->rivals[$plyr];
+        $path = Player::PATH_UPLOAD . "/" . $fileName . Ranking::CSV;
+        $this->player = new Player($pid, $this->log);
+        $ranking = $this->player->importRanking($game, $path, $fileName);
         $this->rankingFileName = "$fileName.xml";
         $path = Ranking::PATH . "/$fileName.xml";
         $file = fopen($path, "r");
-        $pid = $this->rivals[$player];
-        $this->player = new Player($pid, $this->log);
     }
 
 

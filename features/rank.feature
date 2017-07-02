@@ -8,7 +8,7 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	
 	Scenario: Activate a set of rankings
 	  Given a community of Players
-	  And a ranking file "behatRankingSequentialA-Z" from A
+	  And a Squash ranking file "behatRankingSequentialA-Z" from A
 	  When the ranking is Activated
 	  Then A=B on day 1
 	  Then A=C on day 1
@@ -18,9 +18,9 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	  Then A=G on day 1
 	  Then A=H on day 1
 	  Then A=I on day 1
-	  Then A>J on day 1
-	  Then A>K on day 1
-	  Then A>L on day 1
+	  Then A=J on day 1
+	  Then A=K on day 1
+	  Then A=L on day 1
 	  Then A>M on day 1
 	  Then A>N on day 1
 	  Then A>O on day 1
@@ -50,8 +50,8 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	  Then Z<M on day 2
 	  Then Z<N on day 2
 	  Then Z<O on day 2
-	  Then Z<P on day 2
-	  Then Z<Q on day 2
+	  Then Z=P on day 2
+	  Then Z=Q on day 2
 	  Then Z=R on day 2
 	  Then Z=S on day 2
 	  Then Z=T on day 2

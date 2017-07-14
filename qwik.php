@@ -6,21 +6,18 @@ $qwikURL = "http://$subdomain.qwikgame.org";
 
 include 'Player.php';
 include 'Venue.php';
-include 'logging.php';
 
 
-$log = new Logging();
-$log->lfile("/tmp/$subdomain.qwikgame.org.log");
 
 
 $languages = array(
     'zh'=>'中文',
     'es'=>'Español',
     'en'=>'English',
-//    'fr'=>'français',
-//    'hi'=>'हिन्दी भाषा',
-//    'ar'=>'اللغة العربية',
-//    'jp'=>'日本語'
+    // 'fr'=>'français',
+    // 'hi'=>'हिन्दी भाषा',
+    // 'ar'=>'اللغة العربية',
+    // 'jp'=>'日本語'
 );
 
 
@@ -30,59 +27,61 @@ foreach($languages as $code => $language){
 }
 
 
-$flyerURL = "$qwikURL/pdf/qwikgame.org%20flyer.pdf";
-$termsURL = "$qwikURL/pdf/qwikgame.org%20terms%20and%20conditions.pdf";
-$privacyURL = "$qwikURL/pdf/qwikgame.org%20privacy%20policy.pdf";
-$facebookURL = "https://www.facebook.com/sharer/sharer.php?u=$qwikURL";
-$twitterURL = "https://twitter.com/intent/tweet?text=<t>tagline</t>&url=$qwikURL";
+const INFO_ICON      = 'fa fa-question-circle icon';
+const HOME_ICON      = 'fa fa-home icon';
+const RELOAD_ICON    = 'fa fa-refresh icon';
+const BACK_ICO       = 'fa fa-chevron-circle-left icon';
+const LOGOUT_ICON    = 'fa fa-power-off icon';
+const TICK_ICON      = 'fa fa-check-circle tick';
+const CROSS_ICON     = 'fa fa-times-circle cross';
+const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
+const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
+const TWITTER_ICON   = 'fa fa-twitter icon';
+const MALE_ICON      = 'fa fa-male person';
+const FEMALE_ICON    = 'fa fa-female person';
+const COMMENT_ICON   = 'fa fa-comment-o comment';
+const LANG_ICON      = 'fa fa-globe icon';
+const MAP_ICON       = 'fa fa-map-marker';
+const SEND_ICON      = 'fa fa-send';
 
+const SUBDOMAIN = 'www';
+const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';
 
-$emailImg = "<img src='img/email.png' alt='email' class='socialmedia'>";
-$facebookImg = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
-$twitterImg = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
+const FLYER_URL = QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
+const TERMS_URL = QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';
+const PRIVACY_URL = QWIK_URL.'/pdf/qwikgame.org%20privacy%20policy.pdf';
+const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.QWIK_URL;
+const TWITTER_URL = 'https://twitter.com/intent/tweet?text=<t>tagline</t>&url='.QWIK_URL;
 
-$emailLink = "<a href='mailto:?subject=$qwikURL&body=$qwikURL%20makes%20it%20easy%20to%20<t>tagline</t>&target=_blank'>$emailImg</a>";
-$facebookLink = "<a href='$facebookURL' target='_blank'>$facebookImg</a>";
-$twitterLink = "<a href='$twitterURL' target='_blank'>$twitterImg</a>";
+const EMAIL_IMG = "<img src='img/email.png' alt='email' class='socialmedia'>";
+const FACEBOOK_IMG = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
+const TWITTER_IMG = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
 
+const EMAIL_LNK = "<a href='mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20<t>tagline</t>&target=_blank'>".EMAIL_IMG."</a>";
+const FACEBOOK_LNK = "<a href='".FACEBOOK_URL."' target='_blank'>".FACEBOOK_IMG."</a>";
+const TWITTER_LNK = "<a href='".TWITTER_URL."' target='_blank'>".TWITTER_IMG."</a>";
 
-$INFO_ICON      = 'fa fa-question-circle icon';
-$HOME_ICON      = 'fa fa-home icon';
-$RELOAD_ICON    = 'fa fa-refresh icon';
-$BACK_ICO       = 'fa fa-chevron-circle-left icon';
-$LOGOUT_ICON    = 'fa fa-power-off icon';
-$TICK_ICON      = 'fa fa-check-circle tick';
-$CROSS_ICON     = 'fa fa-times-circle cross';
-$THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
-$THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
-$TWITTER_ICON   = 'fa fa-twitter icon';
-$MALE_ICON      = 'fa fa-male person';
-$FEMALE_ICON    = 'fa fa-female person';
-$COMMENT_ICON   = 'fa fa-comment-o comment';
-$LANG_ICON      = 'fa fa-globe icon';
-$MAP_ICON       = 'fa fa-map-marker';
-$SEND_ICON      = 'fa fa-send';
-
-
-
-$CC_ICON_LINK = "
+const CC_ICON_LINK = "
     <a rel='license' href='http://creativecommons.org/licenses/by/4.0/'>
         <img alt='Creative Commons License' 
             style='border-width:0' 
             src='https://i.creativecommons.org/l/by/4.0/88x31.png' />
     </a>";
-$CC_ATTR_LINK = "
+const CC_ATTR_LINK = "
     <a xmlns:cc='http://creativecommons.org/ns#' 
         href='qwikgame.org' 
         property='cc:attributionName' 
         rel='cc:attributionURL'>
         qwikgame.org
     </a>";
-$CC_LICENCE_LINK = "
+const CC_LICENCE_LINK = "
     <a rel='license' 
         href='http://creativecommons.org/licenses/by/4.0/'>
         <t>Creative Commons Attribution 4.0 International License</t>
     </a>";
+
+
+
 
 
 $geo;
@@ -113,83 +112,41 @@ $parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
 
 
 $games = array(
-    'backgammon'    => '<t>Backgammon</t>',
-    'badminton'        => '<t>Badminton</t>',
-    'boules'        => '<t>Boules</t>',
-    'billards'        => '<t>Billiards</t>',
-    'checkers'        => '<t>Checkers</t>',
-    'chess'         => '<t>Chess</t>',
-    'cycle'            => '<t>Cycle</t>',
-    'darts'            => '<t>Darts</t>',
-    'dirt'            => '<t>Dirt Biking</t>',
-    'fly'            => '<t>Fly Fishing</t>',
-    'go'            => '<t>Go</t>',
-    'golf'          => '<t>Golf</t>',
-    'lawn'            => '<t>Lawn Bowls</t>',
-    'mtnbike'        => '<t>Mountain_Biking</t>',
-    'pool'            => '<t>Pool</t>',
-    'racquetball'   => '<t>Racquetball</t>',
-    'run'            => '<t>Run</t>',
-    'snooker'        => '<t>Snooker</t>',
-    'squash'        => '<t>Squash</t>',
-    'table'            => '<t>Table_Tennis</t>',
-    'tennis'        => '<t>Tennis</t>',
-    'tenpin'        => '<t>Tenpin</t>',
-    'walk'            => '<t>Walk</t>'
+    'backgammon'  => '<t>Backgammon</t>',
+    'badminton'   => '<t>Badminton</t>',
+    'boules'      => '<t>Boules</t>',
+    'billards'    => '<t>Billiards</t>',
+    'checkers'    => '<t>Checkers</t>',
+    'chess'       => '<t>Chess</t>',
+    'cycle'       => '<t>Cycle</t>',
+    'darts'       => '<t>Darts</t>',
+    'dirt'        => '<t>Dirt Biking</t>',
+    'fly'         => '<t>Fly Fishing</t>',
+    'go'          => '<t>Go</t>',
+    'golf'        => '<t>Golf</t>',
+    'lawn'        => '<t>Lawn Bowls</t>',
+    'mtnbike'     => '<t>Mountain_Biking</t>',
+    'pool'        => '<t>Pool</t>',
+    'racquetball' => '<t>Racquetball</t>',
+    'run'         => '<t>Run</t>',
+    'snooker'     => '<t>Snooker</t>',
+    'squash'      => '<t>Squash</t>',
+    'table'       => '<t>Table_Tennis</t>',
+    'tennis'      => '<t>Tennis</t>',
+    'tenpin'      => '<t>Tenpin</t>',
+    'walk'        => '<t>Walk</t>'
 );
 
 $status = array(
-    'keen'        => 1,
-    'invitation'=> 2,
-    'accepted'    => 3,
-    'confirmed'    => 4,
-    'feedback'    => 5,
+    'keen'       => 1,
+    'invitation' => 2,
+    'accepted'   => 3,
+    'confirmed'  => 4,
+    'feedback'   => 5,
     'history'    => 6,
-    'cancelled'    => 10
+    'cancelled'  => 10
 );
 
-
-
-function logg($msg){
-    global $log;
-    $log->lwrite($msg);
-    $log->lclose();
-}
-
-function logReq($req){
-    global $log;
-    $msg = '';
-    foreach($req as $key => $val){
-        $msg .= " $key=";
-        switch($key){
-            case 'pid':
-                $msg .= substr($val, 0, 4);
-            break;
-            case 'token':
-                $msg .= substr($val, 0, 2);
-            break;
-            default:
-                $msg .= $val;
-        }
-    }
-    $log->lwrite($msg);
-    $log->lclose();
-}
-
-function logEmail($type, $pid, $game, $vid, $time){
-    global $log;
-    $p = substr($pid, 0, 4);
-    $msg = "email $type pid=$p $game $vid $time";
-    $log->lwrite($msg);
-    $log->lclose();
-}
-
-
-function logMsg($msg){
-    global $log;
-    $log->lwrite($msg);
-    $log->lclose();
-}
 
 
 
@@ -224,440 +181,6 @@ function post($url, $data){
     var_dump($result);
 }
 
-
-/********************************************************************************
-Return the XML data for the current logged in player (if any)
-
-$req    ArrayMap    url parameters from post&get
-********************************************************************************/
-function login($req){
-    session_start();
-
-    if (isset($req['pid'])){            // check for a pid & token in the parameter
-        $pid = $req['pid'];
-        $token = $req['token'];
-    } elseif (isset($_SESSION['pid'])){ // check for a pid in the $_SESSION variable
-        $pid = $_SESSION['pid'];
-        $openSession = true;
-    } elseif (isset($_COOKIE['pid'])){  // check for a pid & token in a $_COOKIE
-        $pid = $_COOKIE['pid'];
-        $token = $_COOKIE['token'];
-    } elseif (isset($req['email'])){    // check for and email address in the param
-        $email = $req['email'];
-        $pid = anonID($email);          // and derive the pid from the email
-        $token = $req['token'];
-    } else {                            // anonymous session: no player identifier
-        return;                         // RETURN login fail
-    }
-                                        // OK playerID
-    $player = new Player($pid, $log, TRUE);
-
-    if($openSession){
-        return $player;
-    }
-
-    if($player->isValidToken($token)){                 // LOGIN with token
-        logMsg("login: valid token " . snip($pid));
-        $_SESSION['pid'] = $pid;
-        $_SESSION['lang'] = (string) $player->lang();
-        setcookie("pid", "$pid", time() + 3*Player::MONTH, "/");
-        setcookie("token", "$token", time() + 3*Player::MONTH, "/");
-        return $player;
-    } else {
-        logMsg("login: invalid token pid=" . snip($pid));
-    }
-
-    if(empty($player->email()) && isset($email)){            // LOGIN anon player
-        logMsg("login: anon player " . snip($pid));
-        emailWelcome($email, $pid, $player->token(Player::MONTH));
-        setcookie("pid", '', time()-Player::DAY, "/");
-        setcookie("token", '', time()-Player::DAY, "/");
-        $_SESSION['pid'] = $pid;
-        $_SESSION['lang'] = (string) $player->lang();
-        return $player;
-    }
-
-    if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
-        logMsg("login: recover account " . snip($pid));                 // todo rate limit
-        emailLogin($email, $pid, $player->token(Player::DAY));
-    }
-}
-
-
-/********************************************************************************
-Logout the current player by deleting both the $_SESSION and the longer term 
-$_COOKIE
-********************************************************************************/
-function logout(){
-    $pid = $_SESSION['pid'];
-    logMsg("logout $pid");
-    global $qwikURL;
-    unset($_SESSION['pid']);
-    setcookie("pid", "", time() - Player::DAY);
-    setcookie("token", "", time() - Player::DAY);
-    header("location: $qwikURL");
-}
-
-
-/********************************************************************************
-Return the current player language or default
-
-$req    ArrayMap    url parameters from post&get
-$player    XML            player data
-********************************************************************************/
-function language($req, $player){
-    global $languages;
-    header('Cache-control: private'); // IE 6 FIX
-
-    if(isset($req['lang'])                            // REQUESTED language
-    && array_key_exists($req['lang'], $languages)){
-        $lang = $req['lang'];
-        if (isset($player)){
-            $player->lang($lang);
-            $player->save();
-        }
-    } elseif (isset($_SESSION['lang'])                // SESSION language
-    && array_key_exists($_SESSION['lang'], $languages)){
-        $lang = $_SESSION['lang'];
-    } elseif ($player                                 // USER language
-    && (null !== $player->lang())
-    && array_key_exists($player->lang(), $languages)){
-        $lang = (string) $player->lang();
-    } elseif (false){                                // geolocate language
-        // todo code
-    } else {                                        // default english
-        $lang = 'en';
-    }
-
-    $_SESSION['lang'] = $lang; 
-    return $lang;
-}
-
-
-
-/********************************************************************************
-Return the html template after replacing <t>variables</t> with the requested 
-language (or with the fallback language as required)
-
-$html    String    html template with variables of the form <t>name</t>
-$lang    String    language to replace <t>variables</t> with
-$fb        String    fallback language for when a translation is missing    
-********************************************************************************/
-function translate($html, $lang, $fb='en'){
-    $strings = $GLOBALS[$lang];
-    $fallback = $GLOBALS[$fb];
-    $pattern = '!(?s)\<t\>([^\<]+)\<\/t\>!';
-    $tr = function($match) use ($strings, $fallback){
-        $key = $match[1];
-        $st = $strings[$key];
-        if(isset($strings[$key])){
-            return $strings[$key];
-        } else if (isset($fallback[$key])){
-            logMsg("translation missing for $key");
-            return $fallback[$key];
-        } else {
-            logMsg("translation missing for en $key");
-            return "<t>$key</t>";
-        }
-    };
-    return  preg_replace_callback($pattern, $tr, $html);
-}
-
-
-/********************************************************************************
-Return the html template after replacing <v>variables</v> with the values provided.
-
-$html        String        html template with variables of the form <v>key</v>
-$variables    ArrayMap    variable name => $value
-********************************************************************************/
-function populate($html, $variables){
-    $pattern = '!(?s)\<v\>([^\<]+)\<\/v\>!';
-    $tr = function($match) use (&$variables){
-        $m = $match[1];
-        return isset($variables[$m]) ? $variables[$m] : "<v>$m</v>";
-    };
-    return  preg_replace_callback($pattern, $tr, $html);
-}
-
-
-/********************************************************************************
-Return the html template after replicating <r>elements</r> with data from $player & $req.
-
-$html    String        html template with variables of the form <v>key</v>
-$player    XML            player data
-$req    ArrayMap    url parameters from post&get
-********************************************************************************/
-function replicate($html, $player, $req){
-    $tr = function($match) use ($player, $req){
-        $id = $match[3];
-        $html = $match[4];
-        switch ($id){
-            case 'repost':        return replicatePost($html, $req);                break;
-            case 'language':    return replicateLanguages($html);                break;
-            case 'games':        return replicateGames($html, $req);                break;
-            case 'venues':        return replicateVenues($html);                    break;
-            case 'similarVenues': return replicateSimilarVenues($html, $req);    break;
-            case 'keen':
-            case 'invitation':
-            case 'accepted':
-            case 'confirmed':
-            case 'feedback':
-            case 'cancelled':
-            case 'history':        return replicateMatches($player, $html, $id);    break;
-            case 'available':    return replicateAvailable($player, $html);        break;
-            case 'rivalEmail':    return replicateEmailCheck($player, $html);        break;
-            case 'familiar':    return replicateFamiliar($player, $html);        break;
-            case 'ability':        return replicateAbility($player, $html);        break;
-            case 'reckon':        return replicateReckons($player, $html);        break;
-            case 'uploads':        return replicateUploads($player, $html);        break;
-            default:            return '';
-        }
-    };
-    $pattern = "!(?s)\<repeat((\sid='(.+?)')|[^\>]*)\>(.+?)\<\/repeat\>!";
-    return  preg_replace_callback($pattern, $tr, $html);
-}
-
-
-$ICONS = array (
-    'INFO_ICON' => $INFO_ICON,
-    'TICK_ICON' => $TICK_ICON,
-    'CROSS_ICON'=> $CROSS_ICON,
-    'THUMB_UP_ICON' => $THUMB_UP_ICON,
-    'THUMB_DN_ICON' => $THUMB_DN_ICON
-);
-
-
-
-function replicatePost($html, $req){
-    $group = '';
-    foreach($req as $name => $value){
-        if(is_array($value)){
-            $nam = "$name" . "[]";
-            foreach($value as $val){
-                 $vars = array(
-                    'name'      => $nam,
-                    'value'     => $val,
-                );
-                $group .= populate($html, $vars);
-            }
-        } else {
-            $vars = array(
-                'name'      => $name,
-                'value'     => $value,
-            );
-            $group .= populate($html, $vars);
-        }
-    }    
-    return $group;
-}
-
-
-
-
-function replicateGames($html, $req){
-    global $games;
-    $default = $req['game'];
-    $group = '';
-    foreach($games as $game => $name){
-        $vars = array(
-            'game'      => $game,
-            'name'      => $name,
-            'selected'  => ($game == $default ? 'selected' : '')
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateVenues($html, $default){
-    return "replicateVenues() has not been implemented";
-echo "<br>REPLICATEVENUES<br>$html";
-    $group = '';
-    $venueIDs = listVenues('squash'); //$game);
-    foreach($venueIDs as $vid => $playerCount){
-echo "<br>$vid";
-        $vars = array(
-            'playerCount'   => $playerCount,
-            'vid'              => $vid,
-            'venueName'      => explode('|', $vid)[0]
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-
-function replicateSimilarVenues($html, $req){
-    $group = '';
-    $vid = $req['vid'];
-    $game = $req['game'];
-//    $similar = similarVenues($req['venue'], $req['game']);
-    $similar = array_slice(similarVenues($req['venue']), 0, 10);
-    foreach($similar as $vid){
-        $venue = readVenueXML($vid);
-        $players = isset($venue) ? $venue->xpath("player") : array() ;
-        $vars = array(
-            'vid'        => $vid,
-            'name'        => implode(', ',explode('|',$vid)),
-            'players'    => count($players),
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateMatches($player, $html, $status){
-    global $ICONS;
-    if(!$player){ return; }
-    $group = '';
-    $playerVars = playerVariables($player);
-    foreach($player->matchStatus($status) as $matchXML) {
-        $match = new Match($player, $matchXML);
-        $matchVars = $match->variables();
-        $vars = $playerVars + $matchVars + $ICONS;
-        $vars['venueLink'] = venueLink($match->vid(), $player, $match->game());
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateAvailable($player, $html){
-    global $ICONS, $games;
-    if(!$player){ return; }
-    $group = '';
-    $playerVars = playerVariables($player);
-    $available = $player->available();
-    foreach($available as $avail){
-        $game = $avail['game'];
-        $availVars = array(
-            'id'        => $avail['id'],
-            'game'      => $games["$game"],
-            'parity'    => $avail['parity'],
-            'weekSpan'  => weekSpan($avail),
-            'venueLink' => venueLink($avail->venue, $player, $game)
-        );
-        $vars = $playerVars + $availVars + $ICONS;
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateEmailCheck($player, $html){
-    if(!$player){ return; }
-    $group = '';
-    $playerVars = playerVariables($player);
-    $reckoning = $player->reckon("email");
-    foreach($reckoning as $reckon){
-        $game = $reckon['game'];
-        $reckonVars = array('email' => $reckon['email']);
-        $vars = $playerVars + $reckonVars ;
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateFamiliar($player, $html){
-    global $ICONS, $games;
-    if(!$player){ return; }
-    $group = '';
-    $playerVars = playerVariables($player);
-    $reckoning = $player->reckon("rival");
-    foreach($reckoning as $reckon){
-        $game = $reckon['game'];
-        $reckonVars = array(
-            'id'        => $reckon['id'],
-            'email'     => $reckon['email'],
-            'game'      => $games["$game"],
-            'parity'    => parityStr($reckon['parity'])
-        );
-        $vars = $playerVars + $reckonVars + $ICONS;
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateAbility($player, $html){
-    global $games, $ICONS;
-    if(!$player){ return; }
-    $group = '';
-    $abilities = array('<t>very_weak</t>', '<t>weak</t>', '<t>competent</t>', '<t>strong</t>', '<t>very_strong</t>');
-    $playerVars = playerVariables($player);
-    $reckoning = $player->reckon("region");
-    foreach($reckoning as $reckon){
-        $game = $reckon['game'];
-        $ability = $reckon['ability'];
-        $reckonVars = array(
-            'id'        => $reckon['id'],
-            'region'    => explode(',', $reckon['region'])[0],
-            'game'      => $games["$game"],
-            'ability'   => $abilities["$ability"]
-        );
-        $vars = $playerVars + $reckonVars + $ICONS;
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-function replicateLanguages($html){
-    global $languages;
-    $group = '';
-    $current = $_SESSION['lang'];
-    foreach($languages as $code => $lang){
-        $vars = array(
-            'code' => $code, 
-            'language' => $lang,
-            'selected' => $code == $current ? 'selected' : ''
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-
-function replicateReckons($player, $html){
-    if(!$player){ return; }
-    $regions = regions($player);
-    $group = '';
-    foreach($regions as $region){
-        $vars = array(
-            'region' => $region,
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
-
-
-
-function replicateUploads($player, $html){
-    if(!$player){ return; }
-    $uploadIDs = $player->uploadIDs();
-    $group = '';
-    foreach($uploadIDs as $uploadID) {
-        $ranking = $player->rankingGet($uploadID);
-        $status = $ranking->status('active');
-        $vars = array(
-            'status'   => $status,
-            'fileName' => $upload['fileName'],
-            'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
-            'tickIcon' => $status == 'uploaded' ? '<v>TICK_ICON</v>' : '',
-            'title'    => $upload['title'],
-            'game'     => $upload['game'],
-            'time'     => $upload['time'] 
-        );
-        $group .= populate($html, $vars);
-    }
-    return $group;
-}
 
 
 
@@ -731,135 +254,6 @@ function scrub($data){
 }
 
 
-/********************************************************************************
-Return the $req data iff ALL variables are valid, or FALSE otherwise
-
-$req    ArrayMap    url parameters from post&get
-********************************************************************************/
-function validate($req){
-//echo "<br>VALIDATE<br>";
-//error_reporting(E_ALL | E_STRICT);
-
-    if(count($req) == 0){
-        return FALSE;
-    }
-
-    $req = scrub($req);        // remove all but a small set of safe characters.
-
-    $ability_opt = array('min_range' => 0, 'max_range' => 4);
-    $parity_opt = array('min_range' => -2, 'max_range' => 2);
-    $rep_opt = array('min_range' => -1, 'max_range' => 1);
-    $hrs_opt = array('min_range' => 0, 'max_range' => 16777215);
-
-    $args = array(
-        'smtwtfs'    => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'address'    => FILTER_DEFAULT,
-        'ability'    => array('filter' => FILTER_VALIDATE_INT,    'options' => $ability_opt),
-        'account'    => FILTER_DEFAULT,
-        'country'    => array('filter' => FILTER_CALLBACK,    'options' => 'validateCountry'),
-        'email'        => FILTER_VALIDATE_EMAIL,
-        'Fri'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'filename'    => FILTER_DEFAULT,
-        'game'        => array('filter' => FILTER_CALLBACK,        'options' => 'validateGame'),
-        'id'        => array('filter' => FILTER_CALLBACK,        'options' => 'validateID'),
-        'invite'    => array('filter' => FILTER_CALLBACK,        'options' => 'validataInvite'),
-        'Mon'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'msg'        => FILTER_DEFAULT,
-        'name'        => FILTER_DEFAULT,
-        'nickname'  => FILTER_DEFAULT,
-        'parity'    => array('filter' => FILTER_CALLBACK,        'options' => 'validateParity'),
-        'phone'     => array('filter' => FILTER_CALLBACK,        'options' => 'validatePhone'),
-        'pid'        => array('filter' => FILTER_CALLBACK,        'options' => 'validatePID'),
-        'qwik'      => array('filter' => FILTER_CALLBACK,        'options' => 'validateQwik'),
-        'Sat'       => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'state'     => FILTER_DEFAULT,
-        'suburb'    => FILTER_DEFAULT,
-        'Sun'       => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'Thu'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'time'        => FILTER_DEFAULT,
-        'today'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'token'        => array('filter' => FILTER_CALLBACK,        'options' => 'validateToken'),
-        'tomorrow'    => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'Tue'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt),
-        'tz'        => FILTER_DEFAULT,
-        'region'    => FILTER_DEFAULT,
-        'rep'        => array('filter' => FILTER_VALIDATE_INT,    'options' => $rep_opt),
-        'repost'    => array('filter' => FILTER_CALLBACK,        'options' => 'validateRepost'),
-        'rival'        => FILTER_VALIDATE_EMAIL,
-        'title'        => FILTER_DEFAULT,
-//        'url'        => FILTER_VALIDATE_URL,
-        'url'        => FILTER_DEFAULT,
-        'venue'        => FILTER_DEFAULT,
-        'Wed'       => array('filter' => FILTER_VALIDATE_INT,    'options' => $hrs_opt)
-    );
-    
-    $result = filter_var_array($req, $args);
-
-    if(in_array(FALSE, $result, TRUE)){
-        echo "<br>";
-        var_dump($result);
-        return FALSE;
-    }
-    return $req;
-//    return declaw($req);
-}
-
-
-function validateGame($val){
-    global $games;
-    return array_key_exists($val, $games) ? $val : FALSE;
-}
-
-
-function validateCountry($val){
-    global $countries;
-    return array_key_exists($val, $countries) ? $val : FALSE;
-}
-
-
-function validateID($val){ 
-    return strlen($val) == 6 ? $val : FALSE;
-}
-
-function validateInvite($val){
-    if (is_array($val)){
-        return true;    // *********************** more validation required **************        
-    }
-    return false;
-}
-
-
-function validateParity($val){
-    global $parityFilter;
-    return in_array($val, $parityFilter) ? $val : FALSE;
-}
-
-
-function validatePID($val){
-    return strlen($val) == 64 ? $val : FALSE;
-}
-
-
-function validatePhone($val){
-    return strlen($val) <= 10 ? $val : FALSE;
-}
-
-
-function validateRepost($val){
-    return $val;
-}
-
-
-function validateQwik($val){
-    global $qwiks;
-    return in_array($val, $qwiks) ? $val : FALSE;
-}
-
-function validateToken($val){
-    return strlen($val) == 10 ? $val : FALSE;
-}
-
-
 
 
 
@@ -885,16 +279,16 @@ function invalidRequest($post, $get, $msg){
 // An array of maximum string lengths.
 // Used by: clip()
 $clip = array(
-    'address'        => 200,
-    'description'    => 200,
-    'filename'         => 50,
-    'nickname'        => 20,
-    'note'            => 2000,
-    'region'        => 50,
-    'state'            => 50,
-    'suburb'        => 50,
-    'tz'            => 100,
-    'venue'         => 150
+    'address'     => 200,
+    'description' => 200,
+    'filename'    => 50,
+    'nickname'    => 20,
+    'note'        => 2000,
+    'region'      => 50,
+    'state'       => 50,
+    'suburb'      => 50,
+    'tz'          => 100,
+    'venue'       => 150
 );
 
 /********************************************************************************
@@ -1352,93 +746,6 @@ function removeAtt($xml, $att){
 }
 
 
-
-
-////// QWIK SWITCH ///////////////////////////////////////////////////////////
-
-
-
-function qwikAvailable($player, $request, $venue){
-    if(isset($request['game']) & isset($request['vid']) & isset($request['parity'])){
-        $newID = $player->availableAdd(
-            $request['game'], 
-            $request['vid'], 
-            $request['parity'],
-            $venue->tz(),
-            isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE,
-            $request
-        );
-        $venue->addPlayer($player->id());
-        return $newID;
-    }
-}
-
-
-function qwikKeen($player, $req, $venue){
-//echo "<br>QWIKKEEN<br>";
-    if(empty($req)
-    || empty($venue)
-    || empty($req['game']) 
-    || (empty($req['today']) && empty($req['tomorrow']))){
-        logMsg("qwikKeen() missing required arguments");
-        return;
-    }
-
-    $game = $req['game'];
-
-    // build an array of Familiar Rivals to invite
-    $pid = $this->id();
-    $familiarRids = array();
-    if (isset($req['invite'])){
-        $emails = $req['invite'];
-        if (is_array($emails)){
-            foreach($emails as $email){
-                $familiarRids[] = anonID($email);
-            }
-        }
-    }
-    unset($familiarRids[$pid]);    // exclude self;
-
-
-    // build an array of other available Rivals to invite
-    $anonRids = array();
-    if ($req['invite-available']){
-        $anonRids = array_diff(
-            $venue->playerIDs(),
-            $familiarRids        // exclude explicit invitations
-        );
-    }
-    unset($anonRids[$pid]);    // exclude self;
-
-
-    $days = array('today','tomorrow');
-    foreach($days as $day){
-        $date = $venue->dateTime($day);
-        $hours = (int) $req[$day];
-        if ($hours > 0){
-             $match = $player->matchKeen($game, $venue, $date, $hours);
-             $match->invite($familiarRids, TRUE);
-             $match->invite($anonRids);
-             $match->save();
-        }
-    }
-}
-
-
-function qwikDecline($player, $request){
-//echo "<br>QWIKDCLINE<br>";
-    $playerID = $player->id();
-    if(isset($request['id'])){
-        $player->matchDecline($request['id']);
-    }
-}
-
-
-
-
-
-
-
 function venueRemoveGame($venue, $game){
     $elements = $venue->xpath("/venue[game='$game']");
 //echo "aborted request to delete $game";
@@ -1452,58 +759,6 @@ function venueRemoveGame($venue, $game){
 //    deleteFile("venue/$game/$vid.xml");
 }
 
-
-function qwikAccept($player, $request){
-//echo "<br>QWIKACCEPT<br>";
-//echo "request = ";
-//print_r($request);
-//echo "<br><br>";
-
-//echo "player = ";
-//print_r($player);
-//echo "<br><br>";
-
-    if(isset($request['id']) & isset($request['hour'])){
-        $matchID = $request['id'];
-        $match = $player->matchID($matchID);
-        if (!isset($match)){
-            header("Location: error.php?msg=unable to locate match.");
-            return;
-        }
-//echo "match = ";
-//print_r($match);
-//echo "<br><br>";
-
-        $match->accept($request['hour']);
-        $player->save();
-    }
-}
-
-
-function qwikFeedback($player, $request){
-    if(isset($request['id']) & isset($request['rep']) & isset($request['parity'])){
-        $rival = $player->outcomeAdd(
-            $request['id'], 
-            $request['parity'], 
-            $request['rep']
-        );
-
-        if ($rival->exists()){
-            $rival->updateRep($request['rep']);
-            updateCongCert($player, $request['id'], $rival);
-            $rival->save();
-        }
-    } else {
-        header("Location: error.php?msg=malformed feedback.");
-    }
-}
-
-
-function qwikMsg($player, $req){
-    if(isset($req['id']) & isset($req['msg'])){
-        $player->matchMsg($req['id'], $req['msg']);
-    }
-}
 
 
 /*******************************************************************************
@@ -1556,68 +811,6 @@ function updateCongCert($player, $matchID, $rival){
 
 
 
-
-function qwikFamiliar($player, $request){
-    if(isset($request['game'])
-    && isset($request['rival'])
-    && isset($request['parity'])){
-        $player->familiar($request['game'], $request['rival'], $request['parity'], $log);
-    }
-}
-
-
-function qwikRegion($player, $request){
-    if(isset($request['game'])
-        && isset($request['ability']) 
-        && isset($request['region'])){
-            $player->region($request['game'], $request['ability'], $request['region']);
-    }
-}
-
-
-function qwikAccount($player, $request){
-//echo "<br>QWIKACCOUNT<br>";
-    global $qwikURL, $DAY;
-    if(isset($request['nick'])){
-        $player->nick($request['nick']);
-    }
-
-    if(isset($request['url'])){
-        $player->url($request['url']);
-    } 
-
-    if(isset($request['email'])){
-        $email = $request['email'];
-        if ($email != $player->email()){
-            emailChange($email, $player->id(), $player->token(Player::DAY));
-        }
-    }
-
-    if(isset($request['lang'])){
-        $player->lang($request['lang']);
-    } 
-
-    if(isset($request['account']) && ($request['account'] === 'quit')) {
-        $player->emailQuit();
-        $player->quit();
-        logout();
-    
-        header("Location: $qwikURL");
-    }    
-}
-
-
-function qwikCancel($player, $req){
-    if(isset($req['id'])){
-        $player->matchCancel($req['id']);
-    }
-}
-
-
-
-function qwikDelete($player, $request){
-    $player->delete($request['id']);
-}
 
 
 function qwikContact($msg, $from){
@@ -1782,15 +975,6 @@ function qwikEmail($to, $subject, $msg, $id, $token){
 ////// HTML ELEMENTS //////////////////////////////////////////////////////////
 
 
-
-function datalists(){
-    global $games;
-    $datalists = '';
-    foreach($games as $game => $name){
-        $datalists .= "\n\n" . venueDatalist($game);
-    }
-    return $datalists;
-}
 
 
 /*******************************************************************************
@@ -1968,39 +1152,6 @@ function venueLink($vid, $player, $game){
 
 
 
-function repStr($player){
-    $word = repWord($player);
-    return empty($word) ? 'AAAAAA' : " with a $word reputation";
-}
-
-
-function repFraction($player){
-    $rep = $player->rep();
-    $repPos = intval($rep['pos']);
-    $repNeg = intval($rep['neg']);
-    $repTot = $repPos + $repNeg;
-    $thumb = "<span class='fa fa-thumbs-o-up green'></span>";
-    return "$repPos $thumb / $repTot";
-}
-
-
-function repThumbs($player){
-    $rep = $player->rep();
-    $repPos = intval($rep['pos']);
-    $repNeg = intval($rep['neg']);
-    $thumbUp = "<span class='fa fa-thumbs-o-up green'></span>";
-    $thumbDown = "<span class='fa fa-thumbs-o-down red'></span>";
-    return str_repeat($thumbDown, $repNeg) . str_repeat($thumbUp, $repPos);
-}
-
-
-function playerVariables($player){
-    return array(
-        'target'    => 'player.php#matches',
-        'reputation'=> repStr($player)
-    );
-}
-
 
 
 function familiarEmailLink($venue, $game, $name){
@@ -2150,39 +1301,6 @@ function similarVenueButtons($venue, $game, $tabs=''){
 }
 
 
-function familiarCheckboxes($player){
-    $checkboxes = '';
-    $reckons = $player->reckon("email");
-    foreach($reckons as $reckon){
-        $email = $reckon['email'];
-        $rid = $reckon['rival'];
-        $checkboxes .= "
-            <span class='nowrap'>
-                <input type='checkbox' name='invite[]' value='$email'>
-                $email
-            </span>";
-    }
-    return $checkboxes;
-}
-
-
-function gameOptions($game='squash', $tabs=''){
-    global $games;
-    if(empty($game)){
-        $game='squash';
-    }
-    $options = '';
-    foreach($games as $val => $txt){
-        if ($val == $game){
-            $selected = 'selected';
-        } else {
-            $selected = '';
-        }
-        $options .= "$tabs<option value='$val' $selected>$txt</option>\n";
-    }
-    return $options;
-}
-
 
 function regions($player){
     $available = $player->available();
@@ -2207,16 +1325,6 @@ function regions($player){
     sort($towns);
 
     return array_merge($countries, $states, $towns);
-}
-
-
-function regionOptions($player, $tabs){
-    $regions = regions($player);    
-    $options = '';
-    foreach($regions as $region){
-           $options .= "$tabs<option value='$region'>$region</option>\n";
-    }
-    return $options;
 }
 
 

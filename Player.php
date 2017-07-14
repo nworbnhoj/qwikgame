@@ -54,12 +54,12 @@ class Player {
         if(chdir($path)){
             $pid = $this->xml['id'];
             $this->xml->saveXML("$pid.xml");
-            if(chdir($cwd)){
-                $this->logMsg("unable to change working directory to $cwd");
+            if(!chdir($cwd)){
+                $this->logMsg("A. unable to change working directory to $cwd");
                 return false;
             }
         } else {
-            logMsg("unable to change working directory to $path");
+            $this->logMsg("B. unable to change working directory to $path");
             return false;
         }
         return true;
@@ -79,11 +79,11 @@ class Player {
         if(chdir($path)){
             $xml = simpleXML_load_file($filename);
             if(!chdir($cwd)){
-                $this->logMsg("unable to change working directory to $cwd");
+                $this->logMsg("C. unable to change working directory to $cwd");
             }
             return $xml;
         } else {
-            $this->logMsg("unable to change working directory to $path");
+            $this->logMsg("D. unable to change working directory to $path");
         }
     }
 
@@ -808,7 +808,7 @@ Requirements:
     }
 
 
-    function repWord(){
+    public function repWord(){
 
         $rep = $this->rep();
         $repPos = intval($rep['pos']);
@@ -845,6 +845,30 @@ Requirements:
         }
         return $word;
     }
+
+
+
+
+    public function repFraction(){
+        $rep = $this->rep();
+        $repPos = intval($rep['pos']);
+        $repNeg = intval($rep['neg']);
+        $repTot = $repPos + $repNeg;
+        $thumb = "<span class='fa fa-thumbs-o-up green'></span>";
+        return "$repPos $thumb / $repTot";
+    }
+
+
+    function repThumbs(){
+        $rep = $this->rep();
+        $repPos = intval($rep['pos']);
+        $repNeg = intval($rep['neg']);
+        $thumbUp = "<span class='fa fa-thumbs-o-up green'></span>";
+        $thumbDown = "<span class='fa fa-thumbs-o-down red'></span>";
+        return str_repeat($thumbDown, $repNeg) . str_repeat($thumbUp, $repPos);
+    }
+
+
 
 
 

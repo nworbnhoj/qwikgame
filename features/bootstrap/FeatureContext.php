@@ -2,6 +2,8 @@
 
 
 require 'qwik.php';
+require 'logging.php';
+require 'PlayerPage.php';
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
@@ -204,7 +206,7 @@ class FeatureContext implements Context
     public function iSubmitThisFavourite()
     {
       	$this->req['qwik'] = 'available';
-        $this->id = qwikAvailable($this->player, $this->req, $this->venue);
+        $this->id = PlayerPage::qwikAvailable($this->player, $this->req, $this->venue);
     }      
 
 
@@ -212,12 +214,12 @@ class FeatureContext implements Context
      * @When I delete this favourite
      */
     public function iDeleteThisFavourite()
-    {    
-    	$this->req['qwik'] = 'delete';
-    	$this->req['id'] = $this->id;
-   	    $this->id = qwikDelete($this->player, $this->req);
+    {
+        $this->req['qwik'] = 'delete';
+        $this->req['id'] = $this->id;
+        $this->id = PlayerPage::qwikDelete($this->player, $this->req);
     }
-    
+
 
     /**
      * @When I click on the link in the confirmation email
@@ -271,7 +273,7 @@ class FeatureContext implements Context
                 $hours = $req[$day];
                 
                 // Set this player as a familiar of the rival, with suitable parity
-                qwikFamiliar(
+                PlayerPage::qwikFamiliar(
                     $rival, 
                     array(
                         'game'=>$game, 
@@ -442,7 +444,7 @@ class FeatureContext implements Context
 		    $keenMatch->remove();
 		}
 
-        qwikFeedback(
+        PlayerPage::qwikFeedback(
             $playerA, 
             array(
                 'id'=>$matchA->id(),

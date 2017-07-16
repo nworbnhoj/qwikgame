@@ -518,10 +518,6 @@ function removePlayer($id){
 
 
 
-function countFiles($path){
-    return iterator_count(new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS));
-}
-
 
 function deleteFile($file){
 //echo "<br>DELETEFILE $file<br>";
@@ -876,28 +872,6 @@ function emailLogin($email, $id, $token){
     $msg  = "<p>\n";
     $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
     $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
-    $msg .= "\t\t\t</p>\n";
-    $msg .= "<p>\n";
-    $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-    $msg .= "<p>\n";
-
-    qwikEmail($email, $subject, $msg, $id, $token);
-    logEmail('login', $id);
-}
-
-
-function emailStash($email, $page, $req, $id, $token){
-    global $qwikURL;
-
-    $subject = 'qwikgame.org confirm availability';
-    $query =  http_build_query($req);
-    $game = $req['game'];
-    $venue = $req['venue'];
-
-    $msg  = "<p>\n";
-    $msg .= "\tPlease click this link to \n";
-    $msg .= "\t<a href='$qwikURL/$page?$query' target='_blank'>confirm</a>\n";
-    $msg .= " that you are available to play <b>$game</b> at <b>$venue</b>.<br>\n";
     $msg .= "\t\t\t</p>\n";
     $msg .= "<p>\n";
     $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";

@@ -67,6 +67,7 @@ class Page {
             'EMAIL_ICON'    => EMAIL_ICON,
             'FACEBOOK_ICON' => FACEBOOK_ICON,
 		    'LANG_ICON'		=> LANG_ICON,
+            'homeURL'       => QWIK_URL,
             'termsURL'		=> TERMS_URL,
             'privacyURL'	=> PRIVACY_URL
         );

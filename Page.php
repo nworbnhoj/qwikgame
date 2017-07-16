@@ -29,6 +29,9 @@ class Page {
         if (!$this->req){
             $this->req = $this->validate($_GET);
         }
+        if (!$this->req) {
+            $this->req = array();
+        }
 
         $this->logReq($this->req);
         $this->player = $this->login($this->req);
@@ -86,6 +89,11 @@ class Page {
             $this->req[$key] = $value;
         }
         return null;
+    }
+
+
+    public function log(){
+        return $this->log;
     }
 
 

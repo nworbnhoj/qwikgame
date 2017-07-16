@@ -55,7 +55,21 @@ class Page {
 
 
     public function variables(){
-        return array();
+        return array(
+            'INFO_ICON'     => INFO_ICON,
+            'HOME_ICON'     => HOME_ICON,
+            'CROSS_ICON'    => CROSS_ICON,
+            'RELOAD_ICON'   => RELOAD_ICON,
+            'LOGOUT_ICON'   => LOGOUT_ICON,
+            'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
+            'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",
+            'TWITTER_ICON'  => TWITTER_ICON,
+            'EMAIL_ICON'    => EMAIL_ICON,
+            'FACEBOOK_ICON' => FACEBOOK_ICON,
+		    'LANG_ICON'		=> LANG_ICON,
+            'termsURL'		=> TERMS_URL,
+            'privacyURL'	=> PRIVACY_URL
+        );
     }
 
 

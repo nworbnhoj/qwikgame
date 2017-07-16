@@ -806,27 +806,6 @@ function updateCongCert($player, $matchID, $rival){
 }
 
 
-
-
-
-function qwikContact($msg, $from){
-    $headers = array();
-    $headers[] = "From: $from";
-    $headers[] = "MIME-Version: 1.0";
-    $headers[] = "Content-type: text/html; charset=UTF-8";
-
-//    $to = 'facilitator@qwikgame.org';
-    $to = 'john@nhoj.info';
-    $subject = "feedback from $from";
-
-    if (! mail($to, $subject, $msg, implode("\r\n", $headers))){
-        header("Location: error.php?msg=<b>The email was unable to be sent");
-    }
-}
-
-
-
-
 ////// EMAIL TEMPLATES ///////////////////////////////////////////////////////
 
 function authURL($email, $token) {

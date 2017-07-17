@@ -90,19 +90,23 @@ longer chains by introducing a decay (=0.9) at each link.
             $subOrb = $node->orb();
             if (($node->rid() != $rivalID)
             && (isset($subOrb))){
+//print_r("\n\t" . snip($node->rid()) . "\t" . snip($rivalID) . "\n");            
                 $subParity = $subOrb->parity($rivalID);
                 if (!is_null($subParity)){
                     $parity += $subParity * $relyChainDecay;
-                }
+//print_r("\t$parity += $subParity * $relyChainDecay\t\tAAA\n");                    
+                }             
             }
             $rely = $node->rely();
             $relyTotal += $rely;
             $parityTotal += $parity * $rely;      // note rely range [0,4]
+//print_r("\t$parityTotal += $parity * $rely\t\tBBB\n");            
             $n++;
         }
         if ($n>0 && $relyTotal>0) {
             $relyAverage = $relyTotal / $n;
             $parityAverage = $parityTotal / ($n * $relyAverage);
+//print_r("\t$parityAverage = $parityTotal / ($n * $relyAverage)\t\tCCC\n");            
         } else {
             $parityAverage = null;
         }
@@ -287,4 +291,3 @@ and by negating Parity.
 }
 
 ?>
-

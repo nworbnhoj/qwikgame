@@ -116,9 +116,8 @@ class PlayerPage extends Page {
 
 
     public function variables(){
-        global $games;
 
-        $player = Page::player();
+        $player = $this->player();
         $venue = $this->venue;
         $game = $this->game;
 
@@ -129,41 +128,31 @@ class PlayerPage extends Page {
 
         $familiarCheckboxes = $this->familiarCheckboxes($player);
         $playerNick = $player->nick();
+        $historyCount = count($player->matchQuery("match[@status='history']"));
 
         $variables = Page::variables($player);
 
-        $variables = array(
-            'pid'            => $player->id(),
-            'vid'            => isset($venue) ? $venue->id() : '',
-            'venue'          => $this->req('venue'),
-            'message'        => $message,
-            'game'           => isset($game) ? $games["$game"] : '',
-            'playerName'     => is_null($playerNick) ? $player->email() : $playerNick,
-            'gameOptions'    => $this->gameOptions($game, "\t\t"),
-            'familiarHidden' => empty($familiarCheckboxes) ? 'hidden' : ' ',
-            'hourRows'       => $this->hourRows(),
-            'selectRegion'   => self::SELECT_REGION,
-            'regionOptions'  => $this->regionOptions($player, "\t\t\t"),
-            'historyHidden'  => count($player->matchQuery("match[@status='history']")) == 0 ? 'hidden' : '',
-//            'historyForms'   => $historyForms,
-            'reputation'     => $player->repWord(),
-            'reputationLink' => "<a href='info.php#reputation'>reputation</a>",
-            'thumbs'         => $player->repThumbs(),
-            'playerNick'     => $playerNick,
-            'playerURL'      => $player->url(),
-            'playerEmail'    => $player->email(),
-            'datalists'      => $this->datalists(),
-            'INFO_ICON'      => INFO_ICON,
-            'HOME_ICON'      => HOME_ICON,
-            'CROSS_ICON'     => CROSS_ICON,
-            'RELOAD_ICON'    => RELOAD_ICON,
-            'LOGOUT_ICON'    => LOGOUT_ICON,
-            'TWITTER_ICON'   => TWITTER_ICON,
-//            'EMAIL_ICON'        => Page::EMAIL_ICON,
-//            'FACEBOOK_ICON'     => Page::FACEBOOK_ICON,
-            'MAP_ICON'       => MAP_ICON,
-            'SEND_ICON'      => SEND_ICON,
-        );
+        $variables['vid']           = isset($venue) ? $venue->id() : '';
+        $variables['venue']         = $this->req('venue');
+        $variables['message']       = $message;
+        $variables['playerName']    = is_null($playerNick) ? $player->email() : $playerNick;
+        $variables['gameOptions']   = $this->gameOptions($game, "\t\t");
+        $variables['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
+        $variables['hourRows']      = $this->hourRows();
+        $variables['selectRegion']  = self::SELECT_REGION;
+        $variables['regionOptions'] = $this->regionOptions($player, "\t\t\t");
+        $variables['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
+//            'historyForms'   => $historyForms;
+        $variables['reputation']    = $player->repWord();
+        $variables['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
+        $variables['thumbs']        = $player->repThumbs();
+        $variables['playerNick']    = $playerNick;
+        $variables['playerURL']     = $player->url();
+        $variables['playerEmail']   = $player->email();
+        $variables['datalists']     = $this->datalists();
+        $variables['MAP_ICON']      = MAP_ICON;
+        $variables['SEND_ICON']     = SEND_ICON;
+
         return $variables;
     }
 

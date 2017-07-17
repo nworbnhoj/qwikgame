@@ -55,22 +55,38 @@ class Page {
 
 
     public function variables(){
-        return array(
-            'INFO_ICON'     => INFO_ICON,
-            'HOME_ICON'     => HOME_ICON,
+        global $games;
+        $game = $this->req('game');
+        $vars = array(
             'CROSS_ICON'    => CROSS_ICON,
-            'RELOAD_ICON'   => RELOAD_ICON,
-            'LOGOUT_ICON'   => LOGOUT_ICON,
-            'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
-            'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",
-            'TWITTER_ICON'  => TWITTER_ICON,
+            'COMMENT_ICON'  => COMMENT_ICON,
             'EMAIL_ICON'    => EMAIL_ICON,
             'FACEBOOK_ICON' => FACEBOOK_ICON,
+            'FEMALE_ICON'   => FEMALE_ICON;
+            'HOME_ICON'     => HOME_ICON,
+            'INFO_ICON'     => INFO_ICON,
 		    'LANG_ICON'		=> LANG_ICON,
+            'LOGOUT_ICON'   => '';
+            'MALE_ICON'     => MALE_ICON;
+            'RELOAD_ICON'   => RELOAD_ICON,
+            'THUMB_DN_ICON' => THUMB_DN_ICON;
+            'THUMB_UP_ICON' => THUMB_UP_ICON;
+            'TWITTER_ICON'  => TWITTER_ICON,
             'homeURL'       => QWIK_URL,
             'termsURL'		=> TERMS_URL,
-            'privacyURL'	=> PRIVACY_URL
+            'privacyURL'	=> PRIVACY_URL,
+            'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
+            'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
+            'game'          => isset($game) ? $games["$game"] : '';
+            
         );
+        
+        if ($this->player != null){
+            $vars['pid']         = $this->player->id();
+            $vars['LOGOUT_ICON'] = LOGOUT_ICON;
+        }
+        
+        return $vars;
     }
 
 
@@ -729,13 +745,25 @@ class Page {
     }
 
 
-    function datalists(){
+    public function datalists(){
         global $games;
         $datalists = '';
         foreach($games as $game => $name){
-            $datalists .= "\n\n" . venueDatalist($game);
+            $datalists .= "\n\n" . $this->venueDatalist($game);
         }
         return $datalists;
+    }
+    
+    
+    private function venueDatalist($game){
+        $vids =venues($game);
+        $datalist = "<datalist id='venue-$game'>\n";
+        foreach($vids as $vid){
+            $svid = shortVenueID($vid);
+            $datalist .= "\t<option value='$svid'>\n";
+        }
+        $datalist .= "</datalist>\n";
+        return $datalist;
     }
 
 

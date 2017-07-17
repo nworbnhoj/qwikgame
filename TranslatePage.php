@@ -89,23 +89,25 @@ Class TranslatePage extends Page {
 
         $selectGame = "<select name='game' class='game'>$gameOptions</select>";
 
-        $variables = array(
-	    	'tick'				=> "<a class='".TICK_ICON."'></a>",
-	    	'cross'				=> "<a class='".CROSS_ICON."'></a>",
-	    	'termsLink'			=> "<a href='".TERMS_URL."'><t>terms & conditions</t></a>",
-            'privacyLink'		=> "<a href='".PRIVACY_URL."'><t>privacy policy</t></a>",
-            'flyerLink'         => "<a href='".FLYER_URL."'><t>flyer</t></a>",
-            'emailLink'         => EMAIL_LNK,
-            'facebookLink'      => FACEBOOK_LNK,
-            'twitterLink'       => TWITTER_LNK,
-	    	'inputVenue'		=> VENUE_INPUT,
-	    	'inputRival'		=> RIVAL_INPUT,
-            'selectGame'        => $selectGame,
-            'selectAbility'     => ABILITY_SELECT,
-	    	'selectRegion'		=> REGION_SELECT,
-	    	'selectParity3'		=> PARITY3_SELECT,
-	    	'selectParity5'		=> PARITY5_SELECT
-        );
+        $variables = Page::variables();
+
+        $variables['tick']         = "<a class='".TICK_ICON."'></a>";
+        $variables['cross']        = "<a class='".CROSS_ICON."'></a>";
+        $variables['termsLink']    = "<a href='".TERMS_URL."'><t>terms & conditions</t></a>";
+        $variables['privacyLink']  = "<a href='".PRIVACY_URL."'><t>privacy policy</t></a>";
+        $variables['flyerLink']    = "<a href='".FLYER_URL."'><t>flyer</t></a>";
+        $variables['emailLink']    = EMAIL_LNK;
+        $variables['facebookLink'] = FACEBOOK_LNK;
+        $variables['twitterLink']  = TWITTER_LNK;
+        $variables['inputVenue']   = VENUE_INPUT;
+        $variables['inputRival']   = RIVAL_INPUT;
+        $variables['selectGame']   = $selectGame;
+        $variables['selectAbility']= ABILITY_SELECT;
+        $variables['selectRegion'] = REGION_SELECT;
+        $variables['selectParity3'] = PARITY3_SELECT;
+        $variables['selectParity5'] = PARITY5_SELECT;
+        
+        return $variables;
     }
     
     

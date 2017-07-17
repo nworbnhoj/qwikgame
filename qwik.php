@@ -941,16 +941,6 @@ function shortVenueID($vid){
 }
 
 
-function venueDatalist($game){
-    $vids =venues($game);
-    $datalist = "<datalist id='venue-$game'>\n";
-    foreach($vids as $vid){
-        $svid = shortVenueID($vid);
-        $datalist .= "\t<option value='$svid'>\n";
-    }
-    $datalist .= "</datalist>\n";
-    return $datalist;
-}
 
 
 /*******************************************************************************

@@ -45,32 +45,16 @@ class IndexPage extends Page {
     public function variables(){
         $venue = $this->req('venue');
         $game = $this->req('game');
+        
+        $variables = $Page::variables();
 
-        $variables = array(
-            'playerCount'		=> $this->countFiles('player'),
-            'venueCount'		=> $this->countFiles('venue'),
-            'venuesLink'		=> "<a href='venues.php?game=squash'><t>venues</t></a>",
-            'venue'             => isset($venue) ? $venue : '',
-            'game'              => $games["$game"],
-    //		'game'				=> $game,
-            'gameOptions'       => $this->gameOptions($game, "\t\t"),
-            'datalists'         => $this->datalists(),
-            'INFO_ICON'         => INFO_ICON,
-            'HOME_ICON'         => HOME_ICON,
-            'CROSS_ICON'        => CROSS_ICON,
-            'RELOAD_ICON'       => RELOAD_ICON,
-            'COMMENT_ICON'		=> COMMENT_ICON,
-            'MALE_ICON'			=> MALE_ICON,
-            'FEMALE_ICON'		=> FEMALE_ICON,
-            'THUMB_UP_ICON'		=> THUMB_UP_ICON,
-            'THUMB_DN_ICON'     => THUMB_DN_ICON,
-            'LANG_ICON' 		=> LANG_ICON,
-            'INFO_ICON'			=> INFO_ICON,
-            'LOGOUT_ICON'		=> null !== $this->player() ? LOGOUT_ICON : '',
-            'TWITTER_ICON'      => TWITTER_ICON,
-            'EMAIL_ICON'        => EMAIL_ICON,
-            'FACEBOOK_ICON'     => FACEBOOK_ICON,
-        );
+        $variables['playerCount']    = $this->countFiles('player');
+        $variables['venueCount']     = $this->countFiles('venue');
+        $variables['venuesLink']     = "<a href='venues.php?game=squash'><t>venues</t></a>";
+        $variables['venue']          = isset($venue) ? $venue : '';
+        $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
+        $variables['datalists']      = $this->datalists();
+        
         return $variables;
     }
 

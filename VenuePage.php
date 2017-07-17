@@ -51,36 +51,30 @@ class VenuePage extends Page {
         $backLink = "<a href='".QWIK_URL;
         $backlink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
-        $variables = array(
-            'vid'			=> $this->venue->id(),
-            'game'			=> $game,
-            'homeURL'		=> QWIK_URL,
-            'playerCount'	=> $this->venue->playerCount(),
-            'message'		=> '',
-            'displayHidden'	=> '',
-            'editHidden'	=> 'hidden',
-            'repostInputs'	=> repostIns($repost, "\t\t\t"),
-            'venueName'		=> $venueName,
-            'venueAddress'  => $this->venue->address(),
-            'venueSuburb'	=> $this->venue->suburb(),
-            'venueState' 	=> $venueState,
-            'venueCountry'  => $venueCountry,
-            'countryOptions'=> countryOptions($venueCountry, "\t\t\t\t\t"),
-            'venuePhone'	=> $this->venue->phone(),
-            'venueURL'		=> $this->venue->url(),
-            'venueTZ'		=> $this->venue->tz(),
-            'venueLat'		=> $this->venue->lat(),
-            'venueLng'		=> $this->venue->lng(),
-            'venueNote'		=> $this->venue->note(),
-            'venueRevertDiv'=> $this->venue->revertDiv(),
-            'backLink'		=> $backLink,
-            'venueUrlLink'	=> "<a href='$venueUrl'><t>homepage</t></a>",
-            'INFO_ICON'		=> INFO_ICON,
-            'HOME_ICON'     => HOME_ICON,
-            'TWITTER_ICON'	=> TWITTER_ICON,
-            'EMAIL_ICON'	=> EMAIL_ICON,
-            'FACEBOOK_ICON'	=> FACEBOOK_ICON,
-        );
+        $variables = Page::variables();
+        
+        $variables['vid']           = $this->venue->id();
+        $variables['playerCount']   = $this->venue->playerCount();
+        $variables['message']       = '';
+        $variables['displayHidden'] = '';
+        $variables['editHidden']    = 'hidden';
+        $variables['repostInputs']  = repostIns($repost, "\t\t\t");
+        $variables['venueName']     = $venueName;
+        $variables['venueAddress']  = $this->venue->address();
+        $variables['venueSuburb']   = $this->venue->suburb();
+        $variables['venueState']    = $venueState;
+        $variables['venueCountry']  = $venueCountry;
+        $variables['countryOptions']= countryOptions($venueCountry, "\t\t\t\t\t");
+        $variables['venuePhone']    = $this->venue->phone();
+        $variables['venueURL']      = $this->venue->url();
+        $variables['venueTZ']       = $this->venue->tz();
+        $variables['venueLat']      = $this->venue->lat();
+        $variables['venueLng']      = $this->venue->lng();
+        $variables['venueNote']     = $this->venue->note();
+        $variables['venueRevertDiv']= $this->venue->revertDiv();
+        $variables['backLink']      = $backLink;
+        $variables['venueUrlLink']  = "<a href='$venueUrl'><t>homepage</t></a>";
+        
 	    return $variables;
 	}
 

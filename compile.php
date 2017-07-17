@@ -58,8 +58,6 @@
 
 
 	$html = file_get_contents("$path/$filename");
-
-//	header("location: $qwikURL/$path/$filename");
 echo "done";
 
 ?>

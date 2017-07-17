@@ -20,13 +20,11 @@ class Page {
     private $player;
     private $language;
 
-	public function __construct($template='index'){
-	    global $subdomain;
-	    
+	public function __construct($template='index'){	    
 	    $this->template = $template;
 	    
         $this->log = new Logging();
-        $this->log->lfile("/tmp/$subdomain.qwikgame.org.log");
+        $this->log->lfile("/tmp/".SUBDOMAIN.".qwikgame.org.log");
 
         $this->req = $this->validate($_POST);
         if (!$this->req){
@@ -381,8 +379,7 @@ class Page {
         }
         setcookie("pid", "", time() - Player::DAY);
         setcookie("token", "", time() - Player::DAY);
-        global $qwikURL;
-        header("location: $qwikURL");
+        header("location: ".QWIK_URL);
     }
 
 

@@ -508,11 +508,10 @@ class Player {
 
 
     function loginURL($shelfLife){
-        global $qwikURL;
         $pid = $this->id();
         $token = $rival->token($shelfLife);
         $data = array('qwik'=>'login', 'pid'=>$pid, 'token'=>$token);
-        return "$qwikURL/player.php?" . http_build_query($data);
+        return QWIK_URL."/player.php?" . http_build_query($data);
     }
 
 
@@ -612,7 +611,7 @@ class Player {
 
 
     function emailQuit($player){
-        global $subdomain, $YEAR;
+        global $YEAR;
         $lang = $this->lang();
 
         $subject = $GLOBALS[$lang]["emailQuitSubject"];

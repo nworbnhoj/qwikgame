@@ -14,7 +14,7 @@
     if(!$req
     || empty($req['game'])){
 //    || empty($req['venue'])){
-        header("Location: $qwikURL");
+        header("Location: ".QWIK_URL);
 //        invalidRequest($_POST, $_GET, 'malformed request');
  //       return;
     }
@@ -31,7 +31,7 @@
 	if($matchCount == 1){
 		$req['vid'] = $vids[0];
 		$query = http_build_query($req);
-        header("location: $qwikURL/$repost?$query");
+        header("location: ".QWIK_URL."/$repost?$query");
 		return;
 	}
 
@@ -57,7 +57,7 @@
 
         $req['vid'] = $vid;
         $query = http_build_query($req);
-        header("location: $qwikURL/$repost?$query");
+        header("location: ".QWIK_URL."/$repost?$query");
         return;
 	}
 
@@ -66,7 +66,7 @@
     $variables = array(
         'vid'               => $venue['id'],
         'game'              => $game,
-        'homeURL'           => "$qwikURL/player.php",
+        'homeURL'           => QWIK_URL."/player.php",
 		'repost'			=> $repost,
         'venueName'         => isset($venue['name']) ? $venue['name'] : '',
         'venueAddress'      => isset($venue['address']) ? $venue['address'] : '',

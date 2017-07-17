@@ -41,7 +41,7 @@ class PlayerPage extends Page {
                 $this->req('repost', 'player.php');
             }
             $query = http_build_query($this->req());
-            header("location: $qwikURL/locate.php?$query");
+            header("location: ".QWIK_URL."/locate.php?$query");
             return;
         }
     }
@@ -94,7 +94,7 @@ class PlayerPage extends Page {
                         $token = $player->token(Player::MINUTE);
                         $newID = $player->id();
                         $query = "qwik=login&pid=$newID&token=$token'";
-                        header("Location: $qwikURL/player.php?$query");
+                        header("Location: ".QWIK_URL."/player.php?$query");
                     }
                 }
                 break;
@@ -302,7 +302,7 @@ function qwikDelete($player, $request){
 
 function qwikAccount($player, $request){
 //echo "<br>QWIKACCOUNT<br>";
-    global $qwikURL, $DAY;
+    global $DAY;
     if(isset($request['nick'])){
         $player->nick($request['nick']);
     }
@@ -327,7 +327,7 @@ function qwikAccount($player, $request){
         $player->quit();
         logout();
 
-        header("Location: $qwikURL");
+        header("Location: ".QWIK_URL);
     }
 }
 

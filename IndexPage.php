@@ -13,7 +13,7 @@ class IndexPage extends Page {
     public function serve($template){
         if (null !== $this->player()){
             $query = http_build_query($this->req());
-		    header("Location: $qwikURL/player.php?$query");
+		    header("Location: ".QWIK_URL."/player.php?$query");
             return;
 	    }
 	    parent::serve($template);

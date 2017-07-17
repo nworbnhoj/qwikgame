@@ -1,13 +1,10 @@
 <?php 
 
-$subdomain = 'www';
-$qwikURL = "http://$subdomain.qwikgame.org";
-
+const SUBDOMAIN = 'www';
+const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';
 
 include 'Player.php';
 include 'Venue.php';
-
-
 
 
 $languages = array(
@@ -45,9 +42,6 @@ const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
 const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
 const TICK_ICON      = 'fa fa-check-circle tick';
 const TWITTER_ICON   = 'fa fa-twitter icon';
-
-const SUBDOMAIN = 'www';
-const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';
 
 const FLYER_URL = QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
 const TERMS_URL = QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';
@@ -505,7 +499,7 @@ function pickVenue($req, $sourceUrl){
                 'game' => $req['game'],
                 'repost' => $req
             );
-            post("http://$subdomain.qwikgame.org/venue.php", $data);
+            post("http://".SUBDOMAIN.".qwikgame.org/venue.php", $data);
         }
     }
 }
@@ -810,16 +804,12 @@ function updateCongCert($player, $matchID, $rival){
 
 ////// EMAIL TEMPLATES ///////////////////////////////////////////////////////
 
-function authURL($email, $token) {
-    global $qwikURL;
-    
-    return "$qwikURL/player.php?qwik=login&email=$email&token=$token";
+function authURL($email, $token) {    
+    return QWIK_URL."/player.php?qwik=login&email=$email&token=$token";
 }
 
 
 function emailWelcome($email, $id, $token){
-    global $qwikURL, $termsURL;
-
     $authURL = authURL($email, $token);
 
     $subject = "Welcome to qwikgame.org";
@@ -830,7 +820,7 @@ function emailWelcome($email, $id, $token){
     $msg .= "\t\t\t</p>\n";
     $msg .= "\t\t\t<p>\n";
     $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-    $msg .= "\t\t\t<a href='$termsURL' target='_blank'>\n";
+    $msg .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
     $msg .= "\t\t\tTerms & Conditions</a>";
     $msg .= "</p>\n";
     $msg .= "<p>\n";
@@ -844,8 +834,6 @@ function emailWelcome($email, $id, $token){
 
 
 function emailLogin($email, $id, $token){
-    global $qwikURL;
-
     $authURL = authURL($email, $token);
 
     $subject = 'qwikgame.org login link';
@@ -864,13 +852,11 @@ function emailLogin($email, $id, $token){
 
 
 function emailChange($email, $id, $token){
-    global $qwikURL;
-
     $subject = 'Confirm email change for qwikgame.org';
 
     $msg  = "<p>\n";
     $msg .= "\tPlease click this link to change your qwikgame email address to $email:<br>\n";
-    $msg .= "\t<a href='$qwikURL/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>$qwikURL/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
+    $msg .= "\t<a href='".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
     $msg .= "\t\t\t</p>\n";
     $msg .= "<p>\n";
     $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
@@ -885,9 +871,6 @@ function emailChange($email, $id, $token){
 
 
 function qwikEmail($to, $subject, $msg, $id, $token){
-
-    global $qwikURL, $termsURL;
-
     $headers = array();
     $headers[] = "From: facilitator@qwikgame.org";
     $headers[] = "MIME-Version: 1.0";
@@ -908,7 +891,7 @@ function qwikEmail($to, $subject, $msg, $id, $token){
     $body .= "\t\t<br><hr>\n";
     $body .= "\t\t<p>\n";
     $body .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-    $body .= "\t\t\t<a href='$termsURL' target='_blank'>\n";
+    $body .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
     $body .= "\t\t\tTerms & Conditions</a>";
     $body .= "\t\t</p>\n";
     $body .= "\t\t</p>\n";
@@ -1189,8 +1172,6 @@ function repostIns($repost, $tabs=''){
 
 
 function venueSimilarDiv($venue, $game, $repost){
-//echo "<br>VENUESIMILARDIV<br>";
-    global $qwikURL;
     $similarVenueInputs = similarVenueButtons($venue, $game, "\t\t\t");
     if(empty($similarVenueInputs)){
         return '';

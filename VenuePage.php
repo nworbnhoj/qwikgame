@@ -7,7 +7,7 @@ class VenuePage extends Page {
     private $venue;
 
     public function __construct(){
-        Page::__construct('venue');
+        parent::__construct('venue');
 
 	    $vid = $this->req('vid');
         $this->venue = new Venue($vid, $this->log());
@@ -19,7 +19,7 @@ class VenuePage extends Page {
             header("Location: ".QWIK_URL);
             return;
 	    }
-	    Page::serve($template);
+	    parent::serve($template);
 	}
 
 
@@ -51,7 +51,7 @@ class VenuePage extends Page {
         $backLink = "<a href='".QWIK_URL;
         $backlink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
-        $variables = Page::variables();
+        $variables = parent::variables();
         
         $variables['vid']           = $this->venue->id();
         $variables['playerCount']   = $this->venue->playerCount();

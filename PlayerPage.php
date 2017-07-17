@@ -17,7 +17,7 @@ class PlayerPage extends Page {
 
 
     public function __construct(){
-        Page::__construct('player');
+        parent::__construct('player');
 
         $player = $this->player();
         if (is_null($player)){
@@ -125,7 +125,7 @@ class PlayerPage extends Page {
         $playerNick = $player->nick();
         $historyCount = count($player->matchQuery("match[@status='history']"));
 
-        $variables = Page::variables($player);
+        $variables = parent::variables($player);
 
         $variables['vid']           = isset($venue) ? $venue->id() : '';
         $variables['venue']         = $this->req('venue');

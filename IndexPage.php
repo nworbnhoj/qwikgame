@@ -6,7 +6,7 @@ class IndexPage extends Page {
 
 
     public function __construct(){
-        Page::__construct('index');
+        parent::__construct('index');
     }
 
 
@@ -16,7 +16,7 @@ class IndexPage extends Page {
 		    header("Location: $qwikURL/player.php?$query");
             return;
 	    }
-	    Page::serve($template);
+	    parent::serve($template);
 	}
 
 
@@ -46,7 +46,7 @@ class IndexPage extends Page {
         $venue = $this->req('venue');
         $game = $this->req('game');
         
-        $variables = Page::variables();
+        $variables = parent::variables();
 
         $variables['playerCount']    = $this->countFiles('player');
         $variables['venueCount']     = $this->countFiles('venue');

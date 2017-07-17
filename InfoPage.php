@@ -6,7 +6,7 @@ class InfoPage extends Page {
 
 
     public function __construct(){
-        Page::__construct('info');
+        parent::__construct('info');
     }
 
 

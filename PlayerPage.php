@@ -17,7 +17,7 @@ class PlayerPage extends Page {
 
 
     public function __construct(){
-        Page::__construct();
+        Page::__construct('player');
 
         $player = $this->player();
         if (is_null($player)){
@@ -44,11 +44,6 @@ class PlayerPage extends Page {
             header("location: $qwikURL/locate.php?$query");
             return;
         }
-    }
-
-
-    public function serve($template='player'){
-        Page::serve($template);
     }
 
 

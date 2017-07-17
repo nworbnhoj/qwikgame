@@ -27,22 +27,24 @@ foreach($languages as $code => $language){
 }
 
 
-const INFO_ICON      = 'fa fa-question-circle icon';
-const HOME_ICON      = 'fa fa-home icon';
-const RELOAD_ICON    = 'fa fa-refresh icon';
-const BACK_ICO       = 'fa fa-chevron-circle-left icon';
-const LOGOUT_ICON    = 'fa fa-power-off icon';
-const TICK_ICON      = 'fa fa-check-circle tick';
-const CROSS_ICON     = 'fa fa-times-circle cross';
-const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
-const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
-const TWITTER_ICON   = 'fa fa-twitter icon';
-const MALE_ICON      = 'fa fa-male person';
-const FEMALE_ICON    = 'fa fa-female person';
+const BACK_ICON      = 'fa fa-chevron-circle-left icon';
 const COMMENT_ICON   = 'fa fa-comment-o comment';
+const CROSS_ICON     = 'fa fa-times-circle cross';
+const EMAIL_ICON     = 'fa fa-envelope-o icon';
+const FACEBOOK_ICON  = 'fa fa-facebook icon';
+const FEMALE_ICON    = 'fa fa-female person';
+const HOME_ICON      = 'fa fa-home icon';
+const INFO_ICON      = 'fa fa-question-circle icon';
+const RELOAD_ICON    = 'fa fa-refresh icon';
 const LANG_ICON      = 'fa fa-globe icon';
+const LOGOUT_ICON    = 'fa fa-power-off icon';
+const MALE_ICON      = 'fa fa-male person';
 const MAP_ICON       = 'fa fa-map-marker';
 const SEND_ICON      = 'fa fa-send';
+const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
+const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
+const TICK_ICON      = 'fa fa-check-circle tick';
+const TWITTER_ICON   = 'fa fa-twitter icon';
 
 const SUBDOMAIN = 'www';
 const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';

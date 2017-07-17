@@ -14,14 +14,17 @@ class Page {
         'THUMB_DN_ICON' => THUMB_DN_ICON
     );
 
-
+    private $template;
     private $log;
     private $req;
     private $player;
     private $language;
 
-	public function __construct(){
+	public function __construct($template='index'){
 	    global $subdomain;
+	    
+	    $this->template = $template;
+	    
         $this->log = new Logging();
         $this->log->lfile("/tmp/$subdomain.qwikgame.org.log");
 
@@ -40,7 +43,8 @@ class Page {
     }
 
 
-    public function serve($template='index'){
+    public function serve($template=null){
+        $template = $template == null ? $this->template : $template;
         $this->processRequest();
         $variables = $this->variables($this->player);
         $html = $this->html($template, $variables);
@@ -62,23 +66,22 @@ class Page {
             'COMMENT_ICON'  => COMMENT_ICON,
             'EMAIL_ICON'    => EMAIL_ICON,
             'FACEBOOK_ICON' => FACEBOOK_ICON,
-            'FEMALE_ICON'   => FEMALE_ICON;
+            'FEMALE_ICON'   => FEMALE_ICON,
             'HOME_ICON'     => HOME_ICON,
             'INFO_ICON'     => INFO_ICON,
 		    'LANG_ICON'		=> LANG_ICON,
-            'LOGOUT_ICON'   => '';
-            'MALE_ICON'     => MALE_ICON;
+            'LOGOUT_ICON'   => '',
+            'MALE_ICON'     => MALE_ICON,
             'RELOAD_ICON'   => RELOAD_ICON,
-            'THUMB_DN_ICON' => THUMB_DN_ICON;
-            'THUMB_UP_ICON' => THUMB_UP_ICON;
+            'THUMB_DN_ICON' => THUMB_DN_ICON,
+            'THUMB_UP_ICON' => THUMB_UP_ICON,
             'TWITTER_ICON'  => TWITTER_ICON,
             'homeURL'       => QWIK_URL,
             'termsURL'		=> TERMS_URL,
             'privacyURL'	=> PRIVACY_URL,
             'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
             'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
-            'game'          => isset($game) ? $games["$game"] : '';
-            
+            'game'          => isset($game) ? $games["$game"] : ''
         );
         
         if ($this->player != null){

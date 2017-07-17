@@ -6,12 +6,7 @@ class InfoPage extends Page {
 
 
     public function __construct(){
-        Page::__construct();
-    }
-
-
-    public function serve($template='info'){
-        Page::serve($template);
+        Page::__construct('info');
     }
 
 

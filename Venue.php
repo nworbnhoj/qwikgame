@@ -63,13 +63,13 @@ class Venue {
 
     public function save(){
         $cwd = getcwd();
-        $path = self::VENUE_PATH;
+        $path = self::PATH_VENUE;
         if(chdir($path)){
             $vid = $this->id();
             $ext = self::XML;
             $fileName = "$vid$ext";
             $this->xml->saveXML($fileName);
-            $games = $venue->xpath('game');
+            $games = $this->xml->xpath('game');
             foreach($games as $game){
                 if(!file_exists("$game/$filename")){
                     if(file_exists($game) && chdir($game)){
@@ -336,7 +336,6 @@ class Venue {
 
 
     public function revertDiv(){
-        global $revert;
         $edits = $this->xml->xpath('edit');
         if (count($edits) == 0){
             return '';
@@ -347,7 +346,7 @@ class Venue {
         foreach($edits as $edit){
             $revertID = $edit['id'];
             $div .= "\t<button class='revert' id='#venue-$edit->key' val='$edit->val'>";
-            $div .= "\t\t$revert <s>$edit->val</s>\n";
+            $div .= "\t\t".REVERT_CHAR." <s>$edit->val</s>\n";
             $div .= "\t</button>\n";
         }
         $div .= "\t<br>\n";

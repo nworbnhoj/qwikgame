@@ -14,7 +14,7 @@ class VenuePage extends Page {
     }
 
 
-    public function serve($template){
+    public function serve($template=null){
         if (!$this->venue->exists()){
             header("Location: ".QWIK_URL);
             return;

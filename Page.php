@@ -314,6 +314,7 @@ class Page {
     $req    ArrayMap    url parameters from post&get
     ********************************************************************************/
     private function login($req){
+        $openSession = false;
         session_start();
 
         if (isset($req['pid'])){            // check for a pid & token in the parameter
@@ -335,16 +336,16 @@ class Page {
                                             // OK playerID
         $player = new Player($pid, $this->log, TRUE);
 
-        if(isset($openSession)){
+        if($openSession){
             return $player;
         }
 
         if($player->isValidToken($token)){                 // LOGIN with token
             $this->logMsg("login: valid token " . snip($pid));
             $_SESSION['pid'] = $pid;
-            $_SESSION['lang'] = (string) $player->lang();
-            setcookie("pid", "$pid", time() + 3*Player::MONTH, "/");
-            setcookie("token", "$token", time() + 3*Player::MONTH, "/");
+            $_SESSION['lang'] = $player->lang();
+            setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
+            setcookie("token", $token, time() + 3*Player::MONTH, "/");
             return $player;
         } else {
             $this->logMsg("login: invalid token pid=" . snip($pid));
@@ -352,11 +353,13 @@ class Page {
 
         if(empty($player->email()) && isset($email)){            // LOGIN anon player
             $this->logMsg("login: anon player " . snip($pid));
-            emailWelcome($email, $pid, $player->token(Player::MONTH));
-            setcookie("pid", '', time()-Player::DAY, "/");
-            setcookie("token", '', time()-Player::DAY, "/");
+            $token = $player->token(Player::MONTH);
+            $player->save();
+            setcookie("pid", $pid, time() + Player::DAY, "/");
+            setcookie("token", $token, time() + Player::DAY, "/");
             $_SESSION['pid'] = $pid;
-            $_SESSION['lang'] = (string) $player->lang();
+            $_SESSION['lang'] = $player->lang();
+            emailWelcome($email, $pid, $token);
             return $player;
         }
 
@@ -514,14 +517,14 @@ class Page {
                         'name'      => $nam,
                         'value'     => $val,
                     );
-                    $group .= populate($html, $vars);
+                    $group .= $this->populate($html, $vars);
                 }
             } else {
                 $vars = array(
                     'name'      => $name,
                     'value'     => $value,
                 );
-                $group .= populate($html, $vars);
+                $group .= $this->populate($html, $vars);
             }
         }
         return $group;
@@ -538,7 +541,7 @@ class Page {
                 'name'      => $name,
                 'selected'  => ($game == $default ? 'selected' : '')
             );
-            $group .= Page::populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -556,7 +559,7 @@ class Page {
                 'vid'              => $vid,
                 'venueName'      => explode('|', $vid)[0]
             );
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -576,7 +579,7 @@ class Page {
                 'name'        => implode(', ',explode('|',$vid)),
                 'players'    => count($players),
             );
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -591,7 +594,7 @@ class Page {
             $matchVars = $match->variables();
             $vars = $playerVars + $matchVars + $this->icons;
             $vars['venueLink'] = venueLink($match->vid(), $player, $match->game());
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -613,7 +616,7 @@ class Page {
                 'venueLink' => venueLink($avail->venue, $player, $game)
             );
             $vars = $playerVars + $availVars + $this->icons;
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -628,7 +631,7 @@ class Page {
             $game = $reckon['game'];
             $reckonVars = array('email' => $reckon['email']);
             $vars = $playerVars + $reckonVars ;
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -649,7 +652,7 @@ class Page {
                 'parity'    => parityStr($reckon['parity'])
             );
             $vars = $playerVars + $reckonVars + $this->icons;
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -672,7 +675,7 @@ class Page {
                 'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + $this->icons;
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -702,7 +705,7 @@ class Page {
             $vars = array(
                 'region' => $region,
             );
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -724,7 +727,7 @@ class Page {
                 'game'     => $upload['game'],
                 'time'     => $upload['time']
             );
-            $group .= populate($html, $vars);
+            $group .= $this->populate($html, $vars);
         }
         return $group;
     }

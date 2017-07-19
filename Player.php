@@ -49,17 +49,15 @@ class Player {
 
     public function save(){
         $cwd = getcwd();
-
-        $path = self::PATH_PLAYER;
-        if(chdir($path)){
+        if(chdir(self::PATH_PLAYER)){
             $pid = $this->xml['id'];
             $this->xml->saveXML("$pid.xml");
             if(!chdir($cwd)){
-                $this->logMsg("A. unable to change working directory to $cwd");
+                $this->logMsg("failed to change working directory to $cwd");
                 return false;
             }
         } else {
-            $this->logMsg("B. unable to change working directory to $path");
+            $this->logMsg("failed to change working directory to ".self::PATH_PLAYER);
             return false;
         }
         return true;
@@ -79,11 +77,11 @@ class Player {
         if(chdir($path)){
             $xml = simpleXML_load_file($filename);
             if(!chdir($cwd)){
-                $this->logMsg("C. unable to change working directory to $cwd");
+                $this->logMsg("failed to change working directory to $cwd");
             }
             return $xml;
         } else {
-            $this->logMsg("D. unable to change working directory to $path");
+            $this->logMsg("failed to change working directory to $path");
         }
     }
 

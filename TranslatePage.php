@@ -89,25 +89,25 @@ Class TranslatePage extends Page {
 
         $selectGame = "<select name='game' class='game'>$gameOptions</select>";
 
-        $variables = parent::variables();
+        $vars = parent::variables();
 
-        $variables['tick']         = "<a class='".TICK_ICON."'></a>";
-        $variables['cross']        = "<a class='".CROSS_ICON."'></a>";
-        $variables['termsLink']    = "<a href='".TERMS_URL."'><t>terms & conditions</t></a>";
-        $variables['privacyLink']  = "<a href='".PRIVACY_URL."'><t>privacy policy</t></a>";
-        $variables['flyerLink']    = "<a href='".FLYER_URL."'><t>flyer</t></a>";
-        $variables['emailLink']    = EMAIL_LNK;
-        $variables['facebookLink'] = FACEBOOK_LNK;
-        $variables['twitterLink']  = TWITTER_LNK;
-        $variables['inputVenue']   = VENUE_INPUT;
-        $variables['inputRival']   = RIVAL_INPUT;
-        $variables['selectGame']   = $selectGame;
-        $variables['selectAbility']= ABILITY_SELECT;
-        $variables['selectRegion'] = REGION_SELECT;
-        $variables['selectParity3'] = PARITY3_SELECT;
-        $variables['selectParity5'] = PARITY5_SELECT;
+        $vars['tick']         = "<a class='".TICK_ICON."'></a>";
+        $vars['cross']        = "<a class='".CROSS_ICON."'></a>";
+        $vars['termsLink']    = "<a href='".TERMS_URL."'><t>terms & conditions</t></a>";
+        $vars['privacyLink']  = "<a href='".PRIVACY_URL."'><t>privacy policy</t></a>";
+        $vars['flyerLink']    = "<a href='".FLYER_URL."'><t>flyer</t></a>";
+        $vars['emailLink']    = EMAIL_LNK;
+        $vars['facebookLink'] = FACEBOOK_LNK;
+        $vars['twitterLink']  = TWITTER_LNK;
+        $vars['inputVenue']   = VENUE_INPUT;
+        $vars['inputRival']   = RIVAL_INPUT;
+        $vars['selectGame']   = $selectGame;
+        $vars['selectAbility']= ABILITY_SELECT;
+        $vars['selectRegion'] = REGION_SELECT;
+        $vars['selectParity3'] = PARITY3_SELECT;
+        $vars['selectParity5'] = PARITY5_SELECT;
         
-        return $variables;
+        $this->variables = $vars;
     }
     
     

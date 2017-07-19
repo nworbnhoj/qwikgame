@@ -10,13 +10,13 @@ class IndexPage extends Page {
     }
 
 
-    public function serve($template){
-        if (null !== $this->player()){
+    public function serve($template=null){
+        if ($this->player() == null){
+            parent::serve($template);
+        } else {
             $query = http_build_query($this->req());
 		    header("Location: ".QWIK_URL."/player.php?$query");
-            return;
 	    }
-	    parent::serve($template);
 	}
 
 
@@ -25,8 +25,8 @@ class IndexPage extends Page {
 		$qwik = $this->req('qwik');
 		$email = $this->req('email');
 		if ($qwik == 'available'
-		&& null !== $this->req('venue')
-		&& null !== $this->req('game')
+		&& $this->req('venue') !== null
+		&& $this->req('game') !== null
 		&& isset($email)){
 			$pid = anonID($email);
 			$anon = new Player($pid, $log, TRUE);

@@ -76,7 +76,7 @@ const CC_LICENCE_LINK = "
         <t>Creative Commons Attribution 4.0 International License</t>
     </a>";
 
-
+const REVERT_CHAR = '⟲';
 
 
 

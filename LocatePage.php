@@ -10,8 +10,8 @@ class LocatePage extends Page {
     private $repost;
     
 
-    public function __construct(){
-        parent::__construct('locate');
+    public function __construct($template='construct'){
+        parent::__construct($template);
         
         $this->game = $this->req('game');
         $this->venueDesc = $this->req('venue');
@@ -19,12 +19,12 @@ class LocatePage extends Page {
     }
 
 
-    public function serve($template=null){
+    public function serve(){
         if (!$this->game != null){
             header("Location: ".QWIK_URL);
             return;
 	    }
-	    parent::serve($template);
+	    parent::serve();
 	}
 	
 	

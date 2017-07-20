@@ -16,25 +16,25 @@ class PlayerPage extends Page {
     ";
 
 
-    public function __construct(){
-        parent::__construct('player');
+    public function __construct($template='player'){
+        parent::__construct($template);
 
         $player = $this->player();
         if (is_null($player)){
             $this->logout();
         }
 
-        $game = $this->req('game');
+        $this->game = $this->req('game');
 
         $vid = $this->req('vid');
         if(isset($vid)){
-            $venue = new Venue($vid);
+            $this->venue = new Venue($vid);
         }
 
-        if (isset($venue)){
-            if($venue->addGame($game)){
-                $venue->save();
-                $this->logMsg("Added $game to $vid");
+        if (isset($this->venue)){
+            if($this->venue->addGame($this->game)){
+                $this->venue->save();
+                $this->logMsg("Added ".$this->game." to $vid");
             }
         } elseif (!is_null($this->req('venue'))){
             if(is_null($this->req('repost'))){
@@ -54,37 +54,37 @@ class PlayerPage extends Page {
         $player = $this->player();
         switch ($qwik) {
             case "available":
-                qwikAvailable($player, $req, $venue);
+                $this->qwikAvailable($player, $req, $venue);
                 break;
             case "keen":
-                qwikKeen($player, $req, $venue);
+                $this->qwikKeen($player, $req, $venue);
                 break;
             case 'accept':
-                qwikAccept($player, $req);
+                $this->qwikAccept($player, $req);
                  break;
             case 'decline':
-                qwikDecline($player, $req);
+                $this->qwikDecline($player, $req);
                  break;
             case 'familiar':
-                qwikFamiliar($player, $req);
+                $this->qwikFamiliar($player, $req);
                 break;
             case 'region':
-                qwikRegion($player, $req);
+                $this->qwikRegion($player, $req);
                 break;
             case "cancel":
-                qwikCancel($player, $req);
+                $this->qwikCancel($player, $req);
                 break;
             case "feedback":
-                qwikFeedback($player, $req);
+                $this->qwikFeedback($player, $req);
                 break;
             case 'delete':
-                qwikDelete($player, $req);
+                $this->qwikDelete($player, $req);
                 break;
             case 'account':
-                qwikAccount($player, $req);
+                $this->qwikAccount($player, $req);
                 break;
             case 'msg':
-                qwikMsg($player, $req);
+                $this->qwikMsg($player, $req);
                 break;
             case 'login':
                 $email = $page->req('email');
@@ -99,7 +99,7 @@ class PlayerPage extends Page {
                 }
                 break;
             case 'logout':
-                logout();
+                $this->logout();
                 break;
             default:
     //             header("Location: error.php?msg=<b>Invalid post:<b> $qwik<br>");
@@ -117,38 +117,38 @@ class PlayerPage extends Page {
         $game = $this->game;
 
         $rnd = mt_rand(1,8);
-        $message = null !== $player->email() ?
-            "<t>Tip$rnd<    >" :
+        $message = $player->email() != null ?
+            "<t>Tip$rnd</t>" :
             'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
 
         $familiarCheckboxes = $this->familiarCheckboxes($player);
         $playerNick = $player->nick();
         $historyCount = count($player->matchQuery("match[@status='history']"));
 
-        $variables = parent::variables($player);
+        $vars = parent::variables($player);
 
-        $variables['vid']           = isset($venue) ? $venue->id() : '';
-        $variables['venue']         = $this->req('venue');
-        $variables['message']       = $message;
-        $variables['playerName']    = is_null($playerNick) ? $player->email() : $playerNick;
-        $variables['gameOptions']   = $this->gameOptions($game, "\t\t");
-        $variables['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
-        $variables['hourRows']      = $this->hourRows();
-        $variables['selectRegion']  = self::SELECT_REGION;
-        $variables['regionOptions'] = $this->regionOptions($player, "\t\t\t");
-        $variables['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
+        $vars['vid']           = isset($venue) ? $venue->id() : '';
+        $vars['venue']         = isset($venue) ? $venue->name() : '';
+        $vars['message']       = $message;
+        $vars['playerName']    = is_null($playerNick) ? $player->email() : $playerNick;
+        $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
+        $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
+        $vars['hourRows']      = $this->hourRows();
+        $vars['selectRegion']  = self::SELECT_REGION;
+        $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
+        $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
 //            'historyForms'   => $historyForms;
-        $variables['reputation']    = $player->repWord();
-        $variables['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
-        $variables['thumbs']        = $player->repThumbs();
-        $variables['playerNick']    = $playerNick;
-        $variables['playerURL']     = $player->url();
-        $variables['playerEmail']   = $player->email();
-        $variables['datalists']     = $this->datalists();
-        $variables['MAP_ICON']      = MAP_ICON;
-        $variables['SEND_ICON']     = SEND_ICON;
+        $vars['reputation']    = $player->repWord();
+        $vars['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
+        $vars['thumbs']        = $player->repThumbs();
+        $vars['playerNick']    = $playerNick;
+        $vars['playerURL']     = $player->url();
+        $vars['playerEmail']   = $player->email();
+        $vars['datalists']     = $this->datalists();
+        $vars['MAP_ICON']      = MAP_ICON;
+        $vars['SEND_ICON']     = SEND_ICON;
 
-        return $variables;
+        return $vars;
     }
 
 
@@ -301,8 +301,6 @@ function qwikDelete($player, $request){
 
 
 function qwikAccount($player, $request){
-//echo "<br>QWIKACCOUNT<br>";
-    global $DAY;
     if(isset($request['nick'])){
         $player->nick($request['nick']);
     }
@@ -325,7 +323,7 @@ function qwikAccount($player, $request){
     if(isset($request['account']) && ($request['account'] === 'quit')) {
         $player->emailQuit();
         $player->quit();
-        logout();
+        $this->logout();
 
         header("Location: ".QWIK_URL);
     }

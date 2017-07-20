@@ -5,8 +5,8 @@ require 'Page.php';
 class InfoPage extends Page {
 
 
-    public function __construct(){
-        parent::__construct('info');
+    public function __construct($template='info'){
+        parent::__construct($template);
     }
 
 

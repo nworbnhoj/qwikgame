@@ -5,14 +5,14 @@ require_once 'Page.php';
 class IndexPage extends Page {
 
 
-    public function __construct(){
-        parent::__construct('index');
+    public function __construct($template='index'){
+        parent::__construct($template);
     }
 
 
-    public function serve($template=null){
+    public function serve(){
         if ($this->player() == null){
-            parent::serve($template);
+            parent::serve();
         } else {
             $query = http_build_query($this->req());
 		    header("Location: ".QWIK_URL."/player.php?$query");

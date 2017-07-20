@@ -41,8 +41,7 @@ class Page {
     }
 
 
-    public function serve($template=null){
-        $template = $template == null ? $this->template : $template;
+    public function serve(){
         $this->processRequest();
         $variables = $this->variables($this->player);
         $html = $this->html($template, $variables);

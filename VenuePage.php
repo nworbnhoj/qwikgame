@@ -6,20 +6,20 @@ class VenuePage extends Page {
 
     private $venue;
 
-    public function __construct(){
-        parent::__construct('venue');
+    public function __construct($template='venue'){
+        parent::__construct($template);
 
 	    $vid = $this->req('vid');
         $this->venue = new Venue($vid, $this->log());
     }
 
 
-    public function serve($template=null){
+    public function serve(){
         if (!$this->venue->exists()){
             header("Location: ".QWIK_URL);
             return;
 	    }
-	    parent::serve($template);
+	    parent::serve();
 	}
 
 

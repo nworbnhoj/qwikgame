@@ -146,7 +146,7 @@ class Player {
             if (isset($this->xml['url'])){
                 $this->xml['url'] = $url;
             } else {
-                $this->addAttribute('url', $url);
+                $this->xml->addAttribute('url', $url);
             }
         }
         return (string) $this->xml['url'];

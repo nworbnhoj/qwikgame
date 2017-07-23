@@ -76,7 +76,26 @@ class VenuePage extends Page {
         $variables['venueUrlLink']  = "<a href='$venueUrl'><t>homepage</t></a>";
         
 	    return $variables;
-	}
+    }
+
+
+    static function venueLink($vid){
+        $name = explode("|", $vid)[0];
+        $boldName = $this->firstWordBold($name);
+        $vid = $this->vid();
+        $url = QWIK_URL."/venue.php?vid=$vid";
+        $link = "<a href='$url'>$boldName</a>";
+        return $link;
+    }
+
+
+    private function firstWordBold($phrase){
+        $words = explode(' ', $phrase);
+        $first = $words[0];
+        $words[0] = "<b>$first</b>";
+        return implode(' ', $words);
+    }
+
 
 }
 

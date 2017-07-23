@@ -6,25 +6,17 @@ require_once 'logging.php';
 
 class Page {
 
-    private $icons = array (
-        'INFO_ICON' => INFO_ICON,
-        'TICK_ICON' => TICK_ICON,
-        'CROSS_ICON'=> CROSS_ICON,
-        'THUMB_UP_ICON' => THUMB_UP_ICON,
-        'THUMB_DN_ICON' => THUMB_DN_ICON
-    );
+
+    static $log;
+    static $icons;
 
     private $template;
-    private $log;
     private $req;
     private $player;
     private $language;
 
 	public function __construct($template='index'){	    
 	    $this->template = $template;
-	    
-        $this->log = new Logging();
-        $this->log->lfile("/tmp/".SUBDOMAIN.".qwikgame.org.log");
 
         $this->req = $this->validate($_POST);
         if (!$this->req){
@@ -41,10 +33,24 @@ class Page {
     }
 
 
+    // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
+    static function initStatic(){
+        self::$log = new Logging();
+        self::$log->lfile("/tmp/".SUBDOMAIN.".qwikgame.org.log");
+
+        self::$icons = array (
+           'INFO_ICON' => INFO_ICON,
+            'TICK_ICON' => TICK_ICON,
+            'CROSS_ICON'=> CROSS_ICON,
+            'THUMB_UP_ICON' => THUMB_UP_ICON,
+            'THUMB_DN_ICON' => THUMB_DN_ICON
+        );
+    }
+
+
     public function serve(){
         $this->processRequest();
-        $variables = $this->variables($this->player);
-        $html = $this->html($template, $variables);
+        $html = $this->html();
         echo($html);
     }
 
@@ -52,7 +58,6 @@ class Page {
     public function processRequest(){
 
     }
-
 
 
     public function variables(){
@@ -91,12 +96,13 @@ class Page {
 
 
 
-    public function html($template, $variables){
+    public function html(){
         $lang = $this->language;
+        $template = $this->template;
         $html = file_get_contents("lang/$lang/$template.html");
     //	do{
 	    $html = $this->replicate($html, $this->player, $this->req);
-        $html = $this->populate($html, $variables);
+        $html = $this->populate($html, $this->variables());
 	    $html = $this->translate($html, $this->language);
     //	} while (preg_match("\<v\>([^\<]+)\<\/v\>", $html) != 1);
     //	} while (strstr($html, "<v>"));
@@ -111,7 +117,7 @@ class Page {
     }
 
 
-    public function req($key=Null, $value=Null){
+    public function req($key=null, $value=null){
         if(is_null($key)){
             return $this->req;
         } elseif (is_null($value) && isset($this->req[$key])){
@@ -124,18 +130,12 @@ class Page {
 
 
     public function log(){
-        return $this->log;
+        return self::$log;
     }
 
 
     public function qwik(){
         return $this->req('qwik');
-    }
-
-
-    function logg($msg){
-        $this->log->lwrite($msg);
-        $this->log->lclose();
     }
 
 
@@ -154,22 +154,22 @@ class Page {
                     $msg .= $val;
             }
         }
-        $this->log->lwrite($msg);
-        $this->log->lclose();
+        self::$log->lwrite($msg);
+        self::$log->lclose();
     }
 
 
-    function logEmail($type, $pid, $game, $vid, $time){
+    function logEmail($type, $pid, $game='', $vid='', $time=''){
         $p = substr($pid, 0, 4);
         $msg = "email $type pid=$p $game $vid $time";
-        $this->log->lwrite($msg);
-        $this->log->lclose();
+        self::$log->lwrite($msg);
+        self::$log->lclose();
     }
 
 
     function logMsg($msg){
-        $this->log->lwrite($msg);
-        $this->log->lclose();
+        self::$log->lwrite($msg);
+        self::$log->lclose();
     }
 
 
@@ -196,45 +196,45 @@ class Page {
         $hrs_opt = array('min_range' => 0, 'max_range' => 16777215);
 
         $args = array(
-            'smtwtfs'  => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'smtwtfs'  => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'address'  => FILTER_DEFAULT,
-            'ability'  => array('filter' => FILTER_VALIDATE_INT, 'options' => $ability_opt),
+            'ability'  => array('filter'=>FILTER_VALIDATE_INT, 'options' => $ability_opt),
             'account'  => FILTER_DEFAULT,
-            'country'  => array('filter' => FILTER_CALLBACK,    'options' => 'validateCountry'),
+            'country'  => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateCountry')),
             'email'    => FILTER_VALIDATE_EMAIL,
-            'Fri'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'Fri'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'filename' => FILTER_DEFAULT,
-            'game'     => array('filter' => FILTER_CALLBACK,    'options' => 'validateGame'),
-            'id'       => array('filter' => FILTER_CALLBACK,    'options' => 'validateID'),
-            'invite'   => array('filter' => FILTER_CALLBACK,    'options' => 'validataInvite'),
-            'Mon'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'game'     => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateGame')),
+            'id'       => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateID')),
+            'invite'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validataInvite')),
+            'Mon'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'msg'      => FILTER_DEFAULT,
             'name'     => FILTER_DEFAULT,
             'nickname' => FILTER_DEFAULT,
-            'parity'   => array('filter' => FILTER_CALLBACK,     'options' => 'validateParity'),
-            'phone'    => array('filter' => FILTER_CALLBACK,     'options' => 'validatePhone'),
-            'pid'      => array('filter' => FILTER_CALLBACK,     'options' => 'validatePID'),
-            'qwik'     => array('filter' => FILTER_CALLBACK,     'options' => 'validateQwik'),
-            'Sat'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'parity'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateParity')),
+            'phone'    => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validatePhone')),
+            'pid'      => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validatePID')),
+            'qwik'     => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateQwik')),
+            'Sat'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'state'    => FILTER_DEFAULT,
             'suburb'   => FILTER_DEFAULT,
-            'Sun'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'Thu'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'Sun'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'Thu'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'time'     => FILTER_DEFAULT,
-            'today'    => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'token'    => array('filter' => FILTER_CALLBACK,     'options' => 'validateToken'),
-            'tomorrow' => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'Tue'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'today'    => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'token'    => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateToken')),
+            'tomorrow' => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
+            'Tue'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
             'tz'       => FILTER_DEFAULT,
             'region'   => FILTER_DEFAULT,
-            'rep'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $rep_opt),
-            'repost'   => array('filter' => FILTER_CALLBACK,     'options' => 'validateRepost'),
+            'rep'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $rep_opt),
+            'repost'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateRepost')),
             'rival'    => FILTER_VALIDATE_EMAIL,
             'title'    => FILTER_DEFAULT,
     //        'url'        => FILTER_VALIDATE_URL,
             'url'      => FILTER_DEFAULT,
             'venue'    => FILTER_DEFAULT,
-            'Wed'      => array('filter' => FILTER_VALIDATE_INT, 'options' => $hrs_opt)
+            'Wed'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt)
         );
 
         $result = filter_var_array($req, $args);
@@ -328,12 +328,12 @@ class Page {
         } elseif (isset($req['email'])){    // check for and email address in the param
             $email = $req['email'];
             $pid = anonID($email);          // and derive the pid from the email
-            $token = $req['token'];
+            $token = isset($req['token']) ? $req['token'] : null;
         } else {                            // anonymous session: no player identifier
             return;                         // RETURN login fail
         }
                                             // OK playerID
-        $player = new Player($pid, $this->log, TRUE);
+        $player = new Player($pid, self::$log, TRUE);
 
         if($openSession){
             return $player;
@@ -480,24 +480,24 @@ class Page {
             $id = $match[3];
             $html = $match[4];
             switch ($id){
-                case 'repost':    return $this->replicatePost($html, $req);                break;
-                case 'language':  return $this->replicateLanguages($html);                break;
-                case 'games':     return $this->replicateGames($html, $req);                break;
-                case 'venues':    return $this->replicateVenues($html);                    break;
-                case 'similarVenues': return $this->replicateSimilarVenues($html, $req);    break;
+                case 'repost':    return $this->replicatePost($html, $req);              break;
+                case 'language':  return $this->replicateLanguages($html);               break;
+                case 'games':     return $this->replicateGames($html, $req);             break;
+                case 'venues':    return $this->replicateVenues($html);                  break;
+                case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'keen':
                 case 'invitation':
                 case 'accepted':
                 case 'confirmed':
                 case 'feedback':
                 case 'cancelled':
-                case 'history':    return $this->replicateMatches($player, $html, $id);    break;
-                case 'available':  return $this->replicateAvailable($player, $html);        break;
-                case 'rivalEmail': return $this->replicateEmailCheck($player, $html);        break;
-                case 'familiar':   return $this->replicateFamiliar($player, $html);        break;
-                case 'ability':    return $this->replicateAbility($player, $html);        break;
-                case 'reckon':     return $this->replicateReckons($player, $html);        break;
-                case 'uploads':    return $this->replicateUploads($player, $html);        break;
+                case 'history':    return $this->replicateMatches($player, $html, $id);  break;
+                case 'available':  return $this->replicateAvailable($player, $html);     break;
+                case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
+                case 'familiar':   return $this->replicateFamiliar($player, $html);      break;
+                case 'ability':    return $this->replicateAbility($player, $html);       break;
+                case 'reckon':     return $this->replicateReckons($player, $html);       break;
+                case 'uploads':    return $this->replicateUploads($player, $html);       break;
                 default:           return '';
             }
         };
@@ -591,7 +591,7 @@ class Page {
         foreach($player->matchStatus($status) as $matchXML) {
             $match = new Match($player, $matchXML);
             $matchVars = $match->variables();
-            $vars = $playerVars + $matchVars + $this->icons;
+            $vars = $playerVars + $matchVars + self::$icons;
             $vars['venueLink'] = venueLink($match->vid(), $player, $match->game());
             $group .= $this->populate($html, $vars);
         }
@@ -609,12 +609,12 @@ class Page {
             $game = $avail['game'];
             $availVars = array(
                 'id'        => $avail['id'],
-                'game'      => $games["$game"],
+                'game'      => $games[$game],
                 'parity'    => $avail['parity'],
                 'weekSpan'  => weekSpan($avail),
-                'venueLink' => venueLink($avail->venue, $player, $game)
+                'venueLink' => VenuePage::($avail->venue)
             );
-            $vars = $playerVars + $availVars + $this->icons;
+            $vars = $playerVars + $availVars + self::$icons;
             $group .= $this->populate($html, $vars);
         }
         return $group;
@@ -650,7 +650,7 @@ class Page {
                 'game'      => $games["$game"],
                 'parity'    => parityStr($reckon['parity'])
             );
-            $vars = $playerVars + $reckonVars + $this->icons;
+            $vars = $playerVars + $reckonVars + selficons;
             $group .= $this->populate($html, $vars);
         }
         return $group;
@@ -673,7 +673,7 @@ class Page {
                 'game'      => $games["$game"],
                 'ability'   => $abilities["$ability"]
             );
-            $vars = $playerVars + $reckonVars + $this->icons;
+            $vars = $playerVars + $reckonVars + self::$icons;
             $group .= $this->populate($html, $vars);
         }
         return $group;
@@ -787,5 +787,7 @@ class Page {
     }
 
 }
+
+Page::initStatic();
 
 ?>

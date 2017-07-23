@@ -10,7 +10,7 @@ class LocatePage extends Page {
     private $repost;
     
 
-    public function __construct($template='construct'){
+    public function __construct($template='locate'){
         parent::__construct($template);
         
         $this->game = $this->req('game');
@@ -20,7 +20,7 @@ class LocatePage extends Page {
 
 
     public function serve(){
-        if (!$this->game != null){
+        if ($this->game == null){
             header("Location: ".QWIK_URL);
             return;
 	    }
@@ -33,18 +33,14 @@ class LocatePage extends Page {
 	    $vids = matchShortVenueID($this->venueDesc, $this->game);
 	    $matchCount = count($vids);
 	    if($matchCount == 1){
-	    	$this->req('vid', $vids[0]);
-	    	$query = http_build_query($this->req());
-	    	$repost = $this->repost;
-            header("location: ".QWIK_URL."/$repost?$query");
-		    return;
+	        $vid = $vids[0];
 	    }
 
-	    if($this->req('name') != null
-	    && $this->req('address') != null
-	    && $this->req('suburb') != null
-	    && $this->req('state') != null
-	    && $this->req('country') != null){
+	    if($this->req('name') !== null
+	    && $this->req('address') !== null
+	    && $this->req('suburb') !== null
+	    && $this->req('state') !== null
+	    && $this->req('country') !== null){
 	    	$vid = venueID(
 	    		$this->req('name'), 
 	    		$this->req('address'), 
@@ -52,16 +48,15 @@ class LocatePage extends Page {
             	$this->req('state'), 
             	$this->req('country')
 		    );
-	    	$xml = "<venue id='$vid'><game>$this->game</game></venue>";
-	    	$venue = new simplexmlelement($xml, LIBXML_NOENT);
-		    updateVenue($venue, $this->req());
+            $venue = new Venue($vid, $this->log(), TRUE);
+		}
 
+	    if ($vid !== null){
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
-	    	$repost = $this->repost;
+            $repost = $this->repost;
             header("location: ".QWIK_URL."/$repost?$query");
-            return;
-	    }
+       }
     }
 
 

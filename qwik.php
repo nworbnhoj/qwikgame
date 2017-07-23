@@ -828,7 +828,7 @@ function emailWelcome($email, $id, $token){
     $msg .= "<p>\n";
 
     qwikEmail($email, $subject, $msg, $id, $token);
-    logEmail('welcome', $id);
+    Page::logEmail('welcome', $id);
 }
 
 
@@ -922,7 +922,9 @@ $vid    String    Venue ID
 *******************************************************************************/
 function shortVenueID($vid){
     $address = explode('|', $vid);
-    return $address[0] . ' | ' . $address[2];
+    $name = isset($address[0]) ? $address[0] : '';
+    $place = isset($address[2]) ? $address[2] : '';
+    return "$name | $place";
 }
 
 
@@ -937,14 +939,14 @@ The Short Venue ID $svid is a non-unique human convenient way of referring to a
 Venue. This functions finds zero or more $vid that match the $svid
 *******************************************************************************/
 function matchShortVenueID($svid, $game){
-    $match = array();
+    $matchedVids = array();
     $vids =venues(strtolower($game));
     foreach($vids as $vid){
-        if($svid == shortVenueID($vid)){
-            $match[] = $vid;
+        if($svid === shortVenueID($vid)){
+            $matchedVids[] = $vid;
         }
     }
-    return $match;
+    return $matchedVids;
 }
 
 

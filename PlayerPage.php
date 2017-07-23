@@ -28,7 +28,7 @@ class PlayerPage extends Page {
 
         $vid = $this->req('vid');
         if(isset($vid)){
-            $this->venue = new Venue($vid);
+            $this->venue = new Venue($vid, $this->log());
         }
 
         if (isset($this->venue)){
@@ -54,10 +54,10 @@ class PlayerPage extends Page {
         $player = $this->player();
         switch ($qwik) {
             case "available":
-                $this->qwikAvailable($player, $req, $venue);
+                $this->qwikAvailable($player, $req, $this->venue);
                 break;
             case "keen":
-                $this->qwikKeen($player, $req, $venue);
+                $this->qwikKeen($player, $req, $this->venue);
                 break;
             case 'accept':
                 $this->qwikAccept($player, $req);
@@ -87,7 +87,7 @@ class PlayerPage extends Page {
                 $this->qwikMsg($player, $req);
                 break;
             case 'login':
-                $email = $page->req('email');
+                $email = $this->req('email');
                 if(isset($email)){
                     if($email != $player->email()){
                         $player->email($email);
@@ -117,7 +117,7 @@ class PlayerPage extends Page {
         $game = $this->game;
 
         $rnd = mt_rand(1,8);
-        $message = $player->email() != null ?
+        $message = $player->email() !== null ?
             "<t>Tip$rnd</t>" :
             'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
 
@@ -125,12 +125,12 @@ class PlayerPage extends Page {
         $playerNick = $player->nick();
         $historyCount = count($player->matchQuery("match[@status='history']"));
 
-        $vars = parent::variables($player);
+        $vars = parent::variables();
 
         $vars['vid']           = isset($venue) ? $venue->id() : '';
         $vars['venue']         = isset($venue) ? $venue->name() : '';
         $vars['message']       = $message;
-        $vars['playerName']    = is_null($playerNick) ? $player->email() : $playerNick;
+        $vars['playerName']    = empty($playerNick) ? $player->email() : $playerNick;
         $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
         $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
         $vars['hourRows']      = $this->hourRows();
@@ -347,7 +347,7 @@ function hourRows(){
         $bit = 1;
         $hourRows .= "$tabs<tr>\n";
         $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
-        $hourRows .= "$tabs\t<th>$day<    h>\n";
+        $hourRows .= "$tabs\t<th>$day</th>\n";
         for($hr24=0; $hr24<=23; $hr24++){
             if (($hr24 < 6) | ($hr24 > 20)){
                 $hidden = 'hidden';
@@ -359,7 +359,7 @@ function hourRows(){
             } else {
                 $hr12 = $hr24-12;
             }
-            $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12<    d>\n";
+            $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12</td>\n";
             $bit = $bit * 2;
         }
         $hourRows .= "$tabs<    r>\n";

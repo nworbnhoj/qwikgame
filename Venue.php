@@ -137,6 +137,19 @@ class Venue {
     }
 
 
+    /*******************************************************************************
+    Returns the Name & Suburb of a Venue as a human convenient reference.
+
+    $vid    String    Venue ID
+    *******************************************************************************/
+    static function svid($vid){
+        $address = explode('|', $vid);
+        $name = isset($address[0]) ? $address[0] : '';
+        $place = isset($address[2]) ? $address[2] : '';
+        return "$name | $place";
+    }
+
+
     public function lat(){
         return isset($this->xml['lat']) ? $this->xml['lat'] : '';
     }
@@ -353,6 +366,20 @@ class Venue {
         $div .= "</div>\n";
         return $div;
     }
+    
+    
+    
+    function venueRemoveGame($game){
+        $elements = $this->xpath("/venue[game='$game']");
+
+        foreach($elements as $element){
+            removeElement($element);
+        }
+        $vid = $this->id();
+        deleteFile("venue/$game/$vid.xml");
+    }
+
+
 
 
 }

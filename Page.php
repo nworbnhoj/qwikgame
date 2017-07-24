@@ -174,6 +174,57 @@ class Page {
 
 
 
+/********************************************************************************
+Return the $data string with all but a small set of safe characters removed
+
+$data    String    An arbitrary string
+
+Safe character set:
+    abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
+    
+********************************************************************************/
+function scrub($data){
+    if (is_array($data)){
+        foreach($data as $key => $val){
+            $data[$key] = $this->clip($key, scrub($val));
+        }
+    } else {
+        $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);
+    }
+    return $data;
+}
+
+
+
+// An array of maximum string lengths.
+// Used by: clip()
+$clip = array(
+    'address'     => 200,
+    'description' => 200,
+    'filename'    => 50,
+    'nickname'    => 20,
+    'note'        => 2000,
+    'region'      => 50,
+    'state'       => 50,
+    'suburb'      => 50,
+    'tz'          => 100,
+    'venue'       => 150
+);
+
+/********************************************************************************
+Returns $val truncated to a maximum length specified in the global $clip array
+
+$key    String    the $key of the global $clip array specifying the truncated length
+$val    String    A string to be truncated according to global $clip array
+********************************************************************************/
+function clip($key, $val){
+    global $clip;
+    return array_key_exists($key, $clip) ? substr($val, 0, $clip[$key]) : $val ;
+}
+
+
+
+
 
     /********************************************************************************
     Return the $req data iff ALL variables are valid, or FALSE otherwise
@@ -188,7 +239,7 @@ class Page {
             return FALSE;
         }
 
-        $req = scrub($req);        // remove all but a small set of safe characters.
+        $req = $this->scrub($req);        // remove all but a small set of safe characters.
 
         $ability_opt = array('min_range' => 0, 'max_range' => 4);
         $parity_opt = array('min_range' => -2, 'max_range' => 2);
@@ -327,7 +378,7 @@ class Page {
             $token = $_COOKIE['token'];
         } elseif (isset($req['email'])){    // check for and email address in the param
             $email = $req['email'];
-            $pid = anonID($email);          // and derive the pid from the email
+            $pid = Player::anonID($email);          // and derive the pid from the email
             $token = isset($req['token']) ? $req['token'] : null;
         } else {                            // anonymous session: no player identifier
             return;                         // RETURN login fail
@@ -358,13 +409,13 @@ class Page {
             setcookie("token", $token, time() + Player::DAY, "/");
             $_SESSION['pid'] = $pid;
             $_SESSION['lang'] = $player->lang();
-            emailWelcome($email, $pid, $token);
+            $this->emailWelcome($email, $pid, $token);
             return $player;
         }
 
         if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
             $this->logMsg("login: recover account " . snip($pid));                 // todo rate limit
-            emailLogin($email, $pid, $player->token(Player::DAY));
+            $this->emailLogin($email, $pid, $player->token(Player::DAY));
         }
     }
 
@@ -550,7 +601,7 @@ class Page {
         return "replicateVenues() has not been implemented";
     echo "<br>REPLICATEVENUES<br>$html";
         $group = '';
-        $venueIDs = listVenues('squash'); //$game);
+        $venueIDs = $this->listVenues('squash'); //$game);
         foreach($venueIDs as $vid => $playerCount){
     echo "<br>$vid";
             $vars = array(
@@ -568,8 +619,8 @@ class Page {
         $group = '';
         $vid = $req['vid'];
         $game = $req['game'];
-    //    $similar = similarVenues($req['venue'], $req['game']);
-        $similar = array_slice(similarVenues($req['venue']), 0, 10);
+    //    $similar = $this->similarVenues($req['venue'], $req['game']);
+        $similar = array_slice($this->similarVenues($req['venue']), 0, 10);
         foreach($similar as $vid){
             $venue = readVenueXML($vid);
             $players = isset($venue) ? $venue->xpath("player") : array() ;
@@ -592,7 +643,7 @@ class Page {
             $match = new Match($player, $matchXML);
             $matchVars = $match->variables();
             $vars = $playerVars + $matchVars + self::$icons;
-            $vars['venueLink'] = venueLink($match->vid(), $player, $match->game());
+            $vars['venueLink'] = VenuePage::venueLink($match->vid());
             $group .= $this->populate($html, $vars);
         }
         return $group;
@@ -611,8 +662,8 @@ class Page {
                 'id'        => $avail['id'],
                 'game'      => $games[$game],
                 'parity'    => $avail['parity'],
-                'weekSpan'  => weekSpan($avail),
-                'venueLink' => VenuePage::($avail->venue)
+                'weekSpan'  => $this->weekSpan($avail),
+                'venueLink' => VenuePage::venueLink($avail->venue)
             );
             $vars = $playerVars + $availVars + self::$icons;
             $group .= $this->populate($html, $vars);
@@ -698,7 +749,7 @@ class Page {
 
     private function replicateReckons($player, $html){
         if(!$player){ return; }
-        $regions = regions($player);
+        $regions = $this->regions($player);
         $group = '';
         foreach($regions as $region){
             $vars = array(
@@ -761,7 +812,7 @@ class Page {
         $vids =venues($game);
         $datalist = "<datalist id='venue-$game'>\n";
         foreach($vids as $vid){
-            $svid = shortVenueID($vid);
+            $svid = Venue::svid($vid);
             $datalist .= "\t<option value='$svid'>\n";
         }
         $datalist .= "</datalist>\n";
@@ -785,6 +836,156 @@ class Page {
         }
         return $options;
     }
+    
+    
+    public function regions($player){
+        $available = $player->available();
+        $countries = array();
+        $states = array();
+        $towns = array();
+        foreach($available as $avail){
+            $venueID = $avail->venue;
+            $reg = explode('|', $venueID);
+            $last = count($reg);
+            $countries[] = $reg[$last-1];
+            $states[] = $reg[$last-2];
+            $towns[] = $reg[$last-3];
+        }
+
+        $countries = array_unique($countries);
+        $states = array_unique($states);
+        $towns = array_unique($towns);
+
+        sort($countries);
+        sort($states);
+        sort($towns);
+
+        return array_merge($countries, $states, $towns);
+    }
+
+
+    function countryOptions($country, $tabs=''){
+        global $countries;
+        if(!isset($country)){
+            $country = $this->geolocate('countryCode');
+        }
+        $options = '';
+        foreach($countries as $val => $txt){
+            $selected = ($val == $country) ? " selected" : '';
+            $options .= "$tabs<option value='$val'$selected>$txt</option>\n";
+        }
+        return $options;
+    }
+    
+    
+    private function weekSpan($xml){
+        $html = "";
+        $hrs = $xml->xpath("hrs");
+        foreach($hrs as $hr){
+            $html .= daySpan($hr, $hr['day']);
+        }
+        return $html;
+    }
+    
+    
+    
+    function similarVenues($description, $game){
+        $similar = array();
+        $existingVenues = venues($game);
+        $words = explode(" ", $description, 5);
+        array_walk($words, 'trim_value'); 
+    
+        foreach($existingVenues as $venueID){
+            $venueid = strtolower($venueID);
+            $hits = 0;
+            foreach($words as $word){
+                $hits += substr_count($venueid, strtolower($word));
+            }
+            if($hits > 0){
+                $similar[$venueID] = $hits;
+            }
+        }
+        arsort($similar);
+        return array_keys($similar);
+    }
+
+
+    function listVenues($game){
+    //echo "<br>LISTVENUES<br>";
+        $venues = venues($game);
+        $sorted = array();
+        foreach($venues as $vid){
+            $venue = readVenueXML($vid);
+            if(isset($venue)){
+                $players = $venue->xpath('player');
+                $sorted[$vid] = count($players);
+            }
+        }
+        arsort($sorted);
+        return $sorted;
+    }
+    
+
+
+
+    public function geolocate($key){
+        global $geo;
+        if(!isset($geo)){
+            $geo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+        }
+        return $geo["geoplugin_$key"];
+    }
+
+
+
+    private function emailWelcome($email, $id, $token){
+        $authURL = $this->authURL($email, $token);
+
+        $subject = "Welcome to qwikgame.org";
+
+        $msg  = "<p>\n";
+        $msg .= "\tPlease click this link to <b>activate</b> your qwikgame account:<br>\n";
+        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\t\t\t</p>\n";
+        $msg .= "\t\t\t<p>\n";
+        $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
+        $msg .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
+        $msg .= "\t\t\tTerms & Conditions</a>";
+        $msg .= "</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
+        $msg .= "<p>\n";
+
+        Player::qwikEmail($email, $subject, $msg, $id, $token);
+        self::logEmail('welcome', $id);
+    }
+
+
+    private function emailLogin($email, $id, $token){
+        $authURL = $this->authURL($email, $token);
+
+        $subject = 'qwikgame.org login link';
+
+        $msg  = "<p>\n";
+        $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
+        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\t\t\t</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
+        $msg .= "<p>\n";
+
+        Player::qwikEmail($email, $subject, $msg, $id, $token);
+        self::logEmail('login', $id);
+    }
+
+
+
+    function authURL($email, $token) {    
+        return QWIK_URL."/player.php?qwik=login&email=$email&token=$token";
+    }
+
+
+
 
 }
 

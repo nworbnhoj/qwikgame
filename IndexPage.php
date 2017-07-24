@@ -28,7 +28,7 @@ class IndexPage extends Page {
 		&& $this->req('venue') !== null
 		&& $this->req('game') !== null
 		&& isset($email)){
-			$pid = anonID($email);
+			$pid = Player::anonID($email);
 			$anon = new Player($pid, $log, TRUE);
 			if(isset($anon)){
 				$token = $anon->token(2*Player::DAY);
@@ -75,7 +75,7 @@ class IndexPage extends Page {
         $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
         $msg .= "<p>\n";
 
-        qwikEmail($email, $subject, $msg, $id, $token);
+        Player::qwikEmail($email, $subject, $msg, $id, $token);
         $this->logEmail('login', $id);
     }
 

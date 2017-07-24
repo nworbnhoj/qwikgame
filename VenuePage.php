@@ -46,7 +46,7 @@ class VenuePage extends Page {
         $game = $this->req('game');
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
-        $venueState = (empty($this->venue->state())) ? geolocate('region') : $this->venue->state();
+        $venueState = (empty($this->venue->state())) ? $this->geolocate('region') : $this->venue->state();
         $venueCountry = $this->venue->country();
         $backLink = "<a href='".QWIK_URL;
         $backlink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
@@ -58,13 +58,13 @@ class VenuePage extends Page {
         $variables['message']       = '';
         $variables['displayHidden'] = '';
         $variables['editHidden']    = 'hidden';
-        $variables['repostInputs']  = repostIns($repost, "\t\t\t");
+        $variables['repostInputs']  = $this->repostIns($repost, "\t\t\t");
         $variables['venueName']     = $venueName;
         $variables['venueAddress']  = $this->venue->address();
         $variables['venueSuburb']   = $this->venue->suburb();
         $variables['venueState']    = $venueState;
         $variables['venueCountry']  = $venueCountry;
-        $variables['countryOptions']= countryOptions($venueCountry, "\t\t\t\t\t");
+        $variables['countryOptions']= $this->countryOptions($venueCountry, "\t\t\t\t\t");
         $variables['venuePhone']    = $this->venue->phone();
         $variables['venueURL']      = $this->venue->url();
         $variables['venueTZ']       = $this->venue->tz();
@@ -95,6 +95,29 @@ class VenuePage extends Page {
         $words[0] = "<b>$first</b>";
         return implode(' ', $words);
     }
+    
+    
+    
+
+
+    private function repostIns($repost, $tabs=''){
+    //echo "<br>REPOSTINPUTS<br>";
+        $braces = '[]';
+        $inputs = '';
+        foreach($repost as $key => $val){
+            if (is_array($val)){
+                foreach($val as $v){
+                    $v = reclaw($v);
+                    $inputs .= "$tabs<input type='hidden' name='$key$braces' value='$v'>\n";
+                }
+            } else {
+                $val = reclaw($val);
+                $inputs .= "$tabs<input type='hidden' name='$key' value='$val'>\n";
+            }
+        }
+        return $inputs;
+    }
+
 
 
 }

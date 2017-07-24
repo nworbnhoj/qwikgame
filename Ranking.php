@@ -268,6 +268,17 @@ class Ranking {
         $this->status('uploaded');
         $this->save();
     }
+    
+    
+    function removePlayer($id){
+    //echo "REMOVEPLAYER $id<br>";
+        $path = 'player';
+        $filename = "$id.xml";
+        return deleteFile("$path/$filename");
+    }
+
+
+
 
 
 }

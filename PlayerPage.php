@@ -192,7 +192,7 @@ function qwikKeen($player, $req, $venue){
         $emails = $req['invite'];
         if (is_array($emails)){
             foreach($emails as $email){
-                $familiarRids[] = anonID($email);
+                $familiarRids[] = Player::anonID($email);
             }
         }
     }
@@ -283,7 +283,7 @@ function qwikFeedback($player, $request){
 
         if ($rival->exists()){
             $rival->updateRep($request['rep']);
-            updateCongCert($player, $request['id'], $rival);
+            $this->updateCongCert($player, $request['id'], $rival);
             $rival->save();
         }
     } else {
@@ -312,7 +312,7 @@ function qwikAccount($player, $request){
     if(isset($request['email'])){
         $email = $request['email'];
         if ($email != $player->email()){
-            emailChange($email, $player->id(), $player->token(Player::DAY));
+            $this->emailChange($email, $player->id(), $player->token(Player::DAY));
         }
     }
 
@@ -387,14 +387,89 @@ function familiarCheckboxes($player){
 
 
 
-function regionOptions($player, $tabs){
-    $regions = regions($player);
-    $options = '';
-    foreach($regions as $region){
-           $options .= "$tabs<option value='$region'>$region</option>\n";
+    function regionOptions($player, $tabs){
+        $regions = $this->regions($player);
+        $options = '';
+        foreach($regions as $region){
+               $options .= "$tabs<option value='$region'>$region</option>\n";
+        }
+        return $options;
     }
-    return $options;
-}
+
+
+
+
+    /*******************************************************************************
+
+    qwikgame attempts to estimate the PARITY of possible RIVALs prior to each MATCH.
+
+    After each MATCH both PLAYERSs rate the PARITY of their RIVAL's ability:
+        +2  much stronger
+        +1  stronger
+         0  well matched
+        -1  weaker
+        -2  much weaker
+    There may be DISPARITY between the two ratings. 
+
+    A player's RELYability measures their consistency in rating their RIVALs.
+    There can be DISPARITY between two Players rating of each other. DISPARITY causes
+    a Players RELYability to drop, but the PLayer with the lower historical RELYability
+    will suffer most from any DISPARITY (on the assumption that they are the probable
+    cause)
+
+    The CONFIDENCE in each PARITY rating is used to resolve DISPARITY during estimates.
+    Each PARITY rating has a CONFIDENCE which is high when two rivals with 
+    high CONGRUENCE rate each other with no DISPARITY (and vice versa).
+
+
+    // refine CONGRUENCE and CERTAINTY when RIVAL Feedback also exists
+    ********************************************************************************/
+
+    function updateCongCert($player, $matchID, $rival){
+       $pOutcome = $player->outcome($matchID);
+        $rOutcome = $rival->outcome($matchID);
+
+        if (null !== $pOutcome && null !== $rOutcome){
+
+            $pParity = intval($pOutcome['parity']);
+            $rParity = intval($rOutcome['parity']);
+
+            $pRely = $player->rely();
+            $rRely = $rival->rely();
+
+            $disparity = abs($rParity + $pParity);    // note '+' sign & range [0,4]
+            $player->rely(($disparity * $rRely * $rRely) / 16);
+            $rival->rely(($disparity * $pRely * $pRely) / 16);
+
+            $congruence = 4 - $disparity;             // range [0,4]
+            $player->outcome($matchID, ($pRely * $congruence) / 4);
+            $rival->outcome($matchID, ($rRely * $congruence) / 4);
+        }
+    }
+
+
+
+
+
+    private function emailChange($email, $id, $token){
+        $subject = 'Confirm email change for qwikgame.org';
+
+        $msg  = "<p>\n";
+        $msg .= "\tPlease click this link to change your qwikgame email address to $email:<br>\n";
+        $msg .= "\t<a href='".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
+        $msg .= "\t\t\t</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
+        $msg .= "<p>\n";
+
+        Player::qwikEmail($email, $subject, $msg, $id, $token);
+        self::logEmail('email', $id);
+    }
+
+
+
+
+
 
 
 }

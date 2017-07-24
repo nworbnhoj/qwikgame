@@ -319,7 +319,7 @@ class Match {
                 $vars['rivalCount'] = $this->rivalCount();
                 break;
             case 'invitation':
-                $vars['hour'] = hourSelect(hours($hrs));
+                $vars['hour'] = $this->hourSelect(hours($hrs));
                 break;
             case 'history':
                 $outcome = $this->player->outcome($matchID);
@@ -362,6 +362,27 @@ class Match {
 
     public function day(){
         return day($this->tz(), $this->date());
+    }
+    
+    
+    private function hourSelect($hrs){
+        global $clock24hr;
+        if (count($hrs) == 1){
+            $hr = $hrs[0];
+            $hourbit = pow(2, $hr);
+            $hour = hr($hr);
+            $html = "$hour<input type='hidden' name='hour' value='$hourbit'>";
+        } else {
+            $html = "<select name='hour' required>\n";
+            $html .= "<option selected disabled>time</option>";
+            foreach ($hrs as $hr){
+                $hourbit = pow(2, $hr);     // $hourbit =(2**$hr);    // php 5.6
+                $hour = hr($hr);
+                $html .= "\t<option value='$hourbit'>$hour</option>\n";
+            }
+            $html .= "</select>\n";
+        }
+        return $html;
     }
 
 

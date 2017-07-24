@@ -95,6 +95,23 @@ class Player {
     public function exists(){
         return !is_null($this->xml);
     }
+    
+    
+    /*******************************************************************************
+    Returns the sha256 hash of the $email address provided
+
+    $email    String    an email address
+
+    The unique player ID is chosen by taking the sha256 hash of the email address. 
+    This has a number of advantages:
+    - The player ID will be unique because the email address will be unique
+    - Qwikgame can accept and use a sha256 hash to store anonymous player data
+    - A new email address can be linked to existing anonymous player data
+
+    *******************************************************************************/
+    static function anonID($email){
+        return hash('sha256', $email);
+    }
 
 
     public function id(){
@@ -161,7 +178,7 @@ class Player {
             } else {
                 $oldEmail = $this->xml['email'][0];
                 if ($oldEmail != $newEmail) {
-                    $newID = anonID($newEmail);
+                    $newID = Player::anonID($newEmail);
                     if (false){ // if newID already exists then log and abort
                         logMsg("abort change email from $oldEmail to $newEmail.");
                     } else {
@@ -176,7 +193,7 @@ class Player {
 
     private function changeEmail($newEmail){
         $preID = $this->id();
-        $newID = anonID($newEmail);
+        $newID = Player::anonID($newEmail);
         removeElement($this->xml['email']);
         $this->xml->addChild('email', $newEmail);
         $this->id = $newID;
@@ -192,10 +209,29 @@ class Player {
 
     public function token($term){
         $token = newToken(10);
-        $nekot = $this->xml->addChild('nekot', nekot($token));
+        $nekot = $this->xml->addChild('nekot', $this->nekot($token));
         $nekot->addAttribute('exp', time() + $term);
         return $token;
     }
+
+
+    /*******************************************************************************
+    Returns the sha256 hash of the $token provided
+
+    $token    String    an token
+
+    When it is necessary to send a token to a user (e.g. via email as a proof of 
+    identity) then only the sha256 hash of the token is stored by qwikgame.
+    This has a number of advantages:
+    - the sha256 hash can be computed on presented tokens and validated against the 
+    stored hash
+    - if the system is compromised then the user held token remain secure.
+    *******************************************************************************/
+    function nekot($token){
+        return hash('sha256', $token);
+    }
+
+
 
 
     public function available(){
@@ -265,7 +301,7 @@ class Player {
 
 
     public function isValidToken($token){
-        $nekot = nekot($token);
+        $nekot = $this->nekot($token);
         return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
     }
 
@@ -345,7 +381,7 @@ class Player {
 ////////// RECKON ///////////////////////////////////////
 
     public function familiar($game, $rivalEmail, $parity, $log){
-        $rid = anonID($rivalEmail);
+        $rid = Player::anonID($rivalEmail);
 
         $reckon = $this->xml->addChild('reckon', '');
         $reckon->addAttribute('rival', $rid);
@@ -531,7 +567,7 @@ class Player {
         $msg .= "\tand <b>accept</b> if you would like to play.\n";
         $msg .= "</p>\n";
 
-        qwikEmail($email, $subject, $msg, $pid, $token);
+        self::qwikEmail($email, $subject, $msg, $pid, $token);
         logEmail('invite', $pid, $game, $venueName);
     }
 
@@ -558,7 +594,7 @@ class Player {
         $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
         $msg .= "</p>\n";
 
-        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
         logEmail('confirm', $pid, $game, $venueName, $time);
     }
 
@@ -573,7 +609,7 @@ class Player {
         $gameName = $games["$game"];
         $pid = $this->id();
         $token = $this->token(2*Player::DAY);
-        $venueName = shortVenueID($match->venue());
+        $venueName = Venue::svid($match->venue());
         $url = loginURL(self::DAY);
 
         $subject = 'Message from qwikgame rival';
@@ -584,7 +620,7 @@ class Player {
         $msg .= "Please <a href='$url'>login</a> to reply.";
         $msg .= "</p>\n";
 
-        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
     }
 
 
@@ -603,7 +639,7 @@ class Player {
         $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
         $msg .= "</p>\n";
 
-        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
         logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
@@ -617,10 +653,47 @@ class Player {
         $pid = $this->id();
         $token = $this->token(self::YEAR);
 
-        qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
         logEmail('quit', $pid);
     }
 
+
+
+
+    static function qwikEmail($to, $subject, $msg, $id, $token){
+        $headers = array();
+        $headers[] = "From: facilitator@qwikgame.org";
+        $headers[] = "MIME-Version: 1.0";
+        $headers[] = "Content-type: text/html; charset=UTF-8";
+
+        $body  = "<html>\n";
+        $body .= "\t<head>\n";
+        $body .= "\t\t<meta charset='UTF-8'>\n";
+        $body .= "\t\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n";
+        $body .= "\t\t<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>";
+        $body .= "\t\t<link rel='stylesheet' type='text/css' href='qwik.css'>";
+        $body .= "\t\t<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>";
+        $body .= "\t</head>\n";
+        $body .= "\t<body>\n";
+
+        $body .= "$msg";
+
+        $body .= "\t\t<br><hr>\n";
+        $body .= "\t\t<p>\n";
+        $body .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
+        $body .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
+        $body .= "\t\t\tTerms & Conditions</a>";
+        $body .= "\t\t</p>\n";
+        $body .= "\t\t</p>\n";
+        $body .= "\t\t\tFind someone to play your favourite game at a time and place that suits you.\n";
+        $body .= "\t\t</p>\n";
+        $body .= "\t</body>\n";
+        $body .= "</html>\n";
+
+        if (! mail($to, $subject, $body, implode("\r\n", $headers))){
+            header("Location: error.php?msg=<b>The email was unable to be sent");
+        }
+    }
 
 
 

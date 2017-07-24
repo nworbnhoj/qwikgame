@@ -128,7 +128,7 @@
     foreach($vids as $vid){
         $venue = readVenueXML($vid);
 		if (isset($venue)){
-			$svid = shortVenueID($vid);
+			$svid = Venue::svid($vid);
 			$players = $venue->xpath("player");
 			$playerCount = count($players);
 			$ids='';

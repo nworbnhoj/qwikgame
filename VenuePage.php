@@ -51,67 +51,47 @@ class VenuePage extends Page {
         $backLink = "<a href='".QWIK_URL;
         $backlink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
-        $variables = parent::variables();
+        $vars = parent::variables();
         
-        $variables['vid']           = $this->venue->id();
-        $variables['playerCount']   = $this->venue->playerCount();
-        $variables['message']       = '';
-        $variables['displayHidden'] = '';
-        $variables['editHidden']    = 'hidden';
-        $variables['repostInputs']  = $this->repostIns($repost, "\t\t\t");
-        $variables['venueName']     = $venueName;
-        $variables['venueAddress']  = $this->venue->address();
-        $variables['venueSuburb']   = $this->venue->suburb();
-        $variables['venueState']    = $venueState;
-        $variables['venueCountry']  = $venueCountry;
-        $variables['countryOptions']= $this->countryOptions($venueCountry, "\t\t\t\t\t");
-        $variables['venuePhone']    = $this->venue->phone();
-        $variables['venueURL']      = $this->venue->url();
-        $variables['venueTZ']       = $this->venue->tz();
-        $variables['venueLat']      = $this->venue->lat();
-        $variables['venueLng']      = $this->venue->lng();
-        $variables['venueNote']     = $this->venue->note();
-        $variables['venueRevertDiv']= $this->venue->revertDiv();
-        $variables['backLink']      = $backLink;
-        $variables['venueUrlLink']  = "<a href='$venueUrl'><t>homepage</t></a>";
+        $vars['vid']           = $this->venue->id();
+        $vars['playerCount']   = $this->venue->playerCount();
+        $vars['message']       = '';
+        $vars['displayHidden'] = '';
+        $vars['editHidden']    = 'hidden';
+        $vars['repostInputs']  = $this->repostInputs($repost, "\t\t\t");
+        $vars['venueName']     = $venueName;
+        $vars['venueAddress']  = $this->venue->address();
+        $vars['venueSuburb']   = $this->venue->suburb();
+        $vars['venueState']    = $venueState;
+        $vars['venueCountry']  = $venueCountry;
+        $vars['countryOptions']= $this->countryOptions($venueCountry, "\t\t\t\t\t");
+        $vars['venuePhone']    = $this->venue->phone();
+        $vars['venueURL']      = $this->venue->url();
+        $vars['venueTZ']       = $this->venue->tz();
+        $vars['venueLat']      = $this->venue->lat();
+        $vars['venueLng']      = $this->venue->lng();
+        $vars['venueNote']     = $this->venue->note();
+        $vars['venueRevertDiv']= $this->venue->revertDiv();
+        $vars['backLink']      = $backLink;
+        $vars['venueUrlLink']  = "<a href='$venueUrl'><t>homepage</t></a>";
         
-	    return $variables;
-    }
-
-
-    static function venueLink($vid){
-        $name = explode("|", $vid)[0];
-        $boldName = $this->firstWordBold($name);
-        $vid = $this->vid();
-        $url = QWIK_URL."/venue.php?vid=$vid";
-        $link = "<a href='$url'>$boldName</a>";
-        return $link;
-    }
-
-
-    private function firstWordBold($phrase){
-        $words = explode(' ', $phrase);
-        $first = $words[0];
-        $words[0] = "<b>$first</b>";
-        return implode(' ', $words);
+	    return $vars;
     }
     
-    
-    
 
 
-    private function repostIns($repost, $tabs=''){
+    private function repostInputs($repost, $tabs=''){
     //echo "<br>REPOSTINPUTS<br>";
         $braces = '[]';
         $inputs = '';
         foreach($repost as $key => $val){
             if (is_array($val)){
                 foreach($val as $v){
-                    $v = reclaw($v);
+                //    $v = reclaw($v);
                     $inputs .= "$tabs<input type='hidden' name='$key$braces' value='$v'>\n";
                 }
             } else {
-                $val = reclaw($val);
+                //$val = reclaw($val);
                 $inputs .= "$tabs<input type='hidden' name='$key' value='$val'>\n";
             }
         }

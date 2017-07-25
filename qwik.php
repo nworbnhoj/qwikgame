@@ -201,34 +201,6 @@ function tzDateTime($str='now', $tz){
 ////////// VALIDATE ////////////////////////////////////////
 
 
-# SECURITY escape all parameters to prevent malicious code insertion
-# http://au.php.net/manual/en/function.htmlentities.php
-function declaw($data){
-    if (is_array($data)){
-        foreach($data as $key => $val){
-            $data[$key] = declaw($val);
-        }
-    } else {
-        $data = htmlentities(trim($data), ENT_QUOTES | ENT_HTML5, "UTF-8");
-    }
-    return $data;
-}
-
-
-# SECURITY escape all parameters to prevent malicious code insertion
-# http://au.php.net/manual/en/function.htmlentities.php
-function reclaw($data){
-    if (is_array($data)){
-        foreach($data as $key => $val){
-            $data[$key] = reclaw($val);
-        }
-    } else {
-        $data = html_entity_decode($data, ENT_QUOTES | ENT_HTML5);
-    }
-    return $data;
-}
-
-
 
 
 /********************************************************************************
@@ -312,7 +284,6 @@ function hours($bits){
 }
 
 
-
 function addHoursXML($element, $request, $day){
     $hourBits = hours2bits($request, $day);
     if ($hourBits > 0){
@@ -336,8 +307,6 @@ function day($tz, $dateStr){
 }
 
 
-
-
 function hr($hr){
     global $clock24hr;
     $apm = ':00';
@@ -355,14 +324,9 @@ function hr($hr){
 }
 
 
-
-
 function snip($str){
     return substr($str, 0, 4);
 }
-
-
-
 
 
 
@@ -394,8 +358,6 @@ function isXML($xml){
 }
 
 
-
-
 function deleteFile($file){
 //echo "<br>DELETEFILE $file<br>";
 //    $fileName = realpath("$file");
@@ -408,8 +370,6 @@ function deleteFile($file){
 }
 
 
-
-
 function lockXML($xml, $token){
     $nekot = hash('sha256', $token);
     if (isset($token)){
@@ -420,7 +380,6 @@ function lockXML($xml, $token){
         }
     }
 }
-
 
 
 function unlockXML($xml, $token){

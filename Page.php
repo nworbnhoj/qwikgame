@@ -2,6 +2,7 @@
 
 require_once 'qwik.php';
 require_once 'logging.php';
+require_once 'Defend.php';
 
 
 class Page {
@@ -17,14 +18,9 @@ class Page {
 
 	public function __construct($template='index'){	    
 	    $this->template = $template;
-
-        $this->req = $this->validate($_POST);
-        if (!$this->req){
-            $this->req = $this->validate($_GET);
-        }
-        if (!$this->req) {
-            $this->req = array();
-        }
+       
+        $defend = new Defend();
+        $this->req = $defend->request();
 
         $this->logReq($this->req);
         $this->player = $this->login($this->req);
@@ -174,187 +170,7 @@ class Page {
 
 
 
-/********************************************************************************
-Return the $data string with all but a small set of safe characters removed
 
-$data    String    An arbitrary string
-
-Safe character set:
-    abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
-    
-********************************************************************************/
-function scrub($data){
-    if (is_array($data)){
-        foreach($data as $key => $val){
-            $data[$key] = $this->clip($key, scrub($val));
-        }
-    } else {
-        $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);
-    }
-    return $data;
-}
-
-
-
-// An array of maximum string lengths.
-// Used by: clip()
-$clip = array(
-    'address'     => 200,
-    'description' => 200,
-    'filename'    => 50,
-    'nickname'    => 20,
-    'note'        => 2000,
-    'region'      => 50,
-    'state'       => 50,
-    'suburb'      => 50,
-    'tz'          => 100,
-    'venue'       => 150
-);
-
-/********************************************************************************
-Returns $val truncated to a maximum length specified in the global $clip array
-
-$key    String    the $key of the global $clip array specifying the truncated length
-$val    String    A string to be truncated according to global $clip array
-********************************************************************************/
-function clip($key, $val){
-    global $clip;
-    return array_key_exists($key, $clip) ? substr($val, 0, $clip[$key]) : $val ;
-}
-
-
-
-
-
-    /********************************************************************************
-    Return the $req data iff ALL variables are valid, or FALSE otherwise
-
-    $req    ArrayMap    url parameters from post&get
-    ********************************************************************************/
-    private function validate($req){
-    //echo "<br>VALIDATE<br>";
-    //error_reporting(E_ALL | E_STRICT);
-
-        if(count($req) == 0){
-            return FALSE;
-        }
-
-        $req = $this->scrub($req);        // remove all but a small set of safe characters.
-
-        $ability_opt = array('min_range' => 0, 'max_range' => 4);
-        $parity_opt = array('min_range' => -2, 'max_range' => 2);
-        $rep_opt = array('min_range' => -1, 'max_range' => 1);
-        $hrs_opt = array('min_range' => 0, 'max_range' => 16777215);
-
-        $args = array(
-            'smtwtfs'  => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'address'  => FILTER_DEFAULT,
-            'ability'  => array('filter'=>FILTER_VALIDATE_INT, 'options' => $ability_opt),
-            'account'  => FILTER_DEFAULT,
-            'country'  => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateCountry')),
-            'email'    => FILTER_VALIDATE_EMAIL,
-            'Fri'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'filename' => FILTER_DEFAULT,
-            'game'     => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateGame')),
-            'id'       => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateID')),
-            'invite'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validataInvite')),
-            'Mon'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'msg'      => FILTER_DEFAULT,
-            'name'     => FILTER_DEFAULT,
-            'nickname' => FILTER_DEFAULT,
-            'parity'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateParity')),
-            'phone'    => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validatePhone')),
-            'pid'      => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validatePID')),
-            'qwik'     => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateQwik')),
-            'Sat'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'state'    => FILTER_DEFAULT,
-            'suburb'   => FILTER_DEFAULT,
-            'Sun'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'Thu'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'time'     => FILTER_DEFAULT,
-            'today'    => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'token'    => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateToken')),
-            'tomorrow' => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'Tue'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt),
-            'tz'       => FILTER_DEFAULT,
-            'region'   => FILTER_DEFAULT,
-            'rep'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $rep_opt),
-            'repost'   => array('filter'=>FILTER_CALLBACK, 'options' => array($this,'validateRepost')),
-            'rival'    => FILTER_VALIDATE_EMAIL,
-            'title'    => FILTER_DEFAULT,
-    //        'url'        => FILTER_VALIDATE_URL,
-            'url'      => FILTER_DEFAULT,
-            'venue'    => FILTER_DEFAULT,
-            'Wed'      => array('filter'=>FILTER_VALIDATE_INT, 'options' => $hrs_opt)
-        );
-
-        $result = filter_var_array($req, $args);
-
-        if(in_array(FALSE, $result, TRUE)){
-            echo "<br>";
-            var_dump($result);
-            return FALSE;
-        }
-        return $req;
-    //    return declaw($req);
-    }
-
-
-    private function validateGame($val){
-        global $games;
-        return array_key_exists($val, $games) ? $val : FALSE;
-    }
-
-
-    private function validateCountry($val){
-        global $countries;
-        return array_key_exists($val, $countries) ? $val : FALSE;
-    }
-
-
-    private function validateID($val){
-        return strlen($val) == 6 ? $val : FALSE;
-    }
-
-
-    private function validateInvite($val){
-        if (is_array($val)){
-            return true;    // *********** more validation required **************
-        }
-        return false;
-    }
-
-
-    private function validateParity($val){
-        global $parityFilter;
-        return in_array($val, $parityFilter) ? $val : FALSE;
-    }
-
-
-    private function validatePID($val){
-        return strlen($val) == 64 ? $val : FALSE;
-    }
-
-
-    private function validatePhone($val){
-        return strlen($val) <= 10 ? $val : FALSE;
-    }
-
-
-    private function validateRepost($val){
-        return $val;
-    }
-
-
-    private function validateQwik($val){
-        global $qwiks;
-        return in_array($val, $qwiks) ? $val : FALSE;
-    }
-
-
-    private function validateToken($val){
-        return strlen($val) == 10 ? $val : FALSE;
-    }
 
 
 
@@ -643,7 +459,7 @@ function clip($key, $val){
             $match = new Match($player, $matchXML);
             $matchVars = $match->variables();
             $vars = $playerVars + $matchVars + self::$icons;
-            $vars['venueLink'] = VenuePage::venueLink($match->vid());
+            $vars['venueLink'] = $this->venueLink($match->vid());
             $group .= $this->populate($html, $vars);
         }
         return $group;
@@ -660,10 +476,10 @@ function clip($key, $val){
             $game = $avail['game'];
             $availVars = array(
                 'id'        => $avail['id'],
-                'game'      => $games[$game],
+                'game'      => $games["$game"],
                 'parity'    => $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
-                'venueLink' => VenuePage::venueLink($avail->venue)
+                'venueLink' => $this->venueLink($avail->venue)
             );
             $vars = $playerVars + $availVars + self::$icons;
             $group .= $this->populate($html, $vars);
@@ -924,6 +740,26 @@ function clip($key, $val){
         arsort($sorted);
         return $sorted;
     }
+    
+
+
+    private function venueLink($vid){
+        $name = explode("|", $vid)[0];
+        $boldName = $this->firstWordBold($name);
+        $url = QWIK_URL."/venue.php?vid=$vid";
+        $link = "<a href='$url'>$boldName</a>";
+        return $link;
+    }
+
+
+    private function firstWordBold($phrase){
+        $words = explode(' ', $phrase);
+        $first = $words[0];
+        $words[0] = "<b>$first</b>";
+        return implode(' ', $words);
+    }
+    
+    
     
 
 

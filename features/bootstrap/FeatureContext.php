@@ -1,9 +1,13 @@
 <?php
 
 
-require 'qwik.php';
-require 'logging.php';
-require 'PlayerPage.php';
+require_once 'qwik.php';
+require_once 'logging.php';
+require_once 'PlayerPage.php';
+require_once 'Player.php';
+require_once 'Ranking.php';
+require_once 'LocatePage.php';
+
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
@@ -12,9 +16,6 @@ use Behat\Gherkin\Node\TableNode;
 
 require 'phpunit.phar';
 use PHPUnit\Framework\TestCase as Assert;
-
-
-include 'Ranking.php';
 
 
 /**
@@ -86,7 +87,7 @@ class FeatureContext implements Context
      */    
     private function locateVenue($svid, $game = '')
     {        
-    	$vids = matchShortVenueID($svid, $game);
+    	$vids = LocatePage::matchShortVenueID($svid, $game);
     	Assert::assertCount(1, $vids, "Please specify an existing Venue exactly");
     	return $vids[0];
     }
@@ -100,8 +101,8 @@ class FeatureContext implements Context
      */
     public function myEmailIsNotRegisteredWithQwikgame($address)
     {
-    	$this->pid = anonID($address);
-        removePlayer($this->pid);
+    	$this->pid = Player::anonID($address);
+        Ranking::removePlayer($this->pid);
     }
 
 
@@ -110,8 +111,8 @@ class FeatureContext implements Context
      */
     public function myEmailIsRegisteredWithQwikgame($address)
     {
-    	$this->pid = anonID($address);    	
-        removePlayer($this->pid);
+    	$this->pid = Player::anonID($address);    	
+        Ranking::removePlayer($this->pid);
         $this->player = new Player($this->pid, $this->log, TRUE);
         $this->player->email($address);
         $this->player->save(); 
@@ -189,7 +190,7 @@ class FeatureContext implements Context
     	$this->email = $address;
     	
 		if(!$this->player){
- 		    $this->pid = anonID($address);
+ 		    $this->pid = Player::anonID($address);
 			$this->player = new Player($this->pid, $this->log, TRUE);
         }
         global $MONTH;
@@ -206,8 +207,10 @@ class FeatureContext implements Context
     public function iSubmitThisFavourite()
     {
       	$this->req['qwik'] = 'available';
-        $this->id = PlayerPage::qwikAvailable($this->player, $this->req, $this->venue);
-    }      
+      	$page = new PlayerPage();
+      	$_GET = $this->req;
+      	$this->id = $page->processRequest();
+    }
 
 
     /**
@@ -217,7 +220,9 @@ class FeatureContext implements Context
     {
         $this->req['qwik'] = 'delete';
         $this->req['id'] = $this->id;
-        $this->id = PlayerPage::qwikDelete($this->player, $this->req);
+      	$page = new PlayerPage();
+      	$_GET = $this->req;
+      	$this->id = $page->processRequest();
     }
 
 
@@ -234,9 +239,12 @@ class FeatureContext implements Context
     	parse_str($query, $req);    	
     	Assert::assertNotNull($req);
     	
-    	qwikAccount($this->player, $req);
+    	$page = new PlayerPage();
+      	$_GET = $req;
+      	$page->processRequest();
+      	
         Assert::assertTrue(
-            validPlayerToken($this->player, $req['token']),
+            $this->player->isValid($this->req['token']),
             "The player token is invalid"
         );
     }
@@ -262,24 +270,28 @@ class FeatureContext implements Context
      *
      * @throws 
      */
-    private function iWillBeAvailableToPlay($req, $venue, $rivalParity='any', $test='ALL')
-    {        
-        $game = $req['game'];
-        $rival = new Player(anonID("rival@qwikgame.org"), $this->log, TRUE);  //dummy rival
+    private function iWillBeAvailableToPlay($game, $venue, $rivalParity='any', $test='ALL')
+    {
+        $rid = Player::anonID("rival@qwikgame.org");
+        $rival = new Player($rid, $this->log, TRUE);  //dummy rival
+        // Set this player as a familiar of the rival, with suitable parity
+        $rivalToken = $rival->token();
+        $rival->save();
+        $page = new PlayerPage();
+        $_GET = array(
+                'pid'=>$rid,
+                'token'=>$rivalToken,
+                'qwik'=>'familiar',
+                'game'=>$game, 
+                'rival'=>$this->email,
+                'parity'=>$rivalParity
+            ); 
+        $page->processRequest();
         
         foreach ($this->days as $day) {
-            if (isset($req[$day])){
+            if (isset($this->req[$day])){
                 $date  = $venue->dateTime($day);
-                $hours = $req[$day];
-                
-                // Set this player as a familiar of the rival, with suitable parity
-                PlayerPage::qwikFamiliar(
-                    $rival, 
-                    array(
-                        'game'=>$game, 
-                        'rival'=>$this->email,
-                        'parity'=>$rivalParity)
-                    ); 
+                $hours = $this->req[$day];
         
                 // The rival is keen for a match
                 $match = $rival->matchKeen($game, $venue, $date, $this->Hrs24);
@@ -321,7 +333,7 @@ class FeatureContext implements Context
      */
     public function iWillBeAvailableToPlayMyFavouriteGame()
     {       
-        $this->iWillBeAvailableToPlay($this->req, $this->venue, 'any', 'ALL');
+        $this->iWillBeAvailableToPlay($this->req['game'], $this->venue, 'any', 'ALL');
     }
   
 
@@ -336,17 +348,18 @@ class FeatureContext implements Context
         foreach ($this->days as $day) {
             $req[$day] = $this->Hrs24 ^ (isset($req[$day]) ? $req[$day] : 0);
         }
-    	$this->iWillBeAvailableToPlay($req, $this->venue, 'any', 'NONE');
+        $game = $this->req['game'];
+    	$this->iWillBeAvailableToPlay($game, $this->venue, 'any', 'NONE');
 
     	// Check other abilities for this game and venue
     	 if ($this->req['parity'] == 'matched') {
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-stronger', 'NONE');
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'stronger', 'NONE');
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'weaker', 'NONE');
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-weaker', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'weaker', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-weaker', 'NONE');
     	} elseif ($this->req['parity'] == 'similar') {
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-stronger', 'NONE');
-            $this->iWillBeAvailableToPlay($req, $this->venue, 'much-weaker', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-weaker', 'NONE');
     	} else {
     	    // no alternate to check for parity==all
     	}
@@ -359,7 +372,7 @@ class FeatureContext implements Context
         foreach ($this->games as $game) {
             if ($game != $this->game) { 
                 $req['game'] = $game;            
-                $this->iWillBeAvailableToPlay($req, $this->venue, 'any', 'NONE');
+                $this->iWillBeAvailableToPlay($game, $this->venue, 'any', 'NONE');
             }
         }    
         
@@ -390,8 +403,8 @@ class FeatureContext implements Context
         foreach (range('A', 'Z') as $char) {
             $name = "player.$char";
             $email = "$name@qwikgame.org";
-            $id = anonID($email);
-            removePlayer($id);
+            $id = Player::anonID($email);
+            Ranking::removePlayer($id);
             $player = new Player($id, $this->log, TRUE);
             $player->nick($name);
             $player->save();

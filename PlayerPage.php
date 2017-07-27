@@ -52,39 +52,40 @@ class PlayerPage extends Page {
         $action = $this->req('action');
         $req = $this->req();
         $player = $this->player();
+        $result = null;
         switch ($qwik) {
             case "available":
-                $this->qwikAvailable($player, $req, $this->venue);
+                $result = $this->qwikAvailable($player, $req, $this->venue);
                 break;
             case "keen":
-                $this->qwikKeen($player, $req, $this->venue);
+                $result = $this->qwikKeen($player, $req, $this->venue);
                 break;
             case 'accept':
-                $this->qwikAccept($player, $req);
+                $result = $this->qwikAccept($player, $req);
                  break;
             case 'decline':
-                $this->qwikDecline($player, $req);
+                $result = $this->qwikDecline($player, $req);
                  break;
             case 'familiar':
-                $this->qwikFamiliar($player, $req);
+                $result = $this->qwikFamiliar($player, $req);
                 break;
             case 'region':
-                $this->qwikRegion($player, $req);
+                $result = $this->qwikRegion($player, $req);
                 break;
             case "cancel":
-                $this->qwikCancel($player, $req);
+                $result = $this->qwikCancel($player, $req);
                 break;
             case "feedback":
-                $this->qwikFeedback($player, $req);
+                $result = $this->qwikFeedback($player, $req);
                 break;
             case 'delete':
-                $this->qwikDelete($player, $req);
+                $result = $this->qwikDelete($player, $req);
                 break;
             case 'account':
-                $this->qwikAccount($player, $req);
+                $result = $this->qwikAccount($player, $req);
                 break;
             case 'msg':
-                $this->qwikMsg($player, $req);
+                $result = $this->qwikMsg($player, $req);
                 break;
             case 'login':
                 $email = $this->req('email');
@@ -99,14 +100,16 @@ class PlayerPage extends Page {
                 }
                 break;
             case 'logout':
-                $this->logout();
+                $result = $this->logout();
                 break;
             default:
+                $result =  null;
     //             header("Location: error.php?msg=<b>Invalid post:<b> $qwik<br>");
         }
 
         $player->concludeMatches();
         $player->save();
+        return $result;
     }
 
 
@@ -251,7 +254,7 @@ function qwikFamiliar($player, $request){
     if(isset($request['game'])
     && isset($request['rival'])
     && isset($request['parity'])){
-        $player->familiar($request['game'], $request['rival'], $request['parity'], $log);
+        $player->familiar($request['game'], $request['rival'], $request['parity']);
     }
 }
 
@@ -362,7 +365,7 @@ function hourRows(){
             $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12</td>\n";
             $bit = $bit * 2;
         }
-        $hourRows .= "$tabs<    r>\n";
+        $hourRows .= "$tabs</tr>\n";
     }
     return $hourRows;
 }

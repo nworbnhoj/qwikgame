@@ -1,6 +1,6 @@
 <?php
 
-require 'Page.php';
+require_once 'Page.php';
 
 
 class LocatePage extends Page {
@@ -30,7 +30,7 @@ class LocatePage extends Page {
 	
 	public function processRequest(){
 
-	    $vids = matchShortVenueID($this->venueDesc, $this->game);
+	    $vids = $this->matchShortVenueID($this->venueDesc, $this->game);
 	    $matchCount = count($vids);
 	    if($matchCount == 1){
 	        $vid = $vids[0];

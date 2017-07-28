@@ -55,6 +55,7 @@ const TWITTER_IMG = "<img src='img/twitter.png' alt='twitter' class='socialmedia
 
 const EMAIL_LNK = "<a href='mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20<t>tagline</t>&target=_blank'>".EMAIL_IMG."</a>";
 const FACEBOOK_LNK = "<a href='".FACEBOOK_URL."' target='_blank'>".FACEBOOK_IMG."</a>";
+const FLYER_LNK = "<a href='".FLYER_URL."' target='_blank'><t>flyer</t></a>";
 const TWITTER_LNK = "<a href='".TWITTER_URL."' target='_blank'>".TWITTER_IMG."</a>";
 
 const CC_ICON_LINK = "
@@ -484,6 +485,7 @@ function daySpan($bits, $day=''){
             return "<span class='lolite'><b>$dayX</b></span>";
         } else {
             $str =  $clock24hr ? $dayX : '';
+            $last = null;
             foreach($hours as $hr){
                 $pm = $hr > 12;
                 $consecutive = $hr == ($last + 1);

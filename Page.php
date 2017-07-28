@@ -52,7 +52,7 @@ class Page {
 
 
     public function processRequest(){
-
+        return null;
     }
 
 
@@ -77,9 +77,10 @@ class Page {
             'homeURL'       => QWIK_URL,
             'termsURL'		=> TERMS_URL,
             'privacyURL'	=> PRIVACY_URL,
+            'flyerLink'  	=> FLYER_LNK,
             'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
             'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
-            'game'          => isset($game) ? $games["$game"] : ''
+            'game'          => isset($game) ? $games["$game"] : '<v>game</v>'
         );
         
         if ($this->player != null){
@@ -181,7 +182,9 @@ class Page {
     ********************************************************************************/
     private function login($req){
         $openSession = false;
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
         if (isset($req['pid'])){            // check for a pid & token in the parameter
             $pid = $req['pid'];
@@ -263,7 +266,7 @@ class Page {
 
     private function language($req, $player){
         global $languages;
-        header('Cache-control: private'); // IE 6 FIX
+//        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
         && array_key_exists($req['lang'], $languages)){
@@ -308,10 +311,10 @@ class Page {
             if(isset($strings[$key])){
                 return $strings[$key];
             } else if (isset($fallback[$key])){
-                $this->logMsg("translation missing for $key");
+//                $this->logMsg("translation missing for $key");
                 return $fallback[$key];
             } else {
-                $this->logMsg("translation missing for en $key");
+//                $this->logMsg("translation missing for en $key");
                 return "<t>$key</t>";
             }
         };
@@ -327,7 +330,7 @@ class Page {
     ********************************************************************************/
     public function populate($html, $variables){
         $pattern = '!(?s)\<v\>([^\<]+)\<\/v\>!';
-        $tr = function($match) use (&$variables){
+        $tr = function($match) use ($variables){
             $m = $match[1];
             return isset($variables[$m]) ? $variables[$m] : "<v>$m</v>";
         };
@@ -473,11 +476,11 @@ class Page {
         $playerVars = $this->playerVariables($player);
         $available = $player->available();
         foreach($available as $avail){
-            $game = $avail['game'];
+            $game = (string) $avail['game'];
             $availVars = array(
-                'id'        => $avail['id'],
-                'game'      => $games["$game"],
-                'parity'    => $avail['parity'],
+                'id'        => (string) $avail['id'],
+                'game'      => $games[$game],
+                'parity'    => (string) $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)
             );
@@ -517,7 +520,7 @@ class Page {
                 'game'      => $games["$game"],
                 'parity'    => parityStr($reckon['parity'])
             );
-            $vars = $playerVars + $reckonVars + selficons;
+            $vars = $playerVars + $reckonVars + self::$icons;
             $group .= $this->populate($html, $vars);
         }
         return $group;

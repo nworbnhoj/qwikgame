@@ -13,7 +13,7 @@ class Defend {
     public function get(){
         if (is_null($this->get)){
             $get = $_GET;
-            $this->get = is_empty($get) ? array() : examine($_GET);
+            $this->get = empty($get) ? array() : examine($_GET);
         }
         return $this->get;
     }
@@ -22,7 +22,7 @@ class Defend {
     public function post(){
         if (is_null($this->post)){
             $post = $_POST;
-            $this->post = is_empty($post) ? array() : examine($_POST);
+            $this->post = empty($post) ? array() : examine($_POST);
         }
         return $this->post;
     }
@@ -99,7 +99,7 @@ class Defend {
         $result = filter_var_array($req, $args);
 
         if(in_array(FALSE, $result, TRUE)){
-            $this-req = array();
+            $this->req = array();
             Page::logMsg("The Defense Filter rejected the input request.");
         }
         

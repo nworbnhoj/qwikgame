@@ -173,10 +173,10 @@ class Player {
 
     public function email($newEmail=NULL){
         if (!is_null($newEmail)){
-            if(empty($this->xml['email'])){
+            if(empty($this->email)){
                 $this->xml->addChild('email', $newEmail);
             } else {
-                $oldEmail = $this->xml['email'][0];
+                $oldEmail = $this->xml->email[0];
                 if ($oldEmail != $newEmail) {
                     $newID = Player::anonID($newEmail);
                     if (false){ // if newID already exists then log and abort
@@ -187,14 +187,14 @@ class Player {
                 }
             }
         }
-        return (string) $this->xml['email'];
+        return (string) $this->xml->email[0];
     }
 
 
     private function changeEmail($newEmail){
         $preID = $this->id();
         $newID = Player::anonID($newEmail);
-        removeElement($this->xml['email']);
+        removeElement($this->xml->email[0]);
         $this->xml->addChild('email', $newEmail);
         $this->id = $newID;
         $this->xml['id'] = $newID;
@@ -380,7 +380,7 @@ class Player {
 
 ////////// RECKON ///////////////////////////////////////
 
-    public function familiar($game, $rivalEmail, $parity, $log){
+    public function familiar($game, $rivalEmail, $parity){
         $rid = Player::anonID($rivalEmail);
 
         $reckon = $this->xml->addChild('reckon', '');
@@ -393,7 +393,7 @@ class Player {
         $reckon->addAttribute('id', newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
 
-        $rival =  new Player($rid, $log);
+        $rival =  new Player($rid, $this->log, true);
         $rival->save();
     }
 
@@ -886,7 +886,7 @@ Requirements:
         $repTot = $repPos + $repNeg;
 
         if($repTot <= 0){
-            return;
+            return '<t>good</t>';
         } elseif($repTot < 5){
             if($repPos > $repNeg){
                 $word = '<t>good</t>';

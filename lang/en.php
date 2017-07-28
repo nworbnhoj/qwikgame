@@ -122,7 +122,7 @@ $en['Tip3'] =  '<b>Share</b> qwikgame.org with your favourite <b>social media</b
 $en['Tip4'] =  'Add a <b>nick-name</b> to your account to help your rivals recognise you.';
 $en['Tip5'] =  'Add a <b>link</b> to your favourite <b>social media</b> profile.';
 //$en['Tip6'] =  "Print a <v>flyerLink</v> and <b>pin it</b> up at your <b>local venue</b>.";
-$en['Tip6'] =  "Print a <a href='qwikgame.org%20flyer.pdf'><t>flyer</t></a> and <b>pin it</b> up at your <b>local venue</b>.";
+$en['Tip6'] =  "Print a <a href='/pdf/qwikgame.org%20flyer.pdf'><t>flyer</t></a> and <b>pin it</b> up at your <b>local venue</b>.";
 
 $en['Tip7'] =  "<a href='upload.php'>Upload</a> <b>anonymous player rankings</b> from your local club.";
 $en['Tip8'] =  'Try another <b>game</b> for something new.' ;
@@ -245,7 +245,7 @@ $en['excellent'] = 'excellent';
 $en['great'] = 'great';
 $en['good'] = 'good';
 $en['mixed'] = 'mixed';
-$en['poor'] = 'door';
+$en['poor'] = 'poor';
 $en['dreadful'] = 'dreadful';
 $en['Better_than_49...'] = 'Better than 49 <v>thumb-up</v> in every 50 games.';
 $en['Better_than_19...'] = 'Better than 19 <v>thumb-up</v> in every 20 games.';

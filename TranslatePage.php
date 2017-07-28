@@ -82,7 +82,7 @@ Class TranslatePage extends Page {
 	public function __construct($template=null){
 	    parent::__construct($template);
 	
-	    $gameOptions = this->replicateGames(
+	    $gameOptions = $this->replicateGames(
 		    "<option value='<v>game</v>' <v>selected</v>><v>name</v></option>",
 		    array('game' => 'squash')
         );

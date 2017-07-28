@@ -195,7 +195,7 @@ class FeatureContext implements Context
         }
         global $MONTH;
         $this->token = $this->player->token(Player::MONTH);
-	    $this->authURL = authURL($address, $this->token);
+	    $this->authURL = Page::authURL($address, $this->token);
     }
     
     
@@ -456,15 +456,21 @@ class FeatureContext implements Context
             $keenMatch->cancel();
 		    $keenMatch->remove();
 		}
-
-        PlayerPage::qwikFeedback(
-            $playerA, 
-            array(
+		
+		
+        $page = new PlayerPage();
+        $playerAToken = $playerA->token();
+        $playerA->save();
+        $_GET = array(
+                'pid'=>$playerA->id(),
+                'token'=>$playerAToken,
+                'qwik'=>'feedback',
                 'id'=>$matchA->id(),
                 'rep'=>'0',
                 'parity'=>$this->paritySymbol[$parity]
-            )
-        );
+            );
+        $page->processRequest();
+        
         $playerA->save();
         $playerB->save();
     }

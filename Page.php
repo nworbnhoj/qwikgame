@@ -3,10 +3,22 @@
 require_once 'qwik.php';
 require_once 'logging.php';
 require_once 'Defend.php';
+require_once 'Translation.php';
 
 
 class Page {
 
+    static $translation;
+
+    static $languages = array(
+        'zh'=>'中文',
+        'es'=>'Español',
+        'en'=>'English',
+        // 'fr'=>'français',
+        // 'hi'=>'हिन्दी भाषा',
+        // 'ar'=>'اللغة العربية',
+        // 'jp'=>'日本語'
+    );
 
     static $log;
     static $icons;
@@ -18,6 +30,10 @@ class Page {
 
 	public function __construct($template='index'){	    
 	    $this->template = $template;
+	    
+	    if (is_null(self::$translation)){
+            self::$translation = new Translation('translation.xml');
+        }
        
         $defend = new Defend();
         $this->req = $defend->request();
@@ -111,6 +127,10 @@ class Page {
 
     public function player(){
         return $this->player;
+    }
+    
+    public function languages(){
+        return self::$translation->languages();
     }
 
 
@@ -244,7 +264,7 @@ class Page {
     $_COOKIE
     ********************************************************************************/
     public function logout(){
-        if (isset($_SESSION)){
+        if (isset($_SESSION) && isset($_SESSION['pid'])){
             $pid = $_SESSION['pid'];
             $this->logMsg("logout $pid");
             unset($_SESSION['pid']);
@@ -265,7 +285,7 @@ class Page {
     ********************************************************************************/
 
     private function language($req, $player){
-        global $languages;
+        $languages = $this->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
@@ -302,21 +322,12 @@ class Page {
     $fb        String    fallback language for when a translation is missing
     ********************************************************************************/
     public function translate($html, $lang, $fb='en'){
-        $strings = $GLOBALS[$lang];
-        $fallback = $GLOBALS[$fb];
+        $translation = self::$translation;
         $pattern = '!(?s)\<t\>([^\<]+)\<\/t\>!';
-        $tr = function($match) use ($strings, $fallback){
+        $tr = function($match) use ($translation, $lang, $fb){
             $key = $match[1];
-            $st = $strings[$key];
-            if(isset($strings[$key])){
-                return $strings[$key];
-            } else if (isset($fallback[$key])){
-//                $this->logMsg("translation missing for $key");
-                return $fallback[$key];
-            } else {
-//                $this->logMsg("translation missing for en $key");
-                return "<t>$key</t>";
-            }
+            $phrase = $translation->phrase($key, $lang, $fb);
+            return empty($phrase) ? "<t>$key</t>" : $phrase;
         };
         return  preg_replace_callback($pattern, $tr, $html);
     }

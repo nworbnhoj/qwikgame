@@ -65,7 +65,8 @@ const PARITY5_SELECT = "
 
 Class TranslatePage extends Page {
 
-    private $langs = array('en', 'es', 'zh');
+    private $langs;
+    private $phraseKeys;
     private $files = array( 
         'index.html',
 		'info.html',
@@ -81,6 +82,9 @@ Class TranslatePage extends Page {
 	
 	public function __construct($template=null){
 	    parent::__construct($template);
+	    
+	    $this->langs = self::$translation->languages();
+	    $this->phraseKeys = self::$translation->phraseKeys();
 	
 	    $gameOptions = $this->replicateGames(
 		    "<option value='<v>game</v>' <v>selected</v>><v>name</v></option>",
@@ -141,18 +145,16 @@ Class TranslatePage extends Page {
         }
 
         echo "<hr><h2>Missing translations</h2>\n";
-    	$english = $GLOBALS['en'];
-    	foreach($this->langs as $lang){
-    		$strings = $GLOBALS[$lang];
-    
+    	foreach($this->langs as $lang){    
     		$html = '<hr>';
     		$html .= "<table style='width:100%'>";
-    		foreach($english as $key => $eng){
-    			if (!isset($strings[$key])){
-    		        $html .= "<tr><td>$key</td><td>$lang</td><td>$eng</td></tr>";
+    		foreach($this->phraseKeys as $key){
+    		    $phrase = self::$translation->phrase($key, $lang, '');
+    			if (!isset($phrase)){
+    			    $phrase = self::$translation->phrase($key, 'en');
+    		        $html .= "<tr><td>$key</td><td>$lang</td><td>$phrase</td></tr>";
     			}
     		}
-    
     		$html .= '</table>';
     		$html .= "<hr>\n";
     		echo "$html";
@@ -163,19 +165,18 @@ Class TranslatePage extends Page {
 
         echo "<hr><h2>Full translations</h2>\n";
     	$count = count($this->langs);
-        $english = $GLOBALS['en'];
         $html = '<hr>';
         $html .= "<table style='width:100%'>";
-        foreach($english as $key => $eng){
-            $html .= "<tr><td rowspan='$count'>$key</td><td>en</td><td>$eng</td></tr>";
+        foreach($this->phraseKeys as $key){
+    	    $phrase = self::$translation->phrase($key, 'en');
+            $html .= "<tr><td rowspan='$count'>$key</td><td>en</td><td>$phrase</td></tr>";
     	    foreach($this->langs as $lang){
     			if($lang != 'en'){
-    	        	$str = $GLOBALS[$lang][$key];
-                	$html .= "<tr><td>$lang</td><td>$str</td></tr>";
+    			    $phrase = self::$translation->phrase($key, $lang, '');
+                	$html .= "<tr><td>$lang</td><td>$phrase</td></tr>";
     			}
     		}
         }
-    
         $html .= '</table>';
         $html .= "<hr>\n";
         echo "$html";

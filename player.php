@@ -1,5 +1,5 @@
 <?php
-require_once 'PlayerPage.php';
+require_once 'class/PlayerPage.php';
 
 $page = new PlayerPage();
 $page->serve();

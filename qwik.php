@@ -3,8 +3,8 @@
 const SUBDOMAIN = 'www';
 const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';
 
-include 'Player.php';
-include 'Venue.php';
+include 'class/Player.php';
+include 'class/Venue.php';
 
 
 $languages = array(

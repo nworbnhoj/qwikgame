@@ -1,7 +1,7 @@
 <?php
 
 require_once 'qwik.php';
-require_once 'logging.php';
+require_once 'Logging.php';
 require_once 'Defend.php';
 require_once 'Translation.php';
 

@@ -1,5 +1,5 @@
 <?php
-require_once 'InfoPage.php';
+require_once 'class/InfoPage.php';
 
 $page = new InfoPage();
 $page->serve();

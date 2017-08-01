@@ -1,5 +1,7 @@
 <?php
-	 require '../qwik.php';
+	 require_once '../qwik.php';
+	 require_once '../class/Venue.php';
+	 
 	$game = $_GET['game'];
 	$mapData = '';
 	if($game){
@@ -7,7 +9,7 @@
 		$venues = $xml->xpath("/meta/venue[game='$game']");
 		foreach($venues as $venue){ 
 			$vid = $venue['id'];
-			$svid = shortVenueID($vid);
+			$svid = Venue::svid($vid);
 			$lat = $venue['lat'];
 			$lng = $venue['lng'];
 			$name = $venue['name'];

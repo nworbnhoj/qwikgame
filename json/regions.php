@@ -1,11 +1,14 @@
 <?php
 
+    require_once 'class/Player.php';
+    require_once 'class/Page.php';
+
 	$pid = $req['pid'];
-	$player = readPlayerXML($pid);
+	$player = new Player($pid, Page::$log, FALSE);
 	$options = '';
 	if(isset($player){	
 
-	    $available = $player->xpath('available');
+	    $available = $player->available();
 	    $regions = array();
 	    foreach($available as $avail){
 	        $venueID = $avail->venue;

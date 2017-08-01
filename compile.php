@@ -1,19 +1,7 @@
 <?php
-    require 'qwik.php';
-
-    $req = validate($_POST);
-    if (!$req){
-        $req = validate($_GET);
-    }
-
-    logReq($req);
-    $player = login($req);
-
-    if (!$player){
-        logout();
-    }
-
-    $lang = language($req, $player);
+    require_once 'qwik.php';
+    require_once 'class/Venue.php';
+    require_once 'class/Page.php';
 
 	$now = new DateTime('now');
 	$compiled = $now->format('d-m-Y');
@@ -22,21 +10,18 @@
 	$venues = venues();
 	echo "<table>\n";
 	foreach($venues as $vid){
-        $venue = readVenueXML($vid);
+        $venue = new Venue($vid, Page::$log, FALSE);
 		if(isset($venue)){
-			$lat = $venue['lat'];
-			$lng = $venue['lng'];
-			$name = $venue['name'];
+			$lat = $venue->lat();
+			$lng = $venue->lng();
+			$name = $venue->name();
 			echo "<tr><td>$name</td><td>$lat</td><td>$lng</td></tr>\n";
 			$v = $xml->addChild('venue', '');
-			$v->addAttribute('id', $venue['id']);
-            $v->addAttribute('name', $venue['name']);
-			$v->addAttribute('lat', $venue['lat']);
-			$v->addAttribute('lng', $venue['lng']);
-			$players = $venue->xpath("/venue/player");
-			if($players){
-				$v->addAttribute('playerCount', count($players));
-			}
+			$v->addAttribute('id', $venue->id());
+            $v->addAttribute('name', $venue->name());
+			$v->addAttribute('lat', $venue->lat());
+			$v->addAttribute('lng', $venue->lng());
+            $v->addAttribute('playerCount', $venue->playerCount());
    	    }
 	}
 	echo "</table>";
@@ -53,8 +38,8 @@
 
 	$path = "venue";
 	$filename = "venues$compiled.xml";
-	writeXML($path, $filename, $xml);
-    writeXML($path, "venues.xml", $xml);
+	$xml->saveXML("$path/$filename");
+	$xml->saveXML("$path/venues.xml");
 
 
 	$html = file_get_contents("$path/$filename");

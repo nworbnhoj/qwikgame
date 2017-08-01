@@ -7,23 +7,6 @@ include 'class/Player.php';
 include 'class/Venue.php';
 
 
-$languages = array(
-    'zh'=>'中文',
-    'es'=>'Español',
-    'en'=>'English',
-    // 'fr'=>'français',
-    // 'hi'=>'हिन्दी भाषा',
-    // 'ar'=>'اللغة العربية',
-    // 'jp'=>'日本語'
-);
-
-
-// include language translations
-foreach($languages as $code => $language){
-    include "lang/$code.php";
-}
-
-
 const BACK_ICON      = 'fa fa-chevron-circle-left icon';
 const COMMENT_ICON   = 'fa fa-comment-o comment';
 const CROSS_ICON     = 'fa fa-times-circle cross';
@@ -330,6 +313,42 @@ function snip($str){
 }
 
 
+function writeXML($xml, $path, $filename){
+    $cwd = getcwd();
+    if(chdir($path)){
+        $xml->saveXML($filename);
+        if(!chdir($cwd)){
+            $this->logMsg("failed to change working directory to $cwd");
+            return false;
+        }
+    } else {
+        $this->logMsg("failed to change working directory to $path");
+        return false;
+    }
+    return true;
+}
+
+
+function readXML($path, $filename){
+    if (!file_exists("$path/$filename")) {
+        $this->logMsg("unable to read xml $path/$filename");
+        return null;
+    }
+
+    $cwd = getcwd();
+    if(chdir($path)){
+        $xml = simpleXML_load_file($filename);
+        if(!chdir($cwd)){
+            $this->logMsg("failed to change working directory to $cwd");
+        }
+        return $xml;
+    } else {
+        $this->logMsg("failed to change working directory to $path");
+    }
+}
+
+
+
 
 // https://secure.php.net/manual/en/class.simplexmlelement.php
 // Must be tested with ===, as in if(isXML($xml) === true){}
@@ -413,7 +432,7 @@ function fileList($dir){
 }
 
 
-function venues($game){
+function venues($game=null){
     $venues = array();
     $path = "venue";
     $path .= $game ? "/$game" : '';

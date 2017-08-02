@@ -32,7 +32,7 @@ class Page {
 	    $this->template = $template;
 	    
 	    if (is_null(self::$translation)){
-            self::$translation = new Translation('translation.xml');
+            self::$translation = new Translation(self::$log, 'translation.xml', 'lang');
         }
        
         $defend = new Defend();
@@ -562,7 +562,7 @@ class Page {
 
 
     private function replicateLanguages($html){
-        global $languages;
+        $languages = $this->languages();
         $group = '';
         $current = $_SESSION['lang'];
         foreach($languages as $code => $lang){

@@ -169,6 +169,10 @@ alert('jjj');
 		return false;
 	});
 
+	$('#phrase').click(function(){
+		$(this).nextAll('.edit-phrase').toggle();
+	});
+
 	$('#tz').focus(function(){
 		var tzSelect = $('#tz');
 		var tzVal = tzSelect.val();

@@ -13,7 +13,7 @@ class Defend {
     public function get(){
         if (is_null($this->get)){
             $get = $_GET;
-            $this->get = empty($get) ? array() : examine($_GET);
+            $this->get = empty($get) ? array() : $this->examine($_GET);
         }
         return $this->get;
     }
@@ -22,7 +22,7 @@ class Defend {
     public function post(){
         if (is_null($this->post)){
             $post = $_POST;
-            $this->post = empty($post) ? array() : examine($_POST);
+            $this->post = empty($post) ? array() : $this->examine($_POST);
         }
         return $this->post;
     }
@@ -120,7 +120,7 @@ class Defend {
     private function scrub($data){
         if (is_array($data)){
             foreach($data as $key => $val){
-                $data[$key] = $this->clip($key, scrub($val));
+                $data[$key] = $this->clip($key, $this->scrub($val));
             }
         } else {
             $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);

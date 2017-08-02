@@ -313,25 +313,25 @@ function snip($str){
 }
 
 
-function writeXML($xml, $path, $filename){
+function writeXML($xml, $path, $filename, $log){
     $cwd = getcwd();
     if(chdir($path)){
         $xml->saveXML($filename);
         if(!chdir($cwd)){
-            $this->logMsg("failed to change working directory to $cwd");
+            logMsg($log, "failed to change working directory to $cwd");
             return false;
         }
     } else {
-        $this->logMsg("failed to change working directory to $path");
+        logMsg($log, "failed to change working directory to $path");
         return false;
     }
     return true;
 }
 
 
-function readXML($path, $filename){
+function readXML($path, $filename, $log){
     if (!file_exists("$path/$filename")) {
-        $this->logMsg("unable to read xml $path/$filename");
+        logMsg($log, "unable to read xml $path/$filename");
         return null;
     }
 
@@ -339,16 +339,20 @@ function readXML($path, $filename){
     if(chdir($path)){
         $xml = simpleXML_load_file($filename);
         if(!chdir($cwd)){
-            $this->logMsg("failed to change working directory to $cwd");
+            logMsg($log, "failed to change working directory to $cwd");
         }
         return $xml;
     } else {
-        $this->logMsg("failed to change working directory to $path");
+        logMsg($log, "failed to change working directory to $path");
     }
 }
 
 
 
+function logMsg($log, $msg){
+    $log->lwrite($msg);
+    $log->lclose();
+}
 
 // https://secure.php.net/manual/en/class.simplexmlelement.php
 // Must be tested with ===, as in if(isXML($xml) === true){}

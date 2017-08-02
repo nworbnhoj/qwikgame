@@ -3,6 +3,18 @@
 require_once 'qwik.php';
 require_once 'Page.php';
 
+const HEAD = "<head>
+    <meta charset='UTF-8'>
+    <style>
+        table {width:100%; border:1px solid black; border-collapse: collapse;}
+        td {height:auto; border:1px solid black;}
+        tr:nth-child(odd) {background-color:LightGrey;}
+        div.pending {color:DarkGreen;}
+    </style>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+    <script src='qwik.js'></script>
+</head>\n";
+
 const TICK = "<button class='TICK_ICON'></button>";
 
 const VENUE_INPUT = "
@@ -77,14 +89,17 @@ Class TranslatePage extends Page {
 		'venues.html');
 	
 	private $variables;
+	private $pending;
 
 
-	
+
 	public function __construct($template=null){
 	    parent::__construct($template);
 	    
-	    $this->langs = self::$translation->languages();
-	    $this->phraseKeys = self::$translation->phraseKeys();
+        $this->langs = self::$translation->languages();
+        $this->phraseKeys = self::$translation->phraseKeys();
+
+	    $this->pending = new Translation(self::$log, 'pending.xml', 'lang');
 	
 	    $gameOptions = $this->replicateGames(
 		    "<option value='<v>game</v>' <v>selected</v>><v>name</v></option>",
@@ -115,73 +130,120 @@ Class TranslatePage extends Page {
     }
     
     
-    public function serve(){
-
-    	echo "
-    		<head>
-    			<style>
-    				table {width:100%; border:1px solid black; border-collapse: collapse;}
-                    td {height:auto; border:1px solid black;}
-    				tr:nth-child(odd) {background-color:LightGrey;}
     
-    			</style>
-    
-    		</head>
-    		<body>
-    	";
+    public function processRequest(){
+        $key = $this->req('key');
+        $lang = $this->req('lang');
+        $phrase = $this->req('phrase');
+        if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
+            $this->pending->set($key, $lang, $phrase);
+        }
+        $this->pending->save();
+    }
 
-        foreach($this->langs as $lang){
-    		echo "<h3>$lang translation</h3>";
+
+    public function html(){
+        $html = HEAD;
+        $html .= "<body>\n";
+        $html .= $this->translateTemplates();
+        $html .= "<br><br><br>\n";
+        $html .= "<h2>Edit Translations</h2>\n";
+        $count = count($this->langs) + 1;
+
+        foreach($this->phraseKeys as $key){
+            $size = strlen(self::$translation->phrase($key, 'en'));
+            $html .= "<table style='width:100%' id='$key'>\n";
+            $html .= "<tr>";
+            $html .= "  <td colspan='2'><b>$key</b></td>";
+            $html .= "</tr>\n";
+            foreach($this->langs as $lang => $native){
+                $html .= "<tr>\n";
+                $html .= "  <td style='width:10%'>$native</td>\n";
+                $html .= $this->tdPhrase($key, $lang, $size);
+                $html .= "</tr>\n";
+    		}
+            $html .= "</table>\n";
+            $html .= "<br><br>\n";
+        }
+        $html .= "<hr>\n";
+        $html .= "</body>\n</html>\n";
+        return $html;
+	}
+
+
+	private function stats(){
+	    $count = array();
+	    foreach($this->langs as $lang => $native){
+            $count[$lang] = 0;
+	    }
+
+	    foreach($this->phraseKeys as $key){
+            foreach($this->langs as $lang => $native){
+                $phrase = self::$translation->phrase($key, $lang, '');
+                if (!empty($phrase)){
+                    $count[$lang] += 1;
+                }
+    	    }
+        }
+
+        $stats = array();
+//        $denominator = count($this->phraseKeys);
+        $denominator = $count['en'];
+        foreach($count as $lang => $numerator){
+            $stats[$lang] = intval(100 * $numerator / $denominator);
+        }
+	    return $stats;
+	}
+
+
+	private function translateTemplates(){
+	    $stats = $this->stats();
+	    $html = "<h2>Translations</h2>\n";
+        $html .= "<table>\n";
+        foreach($this->langs as $lang => $native){
+            $stat = $stats[$lang];
+            $html .= "<tr><td><big><b>$native</b></big></td>\n";
+            $html .= "<td>$stat%</td>\n";
             foreach($this->files as $file){
                 $path = "lang/$lang/$file";
-    			echo "<br><a href='$path'>$file</a>";
-                $html = file_get_contents("html/$file");
-                $html = $this->translate($html, $lang);   // sentences with differing word order
-    			$html = $this->populate($html, $this->variables); // select elements
-    			$html = $this->translate($html, $lang);     // translate all remaining
-                file_put_contents($path, $html, LOCK_EX);
+                $htm = file_get_contents("html/$file");
+                $htm = $this->translate($html, $lang);   // sentences with differing word order
+                $htm = $this->populate($html, $this->variables); // select elements
+                $htm = $this->translate($html, $lang);     // translate all remaining
+                file_put_contents($path, $htm, LOCK_EX);
+                $html .= "<td><a href='$path'>$file</a></td>\n";
             }
-    		echo "<br>";
+            $html .= "</tr>\n";
         }
-
-        echo "<hr><h2>Missing translations</h2>\n";
-    	foreach($this->langs as $lang){    
-    		$html = '<hr>';
-    		$html .= "<table style='width:100%'>";
-    		foreach($this->phraseKeys as $key){
-    		    $phrase = self::$translation->phrase($key, $lang, '');
-    			if (!isset($phrase)){
-    			    $phrase = self::$translation->phrase($key, 'en');
-    		        $html .= "<tr><td>$key</td><td>$lang</td><td>$phrase</td></tr>";
-    			}
-    		}
-    		$html .= '</table>';
-    		$html .= "<hr>\n";
-    		echo "$html";
-    
-    	}
-        echo "</body></html>";
+        $html .= "</table>\n";
+        return $html;
+	}
 
 
-        echo "<hr><h2>Full translations</h2>\n";
-    	$count = count($this->langs);
-        $html = '<hr>';
-        $html .= "<table style='width:100%'>";
-        foreach($this->phraseKeys as $key){
-    	    $phrase = self::$translation->phrase($key, 'en');
-            $html .= "<tr><td rowspan='$count'>$key</td><td>en</td><td>$phrase</td></tr>";
-    	    foreach($this->langs as $lang){
-    			if($lang != 'en'){
-    			    $phrase = self::$translation->phrase($key, $lang, '');
-                	$html .= "<tr><td>$lang</td><td>$phrase</td></tr>";
-    			}
-    		}
-        }
-        $html .= '</table>';
-        $html .= "<hr>\n";
-        echo "$html";
-    
-    	echo "</body></html>";
+	private function tdPhrase($key, $lang, $size=30){
+	    $phrase = self::$translation->phrase($key, $lang, '');
+        $pending = $this->pending->phrase($key, $lang, '');
+        $edit = is_null($pending) ? $phrase : $pending;
+        $hidden = is_null($phrase) ? "" : "hidden";
+        $submit = self::$translation->phrase('Submit', $lang);
+
+        $key = htmlentities($key, ENT_QUOTES | ENT_HTML5);
+        $lang = htmlentities($lang, ENT_QUOTES | ENT_HTML5);
+        $edit = htmlentities($edit, ENT_QUOTES | ENT_HTML5);
+        $submit = htmlentities($submit, ENT_QUOTES | ENT_HTML5);
+
+        $td  = "  <td>\n";
+        $td .= "    <div class='phrase'>$phrase</div>\n";
+        $td .= "    <div class='pending'>$pending</div>\n";
+        $td .= "    <form action='translate.php#$key' method='post' class='edit-phrase' $hidden>\n";
+        $td .= "      <input type='hidden' name='key' value='$key'>\n";
+        $td .= "      <input type='hidden' name='lang' value='$lang'>\n";
+        $td .= "      <input type='text' name='phrase' value='$edit' size='$size'>\n";
+        $td .= "      <input type='submit' value='$submit'>\n";
+        $td .= "    </form>\n";
+        $td .= "  </td>\n";
+
+        return $td;
 	}
 
 }

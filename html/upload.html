@@ -19,8 +19,8 @@
 <body>
 
     <div id='menu' class='menu'>
-	    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
-	    <a id='home-icon' class='<v>HOME_ICON</v>' href='player.php'></a>
+	    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+	    <a id='home-icon' class='[HOME_ICON]' href='player.php'></a>
     </div>
 
 
@@ -28,22 +28,22 @@
 
 	<p class='center'>
 		{Upload_a_list...}<br>
-		<v>please_login</v>
+		[please_login]
 	</p>
 
 	<h2>{Upload_Rankings}</h2>
 
 	<repeat id='uploads'>
-	<form action='upload.php' method='post' class='center record <v>status</v>' <v>uploadHidden</v>>
-    	<input type='hidden' name='filename' value='<v>fileName</v>'>
-		<button type='button' class='action help <v>INFO_ICON</v>' id='help-reckon'></button>
-        <button class='action <v>CROSS_ICON</v>' name='qwik' value='<v>crossAct</v>'></button>
-		<button class='action <v>tickIcon</v>' name='qwik' value='activate' ></button>
+	<form action='upload.php' method='post' class='center record [status]' [uploadHidden]>
+    	<input type='hidden' name='filename' value='[fileName]'>
+		<button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
+        <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
+		<button class='action [tickIcon]' name='qwik' value='activate' ></button>
 		
         <span class='help' hidden>{Once_you_have_uploaded...}</span>
-        <span class='tag {<v>status</v>}'><v>status</v></span>
-    	<v>title</v><br>
-    	<b><v>game</v></b> <v>time</v>
+        <span class='tag {[status]}'>[status]</span>
+    	[title]<br>
+    	<b>[game]</b> [time]
     </form>
 	</repeat>
 
@@ -56,14 +56,14 @@
 		<input type='hidden' name='qwik' value='upload'>
 		<select name="game" class="game">
         	<repeat id='games'>
-        	<option value='<v>game</v>' <v>selected</v>> <v>name</v></option>
+        	<option value='[game]' [selected]> [name]</option>
 			</repeat>
 		</select>
-		<input required	type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' <v>uploadDisabled</v>>
+		<input required	type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
 		<br>
-		<input required	name='title' type='text' class='center' placeholder='{prompt_title}' <v>uploadDisabled</v>>
+		<input required	name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
 		<br>
-		<input type="submit" value="Upload" name="submit" <v>uploadDisabled</v>>
+		<input type="submit" value="Upload" name="submit" [uploadDisabled]>
 		<br>
 	</form>
 <br>

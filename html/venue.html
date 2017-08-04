@@ -22,29 +22,29 @@
 	<h1>{qwik_game_org}</h1>
 
 	<div id='menu' class='menu'>
-	    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
-	    <a id='back-icon' class='<v>HOME_ICON</v>' href='<v>homeURL</v>'></a>
+	    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+	    <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
 	</div>
 
-	<p class='center'><v>message</v></p>
+	<p class='center'>[message]</p>
 
-	<h2><v>venueName</v></h2>
+	<h2>[venueName]</h2>
 
 	<div id='display-venue-div' >
 		<div class='center'>
-			<span class='huge'><v>playerCount</v></span><br>
+			<span class='huge'>[playerCount]</span><br>
 			{players_available}<br>
 			<br>
 		</div>
 
-		<p id='venue-display' class='center' <v>displayHidden</v>>
-			<v>venueAddress</v><br>
-			<v>venueSuburb</v><br>
-			<v>venueState</v>, 
-			<v>venueCountry</v><br>
-			<v>venuePhone</v><br>
-			<a href='<v>venueURL</v>' target='_blank'>homepage</a><br>
-			<v>venueNote</v><br>
+		<p id='venue-display' class='center' [displayHidden]>
+			[venueAddress]<br>
+			[venueSuburb]<br>
+			[venueState], 
+			[venueCountry]<br>
+			[venuePhone]<br>
+			<a href='[venueURL]' target='_blank'>homepage</a><br>
+			[venueNote]<br>
 			<button class='show-edit-venue' type='button' >Edit</button>
 			<br>
 			<br>
@@ -53,46 +53,46 @@
 
     <div id="map" class='center wide'></div>
 	<br>
-	<div id='edit-venue-div' class='center wide' <v>editHidden</v>>
-		<v>venueRevertDiv</v>
+	<div id='edit-venue-div' class='center wide' [editHidden]>
+		[venueRevertDiv]
 		<form id='edit-venue-form' action='venue.php' method='post' class='commit center vwide shadow venue'>
-			<input type='hidden' name='vid' value='<v>vid</v>'>
+			<input type='hidden' name='vid' value='[vid]'>
 			<input id='venue-game' name='game' class='center' type='hidden' 
-				value='<v>game</v>'>
-			<input type='hidden' name='lat' value='<v>venueLat</v>' id='venue-lat'>
-            <input type='hidden' name='lng' value='<v>venueLng</v>' id='venue-lng'>
+				value='[game]'>
+			<input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
+            <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
 
-			<v>repostInputs</v>
+			[repostInputs]
 			<span class='help' hidden>
 				{Please_correct...}<br>
 				{You_can_easily_revert...}
 			</span>
-			<button type='button' class='action help <v>INFO_ICON</v>'></button>
+			<button type='button' class='action help [INFO_ICON]'></button>
 			<p class='center'>
 				<input id='venue-name' name='name' class='center' 
-					value='<v>venueName</v>' placeholder='Name' autocomplete="off">
+					value='[venueName]' placeholder='Name' autocomplete="off">
 				<input id='venue-address' name='address' class='center geocode' 
-					value='<v>venueAddress</v>' placeholder='Address' autocomplete="off">
+					value='[venueAddress]' placeholder='Address' autocomplete="off">
 				<input id='venue-suburb' name='suburb' class='center geocode' 
-					value='<v>venueSuburb</v>' placeholder='<v>suburb</v>'  autocomplete="off">
+					value='[venueSuburb]' placeholder='[suburb]'  autocomplete="off">
 				<input id='venue-state' name='state' class='center geocode' 
-					value='<v>venueState</v>' placeholder='State/Provence' autocomplete="off">
+					value='[venueState]' placeholder='State/Provence' autocomplete="off">
 				<select id='venue-country' name='country' class='center geocode' required>
-					<v>countryOptions</v>
+					[countryOptions]
 				</select>
 				<br>
 				<br>
 				<input id='venue-phone' name='phone' class='center'
-					value='<v>venuePhone</v>' placeholder='phone'>
+					value='[venuePhone]' placeholder='phone'>
 				<input id='venue-url' name='url' type='url' class='center' 
-					value='<v>venueURL</v>' placeholder='http://'><br>
+					value='[venueURL]' placeholder='http://'><br>
 				<select id='tz' name='tz' class='center' required>
 					<option disabled value>{timezone}</option>
-					<option value='<v>venueTZ</v>'><v>venueTZ</v></option>
+					<option value='[venueTZ]'>[venueTZ]</option>
 				</select>
 				<br>
 				<br>
-				<textarea id='venue-note' name='note' class='center' placeholder='..notes...' ><v>venueNote</v></textarea>
+				<textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
 			</p>
 			<br>
 			<input id='venue-cancel' type='button' value='Cancel'>
@@ -110,9 +110,9 @@
         <p>{Here_are_a_few_things...}</p>
         <p><b>{Get_the_word_out}</b>
             {Encourage_your_rivals...}
-            <v>twitterLink</v>
-            <v>emailLink</v>
-            <v>facebookLink</v>
+            [twitterLink]
+            [emailLink]
+            [facebookLink]
         </p>
         <p>{Put_this_link...}</p>
         <p>{Reckon_your_ability...}</p>

@@ -24,26 +24,26 @@
     <form id='lang-form' action='index.php' method='post'>
         <select id='lang-select' name='lang' hidden>
             <repeat id='language'>
-                <option value='<v>code</v>' <v>selected</v>><v>language</v></option>
+                <option value='[code]' [selected]>[language]</option>
             </repeat>
         </select>
     </form>
-    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
-    <a id='lang-icon' class='<v>LANG_ICON</v>'></a>
-	<a id='back-icon' class='<v>HOME_ICON</v>' href='<v>homeURL</v>'></a>
-    <a id='logout-icon' class='<v>LOGOUT_ICON</v>' href='index.php?qwik=logout'></a>
+    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+    <a id='lang-icon' class='[LANG_ICON]'></a>
+	<a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
+    <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
 </div>
 
 	<h1>qwik game org</h1>
 
-    <h2><v>game</v> Venues</h2>
+    <h2>[game] Venues</h2>
 	
 	<div class='center'>
 		<form action='venues.php' method='post' class='repost'>
 		Showing # available 
 	    <select id='game' name="game" class="game repost">
 	        <repeat id='games'>
-	        <option value='<v>game</v>' <v>selected</v>> <v>name</v></option>
+	        <option value='[game]' [selected]> [name]</option>
 	        </repeat>
 	    </select> players.
 		</form>
@@ -56,9 +56,9 @@
 
 <div class='center shadow'>
     <p>
-	    <v>twitterLink</v>
-	    <v>emailLink</v>
-    	<v>facebookLink</v>
+	    [twitterLink]
+	    [emailLink]
+    	[facebookLink]
     </p>
 </div>
 

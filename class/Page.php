@@ -340,10 +340,10 @@ class Page {
     $variables    ArrayMap    variable name => $value
     ********************************************************************************/
     public function populate($html, $variables){
-        $pattern = '!(?s)\<v\>([^\<]+)\<\/v\>!';
+        $pattern = '!(?s)\[([^\]]+)\]!';
         $tr = function($match) use ($variables){
             $m = $match[1];
-            return isset($variables[$m]) ? $variables[$m] : "<v>$m</v>";
+            return isset($variables[$m]) ? $variables[$m] : "[$m]";
         };
         return  preg_replace_callback($pattern, $tr, $html);
     }

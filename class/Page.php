@@ -96,7 +96,7 @@ class Page {
             'flyerLink'  	=> FLYER_LNK,
             'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
             'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
-            'game'          => isset($game) ? $games["$game"] : '<v>game</v>'
+            'game'          => isset($game) ? $games["$game"] : '[game]'
         );
         
         if ($this->player != null){
@@ -117,8 +117,8 @@ class Page {
 	    $html = $this->replicate($html, $this->player, $this->req);
         $html = $this->populate($html, $this->variables());
 	    $html = $this->translate($html, $this->language);
-    //	} while (preg_match("\<v\>([^\<]+)\<\/v\>", $html) != 1);
-    //	} while (strstr($html, "<v>"));
+    //	} while (preg_match("\[([^\]]+)\]", $html) != 1);
+    //	} while (strstr($html, "["));
         return $html;
     }
 
@@ -314,11 +314,11 @@ class Page {
 
 
     /********************************************************************************
-    Return the html template after replacing <t>variables</t> with the requested
+    Return the html template after replacing {variables} with the requested
     language (or with the fallback language as required)
 
-    $html    String    html template with variables of the form <t>name</t>
-    $lang    String    language to replace <t>variables</t> with
+    $html    String    html template with variables of the form {name}
+    $lang    String    language to replace {variables} with
     $fb        String    fallback language for when a translation is missing
     ********************************************************************************/
     public function translate($html, $lang, $fb='en'){
@@ -334,9 +334,9 @@ class Page {
 
 
     /********************************************************************************
-    Return the html template after replacing <v>variables</v> with the values provided.
+    Return the html template after replacing [variables] with the values provided.
 
-    $html        String        html template with variables of the form <v>key</v>
+    $html        String        html template with variables of the form [key]
     $variables    ArrayMap    variable name => $value
     ********************************************************************************/
     public function populate($html, $variables){
@@ -352,7 +352,7 @@ class Page {
     /********************************************************************************
     Return the html template after replicating <r>elements</r> with data from $player & $req.
 
-    $html    String        html template with variables of the form <v>key</v>
+    $html    String        html template with variables of the form [key]
     $player    XML            player data
     $req    ArrayMap    url parameters from post&get
     ********************************************************************************/
@@ -542,7 +542,7 @@ class Page {
         global $games;
         if(!$player){ return; }
         $group = '';
-        $abilities = array('<t>very_weak</t>', '<t>weak</t>', '<t>competent</t>', '<t>strong</t>', '<t>very_strong</t>');
+        $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("region");
         foreach($reckoning as $reckon){
@@ -602,7 +602,7 @@ class Page {
                 'status'   => $status,
                 'fileName' => $upload['fileName'],
                 'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
-                'tickIcon' => $status == 'uploaded' ? '<v>TICK_ICON</v>' : '',
+                'tickIcon' => $status == 'uploaded' ? '[TICK_ICON]' : '',
                 'title'    => $upload['title'],
                 'game'     => $upload['game'],
                 'time'     => $upload['time']

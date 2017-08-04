@@ -47,7 +47,7 @@
 
 
     $variables = array(
-		'please_login'	=> $player ? '' : '<t>prompt_login</t>',
+		'please_login'	=> $player ? '' : '{prompt_login}',
     	'uploadHidden'	=> $player ? '' : 'hidden',
 		'uploadDisabled'	=> $player ? '' : 'disabled',
         'INFO_ICON'     => $INFO_ICON,

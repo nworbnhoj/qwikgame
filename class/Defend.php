@@ -49,7 +49,7 @@ class Defend {
         $fvInvite  = array($this,'fvInvite');
         $fvParity  = array($this,'fvParity');
         $fvPhone   = array($this,'fvPhone');
-        $fvID      = array($this,'fvID');
+        $fvPID     = array($this,'fvPID');
         $fvQwik    = array($this,'fvQwik');
         $fvToken   = array($this,'fvToken');
         $fvRepost  = array($this,'fvRepost');

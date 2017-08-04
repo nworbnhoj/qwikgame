@@ -115,7 +115,7 @@ class LocatePage extends Page {
         $variables['venueNote']      = $venue->note();
 //        $variables['venueRevertDiv'] = $venue->revertDiv();
         $variables['backLink']       = $backLink;
-        $variables['venueUrlLink']   = "<a href='$venueURL'><t>homepage</t></a>";
+        $variables['venueUrlLink']   = "<a href='$venueURL'>{homepage}</a>";
         
         return $variables;
     }

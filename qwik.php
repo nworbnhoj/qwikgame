@@ -30,15 +30,15 @@ const FLYER_URL = QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
 const TERMS_URL = QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';
 const PRIVACY_URL = QWIK_URL.'/pdf/qwikgame.org%20privacy%20policy.pdf';
 const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.QWIK_URL;
-const TWITTER_URL = 'https://twitter.com/intent/tweet?text=<t>tagline</t>&url='.QWIK_URL;
+const TWITTER_URL = 'https://twitter.com/intent/tweet?text={tagline}&url='.QWIK_URL;
 
 const EMAIL_IMG = "<img src='img/email.png' alt='email' class='socialmedia'>";
 const FACEBOOK_IMG = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
 const TWITTER_IMG = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
 
-const EMAIL_LNK = "<a href='mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20<t>tagline</t>&target=_blank'>".EMAIL_IMG."</a>";
+const EMAIL_LNK = "<a href='mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".EMAIL_IMG."</a>";
 const FACEBOOK_LNK = "<a href='".FACEBOOK_URL."' target='_blank'>".FACEBOOK_IMG."</a>";
-const FLYER_LNK = "<a href='".FLYER_URL."' target='_blank'><t>flyer</t></a>";
+const FLYER_LNK = "<a href='".FLYER_URL."' target='_blank'>{flyer}</a>";
 const TWITTER_LNK = "<a href='".TWITTER_URL."' target='_blank'>".TWITTER_IMG."</a>";
 
 const CC_ICON_LINK = "
@@ -57,7 +57,7 @@ const CC_ATTR_LINK = "
 const CC_LICENCE_LINK = "
     <a rel='license' 
         href='http://creativecommons.org/licenses/by/4.0/'>
-        <t>Creative Commons Attribution 4.0 International License</t>
+        {Creative Commons Attribution 4.0 International License}
     </a>";
 
 const REVERT_CHAR = '⟲';
@@ -92,29 +92,29 @@ $parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
 
 
 $games = array(
-    'backgammon'  => '<t>Backgammon</t>',
-    'badminton'   => '<t>Badminton</t>',
-    'boules'      => '<t>Boules</t>',
-    'billards'    => '<t>Billiards</t>',
-    'checkers'    => '<t>Checkers</t>',
-    'chess'       => '<t>Chess</t>',
-    'cycle'       => '<t>Cycle</t>',
-    'darts'       => '<t>Darts</t>',
-    'dirt'        => '<t>Dirt Biking</t>',
-    'fly'         => '<t>Fly Fishing</t>',
-    'go'          => '<t>Go</t>',
-    'golf'        => '<t>Golf</t>',
-    'lawn'        => '<t>Lawn Bowls</t>',
-    'mtnbike'     => '<t>Mountain_Biking</t>',
-    'pool'        => '<t>Pool</t>',
-    'racquetball' => '<t>Racquetball</t>',
-    'run'         => '<t>Run</t>',
-    'snooker'     => '<t>Snooker</t>',
-    'squash'      => '<t>Squash</t>',
-    'table'       => '<t>Table_Tennis</t>',
-    'tennis'      => '<t>Tennis</t>',
-    'tenpin'      => '<t>Tenpin</t>',
-    'walk'        => '<t>Walk</t>'
+    'backgammon'  => '{Backgammon}',
+    'badminton'   => '{Badminton}',
+    'boules'      => '{Boules}',
+    'billards'    => '{Billiards}',
+    'checkers'    => '{Checkers}',
+    'chess'       => '{Chess}',
+    'cycle'       => '{Cycle}',
+    'darts'       => '{Darts}',
+    'dirt'        => '{Dirt Biking}',
+    'fly'         => '{Fly Fishing}',
+    'go'          => '{Go}',
+    'golf'        => '{Golf}',
+    'lawn'        => '{Lawn Bowls}',
+    'mtnbike'     => '{Mountain_Biking}',
+    'pool'        => '{Pool}',
+    'racquetball' => '{Racquetball}',
+    'run'         => '{Run}',
+    'snooker'     => '{Snooker}',
+    'squash'      => '{Squash}',
+    'table'       => '{Table_Tennis}',
+    'tennis'      => '{Tennis}',
+    'tenpin'      => '{Tenpin}',
+    'walk'        => '{Walk}'
 );
 
 $status = array(
@@ -544,15 +544,15 @@ function parityStr($parity){
 
     $pf = floatval($parity);
     if($pf <= -2){
-        return "<t>much_weaker</t>";
+        return "{much_weaker}";
     } elseif($pf <= -1){
-        return "<t>weaker</t>";
+        return "{weaker}";
     } elseif($pf < 1){
-        return "<t>well_matched</t>";
+        return "{well_matched}";
     } elseif($pf < 2){
-        return "<t>stronger</t>";
+        return "{stronger}";
     } else {
-        return "<t>much_stronger</t>";
+        return "{much_stronger}";
     }
 }
 

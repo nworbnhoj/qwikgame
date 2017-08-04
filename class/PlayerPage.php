@@ -10,7 +10,7 @@ class PlayerPage extends Page {
     const SELECT_REGION = "
         <select name='region' class='region' required>
             <repeat id='reckon'>
-                <option value='<v>region</v>'><v>region</v></option>
+                <option value='[region]'>[region]</option>
             </repeat>
         </select>
     ";
@@ -121,7 +121,7 @@ class PlayerPage extends Page {
 
         $rnd = mt_rand(1,8);
         $message = $player->email() !== null ?
-            "<t>Tip$rnd</t>" :
+            "{Tip$rnd}" :
             'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
 
         $familiarCheckboxes = $this->familiarCheckboxes($player);

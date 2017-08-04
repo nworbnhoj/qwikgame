@@ -886,31 +886,31 @@ Requirements:
         $repTot = $repPos + $repNeg;
 
         if($repTot <= 0){
-            return '<t>good</t>';
+            return '{good}';
         } elseif($repTot < 5){
             if($repPos > $repNeg){
-                $word = '<t>good</t>';
+                $word = '{good}';
             } elseif($repPos < $repNeg){
-                $word = '<t>poor</t>';
+                $word = '{poor}';
             } else {
-                $word = '<t>mixed</t>';
+                $word = '{mixed}';
             }
         } else {
             $pct = $repPos/$repTot;
             if($pct >= 0.98){            // 1:50
-                $word = '<t>supurb</t>';
+                $word = '{supurb}';
             } elseif($pct > 0.95){        // 1:20
-                $word = '<t>excellent</t>';
+                $word = '{excellent}';
            } elseif($pct >= 0.90){     // 1:10
-                $word = '<t>great</t>';
+                $word = '{great}';
             } elseif($pct >= 0.80){        // 1:5
-                $word = '<t>good</t>';
+                $word = '{good}';
             } elseif ($pct >= 0.66){    // 1:3
-            $word = '<t>mixed</t>';
+            $word = '{mixed}';
             } elseif ($pct >= 0.50){    // 1:2
-                $word = '<t>poor</t>';
+                $word = '{poor}';
             } else {
-                $word = '<t>dreadful</t>';
+                $word = '{dreadful}';
             }
         }
         return $word;

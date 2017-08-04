@@ -57,7 +57,7 @@ class Translation {
 
     public function set($key, $lang, $phrase){
         if (array_key_exists($key, $this->phrases)){
-            $phraseElement = $this->xml->xpath("phrase[key='$key']")[0];
+            $phraseElement = $this->xml->xpath("phrase[@key='$key']")[0];
         } else {
             $this->phrases[$key] = array();
             $phraseElement = $this->xml->addChild('phrase');
@@ -65,7 +65,7 @@ class Translation {
         }
 
         $this->phrases[$key][$lang] = $phrase;
-        $langElement = $phraseElement->xpath("lang[key='$lang']")[0];
+        $langElement = $phraseElement->xpath("lang[@key='$lang']")[0];
         if(isset($langElement)){
             $langElement = $phrase;
         } else {

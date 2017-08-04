@@ -26,8 +26,8 @@ const VENUE_INPUT = "
     	    name='venue' 
     	    class='venue' 
     	    list='venue-squash'
-			value='<v>venue</v>' 
-    	    placeholder='<t>prompt_venue</t>' 
+			value='[venue]' 
+    	    placeholder='{prompt_venue}' 
     	    size='120'
     	    required>
 	";
@@ -35,43 +35,43 @@ const VENUE_INPUT = "
 const RIVAL_INPUT = "
         <input name='rival' 
             type='email' 
-            placeholder='<t>prompt_rival</t>' 
+            placeholder='{prompt_rival}' 
             required>
 	";
 	
 const REGION_SELECT = "
         <select name='region' class='region' required>
             <repeat id='reckon'>
-                <option value='<v>region</v>'><v>region</v></option>
+                <option value='[region]'>[region]</option>
             </repeat>
         </select>
     ";
 
 const ABILITY_SELECT = "
         <select name='ability' required>
-            <option value='4'><t>very_strong</t></option>
-            <option value='3'><t>strong</t></option>
-            <option value='2' selected><t>competent</t></option>
-            <option value='1'><t>weak</t></option>
-            <option value='0'><t>very_weak</t></option>
+            <option value='4'>{very_strong}</option>
+            <option value='3'>{strong}</option>
+            <option value='2' selected>{competent}</option>
+            <option value='1'>{weak}</option>
+            <option value='0'>{very_weak}</option>
         </select>
     ";
 
 const PARITY3_SELECT  = "
     	<select name='parity'>
-    	    <option value='matching' disabled><t>matching</t></option>
-    	    <option value='similar' selected><t>similar</t></option>
-    	    <option value='any'><t>any</t></option>
+    	    <option value='matching' disabled>{matching}</option>
+    	    <option value='similar' selected>{similar}</option>
+    	    <option value='any'>{any}</option>
     	</select>
 	";
 
 const PARITY5_SELECT = "
 		<select name='parity'>
-          <option value='+2'><t>much_stronger</t></option>
-          <option value='+1'><t>stronger</t></option>
-          <option value='0' selected><t>well_matched</t></option>
-          <option value='-1'><t>weaker</t></option>
-          <option value='-2'><t>much_weaker</t></option>
+          <option value='+2'>{much_stronger}</option>
+          <option value='+1'>{stronger}</option>
+          <option value='0' selected>{well_matched}</option>
+          <option value='-1'>{weaker}</option>
+          <option value='-2'>{much_weaker}</option>
         </select>
 	";
 	
@@ -106,7 +106,7 @@ Class TranslatePage extends Page {
 	    $this->pending = new Translation(self::$log, 'pending.xml', 'lang');
 	
 	    $gameOptions = $this->replicateGames(
-		    "<option value='<v>game</v>' <v>selected</v>><v>name</v></option>",
+		    "<option value='[game]' [selected]>[name]</option>",
 		    array('game' => 'squash')
         );
 
@@ -116,9 +116,9 @@ Class TranslatePage extends Page {
 
         $vars['tick']         = "<a class='".TICK_ICON."'></a>";
         $vars['cross']        = "<a class='".CROSS_ICON."'></a>";
-        $vars['termsLink']    = "<a href='".TERMS_URL."'><t>terms & conditions</t></a>";
-        $vars['privacyLink']  = "<a href='".PRIVACY_URL."'><t>privacy policy</t></a>";
-        $vars['flyerLink']    = "<a href='".FLYER_URL."'><t>flyer</t></a>";
+        $vars['termsLink']    = "<a href='".TERMS_URL."'>{terms & conditions}</a>";
+        $vars['privacyLink']  = "<a href='".PRIVACY_URL."'>{privacy policy}</a>";
+        $vars['flyerLink']    = "<a href='".FLYER_URL."'>{flyer}</a>";
         $vars['emailLink']    = EMAIL_LNK;
         $vars['facebookLink'] = FACEBOOK_LNK;
         $vars['twitterLink']  = TWITTER_LNK;

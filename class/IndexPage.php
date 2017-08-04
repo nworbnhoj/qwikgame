@@ -50,7 +50,7 @@ class IndexPage extends Page {
 
         $variables['playerCount']    = $this->countFiles('player');
         $variables['venueCount']     = $this->countFiles('venue');
-        $variables['venuesLink']     = "<a href='venues.php?game=squash'><t>venues</t></a>";
+        $variables['venuesLink']     = "<a href='venues.php?game=squash'>{venues}</a>";
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
         $variables['datalists']      = $this->datalists();

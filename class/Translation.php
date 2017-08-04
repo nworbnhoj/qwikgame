@@ -20,10 +20,8 @@ class Translation {
             $key = (string) $xmlPhrase['key'];
             if(!is_null($key)){
                 $phrase = array();
-                foreach($xmlPhrase->attributes() as $lang => $trans){
-                    if($lang !== 'key'){
-                        $phrase[$lang] = $trans;
-                    }
+                foreach($xmlPhrase->children() as $child){
+                    $phrase[$child->getName()] = (string) $child;
                 }            
                 $this->phrases[$key] = $phrase;
             }
@@ -32,8 +30,8 @@ class Translation {
         $xmlLanguages = $this->xml->xpath("language");
         foreach($xmlLanguages as $xmlLanguage){
             $key = (string) $xmlLanguage['key'];
-            if(!is_null($key)){
-                $this->languages[$key] = (string) $xmlLanguage;
+            if(!is_null($key)){   
+                $this->languages[$key] = html_entity_decode((string) $xmlLanguage);
             }
         }      
     }
@@ -59,17 +57,20 @@ class Translation {
 
     public function set($key, $lang, $phrase){
         if (array_key_exists($key, $this->phrases)){
-            $element = $this->xml->xpath("phrase='$key'")[0];
+            $phraseElement = $this->xml->xpath("phrase[key='$key']")[0];
         } else {
             $this->phrases[$key] = array();
-            $element = $this->xml->addChild('phrase');
+            $phraseElement = $this->xml->addChild('phrase');
+            $phraseElement['key'] = $key;
         }
 
         $this->phrases[$key][$lang] = $phrase;
-        if(isset($element[$lang])){
-            $element[$lang] = $phrase;
+        $langElement = $phraseElement->xpath("lang[key='$lang']")[0];
+        if(isset($langElement)){
+            $langElement = $phrase;
         } else {
-            $element->addAttribute($lang, $phrase);
+            $langElement = $phraseElement->addChild('lang', $phrase);
+            $langElement->addAttribute('key', $lang);
         }
     }
 
@@ -81,6 +82,27 @@ class Translation {
     
     public function phraseKeys(){
         return array_keys($this->phrases);
+    }
+    
+    
+    public function export(){
+        $xml = new SimpleXMLElement("<translation></translation>");
+    
+        foreach($this->languages as $key => $native){
+            $element = $xml->addChild('language');
+            $element->addAttribute($key, $native);        
+        }
+        
+        
+        foreach($this->phrases as $key => $phrase){            
+            $phraseElement = $xml->addChild('phrase');
+            $phraseElement->addAttribute('key', $key);
+            foreach ($phrase as $lang => $dict){
+                $phraseElement->addChild($lang, $dict);
+            }     
+        }
+        $xml->saveXML("translation1.xml");
+    
     }
 
 

@@ -3,7 +3,11 @@
 require_once 'qwik.php';
 require_once 'Page.php';
 
-const HEAD = "<head>
+const HEAD = "
+<!DOCTYPE html PUBLIC '-//W2C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
     <meta charset='UTF-8'>
     <style>
         table {width:100%; border:1px solid black; border-collapse: collapse;}
@@ -207,9 +211,9 @@ Class TranslatePage extends Page {
             foreach($this->files as $file){
                 $path = "lang/$lang/$file";
                 $htm = file_get_contents("html/$file");
-                $htm = $this->translate($html, $lang);   // sentences with differing word order
-                $htm = $this->populate($html, $this->variables); // select elements
-                $htm = $this->translate($html, $lang);     // translate all remaining
+                $htm = $this->translate($htm, $lang);   // sentences with differing word order
+                $htm = $this->populate($htm, $this->variables); // select elements
+                $htm = $this->translate($htm, $lang);     // translate all remaining
                 file_put_contents($path, $htm, LOCK_EX);
                 $html .= "<td><a href='$path'>$file</a></td>\n";
             }

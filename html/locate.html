@@ -23,9 +23,9 @@
     </div>
 
 	<div class='center'>
-		<p><t>Please_click_an...</t></p>
+		<p>{Please_click_an...}</p>
 
-    	<h3><t>Similar_Venues</t></h3>
+    	<h3>{Similar_Venues}</h3>
     	<form action='<v>repost</v>' method='post' class='transparent'>
 			<repeat id='repost'>
 			<input type='hidden' name='<v>name</v>' value='<v>value</v>'>
@@ -38,7 +38,7 @@
    	    </form>
 
 		<br>
-		<h3><t>New_Venue</t></h3>
+		<h3>{New_Venue}</h3>
 
 		<form id='edit-venue-form' action='locate.php' method='post' 
 			class='commit center vwide shadow venue'>
@@ -55,33 +55,33 @@
             <button type='button' class='action help <v>INFO_ICON</v>'></button>
             <p class='center'>
                 <input id='venue-name' name='name' class='center' 
-                    value='<v>venueName</v>' placeholder='<t>name</t>' autocomplete="off">
+                    value='<v>venueName</v>' placeholder='{name}' autocomplete="off">
                 <input id='venue-address' name='address' class='center geocode' 
-                    value='<v>venueAddress</v>' placeholder='<t>address</t>' autocomplete="off">
+                    value='<v>venueAddress</v>' placeholder='{address}' autocomplete="off">
                 <input id='venue-suburb' name='suburb' class='center geocode' 
-                    value='<v>venueSuburb</v>' placeholder='<t>suburb</t>'  autocomplete="off">
+                    value='<v>venueSuburb</v>' placeholder='{suburb}'  autocomplete="off">
                 <input id='venue-state' name='state' class='center geocode' 
-                    value='<v>venueState</v>' placeholder='<t>state/provence</t>' autocomplete="off">
+                    value='<v>venueState</v>' placeholder='{state/provence}' autocomplete="off">
                 <select id='venue-country' name='country' class='center geocode' required>
                     <v>countryOptions</v>
                 </select>
                 <br>
                 <br>
                 <input id='venue-phone' name='phone' class='center'
-                    value='<v>venuePhone</v>' placeholder='<t>phone</t>'>
+                    value='<v>venuePhone</v>' placeholder='{phone}'>
                 <input id='venue-url' name='url' type='url' class='center' 
                     value='<v>venueURL</v>' placeholder='http://'><br>
                 <select id='tz' name='tz' class='center' required>
-                    <option disabled value><t>timezone</t></option>
+                    <option disabled value>{timezone}</option>
                     <option value='<v>venueTZ</v>'><v>venueTZ</v></option>
                 </select>
                 <br>
                 <br>
-                <textarea id='venue-note' name='note' class='center' placeholder='<t>notes</t>' ><v>venueNote</v></textarea>
+                <textarea id='venue-note' name='note' class='center' placeholder='{notes}' ><v>venueNote</v></textarea>
             </p>
             <br>
-            <input id='venue-cancel' type='button' value='<t>Cancel</t>'>
-            <input id='venue-submit' type='submit' value='<t>Submit</t>'>
+            <input id='venue-cancel' type='button' value='{Cancel}'>
+            <input id='venue-submit' type='submit' value='{Submit}'>
             <br>
             <br>
         </form>
@@ -93,7 +93,7 @@
 
 
     <div id='footer' class='center'>
-        <t>license</t>
+        {license}
     </div>
 
 </body>

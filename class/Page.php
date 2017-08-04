@@ -323,11 +323,11 @@ class Page {
     ********************************************************************************/
     public function translate($html, $lang, $fb='en'){
         $translation = self::$translation;
-        $pattern = '!(?s)\<t\>([^\<]+)\<\/t\>!';
+        $pattern = '!(?s)\{([^\}]+)\}!';
         $tr = function($match) use ($translation, $lang, $fb){
             $key = $match[1];
             $phrase = $translation->phrase($key, $lang, $fb);
-            return empty($phrase) ? "<t>$key</t>" : $phrase;
+            return empty($phrase) ? '{'."$key".'}' : $phrase;
         };
         return  preg_replace_callback($pattern, $tr, $html);
     }

@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><t>venuePageTitle</t></title>
+	<title>{venuePageTitle}</title>
 	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="qwik.css">
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	<h1><t>qwik_game_org</t></h1>
+	<h1>{qwik_game_org}</h1>
 
 	<div id='menu' class='menu'>
 	    <a id='info-icon' class='<v>INFO_ICON</v>' href='info.php'></a>
@@ -33,7 +33,7 @@
 	<div id='display-venue-div' >
 		<div class='center'>
 			<span class='huge'><v>playerCount</v></span><br>
-			<t>players_available</t><br>
+			{players_available}<br>
 			<br>
 		</div>
 
@@ -64,8 +64,8 @@
 
 			<v>repostInputs</v>
 			<span class='help' hidden>
-				<t>Please_correct...</t><br>
-				<t>You_can_easily_revert...</t>
+				{Please_correct...}<br>
+				{You_can_easily_revert...}
 			</span>
 			<button type='button' class='action help <v>INFO_ICON</v>'></button>
 			<p class='center'>
@@ -87,7 +87,7 @@
 				<input id='venue-url' name='url' type='url' class='center' 
 					value='<v>venueURL</v>' placeholder='http://'><br>
 				<select id='tz' name='tz' class='center' required>
-					<option disabled value><t>timezone</t></option>
+					<option disabled value>{timezone}</option>
 					<option value='<v>venueTZ</v>'><v>venueTZ</v></option>
 				</select>
 				<br>
@@ -104,24 +104,24 @@
 
 
 
-    <h2><t>Jump_Start</t></h2>
+    <h2>{Jump_Start}</h2>
 
     <div class='center shadow'>
-        <p><t>Here_are_a_few_things...</t></p>
-        <p><b><t>Get_the_word_out</t></b>
-            <t>Encourage_your_rivals...</t>
+        <p>{Here_are_a_few_things...}</p>
+        <p><b>{Get_the_word_out}</b>
+            {Encourage_your_rivals...}
             <v>twitterLink</v>
             <v>emailLink</v>
             <v>facebookLink</v>
         </p>
-        <p><t>Put_this_link...</t></p>
-        <p><t>Reckon_your_ability...</t></p>
-        <p><b><a href='upload.php'><t>Upload</t></a></b><t>a_list_of...</t></p>
+        <p>{Put_this_link...}</p>
+        <p>{Reckon_your_ability...}</p>
+        <p><b><a href='upload.php'>{Upload}</a></b>{a_list_of...}</p>
     </div>
     <br>
     <br><br><br><br><br><br>
     <div id='footer' class='center'>
-        <t>license</t>
+        {license}
     </div>
 
 </body>

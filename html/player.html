@@ -27,10 +27,10 @@
 <body>
 
 
-<h1><t>qwik_game_org</t></h1>
+<h1>{qwik_game_org}</h1>
 
 <p class='center'>
-	<t>Welcome</t><br><br>
+	{Welcome}<br><br>
 	<b><v>playerName</v></b><br><br>
 	<v>message</v><br>
 </p><br>
@@ -43,10 +43,10 @@
 		href='player.php?qwik=logout'></a>
 </div>
 
-<h2 name='matches'><t>Matches</t></h2>
+<h2 name='matches'>{Matches}</h2>
 
 <p class='centre'>
-<b><t>keen</t> ⇨ <t>invitation</t> ⇨ <t>accepted</t> ⇨ <t>confirmed</t> ⇨ <t>feedback</t></b>
+<b>{keen} ⇨ {invitation} ⇨ {accepted} ⇨ {confirmed} ⇨ {feedback}</b>
 </p>
 
 
@@ -55,10 +55,10 @@
     <input type='hidden' name='id' value='<v>id</v>'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <button type='submit' name='qwik' value='delete' class='action <v>CROSS_ICON</v>'></button>
-    <span class='help' hidden><t>Unfortunately_cancelled...</t></span>
+    <span class='help' hidden>{Unfortunately_cancelled...}</span>
     <p class='record'>
-        <span class='tag cancelled'><s><t>cancelled</t></s></span>
-        <t>Cancelled_Game_at...</t>
+        <span class='tag cancelled'><s>{cancelled}</s></span>
+        {Cancelled_Game_at...}
     </p>
 </form>
 </repeat>
@@ -69,10 +69,10 @@
 	<input type='hidden' id='rep' name='rep' value='+1'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <button type='submit' name='qwik' value='feedback' class='action <v>TICK_ICON</v>'></button>
-    <span class='help' hidden><t>Your_feedback_is...</t></span>
+    <span class='help' hidden>{Your_feedback_is...}</span>
     <p class='record'>
-        <span class='tag feedback'><t>feedback</t></span>
-        <t>Feedback_Game_at...</t>
+        <span class='tag feedback'>{feedback}</span>
+        {Feedback_Game_at...}
 		<select name='parity'>
         	<option value='2'>much stronger</option>
 			<option value='1'>stronger</option>
@@ -81,7 +81,7 @@
 			<option value='-2'>much weaker</option>
 		</select>
         <button type='button' id='rep-thumb' class='<v>THUMB_UP_ICON</v>'></button>
-		<t>player</t>
+		{player}
     </p>
 </form>
 </repeat>
@@ -91,11 +91,11 @@
     <input type='hidden' name='id' value='<v>id</v>'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
-    <span class='help' hidden><t>Your_game_confirmed...</t></span>
+    <span class='help' hidden>{Your_game_confirmed...}</span>
     <p class='record'>
-        <span class='tag confirmed'><t>confirmed</t></span>
-        <t>Confirmed_Game_at...</t><br>
-		<input type='text' name='msg' placeholder='<t>prompt_msg</t>'>
+        <span class='tag confirmed'>{confirmed}</span>
+        {Confirmed_Game_at...}<br>
+		<input type='text' name='msg' placeholder='{prompt_msg}'>
 		<button type='submit' name='qwik' value='msg' class='thumb <v>SEND_ICON</v>'></button>
     </p>
 </form>
@@ -106,10 +106,10 @@
     <input type='hidden' name='id' value='<v>id</v>'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
-    <span class='help' hidden><t>Wait_for_confirmation...</t></span>
+    <span class='help' hidden>{Wait_for_confirmation...}</span>
     <p class='record'>
-        <span class='tag accepted'><t>accepted</t></span>
-        <t>Accepted_Game_at...</t>
+        <span class='tag accepted'>{accepted}</span>
+        {Accepted_Game_at...}
     </p>
 </form>
 </repeat>
@@ -120,10 +120,10 @@
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
     <button type='submit' name='qwik' value='accept' class='action <v>TICK_ICON</v>'></button>
-    <span class='help' hidden><t>Select_a_time...</t></span>
+    <span class='help' hidden>{Select_a_time...}</span>
     <p class='record'>
-        <span class='tag invitation'><t>invitation</t></span>
-        <t>Invitation_Game_at...</t>
+        <span class='tag invitation'>{invitation}</span>
+        {Invitation_Game_at...}
     </p>
 </form>
 </repeat>
@@ -133,12 +133,12 @@
 	<input type='hidden' name='id' value='<v>id</v>'>
 	<button type='button' class='action help <v>INFO_ICON</v>'></button>
 	<button type='submit' name='qwik' value='cancel' class='action <v>CROSS_ICON</v>'></button>
-	<span class='help' hidden><t>Available_rivals_have...</t></span>
+	<span class='help' hidden>{Available_rivals_have...}</span>
 	<p class='record'>
-		<span class='tag keen'><t>keen</t></span>
-		<t>Keen_Game_at...</t>
+		<span class='tag keen'>{keen}</span>
+		{Keen_Game_at...}
 		<br>
-		<span class='count nowrap'><v>rivalCount</v> <t>potential_rivals</t></span>
+		<span class='count nowrap'><v>rivalCount</v> {potential_rivals}</span>
 	</p>
 </form>
 </repeat>
@@ -152,21 +152,21 @@
 	<input type='hidden' name='repost' value='player.php'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
 	<span class='help' hidden>
-		<t>This_will_alert...</t>
+		{This_will_alert...}
 	</span>
 
 	<br>
 	<p>
-		<t>I_am_keen_to...</t>
+		{I_am_keen_to...}
 		<a id='map-icon' class='thumb <v>MAP_ICON</v>' href='venues.php?game=squash'></a>
 	</p>
 	<table class="time center wide">
 		<tr>
 			<th></th>
 			<th></th>
-			<th><t>am</t></th>
-			<th colspan=9><t>today_or_tomorrow</t></th>
-			<th><t>pm</t></th>
+			<th>{am}</th>
+			<th colspan=9>{today_or_tomorrow}</th>
+			<th>{pm}</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -228,13 +228,13 @@
 	<div id='invite-familiars' <v>familiarHidden</v>>
 		<span class='nowrap'>
 			<input type='checkbox'  autocomplete='off'>
-			<t>invite_familiar_rivals</t>
+			{invite_familiar_rivals}
 		</span>
 	</div>
 	<div id='familiar-invites' hidden>
 		<span class='nowrap'>
         	<input type='checkbox' name='invite-available' autocomplete='off' checked>
-			<t>invite_available_rivals</t>
+			{invite_available_rivals}
 		</span>
 		<hr>
 		<repeat id='rivalEmail'>	
@@ -245,16 +245,16 @@
 		</repeat>
 	</div>
 	<br>
-	<input type="submit" class='keen' value="<t>Submit</t>"><br>
+	<input type="submit" class='keen' value="{Submit}"><br>
 	<br>
 </form>
 
 
 <span id='available'></span>
 
-<h2 name='available' class='available center'><t>Available</t></h2>
+<h2 name='available' class='available center'>{Available}</h2>
 
-<p class='center'><t>...will_let_you_know...</t></p>
+<p class='center'>{...will_let_you_know...}</p>
 
 <repeat id='available'>
 <form class='center record shadow available'>
@@ -262,10 +262,10 @@
 	<button class='action cross fa <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
 	<input type='hidden' name='id' value='<v>id</v>'>
 	<span class='help' hidden>
-		<t>Make_yourself_available...</t>
+		{Make_yourself_available...}
 	</span>
 	<p class='record'>
-		<t>Available_game_with...</t><br>
+		{Available_game_with...}<br>
 		<v>weekSpan</v><br>
 	</p>
 </form>
@@ -277,15 +277,15 @@
     <input type='hidden' name='repost' value='player.php'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
 	<span class='help' hidden>
-		<p><t>Make_yourself_available...</t>
+		<p>{Make_yourself_available...}
 		</p>
 	</span>
 	<br>
 	<p>
-	<t>Let_me_know_when...</t>
+	{Let_me_know_when...}
 	<a id='map-icon' class='<v>MAP_ICON</v>' href='venues.php?game=squash'></a>
 	<span class='nowrap'>
-		<input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked><t>anytime</t>
+		<input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked>{anytime}
 	</span>
 	</p>
 	<div id='hr' style='display:none'>
@@ -335,9 +335,9 @@
 			<tr>
 				<th></th>
 				<th><<</th>
-				<th colspan='2'><t>am</t></th>
+				<th colspan='2'>{am}</th>
 				<th colspan='9'></th>
-				<th colspan='2'><t>pm</t></th>
+				<th colspan='2'>{pm}</th>
 				<th>>></th>
 			</tr>
 			<v>hourRows</v>
@@ -351,10 +351,10 @@
 
 <div id='familiar'></div>
 
-<h2><t>Familiar</t></h2>
+<h2>{Familiar}</h2>
 
 <p class="center">
-    <t>Familiar_players_help...</t>
+    {Familiar_players_help...}
 </p>
 
 <repeat id='familiar'>
@@ -362,7 +362,7 @@
 	<button class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
 	<input type='hidden' name='id' value='<v>id</v>'>
 	<p class='record'>
-		<t>email_is_familiar</t>
+		{email_is_familiar}
 	</p>
 </form>
 </repeat>
@@ -373,13 +373,13 @@
     <input type="hidden" name="qwik" value='familiar'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
     <span class='help' hidden>
-        <p><t>This_is_an_effective...</t></p>
-        <p><t>Your_rivals_will_not...</t></p>
+        <p>{This_is_an_effective...}</p>
+        <p>{Your_rivals_will_not...}</p>
     </span>
     <p>
-        <t>rival_is_a...</t>
+        {rival_is_a...}
 		<br>
-        <input type='submit' class='familiar' value='<t>Submit</t>'><br>
+        <input type='submit' class='familiar' value='{Submit}'><br>
     </p>
 </form>
 
@@ -388,40 +388,40 @@
 
 <div id='region'><br></div>
 
-<h2><t>Ability</t></h2>
+<h2>{Ability}</h2>
 
-<p class="center"><t>Reckon_your_own...</t></p>
+<p class="center">{Reckon_your_own...}</p>
 
 <repeat id='ability'>
 <form action='player.php#reckon' method='post' class='center record ability'>
 	<button class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
 	<input type='hidden' name='id' value='<v>id</v>'>
-	<p class='record'><t>parity_game_player...</t></p>
+	<p class='record'>{parity_game_player...}</p>
 </form>
 </repeat>
 
 <form action="player.php#region" method="post" class="commit center shadow ability">
 	<input type="hidden" name="qwik" value='region'>
     <button type='button' class='action help <v>INFO_ICON</v>'></button>
-	<span class='help' hidden><t>Be_as_specific...</t></span>
-	<p><t>I_am_a...</t><br>
-		<input type="submit" class='ability' value='<t>Submit</t>'>
+	<span class='help' hidden>{Be_as_specific...}</span>
+	<p>{I_am_a...}<br>
+		<input type="submit" class='ability' value='{Submit}'>
 	</p>
 </form>
 
 
-    <h2><t>Jump_Start</t></h2>
+    <h2>{Jump_Start}</h2>
 
     <div class='center shadow'>
-        <p><t>Here_are_a_few_things...</t></p>
-        <p><b><t>Get_the_word_out</t></b>
-            <t>Encourage_your_rivals...</t>
+        <p>{Here_are_a_few_things...}</p>
+        <p><b>{Get_the_word_out}</b>
+            {Encourage_your_rivals...}
             <v>twitterLink</v>
             <v>emailLink</v>
             <v>facebookLink</v>
         </p>
-        <p><t>Reckon_your_ability...</t></p>
-        <p><b><a href='upload.php'><t>Upload</t></a></b><t>a_list_of...</t></p>
+        <p>{Reckon_your_ability...}</p>
+        <p><b><a href='upload.php'>{Upload}</a></b>{a_list_of...}</p>
 		<br>
         </span>
     </div>
@@ -431,7 +431,7 @@
 <div id='history'><br></div>
 
 
-<h2 id='history' <v>historyHidden</v>><t>History</t></h2>
+<h2 id='history' <v>historyHidden</v>>{History}</h2>
 
 <repeat id='history'>
 <form action='player.php#matches'  method='post' class='center record shadow history'>
@@ -439,8 +439,8 @@
 	<button type='button' class='action help <v>INFO_ICON</v>'></button>
 	<button type='submit' class='action <v>CROSS_ICON</v>' name='qwik' value='delete'></button>
 	<input type='hidden' name='qwik' value='delete'>
-	<span class='help' hidden><t>You_can_disown...</t></span>
-	<p class='record'><t>History_game_at...</t></p>
+	<span class='help' hidden>{You_can_disown...}</span>
+	<p class='record'>{History_game_at...}</p>
 </form>
 </repeat>
 
@@ -448,31 +448,31 @@
 
 <div id='account'><br></div>
 
-<h2><t>Account</t></h2>
+<h2>{Account}</h2>
 
 <form class='center shadow commit account' action='player.php#account'>
 	<div>
 		<input type="hidden" name="qwik" value='account'>
 		<button type='button' class='action help <v>INFO_ICON</v>'></button>
-		<span class='help' hidden><t>Your_nickname_will...</t></span>
-		<h4><t>public</t></h4>
+		<span class='help' hidden>{Your_nickname_will...}</span>
+		<h4>{public}</h4>
 		<p>
-        <t>You_have_a...</t>
+        {You_have_a...}
         <br>
 		<v>thumbs</v>
 		<br>
-		<input name="nick" type="text" class='center' value="<v>playerNick</v>" placeholder='<t>nickname</t>'>
+		<input name="nick" type="text" class='center' value="<v>playerNick</v>" placeholder='{nickname}'>
 		<input name='url' type='url' class='center' value="<v>playerURL</v>"  placeholder='http://your.page.com'>
 		<br>
-		<input type="submit" class="account" value="<t>Submit</t>"><br>
+		<input type="submit" class="account" value="{Submit}"><br>
 	</div>
 </form>
 
 <form class='center shadow commit account' action='player.php#account'>
 	<input type="hidden" name="qwik" value='account'>
 	<button type='button' class='action help <v>INFO_ICON</v>'></button>
-	<h4><t>private</t></h4>
-	<span class='help' hidden><t>You_will_receive_validation...</t></span>
+	<h4>{private}</h4>
+	<span class='help' hidden>{You_will_receive_validation...}</span>
 	<input name="new-email" type="email" class='center' value="<v>playerEmail</v>" required><br>
 	<select name='lang'>
 		<repeat id='language'>
@@ -480,24 +480,24 @@
 		</repeat>
 	</select>
 	<br>
-	<input type="submit" class="account" value="<t>Submit</t>"><br>
+	<input type="submit" class="account" value="{Submit}"><br>
 </form>
 
 <form class="center shadow commit account"  onsubmit='return checkQuit()'>
 	<input type="hidden" name="qwik" value='account'>
 	<button type='button' class='action help <v>INFO_ICON</v>'></button>
-	<span class='help' hidden><t>Your_anonymous_match...</t></span>
-	<p class="center"><t>Quit_qwikgame.org</t></p>
+	<span class='help' hidden>{Your_anonymous_match...}</span>
+	<p class="center">{Quit_qwikgame.org}</p>
 	<input type="hidden" name="account" value='quit'>
-	<input id='quit-qwik' type="submit" class="account" value="<t>Quit</t>"><br>
-	<p class="center"><t>This_will_immediately...</t></p>
+	<input id='quit-qwik' type="submit" class="account" value="{Quit}"><br>
+	<p class="center">{This_will_immediately...}</p>
 </form>
 
 <br><br><br><br><br><br><br>
 
 
 <div id='footer' class='center'>
-	<t>license</t>
+	{license}
 </div>
 
 

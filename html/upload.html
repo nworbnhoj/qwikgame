@@ -27,11 +27,11 @@
 	<h1>qwik game org</h1>
 
 	<p class='center'>
-		<t>Upload_a_list...</t><br>
+		{Upload_a_list...}<br>
 		<v>please_login</v>
 	</p>
 
-	<h2><t>Upload_Rankings</t></h2>
+	<h2>{Upload_Rankings}</h2>
 
 	<repeat id='uploads'>
 	<form action='upload.php' method='post' class='center record <v>status</v>' <v>uploadHidden</v>>
@@ -40,8 +40,8 @@
         <button class='action <v>CROSS_ICON</v>' name='qwik' value='<v>crossAct</v>'></button>
 		<button class='action <v>tickIcon</v>' name='qwik' value='activate' ></button>
 		
-        <span class='help' hidden><t>Once_you_have_uploaded...</t></span>
-        <span class='tag <t><v>status</v></t>'><v>status</v></span>
+        <span class='help' hidden>{Once_you_have_uploaded...}</span>
+        <span class='tag {<v>status</v>}'><v>status</v></span>
     	<v>title</v><br>
     	<b><v>game</v></b> <v>time</v>
     </form>
@@ -61,26 +61,26 @@
 		</select>
 		<input required	type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' <v>uploadDisabled</v>>
 		<br>
-		<input required	name='title' type='text' class='center' placeholder='<t>prompt_title</t>' <v>uploadDisabled</v>>
+		<input required	name='title' type='text' class='center' placeholder='{prompt_title}' <v>uploadDisabled</v>>
 		<br>
 		<input type="submit" value="Upload" name="submit" <v>uploadDisabled</v>>
 		<br>
 	</form>
 <br>
 
-	<p class='center'><t>A_comma_delimited...</t></p>
+	<p class='center'>{A_comma_delimited...}</p>
 
-	<p class='center'><t>There_is_a_simple...</t></p>
+	<p class='center'>{There_is_a_simple...}</p>
 <br><br>
 
 <h2>How does this work?</h2>
 
 <div class='center shadow'>
-	<p><t>needs_a_unique...</t>
-	<p><t>The_sha256...</t></p>
-	<p><t>uses_match_feedback...</t></p>
-	<p><t>If_a_player_chooses...</t></p>
-	<p><t>When_player_rankings...</t></p>
+	<p>{needs_a_unique...}
+	<p>{The_sha256...}</p>
+	<p>{uses_match_feedback...}</p>
+	<p>{If_a_player_chooses...}</p>
+	<p>{When_player_rankings...}</p>
 </div>
 
 <br><br>
@@ -91,15 +91,15 @@
 <div class='center shadow left'>
 		<br>
 		<ol>
-			<li><t>Every_line_must...</t>
+			<li>{Every_line_must...}
 				<code class='csv'>
 					<span class='csv rank'>18</span>
 					<span class='csv comma'>,</span>
 					<span class='csv hash'>d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9</span>
 				</code>
 			</li>
-		    <li><t>The_first_line...</t></li>
-		    <li><t>The_file_size...</t></li>
+		    <li>{The_first_line...}</li>
+		    <li>{The_file_size...}</li>
 		</ol>
 		<br>
 	</div>
@@ -107,7 +107,7 @@
 <br><br><br><br><br><br>
 
 <div class='center'>
-	<t>license</t>
+	{license}
 </div>
 
 </body>

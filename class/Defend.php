@@ -35,8 +35,7 @@ class Defend {
 	
 	
 	private function examine($request){
-
-        $req = $this->scrub($request);     // remove all but a small set of safe characters.
+        $req = $this->declaw($request);
 
         $ability_opt = array('min_range' => 0, 'max_range' => 4);
         $parity_opt  = array('min_range' => -2, 'max_range' => 2);
@@ -220,21 +219,22 @@ class Defend {
     
     # SECURITY escape all parameters to prevent malicious code insertion
     # http://au.php.net/manual/en/function.htmlentities.php
-    function declaw($data){
-        if (is_array($data)){
-            foreach($data as $key => $val){
-                $data[$key] = declaw($val);
+    private function declaw($cat){
+        if (is_array($cat)){
+            $kitten = array();
+            foreach($cat as $key => $val){
+                $kitten[$this->declaw($key)] = $this->declaw($val);
             }
         } else {
-            $data = htmlentities(trim($data), ENT_QUOTES | ENT_HTML5, "UTF-8");
+            $kitten = htmlspecialchars(trim($cat), ENT_QUOTES | ENT_HTML5, "UTF-8");
         }
-        return $data;
+        return $kitten;
     }
 
 
     # SECURITY escape all parameters to prevent malicious code insertion
     # http://au.php.net/manual/en/function.htmlentities.php
-    function reclaw($data){
+    private function reclaw($data){
         if (is_array($data)){
             foreach($data as $key => $val){
                 $data[$key] = reclaw($val);

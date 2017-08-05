@@ -65,12 +65,11 @@ class Translation {
         }
 
         $this->phrases[$key][$lang] = $phrase;
-        $langElement = $phraseElement->xpath("lang[@key='$lang']")[0];
+        $langElement = $phraseElement->xpath($lang)[0];
         if(isset($langElement)){
             $langElement = $phrase;
         } else {
-            $langElement = $phraseElement->addChild('lang', $phrase);
-            $langElement->addAttribute('key', $lang);
+            $phraseElement->addChild($lang, $phrase);
         }
     }
 

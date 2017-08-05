@@ -169,9 +169,13 @@ alert('jjj');
 		return false;
 	});
 
-	$('#phrase').click(function(){
+	$('.phrase').click(function(){
 		$(this).nextAll('.edit-phrase').toggle();
 	});
+	
+    $('.pending').click(function(){
+        $(this).nextAll('.edit-phrase').toggle();
+    });
 
 	$('#tz').focus(function(){
 		var tzSelect = $('#tz');

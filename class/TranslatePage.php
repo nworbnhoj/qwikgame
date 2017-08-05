@@ -13,7 +13,7 @@ const HEAD = "
         table {width:100%; border:1px solid black; border-collapse: collapse;}
         td {height:auto; border:1px solid black;}
         tr:nth-child(odd) {background-color:LightGrey;}
-        div.pending {color:DarkGreen;}
+        .pending {color:DarkGreen;}
     </style>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
     <script src='qwik.js'></script>
@@ -152,10 +152,18 @@ Class TranslatePage extends Page {
         $html .= $this->translateTemplates();
         $html .= "<br><br><br>\n";
         $html .= "<h2>Edit Translations</h2>\n";
+        $html .= "<p>";
+        $html .= "Thank you for helping to translate qwikgame into your language.\n";
+        $html .= "<ul>";
+        $html .= "<li>When you {Submit} a phrase it will be displayed in <span class='pending'>green</span> until it is accepted.</li>\n";
+        $html .= "<li>Some phrases include a variable such as [game] or [venue] that must be included in the translated phrase. So for example <i>'My favourite game is [game].'</i> might be translated as <i>'Mi juego favorito es [game].'</i>.</li>\n";
+        $html .= "</ul>";
+        $html .= "</p>";
         $count = count($this->langs) + 1;
 
         foreach($this->phraseKeys as $key){
             $size = strlen(self::$translation->phrase($key, 'en'));
+            $size = $size > 100 ? 100 : $size;
             $html .= "<table style='width:100%' id='$key'>\n";
             $html .= "<tr>";
             $html .= "  <td colspan='2'><b>$key</b></td>";
@@ -228,7 +236,7 @@ Class TranslatePage extends Page {
 	    $phrase = self::$translation->phrase($key, $lang, '');
         $pending = $this->pending->phrase($key, $lang, '');
         $edit = is_null($pending) ? $phrase : $pending;
-        $hidden = is_null($phrase) ? "" : "hidden";
+        $hidden = is_null($phrase) && is_null($pending) ? "" : "hidden";
         $submit = self::$translation->phrase('Submit', $lang);
 
         $key = htmlentities($key, ENT_QUOTES | ENT_HTML5);

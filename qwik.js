@@ -389,4 +389,10 @@ function getRandomColor() {
     return color;
 }
 
+// https://stackoverflow.com/questions/26361649/how-to-handle-right-to-left-text-input-fields-the-right-way?noredirect=1&lq=1
+function rtl(element){   
+    if(element.setSelectionRange){
+        element.setSelectionRange(0,0);
+    }
+}
 

@@ -238,6 +238,8 @@ Class TranslatePage extends Page {
         $edit = is_null($pending) ? $phrase : $pending;
         $hidden = is_null($phrase) && is_null($pending) ? "" : "hidden";
         $submit = self::$translation->phrase('Submit', $lang);
+        $dir = self::$translation->direction($lang);
+        $rtl = ($dir === 'rtl') ? "dir='rtl' onkeyup='rtl(this)'" : '';
 
         $key = htmlentities($key, ENT_QUOTES | ENT_HTML5);
         $lang = htmlentities($lang, ENT_QUOTES | ENT_HTML5);
@@ -250,7 +252,7 @@ Class TranslatePage extends Page {
         $td .= "    <form action='translate.php#$key' method='post' class='edit-phrase' $hidden>\n";
         $td .= "      <input type='hidden' name='key' value='$key'>\n";
         $td .= "      <input type='hidden' name='lang' value='$lang'>\n";
-        $td .= "      <input type='text' name='phrase' value='$edit' size='$size'>\n";
+        $td .= "      <input type='text' name='phrase' value='$edit' size='$size' $rtl>\n";
         $td .= "      <input type='submit' value='$submit'>\n";
         $td .= "    </form>\n";
         $td .= "  </td>\n";

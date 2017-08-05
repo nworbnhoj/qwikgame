@@ -84,6 +84,11 @@ class Translation {
     }
     
     
+    public function direction($lang){
+        return $this->xml->xpath("$lang[@dir]")[0];
+    }
+    
+    
     public function export(){
         $xml = new SimpleXMLElement("<translation></translation>");
     

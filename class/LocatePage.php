@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Page.php';
+require_once 'Venue.php';
 
 
 class LocatePage extends Page {

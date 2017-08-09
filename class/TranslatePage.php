@@ -155,6 +155,7 @@ Class TranslatePage extends Page {
         $html .= "<p>";
         $html .= "Thank you for helping to translate qwikgame into your language.\n";
         $html .= "<ul>";
+        $html .= "<li>Click on an existing translation to correct it.</li>\n";
         $html .= "<li>When you {Submit} a phrase it will be displayed in <span class='pending'>green</span> until it is accepted.</li>\n";
         $html .= "<li>Some phrases include a variable such as [game] or [venue] that must be included in the translated phrase. So for example <i>'My favourite game is [game].'</i> might be translated as <i>'Mi juego favorito es [game].'</i>.</li>\n";
         $html .= "</ul>";

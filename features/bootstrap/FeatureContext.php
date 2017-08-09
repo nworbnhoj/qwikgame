@@ -1,12 +1,11 @@
 <?php
 
 
-require_once 'qwik.php';
-require_once 'logging.php';
-require_once 'PlayerPage.php';
-require_once 'Player.php';
-require_once 'Ranking.php';
-require_once 'LocatePage.php';
+require_once 'class/Logging.php';
+require_once 'class/PlayerPage.php';
+require_once 'class/Player.php';
+require_once 'class/Ranking.php';
+require_once 'class/LocatePage.php';
 
 
 use Behat\Behat\Tester\Exception\PendingException;
@@ -115,7 +114,11 @@ class FeatureContext implements Context
         Ranking::removePlayer($this->pid);
         $this->player = new Player($this->pid, $this->log, TRUE);
         $this->player->email($address);
+        $token = $this->player->token();
         $this->player->save(); 
+
+        $this->req['pid'] = $this->player->id();
+        $this->req['token'] = $token;
     }
     
      /**
@@ -196,6 +199,10 @@ class FeatureContext implements Context
         global $MONTH;
         $this->token = $this->player->token(Player::MONTH);
 	    $this->authURL = Page::authURL($address, $this->token);
+
+        $this->req['pid'] = $this->pid;
+        $this->req['email'] = $address;
+        $this->req['token'] = $this->token;
     }
     
     
@@ -207,8 +214,8 @@ class FeatureContext implements Context
     public function iSubmitThisFavourite()
     {
       	$this->req['qwik'] = 'available';
-      	$page = new PlayerPage();
       	$_GET = $this->req;
+        $page = new PlayerPage();
       	$this->id = $page->processRequest();
     }
 
@@ -220,8 +227,8 @@ class FeatureContext implements Context
     {
         $this->req['qwik'] = 'delete';
         $this->req['id'] = $this->id;
-      	$page = new PlayerPage();
       	$_GET = $this->req;
+        $page = new PlayerPage();
       	$this->id = $page->processRequest();
     }
 
@@ -239,8 +246,8 @@ class FeatureContext implements Context
     	parse_str($query, $req);    	
     	Assert::assertNotNull($req);
     	
-    	$page = new PlayerPage();
       	$_GET = $req;
+        $page = new PlayerPage();
       	$page->processRequest();
       	
         Assert::assertTrue(
@@ -277,7 +284,6 @@ class FeatureContext implements Context
         // Set this player as a familiar of the rival, with suitable parity
         $rivalToken = $rival->token();
         $rival->save();
-        $page = new PlayerPage();
         $_GET = array(
                 'pid'=>$rid,
                 'token'=>$rivalToken,
@@ -286,6 +292,7 @@ class FeatureContext implements Context
                 'rival'=>$this->email,
                 'parity'=>$rivalParity
             ); 
+        $page = new PlayerPage();
         $page->processRequest();
         
         foreach ($this->days as $day) {
@@ -458,7 +465,6 @@ class FeatureContext implements Context
 		}
 		
 		
-        $page = new PlayerPage();
         $playerAToken = $playerA->token();
         $playerA->save();
         $_GET = array(
@@ -469,6 +475,7 @@ class FeatureContext implements Context
                 'rep'=>'0',
                 'parity'=>$this->paritySymbol[$parity]
             );
+        $page = new PlayerPage();
         $page->processRequest();
         
         $playerA->save();

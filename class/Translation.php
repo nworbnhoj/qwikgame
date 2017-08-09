@@ -85,7 +85,8 @@ class Translation {
     
     
     public function direction($lang){
-        return $this->xml->xpath("$lang[@dir]")[0];
+        $element = $this->xml->xpath("language[@key='$lang']")[0];
+        return isset($element) ? $element['dir'] : '';
     }
     
     

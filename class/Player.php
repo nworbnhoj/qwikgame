@@ -207,7 +207,7 @@ class Player {
 
 
 
-    public function token($term){
+    public function token($term = Player::SECOND){
         $token = newToken(10);
         $nekot = $this->xml->addChild('nekot', $this->nekot($token));
         $nekot->addAttribute('exp', time() + $term);

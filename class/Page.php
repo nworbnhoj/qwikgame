@@ -202,7 +202,8 @@ class Page {
     ********************************************************************************/
     private function login($req){
         $openSession = false;
-        if (session_status() == PHP_SESSION_NONE) {
+        if (session_status() == PHP_SESSION_NONE
+        && !headers_sent()) {
             session_start();
         }
 
@@ -269,12 +270,22 @@ class Page {
             $this->logMsg("logout $pid");
             unset($_SESSION['pid']);
         }
-        setcookie("pid", "", time() - Player::DAY);
-        setcookie("token", "", time() - Player::DAY);
-        header("location: ".QWIK_URL);
+        if (!headers_sent()){
+            setcookie("pid", "", time() - Player::DAY);
+            setcookie("token", "", time() - Player::DAY);
+        }
+        $this->goHome();
     }
 
 
+    public function goHome(){
+        if (headers_sent()){
+            echo("Redirect failed.<br>");
+            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
+        } else {
+            header("location: ".QWIK_URL);
+        }
+    }
 
 
     /********************************************************************************

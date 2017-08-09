@@ -3,10 +3,6 @@
 const SUBDOMAIN = 'www';
 const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';
 
-include 'class/Player.php';
-include 'class/Venue.php';
-
-
 const BACK_ICON      = 'fa fa-chevron-circle-left icon';
 const COMMENT_ICON   = 'fa fa-comment-o comment';
 const CROSS_ICON     = 'fa fa-times-circle cross';
@@ -78,17 +74,6 @@ $back = '⤺';
 $bug = '☹';
 $logout = 'fa-power-off';
 
-$qwiks=array('accept','account','activate','available','cancel','deactivate','decline','delete','familiar','feedback','keen','login','logout','msg','recover','region','upload');
-
-$parityExp=array();
-$parityExp[-2]    = 'much weaker';
-$parityExp[-1] = 'weaker';
-$parityExp[0]    = 'well matched';
-$parityExp[1]    = 'stronger';
-$parityExp[2]    = 'much stronger';
-
-$parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
-
 
 
 $games = array(
@@ -130,20 +115,6 @@ $status = array(
 
 
 
-# SECURITY escape all parameters to prevent malicious code insertion
-# http://au.php.net/manual/en/function.htmlentities.php
-function SECURITYsanitizeHTML($data){
-    if (is_array($data)){
-        foreach($data as $key => $val){
-            $data[$key] = SECURITYsanitizeHTML($val);
-        }
-    } else {
-        $data = htmlentities(trim($data), ENT_QUOTES | ENT_HTML5);
-    }
-    return $data;
-}
-
-
 // https://stackoverflow.com/questions/5647461/how-do-i-send-a-post-request-with-php
 function post($url, $data){
     // use key 'http' even if you send the request to https://...
@@ -180,30 +151,6 @@ function tzDateTime($str='now', $tz){
     return new DateTime($str, timezone_open($tz));
 }
 
-
-
-////////// VALIDATE ////////////////////////////////////////
-
-
-
-
-/********************************************************************************
-Post an explanation of a failed post&get request to error.php
-
-$req    ArrayMap    url parameters from post&get
-$msg    String        An explanatory message to display to the user at error.php
-********************************************************************************/
-function invalidRequest($post, $get, $msg){
-    $str = '<b>POST</b><br>';
-    foreach($post as $key => $val){
-        $str .= "$key => $val<br>";
-    }
-    $str .= '<b>GET</b><br>';
-    foreach($get as $key => $val){
-        $str .= "$key => $val<br>";
-    }
-    header("Location: error.php?msg=<u>$msg</u><br>$str");
-}
 
 
 

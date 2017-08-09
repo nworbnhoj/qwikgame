@@ -22,6 +22,7 @@ class PlayerPage extends Page {
         $player = $this->player();
         if (is_null($player)){
             $this->logout();
+            return;
         }
 
         $this->game = $this->req('game');
@@ -48,10 +49,15 @@ class PlayerPage extends Page {
 
 
     public function processRequest(){
+        $player = $this->player();
+        if (is_null($player)){
+            $this->logout();
+            return;
+        }
+
         $qwik = $this->req('qwik');
         $action = $this->req('action');
         $req = $this->req();
-        $player = $this->player();
         $result = null;
         switch ($qwik) {
             case "available":

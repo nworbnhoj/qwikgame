@@ -1,6 +1,9 @@
 <?php 
 
+require_once 'qwik.php';
+
 class Defend {
+
 
     private $get;
     private $post;
@@ -184,9 +187,10 @@ class Defend {
     }
 
 
+    static private $parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
+
     private function fvParity($val){
-        global $parityFilter;
-        return in_array($val, $parityFilter) ? $val : FALSE;
+        return in_array($val, Defend::$parityFilter) ? $val : FALSE;
     }
 
 
@@ -205,9 +209,27 @@ class Defend {
     }
 
 
+    static private $qwiks = array(
+        'accept',
+        'account',
+        'activate',
+        'available',
+        'cancel',
+        'deactivate',
+        'decline',
+        'delete',
+        'familiar',
+        'feedback',
+        'keen',
+        'login',
+        'logout',
+        'msg',
+        'recover',
+        'region',
+        'upload');
+
     private function fvQwik($val){
-        global $qwiks;
-        return in_array($val, $qwiks) ? $val : FALSE;
+        return in_array($val, Defend::$qwiks) ? $val : FALSE;
     }
 
 

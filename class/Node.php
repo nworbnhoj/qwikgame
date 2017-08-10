@@ -9,12 +9,12 @@ class Node {
     private $date;
     private $orb;
 
-    public function __construct($rivalID, $log, $parity=NULL, $rely=NULL, $date=NULL){
+    public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
         $node = array();
         $this->rid = "$rivalID";
         $this->parity = "$parity";
         $this->rely = $this->rely($rely, $date);
-        $this->orb = new Orb($log);
+        $this->orb = new Orb();
     }
 
 

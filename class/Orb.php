@@ -1,16 +1,14 @@
 <?php
 
-
-include 'Node.php';
+require_once 'Node.php';
+require_once 'Player.php';
 
 
 class Orb {
 
     private $nodes;
-    private $log;
 
-    public function __construct($log){
-        $this->log = $log;
+    public function __construct(){
         $this->nodes = array();
     }
 
@@ -36,7 +34,7 @@ class Orb {
             $rid = $node->rid();
             $parity = $node->parity();
             $rely = $node->rely();
-            $str .= "\n$tabs" . snip($rid) . " $parity $rely";
+            $str .= "\n$tabs" . self::snip($rid) . " $parity $rely";
             $orb = $node->orb();
             if(!$orb->empty()){
                 $str .= $orb->print("$tabs\t");
@@ -47,7 +45,7 @@ class Orb {
 
 
     public function addNode($rid, $parity, $rely, $date){
-        $this->nodes[] = new Node($rid, $this->log, $parity, $rely, $date);
+        $this->nodes[] = new Node($rid, $parity, $rely, $date);
     }
 
 
@@ -80,7 +78,7 @@ longer chains by introducing a decay (=0.9) at each link.
 ********************************************************************************/
     public function parity($rivalID){
 //echo "<br>PARITYORB rid=$rivalID<br>\n";
-        $rivalID = subID($rivalID);
+        $rivalID = Player::subID($rivalID);
         $relyChainDecay = 0.7;
         $parityTotal = 0.0;
         $relyTotal = 0.0;
@@ -90,7 +88,7 @@ longer chains by introducing a decay (=0.9) at each link.
             $subOrb = $node->orb();
             if (($node->rid() != $rivalID)
             && (isset($subOrb))){
-//print_r("\n\t" . snip($node->rid()) . "\t" . snip($rivalID) . "\n");            
+//print_r("\n\t" . self::snip($node->rid()) . "\t" . self::snip($rivalID) . "\n");            
                 $subParity = $subOrb->parity($rivalID);
                 if (!is_null($subParity)){
                     $parity += $subParity * $relyChainDecay;
@@ -137,7 +135,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             if (!array_key_exists($rid, $inv)){
                 $inv[$rid] = array();
             }
-            $inv[$rid][] = new Node($pid, $this->log, -1 * $node->parity(), $node->rely());
+            $inv[$rid][] = new Node($pid, -1 * $node->parity(), $node->rely());
 
             // recursion
             $orb = $node->orb();
@@ -206,7 +204,7 @@ and by negating Parity.
             if(!$subOrb->empty()){
                 $crumbs = array_merge($subOrb->expand($crumbs, $game), $crumbs);
             } elseif(!in_array($rid, $crumbs)){
-                $rival = new Player($rid, $this->log);
+                $rival = new Player($rid);
                 if ($rival->exists()){
                     $subOrb->addNodes($rival->orb($game, $crumbs, FALSE));
                     $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
@@ -231,10 +229,10 @@ and by negating Parity.
     ********************************************************************************/
     public function crumbs($orbID){
         $crumbs = array();
-        $orbID = subID("$orbID");
+        $orbID = Player::subID("$orbID");
         $depth = $this->depth($orbID, $crumbs);
         foreach($this->nodes as $node){
-            $rid = subID($node->rid());
+            $rid = Player::subID($node->rid());
             if($depth <= $this->depth($rid, $crumbs)){    // use shortest path
                 $crumbs[$rid] = $orbID;
             }

@@ -10,13 +10,13 @@ class VenuePage extends Page {
         parent::__construct($template);
 
 	    $vid = $this->req('vid');
-        $this->venue = new Venue($vid, $this->log());
+        $this->venue = new Venue($vid);
     }
 
 
     public function serve(){
         if (!$this->venue->exists()){
-            header("Location: ".QWIK_URL);
+            header("Location: ".self::QWIK_URL);
             return;
 	    }
 	    parent::serve();
@@ -48,7 +48,7 @@ class VenuePage extends Page {
         $venueUrl = $this->venue->url();
         $venueState = (empty($this->venue->state())) ? $this->geolocate('region') : $this->venue->state();
         $venueCountry = $this->venue->country();
-        $backLink = "<a href='".QWIK_URL;
+        $backLink = "<a href='".self::QWIK_URL;
         $backlink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
         $vars = parent::variables();

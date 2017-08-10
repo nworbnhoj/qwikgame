@@ -1,6 +1,6 @@
 <?php
 
-
+require_once 'class/Qwik.php';
 require_once 'class/Logging.php';
 require_once 'class/PlayerPage.php';
 require_once 'class/Player.php';
@@ -533,11 +533,11 @@ print_r("$parity\t$parityEstimate\t$parityStr\n");
     public function aRankingFile($game, $fileName, $plyr)
     {
         $pid = $this->rivals[$plyr];
-        $path = Player::PATH_UPLOAD . "/" . $fileName . Ranking::CSV;
+        $path = Qwik::PATH_UPLOAD . "/" . $fileName . Ranking::CSV;
         $this->player = new Player($pid, $this->log);
         $ranking = $this->player->importRanking($game, $path, $fileName);
         $this->rankingFileName = "$fileName.xml";
-        $path = Ranking::PATH . "/$fileName.xml";
+        $path = Qwik::PATH_UPLOAD . "/$fileName.xml";
         $file = fopen($path, "r");
     }
 

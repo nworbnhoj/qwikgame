@@ -29,20 +29,20 @@ class PlayerPage extends Page {
 
         $vid = $this->req('vid');
         if(isset($vid)){
-            $this->venue = new Venue($vid, $this->log());
+            $this->venue = new Venue($vid);
         }
 
         if (isset($this->venue)){
             if($this->venue->addGame($this->game)){
                 $this->venue->save();
-                $this->logMsg("Added ".$this->game." to $vid");
+                self::logMsg("Added ".$this->game." to $vid");
             }
         } elseif (!is_null($this->req('venue'))){
             if(is_null($this->req('repost'))){
                 $this->req('repost', 'player.php');
             }
             $query = http_build_query($this->req());
-            header("location: ".QWIK_URL."/locate.php?$query");
+            header("location: ".self::QWIK_URL."/locate.php?$query");
             return;
         }
     }
@@ -101,7 +101,7 @@ class PlayerPage extends Page {
                         $token = $player->token(Player::MINUTE);
                         $newID = $player->id();
                         $query = "qwik=login&pid=$newID&token=$token'";
-                        header("Location: ".QWIK_URL."/player.php?$query");
+                        header("Location: ".self::QWIK_URL."/player.php?$query");
                     }
                 }
                 break;
@@ -154,8 +154,8 @@ class PlayerPage extends Page {
         $vars['playerURL']     = $player->url();
         $vars['playerEmail']   = $player->email();
         $vars['datalists']     = $this->datalists();
-        $vars['MAP_ICON']      = MAP_ICON;
-        $vars['SEND_ICON']     = SEND_ICON;
+        $vars['MAP_ICON']      = self::MAP_ICON;
+        $vars['SEND_ICON']     = self::SEND_ICON;
 
         return $vars;
     }
@@ -188,7 +188,7 @@ function qwikKeen($player, $req, $venue){
     || empty($venue)
     || empty($req['game'])
     || (empty($req['today']) && empty($req['tomorrow']))){
-        logMsg("qwikKeen() missing required arguments");
+        self::logMsg("qwikKeen() missing required arguments");
         return;
     }
 
@@ -334,7 +334,7 @@ function qwikAccount($player, $request){
         $player->quit();
         $this->logout();
 
-        header("Location: ".QWIK_URL);
+        header("Location: ".self::QWIK_URL);
     }
 }
 
@@ -465,7 +465,7 @@ function familiarCheckboxes($player){
 
         $msg  = "<p>\n";
         $msg .= "\tPlease click this link to change your qwikgame email address to $email:<br>\n";
-        $msg .= "\t<a href='".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>".QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
+        $msg .= "\t<a href='".self::QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>".self::QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
         $msg .= "\t\t\t</p>\n";
         $msg .= "<p>\n";
         $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";

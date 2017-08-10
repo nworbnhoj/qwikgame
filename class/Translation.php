@@ -1,19 +1,21 @@
 <?php
 
-class Translation {
 
-    private $log;
+require_once 'class/Qwik.php';
+
+class Translation extends Qwik {
+
     private $path;
     private $filename;
     private $xml;
     private $phrases = array();
     private $languages = array();
 
-    public function __construct($log, $filename='translation.xml', $path=''){
-        $this->log = $log;
+    public function __construct($filename='translation.xml', $path=''){
+        parent::__construct();
         $this->path = $path;
         $this->filename = $filename;
-        $this->xml = readXML($path, $filename, $log);
+        $this->xml = self::readXML($path, $filename);
         
         $xmlPhrases = $this->xml->xpath("phrase");
         foreach($xmlPhrases as $xmlPhrase){
@@ -35,11 +37,18 @@ class Translation {
             }
         }      
     }
-    
-    
+
+
     public function save(){
-        writeXML($this->xml, $this->path, $this->filename, $this->log);
+        return self::writeXML(
+            $this->xml,
+            $this->path,
+            $this->filename
+        );
     }
+
+    
+    
 
 
     public function phrase($key, $lang, $fallback='en'){

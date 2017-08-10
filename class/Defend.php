@@ -1,15 +1,17 @@
 <?php 
 
-require_once 'qwik.php';
+require_once 'class/Qwik.php';
 
-class Defend {
+class Defend extends Qwik {
 
 
     private $get;
     private $post;
     
 
-	public function __construct(){}
+	public function __construct(){
+        parent::__construct();
+	}
 	
 	
     
@@ -163,14 +165,12 @@ class Defend {
 
 
     private function fvGame($val){
-        global $games;
-        return array_key_exists($val, $games) ? $val : FALSE;
+        return array_key_exists($val, self::games()) ? $val : FALSE;
     }
 
 
     private function fvCountry($val){
-        global $countries;
-        return array_key_exists($val, $countries) ? $val : FALSE;
+        return array_key_exists($val, self::countries()) ? $val : FALSE;
     }
 
 

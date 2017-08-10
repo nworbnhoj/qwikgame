@@ -1,23 +1,23 @@
 <?php
 
+require_once 'class/Qwik.php';
 
-class Match {
+class Match extends Qwik {
 
     private $player;
     private $id;
     private $xml;
-    private $log;
 
     public function __construct($player, $xml){
+        parent::__construct();
         $this->player = $player;
         $this->xml = $xml;
-        $this->log = $player->log();
     }
 
 
     public function init($status, $game, $venue, $date, $hours, $id=NULL){
 
-        $id = is_null($id) ? newID() : $id;
+        $id = is_null($id) ? self::newID() : $id;
         $this->xml->addAttribute('id', $id);
 
         $this->xml->addAttribute('status', $status);
@@ -103,7 +103,7 @@ class Match {
 
 
     public function rival(){
-        return new Player($this->rid(), $this->log);
+        return new Player($this->rid());
     }
 
 
@@ -142,7 +142,7 @@ class Match {
 
     public function invite($rids, $interrupt=FALSE){
         foreach($rids as $rid){
-            $rival = new Player($rid, $this->log);
+            $rival = new Player($rid);
             if(!is_null($rival)
             && !empty($rival->email())){
                 $inviteHours = $this->hrs();
@@ -163,7 +163,7 @@ class Match {
 
 
     public function accept($acceptHour){
-        $rival = new Player($this->rival(), $this->log);
+        $rival = new Player($this->rival());
         if (!$rival){
             return FALSE;
         }
@@ -204,7 +204,7 @@ class Match {
 
     public function decline(){
         foreach($this->rids() as $rid){
-            $rival = new Player($rid, $this->log);
+            $rival = new Player($rid);
             if(isset($rival)){
                 $match = $rival->match($mid);
                 switch ($match->status()){
@@ -218,14 +218,14 @@ class Match {
                 }
                 $rival->save();
             }
-            removeElement($this->xml);
+            self::removeElement($this->xml);
         }
     }
 
 
     private function removeRival($rid){
         $rivalElement = $this->xml->xpath("rival='$rid'");
-        removeElement($rivalElement[0]);
+        self::removeElement($rivalElement[0]);
     }
 
 
@@ -237,7 +237,7 @@ class Match {
         $this->status('cancelled');
         $mid = $this->id();
         foreach($this->rids() as $rid){
-            $rival = new Player($rid, $this->log);
+            $rival = new Player($rid);
             if(isset($rival)){
                 $match = $rival->matchID($mid);
                 if($match->cancel()){
@@ -246,13 +246,13 @@ class Match {
                 }
             }
         }
-//        removeElement($this);
+//        self::removeElement($this);
     }
 
 
     public function conclude(){
         $tz = $this->tz();
-        $now = tzDateTime('now', $tz);
+        $now = self::tzDateTime('now', $tz);
         $dateStr = $this->date();
         $hour = max(hours($this->hrs()));
         switch ($this->status()){
@@ -261,8 +261,8 @@ class Match {
             case 'keen':
             case 'invitation':
             case 'accepted':
-                if ($now > tzDateTime("$dateStr $hour:00:00", $tz)){
-                    removeElement($this->xml);
+                if ($now > self::tzDateTime("$dateStr $hour:00:00", $tz)){
+                    self::removeElement($this->xml);
                 }
                 break;
             case 'confirmed':
@@ -281,7 +281,7 @@ class Match {
     
     
     public function remove(){
-        removeElement($this->xml);
+        self::removeElement($this->xml);
     }
 
 
@@ -290,7 +290,7 @@ class Match {
 
     public function variables(){
     //echo "<br>MATCHVARIABLES<br>";
-        global $THUMB_UP_ICON, $THUMB_DN_ICON, $games;
+        global $THUMB_UP_ICON, $THUMB_DN_ICON;
         $status = $this->status();
         $game = $this->game();
         $rival = $this->rival();
@@ -304,10 +304,10 @@ class Match {
             'venueName' => $this->venueName(),
             'status'    => $status,
             'game'      => $game,
-            'gameName'  => $games[$game],
-            'day'       => $this->day(),
+            'gameName'  => self::games()[$game],
+            'day'       => $this->mday(),
             'hrs'       => $hrs,
-            'hour'      => hr(hours($hrs)[0]),
+            'hour'      => self::hr(hours($hrs)[0]),
             'id'        => $this->id(),
             'parity'    => parityStr($parity),
             'rivalLink' => empty($rivalLink) ? '' : ", $rivalLink",
@@ -360,8 +360,8 @@ class Match {
 
 
 
-    public function day(){
-        return day($this->tz(), $this->date());
+    public function mday(){
+        return parent::day($this->tz(), $this->date());
     }
     
     
@@ -370,14 +370,14 @@ class Match {
         if (count($hrs) == 1){
             $hr = $hrs[0];
             $hourbit = pow(2, $hr);
-            $hour = hr($hr);
+            $hour = self::hr($hr);
             $html = "$hour<input type='hidden' name='hour' value='$hourbit'>";
         } else {
             $html = "<select name='hour' required>\n";
             $html .= "<option selected disabled>time</option>";
             foreach ($hrs as $hr){
                 $hourbit = pow(2, $hr);     // $hourbit =(2**$hr);    // php 5.6
-                $hour = hr($hr);
+                $hour = self::hr($hr);
                 $html .= "\t<option value='$hourbit'>$hour</option>\n";
             }
             $html .= "</select>\n";

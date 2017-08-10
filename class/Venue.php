@@ -1,26 +1,25 @@
 <?php
 
 
-class Venue {
-    const PATH_VENUE  = 'venue';
-    const XML = ".xml";
+require_once 'class/Qwik.php';
+
+class Venue extends Qwik {
 
 
     private $id;
     private $xml;
-    private $log;
 
-    public function __construct($id, $log, $forge=FALSE){
-        $this->log = $log;
+    public function __construct($id, $forge=FALSE){
+        parent::__construct();
         $path = self::PATH_VENUE;
         $ext = self::XML;
         if(!file_exists("$path/$id$ext") && $forge){
             $this->xml = $this->newXML($id);
             $this->save();
-	        $this->logMsg("login: new venue $id");
+	        self::logMsg("login: new venue $id");
         }
-        $this->xml = $this->readXML($id);
         $this->id = $this->xml['id'];
+        $this->xml = $this->retrieve($this->fileName());
     }
 
 
@@ -57,18 +56,22 @@ class Venue {
 
         return new SimpleXMLElement($record);
     }
-
-
+    
+    
+  
+    public function fileName(){
+        return $this->id() . self::XML;
+    }
 
 
     public function save(){
-        $cwd = getcwd();
-        $path = self::PATH_VENUE;
-        if(chdir($path)){
-            $vid = $this->id();
-            $ext = self::XML;
-            $fileName = "$vid$ext";
-            $this->xml->saveXML($fileName);
+        $result = self::writeXML(
+            $this->xml, 
+            self::PATH_VENUE, 
+            $this->fileName()
+        );
+        
+        if ($result){
             $games = $this->xml->xpath('game');
             foreach($games as $game){
                 if(!file_exists("$game/$filename")){
@@ -76,46 +79,22 @@ class Venue {
                         symlink("../$filename", $filename);
                         chdir("..");
                     } else {
-                       logMsg("Unable to create symlink for $game/$filename");
+                       self::logMsg("Unable to create symlink for $game/$filename");
                     }
                 }
             }
         }
-
-        if(!chdir($cwd)){
-            $this->logMsg("unable to change working directory to $cwd");
-        }
+        return $result;
     }
 
 
-    private function readXML($id){
-        $path = self::PATH_VENUE;
-        $ext = self::XML;
-        $fileName = "$id$ext";
-        if (!file_exists("$path/$fileName")) {
-            $this->logMsg("unable to read venue XML $id");
-            return null;
-        }
-
-        $cwd = getcwd();
-        if(!chdir($path)){
-            $this->logMsg("unable to change working directory to $path");
-            return null;
-        }
-
-        $xml = simpleXML_load_file($fileName);
-        if(!chdir($cwd)){
-            $this->logMsg("unable to change working directory to $cwd");
-        }
-        return $xml;
+    public function retrieve($fileName){
+        return self::readXML( 
+            self::PATH_VENUE, 
+            $fileName         
+        );
     }
-
-
-    private function logMsg($msg){
-        $this->log->lwrite($msg);
-        $this->log->lclose();
-    }
-
+ 
 
     public function exists(){
         return !is_null($this->xml);
@@ -249,12 +228,12 @@ class Venue {
             // temporarily replace oldfile with a symlink
             $path = self::VENUE_PATH;
             $ext = self::XML;
-            deleteFile("$path/$preID$ext");
+            self::deleteFile("$path/$preID$ext");
             symlink("$path/$newID$ext", "$path/$preID$ext");
 
             $pids = $this->xml->xpath('player');
             foreach($pids as $pid){
-                $player = new Player($pid, $log);
+                $player = new Player($pid);
                 $player->venueRename($preID, $newID);
                 $player->save();
             }
@@ -262,9 +241,9 @@ class Venue {
             $games = $this->xml->xpath('game');
             foreach($games as $game){
                 symlink("$path/$newID$ext", "$path/$game/$newID$ext");
-                deleteFile("$path/$game/$preID$ext");
+                self::deleteFile("$path/$game/$preID$ext");
             }
-            deleteFile("$path/$preID$ext");    // delete temp symlink
+            self::deleteFile("$path/$preID$ext");    // delete temp symlink
         }
     }
 
@@ -283,7 +262,7 @@ class Venue {
                 if ( strlen(trim($oldVal)) > 0){
                     $edit = $this->xml->addChild('edit', '');
                     $edit->addAttribute('date', $date);
-                    $edit->addAttribute('id', newID());
+                    $edit->addAttribute('id', self::newID());
                     $edit->addChild('key', $key);
                     $edit->addChild('val', $oldVal);
                 }
@@ -329,7 +308,7 @@ class Venue {
     ********************************************************************************/
     public function dateTime($str='now'){
     //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
-        return tzDateTime($str, $this->tz());
+        return self::tzDateTime($str, $this->tz());
     }
 
 
@@ -341,7 +320,7 @@ class Venue {
         foreach($edits as $edit){
             $date = $this->dateTime($edit->date['date']);
             if ($date > strtotime('+1 week')){
-                removeElement($edit);
+                self::removeElement($edit);
             }
         }
         $this->save();
@@ -373,10 +352,10 @@ class Venue {
         $elements = $this->xpath("/venue[game='$game']");
 
         foreach($elements as $element){
-            removeElement($element);
+            self::removeElement($element);
         }
         $vid = $this->id();
-        deleteFile("venue/$game/$vid.xml");
+        self::deleteFile("venue/$game/$vid.xml");
     }
 
 

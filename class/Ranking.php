@@ -1,9 +1,10 @@
 <?php
 
 
-class Ranking {
+require_once 'class/Qwik.php';
 
-    const PATH = 'uploads';
+class Ranking extends Qwik {
+
     const CSV = '.csv';
     const XML = '.xml';
     const RANK_PARITY = array(128=>-12.8, 64=>-6.4, 32=>-3.2, 16=>-1.6, 8=>-0.8, 4=>-0.4, 2=>-0.2, 1=>-0.1, -1=>0.1, -2=>0.2, -4=>0.4, -8=>0.8, -16=>1.6, -32=>3.2, -64=>6.4, -128=>12.8);
@@ -12,13 +13,12 @@ class Ranking {
     private $xml;
     public $transcript;
     public $valid;
-    private $log;
 
-    public function __construct($fileName, $log, $game=NULL, $path=NULL){
-        $this->log = $log;
+    public function __construct($fileName, $game=NULL, $path=NULL){
+        parent::__construct();
         $this->valid = true;
         if(is_null($path)){
-            $this->xml = $this->readXML($fileName);
+            $this->xml = $this->retrieve($fileName);
         } else {
             $this->xml = new SimpleXMLElement("<upload></upload>");
             $this->xml->addAttribute('fileName', $fileName);
@@ -29,16 +29,10 @@ class Ranking {
                 $this->xml->addAttribute('path', $path);
                 $this->xml->addAttribute('game', $game);
                 $this->xml->addAttribute('status', 'uploaded');
-                $this->xml->addAttribute('id', newID());
+                $this->xml->addAttribute('id', self::newID());
                 $this->save();
             }
         }
-    }
-
-
-    private function logMsg($msg){
-        $this->log->lwrite($msg);
-        $this->log->lclose();
     }
 
 
@@ -140,44 +134,22 @@ class Ranking {
             $this->transcript .= "$rankCount player rankings found<br>";
         }
     }
-
-
-    private function save(){
-        $cwd = getcwd();
-        $path = self::PATH;
-        if(chdir($path)){
-            $fileName = $this->fileName();
-            $ext = self::XML;
-            $this->xml->saveXML("$fileName$ext");
-            if(chdir($cwd)){
-                $this->logMsg("unable to change working directory to $cwd");
-                return false;
-            }
-        } else {
-            logMsg("unable to change working directory to $path");
-            return false;
-        }
-        return true;
+    
+    
+    public function save(){
+        return self::writeXML(
+            $this->xml, 
+            self::PATH_UPLOAD, 
+            $this->fileName()
+        );
     }
 
 
-    public function readXML($fileName){
-        $path = self::PATH;
-        if (!file_exists("$path/$fileName")) {
-            $this->logMsg("unable to read ranking XML " . snip($id));
-            return null;
-        }
-
-        $cwd = getcwd();
-        if(chdir($path)){
-            $xml = simpleXML_load_file($fileName);
-            if(!chdir($cwd)){
-                $this->logMsg("unable to change working directory to $cwd");
-            }
-            return $xml;
-        } else {
-            $this->logMsg("unable to change working directory to $path");
-        }
+    public function retrieve($fileName){
+        return self::readXML( 
+            self::PATH_UPLOAD, 
+            $fileName         
+        );
     }
 
 
@@ -228,7 +200,7 @@ class Ranking {
         }
 
         foreach($ranks as $anonRank => $anonID){
-            $anon = new Player($anonID, $this->log, TRUE);
+            $anon = new Player($anonID, TRUE);
 
             foreach($rankParity as $rnk => $parity){
                 $rivalRank = $anonRank + (int) $rnk;
@@ -249,18 +221,18 @@ class Ranking {
 
     $ranking    XML    The uploaded rankings
     ********************************************************************************/
-    public function extract($log){
+    public function extract(){
         $rankingID = $this->id();
         $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
-            $anon = new Player($anonID, $log);
+            $anon = new Player($anonID);
             if ($anon){
                 if(empty($anon->email())){
                     removePlayer($anonID);
                 } else {
                     $ranks = $anon->xpath("rank[@id=$rankingID]");
                     foreach($ranks as $rank){
-                        removeElement($rank);
+                        self::removeElement($rank);
                     }
                 }
             }
@@ -274,7 +246,7 @@ class Ranking {
     //echo "REMOVEPLAYER $id<br>";
         $path = 'player';
         $filename = "$id.xml";
-        return deleteFile("$path/$filename");
+        return self::deleteFile("$path/$filename");
     }
 
 

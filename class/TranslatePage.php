@@ -103,7 +103,7 @@ Class TranslatePage extends Page {
         $this->langs = self::$translation->languages();
         $this->phraseKeys = self::$translation->phraseKeys();
 
-	    $this->pending = new Translation(self::$log, 'pending.xml', 'lang');
+	    $this->pending = new Translation('pending.xml', 'lang');
 	
 	    $gameOptions = $this->replicateGames(
 		    "<option value='[game]' [selected]>[name]</option>",
@@ -114,14 +114,14 @@ Class TranslatePage extends Page {
 
         $vars = parent::variables();
 
-        $vars['tick']         = "<a class='".TICK_ICON."'></a>";
-        $vars['cross']        = "<a class='".CROSS_ICON."'></a>";
-        $vars['termsLink']    = "<a href='".TERMS_URL."'>{terms & conditions}</a>";
-        $vars['privacyLink']  = "<a href='".PRIVACY_URL."'>{privacy policy}</a>";
-        $vars['flyerLink']    = "<a href='".FLYER_URL."'>{flyer}</a>";
-        $vars['emailLink']    = EMAIL_LNK;
-        $vars['facebookLink'] = FACEBOOK_LNK;
-        $vars['twitterLink']  = TWITTER_LNK;
+        $vars['tick']         = "<a class='".self::TICK_ICON."'></a>";
+        $vars['cross']        = "<a class='".self::CROSS_ICON."'></a>";
+        $vars['termsLink']    = "<a href='".self::TERMS_URL."'>{terms & conditions}</a>";
+        $vars['privacyLink']  = "<a href='".self::PRIVACY_URL."'>{privacy policy}</a>";
+        $vars['flyerLink']    = "<a href='".self::FLYER_URL."'>{flyer}</a>";
+        $vars['emailLink']    = self::EMAIL_LNK;
+        $vars['facebookLink'] = self::FACEBOOK_LNK;
+        $vars['twitterLink']  = self::TWITTER_LNK;
         $vars['inputVenue']   = VENUE_INPUT;
         $vars['inputRival']   = RIVAL_INPUT;
         $vars['selectGame']   = $selectGame;

@@ -15,7 +15,7 @@ class IndexPage extends Page {
             parent::serve();
         } else {
             $query = http_build_query($this->req());
-		    header("Location: ".QWIK_URL."/player.php?$query");
+		    header("Location: ".self::QWIK_URL."/player.php?$query");
 	    }
 	}
 
@@ -68,7 +68,7 @@ class IndexPage extends Page {
 
         $msg  = "<p>\n";
         $msg .= "\tPlease click this link to \n";
-        $msg .= "\t<a href='".QWIK_URL."/$page?$query' target='_blank'>confirm</a>\n";
+        $msg .= "\t<a href='".self::QWIK_URL."/$page?$query' target='_blank'>confirm</a>\n";
         $msg .= " that you are available to play <b>$game</b> at <b>$venue</b>.<br>\n";
         $msg .= "\t\t\t</p>\n";
         $msg .= "<p>\n";

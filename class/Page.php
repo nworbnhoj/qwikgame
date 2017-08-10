@@ -1,12 +1,45 @@
 <?php
 
-require_once 'qwik.php';
-require_once 'Logging.php';
+require_once 'class/Qwik.php';
 require_once 'Defend.php';
 require_once 'Translation.php';
 
 
-class Page {
+class Page extends Qwik {
+
+    const BACK_ICON      = 'fa fa-chevron-circle-left icon';
+    const COMMENT_ICON   = 'fa fa-comment-o comment';
+    const CROSS_ICON     = 'fa fa-times-circle cross';
+    const EMAIL_ICON     = 'fa fa-envelope-o icon';
+    const FACEBOOK_ICON  = 'fa fa-facebook icon';
+    const FEMALE_ICON    = 'fa fa-female person';
+    const HOME_ICON      = 'fa fa-home icon';
+    const INFO_ICON      = 'fa fa-question-circle icon';
+    const RELOAD_ICON    = 'fa fa-refresh icon';
+    const LANG_ICON      = 'fa fa-globe icon';
+    const LOGOUT_ICON    = 'fa fa-power-off icon';
+    const MALE_ICON      = 'fa fa-male person';
+    const MAP_ICON       = 'fa fa-map-marker';
+    const SEND_ICON      = 'fa fa-send';
+    const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
+    const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
+    const TICK_ICON      = 'fa fa-check-circle tick';
+    const TWITTER_ICON   = 'fa fa-twitter icon';
+    
+    const FLYER_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
+    const TERMS_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';
+    const PRIVACY_URL  = self::QWIK_URL.'/pdf/qwikgame.org%20privacy%20policy.pdf';
+    const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.self::QWIK_URL;
+    const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.self::QWIK_URL;
+
+    const EMAIL_IMG    = "<img src='img/email.png' alt='email' class='socialmedia'>";
+    const FACEBOOK_IMG = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
+    const TWITTER_IMG  = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
+
+    const EMAIL_LNK = "<a href='mailto:?subject=".self::QWIK_URL."&body=".self::QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
+    const FACEBOOK_LNK = "<a href='".self::FACEBOOK_URL."' target='_blank'>".self::FACEBOOK_IMG."</a>";
+    const FLYER_LNK = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
+    const TWITTER_LNK = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
 
     static $translation;
 
@@ -20,7 +53,6 @@ class Page {
         // 'jp'=>'日本語'
     );
 
-    static $log;
     static $icons;
 
     private $template;
@@ -28,11 +60,12 @@ class Page {
     private $player;
     private $language;
 
-	public function __construct($template='index'){	    
+	public function __construct($template='index'){
+        parent::__construct();  
 	    $this->template = $template;
 	    
 	    if (is_null(self::$translation)){
-            self::$translation = new Translation(self::$log, 'translation.xml', 'lang');
+            self::$translation = new Translation('translation.xml', 'lang');
         }
        
         $defend = new Defend();
@@ -47,15 +80,12 @@ class Page {
 
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
-        self::$log = new Logging();
-        self::$log->lfile("/tmp/".SUBDOMAIN.".qwikgame.org.log");
-
         self::$icons = array (
-           'INFO_ICON' => INFO_ICON,
-            'TICK_ICON' => TICK_ICON,
-            'CROSS_ICON'=> CROSS_ICON,
-            'THUMB_UP_ICON' => THUMB_UP_ICON,
-            'THUMB_DN_ICON' => THUMB_DN_ICON
+           'INFO_ICON'      => self::INFO_ICON,
+            'TICK_ICON'     => self::TICK_ICON,
+            'CROSS_ICON'    => self::CROSS_ICON,
+            'THUMB_UP_ICON' => self::THUMB_UP_ICON,
+            'THUMB_DN_ICON' => self::THUMB_DN_ICON
         );
     }
 
@@ -73,35 +103,34 @@ class Page {
 
 
     public function variables(){
-        global $games;
         $game = $this->req('game');
         $vars = array(
-            'CROSS_ICON'    => CROSS_ICON,
-            'COMMENT_ICON'  => COMMENT_ICON,
-            'EMAIL_ICON'    => EMAIL_ICON,
-            'FACEBOOK_ICON' => FACEBOOK_ICON,
-            'FEMALE_ICON'   => FEMALE_ICON,
-            'HOME_ICON'     => HOME_ICON,
-            'INFO_ICON'     => INFO_ICON,
-		    'LANG_ICON'		=> LANG_ICON,
+            'CROSS_ICON'    => self::CROSS_ICON,
+            'COMMENT_ICON'  => self::COMMENT_ICON,
+            'EMAIL_ICON'    => self::EMAIL_ICON,
+            'FACEBOOK_ICON' => self::FACEBOOK_ICON,
+            'FEMALE_ICON'   => self::FEMALE_ICON,
+            'HOME_ICON'     => self::HOME_ICON,
+            'INFO_ICON'     => self::INFO_ICON,
+		    'LANG_ICON'		=> self::LANG_ICON,
             'LOGOUT_ICON'   => '',
-            'MALE_ICON'     => MALE_ICON,
-            'RELOAD_ICON'   => RELOAD_ICON,
-            'THUMB_DN_ICON' => THUMB_DN_ICON,
-            'THUMB_UP_ICON' => THUMB_UP_ICON,
-            'TWITTER_ICON'  => TWITTER_ICON,
-            'homeURL'       => QWIK_URL,
-            'termsURL'		=> TERMS_URL,
-            'privacyURL'	=> PRIVACY_URL,
-            'flyerLink'  	=> FLYER_LNK,
+            'MALE_ICON'     => self::MALE_ICON,
+            'RELOAD_ICON'   => self::RELOAD_ICON,
+            'THUMB_DN_ICON' => self::THUMB_DN_ICON,
+            'THUMB_UP_ICON' => self::THUMB_UP_ICON,
+            'TWITTER_ICON'  => self::TWITTER_ICON,
+            'homeURL'       => self::QWIK_URL,
+            'termsURL'		=> self::TERMS_URL,
+            'privacyURL'	=> self::PRIVACY_URL,
+            'flyerLink'  	=> self::FLYER_LNK,
             'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
             'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
-            'game'          => isset($game) ? $games["$game"] : '[game]'
+            'game'          => isset($game) ? self::games()["$game"] : '[game]'
         );
         
         if ($this->player != null){
             $vars['pid']         = $this->player->id();
-            $vars['LOGOUT_ICON'] = LOGOUT_ICON;
+            $vars['LOGOUT_ICON'] = self::LOGOUT_ICON;
         }
         
         return $vars;
@@ -146,10 +175,6 @@ class Page {
     }
 
 
-    public function log(){
-        return self::$log;
-    }
-
 
     public function qwik(){
         return $this->req('qwik');
@@ -171,25 +196,17 @@ class Page {
                     $msg .= $val;
             }
         }
-        self::$log->lwrite($msg);
-        self::$log->lclose();
+        self::log()->lwrite($msg);
+        self::log()->lclose();
     }
 
 
     function logEmail($type, $pid, $game='', $vid='', $time=''){
         $p = substr($pid, 0, 4);
         $msg = "email $type pid=$p $game $vid $time";
-        self::$log->lwrite($msg);
-        self::$log->lclose();
+        self::log()->lwrite($msg);
+        self::log()->lclose();
     }
-
-
-    function logMsg($msg){
-        self::$log->lwrite($msg);
-        self::$log->lclose();
-    }
-
-
 
 
 
@@ -224,25 +241,25 @@ class Page {
             return;                         // RETURN login fail
         }
                                             // OK playerID
-        $player = new Player($pid, self::$log, TRUE);
+        $player = new Player($pid, TRUE);
 
         if($openSession){
             return $player;
         }
 
         if($player->isValidToken($token)){                 // LOGIN with token
-            $this->logMsg("login: valid token " . snip($pid));
+            self::logMsg("login: valid token " . self::snip($pid));
             $_SESSION['pid'] = $pid;
             $_SESSION['lang'] = $player->lang();
             setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
             setcookie("token", $token, time() + 3*Player::MONTH, "/");
             return $player;
         } else {
-            $this->logMsg("login: invalid token pid=" . snip($pid));
+            self::logMsg("login: invalid token pid=" . self::snip($pid));
         }
 
         if(empty($player->email()) && isset($email)){            // LOGIN anon player
-            $this->logMsg("login: anon player " . snip($pid));
+            self::logMsg("login: anon player " . self::snip($pid));
             $token = $player->token(Player::MONTH);
             $player->save();
             setcookie("pid", $pid, time() + Player::DAY, "/");
@@ -254,7 +271,7 @@ class Page {
         }
 
         if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
-            $this->logMsg("login: recover account " . snip($pid));                 // todo rate limit
+            self::logMsg("login: recover account " . self::snip($pid));                 // todo rate limit
             $this->emailLogin($email, $pid, $player->token(Player::DAY));
         }
     }
@@ -267,7 +284,7 @@ class Page {
     public function logout(){
         if (isset($_SESSION) && isset($_SESSION['pid'])){
             $pid = $_SESSION['pid'];
-            $this->logMsg("logout $pid");
+            self::logMsg("logout $pid");
             unset($_SESSION['pid']);
         }
         if (!headers_sent()){
@@ -281,9 +298,9 @@ class Page {
     public function goHome(){
         if (headers_sent()){
             echo("Redirect failed.<br>");
-            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
+            echo("Please click on this link: <a href='".self::QWIK_URL."'>this link</a>");
         } else {
-            header("location: ".QWIK_URL);
+            header("location: ".self::QWIK_URL);
         }
     }
 
@@ -423,10 +440,9 @@ class Page {
 
 
     public function replicateGames($html, $req){
-        global $games;
         $default = $req['game'];
         $group = '';
-        foreach($games as $game => $name){
+        foreach(self::$game() as $game => $name){
             $vars = array(
                 'game'      => $game,
                 'name'      => $name,
@@ -492,7 +508,6 @@ class Page {
 
 
     private function replicateAvailable($player, $html){
-        global $games;
         if(!$player){ return; }
         $group = '';
         $playerVars = $this->playerVariables($player);
@@ -501,7 +516,7 @@ class Page {
             $game = (string) $avail['game'];
             $availVars = array(
                 'id'        => (string) $avail['id'],
-                'game'      => $games[$game],
+                'game'      => self::games()[$game],
                 'parity'    => (string) $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)
@@ -529,7 +544,6 @@ class Page {
 
 
     private function replicateFamiliar($player, $html){
-        global $games;
         if(!$player){ return; }
         $group = '';
         $playerVars = $this->playerVariables($player);
@@ -539,7 +553,7 @@ class Page {
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'email'     => $reckon['email'],
-                'game'      => $games["$game"],
+                'game'      => self::games()["$game"],
                 'parity'    => parityStr($reckon['parity'])
             );
             $vars = $playerVars + $reckonVars + self::$icons;
@@ -550,7 +564,6 @@ class Page {
 
 
     private function replicateAbility($player, $html){
-        global $games;
         if(!$player){ return; }
         $group = '';
         $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
@@ -562,7 +575,7 @@ class Page {
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'region'    => explode(',', $reckon['region'])[0],
-                'game'      => $games["$game"],
+                'game'      => self::games()["$game"],
                 'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + self::$icons;
@@ -613,7 +626,7 @@ class Page {
                 'status'   => $status,
                 'fileName' => $upload['fileName'],
                 'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
-                'tickIcon' => $status == 'uploaded' ? '[TICK_ICON]' : '',
+                'tickIcon' => $status == 'uploaded' ? self::TICK_ICON : '',
                 'title'    => $upload['title'],
                 'game'     => $upload['game'],
                 'time'     => $upload['time']
@@ -640,9 +653,8 @@ class Page {
 
 
     public function datalists(){
-        global $games;
         $datalists = '';
-        foreach($games as $game => $name){
+        foreach(self::games() as $game => $name){
             $datalists .= "\n\n" . $this->venueDatalist($game);
         }
         return $datalists;
@@ -650,7 +662,7 @@ class Page {
     
     
     private function venueDatalist($game){
-        $vids =venues($game);
+        $vids = self::venues($game);
         $datalist = "<datalist id='venue-$game'>\n";
         foreach($vids as $vid){
             $svid = Venue::svid($vid);
@@ -662,12 +674,11 @@ class Page {
 
 
     function gameOptions($game='squash', $tabs=''){
-        global $games;
         if(empty($game)){
             $game='squash';
         }
         $options = '';
-        foreach($games as $val => $txt){
+        foreach(self::games() as $val => $txt){
             if ($val == $game){
                 $selected = 'selected';
             } else {
@@ -706,12 +717,11 @@ class Page {
 
 
     function countryOptions($country, $tabs=''){
-        global $countries;
         if(!isset($country)){
             $country = $this->geolocate('countryCode');
         }
         $options = '';
-        foreach($countries as $val => $txt){
+        foreach(self::countries() as $val => $txt){
             $selected = ($val == $country) ? " selected" : '';
             $options .= "$tabs<option value='$val'$selected>$txt</option>\n";
         }
@@ -732,7 +742,7 @@ class Page {
     
     function similarVenues($description, $game){
         $similar = array();
-        $existingVenues = venues($game);
+        $existingVenues = self::venues($game);
         $words = explode(" ", $description, 5);
         array_walk($words, 'trim_value'); 
     
@@ -753,7 +763,7 @@ class Page {
 
     function listVenues($game){
     //echo "<br>LISTVENUES<br>";
-        $venues = venues($game);
+        $venues = self::venues($game);
         $sorted = array();
         foreach($venues as $vid){
             $venue = readVenueXML($vid);
@@ -771,7 +781,7 @@ class Page {
     private function venueLink($vid){
         $name = explode("|", $vid)[0];
         $boldName = $this->firstWordBold($name);
-        $url = QWIK_URL."/venue.php?vid=$vid";
+        $url = self::QWIK_URL."/venue.php?vid=$vid";
         $link = "<a href='$url'>$boldName</a>";
         return $link;
     }
@@ -810,7 +820,7 @@ class Page {
         $msg .= "\t\t\t</p>\n";
         $msg .= "\t\t\t<p>\n";
         $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-        $msg .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
+        $msg .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
         $msg .= "\t\t\tTerms & Conditions</a>";
         $msg .= "</p>\n";
         $msg .= "<p>\n";
@@ -842,7 +852,7 @@ class Page {
 
 
     function authURL($email, $token) {    
-        return QWIK_URL."/player.php?qwik=login&email=$email&token=$token";
+        return self::QWIK_URL."/player.php?qwik=login&email=$email&token=$token";
     }
 
 

@@ -1,0 +1,601 @@
+<?php
+
+
+require_once 'Logging.php';
+
+
+class Qwik {
+    const SUBDOMAIN = 'www';
+    const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';    
+
+    const PATH_VENUE  = 'venue';
+    const PATH_PLAYER = 'venue';
+    const PATH_LANG   = 'lang';
+    const PATH_HTML   = 'html';
+    const PATH_JSON   = 'json';
+    const PATH_UPLOAD = 'uploads';
+    
+    const XML = '.xml';
+
+
+    static private $games = array(
+        'backgammon'  => '{Backgammon}',
+        'badminton'   => '{Badminton}',
+        'boules'      => '{Boules}',
+        'billards'    => '{Billiards}',
+        'checkers'    => '{Checkers}',
+        'chess'       => '{Chess}',
+        'cycle'       => '{Cycle}',
+        'darts'       => '{Darts}',
+        'dirt'        => '{Dirt Biking}',
+        'fly'         => '{Fly Fishing}',
+        'go'          => '{Go}',
+        'golf'        => '{Golf}',
+        'lawn'        => '{Lawn Bowls}',
+        'mtnbike'     => '{Mountain_Biking}',
+        'pool'        => '{Pool}',
+        'racquetball' => '{Racquetball}',
+        'run'         => '{Run}',
+        'snooker'     => '{Snooker}',
+        'squash'      => '{Squash}',
+        'table'       => '{Table_Tennis}',
+        'tennis'      => '{Tennis}',
+        'tenpin'      => '{Tenpin}',
+        'walk'        => '{Walk}'
+    );
+
+
+    static private $countries = array(
+        'AF' => "Afghanistan",
+        'AX' => "Åland Islands",
+        'AL' => "Albania",
+        'DZ' => "Algeria",
+        'AS' => "American Samoa",
+        'AD' => "Andorra",
+        'AO' => "Angola",
+        'AI' => "Anguilla",
+        'AQ' => "Antarctica",
+        'AG' => "Antigua and Barbuda",
+        'AR' => "Argentina",
+        'AM' => "Armenia",
+        'AW' => "Aruba",
+        'AU' => "Australia",
+        'AT' => "Austria",
+        'AZ' => "Azerbaijan",
+        'BS' => "Bahamas",
+        'BH' => "Bahrain",
+        'BD' => "Bangladesh",
+        'BB' => "Barbados",
+        'BY' => "Belarus",
+        'BE' => "Belgium",
+        'BZ' => "Belize",
+        'BJ' => "Benin",
+        'BM' => "Bermuda",
+        'BT' => "Bhutan",
+        'BO' => "Bolivia, Plurinational State of",
+        'BQ' => "Bonaire, Sint Eustatius and Saba",
+        'BA' => "Bosnia and Herzegovina",
+        'BW' => "Botswana",
+        'BV' => "Bouvet Island",
+        'BR' => "Brazil",
+        'IO' => "British Indian Ocean Territory",
+        'BN' => "Brunei Darussalam",
+        'BG' => "Bulgaria",
+        'BF' => "Burkina Faso",
+        'BI' => "Burundi",
+        'KH' => "Cambodia",
+        'CM' => "Cameroon",
+        'CA' => "Canada",
+        'CV' => "Cape Verde",
+        'KY' => "Cayman Islands",
+        'CF' => "Central African Republic",
+        'TD' => "Chad",
+        'CL' => "Chile",
+        'CN' => "China",
+        'CX' => "Christmas Island",
+        'CC' => "Cocos (Keeling) Islands",
+        'CO' => "Colombia",
+        'KM' => "Comoros",
+        'CG' => "Congo",
+        'CD' => "Congo, the Democratic Republic of the",
+        'CK' => "Cook Islands",
+        'CR' => "Costa Rica",
+        'CI' => "Côte d'Ivoire",
+        'HR' => "Croatia",
+        'CU' => "Cuba",
+        'CW' => "Curaçao",
+        'CY' => "Cyprus",
+        'CZ' => "Czech Republic",
+        'DK' => "Denmark",
+        'DJ' => "Djibouti",
+        'DM' => "Dominica",
+        'DO' => "Dominican Republic",
+        'EC' => "Ecuador",
+        'EG' => "Egypt",
+        'SV' => "El Salvador",
+        'GQ' => "Equatorial Guinea",
+        'ER' => "Eritrea",
+        'EE' => "Estonia",
+        'ET' => "Ethiopia",
+        'FK' => "Falkland Islands (Malvinas)",
+        'FO' => "Faroe Islands",
+        'FJ' => "Fiji",
+        'FI' => "Finland",
+        'FR' => "France",
+        'GF' => "French Guiana",
+        'PF' => "French Polynesia",
+        'TF' => "French Southern Territories",
+        'GA' => "Gabon",
+        'GM' => "Gambia",
+        'GE' => "Georgia",
+        'DE' => "Germany",
+        'GH' => "Ghana",
+        'GI' => "Gibraltar",
+        'GR' => "Greece",
+        'GL' => "Greenland",
+        'GD' => "Grenada",
+        'GP' => "Guadeloupe",
+        'GU' => "Guam",
+        'GT' => "Guatemala",
+        'GG' => "Guernsey",
+        'GN' => "Guinea",
+        'GW' => "Guinea-Bissau",
+        'GY' => "Guyana",
+        'HT' => "Haiti",
+        'HM' => "Heard Island and McDonald Islands",
+        'VA' => "Holy See (Vatican City State)",
+        'HN' => "Honduras",
+        'HK' => "Hong Kong",
+        'HU' => "Hungary",
+        'IS' => "Iceland",
+        'IN' => "India",
+        'ID' => "Indonesia",
+        'IR' => "Iran, Islamic Republic of",
+        'IQ' => "Iraq",
+        'IE' => "Ireland",
+        'IM' => "Isle of Man",
+        'IL' => "Israel",
+        'IT' => "Italy",
+        'JM' => "Jamaica",
+        'JP' => "Japan",
+        'JE' => "Jersey",
+        'JO' => "Jordan",
+        'KZ' => "Kazakhstan",
+        'KE' => "Kenya",
+        'KI' => "Kiribati",
+        'KP' => "Korea, Democratic People's Republic of",
+        'KR' => "Korea, Republic of",
+        'KW' => "Kuwait",
+        'KG' => "Kyrgyzstan",
+        'LA' => "Lao People's Democratic Republic",
+        'LV' => "Latvia",
+        'LB' => "Lebanon",
+        'LS' => "Lesotho",
+        'LR' => "Liberia",
+        'LY' => "Libya",
+        'LI' => "Liechtenstein",
+        'LT' => "Lithuania",
+        'LU' => "Luxembourg",
+        'MO' => "Macao",
+        'MK' => "Macedonia, the former Yugoslav Republic of",
+        'MG' => "Madagascar",
+        'MW' => "Malawi",
+        'MY' => "Malaysia",
+        'ML' => "Mali",
+        'MT' => "Malta",
+        'MH' => "Marshall Islands",
+        'MQ' => "Martinique",
+        'MR' => "Mauritania",
+        'MU' => "Mauritius",
+        'YT' => "Mayotte",
+        'MX' => "Mexico",
+        'FM' => "Micronesia, Federated States of",
+        'MD' => "Moldova, Republic of",
+        'MC' => "Monaco",
+        'MN' => "Mongolia",
+        'ME' => "Montenegro",
+        'MS' => "Montserrat",
+        'MA' => "Morocco",
+        'MZ' => "Mozambique",
+        'MM' => "Myanmar",
+        'NA' => "Namibia",
+        'NR' => "Nauru",
+        'NP' => "Nepal",
+        'NL' => "Netherlands",
+        'NC' => "New Caledonia",
+        'NZ' => "New Zealand",
+        'NI' => "Nicaragua",
+        'NE' => "Niger",
+        'NG' => "Nigeria",
+        'NU' => "Niue",
+        'NF' => "Norfolk Island",
+        'MP' => "Northern Mariana Islands",
+        'NO' => "Norway",
+        'OM' => "Oman",
+        'PK' => "Pakistan",
+        'PW' => "Palau",
+        'PS' => "Palestinian Territory, Occupied",
+        'PA' => "Panama",
+        'PG' => "Papua New Guinea",
+        'PY' => "Paraguay",
+        'PE' => "Peru",
+        'PH' => "Philippines",
+        'PN' => "Pitcairn",
+        'PL' => "Poland",
+        'PT' => "Portugal",
+        'PR' => "Puerto Rico",
+        'QA' => "Qatar",
+        'RE' => "Réunion",
+        'RO' => "Romania",
+        'RU' => "Russian Federation",
+        'RW' => "Rwanda",
+        'BL' => "Saint Barthélemy",
+        'SH' => "Saint Helena, Ascension and Tristan da Cunha",
+        'KN' => "Saint Kitts and Nevis",
+        'LC' => "Saint Lucia",
+        'MF' => "Saint Martin (French part)",
+        'PM' => "Saint Pierre and Miquelon",
+        'VC' => "Saint Vincent and the Grenadines",
+        'WS' => "Samoa",
+        'SM' => "San Marino",
+        'ST' => "Sao Tome and Principe",
+        'SA' => "Saudi Arabia",
+        'SN' => "Senegal",
+        'RS' => "Serbia",
+        'SC' => "Seychelles",
+        'SL' => "Sierra Leone",
+        'SG' => "Singapore",
+        'SX' => "Sint Maarten (Dutch part)",
+        'SK' => "Slovakia",
+        'SI' => "Slovenia",
+        'SB' => "Solomon Islands",
+        'SO' => "Somalia",
+        'ZA' => "South Africa",
+        'GS' => "South Georgia and the South Sandwich Islands",
+        'SS' => "South Sudan",
+        'ES' => "Spain",
+        'LK' => "Sri Lanka",
+        'SD' => "Sudan",
+        'SR' => "Suriname",
+        'SJ' => "Svalbard and Jan Mayen",
+        'SZ' => "Swaziland",
+        'SE' => "Sweden",
+        'CH' => "Switzerland",
+        'SY' => "Syrian Arab Republic",
+        'TW' => "Taiwan, Province of China",
+        'TJ' => "Tajikistan",
+        'TZ' => "Tanzania, United Republic of",
+        'TH' => "Thailand",
+        'TL' => "Timor-Leste",
+        'TG' => "Togo",
+        'TK' => "Tokelau",
+        'TO' => "Tonga",
+        'TT' => "Trinidad and Tobago",
+        'TN' => "Tunisia",
+        'TR' => "Turkey",
+        'TM' => "Turkmenistan",
+        'TC' => "Turks and Caicos Islands",
+        'TV' => "Tuvalu",
+        'UG' => "Uganda",
+        'UA' => "Ukraine",
+        'AE' => "United Arab Emirates",
+        'GB' => "United Kingdom",
+        'US' => "United States",
+        'UM' => "United States Minor Outlying Islands",
+        'UY' => "Uruguay",
+        'UZ' => "Uzbekistan",
+        'VU' => "Vanuatu",
+        'VE' => "Venezuela, Bolivarian Republic of",
+        'VN' => "Viet Nam",
+        'VG' => "Virgin Islands, British",
+        'VI' => "Virgin Islands, U.S.",
+        'WF' => "Wallis and Futuna",
+        'EH' => "Western Sahara",
+        'YE' => "Yemen",
+        'ZM' => "Zambia",
+        'ZW' => "Zimbabwe"
+    );
+    
+    
+    static $log;
+    
+    public function __construct(){}
+    
+    
+    // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
+    static function initStatic(){
+        self::$log = new Logging();
+        self::$log->lfile("/tmp/".self::SUBDOMAIN.".qwikgame.org.log");
+    }
+    
+
+
+    static public function games(){
+        return self::$games;
+    }
+    
+    
+
+    static public function countries(){
+        return self::$countries;
+    }
+    
+    
+    
+    
+    /*****************************************************************
+        Logging Service functions
+    *****************************************************************/
+    
+    
+
+    static public function log(){
+        return self::$log;
+    }
+    
+    
+    static public function logMsg($msg){
+        self::$log->lwrite($msg);
+        self::$log->lclose();
+    }
+    
+    
+    static public function snip($str){
+        return substr($str, 0, 4);
+    }
+
+    
+    
+    /*****************************************************************
+        File System Helper functions
+    *****************************************************************/
+    
+    static public function deleteFile($file){
+        if (is_writable($file)){
+            return unlink($file);
+        }
+        return false;
+    }
+
+    
+    
+    // https://stackoverflow.com/questions/720751/how-to-read-a-list-of-files-from-a-folder-using-php
+    static public function fileList($dir){
+        $fileList = array();
+        if (is_dir($dir)) {
+            if ($dh = opendir($dir)) {
+                while (($file = readdir($dh)) !== false) {
+                    $fileList[] = $file;
+                }
+                closedir($dh);
+            }
+        }
+        return $fileList;
+    }
+
+
+    static public function venues($game=null){
+        $venues = array();
+        $path = SELF::PATH_VENUE;
+        $path .= $game ? "/$game" : '';
+        $fileList = self::fileList($path);
+        foreach($fileList as $file){
+            if (substr_count($file, '.xml') > 0){
+                $venues[] = str_replace('.xml', '', $file);
+            }
+        }
+        return $venues;
+    }
+
+
+    static public function pids($game){
+        $pids = array();
+        $fileList = self::fileList(SELF::PATH_PLAYER);
+        foreach($fileList as $file){
+            if (substr_count($file, '.xml') > 0){
+                $pids[] = str_replace('.xml', '', $file);
+            }
+       }
+        return $pids;
+    }
+    
+    
+    /*****************************************************************
+        XML Helper functions
+    *****************************************************************/
+    
+    static public function writeXML($xml, $path, $filename){
+        $cwd = getcwd();
+        if(chdir($path)){
+            $xml->saveXML($filename);
+            if(!chdir($cwd)){
+                self::logMsg("failed to change working directory to $cwd");
+                return false;
+            }
+        } else {
+            self::logMsg("failed to change working directory to $path");
+            return false;
+        }
+        return true;
+    }
+
+
+    static public function readXML($path, $filename){
+        if (!file_exists("$path/$filename")) {
+            self::logMsg("unable to read xml $path/$filename");
+            return null;
+        }
+
+        $cwd = getcwd();
+        if(chdir($path)){
+            $xml = simpleXML_load_file($filename);
+            if(!chdir($cwd)){
+                self::logMsg("failed to change working directory to $cwd");
+            }
+            return $xml;
+        } else {
+            self::logMsg("failed to change working directory to $path");
+        }
+    }
+    
+    
+
+    // https://secure.php.net/manual/en/class.simplexmlelement.php
+    // Must be tested with ===, as in if(isXML($xml) === true){}
+    // Returns the error message on improper XML
+    static public function isXML($xml){
+        libxml_use_internal_errors(true);
+
+        $doc = new DOMDocument('1.0', 'utf-8');
+        $doc->loadXML($xml);
+
+        $errors = libxml_get_errors();
+
+        if(empty($errors)){
+            return true;
+        }
+
+        $error = $errors[0];
+        if($error->level < 3){
+            return true;
+        }
+
+        $explodedxml = explode("r", $xml);
+        $badxml = $explodedxml[($error->line)-1];
+
+        $message = $error->message . ' at line ' . $error->line . '. Bad XML: ' . htmlentities($badxml);
+        return $message;
+    }
+    
+    
+    
+    static public function lockXML($xml, $token){
+        $nekot = hash('sha256', $token);
+        if (isset($token)){
+            if (isset($xml['lock'])){
+                $xml['lock'] = $token;
+            } else {
+                $xml->addAttribute('lock', $token);
+            }
+        }
+    }
+
+
+    static public function unlockXML($xml, $token){
+        $nekot = hash('sha256', $token);
+        $locked = $xml->xpath("//*[@lock='$token']");
+        foreach($locked as $open){
+            removeAtt($open, 'lock');
+        }
+    }
+
+
+    static public function isLocked($xml){
+    //    return ! empty($xml['lock']);
+        return isset($xml['lock']) && strlen($xml['lock']) > 0;
+    }
+
+
+    static public function removeElement($xml){
+        $dom=dom_import_simpleXML($xml);
+        $dom->parentNode->removeChild($dom);
+    }
+
+    static public function removeAtt($xml, $att){
+        $dom=dom_import_simpleXML($xml);
+        $dom->removeAttribute($att);
+    }
+
+
+
+
+    /*****************************************************************
+        Time Helper functions
+    *****************************************************************/
+
+
+
+    /********************************************************************************
+    Returns a new DateTime object for the time string and time-zone requested
+
+    $str    String    time & date
+    $tz        String    time-zone
+    ********************************************************************************/
+    static public function tzDateTime($str='now', $tz){
+        if(empty($tz)){
+            return new DateTime($str);
+        }
+        return new DateTime($str, timezone_open($tz));
+    }
+
+
+
+    static public function day($tz, $dateStr){
+        $date = self::tzDateTime($dateStr, $tz);
+        $today = self::tzDateTime('today', $tz);
+        $interval = $today->diff($date);
+        switch ($interval->days) {
+            case 0: return 'today'; break;
+            case 1: return $interval->invert ? 'yesterday' : 'tomorrow'; break;
+            default:
+                return $date->format('jS M');
+        }
+    }
+
+
+    static public function hr($hr){
+        global $clock24hr;
+        $apm = ':00';
+        if (!$clock24hr){
+            if ($hr < 12){
+                $apm = 'am';
+            } elseif ($hr > 12) {
+                $hr = $hr - 12;
+                $apm = 'pm';
+            } else {
+                $apm = 'pm';
+            }
+        }
+        return "$hr$apm";
+    }
+
+
+
+    static public function clock($hr){
+        global $clock24hr;
+        return (($hr > 12) && !$clock24hr) ? $hr-12 : $hr;
+    }
+
+
+    /*****************************************************************
+        Time Helper functions
+    *****************************************************************/
+
+    const DIGCHR = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // https://stackoverflow.com/questions/4356289/php-random-string-generator/31107425#31107425 
+    static private function generateRandomString($length = 10) {
+        $str_repeat = str_repeat($x=self::DIGCHR, ceil($length/strlen($x)));
+        $str_shuffle = str_shuffle($str_repeat);
+        return substr($str_shuffle,1,$length);
+    }
+
+
+    static public function newID($len = 6){
+        return self::generateRandomString($len);
+    }
+
+
+    static public function newToken($len = 10){
+        return self::generateRandomString($len);
+    }
+
+
+
+
+}
+
+
+Qwik::initStatic();
+
+?>

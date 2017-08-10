@@ -22,7 +22,7 @@ class LocatePage extends Page {
 
     public function serve(){
         if ($this->game == null){
-            header("Location: ".QWIK_URL);
+            header("Location: ".self::QWIK_URL);
             return;
 	    }
 	    parent::serve();
@@ -49,14 +49,14 @@ class LocatePage extends Page {
             	$this->req('state'), 
             	$this->req('country')
 		    );
-            $venue = new Venue($vid, $this->log(), TRUE);
+            $venue = new Venue($vid, TRUE);
 		}
 
 	    if ($vid !== null){
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
             $repost = $this->repost;
-            header("location: ".QWIK_URL."/$repost?$query");
+            header("location: ".self::QWIK_URL."/$repost?$query");
        }
     }
     
@@ -73,7 +73,7 @@ class LocatePage extends Page {
     *******************************************************************************/
     function matchShortVenueID($svid, $game){
         $matchedVids = array();
-        $vids =venues(strtolower($game));
+        $vids = self::venues(strtolower($game));
         foreach($vids as $vid){
             if($svid === Venue::svid($vid)){
                 $matchedVids[] = $vid;
@@ -89,18 +89,18 @@ class LocatePage extends Page {
 	public function variables(){
 
         $game = $this->game;
-	    $venue = new Venue($this->venueDesc, $this->log(), TRUE);
+	    $venue = new Venue($this->venueDesc, TRUE);
 	    $venueName = $venue->name();
 	    $venueCountry = $venue->country();
 	    $venueURL = $venue->url();
-        $backLink = "<a href='".QWIK_URL;
+        $backLink = "<a href='".self::QWIK_URL;
         $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
         $variables = parent::variables();
 
         $variables['vid']            = $venue->id();
         $variables['game']           = $this->game;
-        $variables['homeURL']        = QWIK_URL."/player.php";
+        $variables['homeURL']        = self::QWIK_URL."/player.php";
 		$variables['repost']         = $this->repost;
         $variables['venueName']      = $venueName;
         $variables['venueAddress']   = $venue->address();

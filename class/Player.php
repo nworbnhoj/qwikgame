@@ -1,11 +1,11 @@
 <?php
 
-
+require_once 'class/Qwik.php';
 include 'Orb.php';
 include 'Match.php';
 
 
-class Player {
+class Player extends Qwik {
 
     const PATH_PLAYER   = 'player';
     const PATH_UPLOAD = 'uploads';
@@ -20,18 +20,23 @@ class Player {
 
     private $id;
     private $xml;
-    private $log;
 
-    public function __construct($pid, $log, $forge=FALSE){
+    public function __construct($pid, $forge=FALSE){
+        parent::__construct();
         $this->id = $pid;
-        $this->log = $log;
         $path = self::PATH_PLAYER;
         if (!file_exists("$path/$pid.xml") && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
-	        $this->logMsg("login: new player " . snip($pid));
+	        self::logMsg("login: new player " . self::snip($pid));
         }
-        $this->xml = $this->readXML($pid);
+        $fileName = 
+        $this->xml = $this->retrieve($this->fileName());
+    }
+    
+    
+    public function fileName(){
+        return $this->id() . self::XML;
     }
 
 
@@ -48,47 +53,19 @@ class Player {
 
 
     public function save(){
-        $cwd = getcwd();
-        if(chdir(self::PATH_PLAYER)){
-            $pid = $this->xml['id'];
-            $this->xml->saveXML("$pid.xml");
-            if(!chdir($cwd)){
-                $this->logMsg("failed to change working directory to $cwd");
-                return false;
-            }
-        } else {
-            $this->logMsg("failed to change working directory to ".self::PATH_PLAYER);
-            return false;
-        }
-        return true;
+        return self::writeXML(
+            $this->xml, 
+            self::PATH_PLAYER, 
+            $this->fileName()
+        );
     }
 
 
-    public function readXML($id){
-        $id = $this->id;
-        $path = self::PATH_PLAYER;
-        $filename = "$id.xml";
-        if (!file_exists("$path/$filename")) {
-            $this->logMsg("unable to read player XML " . snip($id));
-            return null;
-        }
-
-        $cwd = getcwd();
-        if(chdir($path)){
-            $xml = simpleXML_load_file($filename);
-            if(!chdir($cwd)){
-                $this->logMsg("failed to change working directory to $cwd");
-            }
-            return $xml;
-        } else {
-            $this->logMsg("failed to change working directory to $path");
-        }
-    }
-
-
-    private function logMsg($msg){
-        $this->log->lwrite($msg);
-        $this->log->lclose();
+    public function retrieve($fileName){
+        return self::readXML( 
+            self::PATH_PLAYER, 
+            $fileName        
+        );
     }
 
 
@@ -180,7 +157,7 @@ class Player {
                 if ($oldEmail != $newEmail) {
                     $newID = Player::anonID($newEmail);
                     if (false){ // if newID already exists then log and abort
-                        logMsg("abort change email from $oldEmail to $newEmail.");
+                        self::logMsg("abort change email from $oldEmail to $newEmail.");
                     } else {
                         changeEmail($newEmail);
                     }
@@ -194,21 +171,21 @@ class Player {
     private function changeEmail($newEmail){
         $preID = $this->id();
         $newID = Player::anonID($newEmail);
-        removeElement($this->xml->email[0]);
+        self::removeElement($this->xml->email[0]);
         $this->xml->addChild('email', $newEmail);
         $this->id = $newID;
         $this->xml['id'] = $newID;
 
         // replace old player file with a symlink to the new file
         $path = self::PATH_PLAYER;
-        deleteFile("$path/$preID.xml");
+        self::deleteFile("$path/$preID.xml");
         symlink("$path/$newID.xml", "$path/$preID.xml");
     }
 
 
 
     public function token($term = Player::SECOND){
-        $token = newToken(10);
+        $token = self::newToken(10);
         $nekot = $this->xml->addChild('nekot', $this->nekot($token));
         $nekot->addAttribute('exp', time() + $term);
         return $token;
@@ -289,11 +266,6 @@ class Player {
     }
 
 
-    public function log(){
-        return $this->log;
-    }
-
-
     public function matchCancel($id){
         $match = $this->matchID($id);
         $match->cancel();
@@ -330,7 +302,7 @@ class Player {
     public function delete($id){
         $rubbish = $this->xml->xpath("//*[@id='$id']");
         foreach($rubbish as $junk){
-            removeElement($junk);
+            self::removeElement($junk);
         }
     }
 
@@ -341,11 +313,11 @@ class Player {
         }
         $records = $this->xml->xpath("available | reckon");
         foreach($records as $record){
-            removeElement($record);
+            self::removeElement($record);
         }
         $emails = $this->xml->xpath("email");
         foreach($emails as $email){
-            removeElement($email);
+            self::removeElement($email);
         }
 
         $this->nick(null);
@@ -355,17 +327,6 @@ class Player {
 
 
 ////////// HELPER /////////////////////////////////////
-
-
-    private function removeElement($xml){
-        $dom=dom_import_simpleXML($xml);
-        $dom->parentNode->removeChild($dom);
-    }
-
-    private function removeAtt($xml, $att){
-        $dom=dom_import_simpleXML($xml);
-        $dom->removeAttribute($att);
-    }
 
 
     // Updates an EXPonential moving AVeraGe with a new data POINT.
@@ -390,10 +351,10 @@ class Player {
         $reckon->addAttribute('game', $game);
         $date = date_create();
         $reckon->addAttribute('date', $date->format("d-m-Y"));
-        $reckon->addAttribute('id', newID());
+        $reckon->addAttribute('id', self::newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
 
-        $rival =  new Player($rid, $this->log, true);
+        $rival =  new Player($rid, true);
         $rival->save();
     }
 
@@ -405,7 +366,7 @@ class Player {
         $reckon->addAttribute('game', $game);
         $date = date_create();
         $reckon->addAttribute('date', $date->format("d-m-Y"));
-        $reckon->addAttribute('id', newID());
+        $reckon->addAttribute('id', self::newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
     }
 
@@ -414,7 +375,7 @@ class Player {
 ////////// AVAILABLE //////////////////////////////////////
 
     public function availableAdd($game, $vid, $parity, $tz, $all7days, $req){
-        $newID = newID();
+        $newID = self::newID();
         $element = $this->xml->addChild('available', '');
         $element->addAttribute('id', $newID);
         $element->addAttribute('game', $game);
@@ -502,7 +463,7 @@ class Player {
 
     public function matchInvite($rivalMatch, $hours=NULL){
         $rid = $rivalMatch->pid();
-        $rival = new Player($rid, $this->log);
+        $rival = new Player($rid);
         $game = $rivalMatch->game();
         $match = $this->newMatch();
         $match->copy($rivalMatch);
@@ -545,14 +506,14 @@ class Player {
         $pid = $this->id();
         $token = $rival->token($shelfLife);
         $data = array('qwik'=>'login', 'pid'=>$pid, 'token'=>$token);
-        return QWIK_URL."/player.php?" . http_build_query($data);
+        return self::QWIK_URL."/player.php?" . http_build_query($data);
     }
 
 
     function emailInvite($mid){
         $match = $this->matchID($mid);
         $date = $match->dateTime();
-        $day = $match->day();
+        $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
         $email = $this->email();
@@ -568,7 +529,7 @@ class Player {
         $msg .= "</p>\n";
 
         self::qwikEmail($email, $subject, $msg, $pid, $token);
-        logEmail('invite', $pid, $game, $venueName);
+        $this->logEmail('invite', $pid, $game, $venueName);
     }
 
 
@@ -601,12 +562,10 @@ class Player {
 
 
     function emailMsg($message, $match){
-        global $games;
-
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ha D");
         $game = $match['game'];
-        $gameName = $games["$game"];
+        $gameName = self::games()["$game"];
         $pid = $this->id();
         $token = $this->token(2*Player::DAY);
         $venueName = Venue::svid($match->venue());
@@ -640,7 +599,7 @@ class Player {
         $msg .= "</p>\n";
 
         self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
-        logEmail('cancel', $pid, $game, $venueName, $time);
+        self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
 
@@ -654,7 +613,7 @@ class Player {
         $token = $this->token(self::YEAR);
 
         self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
-        logEmail('quit', $pid);
+        self::logEmail('quit', $pid);
     }
 
 
@@ -681,7 +640,7 @@ class Player {
         $body .= "\t\t<br><hr>\n";
         $body .= "\t\t<p>\n";
         $body .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-        $body .= "\t\t\t<a href='".TERMS_URL."' target='_blank'>\n";
+        $body .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
         $body .= "\t\t\tTerms & Conditions</a>";
         $body .= "\t\t</p>\n";
         $body .= "\t\t</p>\n";
@@ -718,7 +677,7 @@ class Player {
             $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
             $outcome->addAttribute('id', $mid);
 
-            return new Player($match->rid(), $this->log);
+            return new Player($match->rid());
         } else {
             header("Location: error.php?msg=unable to locate match.");
         }
@@ -757,11 +716,11 @@ class Player {
 
     public function rankingGet($fileName){
     //echo "<br>GETUPLOAD<br>";
-        $ranking = new Ranking($fileName, $this->log);
+        $ranking = new Ranking($fileName);
         if(!$ranking){
             $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
             foreach($missing as $miss){
-                $this->removeElement($miss);
+                self::removeElement($miss);
             }
             return FALSE;
         }
@@ -771,25 +730,25 @@ class Player {
 
     public function rankingDelete($fileName){
         $path = self::PATH_UPLOAD;
-        deleteFile("$path/$fileName.csv");
-        deleteFile("$path/$fileName.xml");
+        self::deleteFile("$path/$fileName.csv");
+        self::deleteFile("$path/$fileName.xml");
 
         $delete = $this->xml->xpath("/player/upload[text()='$fileName']");
        foreach($delete as $del){
-           $this->removeElement($del);
+           self::removeElement($del);
        }
     }
 
 
     public function rankingActivate($fileName){
         $ranking = $this->rankingGet($fileName);
-        $ranking->insert($this->log);
+        $ranking->insert();
     }
 
 
     public function rankingDeactivate($fileName){
         $ranking = $this->rankingGet($fileName);
-        $ranking->extract($this->log);
+        $ranking->extract();
     }
 
 /********************************************************************************
@@ -867,7 +826,7 @@ Requirements:
 
 
     public function importRanking($game, $path, $fileName){
-        $ranking = new Ranking($fileName, $this->log, $game, $path);
+        $ranking = new Ranking($fileName, $game, $path);
         if ($ranking->valid){
             $ranking->attribute("player", $this->id());
             $ranking->attribute('uploadHash', hash_file('sha256', $path));
@@ -1030,8 +989,8 @@ Requirements:
                             array_keys($playerOrbCrumbs),
                             array_keys($rivalOrbCrumbs)
                         );
-        $orbIntersect[] = $this->subID($playerID);
-        $orbIntersect[] = $this->subID($rivalID);
+        $orbIntersect[] = self::subID($playerID);
+        $orbIntersect[] = self::subID($rivalID);
 
 //echo "playerIsolated=$playerIsolated<br>\n";
 //echo "rivalIsolated=$rivalIsolated<br>\n";
@@ -1083,7 +1042,7 @@ Requirements:
 //echo "<br><br><br>\n";
     $parity = $spliceOrb->parity($rivalID);
 
-    $this->logMsg("parity ".snip($playerID)." ".snip($rivalID)." $parity". $playerOrb->print());
+    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->print());
 
     return $parity;
 
@@ -1098,10 +1057,10 @@ Requirements:
 
 
 
-    private function subID($id){
-return (string)$id;
-    return substr("$id",0, 10);
-}
+    static public function subID($id){
+        return (string)$id;
+        //return substr("$id",0, 10);
+    }
 
 
 
@@ -1120,10 +1079,10 @@ return (string)$id;
     ********************************************************************************/
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
     //echo "PLAYERORB $game $playerID<br>\n";
-        $orb = new Orb($this->log);
+        $orb = new Orb();
         $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
         foreach($parities as $par){
-            $rid = subID($par['rival']);
+            $rid = self::subID($par['rival']);
             if (!$filter){
                 $include=TRUE;
             } elseif($positiveFilter){

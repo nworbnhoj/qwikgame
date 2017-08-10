@@ -6,6 +6,7 @@ require_once 'class/PlayerPage.php';
 require_once 'class/Player.php';
 require_once 'class/Ranking.php';
 require_once 'class/LocatePage.php';
+require_once 'class/Hours.php';
 
 
 use Behat\Behat\Tester\Exception\PendingException;
@@ -164,16 +165,14 @@ class FeatureContext implements Context
     public function iLikeToPlayOnSaturdayAt3pm($day, $hour)
     {    
     	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
-    	$hour = date("H", strtotime($hour));   // convert 12hr to 24hr format    	
+    	$hour = new Hours(date("H", strtotime($hour)));   // convert 12hr to 24hr format    	
     	
     	if (isset($this->req[$day])) {
-    	    $this->req[$day] = $this->req[$day] | hour2bit($hour);
-        } else {
-        	$this->req[$day] = hour2bit($hour);
+    	    $hour->include(new Hour($this->req[$day]));
         }
-    }   
-    
-    
+        $this->req[$day] = $hour->bits();
+    }
+
 
     /**
      * @When I like to play a rival of :parity ability

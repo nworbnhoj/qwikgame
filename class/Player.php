@@ -1,6 +1,7 @@
 <?php
 
 require_once 'class/Qwik.php';
+require_once 'class/Hours.php';
 include 'Orb.php';
 include 'Match.php';
 
@@ -407,8 +408,7 @@ class Player extends Qwik {
      * @return bitfield representing the hours at the $rival is available
      */
     public function availableHours($rival, $match){
-    //echo "<br>AVAILABLEHOURS<br>";
-        $availableHours = 0;
+        $availableHours = new Hours();
         $vid = $match->vid();
         $game = $match->game();
         $day = $match->dateTime()->format('D');
@@ -416,7 +416,7 @@ class Player extends Qwik {
         foreach ($available as $avail){
             $hours = $avail->xpath("hrs[@day='$day']");
             foreach ($hours as $hrs){
-                $availableHours = $availableHours | $hrs;
+                $availableHours->include(new Hours($hrs));
             }
         }
         return $availableHours;
@@ -425,14 +425,13 @@ class Player extends Qwik {
 
     // check rival keeness in the given hours
     public function keenHours($rival, $match){
-    //echo "<br>KEENHOURS<br>";
-        $keenHours = 0;
+        $keenHours = new Hours();
         $venue = $match->venue();
         $game = $match->game();
         $day = $match->dateTime()->format('D');
         $keens = $this->xml->xpath("match[status='keen' and venue='$venue' and game='$game']");
         foreach ($keens as $keen){
-            $keenHours = $keenHours | $keen['hrs'];
+            $keenHours->include($keen['hrs']);
         }
         return $keenHours;
     }
@@ -469,7 +468,7 @@ class Player extends Qwik {
         $match->copy($rivalMatch);
         $match->status('invitation');
         if (!is_null($hours)){
-            $match->hrs($hours);
+            $match->hours($hours);
         }
         $match->addRival(
             $rid,
@@ -1042,7 +1041,7 @@ Requirements:
 //echo "<br><br><br>\n";
     $parity = $spliceOrb->parity($rivalID);
 
-    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->print());
+//    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->print());
 
     return $parity;
 

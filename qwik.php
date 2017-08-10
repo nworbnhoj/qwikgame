@@ -1,10 +1,6 @@
 <?php 
 
-
-
-const REVERT_CHAR = '⟲';gitk
-
-
+const REVERT_CHAR = '⟲';
 
 $geo;
 $star = '★';
@@ -20,8 +16,6 @@ $back = '⤺';
 $bug = '☹';
 $logout = 'fa-power-off';
 
-
-
 $status = array(
     'keen'       => 1,
     'invitation' => 2,
@@ -31,7 +25,6 @@ $status = array(
     'history'    => 6,
     'cancelled'  => 10
 );
-
 
 
 
@@ -52,12 +45,6 @@ function post($url, $data){
     var_dump($result);
 }
 
-
-
-function subID($id){
-    return (string)$id;
-    return substr("$id",0, 10);
-}
 
 
 ////////////////////// TIME //////////////////////////////

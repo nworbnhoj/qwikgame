@@ -1,6 +1,8 @@
 <?php
 
 require_once 'class/Qwik.php';
+require_once 'class/Hours.php';
+
 
 class Match extends Qwik {
 
@@ -34,7 +36,7 @@ class Match extends Qwik {
         $this->xml->addAttribute('status', $match->status());
         $this->xml->addAttribute('game', $match->game());
         $this->xml->addAttribute('date', $match->date());
-        $this->xml->addAttribute('hrs', $match->hrs());
+        $this->xml->addAttribute('hrs', $match->hours()->bits());
         $v = $this->xml->addChild('venue', $match->vid());
         $v->addAttribute('tz', $match->tz());
     }
@@ -74,11 +76,11 @@ class Match extends Qwik {
     }
 
 
-    public function hrs($hrs=NULL){
-        if(!is_null($hrs)){
-            $this->xml['hrs'] = $hrs;
+    public function hours($hours=NULL){
+        if(!is_null($hours)){
+            $this->xml['hrs'] = $hours->bits();
         }
-        return $this->xml['hrs'];
+        return new Hours($this->xml['hrs']);
     }
 
 
@@ -145,13 +147,13 @@ class Match extends Qwik {
             $rival = new Player($rid);
             if(!is_null($rival)
             && !empty($rival->email())){
-                $inviteHours = $this->hrs();
+                $inviteHours = $this->hours();
                 if (!interrupt){
                     $availableHours = $rival->availableHours($this, $match);
-                    $keenHours = $rival->keenHours($this, $match);
-                    $inviteHours = $hours & ($availableHours | $keenHours);
+                    $availableHours->include($rival->keenHours($this, $match));
+                    $inviteHours = $inviteHours->intersection($availableHours);
                 }
-                if ($inviteHours > 0){
+                if (!$inviteHours->empty()){
                     $inviteMatch = $rival->matchInvite($match, $inviteHours);
                     $inviteMatch->addRival($rid);
                     $rival->emailInvite($invitematch->id());
@@ -179,12 +181,12 @@ class Match extends Qwik {
                 $newMid = newID();
                 $this->id($newMid); //make independent from keenMatch
                 $this->status('accepted');
-                $this->hrs($acceptHour);
+                $this->hours($acceptHour);
                 $rival->matchInvite($this);
                 $rival->emailInvite($newMid);
                 break;
             case 'accepted':
-                $hour = hours($acceptHour)[0];
+                $hour = $acceptHour->first();
                 $date = $this->date();
                 $this->confirm($date, $hour);
                 $rivalMatch->confirm($date, $hour);
@@ -254,7 +256,7 @@ class Match extends Qwik {
         $tz = $this->tz();
         $now = self::tzDateTime('now', $tz);
         $dateStr = $this->date();
-        $hour = max(hours($this->hrs()));
+        $hour = $this->hours()->last();
         switch ($this->status()){
             case 'cancelled':
                 $hour = min($hour+6, 24);
@@ -296,7 +298,7 @@ class Match extends Qwik {
         $rival = $this->rival();
         $rivalElement = $match->xpath("rival")[0];
         $parity = $this->rivalParity();
-        $hrs = $this->hrs();
+        $hours = $this->hours();
         $rivalLink = $rival->htmlLink();
         $repWord = $this->rivalRep();
         $vars = array(
@@ -306,8 +308,8 @@ class Match extends Qwik {
             'game'      => $game,
             'gameName'  => self::games()[$game],
             'day'       => $this->mday(),
-            'hrs'       => $hrs,
-            'hour'      => self::hr(hours($hrs)[0]),
+            'hrs'       => $hours->bits,
+            'hour'      => self::hr($hours->first()),
             'id'        => $this->id(),
             'parity'    => parityStr($parity),
             'rivalLink' => empty($rivalLink) ? '' : ", $rivalLink",
@@ -315,11 +317,11 @@ class Match extends Qwik {
         );
         switch ($status){
             case 'keen':
-                $vars['hour'] = daySpan($hrs);
+                $vars['hour'] = daySpan($hours->bits);
                 $vars['rivalCount'] = $this->rivalCount();
                 break;
             case 'invitation':
-                $vars['hour'] = $this->hourSelect(hours($hrs));
+                $vars['hour'] = $this->hourSelect($hours->list());
                 break;
             case 'history':
                 $outcome = $this->player->outcome($matchID);

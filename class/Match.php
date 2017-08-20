@@ -2,6 +2,7 @@
 
 require_once 'class/Qwik.php';
 require_once 'class/Hours.php';
+require_once 'class/Page.php';
 
 
 class Match extends Qwik {
@@ -25,7 +26,7 @@ class Match extends Qwik {
         $this->xml->addAttribute('status', $status);
         $this->xml->addAttribute('game', $game);
         $this->xml->addAttribute('date', $date->format('d-m-Y'));
-        $this->xml->addAttribute('hrs', $hours);
+        $this->xml->addAttribute('hrs', $hours->bits());
         $v = $this->xml->addChild('venue', $venue->id());
         $v->addAttribute('tz', $venue->tz());
     }
@@ -142,21 +143,26 @@ class Match extends Qwik {
     }
 
 
+    public function venue(){
+        return (string) $this->xml->venue;
+    }
+
+
     public function invite($rids, $interrupt=FALSE){
         foreach($rids as $rid){
             $rival = new Player($rid);
             if(!is_null($rival)
             && !empty($rival->email())){
                 $inviteHours = $this->hours();
-                if (!interrupt){
-                    $availableHours = $rival->availableHours($this, $match);
-                    $availableHours->include($rival->keenHours($this, $match));
-                    $inviteHours = $inviteHours->intersection($availableHours);
+                if (!$interrupt){
+                    $rivalHours = $rival->availableHours($this);
+                    $rivalHours->include($rival->keenHours($this));
+                    $inviteHours->includeOnly($rivalHours);
                 }
                 if (!$inviteHours->empty()){
-                    $inviteMatch = $rival->matchInvite($match, $inviteHours);
+                    $inviteMatch = $rival->matchInvite($this, $inviteHours);
                     $inviteMatch->addRival($rid);
-                    $rival->emailInvite($invitematch->id());
+                    $rival->emailInvite($inviteMatch->id());
                 }
                 $rival->save();
             }
@@ -311,7 +317,7 @@ class Match extends Qwik {
             'hrs'       => $hours->bits,
             'hour'      => self::hr($hours->first()),
             'id'        => $this->id(),
-            'parity'    => parityStr($parity),
+            'parity'    => Page::parityStr($parity),
             'rivalLink' => empty($rivalLink) ? '' : ", $rivalLink",
             'rivalRep'  => strlen($repWord)==0 ? '' : " with a $repWord reputation"
         );

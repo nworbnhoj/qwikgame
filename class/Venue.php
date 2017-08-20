@@ -11,6 +11,7 @@ class Venue extends Qwik {
 
     public function __construct($id, $forge=FALSE){
         parent::__construct();
+        $this->id = $id;
         $path = self::PATH_VENUE;
         $ext = self::XML;
         if(!file_exists("$path/$id$ext") && $forge){
@@ -18,7 +19,6 @@ class Venue extends Qwik {
             $this->save();
 	        self::logMsg("login: new venue $id");
         }
-        $this->id = $this->xml['id'];
         $this->xml = $this->retrieve($this->fileName());
     }
 

@@ -14,6 +14,10 @@ Class Hours {
         $this->bits = $bits;
     }
     
+    public function __toString(){
+        return sprintf("%1$25b", $this->bits);
+    }
+
     
     public function bits(){
         return $this->bits;
@@ -30,23 +34,38 @@ Class Hours {
     }
 
 
-    public function intersection($hours){
-        return new Hours($this->bits & $hours->bits());
+    public function equals($that) {
+        return $this->bits == $that->bits();
+//        return ($this::class === $that::class) && ($bits != null) 
+//             ? $this->bits == $that->bits()
+//             : $this == $that;
     }
     
     
-    public function union($hours){
-        return new Hours($this->bits | $hours->bits());
-    }
-    
-    
+    /**
+    /* Includes the $hours provided into $this
+    /* returns true if $this->bits has changed as a result;
+    **/
     public function include($hours){
-        $this->bits = $this->bits | $hours->bits();
+        $priorBits = $this->bits;
+        $this->bits = ($this->bits | $hours->bits);
+        return $this->bits != $priorBits;
+    }
+
+
+    /**
+    /* Includes only the $hours provided in $this (ie the intersection of $hours and $this)
+    /* returns true if $this->bits has changed as a result;
+    **/
+    public function includeOnly($hours){
+        $priorBits = $this->bits;
+        $this->bits = ($this->bits & $hours->bits);
+        return $this->bits != $priorBits;
     }
     
     
     public function empty(){
-        return $bits === 0;
+        return $this->bits === 0;
     }
     
     
@@ -70,7 +89,7 @@ Class Hours {
 
 
     public function last(){
-        return max($this->hours());
+        return max($this->list());
     }
 }
 

@@ -3,7 +3,9 @@
 require_once 'class/Qwik.php';
 require_once 'Defend.php';
 require_once 'Translation.php';
-
+require_once 'Player.php';
+require_once 'Venue.php';
+require_once 'Hours.php';
 
 class Page extends Qwik {
 
@@ -27,7 +29,6 @@ class Page extends Qwik {
     const TWITTER_ICON   = 'fa fa-twitter icon';
     
     const FLYER_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
-    const TERMS_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';
     const PRIVACY_URL  = self::QWIK_URL.'/pdf/qwikgame.org%20privacy%20policy.pdf';
     const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.self::QWIK_URL;
     const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.self::QWIK_URL;
@@ -123,8 +124,8 @@ class Page extends Qwik {
             'termsURL'		=> self::TERMS_URL,
             'privacyURL'	=> self::PRIVACY_URL,
             'flyerLink'  	=> self::FLYER_LNK,
-            'thumb-up'		=> "<span class='".THUMB_UP_ICON."'></span>",
-            'thumb-dn'		=> "<span class='".THUMB_DN_ICON."'></span>",            
+            'thumb-up'		=> "<span class='" . self::THUMB_UP_ICON . "'></span>",
+            'thumb-dn'		=> "<span class='" . self::THUMB_DN_ICON . "'></span>",
             'game'          => isset($game) ? self::games()["$game"] : '[game]'
         );
         
@@ -201,17 +202,6 @@ class Page extends Qwik {
     }
 
 
-    function logEmail($type, $pid, $game='', $vid='', $time=''){
-        $p = substr($pid, 0, 4);
-        $msg = "email $type pid=$p $game $vid $time";
-        self::log()->lwrite($msg);
-        self::log()->lclose();
-    }
-
-
-
-
-
     /********************************************************************************
     Return the XML data for the current logged in player (if any)
 
@@ -251,19 +241,23 @@ class Page extends Qwik {
             self::logMsg("login: valid token " . self::snip($pid));
             $_SESSION['pid'] = $pid;
             $_SESSION['lang'] = $player->lang();
-            setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
-            setcookie("token", $token, time() + 3*Player::MONTH, "/");
+            if (!headers_sent()){
+                setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
+                setcookie("token", $token, time() + 3*Player::MONTH, "/");
+            }
             return $player;
         } else {
-            self::logMsg("login: invalid token pid=" . self::snip($pid));
+            self::logMsg("lhogin: invalid token pid=" . self::snip($pid));
         }
 
         if(empty($player->email()) && isset($email)){            // LOGIN anon player
             self::logMsg("login: anon player " . self::snip($pid));
             $token = $player->token(Player::MONTH);
             $player->save();
-            setcookie("pid", $pid, time() + Player::DAY, "/");
-            setcookie("token", $token, time() + Player::DAY, "/");
+            if (!headers_sent()){
+                setcookie("pid", $pid, time() + Player::DAY, "/");
+                setcookie("token", $token, time() + Player::DAY, "/");
+            }
             $_SESSION['pid'] = $pid;
             $_SESSION['lang'] = $player->lang();
             $this->emailWelcome($email, $pid, $token);
@@ -442,7 +436,7 @@ class Page extends Qwik {
     public function replicateGames($html, $req){
         $default = $req['game'];
         $group = '';
-        foreach(self::$game() as $game => $name){
+        foreach(self::game() as $game => $name){
             $vars = array(
                 'game'      => $game,
                 'name'      => $name,
@@ -554,7 +548,7 @@ class Page extends Qwik {
                 'id'        => $reckon['id'],
                 'email'     => $reckon['email'],
                 'game'      => self::games()["$game"],
-                'parity'    => parityStr($reckon['parity'])
+                'parity'    => self::parityStr($reckon['parity'])
             );
             $vars = $playerVars + $reckonVars + self::$icons;
             $group .= $this->populate($html, $vars);
@@ -727,13 +721,67 @@ class Page extends Qwik {
         }
         return $options;
     }
-    
-    
+
+
+    static public function parityStr($parity){
+//echo "<br>PARITYSTR $parity<br>";
+        if(!is_numeric("$parity")){
+            return '';
+        }
+
+        $pf = floatval($parity);
+        if($pf <= -2){
+            return "{much_weaker}";
+        } elseif($pf <= -1){
+            return "{weaker}";
+        } elseif($pf < 1){
+            return "{well_matched}";
+        } elseif($pf < 2){
+            return "{stronger}";
+        } else {
+            return "{much_stronger}";
+        }
+    }
+
+
+    static public function daySpan($hours, $day=''){
+        global $clock24hr;
+        if (count($hours) > 0){
+            $dayX = substr($day, 0, 3);
+            $dayP = $clock24hr ? 0 : 12;
+
+            if (count($hours) == 24){
+                return "<span class='lolite'><b>$dayX</b></span>";
+            } else {
+                $str =  $clock24hr ? $dayX : '';
+                $last = null;
+                foreach($hours as $hr){
+                    $pm = $hr > 12;
+                    $consecutive = $hr == ($last + 1);
+                    $str .= $consecutive ? "&middot" : clock($last) . ' ';
+
+                    if ($pm && !$clock24hr) {
+                        $str .= "<b>$dayX</b>";
+                        $dayX = '';
+                    }
+
+                    $str .= $consecutive ? '' : " " . clock($hr);
+                    $last = $hr;
+                }
+                $str .= $consecutive ? clock($last) : '';
+                return "<span class='lolite'>$str</span>";
+            }
+        }
+    return "";
+    }
+
+
     private function weekSpan($xml){
         $html = "";
         $hrs = $xml->xpath("hrs");
         foreach($hrs as $hr){
-            $html .= daySpan($hr, $hr['day']);
+            $hours = new Hours($hr);
+            $html .= self::daySpan($hours->list(), $hr['day']);
         }
         return $html;
     }

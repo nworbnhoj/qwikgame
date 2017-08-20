@@ -98,10 +98,13 @@ class PlayerPage extends Page {
                 if(isset($email)){
                     if($email != $player->email()){
                         $player->email($email);
-                        $token = $player->token(Player::MINUTE);
-                        $newID = $player->id();
-                        $query = "qwik=login&pid=$newID&token=$token'";
-                        header("Location: ".self::QWIK_URL."/player.php?$query");
+
+                        if (!headers_sent()){
+                            $token = $player->token(Player::MINUTE);
+                            $newID = $player->id();
+                            $query = "qwik=login&pid=$newID&token=$token'";
+                            header("Location: ".self::QWIK_URL."/player.php?$query");
+                        }
                     }
                 }
                 break;
@@ -222,8 +225,8 @@ function qwikKeen($player, $req, $venue){
     $days = array('today','tomorrow');
     foreach($days as $day){
         $date = $venue->dateTime($day);
-        $hours = (int) $req[$day];
-        if ($hours > 0){
+        $hours = new Hours((int) $req[$day]);
+        if (!$hours->empty()){
              $match = $player->matchKeen($game, $venue, $date, $hours);
              $match->invite($familiarRids, TRUE);
              $match->invite($anonRids);

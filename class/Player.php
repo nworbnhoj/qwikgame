@@ -25,14 +25,14 @@ class Player extends Qwik {
     public function __construct($pid, $forge=FALSE){
         parent::__construct();
         $this->id = $pid;
-        $path = self::PATH_PLAYER;
-        if (!file_exists("$path/$pid.xml") && $forge) {
+        $path = self::PATH_PLAYER; 
+        $fileName = $this->fileName();
+        if (!file_exists("$path/$fileName") && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
 	        self::logMsg("login: new player " . self::snip($pid));
         }
-        $fileName = 
-        $this->xml = $this->retrieve($this->fileName());
+        $this->xml = $this->retrieve($fileName);
     }
     
     
@@ -223,7 +223,8 @@ class Player extends Qwik {
 
 
     public function matchID($id){
-        return $this->xml->xpath("match[@id='$id']")[0];
+        $xml = $this->xml->xpath("match[@id='$id']")[0];
+        return new Match($this, $xml);
     }
 
 
@@ -407,7 +408,7 @@ class Player extends Qwik {
      *
      * @return bitfield representing the hours at the $rival is available
      */
-    public function availableHours($rival, $match){
+    public function availableHours($match){  
         $availableHours = new Hours();
         $vid = $match->vid();
         $game = $match->game();
@@ -416,7 +417,8 @@ class Player extends Qwik {
         foreach ($available as $avail){
             $hours = $avail->xpath("hrs[@day='$day']");
             foreach ($hours as $hrs){
-                $availableHours->include(new Hours($hrs));
+                $availHrs = new Hours(intval("$hrs"));
+                $availableHours->include($availHrs);
             }
         }
         return $availableHours;
@@ -424,7 +426,7 @@ class Player extends Qwik {
 
 
     // check rival keeness in the given hours
-    public function keenHours($rival, $match){
+    public function keenHours($match){
         $keenHours = new Hours();
         $venue = $match->venue();
         $game = $match->game();
@@ -503,7 +505,7 @@ class Player extends Qwik {
 
     function loginURL($shelfLife){
         $pid = $this->id();
-        $token = $rival->token($shelfLife);
+        $token = $this->token($shelfLife);
         $data = array('qwik'=>'login', 'pid'=>$pid, 'token'=>$token);
         return self::QWIK_URL."/player.php?" . http_build_query($data);
     }
@@ -516,7 +518,7 @@ class Player extends Qwik {
         $game = $match->game();
         $venueName = $match->venueName();
         $email = $this->email();
-        $url = loginURL(2*self::DAY);
+        $url = $this->loginURL(2*self::DAY);
 
         $subject = "Invitation: $game at $venueName";
 
@@ -527,8 +529,8 @@ class Player extends Qwik {
         $msg .= "\tand <b>accept</b> if you would like to play.\n";
         $msg .= "</p>\n";
 
-        self::qwikEmail($email, $subject, $msg, $pid, $token);
-        $this->logEmail('invite', $pid, $game, $venueName);
+        self::qwikEmail($email, $subject, $msg);
+        self::logEmail('invite', $this->id(), $game, $venueName);
     }
 
 
@@ -554,8 +556,8 @@ class Player extends Qwik {
         $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
         $msg .= "</p>\n";
 
-        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
-        logEmail('confirm', $pid, $game, $venueName, $time);
+        self::qwikEmail($this->email(), $subject, $msg);
+        self::logEmail('confirm', $pid, $game, $venueName, $time);
     }
 
 
@@ -578,7 +580,7 @@ class Player extends Qwik {
         $msg .= "Please <a href='$url'>login</a> to reply.";
         $msg .= "</p>\n";
 
-        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg);
     }
 
 
@@ -597,7 +599,7 @@ class Player extends Qwik {
         $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
         $msg .= "</p>\n";
 
-        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
+        self::qwikEmail($this->email(), $subject, $msg);
         self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
@@ -611,14 +613,13 @@ class Player extends Qwik {
         $pid = $this->id();
         $token = $this->token(self::YEAR);
 
-        self::qwikEmail($this->email(), $subject, $msg, $pid, $token);
         self::logEmail('quit', $pid);
     }
 
 
 
 
-    static function qwikEmail($to, $subject, $msg, $id, $token){
+    static function qwikEmail($to, $subject, $msg){
         $headers = array();
         $headers[] = "From: facilitator@qwikgame.org";
         $headers[] = "MIME-Version: 1.0";
@@ -649,7 +650,7 @@ class Player extends Qwik {
         $body .= "</html>\n";
 
         if (! mail($to, $subject, $body, implode("\r\n", $headers))){
-            header("Location: error.php?msg=<b>The email was unable to be sent");
+//            header("Location: error.php?msg=<b>The email was unable to be sent");
         }
     }
 
@@ -662,7 +663,7 @@ class Player extends Qwik {
 ////////// OUTCOME //////////////////////////////////////////
 
     public function outcomeAdd($mid, $parity, $rep){
-        $match = new Match($this, $this->matchID($mid));
+        $match = $this->matchID($mid);
         if (isset($match)){
             $match->status('history');
 

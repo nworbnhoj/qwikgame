@@ -6,7 +6,8 @@ require_once 'Logging.php';
 
 class Qwik {
     const SUBDOMAIN = 'www';
-    const QWIK_URL = 'http://'.SUBDOMAIN.'.qwikgame.org';    
+    const QWIK_URL = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
+    const TERMS_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';    
 
     const PATH_VENUE  = 'venue';
     const PATH_PLAYER = 'venue';
@@ -305,7 +306,7 @@ class Qwik {
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
         self::$log = new Logging();
-        self::$log->lfile("/tmp/".self::SUBDOMAIN.".qwikgame.org.log");
+        self::$log->lfile("/tmp/" . self::SUBDOMAIN . ".qwikgame.org.log");
     }
     
 
@@ -340,6 +341,14 @@ class Qwik {
     }
     
     
+    static public function logEmail($type, $pid, $game='', $vid='', $time=''){
+        $p = substr($pid, 0, 4);
+        $msg = "email $type pid=$p $game $vid $time";
+        self::log()->lwrite($msg);
+        self::log()->lclose();
+    }
+
+
     static public function snip($str){
         return substr($str, 0, 4);
     }

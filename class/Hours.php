@@ -84,7 +84,7 @@ Class Hours {
 
 
     public function first(){
-        return $this->hours()[0];
+        return $this->list()[0];
     }
 
 

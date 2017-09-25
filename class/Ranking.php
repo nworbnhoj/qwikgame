@@ -245,8 +245,8 @@ class Ranking extends Qwik {
     function removePlayer($id){
     //echo "REMOVEPLAYER $id<br>";
         $path = 'player';
-        $filename = "$id.xml";
-        return self::deleteFile("$path/$filename");
+        $fileName = "$id.xml";
+        return self::deleteFile("$path/$fileName");
     }
 
 

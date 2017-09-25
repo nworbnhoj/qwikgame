@@ -27,22 +27,22 @@
 
     	<h3>{Similar_Venues}</h3>
     	<form action='[repost]' method='post' class='transparent'>
-			<repeat id='repost'>
-			<input type='hidden' name='[name]' value='[value]'>
-			</repeat>
-			<repeat id='similarVenues'>
-			<button type='submit' class='venue' name='vid' value='[vid]'>
-				<b>[players]</b> players @ [name]
-			</button>
-			</repeat>
-   	    </form>
+            <repeat id='repost'>
+                <input type='hidden' name='[name]' value='[value]'>
+            </repeat>
+            <repeat id='similarVenues'>
+                <button type='submit' class='venue' name='vid' value='[vid]'>
+                    <b>[players]</b> players @ [name]
+                </button>
+            </repeat>
+        </form>
 
-		<br>
-		<h3>{New_Venue}</h3>
+	<br>
+        <h3>{New_Venue}</h3>
 
-		<form id='edit-venue-form' action='locate.php' method='post' 
-			class='commit center vwide shadow venue'>
-			<input type='hidden' id='vid' name='vid' value='[vid]'>
+        <form id='edit-venue-form' action='locate.php' method='post'
+            class='commit center vwide shadow venue'>
+            <input type='hidden' id='vid' name='vid' value='[vid]'>
             <input id='venue-game' name='game' class='center' type='hidden' 
                 value='[game]'>
             <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
@@ -86,7 +86,7 @@
             <br>
         </form>
 
-	</div>
+    </div>
 
 
 <br><br><br><br><br><br><br>

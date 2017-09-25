@@ -180,6 +180,7 @@ function qwikAvailable($player, $request, $venue){
             $request
         );
         $venue->addPlayer($player->id());
+        $venue->save();
         return $newID;
     }
 }
@@ -198,7 +199,7 @@ function qwikKeen($player, $req, $venue){
     $game = $req['game'];
 
     // build an array of Familiar Rivals to invite
-    $pid = $this->id();
+    $pid = $player->id();
     $familiarRids = array();
     if (isset($req['invite'])){
         $emails = $req['invite'];
@@ -213,7 +214,7 @@ function qwikKeen($player, $req, $venue){
 
     // build an array of other available Rivals to invite
     $anonRids = array();
-    if ($req['invite-available']){
+    if (isset($req['invite-available'])){
         $anonRids = array_diff(
             $venue->playerIDs(),
             $familiarRids        // exclude explicit invitations
@@ -230,9 +231,9 @@ function qwikKeen($player, $req, $venue){
              $match = $player->matchKeen($game, $venue, $date, $hours);
              $match->invite($familiarRids, TRUE);
              $match->invite($anonRids);
-             $match->save();
         }
     }
+    $player->save();
 }
 
 

@@ -1,11 +1,11 @@
 <?php
-	 require_once '../qwik.php';
+	 require_once '../class/Qwik.php';
 	 require_once '../class/Venue.php';
 	 
 	$game = $_GET['game'];
 	$mapData = '';
 	if($game){
-		$xml = readXML('../venue', 'venues.xml');
+		$xml = Qwik::readXML('../venue', 'venues.xml');
 		$venues = $xml->xpath("/meta/venue[game='$game']");
 		foreach($venues as $venue){ 
 			$vid = $venue['id'];

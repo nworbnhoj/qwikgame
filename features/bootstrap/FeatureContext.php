@@ -341,7 +341,6 @@ class FeatureContext implements Context
      */
     public function iWillNotBeAvailableOtherwise()
     {
-        // Check other times for this game and venue
     	$req = $this->req;
         foreach ($this->days as $day) {
             $this->req[$day] = Hours::HRS_24 ^ (isset($req[$day]) ? $req[$day] : -0);
@@ -543,6 +542,22 @@ class FeatureContext implements Context
         $player->rankingActivate($fileName);
     }
 
+
+
+    /**
+     * @When I am keen to play :game at :venue
+     */
+    public function iAmKeenToPlaySquashAtQwikgame($game, $svid)
+    {
+        $this->game = $this->gameKey($game);
+        $this->svid = $svid;
+        $this->vid = $this->locateVenue($this->svid, $this->game);
+        $this->venue = new Venue($this->vid);
+
+        $this->req['parity'] = 'any';
+        $this->req['game'] = $this->game;
+        $this->req['vid'] = $this->vid;
+    }
 
     
     

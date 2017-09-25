@@ -194,7 +194,7 @@ class Page extends Qwik {
                     $msg .= substr($val, 0, 2);
                 break;
                 default:
-                    $msg .= $val;
+                    $msg .= is_array($val) ? print_r($val, true) : $val;
             }
         }
         self::log()->lwrite($msg);
@@ -266,7 +266,9 @@ class Page extends Qwik {
 
         if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
             self::logMsg("login: recover account " . self::snip($pid));                 // todo rate limit
-            $this->emailLogin($email, $pid, $player->token(Player::DAY));
+            $token = $player->token(Player::DAY);
+            $player->save();
+            $this->emailLogin($email, $pid, $token);
         }
     }
 
@@ -436,7 +438,7 @@ class Page extends Qwik {
     public function replicateGames($html, $req){
         $default = $req['game'];
         $group = '';
-        foreach(self::game() as $game => $name){
+        foreach(self::games() as $game => $name){
             $vars = array(
                 'game'      => $game,
                 'name'      => $name,
@@ -450,11 +452,9 @@ class Page extends Qwik {
 
     private function replicateVenues($html, $default){
         return "replicateVenues() has not been implemented";
-    echo "<br>REPLICATEVENUES<br>$html";
         $group = '';
         $venueIDs = $this->listVenues('squash'); //$game);
         foreach($venueIDs as $vid => $playerCount){
-    echo "<br>$vid";
             $vars = array(
                 'playerCount'   => $playerCount,
                 'vid'              => $vid,
@@ -470,15 +470,13 @@ class Page extends Qwik {
         $group = '';
         $vid = $req['vid'];
         $game = $req['game'];
-    //    $similar = $this->similarVenues($req['venue'], $req['game']);
         $similar = array_slice($this->similarVenues($req['venue']), 0, 10);
         foreach($similar as $vid){
-            $venue = readVenueXML($vid);
-            $players = isset($venue) ? $venue->xpath("player") : array() ;
+            $venue = new Venue($vid);
             $vars = array(
-                'vid'        => $vid,
-                'name'        => implode(', ',explode('|',$vid)),
-                'players'    => count($players),
+                'vid'    => $vid,
+                'name'   => implode(', ',explode('|',$vid)),
+                'players'=> $venue->playerCount(),
             );
             $group .= $this->populate($html, $vars);
         }
@@ -693,9 +691,13 @@ class Page extends Qwik {
             $venueID = $avail->venue;
             $reg = explode('|', $venueID);
             $last = count($reg);
-            $countries[] = $reg[$last-1];
-            $states[] = $reg[$last-2];
-            $towns[] = $reg[$last-3];
+            if ($last >= 3){
+                $countries[] = $reg[$last-1];
+                $states[] = $reg[$last-2];
+                $towns[] = $reg[$last-3];
+            } else {
+                self::logMsg("warning: unable to extract region '$venueID'");
+            }
         }
 
         $countries = array_unique($countries);
@@ -744,35 +746,35 @@ class Page extends Qwik {
     }
 
 
-    static public function daySpan($hours, $day=''){
-        global $clock24hr;
-        if (count($hours) > 0){
-            $dayX = substr($day, 0, 3);
-            $dayP = $clock24hr ? 0 : 12;
-
-            if (count($hours) == 24){
-                return "<span class='lolite'><b>$dayX</b></span>";
-            } else {
-                $str =  $clock24hr ? $dayX : '';
-                $last = null;
-                foreach($hours as $hr){
-                    $pm = $hr > 12;
-                    $consecutive = $hr == ($last + 1);
-                    $str .= $consecutive ? "&middot" : clock($last) . ' ';
-
-                    if ($pm && !$clock24hr) {
-                        $str .= "<b>$dayX</b>";
-                        $dayX = '';
-                    }
-
-                    $str .= $consecutive ? '' : " " . clock($hr);
-                    $last = $hr;
-                }
-                $str .= $consecutive ? clock($last) : '';
-                return "<span class='lolite'>$str</span>";
-            }
+    static public function daySpan($hours, $day='', $clock24hr=FALSE){
+        if (count($hours) == 0){
+            return "";
         }
-    return "";
+
+        $dayX = substr($day, 0, 3);
+        if (count($hours) == 24){
+            return "<span class='lolite'><b>$dayX</b></span>";
+        }
+
+        $dayP = $clock24hr ? 0 : 12;
+        $str =  $clock24hr ? $dayX : '';
+        $last = null;
+        foreach($hours as $hr){
+            $pm = $hr > 12;
+            $consecutive = $hr == ($last + 1);
+            $str .= $consecutive ? "&middot" : self::clock($last) . ' ';
+
+            if ($pm && !$clock24hr) {
+                $str .= "<b>$dayX</b>";
+                $dayX = null;
+            }
+
+            $str .= $consecutive ? '' : " " . self::clock($hr);
+            $last = $hr;
+        }
+        $str .= $consecutive ? self::clock($last) : '';
+        $str .= $dayX!=null ? " <b>$dayX</b>" : '';
+        return "<span class='lolite'>$str</span>";
     }
 
 
@@ -788,11 +790,11 @@ class Page extends Qwik {
     
     
     
-    function similarVenues($description, $game){
+    function similarVenues($description, $game=NULL){
         $similar = array();
         $existingVenues = self::venues($game);
         $words = explode(" ", $description, 5);
-        array_walk($words, 'trim_value'); 
+        array_walk($words, array($this, 'trim_value'));
     
         foreach($existingVenues as $venueID){
             $venueid = strtolower($venueID);
@@ -807,6 +809,13 @@ class Page extends Qwik {
         arsort($similar);
         return array_keys($similar);
     }
+
+
+    private function trim_value(&$value)
+    {
+        $value = trim($value);
+    }
+
 
 
     function listVenues($game){

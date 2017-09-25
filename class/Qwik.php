@@ -2,6 +2,7 @@
 
 
 require_once 'Logging.php';
+require_once 'Page.php';
 
 
 class Qwik {
@@ -363,6 +364,7 @@ class Qwik {
         if (is_writable($file)){
             return unlink($file);
         }
+        self::logMsg("Unable to delete file: $file");
         return false;
     }
 
@@ -429,15 +431,15 @@ class Qwik {
     }
 
 
-    static public function readXML($path, $filename){
-        if (!file_exists("$path/$filename")) {
-            self::logMsg("unable to read xml $path/$filename");
+    static public function readXML($path, $fileName){
+        if (!file_exists("$path/$fileName")) {
+            self::logMsg("unable to read xml $path/$fileName");
             return null;
         }
 
         $cwd = getcwd();
         if(chdir($path)){
-            $xml = simpleXML_load_file($filename);
+            $xml = simpleXML_load_file($fileName);
             if(!chdir($cwd)){
                 self::logMsg("failed to change working directory to $cwd");
             }

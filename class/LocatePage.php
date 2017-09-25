@@ -16,7 +16,7 @@ class LocatePage extends Page {
         
         $this->game = $this->req('game');
         $this->venueDesc = $this->req('venue');
-	    $this->repost = $this->req('repost');
+        $this->repost = $this->req('repost');
     }
 
 
@@ -24,35 +24,33 @@ class LocatePage extends Page {
         if ($this->game == null){
             header("Location: ".self::QWIK_URL);
             return;
-	    }
-	    parent::serve();
-	}
+        }
+	parent::serve();
+    }
 	
 	
-	public function processRequest(){
+    public function processRequest(){
+        $vids = $this->matchShortVenueID($this->venueDesc, $this->game);
+	$matchCount = count($vids);
 
-	    $vids = $this->matchShortVenueID($this->venueDesc, $this->game);
-	    $matchCount = count($vids);
-	    if($matchCount == 1){
-	        $vid = $vids[0];
-	    }
+	$vid = ($matchCount == 1) ? $vids[0] : null;
 
-	    if($this->req('name') !== null
-	    && $this->req('address') !== null
-	    && $this->req('suburb') !== null
-	    && $this->req('state') !== null
-	    && $this->req('country') !== null){
-	    	$vid = venueID(
+	if($this->req('name') !== null
+	&& $this->req('address') !== null
+	&& $this->req('suburb') !== null
+	&& $this->req('state') !== null
+	&& $this->req('country') !== null){
+	    $vid = Venue::venueID(
 	    		$this->req('name'), 
 	    		$this->req('address'), 
-            	$this->req('suburb'), 
-            	$this->req('state'), 
-            	$this->req('country')
+                        $this->req('suburb'),
+                        $this->req('state'),
+                        $this->req('country')
 		    );
             $venue = new Venue($vid, TRUE);
-		}
+	}
 
-	    if ($vid !== null){
+	if ($vid !== null){
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
             $repost = $this->repost;
@@ -73,7 +71,7 @@ class LocatePage extends Page {
     *******************************************************************************/
     function matchShortVenueID($svid, $game){
         $matchedVids = array();
-        $vids = self::venues(strtolower($game));
+        $vids = self::venues($game);
         foreach($vids as $vid){
             if($svid === Venue::svid($vid)){
                 $matchedVids[] = $vid;
@@ -86,13 +84,12 @@ class LocatePage extends Page {
     
 
 
-	public function variables(){
-
+    public function variables(){
         $game = $this->game;
-	    $venue = new Venue($this->venueDesc, TRUE);
-	    $venueName = $venue->name();
-	    $venueCountry = $venue->country();
-	    $venueURL = $venue->url();
+        $venue = new Venue($this->venueDesc);
+        $venueName = $venue->name();
+        $venueCountry = $venue->country();
+        $venueURL = $venue->url();
         $backLink = "<a href='".self::QWIK_URL;
         $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
@@ -101,7 +98,7 @@ class LocatePage extends Page {
         $variables['vid']            = $venue->id();
         $variables['game']           = $this->game;
         $variables['homeURL']        = self::QWIK_URL."/player.php";
-		$variables['repost']         = $this->repost;
+	$variables['repost']         = $this->repost;
         $variables['venueName']      = $venueName;
         $variables['venueAddress']   = $venue->address();
         $variables['venueSuburb']    = $venue->suburb();

@@ -101,7 +101,7 @@ class Match extends Qwik {
 
 
     public function rid(){
-        return (string) $this->rids()[0];
+        return isset($this->rids()[0]) ? (string) $this->rids()[0] : null;
     }
 
 
@@ -111,12 +111,14 @@ class Match extends Qwik {
 
 
     public function rivalParity(){
-        return (string) $this->rids()[0]['parity'];
+        $rid = $this->rid();
+        return isset($rid) ? (string) $rid['parity'] : null;
     }
 
 
     public function rivalRep(){
-        return (string) $this->rids()[0]['rep'];
+        $rid = $this->rid();
+        return isset($rid) ? (string) $rid['rep'] : null;
     }
 
 
@@ -293,16 +295,11 @@ class Match extends Qwik {
     }
 
 
-
-
-
     public function variables(){
-    //echo "<br>MATCHVARIABLES<br>";
         global $THUMB_UP_ICON, $THUMB_DN_ICON;
         $status = $this->status();
         $game = $this->game();
         $rival = $this->rival();
-        $rivalElement = $match->xpath("rival")[0];
         $parity = $this->rivalParity();
         $hours = $this->hours();
         $rivalLink = $rival->htmlLink();
@@ -314,7 +311,7 @@ class Match extends Qwik {
             'game'      => $game,
             'gameName'  => self::games()[$game],
             'day'       => $this->mday(),
-            'hrs'       => $hours->bits,
+            'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),
             'id'        => $this->id(),
             'parity'    => Page::parityStr($parity),
@@ -323,7 +320,7 @@ class Match extends Qwik {
         );
         switch ($status){
             case 'keen':
-                $vars['hour'] = daySpan($hours->bits);
+                $vars['hour'] = Page::daySpan($hours->list());
                 $vars['rivalCount'] = $this->rivalCount();
                 break;
             case 'invitation':

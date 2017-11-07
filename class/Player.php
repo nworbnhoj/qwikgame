@@ -30,7 +30,7 @@ class Player extends Qwik {
         if (!file_exists("$path/$fileName") && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
-	        self::logMsg("login: new player " . self::snip($pid));
+            self::logMsg("login: new player " . self::snip($pid));
         }
         $this->xml = $this->retrieve($fileName);
     }
@@ -42,10 +42,10 @@ class Player extends Qwik {
 
 
     private function newXML(){
-        $id = $this->id;
+        $pid = $this->id();
         $now = new DateTime('now');
         $debut = $now->format('d-m-Y');
-        $record  = "<player id='$id' debut='$debut' lang='en'>";
+        $record  = "<player id='$pid' debut='$debut' lang='en'>";
         $record .= "<rep pos='0' neg='0'/>";
         $record .= "<rely val='2.0'/>";
         $record .= "</player>";
@@ -189,6 +189,7 @@ class Player extends Qwik {
         $token = self::newToken(10);
         $nekot = $this->xml->addChild('nekot', $this->nekot($token));
         $nekot->addAttribute('exp', time() + $term);
+        $this->save();
         return $token;
     }
 
@@ -408,34 +409,35 @@ class Player extends Qwik {
      *
      * @return bitfield representing the hours at the $rival is available
      */
-    public function availableHours($match){  
-        $availableHours = new Hours();
-        $vid = $match->vid();
-        $game = $match->game();
-        $day = $match->dateTime()->format('D');
+    public function favouriteHours($vid, $game, $day){
+        $favouriteHours = new Hours();
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
             $hours = $avail->xpath("hrs[@day='$day']");
             foreach ($hours as $hrs){
-                $availHrs = new Hours(intval("$hrs"));
-                $availableHours->include($availHrs);
+                $favHrs = new Hours(intval("$hrs"));
+                $favouriteHours->include($favHrs);
             }
         }
-        return $availableHours;
+        return $favouriteHours;
     }
 
 
     // check rival keeness in the given hours
-    public function keenHours($match){
+    public function keenHours($vid, $game, $day){
         $keenHours = new Hours();
-        $venue = $match->venue();
-        $game = $match->game();
-        $day = $match->dateTime()->format('D');
-        $keens = $this->xml->xpath("match[status='keen' and venue='$venue' and game='$game']");
+        $keens = $this->xml->xpath("match[status='keen' and venue='$vid' and game='$game']");
         foreach ($keens as $keen){
             $keenHours->include($keen['hrs']);
         }
         return $keenHours;
+    }
+
+
+    public function availableHours($vid, $game, $day){
+        $availableHours = $this->favouriteHours($vid, $game, $day);
+        $availableHours->include($this->keenHours($vid, $game, $day));
+        return $availableHours;
     }
 
 
@@ -454,30 +456,54 @@ class Player extends Qwik {
     }
 
 
-    public function matchKeen($game, $venue, $date, $hours) {
+    public function matchKeen($game, $venue, $date, $hours, $rids) {
         $match = $this->newMatch();
         $match->init('keen', $game, $venue, $date, $hours);
         $venue->addPlayer($this->id());
+        $match->invite($rids);
         return $match;
     }
 
 
-    public function matchInvite($rivalMatch, $hours=NULL){
+    public function matchInvite($rivalMatch){
+        $inviteHours = $rivalMatch->hours();
+        $availableHours = $this->availableHours(
+            $rivalMatch->vid(),
+            $rivalMatch->game(),
+            $rivalMatch->dateTime()->format('D')
+        );
+        $inviteHours->includeOnly($availableHours);
+
+        if (!$inviteHours->empty()){
+            $match = $this->matchAdd($rivalMatch, $inviteHours);
+            return $match;
+        }
+        return null;
+    }
+
+
+    public function matchAdd($rivalMatch, $inviteHours=null, $email=null){
+        $inviteHours = is_null($inviteHours) ? $rivalMatch->hours() : $inviteHours;
+        $email = is_null($email) ? $this->email() : $email;
+        if (is_null($inviteHours) | is_null($email)){
+            self::logMsg("matchAdd() unable to add Match");
+            return;
+        }
+
         $rid = $rivalMatch->pid();
         $rival = new Player($rid);
-        $game = $rivalMatch->game();
         $match = $this->newMatch();
         $match->copy($rivalMatch);
         $match->status('invitation');
-        if (!is_null($hours)){
-            $match->hours($hours);
-        }
+        $match->hours($inviteHours);
         $match->addRival(
             $rid,
-            $this->parity($rival, $game),
+            $this->parity($rival, $rivalMatch->game()),
             $rival->repWord(),
             $rival->nick()
         );
+        $this->save();
+        $this->emailInvite($match, $email);
         return $match;
     }
 
@@ -500,25 +526,69 @@ class Player extends Qwik {
     }
 
 
-
-
-
-    function loginURL($shelfLife){
-        $pid = $this->id();
-        $token = $this->token($shelfLife);
-        $data = array('qwik'=>'login', 'pid'=>$pid, 'token'=>$token);
-        return self::QWIK_URL."/player.php?" . http_build_query($data);
+    function authURL($shelfLife){
+        $query = array('qwik'=>'login');
+        $query['pid'] = $this->id();
+        $query['token'] = $this->token($shelfLife);
+        return self::QWIK_URL."/player.php?" . http_build_query($query);
     }
 
 
-    function emailInvite($mid){
-        $match = $this->matchID($mid);
+
+
+    public function emailWelcome($email){
+        $authURL = $this->authURL(self::MONTH);
+
+        $subject = "Welcome to qwikgame.org";
+
+        $msg  = "<p>\n";
+        $msg .= "\tPlease click this link to <b>activate</b> your qwikgame account:<br>\n";
+        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\t\t\t</p>\n";
+        $msg .= "\t\t\t<p>\n";
+        $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
+        $msg .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
+        $msg .= "\t\t\tTerms & Conditions</a>";
+        $msg .= "</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
+        $msg .= "<p>\n";
+
+        self::qwikEmail($email, $subject, $msg);
+        self::logEmail('welcome', $id);
+    }
+
+
+    public function emailLogin($email){
+        $authURL = $this->authURL(self::DAY);
+
+        $subject = 'qwikgame.org login link';
+
+        $msg  = "<p>\n";
+        $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
+        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\t\t\t</p>\n";
+        $msg .= "<p>\n";
+        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
+        $msg .= "<p>\n";
+
+        self::qwikEmail($email, $subject, $msg);
+        self::logEmail('login', $id);
+    }
+
+
+    function emailInvite($match, $email=null){
+        if(is_null($email)){
+            $email = $this->email();
+            if(is_null($email)){
+                return;
+            }
+        }
         $date = $match->dateTime();
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $email = $this->email();
-        $url = $this->loginURL(2*self::DAY);
+        $url = $this->authURL(self::WEEK);
 
         $subject = "Invitation: $game at $venueName";
 
@@ -541,7 +611,7 @@ class Player extends Qwik {
         $game = $match->game();
         $pid = $this->id();
         $venueName = $match->venueName();
-        $url = loginURL(self::DAY);
+        $url = authURL(self::DAY);
 
         $subject = "Confirmed: $game $time at $venueName";
 
@@ -568,9 +638,9 @@ class Player extends Qwik {
         $game = $match['game'];
         $gameName = self::games()["$game"];
         $pid = $this->id();
-        $token = $this->token(2*Player::DAY);
+        $token = $this->token(self::WEEK);
         $venueName = Venue::svid($match->venue());
-        $url = loginURL(self::DAY);
+        $url = authURL(self::DAY);
 
         $subject = 'Message from qwikgame rival';
 
@@ -585,11 +655,17 @@ class Player extends Qwik {
 
 
     function emailCancel($match){
+        $email = $this->email();
+        if (is_null($email)){
+            self:logMsg("unable to email rival without an email address");
+            return;
+        }
+
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ha D");
         $game = $match->game();
         $pid = $this->id();
-        $token = $player->token(2*self::DAY);
+        $token = $this->token(self::WEEK);
         $vid = $match->vid();
         $venueName = $match->venueName();
 
@@ -599,7 +675,7 @@ class Player extends Qwik {
         $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
         $msg .= "</p>\n";
 
-        self::qwikEmail($this->email(), $subject, $msg);
+        self::qwikEmail($email, $subject, $msg);
         self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
@@ -613,6 +689,7 @@ class Player extends Qwik {
         $pid = $this->id();
         $token = $this->token(self::YEAR);
 
+        self::qwikEmail($this->email(), $subject, $msg);
         self::logEmail('quit', $pid);
     }
 
@@ -1058,7 +1135,7 @@ Requirements:
 
 
     static public function subID($id){
-        return (string)$id;
+        return $id;
         //return substr("$id",0, 10);
     }
 
@@ -1083,15 +1160,17 @@ Requirements:
         $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
         foreach($parities as $par){
             $rid = self::subID($par['rival']);
-            if (!$filter){
-                $include=TRUE;
-            } elseif($positiveFilter){
-                $include = in_array($rid, $filter);
-            } else {
-                $include = ! in_array($rid, $filter);
-            }
-            if($include){
-                $orb->addNode($rid, $par['parity'], $par['rely'], $par['date']);
+            if(!is_null($rid)){
+                if (!$filter){
+                    $include=TRUE;
+                } elseif($positiveFilter){
+                    $include = in_array($rid, $filter);
+                } else {
+                    $include = ! in_array($rid, $filter);
+                }
+                if($include){
+                    $orb->addNode($rid, $par['parity'], $par['rely'], $par['date']);
+                }
             }
         }
         //print_r($orb);
@@ -1106,7 +1185,7 @@ Requirements:
         return '';
     }
 
-    $url = $player->url();
+    $url = $this->url();
     if(empty($url)){
         return $name;
     }

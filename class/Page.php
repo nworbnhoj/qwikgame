@@ -37,10 +37,10 @@ class Page extends Qwik {
     const FACEBOOK_IMG = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
     const TWITTER_IMG  = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
 
-    const EMAIL_LNK = "<a href='mailto:?subject=".self::QWIK_URL."&body=".self::QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
+    const EMAIL_LNK    = "<a href='mailto:?subject=".self::QWIK_URL."&body=".self::QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
     const FACEBOOK_LNK = "<a href='".self::FACEBOOK_URL."' target='_blank'>".self::FACEBOOK_IMG."</a>";
-    const FLYER_LNK = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
-    const TWITTER_LNK = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
+    const FLYER_LNK    = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
+    const TWITTER_LNK  = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
 
     static $translation;
 
@@ -82,7 +82,7 @@ class Page extends Qwik {
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
         self::$icons = array (
-           'INFO_ICON'      => self::INFO_ICON,
+            'INFO_ICON'     => self::INFO_ICON,
             'TICK_ICON'     => self::TICK_ICON,
             'CROSS_ICON'    => self::CROSS_ICON,
             'THUMB_UP_ICON' => self::THUMB_UP_ICON,
@@ -113,7 +113,7 @@ class Page extends Qwik {
             'FEMALE_ICON'   => self::FEMALE_ICON,
             'HOME_ICON'     => self::HOME_ICON,
             'INFO_ICON'     => self::INFO_ICON,
-		    'LANG_ICON'		=> self::LANG_ICON,
+            'LANG_ICON'	    => self::LANG_ICON,
             'LOGOUT_ICON'   => '',
             'MALE_ICON'     => self::MALE_ICON,
             'RELOAD_ICON'   => self::RELOAD_ICON,
@@ -121,11 +121,11 @@ class Page extends Qwik {
             'THUMB_UP_ICON' => self::THUMB_UP_ICON,
             'TWITTER_ICON'  => self::TWITTER_ICON,
             'homeURL'       => self::QWIK_URL,
-            'termsURL'		=> self::TERMS_URL,
-            'privacyURL'	=> self::PRIVACY_URL,
-            'flyerLink'  	=> self::FLYER_LNK,
-            'thumb-up'		=> "<span class='" . self::THUMB_UP_ICON . "'></span>",
-            'thumb-dn'		=> "<span class='" . self::THUMB_DN_ICON . "'></span>",
+            'termsURL'      => self::TERMS_URL,
+            'privacyURL'    => self::PRIVACY_URL,
+            'flyerLink'     => self::FLYER_LNK,
+            'thumb-up'      => "<span class='" . self::THUMB_UP_ICON . "'></span>",
+            'thumb-dn'      => "<span class='" . self::THUMB_DN_ICON . "'></span>",
             'game'          => isset($game) ? self::games()["$game"] : '[game]'
         );
         
@@ -144,9 +144,9 @@ class Page extends Qwik {
         $template = $this->template;
         $html = file_get_contents("lang/$lang/$template.html");
     //	do{
-	    $html = $this->replicate($html, $this->player, $this->req);
-        $html = $this->populate($html, $this->variables());
-	    $html = $this->translate($html, $this->language);
+            $html = $this->replicate($html, $this->player, $this->req);
+            $html = $this->populate($html, $this->variables());
+            $html = $this->translate($html, $this->language);
     //	} while (preg_match("\[([^\]]+)\]", $html) != 1);
     //	} while (strstr($html, "["));
         return $html;
@@ -247,7 +247,7 @@ class Page extends Qwik {
             }
             return $player;
         } else {
-            self::logMsg("lhogin: invalid token pid=" . self::snip($pid));
+            self::logMsg("login: invalid token pid=" . self::snip($pid));
         }
 
         if(empty($player->email()) && isset($email)){            // LOGIN anon player
@@ -260,7 +260,7 @@ class Page extends Qwik {
             }
             $_SESSION['pid'] = $pid;
             $_SESSION['lang'] = $player->lang();
-            $this->emailWelcome($email, $pid, $token);
+            $player->emailWelcome($email);
             return $player;
         }
 
@@ -268,7 +268,7 @@ class Page extends Qwik {
             self::logMsg("login: recover account " . self::snip($pid));                 // todo rate limit
             $token = $player->token(Player::DAY);
             $player->save();
-            $this->emailLogin($email, $pid, $token);
+            $player->emailLogin();
         }
     }
 
@@ -850,10 +850,6 @@ class Page extends Qwik {
         $words[0] = "<b>$first</b>";
         return implode(' ', $words);
     }
-    
-    
-    
-
 
 
     public function geolocate($key){
@@ -863,57 +859,6 @@ class Page extends Qwik {
         }
         return $geo["geoplugin_$key"];
     }
-
-
-
-    private function emailWelcome($email, $id, $token){
-        $authURL = $this->authURL($email, $token);
-
-        $subject = "Welcome to qwikgame.org";
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to <b>activate</b> your qwikgame account:<br>\n";
-        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "\t\t\t<p>\n";
-        $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-        $msg .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
-        $msg .= "\t\t\tTerms & Conditions</a>";
-        $msg .= "</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        Player::qwikEmail($email, $subject, $msg, $id, $token);
-        self::logEmail('welcome', $id);
-    }
-
-
-    private function emailLogin($email, $id, $token){
-        $authURL = $this->authURL($email, $token);
-
-        $subject = 'qwikgame.org login link';
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
-        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        Player::qwikEmail($email, $subject, $msg, $id, $token);
-        self::logEmail('login', $id);
-    }
-
-
-
-    function authURL($email, $token) {    
-        return self::QWIK_URL."/player.php?qwik=login&email=$email&token=$token";
-    }
-
-
-
 
 }
 

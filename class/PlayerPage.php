@@ -123,42 +123,54 @@ class PlayerPage extends Page {
 
 
     public function variables(){
-
-        $player = $this->player();
-        $venue = $this->venue;
-        $game = $this->game;
-
-        $rnd = mt_rand(1,8);
-        $message = $player->email() !== null ?
-            "{Tip$rnd}" :
-            'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
-
-        $familiarCheckboxes = $this->familiarCheckboxes($player);
-        $playerNick = $player->nick();
-        $historyCount = count($player->matchQuery("match[@status='history']"));
-
         $vars = parent::variables();
 
-        $vars['vid']           = isset($venue) ? $venue->id() : '';
-        $vars['venue']         = isset($venue) ? $venue->name() : '';
-        $vars['message']       = $message;
-        $vars['playerName']    = empty($playerNick) ? $player->email() : $playerNick;
-        $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
-        $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
         $vars['hourRows']      = $this->hourRows();
         $vars['selectRegion']  = self::SELECT_REGION;
-        $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
-        $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
-//            'historyForms'   => $historyForms;
-        $vars['reputation']    = $player->repWord();
-        $vars['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
-        $vars['thumbs']        = $player->repThumbs();
-        $vars['playerNick']    = $playerNick;
-        $vars['playerURL']     = $player->url();
-        $vars['playerEmail']   = $player->email();
         $vars['datalists']     = $this->datalists();
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
+
+        $venue = $this->venue;
+        if (!is_null($venue)){
+            $vars['vid'] = $venue->id();
+            $vars['venue'] = $venue->name();
+        } else {
+            $vars['vid'] = '';
+            $vars['venue'] = '';
+        }
+
+        $player = $this->player();
+        if (!is_null($player)){
+            $rnd = mt_rand(1,8);
+            $message = $player->email() !== null ?
+                "{Tip$rnd}" :
+                'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
+
+            $familiarCheckboxes = $this->familiarCheckboxes($player);
+            $playerNick = $player->nick();
+            $historyCount = count($player->matchQuery("match[@status='history']"));
+
+            $vars['message']       = $message;
+            $vars['playerName']    = empty($playerNick) ? $player->email() : $playerNick;
+            $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
+
+            $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
+            $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
+    //            'historyForms'   => $historyForms;
+            $vars['reputation']    = $player->repWord();
+            $vars['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
+            $vars['thumbs']        = $player->repThumbs();
+            $vars['playerNick']    = $playerNick;
+            $vars['playerURL']     = $player->url();
+            $vars['playerEmail']   = $player->email();
+        }
+
+        $game = $this->game;
+        if (!is_null($game)){
+
+            $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
+        }
 
         return $vars;
     }
@@ -198,43 +210,32 @@ function qwikKeen($player, $req, $venue){
 
     $game = $req['game'];
 
-    // build an array of Familiar Rivals to invite
-    $pid = $player->id();
-    $familiarRids = array();
-    if (isset($req['invite'])){
-        $emails = $req['invite'];
-        if (is_array($emails)){
-            foreach($emails as $email){
-                $familiarRids[] = Player::anonID($email);
-            }
+    $rids = array();
+    if (isset($req['invite'])){   // add anon Rivals $rid=>null
+        foreach($venue->playerIDs() as $rid){
+            $rids[$rid] = null;
         }
     }
-    unset($familiarRids[$pid]);    // exclude self;
 
-
-    // build an array of other available Rivals to invite
-    $anonRids = array();
-    if (isset($req['invite-available'])){
-        $anonRids = array_diff(
-            $venue->playerIDs(),
-            $familiarRids        // exclude explicit invitations
-        );
+    $emails = $req[	'invite'];
+    if (is_array($emails)){    // add Familiar Rivals $rid=>$email
+        foreach($emails as $email){
+            $rids[Player::anonID($email)] = $email;
+        }
     }
-    unset($anonRids[$pid]);    // exclude self;
-
+    unset($rids[$player->id()]);         // exclude self;
 
     $days = array('today','tomorrow');
     foreach($days as $day){
         $date = $venue->dateTime($day);
         $hours = new Hours((int) $req[$day]);
         if (!$hours->empty()){
-             $match = $player->matchKeen($game, $venue, $date, $hours);
-             $match->invite($familiarRids, TRUE);
-             $match->invite($anonRids);
+             $player->matchKeen($game, $venue, $date, $hours, $rids);
         }
     }
     $player->save();
 }
+
 
 
 function qwikAccept($player, $request){
@@ -245,7 +246,7 @@ function qwikAccept($player, $request){
             header("Location: error.php?msg=unable to locate match.");
             return;
         }
-        $match->accept($request['hour']);
+        $match->accept(new Hours($request['hour']));
         $player->save();
     }
 }
@@ -253,7 +254,6 @@ function qwikAccept($player, $request){
 
 
 function qwikDecline($player, $request){
-//echo "<br>QWIKDCLINE<br>";
     $playerID = $player->id();
     if(isset($request['id'])){
         $player->matchDecline($request['id']);

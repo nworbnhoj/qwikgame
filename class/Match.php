@@ -8,8 +8,8 @@ require_once 'class/Page.php';
 class Match extends Qwik {
 
     private $player;
-    private $id;
     private $xml;
+    private $rivalElements;    // temp variable for performance
 
     public function __construct($player, $xml){
         parent::__construct();
@@ -44,10 +44,11 @@ class Match extends Qwik {
 
 
     public function addRival($rid, $parity=NULL, $rep=NULL, $name=NULL){
-		$rival = $this->xml->addChild('rival', $rid);
+        $rival = $this->xml->addChild('rival', $rid);
         $rival->addAttribute('parity', $parity);
         $rival->addAttribute('rep', $rep);
         $rival->addAttribute('name', $name);
+        $this->rivalElements = null; //reset
     }
 
 
@@ -95,35 +96,70 @@ class Match extends Qwik {
     }
 
 
-    public function rids(){
-        return  $this->xml->xpath('rival');
+    private function rivalElements(){
+        if(is_null($this->rivalElements)){
+            $this->rivalElements = $this->xml->xpath('rival');
+        }
+        return $this->rivalElements;
     }
 
 
-    public function rid(){
-        return isset($this->rids()[0]) ? (string) $this->rids()[0] : null;
+    private function rivalElement(index=0){
+        $rivalElements = $this->rivalElements();
+        return isset($rivalElements[index])
+            ? $rivalElements[index]
+            : null;
     }
 
 
-    public function rival(){
-        return new Player($this->rid());
+    public function rid(index=0){
+        $rivalElement = $this->rivalElement(index);
+        return isset($rivalElement)
+            ? (string) $rivalElement
+            : null ;
+    }
+
+    private function rids(){
+        $rids = array();
+        $rivalCount = $this->rivalCount();
+        for(r=0; r<=rivalCount; r++){
+            $rids[r] = $this->rid(r);
+        }
+        return $rids;
     }
 
 
-    public function rivalParity(){
-        $rid = $this->rid();
-        return isset($rid) ? (string) $rid['parity'] : null;
+    public function rival(index=0){
+        $rid = $this->rid(index);
+        return isset($rid) ? new Player($rid) : null;
     }
 
 
-    public function rivalRep(){
-        $rid = $this->rid();
-        return isset($rid) ? (string) $rid['rep'] : null;
+    private function rivals(){
+        $rivals = array();
+        $rivalCount = $this->rivalCount();
+        for(r=0; r<=rivalCount; r++){
+            $rival = $this->rival(r);
+            $rivals[$rival->id()] = $rival;
+        }
+        return $rivals;
+    }
+
+
+    public function rivalParity(index=0){
+        $element = $this->rivalElement(index);
+        return isset($element) ? (string) $element['parity'] : null;
+    }
+
+
+    public function rivalRep(index=0){
+        $element = $this->rivalElement(index);
+        return isset($element) ? (string) $element['rep'] : null;
     }
 
 
     public function rivalCount(){
-        return count($this->rids());
+        return count($this->rivalElements());
     }
 
 
@@ -150,30 +186,23 @@ class Match extends Qwik {
     }
 
 
-    public function invite($rids, $interrupt=FALSE){
-        foreach($rids as $rid){
+    public function invite($rids){
+        foreach($rids as $rid => $email){
             $rival = new Player($rid);
-            if(!is_null($rival)
-            && !empty($rival->email())){
-                $inviteHours = $this->hours();
-                if (!$interrupt){
-                    $rivalHours = $rival->availableHours($this);
-                    $rivalHours->include($rival->keenHours($this));
-                    $inviteHours->includeOnly($rivalHours);
+            if(!is_null($rival)){
+                $rivalMatch = is_null($email)
+                    ? $rival->matchInvite($this)
+                    : $rival->matchAdd($this, null, $email);
+                if(!is_null($rivalMatch)){
+                    $this->addRival($rid);
                 }
-                if (!$inviteHours->empty()){
-                    $inviteMatch = $rival->matchInvite($this, $inviteHours);
-                    $inviteMatch->addRival($rid);
-                    $rival->emailInvite($inviteMatch->id());
-                }
-                $rival->save();
             }
         }
     }
 
 
     public function accept($acceptHour){
-        $rival = new Player($this->rival());
+        $rival = $this->rival(0);
         if (!$rival){
             return FALSE;
         }
@@ -186,12 +215,12 @@ class Match extends Qwik {
         $rivalStatus = $rivalMatch->status();
         switch ($rivalStatus) {
             case 'keen':
-                $newMid = newID();
+                $newMid = self::newID();
                 $this->id($newMid); //make independent from keenMatch
                 $this->status('accepted');
                 $this->hours($acceptHour);
                 $rival->matchInvite($this);
-                $rival->emailInvite($newMid);
+                $rival->emailInvite($this);
                 break;
             case 'accepted':
                 $hour = $acceptHour->first();
@@ -212,56 +241,71 @@ class Match extends Qwik {
     }
 
 
-    public function decline(){
-        foreach($this->rids() as $rid){
-            $rival = new Player($rid);
-            if(isset($rival)){
-                $match = $rival->match($mid);
-                switch ($match->status()){
-                    case 'accepted':
-                        $match->cancel();
-                        $rival->save();
-                    break;
-                    case 'keen':
-                        $this->removeRival($rid);
-                    break;
-                }
-                $rival->save();
-            }
-            self::removeElement($this->xml);
-        }
-    }
-
-
     private function removeRival($rid){
         $rivalElement = $this->xml->xpath("rival='$rid'");
         self::removeElement($rivalElement[0]);
+        $this->rivalElements = null; // reset
     }
 
 
     public function cancel(){
-        $complete = array('feedback','history','cancelled');
-        if (in_array($this->status(), $complete)){
-            return FALSE;
-        }
-        $this->status('cancelled');
+        $rivals = $this->rivals();
         $mid = $this->id();
-        foreach($this->rids() as $rid){
-            $rival = new Player($rid);
-            if(isset($rival)){
-                $match = $rival->matchID($mid);
-                if($match->cancel()){
-                    $rival->emailCancel($match);
-                    $rival->save();
+        switch ($this->status()) {
+            case 'feedback':
+            case 'history':
+            case 'cancelled':
+                break;
+            case 'confirmed':
+                foreach($rivals as $rival){    // usually only one rival
+                    $rival->emailCancel($this);
                 }
-            }
+                // break; intentional drop-thru
+            case 'keen':
+                foreach($rivals as $rival){
+                    $rival->matchCancel($mid);
+                }
+                $this->status('cancelled');
+                $this->player->save();
+                break;
+            case 'invitation':    // not used - handled by decline()
+                foreach($rivals as $rival){
+                    $rival->matchDecline($mid);
+                }
+                $this->status('cancelled');
+                $this->player->save();
         }
-//        self::removeElement($this);
     }
 
 
+    public function decline(){
+        $rivals = $this->rivals();
+        foreach($rivals as $rival){
+            $match = $rival->match($mid);
+            switch ($match->status()){
+                case 'accepted':
+                    $match->cancel();
+                    $rival->save();
+                break;
+                case 'keen':
+                    $this->removeRival($rid);
+                break;
+            }
+            $rival->save();
+        }
+
+        $rivalElements = $this->rivalElements();
+        foreach($rivalElements as $element){
+            self::removeElement($element);
+        }
+    }
+
+
+
+
+
     public function conclude(){
-        $tz = $this->tz();
+        git$tz = $this->tz();
         $now = self::tzDateTime('now', $tz);
         $dateStr = $this->date();
         $hour = $this->hours()->last();
@@ -392,3 +436,6 @@ class Match extends Qwik {
 
 
 }
+
+
+?>

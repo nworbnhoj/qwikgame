@@ -104,8 +104,9 @@ class Defend extends Qwik {
 
         if(in_array(FALSE, $result, TRUE)){
             $this->req = array();
-            $res = print_r($result, true);
-            Page::logMsg("The Defense Filter rejected the input request. $res");
+            $res = array_filter($result, function($var){return $var!=="";} );
+            $resStr = print_r($res, true);
+            Page::logMsg("The Defense Filter rejected the input request. $resStr");
         }
         
         return $req;

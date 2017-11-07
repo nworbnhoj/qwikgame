@@ -14,13 +14,14 @@ class Venue extends Qwik {
         parent::__construct();
         $this->id = $id;
         $path = self::PATH_VENUE;
-        $ext = self::XML;
-        if(!file_exists("$path/$id$ext") && $forge){
-            $this->xml = $this->newXML($id);
+        $fileName = $this->fileName();
+        $this->xml = file_exists("$path/$fileName") ?
+            $this->retrieve($fileName) :
+            $this->newXML($id);
+        if ($forge){
             $this->save();
             self::logMsg("new Venue: $id");
         }
-        $this->xml = $this->retrieve($this->fileName());
     }
 
 
@@ -177,7 +178,7 @@ class Venue extends Qwik {
 
 
     public function state(){
-        return $this->xml['state'];
+        return isset($this->xml['state']) ? $this->xml['state'] : '';
     }
 
 

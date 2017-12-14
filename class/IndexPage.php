@@ -15,31 +15,26 @@ class IndexPage extends Page {
             parent::serve();
         } else {
             $query = http_build_query($this->req());
-		    header("Location: ".self::QWIK_URL."/player.php?$query");
-	    }
-	}
+            header("Location: ".self::QWIK_URL."/player.php?$query");
+        }
+    }
 
 
 
     public function processRequest(){
-		$qwik = $this->req('qwik');
-		$email = $this->req('email');
-		if ($qwik == 'available'
-		&& $this->req('venue') !== null
-		&& $this->req('game') !== null
-		&& isset($email)){
-			$pid = Player::anonID($email);
-			$anon = new Player($pid, $log, TRUE);
-			if(isset($anon)){
-				$token = $anon->token(2*Player::DAY);
-				$anon->save();
-				$this->req('pid', $pid);
-				$this->req('token', $token);
-				$this->req('repost', 'player.php#available');
-				$this->emailStash($email, 'locate.php', $this->req(), $pid, $token);
-			}
-		}
-	}
+        $qwik = $this->req('qwik');
+        $email = $this->req('email');
+        if ($qwik == 'available'
+        && $this->req('venue') !== null
+        && $this->req('game') !== null
+        && isset($email)){
+            $pid = Player::anonID($email);
+            $anon = new Player($pid, $log, TRUE);
+            if(isset($anon)){
+                $anon->emailFavourite($this->req(), $email);
+            }
+        }
+    }
 
 
     public function variables(){

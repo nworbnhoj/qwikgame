@@ -61,7 +61,7 @@ class PlayerPage extends Page {
         $result = null;
         switch ($qwik) {
             case "available":
-                $result = $this->qwikAvailable($player, $req, $this->venue);
+                $result = $this->qwikAvailable($player, $this->venue);
                 break;
             case "keen":
                 $result = $this->qwikKeen($player, $req, $this->venue);
@@ -181,16 +181,19 @@ class PlayerPage extends Page {
 
 
 
-function qwikAvailable($player, $request, $venue){
-    if(isset($request['game']) & isset($request['vid']) & isset($request['parity'])){
-        $newID = $player->availableAdd(
-            $request['game'],
-            $request['vid'],
-            $request['parity'],
-            $venue->tz(),
-            isset($request['smtwtfs']) ? $request['smtwtfs'] : FALSE,
-            $request
-        );
+function qwikAvailable($player, $venue){
+    if(isset($this->request('game'))
+        & isset($this->request('parity'))
+        & isset($this->req('vid'))){
+            $newID = $player->availableAdd(
+                $this->req('game'),
+                $this->req('vid'),
+                $this->req('parity'),
+                $venue->tz(),
+                isset($this->req('smtwtfs')) ? $this->req('smtwtfs') : FALSE,
+                $this->req()
+            );
+        }
         $venue->addPlayer($player->id());
         $venue->save();
         return $newID;
@@ -325,7 +328,7 @@ function qwikAccount($player, $request){
     if(isset($request['email'])){
         $email = $request['email'];
         if ($email != $player->email()){
-            $this->emailChange($email, $player->id(), $player->token(Player::DAY));
+            $player->emailChange($email);
         }
     }
 
@@ -459,32 +462,6 @@ function familiarCheckboxes($player){
             $rival->outcome($matchID, ($rRely * $congruence) / 4);
         }
     }
-
-
-
-
-
-    private function emailChange($email, $id, $token){
-        $subject = 'Confirm email change for qwikgame.org';
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to change your qwikgame email address to $email:<br>\n";
-        $msg .= "\t<a href='".self::QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token' target='_blank'>".self::QWIK_URL."/player.php?qwik=login&pid=$id&email=$email&token=$token</a>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        Player::qwikEmail($email, $subject, $msg, $id, $token);
-        self::logEmail('email', $id);
-    }
-
-
-
-
-
-
-
 }
 
 ?>

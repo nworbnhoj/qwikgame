@@ -104,16 +104,16 @@ class Match extends Qwik {
     }
 
 
-    private function rivalElement(index=0){
+    private function rivalElement($index=0){
         $rivalElements = $this->rivalElements();
-        return isset($rivalElements[index])
-            ? $rivalElements[index]
+        return isset($rivalElements[$index])
+            ? $rivalElements[$index]
             : null;
     }
 
 
-    public function rid(index=0){
-        $rivalElement = $this->rivalElement(index);
+    public function rid($index=0){
+        $rivalElement = $this->rivalElement($index);
         return isset($rivalElement)
             ? (string) $rivalElement
             : null ;
@@ -122,15 +122,15 @@ class Match extends Qwik {
     private function rids(){
         $rids = array();
         $rivalCount = $this->rivalCount();
-        for(r=0; r<=rivalCount; r++){
-            $rids[r] = $this->rid(r);
+        for($r=0; $r<=$rivalCount; $r++){
+            $rids[r] = $this->rid($r);
         }
         return $rids;
     }
 
 
-    public function rival(index=0){
-        $rid = $this->rid(index);
+    public function rival($index=0){
+        $rid = $this->rid($index);
         return isset($rid) ? new Player($rid) : null;
     }
 
@@ -138,22 +138,22 @@ class Match extends Qwik {
     private function rivals(){
         $rivals = array();
         $rivalCount = $this->rivalCount();
-        for(r=0; r<=rivalCount; r++){
-            $rival = $this->rival(r);
+        for($r=0; $r<=$rivalCount; $r++){
+            $rival = $this->rival($r);
             $rivals[$rival->id()] = $rival;
         }
         return $rivals;
     }
 
 
-    public function rivalParity(index=0){
-        $element = $this->rivalElement(index);
+    public function rivalParity($index=0){
+        $element = $this->rivalElement($index);
         return isset($element) ? (string) $element['parity'] : null;
     }
 
 
-    public function rivalRep(index=0){
-        $element = $this->rivalElement(index);
+    public function rivalRep($index=0){
+        $element = $this->rivalElement($index);
         return isset($element) ? (string) $element['rep'] : null;
     }
 
@@ -305,7 +305,7 @@ class Match extends Qwik {
 
 
     public function conclude(){
-        git$tz = $this->tz();
+        $tz = $this->tz();
         $now = self::tzDateTime('now', $tz);
         $dateStr = $this->date();
         $hour = $this->hours()->last();

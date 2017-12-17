@@ -312,7 +312,7 @@ class Qwik {
     
 
 
-    static public function games(){
+    static public function qwikGames(){
         return self::$games;
     }
     

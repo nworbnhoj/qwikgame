@@ -126,7 +126,7 @@ class Page extends Qwik {
             'flyerLink'     => self::FLYER_LNK,
             'thumb-up'      => "<span class='" . self::THUMB_UP_ICON . "'></span>",
             'thumb-dn'      => "<span class='" . self::THUMB_DN_ICON . "'></span>",
-            'game'          => isset($game) ? self::games()["$game"] : '[game]'
+            'game'          => isset($game) ? self::qwikGames()["$game"] : '[game]'
         );
         
         if ($this->player != null){
@@ -438,7 +438,7 @@ class Page extends Qwik {
     public function replicateGames($html, $req){
         $default = $req['game'];
         $group = '';
-        foreach(self::games() as $game => $name){
+        foreach(self::qwikGames() as $game => $name){
             $vars = array(
                 'game'      => $game,
                 'name'      => $name,
@@ -506,7 +506,7 @@ class Page extends Qwik {
             $game = (string) $avail['game'];
             $availVars = array(
                 'id'        => (string) $avail['id'],
-                'game'      => self::games()[$game],
+                'game'      => self::qwikGames()[$game],
                 'parity'    => (string) $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)
@@ -543,7 +543,7 @@ class Page extends Qwik {
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'email'     => $reckon['email'],
-                'game'      => self::games()["$game"],
+                'game'      => self::qwikGames()["$game"],
                 'parity'    => self::parityStr($reckon['parity'])
             );
             $vars = $playerVars + $reckonVars + self::$icons;
@@ -565,7 +565,7 @@ class Page extends Qwik {
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'region'    => explode(',', $reckon['region'])[0],
-                'game'      => self::games()["$game"],
+                'game'      => self::qwikGames()["$game"],
                 'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + self::$icons;
@@ -644,7 +644,7 @@ class Page extends Qwik {
 
     public function datalists(){
         $datalists = '';
-        foreach(self::games() as $game => $name){
+        foreach(self::qwikGames() as $game => $name){
             $datalists .= "\n\n" . $this->venueDatalist($game);
         }
         return $datalists;
@@ -668,7 +668,7 @@ class Page extends Qwik {
             $game='squash';
         }
         $options = '';
-        foreach(self::games() as $val => $txt){
+        foreach(self::qwikGames() as $val => $txt){
             if ($val == $game){
                 $selected = 'selected';
             } else {

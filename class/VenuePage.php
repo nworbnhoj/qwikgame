@@ -73,8 +73,9 @@ class VenuePage extends Page {
         $vars['venueRevertDiv']= $this->venue->revertDiv();
         $vars['backLink']      = $backLink;
         $vars['venueUrlLink']  = "<a href='$venueUrl'>{homepage}</a>";
+        $vars['games']         = implode(" ", $this->venue->games());
         
-	    return $vars;
+        return $vars;
     }
 
 }

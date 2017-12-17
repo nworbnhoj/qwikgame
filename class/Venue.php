@@ -197,6 +197,18 @@ class Venue extends Qwik {
     }
 
 
+    function games(){
+        $games = array();
+        $elements = $this->xpath("/venue[game]");
+
+        foreach($elements as $element){
+            $games[] = (string) $element;
+        }
+        return $games;
+    }
+
+
+
     public function update($update){
         $save = $this->updateAtt('name', $update);
         $save = $this->updateAtt('address', $update) || $save;

@@ -167,7 +167,7 @@ class Defend extends Qwik {
 
 
     private function fvGame($val){
-        return array_key_exists($val, self::games()) ? $val : FALSE;
+        return array_key_exists($val, self::qwikGames()) ? $val : FALSE;
     }
 
 

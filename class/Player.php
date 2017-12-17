@@ -675,7 +675,7 @@ class Player extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ha D");
         $game = $match['game'];
-        $gameName = self::games()["$game"];
+        $gameName = self::qwikGames()["$game"];
         $pid = $this->id();
         $token = $this->token(self::WEEK);
         $venueName = Venue::svid($match->venue());

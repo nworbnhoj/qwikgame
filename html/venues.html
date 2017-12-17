@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<meta charset="UTF-8">	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{venues}</title>
-	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="qwik.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="qwik.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{venues}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
 
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=venuesMap">
@@ -30,25 +30,25 @@
     </form>
     <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
     <a id='lang-icon' class='[LANG_ICON]'></a>
-	<a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
+    <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
     <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
 </div>
 
-	<h1>qwik game org</h1>
+    <h1>qwik game org</h1>
 
     <h2>[game] Venues</h2>
-	
-	<div class='center'>
-		<form action='venues.php' method='post' class='repost'>
-		Showing # available 
-	    <select id='game' name="game" class="game repost">
-	        <repeat id='games'>
-	        <option value='[game]' [selected]> [name]</option>
-	        </repeat>
-	    </select> players.
-		</form>
-	</div>
-	<br>
+    
+    <div class='center'>
+        <form action='venues.php' method='post' class='repost'>
+        Showing # available 
+        <select id='game' name="game" class="game repost">
+            <repeat id='games'>
+            <option value='[game]' [selected]> [name]</option>
+            </repeat>
+        </select> players.
+        </form>
+    </div>
+    <br>
     <div id="map" class='center wide'></div>
 
 
@@ -56,20 +56,20 @@
 
 <div class='center shadow'>
     <p>
-	    [twitterLink]
-	    [emailLink]
-    	[facebookLink]
+        [twitterLink]
+        [emailLink]
+        [facebookLink]
     </p>
 </div>
 
 
-	
+
 
 
     <br><br><br><br><br>
     <br>
     <div id='footer' class='center'>
-		{license}
+        {license}
     </div>
 
 

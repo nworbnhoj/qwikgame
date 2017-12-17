@@ -4,83 +4,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<meta charset="UTF-8">  
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Upload player ranking</title>
-	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload player ranking</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
 
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="qwik.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="qwik.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
 </head>
 
 
 <body>
 
     <div id='menu' class='menu'>
-	    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
-	    <a id='home-icon' class='[HOME_ICON]' href='player.php'></a>
+        <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+        <a id='home-icon' class='[HOME_ICON]' href='player.php'></a>
     </div>
 
 
-	<h1>qwik game org</h1>
+    <h1>qwik game org</h1>
 
-	<p class='center'>
-		{Upload_a_list...}<br>
-		[please_login]
-	</p>
+    <p class='center'>
+        {Upload_a_list...}<br>
+        [please_login]
+    </p>
 
-	<h2>{Upload_Rankings}</h2>
+    <h2>{Upload_Rankings}</h2>
 
-	<repeat id='uploads'>
-	<form action='upload.php' method='post' class='center record [status]' [uploadHidden]>
-    	<input type='hidden' name='filename' value='[fileName]'>
-		<button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
+    <repeat id='uploads'>
+    <form action='upload.php' method='post' class='center record [status]' [uploadHidden]>
+        <input type='hidden' name='filename' value='[fileName]'>
+        <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
         <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
-		<button class='action [tickIcon]' name='qwik' value='activate' ></button>
-		
+        <button class='action [tickIcon]' name='qwik' value='activate' ></button>
+
         <span class='help' hidden>{Once_you_have_uploaded...}</span>
         <span class='tag {[status]}'>[status]</span>
-    	[title]<br>
-    	<b>[game]</b> [time]
+        [title]<br>
+        <b>[game]</b> [time]
     </form>
-	</repeat>
+    </repeat>
 
 
-	<form action="upload.php" 
-		method="post" 
-		enctype="multipart/form-data" 
-		class='commit center wide shadow upload'
-		<br>
-		<input type='hidden' name='qwik' value='upload'>
-		<select name="game" class="game">
-        	<repeat id='games'>
-        	<option value='[game]' [selected]> [name]</option>
-			</repeat>
-		</select>
-		<input required	type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
-		<br>
-		<input required	name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
-		<br>
-		<input type="submit" value="Upload" name="submit" [uploadDisabled]>
-		<br>
-	</form>
+    <form action="upload.php" 
+        method="post" 
+        enctype="multipart/form-data" 
+        class='commit center wide shadow upload'
+        <br>
+        <input type='hidden' name='qwik' value='upload'>
+        <select name="game" class="game">
+            <repeat id='games'>
+            <option value='[game]' [selected]> [name]</option>
+            </repeat>
+        </select>
+        <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
+        <br>
+        <input required    name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
+        <br>
+        <input type="submit" value="Upload" name="submit" [uploadDisabled]>
+        <br>
+    </form>
 <br>
 
-	<p class='center'>{A_comma_delimited...}</p>
+    <p class='center'>{A_comma_delimited...}</p>
 
-	<p class='center'>{There_is_a_simple...}</p>
+    <p class='center'>{There_is_a_simple...}</p>
 <br><br>
 
 <h2>How does this work?</h2>
 
 <div class='center shadow'>
-	<p>{needs_a_unique...}
-	<p>{The_sha256...}</p>
-	<p>{uses_match_feedback...}</p>
-	<p>{If_a_player_chooses...}</p>
-	<p>{When_player_rankings...}</p>
+    <p>{needs_a_unique...}
+    <p>{The_sha256...}</p>
+    <p>{uses_match_feedback...}</p>
+    <p>{If_a_player_chooses...}</p>
+    <p>{When_player_rankings...}</p>
 </div>
 
 <br><br>
@@ -89,25 +89,25 @@
 <h2>Requirements</h2>
 
 <div class='center shadow left'>
-		<br>
-		<ol>
-			<li>{Every_line_must...}
-				<code class='csv'>
-					<span class='csv rank'>18</span>
-					<span class='csv comma'>,</span>
-					<span class='csv hash'>d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9</span>
-				</code>
-			</li>
-		    <li>{The_first_line...}</li>
-		    <li>{The_file_size...}</li>
-		</ol>
-		<br>
-	</div>
+        <br>
+        <ol>
+            <li>{Every_line_must...}
+                <code class='csv'>
+                    <span class='csv rank'>18</span>
+                    <span class='csv comma'>,</span>
+                    <span class='csv hash'>d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9</span>
+                </code>
+            </li>
+            <li>{The_first_line...}</li>
+            <li>{The_file_size...}</li>
+        </ol>
+        <br>
+    </div>
 
 <br><br><br><br><br><br>
 
 <div class='center'>
-	{license}
+    {license}
 </div>
 
 </body>

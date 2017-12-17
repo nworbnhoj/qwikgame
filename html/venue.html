@@ -3,14 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<meta charset="UTF-8">	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{venuePageTitle}</title>
-	<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="qwik.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script src="qwik.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{venuePageTitle}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
 
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=initMap">
@@ -19,87 +19,87 @@
 </head>
 
 <body>
-	<h1>{qwik_game_org}</h1>
+    <h1>{qwik_game_org}</h1>
 
-	<div id='menu' class='menu'>
-	    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
-	    <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
-	</div>
+    <div id='menu' class='menu'>
+        <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+        <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
+    </div>
 
-	<p class='center'>[message]</p>
+    <p class='center'>[message]</p>
 
-	<h2>[venueName]</h2>
+    <h2>[venueName]</h2>
 
-	<div id='display-venue-div' >
-		<div class='center'>
-			<span class='huge'>[playerCount]</span><br>
-			{players_available}<br>
-			<br>
-		</div>
+    <div id='display-venue-div' >
+        <div class='center'>
+            <span class='huge'>[playerCount]</span><br>
+            {players_available}<br>
+            <br>
+        </div>
 
-		<p id='venue-display' class='center' [displayHidden]>
-			[venueAddress]<br>
-			[venueSuburb]<br>
-			[venueState], 
-			[venueCountry]<br>
-			[venuePhone]<br>
-			<a href='[venueURL]' target='_blank'>homepage</a><br>
-			[venueNote]<br>
-			<button class='show-edit-venue' type='button' >Edit</button>
-			<br>
-			<br>
-		</p>
-	</div>
+        <p id='venue-display' class='center' [displayHidden]>
+            [venueAddress]<br>
+            [venueSuburb]<br>
+            [venueState], 
+            [venueCountry]<br>
+            [venuePhone]<br>
+            <a href='[venueURL]' target='_blank'>homepage</a><br>
+            [venueNote]<br>
+            <button class='show-edit-venue' type='button' >Edit</button>
+            <br>
+            <br>
+        </p>
+    </div>
 
     <div id="map" class='center wide'></div>
-	<br>
-	<div id='edit-venue-div' class='center wide' [editHidden]>
-		[venueRevertDiv]
-		<form id='edit-venue-form' action='venue.php' method='post' class='commit center vwide shadow venue'>
-			<input type='hidden' name='vid' value='[vid]'>
-			<input id='venue-game' name='game' class='center' type='hidden' 
-				value='[game]'>
-			<input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
+    <br>
+    <div id='edit-venue-div' class='center wide' [editHidden]>
+        [venueRevertDiv]
+        <form id='edit-venue-form' action='venue.php' method='post' class='commit center vwide shadow venue'>
+            <input type='hidden' name='vid' value='[vid]'>
+            <input id='venue-game' name='game' class='center' type='hidden' 
+                value='[game]'>
+            <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
             <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
 
-			<span class='help' hidden>
-				{Please_correct...}<br>
-				{You_can_easily_revert...}
-			</span>
-			<button type='button' class='action help [INFO_ICON]'></button>
-			<p class='center'>
-				<input id='venue-name' name='name' class='center' 
-					value='[venueName]' placeholder='Name' autocomplete="off">
-				<input id='venue-address' name='address' class='center geocode' 
-					value='[venueAddress]' placeholder='Address' autocomplete="off">
-				<input id='venue-suburb' name='suburb' class='center geocode' 
-					value='[venueSuburb]' placeholder='[suburb]'  autocomplete="off">
-				<input id='venue-state' name='state' class='center geocode' 
-					value='[venueState]' placeholder='State/Provence' autocomplete="off">
-				<select id='venue-country' name='country' class='center geocode' required>
-					[countryOptions]
-				</select>
-				<br>
-				<br>
-				<input id='venue-phone' name='phone' class='center'
-					value='[venuePhone]' placeholder='phone'>
-				<input id='venue-url' name='url' type='url' class='center' 
-					value='[venueURL]' placeholder='http://'><br>
-				<select id='tz' name='tz' class='center' required>
-					<option disabled value>{timezone}</option>
-					<option value='[venueTZ]'>[venueTZ]</option>
-				</select>
-				<br>
-				<br>
-				<textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
-			</p>
-			<br>
-			<input id='venue-cancel' type='button' value='Cancel'>
-			<input id='venue-submit' type='submit' value='Submit'>
-			<br>
-			<br>
-		</form>
-	</div>
+            <span class='help' hidden>
+                {Please_correct...}<br>
+                {You_can_easily_revert...}
+            </span>
+            <button type='button' class='action help [INFO_ICON]'></button>
+            <p class='center'>
+                <input id='venue-name' name='name' class='center' 
+                    value='[venueName]' placeholder='Name' autocomplete="off">
+                <input id='venue-address' name='address' class='center geocode' 
+                    value='[venueAddress]' placeholder='Address' autocomplete="off">
+                <input id='venue-suburb' name='suburb' class='center geocode' 
+                    value='[venueSuburb]' placeholder='[suburb]'  autocomplete="off">
+                <input id='venue-state' name='state' class='center geocode' 
+                    value='[venueState]' placeholder='State/Provence' autocomplete="off">
+                <select id='venue-country' name='country' class='center geocode' required>
+                    [countryOptions]
+                </select>
+                <br>
+                <br>
+                <input id='venue-phone' name='phone' class='center'
+                    value='[venuePhone]' placeholder='phone'>
+                <input id='venue-url' name='url' type='url' class='center' 
+                    value='[venueURL]' placeholder='http://'><br>
+                <select id='tz' name='tz' class='center' required>
+                    <option disabled value>{timezone}</option>
+                    <option value='[venueTZ]'>[venueTZ]</option>
+                </select>
+                <br>
+                <br>
+                <textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
+            </p>
+            <br>
+            <input id='venue-cancel' type='button' value='Cancel'>
+            <input id='venue-submit' type='submit' value='Submit'>
+            <br>
+            <br>
+        </form>
+    </div>
 
 
 

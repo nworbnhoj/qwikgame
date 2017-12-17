@@ -41,12 +41,12 @@ class LocatePage extends Page {
 	&& $this->req('state') !== null
 	&& $this->req('country') !== null){
 	    $vid = Venue::venueID(
-	    		$this->req('name'), 
-	    		$this->req('address'), 
-                        $this->req('suburb'),
-                        $this->req('state'),
-                        $this->req('country')
-		    );
+                $this->req('name'),
+                $this->req('address'),
+                $this->req('suburb'),
+                $this->req('state'),
+                $this->req('country')
+            );
             $venue = new Venue($vid, TRUE);
 	}
 

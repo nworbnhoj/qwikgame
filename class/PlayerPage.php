@@ -48,7 +48,7 @@ class PlayerPage extends Page {
     }
 
 
-    public function processRequest(){
+    protected function processRequest(){
         $player = $this->player();
         if (is_null($player)){
             $this->logout();
@@ -181,16 +181,16 @@ class PlayerPage extends Page {
 
 
 
-function qwikAvailable($player, $venue){
-    if(isset($this->request('game'))
-        & isset($this->request('parity'))
-        & isset($this->req('vid'))){
+    function qwikAvailable($player, $venue){
+        if($this->req('game')
+        & $this->req('parity')
+        & $this->req('vid')){
             $newID = $player->availableAdd(
                 $this->req('game'),
                 $this->req('vid'),
                 $this->req('parity'),
                 $venue->tz(),
-                isset($this->req('smtwtfs')) ? $this->req('smtwtfs') : FALSE,
+                $this->req('smtwtfs') ? $this->req('smtwtfs') : FALSE,
                 $this->req()
             );
         }
@@ -198,7 +198,7 @@ function qwikAvailable($player, $venue){
         $venue->save();
         return $newID;
     }
-}
+
 
 
 function qwikKeen($player, $req, $venue){

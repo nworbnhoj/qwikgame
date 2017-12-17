@@ -468,8 +468,6 @@ class Page extends Qwik {
 
     private function replicateSimilarVenues($html, $req){
         $group = '';
-        $vid = $req['vid'];
-        $game = $req['game'];
         $similar = array_slice($this->similarVenues($req['venue']), 0, 10);
         foreach($similar as $vid){
             $venue = new Venue($vid);

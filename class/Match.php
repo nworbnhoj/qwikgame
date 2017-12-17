@@ -346,7 +346,7 @@ class Match extends Qwik {
         $rival = $this->rival();
         $parity = $this->rivalParity();
         $hours = $this->hours();
-        $rivalLink = $rival->htmlLink();
+        $rivalLink = isset($rival) ? $rival->htmlLink() : null;
         $repWord = $this->rivalRep();
         $vars = array(
             'vid'       => $this->vid(),

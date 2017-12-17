@@ -574,7 +574,7 @@ class Player extends Qwik {
         $msg .= "<p>\n";
 
         self::qwikEmail($subject, $msg, $this->email());
-        self::logEmail('login', $id);
+        self::logEmail('login', $this->id());
     }
 
 
@@ -597,7 +597,7 @@ class Player extends Qwik {
         $msg .= "<p>\n";
 
         Player::qwikEmail($subject, $msg, $email);
-        $this->logEmail('stash', $id);
+        $this->logEmail('stash', $this->id());
     }
 
 
@@ -730,7 +730,7 @@ class Player extends Qwik {
 
 
 
-    static function qwikEmail($subject, $msg, $to=null){
+    function qwikEmail($subject, $msg, $to=null){
         if(is_null($to)){
             $to = $this->email();
             if (is_null($to)){

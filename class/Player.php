@@ -599,12 +599,14 @@ class Player extends Qwik {
 
 
 
-    function emailInvite($match, $email){
+    function emailInvite($match, $email=null){
         $date = $match->dateTime();
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $url = $this->authURL(self::WEEK);
+        $param = is_null($email) ? null : array('email'=>$email);
+        $url = $this->authURL(self::WEEK, $param);
+        $email = is_null($email) ? $this->email : $email ;
 
         $subject = "Invitation: $game at $venueName";
 

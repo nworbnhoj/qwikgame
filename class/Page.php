@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class/Qwik.php';
+require_once 'Qwik.php';
 require_once 'Defend.php';
 require_once 'Translation.php';
 require_once 'Player.php';
@@ -114,7 +114,6 @@ class Page extends Qwik {
             'HOME_ICON'     => self::HOME_ICON,
             'INFO_ICON'     => self::INFO_ICON,
             'LANG_ICON'	    => self::LANG_ICON,
-            'LOGOUT_ICON'   => '',
             'MALE_ICON'     => self::MALE_ICON,
             'RELOAD_ICON'   => self::RELOAD_ICON,
             'THUMB_DN_ICON' => self::THUMB_DN_ICON,
@@ -131,7 +130,6 @@ class Page extends Qwik {
         
         if ($this->player != null){
             $vars['pid']         = $this->player->id();
-            $vars['LOGOUT_ICON'] = self::LOGOUT_ICON;
         }
         
         return $vars;
@@ -214,7 +212,7 @@ class Page extends Qwik {
             session_start();
         }
 
-        if (isset($req['pid'])){            // check for a pid & token in the parameter
+        if (isset($req['pid'])){            // check for a pid & token in the request
             $pid = $req['pid'];
             $token = $req['token'];
         } elseif (isset($_SESSION['pid'])){ // check for a pid in the $_SESSION variable
@@ -223,9 +221,9 @@ class Page extends Qwik {
         } elseif (isset($_COOKIE['pid'])){  // check for a pid & token in a $_COOKIE
             $pid = $_COOKIE['pid'];
             $token = $_COOKIE['token'];
-        } elseif (isset($req['email'])){    // check for and email address in the param
+        } elseif (isset($req['email'])){    // check for an email address in the param
             $email = $req['email'];
-            $pid = Player::anonID($email);          // and derive the pid from the email
+            $pid = Player::anonID($email);  // and derive the pid from the email
             $token = isset($req['token']) ? $req['token'] : null;
         } else {                            // anonymous session: no player identifier
             return;                         // RETURN login fail
@@ -265,7 +263,7 @@ class Page extends Qwik {
         }
 
         if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
-            self::logMsg("login: recover account " . self::snip($pid));                 // todo rate limit
+            self::logMsg("login: recover account " . self::snip($pid));    // todo rate limit
             $token = $player->token(Player::DAY);
             $player->save();
             $player->emailLogin();

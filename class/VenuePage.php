@@ -51,6 +51,13 @@ class VenuePage extends Page {
         $backLink = "<a href='".self::QWIK_URL;
         $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
+	$qwikGames = $this->qwikGames();
+        $venueGames = "";
+        foreach($this->venue->games() as $gameKey){
+            $gameName = $qwikGames[$gameKey];
+            $venueGames .= "[$gameName] ";
+        }
+
         $vars = parent::variables();
         
         $vars['vid']           = $this->venue->id();
@@ -73,7 +80,7 @@ class VenuePage extends Page {
         $vars['venueRevertDiv']= $this->venue->revertDiv();
         $vars['backLink']      = $backLink;
         $vars['venueUrlLink']  = "<a href='$venueUrl'>{homepage}</a>";
-        $vars['games']         = implode(" ", $this->venue->games());
+        $vars['games']         = $venueGames;
         
         return $vars;
     }

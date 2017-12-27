@@ -48,7 +48,7 @@ class PlayerPage extends Page {
     }
 
 
-    protected function processRequest(){
+    public function processRequest(){
         $player = $this->player();
         if (is_null($player)){
             $this->logout();
@@ -164,11 +164,11 @@ class PlayerPage extends Page {
             $vars['playerNick']    = $playerNick;
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $player->email();
+            $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
         }
 
         $game = $this->game;
         if (!is_null($game)){
-
             $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
         }
 
@@ -220,7 +220,7 @@ function qwikKeen($player, $req, $venue){
         }
     }
 
-    $emails = $req[	'invite'];
+    $emails = $req['invite'];
     if (is_array($emails)){    // add Familiar Rivals $rid=>$email
         foreach($emails as $email){
             $rids[Player::anonID($email)] = $email;

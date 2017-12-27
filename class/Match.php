@@ -140,7 +140,9 @@ class Match extends Qwik {
         $rivalCount = $this->rivalCount();
         for($r=0; $r<=$rivalCount; $r++){
             $rival = $this->rival($r);
-            $rivals[$rival->id()] = $rival;
+            if(isset($rival)){
+                $rivals[$rival->id()] = $rival;
+            }
         }
         return $rivals;
     }
@@ -248,14 +250,23 @@ class Match extends Qwik {
     }
 
 
+
+
     public function cancel(){
-        $rivals = $this->rivals();
-        $mid = $this->id();
+        $status = $this->status();
         switch ($this->status()) {
             case 'feedback':
             case 'history':
             case 'cancelled':
-                break;
+                return;
+        }
+
+        $this->status('cancelled');
+        $this->player->save();
+
+        $rivals = $this->rivals();
+        $mid = $this->id();
+        switch ($this->status()) {
             case 'confirmed':
                 foreach($rivals as $rival){    // usually only one rival
                     $rival->emailCancel($this);
@@ -265,15 +276,11 @@ class Match extends Qwik {
                 foreach($rivals as $rival){
                     $rival->matchCancel($mid);
                 }
-                $this->status('cancelled');
-                $this->player->save();
                 break;
             case 'invitation':    // not used - handled by decline()
                 foreach($rivals as $rival){
                     $rival->matchDecline($mid);
                 }
-                $this->status('cancelled');
-                $this->player->save();
         }
     }
 

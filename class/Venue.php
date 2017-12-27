@@ -197,9 +197,9 @@ class Venue extends Qwik {
     }
 
 
-    function games(){
+    public function games(){
         $games = array();
-        $elements = $this->xpath("/venue[game]");
+        $elements = $this->xml->xpath("//game");
 
         foreach($elements as $element){
             $games[] = (string) $element;
@@ -387,7 +387,7 @@ class Venue extends Qwik {
     
     
     function venueRemoveGame($game){
-        $elements = $this->xpath("/venue[game='$game']");
+        $elements = $this->xml->xpath("/venue[game='$game']");
 
         foreach($elements as $element){
             self::removeElement($element);

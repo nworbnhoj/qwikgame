@@ -224,8 +224,10 @@ class Player extends Qwik {
 
 
     public function matchID($id){
-        $xml = $this->xml->xpath("match[@id='$id']")[0];
-        return new Match($this, $xml);
+        $xml = $this->xml->xpath("match[@id='$id']");
+        if (is_array($xml) && isset($xml[0])){
+            return new Match($this, $xml[0]);
+        }
     }
 
 
@@ -538,7 +540,7 @@ class Player extends Qwik {
 
 
     public function emailWelcome($email){
-        $authURL = $this->authURL(self::MONTH);
+        $authURL = $this->authURL(self::MONTH, array("email"=>$email));
 
         $subject = "Welcome to qwikgame.org";
 
@@ -556,7 +558,7 @@ class Player extends Qwik {
         $msg .= "<p>\n";
 
         self::qwikEmail($subject, $msg, $email);
-        self::logEmail('welcome', $id);
+        self::logEmail('welcome', $this->id());
     }
 
 
@@ -632,7 +634,7 @@ class Player extends Qwik {
         $game = $match->game();
         $pid = $this->id();
         $venueName = $match->venueName();
-        $url = authURL(self::DAY);
+        $url = $this->authURL(self::DAY);
 
         $subject = "Confirmed: $game $time at $venueName";
 
@@ -674,12 +676,12 @@ class Player extends Qwik {
     function emailMsg($message, $match){
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ha D");
-        $game = $match['game'];
+        $game = $match->game();
         $gameName = self::qwikGames()["$game"];
         $pid = $this->id();
         $token = $this->token(self::WEEK);
         $venueName = Venue::svid($match->venue());
-        $url = authURL(self::DAY);
+        $url = $this->authURL(self::DAY);
 
         $subject = 'Message from qwikgame rival';
 

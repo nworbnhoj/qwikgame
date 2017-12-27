@@ -545,14 +545,9 @@ class Player extends Qwik {
         $subject = "Welcome to qwikgame.org";
 
         $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to <b>activate</b> your qwikgame account:<br>\n";
-        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
+        $msg .= " to <b>activate</b> your qwikgame account.<br>\n";
         $msg .= "\t\t\t</p>\n";
-        $msg .= "\t\t\t<p>\n";
-        $msg .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-        $msg .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
-        $msg .= "\t\t\tTerms & Conditions</a>";
-        $msg .= "</p>\n";
         $msg .= "<p>\n";
         $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
         $msg .= "<p>\n";
@@ -568,8 +563,8 @@ class Player extends Qwik {
         $subject = 'qwikgame.org login link';
 
         $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to login and Bookmark for easy access:<br>\n";
-        $msg .= "\t<a href='$authURL' target='_blank'>$authURL</a>\n";
+        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
+        $msg .= "\t to login (and then bookmark it for easy access)<br>\n";
         $msg .= "\t\t\t</p>\n";
         $msg .= "<p>\n";
         $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
@@ -581,7 +576,6 @@ class Player extends Qwik {
 
 
 
-
     function emailFavourite($req, $email){
         $subject = 'qwikgame.org confirm favourite';
         $query =  http_build_query($req);
@@ -590,9 +584,8 @@ class Player extends Qwik {
         $authURL = $this->authURL(2*self::DAY, $req);
 
         $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to \n";
-        $msg .= "\t<a href='$authURL' target='_blank'>confirm</a>\n";
-        $msg .= " that you are available to play <b>$game</b> at <b>$venue</b>.<br>\n";
+        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
+        $msg .= " to confirm that you are available to play <b>$game</b> at <b>$venue</b>.<br>\n";
         $msg .= "\t\t\t</p>\n";
         $msg .= "<p>\n";
         $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";

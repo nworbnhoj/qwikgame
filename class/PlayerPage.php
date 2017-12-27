@@ -100,10 +100,8 @@ class PlayerPage extends Page {
                         $player->email($email);
 
                         if (!headers_sent()){
-                            $token = $player->token(Player::MINUTE);
-                            $newID = $player->id();
-                            $query = "qwik=login&pid=$newID&token=$token'";
-                            header("Location: ".self::QWIK_URL."/player.php?$query");
+                            $url = $player->authURL(Player::MINUTE);
+                            header("Location: $url");
                         }
                     }
                 }

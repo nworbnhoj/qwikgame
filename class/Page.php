@@ -61,11 +61,11 @@ class Page extends Qwik {
     private $player;
     private $language;
 
-	public function __construct($template='index'){
+    public function __construct($template='index'){
         parent::__construct();  
-	    $this->template = $template;
-	    
-	    if (is_null(self::$translation)){
+        $this->template = $template;
+
+        if (is_null(self::$translation)){
             self::$translation = new Translation('translation.xml', 'lang');
         }
        
@@ -212,61 +212,62 @@ class Page extends Qwik {
             session_start();
         }
 
-        if (isset($req['pid'])){            // check for a pid & token in the request
+        // Locate identification (pid) and authentication (token) if they exist
+        if (isset($req['pid'])){            // check in the request
             $pid = $req['pid'];
             $token = $req['token'];
-        } elseif (isset($_SESSION['pid'])){ // check for a pid in the $_SESSION variable
+        } elseif (isset($_SESSION['pid'])){ // check in the $_SESSION variable
             $pid = $_SESSION['pid'];
             $openSession = true;
-        } elseif (isset($_COOKIE['pid'])){  // check for a pid & token in a $_COOKIE
+        } elseif (isset($_COOKIE['pid'])){  // check in a $_COOKIE
             $pid = $_COOKIE['pid'];
             $token = $_COOKIE['token'];
-        } elseif (isset($req['email'])){    // check for an email address in the param
+        } elseif (isset($req['email'])){    // check for an email in the request
             $email = $req['email'];
             $pid = Player::anonID($email);  // and derive the pid from the email
             $token = isset($req['token']) ? $req['token'] : null;
         } else {                            // anonymous session: no player identifier
             return;                         // RETURN login fail
         }
-                                            // OK playerID
+
+        // Load up the Player from file (creating if necessary)
         $player = new Player($pid, TRUE);
 
-        if($openSession){
-            return $player;
-        }
-
-        if($player->isValidToken($token)){                 // LOGIN with token
+        // return the Player iff authentication is possible
+        if($openSession){                            // AUTH: existing session
+        } elseif($player->isValidToken($token)){     // AUTH: token
             self::logMsg("login: valid token " . self::snip($pid));
-            $_SESSION['pid'] = $pid;
-            $_SESSION['lang'] = $player->lang();
-            if (!headers_sent()){
-                setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
-                setcookie("token", $token, time() + 3*Player::MONTH, "/");
+            $this->setupSession($pid, $player->lang());
+            $this->setupCookie($pid, $token);
+        } elseif(isset($email)){
+            if(empty($player->email())){            // AUTH: unvalidated player
+                self::logMsg("login: anon player " . self::snip($pid));
+                $this->setupSession($pid, $player->lang());
+                $player->emailWelcome($email);
+            } elseif($req['qwik'] == 'recover'){    // account recovery
+                self::logMsg("login: recover account " . self::snip($pid));    // todo rate limit
+                $player->emailLogin();
+                unset($player);	                    // AUTH: failure
             }
-            return $player;
         } else {
             self::logMsg("login: invalid token pid=" . self::snip($pid));
+            unset($player);                         // AUTH: failure
         }
 
-        if(empty($player->email()) && isset($email)){            // LOGIN anon player
-            self::logMsg("login: anon player " . self::snip($pid));
-            $token = $player->token(Player::MONTH);
-            $player->save();
-            if (!headers_sent()){
-                setcookie("pid", $pid, time() + Player::DAY, "/");
-                setcookie("token", $token, time() + Player::DAY, "/");
-            }
-            $_SESSION['pid'] = $pid;
-            $_SESSION['lang'] = $player->lang();
-            $player->emailWelcome($email);
-            return $player;
-        }
+        return $player;
+    }
 
-        if(isset($email) && $req['qwik'] == 'recover'){            // account recovery
-            self::logMsg("login: recover account " . self::snip($pid));    // todo rate limit
-            $token = $player->token(Player::DAY);
-            $player->save();
-            $player->emailLogin();
+
+    private function setupSession($pid, $lang){
+        $_SESSION['pid'] = $pid;
+        $_SESSION['lang'] = $lang;
+    }
+
+
+    private function setupCookie($pid, $token){
+        if (!headers_sent()){
+            setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
+            setcookie("token", $token, time() + 3*Player::MONTH, "/");
         }
     }
 

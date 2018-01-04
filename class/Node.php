@@ -7,14 +7,11 @@ class Node {
     private $parity;
     private $rely;
     private $date;
-    private $orb;
 
     public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
-        $node = array();
-        $this->rid = "$rivalID";
+        $this->rid = (string)$rivalID;
         $this->parity = "$parity";
         $this->rely = $this->rely($rely, $date);
-        $this->orb = new Orb();
     }
 
 
@@ -37,8 +34,11 @@ class Node {
     }
 
 
-    public function orb(){
-        return $this->orb;
+    public function orb($game){
+        $rival = new Player($this->rid());
+        if(isset($rival)){
+            return $rival->orb($game);
+        }
     }
 
 }

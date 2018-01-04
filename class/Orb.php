@@ -2,13 +2,16 @@
 
 require_once 'Node.php';
 require_once 'Player.php';
+require_once 'Qwik.php';
 
 
-class Orb {
+class Orb extends Qwik {
 
+    private $game;
     private $nodes;
 
-    public function __construct(){
+    public function __construct($game){
+        $this->game = $game;
         $this->nodes = array();
     }
 
@@ -29,13 +32,16 @@ class Orb {
 
 
     public function print($tabs="\t"){
-        $str = '';
-        foreach($this->nodes as $node){
+        $game = $this->game;
+        $nodes = $this->nodes;
+        $count = count($nodes);
+        $str = "Orb: $game ($count)";
+        foreach($nodes as $node){
             $rid = $node->rid();
             $parity = $node->parity();
             $rely = $node->rely();
             $str .= "\n$tabs" . self::snip($rid) . " $parity $rely";
-            $orb = $node->orb();
+            $orb = $node->orb($this->game);
             if(!$orb->empty()){
                 $str .= $orb->print("$tabs\t");
             }
@@ -57,8 +63,8 @@ class Orb {
 /********************************************************************************
 Returns an estimate of the parity of a player to $rival
 
-$orb    ArrayMap    The orb of the player, pre-pruned to contain paths only to the $rival
-$rival    XML            player data of the rival
+$orb    ArrayMap  The orb of the player, pre-pruned to contain paths only to the $rival
+$rival  XML       player data of the rival
 
 Computes the numeric Parity of the root of the $orb to the $rivalID.
 Some examples:
@@ -85,7 +91,7 @@ longer chains by introducing a decay (=0.9) at each link.
         $n=0;
         foreach($this->nodes as $node){
             $parity = $node->parity();
-            $subOrb = $node->orb();
+            $subOrb = $node->orb($this->game);
             if (($node->rid() != $rivalID)
             && (isset($subOrb))){
 //print_r("\n\t" . self::snip($node->rid()) . "\t" . self::snip($rivalID) . "\n");            
@@ -138,7 +144,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             $inv[$rid][] = new Node($pid, -1 * $node->parity(), $node->rely());
 
             // recursion
-            $orb = $node->orb();
+            $orb = $node->orb($this->game);
             if(!$orb->empty()){
                 $subOrbInv = $orb->inv($node->rid());
                 foreach ($subOrbInv as $rid => $subNode) {
@@ -179,7 +185,7 @@ and by negating Parity.
 
         foreach($this->nodes as &$node){
             $rid = $node->rid();
-            $node->orb()->splice($rid, $invOrb);
+            $node->orb($this->game)->splice($rid, $invOrb);
         }
         return $this;
     }
@@ -187,27 +193,24 @@ and by negating Parity.
 
 
     /********************************************************************************
-    Returns a player orb extended out to include one addition set of relations from
+    Returns a player orb expanded out to include one addition set of relations from
     the edge.
 
-    $orb    ArrayMap    the orb to be extended
-    $crumbs    ArrayMap    node => a more central node
-    $game    String        the game
+    $crumbs  ArrayMap  node => a node closer to root
 
     ********************************************************************************/
-    public function expand($crumbs, $game){
-    //echo "EXPANDORB $game<br><br>\n";
-
+    public function expand($crumbs){
         foreach($this->nodes as &$node){
             $rid = $node->rid();
-            $subOrb = $node->orb();
-            if(!$subOrb->empty()){
-                $crumbs = array_merge($subOrb->expand($crumbs, $game), $crumbs);
+            $nodeOrb = $node->orb($this->game);
+            if(!$nodeOrb->empty()){
+                $nodeOrbCrumbs = $nodeOrb->expand($crumbs);    //recursion
+                $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
             } elseif(!in_array($rid, $crumbs)){
                 $rival = new Player($rid);
                 if ($rival->exists()){
-                    $subOrb->addNodes($rival->orb($game, $crumbs, FALSE));
-                    $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
+                    $nodeOrb->addNodes($rival->orb($this->game, $crumbs, FALSE));
+                    $crumbs = array_merge($nodeOrb->crumbs($rid), $crumbs);
                     $rival->save();
                 }
             }
@@ -218,27 +221,25 @@ and by negating Parity.
 
 
     /********************************************************************************
-    Returns an ArrayMap of node => node next closest to orb center.
+    Returns an ArrayMap of node => node next closest to orb root.
 
-    $orb    ArrayMap    the player orb
-    $orbID    String        The player ID at the root of the $orb
+    $orbID   String    The player ID at the immediate base of the $orb
+    $rootID  String    The player ID at the ultimate root of the $orb
 
     Each player's orb can be traversed outwards from one node to the next;
     but not in inwards direction (of course there are loops). This function
-    constructs bread-crumb trails back to the center.
+    constructs the shortest bread-crumb trails back to the root.
     ********************************************************************************/
-    public function crumbs($orbID){
+    public function crumbs($orbID, $rootID){
         $crumbs = array();
-        $orbID = Player::subID("$orbID");
-        $depth = $this->depth($orbID, $crumbs);
+        $orbID = Player::subID($orbID);
         foreach($this->nodes as $node){
             $rid = Player::subID($node->rid());
-            if($depth <= $this->depth($rid, $crumbs)){    // use shortest path
-                $crumbs[$rid] = $orbID;
-            }
-            $subOrb = $node->orb();
-            if(!$subOrb->empty()){
-                $crumbs = array_merge($subOrb->crumbs($rid), $crumbs);
+            if ($rid != $rootID){
+                $nodeOrb = $node->orb($this->game);
+                $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
+                $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
+                $crumbs[$rid] = $orbID;    // this is the shortest path
             }
         }
         return $crumbs;
@@ -267,7 +268,7 @@ and by negating Parity.
     public function prune($keepers){
         //echo "PRUNEORB<br><br>\n";
         foreach($this->nodes as $key => &$node){
-            $subOrb = $node->orb();
+            $subOrb = $node->orb($this->game);
             if(!$subOrb->empty()){
                 if($subOrb->prune($keepers)){
                     $subOrb->wipe();

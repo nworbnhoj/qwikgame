@@ -1028,27 +1028,32 @@ Requirements:
     $rival    XML        player data for player #2
     $game    String    A string ID of a game.
 
-    Each player is "related" to other players by the reports they have made of the
-    other player's relative ability in a game (ie player-A reports that A>B A=C A<D A>>E).
+    Each player is "related" to other players by the reports they have
+    made of the other player's relative ability in a game 
+    (ie player-A reports that A>B A=C A<D A>>E).
     This sphere of relations is referred to as the players *orb*.
 
     A players *orb* can be *expanded* to include secondary relationships
-    (ie B=C B>E C=A D=F A>>F) and so on for 3rd, 4th & 5th degree relationships and so on.
+    (ie B=C B>E C=A D=F A>>F) and so on for 3rd, 4th & 5th degree relationships
+    and so on.
 
-    The parity estimate is made by expanding the orbs of both players until there is an
-    overlap, and then using these relationships to estimate the parity between the two players.
+    The parity estimate is made by expanding the orbs of both players until there
+    is an overlap, and then using these relationships to estimate the parity between
+    the two players.
     For example there is no overlap between
         Orb-A = (A>B A=C A<D A>>E)
         Orb-F = (F=G F>H)
     but if both orbs are expanded then there is an overlap
         Orb-A = (A>B A=C A<D A>>E B=G C=I C>J C>K D>H)
         Orb-F = (F=G F>H G=B H=L)
-    and the following relationships are used to estimate parity between player-A and player-F
+    and the following relationships are used to estimate parity between player-A 
+    and player-F
         A>B B=G F=G G=B A<D D>H F>H
 
 
-    Note that each player's orb can be traversed outwards from one report to the next;
-    but not in inwards direction (of course there are loops). Function crumbs() is called to     construct bread-crumb trails back to the center.
+    Note that each player's orb can be traversed outwards from one report to the
+    next; but not in inwards direction (of course there are loops). Function 
+    crumbs() is called to construct bread-crumb trails back to the center.
     ********************************************************************************/
     public function parity($rival, $game){
 //echo "<br>PARITY $game<br>\n";
@@ -1063,8 +1068,8 @@ Requirements:
     $rivalOrb = $rival->orb($game);
 
     // generate 'bread-crumb' trails for both orbs
-    $playerOrbCrumbs = $playerOrb->crumbs($playerID);
-    $rivalOrbCrumbs = $rivalOrb->crumbs($rivalID);
+    $playerOrbCrumbs = $playerOrb->crumbs($playerID, $playerID);
+    $rivalOrbCrumbs = $rivalOrb->crumbs($rivalID, $rivalID);
 
     // compute the intersection between the two orbs
     $orbIntersect = array_intersect(
@@ -1075,12 +1080,12 @@ Requirements:
     // check if the orbs are isolated (ie no possible further expansion)
     $playerOrbSize = count($playerOrbCrumbs);
     $rivalOrbSize = count($rivalOrbCrumbs);
-    $playerIsolated = FALSE;
-    $rivalIsolated = FALSE;
+    $playerIsolated = $playerOrbSize == 0;
+    $rivalIsolated = $rivalOrbSize == 0;
     $flipflop = FALSE;
     while (!($playerIsolated && $rivalIsolated)
-        && count($orbIntersect) < 3
-        && ($playerOrbSize + $rivalOrbSize) < 100){
+    && count($orbIntersect) < 3
+    && ($playerOrbSize + $rivalOrbSize) < 100){
 
         $members = array();
         $flipflop = !$flipflop;
@@ -1088,12 +1093,12 @@ Requirements:
         // expand one orb and then the other seeking some intersection
         if ($flipflop){
             $prePlayerOrbSize = $playerOrbSize;
-            $playerOrbCrumbs = $playerOrb->expand($playerOrbCrumbs, $game);
+            $playerOrbCrumbs = $playerOrb->expand($playerOrbCrumbs);
             $playerOrbSize = count($playerOrbCrumbs);
             $playerIsolated = ($playerOrbSize == $prePlayerOrbSize);
         } else {
             $preRivalOrbSize = $rivalOrbSize;
-            $rivalOrbCrumbs = $rivalOrb->expand($rivalOrbCrumbs, $game);
+            $rivalOrbCrumbs = $rivalOrb->expand($rivalOrbCrumbs);
             $rivalOrbSize = count($rivalOrbCrumbs);
             $rivalIsolated = ($rivalOrbSize == $preRivalOrbSize);
         }
@@ -1173,7 +1178,7 @@ Requirements:
 
 
     static public function subID($id){
-        return $id;
+        return (string)$id;
         //return substr("$id",0, 10);
     }
 
@@ -1183,9 +1188,9 @@ Requirements:
     Returns the player orb extended to include only the direct ability reports made
     by the player
 
-    $game            String    The game of interest
-    $filter            Array   An array of nodes to keep or discard
-    $positiveFilter    Boolean    TRUE to include nodes in the $filter; FALSE to discard
+    $game            String   The game of interest
+    $filter          Array    An array of nodes to keep or discard
+    $positiveFilter  Boolean  TRUE to include nodes in the $filter; FALSE to discard
 
     An ORB represents the sphere of PARITY around a PLAYER in a PARITY graph linked by
     estimates from MATCH FEEDBACK, uploaded RANKS, and RECKONS. An ORB is held in an
@@ -1194,7 +1199,7 @@ Requirements:
     ********************************************************************************/
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
     //echo "PLAYERORB $game $playerID<br>\n";
-        $orb = new Orb();
+        $orb = new Orb($game);
         $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
         foreach($parities as $par){
             $rid = self::subID($par['rival']);

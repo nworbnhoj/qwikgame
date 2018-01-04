@@ -439,7 +439,7 @@ class Qwik {
 
         $cwd = getcwd();
         if(chdir($path)){
-            $xml = simpleXML_load_file($fileName);
+            $xml = simplexml_load_file($fileName);
             if(!chdir($cwd)){
                 self::logMsg("failed to change working directory to $cwd");
             }

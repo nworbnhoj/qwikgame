@@ -25,23 +25,23 @@ use PHPUnit\Framework\TestCase as Assert;
 class FeatureContext implements Context
 {
     
-	private $Hrs6amto8pm =  2097088;
+    private $Hrs6amto8pm =  2097088;
     private $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
     private $authURL;
-	private $email;
-	private $game;
-	private $id;
-	private $parity;
-	private $pid;
-	private $player;
-	private $rankingFileName;
-	private $req = [];     // a post or get request
-	private $time;
-	private $token;
-	private $svid;
-	private $venue;
-	private $vid;
-	private $log;
+    private $email;
+    private $game;
+    private $id;
+    private $parity;
+    private $pid;
+    private $player;
+    private $rankingFileName;
+    private $req = [];     // a post or get request
+    private $time;
+    private $token;
+    private $svid;
+    private $venue;
+    private $vid;
+    private $log;
 
     /**
      * Initializes context.
@@ -61,9 +61,9 @@ class FeatureContext implements Context
      */    
     private function locateVenue($svid, $game = '')
     {        
-    	$vids = LocatePage::matchShortVenueID($svid, $game);
-    	Assert::assertCount(1, $vids, "Please specify an existing Venue exactly");
-    	return $vids[0];
+        $vids = LocatePage::matchShortVenueID($svid, $game);
+        Assert::assertCount(1, $vids, "Please specify an existing Venue exactly");
+        return $vids[0];
     }
     
     
@@ -75,7 +75,7 @@ class FeatureContext implements Context
      */
     public function myEmailIsNotRegisteredWithQwikgame($address)
     {
-    	$this->pid = Player::anonID($address);
+        $this->pid = Player::anonID($address);
         Ranking::removePlayer($this->pid);
     }
 
@@ -87,7 +87,7 @@ class FeatureContext implements Context
     {
         $this->email = $address;
 
-    	$this->pid = Player::anonID($address);    	
+        $this->pid = Player::anonID($address);
         Ranking::removePlayer($this->pid);
         $this->player = new Player($this->pid, TRUE);
         $this->player->email($address);
@@ -104,9 +104,9 @@ class FeatureContext implements Context
     public function iAmNotAvailableToPlay()
     {    
         $available = $this->player->available();
-	    foreach($available as $avail){
-			removeElement($available);
-	    }
+        foreach($available as $avail){
+            removeElement($available);
+        }
     }
 
 
@@ -116,19 +116,19 @@ class FeatureContext implements Context
     public function iLikeToPlaySquashAtQwikgame($game, $svid)
     {
         $this->game = $this->gameKey($game);
-    	$this->svid = $svid;
+        $this->svid = $svid;
         $this->vid = $this->locateVenue($this->svid, $this->game);
         $this->venue = new Venue($this->vid);
-    	
-    	$this->req['parity'] = 'any';
+
+        $this->req['parity'] = 'any';
         $this->req['game'] = $this->game;
-    	$this->req['vid'] = $this->vid;
+        $this->req['vid'] = $this->vid;
     }
 
 
     // accepts and Game Name in english looks up the game $key inefficiently
     private function gameKey($gameName){
-        foreach(Qwik::games() as $key => $value){
+        foreach(Qwik::qwikGames() as $key => $value){
            $val = substr($value, 1, strlen($value)-2);
            if ($val === $gameName){
                return $key;
@@ -143,7 +143,7 @@ class FeatureContext implements Context
      */
     public function iDoNotSpecifyATime()
     {   
-    	$this->req['smtwtfs'] = "16777215";
+        $this->req['smtwtfs'] = "16777215";
     }
     
     
@@ -152,11 +152,10 @@ class FeatureContext implements Context
      */
     public function iLikeToPlayOnSaturdayAt3pm($day, $hour)
     {    
-    	$day = date("D", strtotime($day));        // convert Saturday to Sat.    	
-    	$hour = new Hours(date("H", strtotime($hour)));   // convert 12hr to 24hr format    	
-    	
-    	if (isset($this->req[$day])) {
-    	    $hour->include(new Hour($this->req[$day]));
+        $day = date("D", strtotime($day));        // convert Saturday to Sat.
+        $hour = new Hours(date("H", strtotime($hour)));   // convert 12hr to 24hr format
+        if (isset($this->req[$day])) {
+            $hour->include(new Hour($this->req[$day]));
         }
         $this->req[$day] = $hour->bits();
     }
@@ -168,7 +167,7 @@ class FeatureContext implements Context
     public function iLikeToPlayARivalOfSimilarAbility($parity)
     {
         Assert::assertContainsOnly('string', ['matched', 'similar', 'any']);
-    	$this->req['parity'] = $parity;
+        $this->req['parity'] = $parity;
     }
     
 
@@ -177,22 +176,9 @@ class FeatureContext implements Context
      */
     public function iProvideMyEmailAddress($address)
     {
-    	$this->email = $address;
-    	
-		if(!$this->player){
- 		    $this->pid = Player::anonID($address);
-			$this->player = new Player($this->pid, TRUE);
-        }
-        global $MONTH;
-        $this->token = $this->player->token(Player::MONTH);
-	    $this->authURL = Page::authURL($address, $this->token);
-
-	    $this->player->save();
-        $this->player = new Player($this->pid, FALSE);
-
-        $this->req['pid'] = $this->pid;
+        $this->email = $address;
+        $this->pid = Player::anonID($address);
         $this->req['email'] = $address;
-        $this->req['token'] = $this->token;
     }
     
     
@@ -203,11 +189,12 @@ class FeatureContext implements Context
      */
     public function iSubmitThisFavourite()
     {
-      	$this->req['qwik'] = 'available';
-      	$_GET = $this->req;
+        $this->req['qwik'] = 'available';
+        $_GET = $this->req;
         $page = new PlayerPage();
-      	$this->id = $page->processRequest();
+        $this->id = $page->processRequest();
         $this->player = new Player($this->pid, FALSE);
+        $this->authURL = $this->player->authURL(2*Player::DAY, $this->req);
     }
 
 
@@ -218,9 +205,9 @@ class FeatureContext implements Context
     {
         $this->req['qwik'] = 'delete';
         $this->req['id'] = $this->id;
-      	$_GET = $this->req;
+        $_GET = $this->req;
         $page = new PlayerPage();
-      	$this->id = $page->processRequest();
+        $this->id = $page->processRequest();
         $this->player = new Player($this->pid, FALSE);
     }
 
@@ -229,24 +216,25 @@ class FeatureContext implements Context
      * @When I click on the link in the confirmation email
      */
     public function iClickOnTheLinkInTheConfirmationEmail()
-    {    	
+    {
         Assert::assertNotNull($this->authURL);
         
-    	$query = parse_url($this->authURL, PHP_URL_QUERY);    	
-    	Assert::assertNotNull($query);
-    	
-    	parse_str($query, $req);    	
-    	Assert::assertNotNull($req);
-    	
-      	$_GET = $req;
+        $query = parse_url($this->authURL, PHP_URL_QUERY);
+        Assert::assertNotNull($query);
+
+        parse_str($query, $req);
+        Assert::assertNotNull($req);
+
+        $_GET = $req;
         $page = new PlayerPage();
-      	$page->processRequest();
-        $this->player = new Player($this->pid, FALSE);
-      	
+        $player = $page->player();
+
         Assert::assertTrue(
-            $this->player->isValidToken($this->req['token']),
-            "The player token is invalid"
+            isset($player),
+            "The player could not be logged in."
         );
+
+        $page->processRequest();
     }
     
 
@@ -255,7 +243,7 @@ class FeatureContext implements Context
      */
     public function myEmailWillBeRegisteredWithQwikgame($address)
     {
-    	Assert::assertEquals($this->email, $address);
+        Assert::assertEquals($this->email, $address);
         Assert::assertNotNull(new Player($this->pid));
     }
     
@@ -275,28 +263,24 @@ class FeatureContext implements Context
         $rid = Player::anonID("rival@qwikgame.org");
         $rival = new Player($rid, TRUE);  //dummy rival
         // Set this player as a familiar of the rival, with suitable parity
-        $rivalToken = $rival->token();
-        $rival->save();
         $_GET = array(
                 'pid'=>$rid,
-                'token'=>$rivalToken,
+                'token'=>$rival->token(),
                 'qwik'=>'familiar',
                 'game'=>$game, 
                 'rival'=>$this->email,
-                'parity'=>$rivalParity
+                'parity'=>$this->parityPhrase[$rivalParity]
             ); 
         $page = new PlayerPage();
         $page->processRequest();
+
+        $parity = $this->player->parity($rival, $game);
         foreach ($this->days as $day) {
             if (isset($this->req[$day])){
                 $date  = $venue->dateTime($day);
                 $hours = new Hours($this->req[$day]);
-        
-                // The rival is keen for a match
-                $match = $rival->matchKeen($game, $venue, $date, new Hours(Hours::HRS_24));
-                // check when this player is available to play the keen rival
 
-                $availableHours = $this->player->availableHours($match);
+                $availableHours = $this->player->availableHours($venue->id(), $game, $day, $parity);
 //$vid = $venue->id();
 //print_r("$game at $vid\n");
 //printf("hours %1$25b = %1$2d\navail %2$25b = %2$2d\n\n", $hours->bits(), $availableHours->bits());
@@ -314,12 +298,11 @@ class FeatureContext implements Context
                             $availableHours->empty(),
                             "Player Available when they should not be: $game $day $hours"
                         );
-    	                break;
+                        break;
                     default:
                         Assert::assertTrue(FALSE, "Invalid test: $test");
                 
                 }
-                $rival->delete($match->id());
             }        
         }
     }    
@@ -341,32 +324,32 @@ class FeatureContext implements Context
      */
     public function iWillNotBeAvailableOtherwise()
     {
-    	$req = $this->req;
+        $req = $this->req;
         foreach ($this->days as $day) {
             $this->req[$day] = Hours::HRS_24 ^ (isset($req[$day]) ? $req[$day] : -0);
         }
         $game = $this->req['game'];
-    	$this->iWillBeAvailableToPlay($game, $this->venue, 'any', 'NONE');
+        $this->iWillBeAvailableToPlay($game, $this->venue, 'any', 'NONE');
 
-    	// Check other abilities for this game and venue
-    	 if ($this->req['parity'] == 'matched') {
-            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-stronger', 'NONE');
+        // Check other abilities for this game and venue
+         if ($this->req['parity'] == 'matched') {
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much_stronger', 'NONE');
             $this->iWillBeAvailableToPlay($game, $this->venue, 'stronger', 'NONE');
             $this->iWillBeAvailableToPlay($game, $this->venue, 'weaker', 'NONE');
-            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-weaker', 'NONE');
-    	} elseif ($this->req['parity'] == 'similar') {
-            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-stronger', 'NONE');
-            $this->iWillBeAvailableToPlay($game, $this->venue, 'much-weaker', 'NONE');
-    	} else {
-    	    // no alternate to check for parity==all
-    	}
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much_weaker', 'NONE');
+        } elseif ($this->req['parity'] == 'similar') {
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much_stronger', 'NONE');
+            $this->iWillBeAvailableToPlay($game, $this->venue, 'much_weaker', 'NONE');
+        } else {
+            // no alternate to check for parity==all
+        }
         
         // Check other games for this venue
-    	$req = $this->req;         
+        $req = $this->req;
         foreach ($this->days as $day) {
             $req[$day] = Hours::HRS_24;
         }
-        $games = array_keys(Qwik::games());
+        $games = array_keys(Qwik::qwikGames());
         foreach ($games as $game) {
             if ($game !== $this->game) {
                 $req['game'] = $game;            
@@ -407,11 +390,12 @@ class FeatureContext implements Context
             $player->nick($name);
             $player->save();
             $this->rivals[$char] = $id;
-		}
+        }
     }
 
 
     private $paritySymbol = array('<<'=>-2, '<'=>-1, '='=>0, '>'=>1, '>>'=>2);
+    private $parityPhrase = array('much_weaker'=>-2, 'weaker'=>-1, 'well_matched'=>0, 'stronger'=>1, 'much_stronger'=>2, 'any'=>2);
 
 
     /**
@@ -447,20 +431,17 @@ class FeatureContext implements Context
             $hours = new Hours(1);
 
             $keenMatch = $playerA->matchKeen('squash', $venue, $date, $hours);
-            $matchB = $playerB->matchInvite($keenMatch, $hours);
-            $matchA = $playerA->matchInvite($matchB, $hours);
+            $matchB = $playerB->matchAdd($keenMatch);
+            $matchA = $playerA->matchAdd($matchB);
             $matchA->status('confirmed');
             $matchB->status('confirmed');
             $keenMatch->cancel();
-		    $keenMatch->remove();
-		}
-		
-		
-        $playerAToken = $playerA->token();
-        $playerA->save();
+            $keenMatch->remove();
+        }
+
         $_GET = array(
                 'pid'=>$playerA->id(),
-                'token'=>$playerAToken,
+                'token'=>$playerA->token(),
                 'qwik'=>'feedback',
                 'id'=>$matchA->id(),
                 'rep'=>'0',

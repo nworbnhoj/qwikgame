@@ -165,7 +165,15 @@ class Player extends Qwik {
                 }
             }
         }
-        return (string) $this->xml->email[0];
+
+        $xmlEmail = $this->xml->email[0];
+        if (empty($xmlEmail)){
+            return null;
+        } else if (count($xmlEmail) == 1){
+            return (string) $xmlEmail[0];
+        } else {
+            return (string) $xmlEmail[0];
+        }
     }
 
 
@@ -402,6 +410,18 @@ class Player extends Qwik {
     }
 
 
+    function parityBand($filter, $parity){
+        switch ($filter){
+            case "matching":
+                return ($parity >= -1) && ($parity <= 1);
+            case "similar":
+                return ($parity >= -2) && ($parity <= 2);
+            default:
+                return TRUE;
+        }
+    }
+
+
     /**
      * Computes the hours that a $rival is available to have a $match with $player
      *
@@ -411,14 +431,16 @@ class Player extends Qwik {
      *
      * @return bitfield representing the hours at the $rival is available
      */
-    public function favouriteHours($vid, $game, $day){
+    function favouriteHours($vid, $game, $day, $parity=null){
         $favouriteHours = new Hours();
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
-            $hours = $avail->xpath("hrs[@day='$day']");
-            foreach ($hours as $hrs){
-                $favHrs = new Hours(intval("$hrs"));
-                $favouriteHours->include($favHrs);
+            if ($this->parityBand($avail->xpath("@parity"), $parity)){
+                $hours = $avail->xpath("hrs[@day='$day']");
+                foreach ($hours as $hrs){
+                    $favHrs = new Hours(intval("$hrs"));
+                    $favouriteHours->include($favHrs);
+                }
             }
         }
         return $favouriteHours;
@@ -426,7 +448,7 @@ class Player extends Qwik {
 
 
     // check rival keeness in the given hours
-    public function keenHours($vid, $game, $day){
+    function keenHours($vid, $game, $day){
         $keenHours = new Hours();
         $keens = $this->xml->xpath("match[status='keen' and venue='$vid' and game='$game']");
         foreach ($keens as $keen){
@@ -436,8 +458,8 @@ class Player extends Qwik {
     }
 
 
-    public function availableHours($vid, $game, $day){
-        $availableHours = $this->favouriteHours($vid, $game, $day);
+    public function availableHours($vid, $game, $day, $parity=null){
+        $availableHours = $this->favouriteHours($vid, $game, $day, $parity);
         $availableHours->include($this->keenHours($vid, $game, $day));
         return $availableHours;
     }
@@ -458,7 +480,7 @@ class Player extends Qwik {
     }
 
 
-    public function matchKeen($game, $venue, $date, $hours, $rids) {
+    public function matchKeen($game, $venue, $date, $hours, $rids=array()) {
         $match = $this->newMatch();
         $match->init('keen', $game, $venue, $date, $hours);
         $venue->addPlayer($this->id());
@@ -467,24 +489,26 @@ class Player extends Qwik {
     }
 
 
-    public function matchInvite($rivalMatch){
+    public function matchInvite($rivalMatch, $parity=null){
         $inviteHours = $rivalMatch->hours();
+
         $availableHours = $this->availableHours(
             $rivalMatch->vid(),
             $rivalMatch->game(),
-            $rivalMatch->dateTime()->format('D')
+            $rivalMatch->dateTime()->format('D'),
+            $parity
         );
         $inviteHours->includeOnly($availableHours);
 
         if (!$inviteHours->empty()){
-            $match = $this->matchAdd($rivalMatch, $inviteHours);
+            $match = $this->matchAdd($rivalMatch, $parity, $inviteHours);
             return $match;
         }
         return null;
     }
 
 
-    public function matchAdd($rivalMatch, $inviteHours=null, $email=null){
+    public function matchAdd($rivalMatch, $parity=null, $inviteHours=null, $email=null){
         $inviteHours = is_null($inviteHours) ? $rivalMatch->hours() : $inviteHours;
         $email = is_null($email) ? $this->email() : $email;
         if (is_null($inviteHours) | is_null($email)){
@@ -498,12 +522,7 @@ class Player extends Qwik {
         $match->copy($rivalMatch);
         $match->status('invitation');
         $match->hours($inviteHours);
-        $match->addRival(
-            $rid,
-            $this->parity($rival, $rivalMatch->game()),
-            $rival->repWord(),
-            $rival->nick()
-        );
+        $match->addRival($rid, $parity, $rival->repWord(), $rival->nick());
         $this->save();
         $this->emailInvite($match, $email);
         return $match;
@@ -528,7 +547,7 @@ class Player extends Qwik {
     }
 
 
-    function authURL($shelfLife, $param=null){
+    public function authURL($shelfLife, $param=null){
         $query = is_array($param) ? $param : array();
         $query['qwik'] = 'login';
         $query['pid'] = $this->id();
@@ -728,9 +747,9 @@ class Player extends Qwik {
 
 
     function qwikEmail($subject, $msg, $to=null){
-        if(is_null($to)){
+        if(empty($to)){
             $to = $this->email();
-            if (is_null($to)){
+            if (empty($to)){
                 self::logMsg("unable to email player without an email address");
                 return;
             }
@@ -764,7 +783,7 @@ class Player extends Qwik {
         $body .= "\t</body>\n";
         $body .= "</html>\n";
 
-        if (! mail($to, $subject, $body, implode("\r\n", $headers))){
+        if (!mail($to, $subject, $body, implode("\r\n", $headers))){
 //            header("Location: error.php?msg=<b>The email was unable to be sent");
         }
     }

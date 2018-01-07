@@ -1,12 +1,13 @@
 <?php
 
-    require_once('class/Page.php');
+    require_once('../class/Page.php');
+    require_once('../class/Venue.php');
 
     $min = $_GET['min'];
     $max = $_GET['max'];
     $vid = $_GET['venue'];
 
-    $venue = new Vanue($vid, Page::$log, FALSE);
+    $venue = new Venue($vid, FALSE);
     $tz = empty($venue) ? local : $venue->tz();
 
     $tds = '';

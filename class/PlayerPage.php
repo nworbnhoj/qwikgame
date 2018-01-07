@@ -7,15 +7,6 @@ class PlayerPage extends Page {
     private $game;
     private $venue;
 
-    const SELECT_REGION = "
-        <select name='region' class='region' required>
-            <repeat id='reckon'>
-                <option value='[region]'>[region]</option>
-            </repeat>
-        </select>
-    ";
-
-
     public function __construct($template='player'){
         parent::__construct($template);
 
@@ -124,7 +115,6 @@ class PlayerPage extends Page {
         $vars = parent::variables();
 
         $vars['hourRows']      = $this->hourRows();
-        $vars['selectRegion']  = self::SELECT_REGION;
         $vars['datalists']     = $this->datalists();
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;

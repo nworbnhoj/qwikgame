@@ -7,6 +7,7 @@ class Node {
     private $parity;
     private $rely;
     private $date;
+    private $orb;
 
     public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
         $this->rid = (string)$rivalID;
@@ -25,7 +26,7 @@ class Node {
     }
 
 
-    public function rely($rely=null, $date=NULL){
+    public function rely($rely=NULL, $date=NULL){
         if(!is_null($rely)){
             $this->rely = $rely;
 //            $this->rely = $this->ebb($rely, $date);  // depreciate with age
@@ -34,11 +35,11 @@ class Node {
     }
 
 
-    public function orb($game){
-        $rival = new Player($this->rid());
-        if(isset($rival)){
-            return $rival->orb($game);
+    public function orb($orb=NULL){
+        if (!is_null($orb)){
+            $this->orb = $orb;
         }
+        return $this->orb;
     }
 
 }

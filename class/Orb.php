@@ -52,7 +52,6 @@ class Orb extends Qwik {
 
     public function addNode($rid, $parity, $rely, $date){
         $this->nodes[] = new Node($rid, $parity, $rely, $date);
-    }
 
 
     public function addNodes($orb){
@@ -198,20 +197,20 @@ and by negating Parity.
 
     $crumbs  ArrayMap  node => a node closer to root
 
+    Checks every node at this level in the orb and utilizes recursion to step
+    out into subsequent levels in search of an edge, and expand if possible.
     ********************************************************************************/
     public function expand($crumbs){
         foreach($this->nodes as &$node){
             $rid = $node->rid();
-            $nodeOrb = $node->orb($this->game);
-            if(!$nodeOrb->empty()){
-                $nodeOrbCrumbs = $nodeOrb->expand($crumbs);    //recursion
-                $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
-            } elseif(!in_array($rid, $crumbs)){
+            $nodeOrb = $node->orb();
+            if(!$nodeOrb->empty()){                     // step further out
+                $crumbs = $nodeOrb->expand($crumbs);    // recursion
+            } elseif(!in_array($rid, $crumbs)){         // found a new edge
                 $rival = new Player($rid);
-                if ($rival->exists()){
-                    $nodeOrb->addNodes($rival->orb($this->game, $crumbs, FALSE));
-                    $crumbs = array_merge($nodeOrb->crumbs($rid), $crumbs);
-                    $rival->save();
+                if ($rival->exists()){                  // expand the edge
+                    $nodeOrb = $node->orb($rival->orb($this->game, $crumbs, FALSE));
+                    $crumbs = array_merge($crumbs, $nodeOrb->crumbs($rid, $rid));
                 }
             }
         }

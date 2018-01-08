@@ -131,28 +131,30 @@ class PlayerPage extends Page {
         $player = $this->player();
         if (!is_null($player)){
             $rnd = mt_rand(1,8);
-            $message = $player->email() !== null ?
-                "{Tip$rnd}" :
-                'Please <b>activate</b> your account<br><br>An email has been sent with an activation link to click.';
-
+            $playerEmail = $player->email();
             $familiarCheckboxes = $this->familiarCheckboxes($player);
             $playerNick = $player->nick();
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
-            $vars['message']       = $message;
-            $vars['playerName']    = empty($playerNick) ? $player->email() : $playerNick;
+            $vars['message']       = "{Tip$rnd}";
+            $vars['playerName']    = empty($playerNick) ? $playerEmail : $playerNick;
             $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
-
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
-    //            'historyForms'   => $historyForms;
             $vars['reputation']    = $player->repWord();
             $vars['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;
             $vars['playerURL']     = $player->url();
-            $vars['playerEmail']   = $player->email();
+            $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
+
+            // special case: new un-activated player
+            if (is_null($playerEmail)){
+                $vars['message']    = '{Please activate...}';
+                $vars['playerName'] = ' ';
+                $vars['playerEmail'] = ' ';
+            }
         }
 
         $game = $this->game;

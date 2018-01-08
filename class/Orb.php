@@ -41,8 +41,8 @@ class Orb extends Qwik {
             $parity = $node->parity();
             $rely = $node->rely();
             $str .= "\n$tabs" . self::snip($rid) . " $parity $rely";
-            $orb = $node->orb($this->game);
-            if(!$orb->empty()){
+            $orb = $node->orb();
+            if(isset($orb) && !$orb->empty()){
                 $str .= $orb->print("$tabs\t");
             }
         }
@@ -52,6 +52,7 @@ class Orb extends Qwik {
 
     public function addNode($rid, $parity, $rely, $date){
         $this->nodes[] = new Node($rid, $parity, $rely, $date);
+    }
 
 
     public function addNodes($orb){
@@ -90,7 +91,7 @@ longer chains by introducing a decay (=0.9) at each link.
         $n=0;
         foreach($this->nodes as $node){
             $parity = $node->parity();
-            $subOrb = $node->orb($this->game);
+            $subOrb = $node->orb();
             if (($node->rid() != $rivalID)
             && (isset($subOrb))){
 //print_r("\n\t" . self::snip($node->rid()) . "\t" . self::snip($rivalID) . "\n");            
@@ -143,8 +144,8 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             $inv[$rid][] = new Node($pid, -1 * $node->parity(), $node->rely());
 
             // recursion
-            $orb = $node->orb($this->game);
-            if(!$orb->empty()){
+            $orb = $node->orb();
+            if(isset($orb) && !$orb->empty()){
                 $subOrbInv = $orb->inv($node->rid());
                 foreach ($subOrbInv as $rid => $subNode) {
                     if (!array_key_exists($rid, $inv)){
@@ -184,7 +185,10 @@ and by negating Parity.
 
         foreach($this->nodes as &$node){
             $rid = $node->rid();
-            $node->orb($this->game)->splice($rid, $invOrb);
+            $orb = $node->orb();
+            if(isset($orb)){
+                $orb->splice($rid, $invOrb);
+            }
         }
         return $this;
     }
@@ -210,7 +214,9 @@ and by negating Parity.
                 $rival = new Player($rid);
                 if ($rival->exists()){                  // expand the edge
                     $nodeOrb = $node->orb($rival->orb($this->game, $crumbs, FALSE));
-                    $crumbs = array_merge($crumbs, $nodeOrb->crumbs($rid, $rid));
+                    if (isset($nodeOrb)){
+                        $crumbs = array_merge($crumbs, $nodeOrb->crumbs($rid, $rid));
+                    }
                 }
             }
         }
@@ -235,10 +241,12 @@ and by negating Parity.
         foreach($this->nodes as $node){
             $rid = Player::subID($node->rid());
             if ($rid != $rootID){
-                $nodeOrb = $node->orb($this->game);
-                $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
-                $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
-                $crumbs[$rid] = $orbID;    // this is the shortest path
+                $nodeOrb = $node->orb();
+                if (isset($nodeOrb)){
+                    $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
+                    $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
+                    $crumbs[$rid] = $orbID;    // this is the shortest path
+                }
             }
         }
         return $crumbs;
@@ -267,13 +275,15 @@ and by negating Parity.
     public function prune($keepers){
         //echo "PRUNEORB<br><br>\n";
         foreach($this->nodes as $key => &$node){
-            $subOrb = $node->orb($this->game);
-            if(!$subOrb->empty()){
-                if($subOrb->prune($keepers)){
-                    $subOrb->wipe();
+            $subOrb = $node->orb();
+            if(isset($subOrb)){
+                if(!$subOrb->empty()){
+                    if($subOrb->prune($keepers)){
+                        $subOrb->wipe();
+                    }
+                } elseif(!in_array($node->rid(), $keepers)){
+                    $subOrb->wipe($key);
                 }
-            } elseif(!in_array($node->rid(), $keepers)){
-                $subOrb->wipe($key);
             }
         }
         return $this->size() == 0; //denuded branch

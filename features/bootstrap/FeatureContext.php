@@ -388,6 +388,7 @@ class FeatureContext implements Context
             Ranking::removePlayer($id);
             $player = new Player($id, TRUE);
             $player->nick($name);
+            $player->email($email);
             $player->save();
             $this->rivals[$char] = $id;
         }

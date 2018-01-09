@@ -22,23 +22,23 @@ const HEAD = "
 const TICK = "<button class='TICK_ICON'></button>";
 
 const VENUE_INPUT = "
-		<input id='venue-desc' 
-    	    name='venue' 
-    	    class='venue' 
-    	    list='venue-squash'
-			value='[venue]' 
-    	    placeholder='{prompt_venue}' 
-    	    size='120'
-    	    required>
-	";
+        <input id='venue-desc' 
+            name='venue' 
+            class='venue' 
+            list='venue-squash'
+            value='[venue]' 
+            placeholder='{prompt_venue}' 
+            size='120'
+            required>
+    ";
 
 const RIVAL_INPUT = "
         <input name='rival' 
             type='email' 
             placeholder='{prompt_rival}' 
             required>
-	";
-	
+    ";
+    
 const REGION_SELECT = "
         <select name='region' class='region' required>
             <repeat id='reckon'>
@@ -58,25 +58,23 @@ const ABILITY_SELECT = "
     ";
 
 const PARITY3_SELECT  = "
-    	<select name='parity'>
-    	    <option value='matching' disabled>{matching}</option>
-    	    <option value='similar' selected>{similar}</option>
-    	    <option value='any'>{any}</option>
-    	</select>
-	";
+        <select name='parity'>
+            <option value='matching' disabled>{matching}</option>
+            <option value='similar' selected>{similar}</option>
+            <option value='any'>{any}</option>
+        </select>
+    ";
 
 const PARITY5_SELECT = "
-		<select name='parity'>
+        <select name='parity'>
           <option value='+2'>{much_stronger}</option>
           <option value='+1'>{stronger}</option>
           <option value='0' selected>{well_matched}</option>
           <option value='-1'>{weaker}</option>
           <option value='-2'>{much_weaker}</option>
         </select>
-	";
-	
-
-
+    ";
+    
 
 
 Class TranslatePage extends Page {
@@ -85,56 +83,53 @@ Class TranslatePage extends Page {
     private $phraseKeys;
     private $files = array( 
         'index.html',
-		'info.html',
-		'locate.html',
+        'info.html',
+        'locate.html',
         'player.html',
-		'upload.html',
+        'upload.html',
         'venue.html',
-		'venues.html');
-	
-	private $variables;
-	private $pending;
+        'venues.html');
+    private $variables;
+    private $pending;
 
 
-
-	public function __construct($template=null){
-	    parent::__construct($template);
-	    
+    public function __construct($template=null){
+        parent::__construct($template);
+        
         $this->langs = self::$translation->languages();
         $this->phraseKeys = self::$translation->phraseKeys();
 
-	    $this->pending = new Translation('pending.xml', 'lang');
-	
-	    $gameOptions = $this->replicateGames(
-		    "<option value='[game]' [selected]>[name]</option>",
-		    array('game' => 'squash')
+        $this->pending = new Translation('pending.xml', 'lang');
+    
+        $gameOptions = $this->replicateGames(
+            "<option value='[game]' [selected]>[name]</option>",
+            array('game' => 'squash')
         );
 
         $selectGame = "<select name='game' class='game'>$gameOptions</select>";
 
         $vars = parent::variables();
 
-        $vars['tick']         = "<a class='".self::TICK_ICON."'></a>";
-        $vars['cross']        = "<a class='".self::CROSS_ICON."'></a>";
-        $vars['termsLink']    = "<a href='".self::TERMS_URL."'>{terms & conditions}</a>";
-        $vars['privacyLink']  = "<a href='".self::PRIVACY_URL."'>{privacy policy}</a>";
-        $vars['flyerLink']    = "<a href='".self::FLYER_URL."'>{flyer}</a>";
-        $vars['emailLink']    = self::EMAIL_LNK;
-        $vars['facebookLink'] = self::FACEBOOK_LNK;
-        $vars['twitterLink']  = self::TWITTER_LNK;
-        $vars['inputVenue']   = VENUE_INPUT;
-        $vars['inputRival']   = RIVAL_INPUT;
-        $vars['selectGame']   = $selectGame;
-        $vars['selectAbility']= ABILITY_SELECT;
-        $vars['selectRegion'] = REGION_SELECT;
+        $vars['tick']          = "<a class='".self::TICK_ICON."'></a>";
+        $vars['cross']         = "<a class='".self::CROSS_ICON."'></a>";
+        $vars['termsLink']     = "<a href='".self::TERMS_URL."'>{terms & conditions}</a>";
+        $vars['privacyLink']   = "<a href='".self::PRIVACY_URL."'>{privacy policy}</a>";
+        $vars['flyerLink']     = "<a href='".self::FLYER_URL."'>{flyer}</a>";
+        $vars['emailLink']     = self::EMAIL_LNK;
+        $vars['facebookLink']  = self::FACEBOOK_LNK;
+        $vars['twitterLink']   = self::TWITTER_LNK;
+        $vars['inputVenue']    = VENUE_INPUT;
+        $vars['inputRival']    = RIVAL_INPUT;
+        $vars['selectGame']    = $selectGame;
+        $vars['selectAbility'] = ABILITY_SELECT;
+        $vars['selectRegion']  = REGION_SELECT;
         $vars['selectParity3'] = PARITY3_SELECT;
         $vars['selectParity5'] = PARITY5_SELECT;
         
         $this->variables = $vars;
     }
     
-    
-    
+
     public function processRequest(){
         $key = $this->req('key');
         $lang = $this->req('lang');
@@ -174,29 +169,29 @@ Class TranslatePage extends Page {
                 $html .= "  <td style='width:10%'>$native</td>\n";
                 $html .= $this->tdPhrase($key, $lang, $size);
                 $html .= "</tr>\n";
-    		}
+            }
             $html .= "</table>\n";
             $html .= "<br><br>\n";
         }
         $html .= "<hr>\n";
         $html .= "</body>\n</html>\n";
         return $html;
-	}
+    }
 
 
-	private function stats(){
-	    $count = array();
-	    foreach($this->langs as $lang => $native){
+    private function stats(){
+        $count = array();
+        foreach($this->langs as $lang => $native){
             $count[$lang] = 0;
-	    }
+        }
 
-	    foreach($this->phraseKeys as $key){
+        foreach($this->phraseKeys as $key){
             foreach($this->langs as $lang => $native){
                 $phrase = self::$translation->phrase($key, $lang, '');
                 if (!empty($phrase)){
                     $count[$lang] += 1;
                 }
-    	    }
+            }
         }
 
         $stats = array();
@@ -205,13 +200,13 @@ Class TranslatePage extends Page {
         foreach($count as $lang => $numerator){
             $stats[$lang] = intval(100 * $numerator / $denominator);
         }
-	    return $stats;
-	}
+        return $stats;
+    }
 
 
-	private function translateTemplates(){
-	    $stats = $this->stats();
-	    $html = "<h2>Translations</h2>\n";
+    private function translateTemplates(){
+        $stats = $this->stats();
+        $html = "<h2>Translations</h2>\n";
         $html .= "<table>\n";
         foreach($this->langs as $lang => $native){
             $stat = $stats[$lang];
@@ -230,11 +225,11 @@ Class TranslatePage extends Page {
         }
         $html .= "</table>\n";
         return $html;
-	}
+    }
 
 
-	private function tdPhrase($key, $lang, $size=30){
-	    $phrase = self::$translation->phrase($key, $lang, '');
+    private function tdPhrase($key, $lang, $size=30){
+        $phrase = self::$translation->phrase($key, $lang, '');
         $pending = $this->pending->phrase($key, $lang, '');
         $edit = is_null($pending) ? $phrase : $pending;
         $hidden = is_null($phrase) && is_null($pending) ? "" : "hidden";
@@ -259,7 +254,7 @@ Class TranslatePage extends Page {
         $td .= "  </td>\n";
 
         return $td;
-	}
+    }
 
 }
 

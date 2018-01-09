@@ -47,9 +47,6 @@ class Translation extends Qwik {
         );
     }
 
-    
-    
-
 
     public function phrase($key, $lang, $fallback='en'){
         if (array_key_exists($key, $this->phrases)){
@@ -86,12 +83,12 @@ class Translation extends Qwik {
     public function languages(){
         return $this->languages;
     }
-    
-    
+
+
     public function phraseKeys(){
         return array_keys($this->phrases);
     }
-    
+
     
     public function direction($lang){
         $element = $this->xml->xpath("language[@key='$lang']")[0];
@@ -106,8 +103,7 @@ class Translation extends Qwik {
             $element = $xml->addChild('language');
             $element->addAttribute($key, $native);        
         }
-        
-        
+
         foreach($this->phrases as $key => $phrase){            
             $phraseElement = $xml->addChild('phrase');
             $phraseElement->addAttribute('key', $key);
@@ -116,9 +112,7 @@ class Translation extends Qwik {
             }     
         }
         $xml->saveXML("translation1.xml");
-    
     }
-
 
 }
 

@@ -1,13 +1,12 @@
 <?php
 
-require_once 'Qwik.php';
+require_once 'Html.php';
 require_once 'Defend.php';
-require_once 'Translation.php';
 require_once 'Player.php';
 require_once 'Venue.php';
 require_once 'Hours.php';
 
-class Page extends Qwik {
+class Page extends Html {
 
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
     const COMMENT_ICON   = 'fa fa-comment-o comment';
@@ -29,7 +28,6 @@ class Page extends Qwik {
     const TWITTER_ICON   = 'fa fa-twitter icon';
     
     const FLYER_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
-    const PRIVACY_URL  = self::QWIK_URL.'/pdf/qwikgame.org%20privacy%20policy.pdf';
     const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.self::QWIK_URL;
     const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.self::QWIK_URL;
 
@@ -42,18 +40,6 @@ class Page extends Qwik {
     const FLYER_LNK    = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
     const TWITTER_LNK  = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
 
-    static $translation;
-
-    static $languages = array(
-        'zh'=>'中文',
-        'es'=>'Español',
-        'en'=>'English',
-        // 'fr'=>'français',
-        // 'hi'=>'हिन्दी भाषा',
-        // 'ar'=>'اللغة العربية',
-        // 'jp'=>'日本語'
-    );
-
     static $icons;
 
     private $template;
@@ -64,10 +50,6 @@ class Page extends Qwik {
     public function __construct($template='index'){
         parent::__construct();  
         $this->template = $template;
-
-        if (is_null(self::$translation)){
-            self::$translation = new Translation('translation.xml', 'lang');
-        }
        
         $defend = new Defend();
         $this->req = $defend->request();
@@ -75,7 +57,8 @@ class Page extends Qwik {
         $this->logReq($this->req);
         $this->player = $this->login($this->req);
 
-        $this->language = $this->language($this->req, $this->player);
+        $pageLanguage = $this->language($this->req, $this->player);
+        parent::language($pageLanguage);
     }
 
 
@@ -104,29 +87,25 @@ class Page extends Qwik {
 
 
     public function variables(){
+        $vars = parent::variables();
+        $vars['CROSS_ICON']    = self::CROSS_ICON;
+        $vars['COMMENT_ICON']  = self::COMMENT_ICON;
+        $vars['EMAIL_ICON']    = self::EMAIL_ICON;
+        $vars['FACEBOOK_ICON'] = self::FACEBOOK_ICON;
+        $vars['FEMALE_ICON']   = self::FEMALE_ICON;
+        $vars['HOME_ICON']     = self::HOME_ICON;
+        $vars['INFO_ICON']     = self::INFO_ICON;
+        $vars['LANG_ICON']     = self::LANG_ICON;
+        $vars['MALE_ICON']     = self::MALE_ICON;
+        $vars['RELOAD_ICON']   = self::RELOAD_ICON;
+        $vars['THUMB_DN_ICON'] = self::THUMB_DN_ICON;
+        $vars['THUMB_UP_ICON'] = self::THUMB_UP_ICON;
+        $vars['TWITTER_ICON']  = self::TWITTER_ICON;
+        $vars['flyerLink']     = self::FLYER_LNK;
+        $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
+        $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";
         $game = $this->req('game');
-        $vars = array(
-            'CROSS_ICON'    => self::CROSS_ICON,
-            'COMMENT_ICON'  => self::COMMENT_ICON,
-            'EMAIL_ICON'    => self::EMAIL_ICON,
-            'FACEBOOK_ICON' => self::FACEBOOK_ICON,
-            'FEMALE_ICON'   => self::FEMALE_ICON,
-            'HOME_ICON'     => self::HOME_ICON,
-            'INFO_ICON'     => self::INFO_ICON,
-            'LANG_ICON'	    => self::LANG_ICON,
-            'MALE_ICON'     => self::MALE_ICON,
-            'RELOAD_ICON'   => self::RELOAD_ICON,
-            'THUMB_DN_ICON' => self::THUMB_DN_ICON,
-            'THUMB_UP_ICON' => self::THUMB_UP_ICON,
-            'TWITTER_ICON'  => self::TWITTER_ICON,
-            'homeURL'       => self::QWIK_URL,
-            'termsURL'      => self::TERMS_URL,
-            'privacyURL'    => self::PRIVACY_URL,
-            'flyerLink'     => self::FLYER_LNK,
-            'thumb-up'      => "<span class='" . self::THUMB_UP_ICON . "'></span>",
-            'thumb-dn'      => "<span class='" . self::THUMB_DN_ICON . "'></span>",
-            'game'          => isset($game) ? self::qwikGames()["$game"] : '[game]'
-        );
+        $vars['game']  = isset($game) ? self::qwikGames()["$game"] : '[game]';
         
         if ($this->player != null){
             $vars['pid']         = $this->player->id();
@@ -136,29 +115,18 @@ class Page extends Qwik {
     }
 
 
-
     public function html(){
-        $lang = $this->language;
+        $lang = $this->language();
         $template = $this->template;
         $html = file_get_contents("lang/$lang/$template.html");
-    //	do{
-            $html = $this->replicate($html, $this->player, $this->req);
-            $html = $this->populate($html, $this->variables());
-            $html = $this->translate($html, $this->language);
-    //	} while (preg_match("\[([^\]]+)\]", $html) != 1);
-    //	} while (strstr($html, "["));
+        $html = $this->replicate($html, $this->player, $this->req);
+        $html = parent::html($html);
         return $html;
     }
 
 
-
-
     public function player(){
         return $this->player;
-    }
-    
-    public function languages(){
-        return self::$translation->languages();
     }
 
 
@@ -335,41 +303,6 @@ class Page extends Qwik {
         return $lang;
     }
 
-
-    /********************************************************************************
-    Return the html template after replacing {variables} with the requested
-    language (or with the fallback language as required)
-
-    $html    String    html template with variables of the form {name}
-    $lang    String    language to replace {variables} with
-    $fb        String    fallback language for when a translation is missing
-    ********************************************************************************/
-    public function translate($html, $lang, $fb='en'){
-        $translation = self::$translation;
-        $pattern = '!(?s)\{([^\}]+)\}!';
-        $tr = function($match) use ($translation, $lang, $fb){
-            $key = $match[1];
-            $phrase = $translation->phrase($key, $lang, $fb);
-            return empty($phrase) ? '{'."$key".'}' : $phrase;
-        };
-        return  preg_replace_callback($pattern, $tr, $html);
-    }
-
-
-    /********************************************************************************
-    Return the html template after replacing [variables] with the values provided.
-
-    $html        String        html template with variables of the form [key]
-    $variables    ArrayMap    variable name => $value
-    ********************************************************************************/
-    public function populate($html, $variables){
-        $pattern = '!(?s)\[([^\]]+)\]!';
-        $tr = function($match) use ($variables){
-            $m = $match[1];
-            return isset($variables[$m]) ? $variables[$m] : "[$m]";
-        };
-        return  preg_replace_callback($pattern, $tr, $html);
-    }
 
 
     /********************************************************************************
@@ -629,16 +562,10 @@ class Page extends Qwik {
     function playerVariables($player){
         return array(
             'target'    => 'player.php#matches',
-            'reputation'=> $this->repStr($player)
+            'reputation'=> $this->repStr($player->repWord())
         );
     }
 
-
-
-    function repStr($player){
-        $word = $player->repWord();
-        return empty($word) ? 'AAAAAA' : " with a $word reputation";
-    }
 
 
     public function datalists(){
@@ -830,24 +757,6 @@ class Page extends Qwik {
         return $sorted;
     }
     
-
-
-    private function venueLink($vid){
-        $name = explode("|", $vid)[0];
-        $boldName = $this->firstWordBold($name);
-        $url = self::QWIK_URL."/venue.php?vid=$vid";
-        $link = "<a href='$url'>$boldName</a>";
-        return $link;
-    }
-
-
-    private function firstWordBold($phrase){
-        $words = explode(' ', $phrase);
-        $first = $words[0];
-        $words[0] = "<b>$first</b>";
-        return implode(' ', $words);
-    }
-
 
     public function geolocate($key){
         global $geo;

@@ -6,9 +6,7 @@ require_once 'Page.php';
 
 
 class Qwik {
-    const SUBDOMAIN = 'www';
-    const QWIK_URL = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
-    const TERMS_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20terms%20and%20conditions.pdf';    
+    const SUBDOMAIN  = 'www';
 
     const PATH_VENUE  = 'venue';
     const PATH_PLAYER = 'venue';
@@ -18,7 +16,6 @@ class Qwik {
     const PATH_UPLOAD = 'uploads';
     
     const XML = '.xml';
-
 
     static private $games = array(
         'backgammon'  => '{Backgammon}',

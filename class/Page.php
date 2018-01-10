@@ -6,6 +6,12 @@ require_once 'Player.php';
 require_once 'Venue.php';
 require_once 'Hours.php';
 
+/*******************************************************************************
+    Class Page constructs an html page beginning with a html template; 
+    replicating html elements (such as rows in a <table>); replacing
+    [variables]; and making {translations}.
+*******************************************************************************/
+
 class Page extends Html {
 
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
@@ -42,14 +48,20 @@ class Page extends Html {
 
     static $icons;
 
-    private $template;
+    private $templateName;
     private $req;
     private $player;
     private $language;
 
-    public function __construct($template='index'){
+
+    /*******************************************************************************
+    Class Page is constructed with the name of the file containing a html template.
+
+    $templateName  String  fileName containing the html template.
+    *******************************************************************************/
+    public function __construct($templateName='index'){
         parent::__construct();  
-        $this->template = $template;
+        $this->templateName = $templateName;
        
         $defend = new Defend();
         $this->req = $defend->request();
@@ -76,7 +88,9 @@ class Page extends Html {
 
     public function serve(){
         $this->processRequest();
-        $html = $this->html();
+        $templateName = $this->templateName;
+        $template = $this->template($templateName);
+        $html = $this->make($template);
         echo($html);
     }
 
@@ -115,12 +129,9 @@ class Page extends Html {
     }
 
 
-    public function html(){
-        $lang = $this->language();
-        $template = $this->template;
-        $html = file_get_contents("lang/$lang/$template.html");
+    public function make($html, $variables){
         $html = $this->replicate($html, $this->player, $this->req);
-        $html = parent::html($html);
+        $html = parent::make($html, $variables);
         return $html;
     }
 
@@ -649,6 +660,11 @@ class Page extends Html {
     }
 
 
+    function repStr($word){
+        return empty($word) ? 'AAAAAA' : " with a $word reputation";
+    }
+
+
     static public function parityStr($parity){
 //echo "<br>PARITYSTR $parity<br>";
         if(!is_numeric("$parity")){
@@ -667,6 +683,28 @@ class Page extends Html {
         } else {
             return "{much_stronger}";
         }
+    }
+
+
+    private function trim_value(&$value){
+        $value = trim($value);
+    }
+
+
+    private function firstWordBold($phrase){
+        $words = explode(' ', $phrase);
+        $first = $words[0];
+        $words[0] = "<b>$first</b>";
+        return implode(' ', $words);
+    }
+
+
+    private function venueLink($vid){
+        $name = explode("|", $vid)[0];
+        $boldName = $this->firstWordBold($name);
+        $url = self::QWIK_URL."/venue.php?vid=$vid";
+        $link = "<a href='$url'>$boldName</a>";
+        return $link;
     }
 
 
@@ -733,13 +771,6 @@ class Page extends Html {
         arsort($similar);
         return array_keys($similar);
     }
-
-
-    private function trim_value(&$value)
-    {
-        $value = trim($value);
-    }
-
 
 
     function listVenues($game){

@@ -555,67 +555,66 @@ class Player extends Qwik {
         return self::QWIK_URL."/player.php?" . http_build_query($query);
     }
 
-
+    
+    public function authLink($shelfLife, $param=null){
+        $authURL = $this->authURL($shelfLife, $param);
+        return "<a href='$authURL'>{login}</a>";
+  
+    }
 
 
     public function emailWelcome($email){
-        $authURL = $this->authURL(self::MONTH, array("email"=>$email));
+        $authLink = $this->authLink(self::MONTH, array("email"=>$email));
+        $paras = array(
+            "Please activate",
+            "Safely Ignore"
+        );
+        $vars = array(
+            "subject"    => "{emailLoginSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "authLink"   => $authLink
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
-        $subject = "Welcome to qwikgame.org";
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
-        $msg .= " to <b>activate</b> your qwikgame account.<br>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        self::qwikEmail($subject, $msg, $email);
         self::logEmail('welcome', $this->id());
     }
 
 
     public function emailLogin(){
-        $authURL = $this->authURL(self::DAY);
+        $vars = array(
+            "subject"    => "{emailLoginSubject}",
+            "paragraphs" => array(),
+            "to"         => $this->email(),
+            "authLink"   => $this->authLink(self::DAY)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
-        $subject = 'qwikgame.org login link';
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
-        $msg .= "\t to login (and then bookmark it for easy access)<br>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        self::qwikEmail($subject, $msg, $this->email());
         self::logEmail('login', $this->id());
     }
 
 
-
     function emailFavourite($req, $email){
-        $subject = 'qwikgame.org confirm favourite';
-        $query =  http_build_query($req);
-        $game = $req['game'];
-        $venue = $req['venue'];
-        $authURL = $this->authURL(2*self::DAY, $req);
+        $authLink = $this->authLink(2*self::DAY, array("email"=>$email));
+        $paras = array(
+            "Click to confirm",
+            "Safely Ignore"
+        );
+        $vars = array(
+            "subject"    => "{emailFavouriteSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "game"       => $req['game'],
+            "venueName"  => $req['venue'],
+            "authLink"   => $authLink
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
-        $msg  = "<p>\n";
-        $msg .= "\tPlease <a href='$authURL' target='_blank'>click this link</a>";
-        $msg .= " to confirm that you are available to play <b>$game</b> at <b>$venue</b>.<br>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        Player::qwikEmail($subject, $msg, $email);
         $this->logEmail('stash', $this->id());
     }
-
-
-
 
 
     function emailInvite($match, $email=null){
@@ -623,20 +622,22 @@ class Player extends Qwik {
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $param = is_null($email) ? null : array('email'=>$email);
-        $url = $this->authURL(self::WEEK, $param);
         $email = is_null($email) ? $this->email : $email ;
-
-        $subject = "Invitation: $game at $venueName";
-
-        $msg  = "<p>\n";
-        $msg .= "\tYou have been invited to play <b>$game $day</b> at $venueName.<br>\n";
-        $msg .= "\t<br>\n";
-        $msg .= "\tPlease <a href='$url' target='_blank'>login</a>\n";
-        $msg .= "\tand <b>accept</b> if you would like to play.\n";
-        $msg .= "</p>\n";
-
-        self::qwikEmail($subject, $msg, $email);
+        $paras = array(
+            "You are invited",
+            "Please accept"
+        );
+        $vars = array(
+            "subject"    => "{emailInviteSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "game"       => $game,
+            "day"        => $day,
+            "venueName"  => $venueName,
+            "authLink"   => $this->authLink(self::WEEK)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
         self::logEmail('invite', $this->id(), $game, $venueName);
     }
 
@@ -646,43 +647,44 @@ class Player extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $pid = $this->id();
         $venueName = $match->venueName();
-        $url = $this->authURL(self::DAY);
+        $paras = array(
+            "Game is set",
+            "Need to cancel",
+            "Have great game"
+        );
+        $vars = array(
+            "subject"    => "{emailConfirmSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "game"       => $game,
+            "time"       => $time,
+            "venueName"  => $venueName,
+            "authLink"   => $this->authLink(self::DAY)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
-        $subject = "Confirmed: $game $time at $venueName";
-
-        $msg  = "<p>\n";
-        $msg .= "\tYour game of <b>$game</b> is set for <b>$time</b> at $venueName.<br>\n";
-        $msg .= "\t<br>\n";
-        $msg .= "\tIf you need to cancel for some reason, please ";
-        $msg .= "<a href='$url' target='_blank'>login</a> ";
-        $msg .= "as soon as possible to let your rival know.\n";
-        $msg .= "</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\t<b>Good Luck! and have a great game.</b>\n";
-        $msg .= "</p>\n";
-
-        self::qwikEmail($subject, $msg, $this->email());
-        self::logEmail('confirm', $pid, $game, $venueName, $time);
+        self::logEmail('confirm', $this->id(), $game, $venueName, $time);
     }
 
 
     private function emailChange($email){
-        $authURL = $this->authURL(self::DAY, array('email'=>$email));
-        $pid = $this->id();
+        $paras = array(
+            "Click to change",
+            "Safely ignore"
+        );
+        $vars = array(
+            "subject"    => "{emailChangeSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "email"      => $email,
+            "authLink"   => $this->authLink(self::DAY)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
-        $subject = 'Confirm email change for qwikgame.org';
-
-        $msg  = "<p>\n";
-        $msg .= "\tPlease click this link to change your qwikgame email address to $email: $authURL<br>\n";
-        $msg .= "\t\t\t</p>\n";
-        $msg .= "<p>\n";
-        $msg .= "\tIf you did not expect to receive this request, then you can safely ignore and delete this email.\n";
-        $msg .= "<p>\n";
-
-        Player::qwikEmail($subject, $msg, $email);
-        self::logEmail('email', $pid);
+        self::logEmail('email', $this->id());
     }
 
 
@@ -695,55 +697,64 @@ class Player extends Qwik {
         $pid = $this->id();
         $token = $this->token(self::WEEK);
         $venueName = Venue::svid($match->venue());
-        $url = $this->authURL(self::DAY);
-
-        $subject = 'Message from qwikgame rival';
-
-        $msg  = "<p>\n";
-        $msg .= "<b>$gameName</b> at $time at $venueName<br><br><br>";
-        $msg .= "\tYour rival says: \"<i>$message</i>\"<br><br><br>\n";
-        $msg .= "Please <a href='$url'>login</a> to reply.";
-        $msg .= "</p>\n";
+        $paras = array(
+            "game time venue",
+            "Your rival says...",
+            "Please reply"
+        );
+        $vars = array(
+            "subject"    => "{emailMsgSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email(),
+            "game"       => $game,
+            "time"       => $time,
+            "venueName"  => $venueName,
+            "authLink"   => $this->authLink(self::DAY)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
 
         self::qwikEmail($subject, $msg, $this->email());
     }
 
 
     function emailCancel($match){
-
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ha D");
         $game = $match->game();
         $pid = $this->id();
-        $token = $this->token(self::WEEK);
-        $vid = $match->vid();
         $venueName = $match->venueName();
-
-        $subject = "Cancelled: $game $time at $venueName";
-
-        $msg  = "<p>\n";
-        $msg .= "\tYour game of <b>$game</b> at <b>$time</b> at $venuName has been CANCELLED by your rival.<br>\n";
-        $msg .= "</p>\n";
-
-        self::qwikEmail($subject, $msg, $this->email());
+        $vars = array(
+            "subject"    => "{emailCancelSubject}",
+            "paragraphs" => array("{Game cancelled}"),
+            "to"         => $this->email(),
+            "game"       => $game,
+            "time"       => $time,
+            "venueName"  => $venueName
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
         self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
 
-    function emailQuit($player){
-        global $YEAR;
-        $lang = $this->lang();
-
-        $subject = $GLOBALS[$lang]["emailQuitSubject"];
-        $msg = $GLOBALS[$lang]["emailQuitBody"];
-        $pid = $this->id();
-        $token = $this->token(self::YEAR);
-
-        self::qwikEmail($subject, $msg, $this->email());
-        self::logEmail('quit', $pid);
+    function emailQuit(){
+        $paras = array(
+            "{Sorry that you...}",
+            "{Your info removed}",
+            "{Anon feedback remains}",
+            "{Backups remain}",
+            "{Good luck}"
+        );
+        $vars = array(
+            "subject"    => "{emailQuitSubject}",
+            "paragraphs" => $paras,
+            "to"         => $this->email()
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
+        self::logEmail('quit', $this->id());
     }
-
-
 
 
     function qwikEmail($subject, $msg, $to=null){
@@ -773,15 +784,17 @@ class Player extends Qwik {
 
         $body .= "\t\t<br><hr>\n";
         $body .= "\t\t<p>\n";
-        $body .= "\t\t\tBy clicking on these links you are agreeing to be bound by these \n";
-        $body .= "\t\t\t<a href='".self::TERMS_URL."' target='_blank'>\n";
-        $body .= "\t\t\tTerms & Conditions</a>";
+        $body .= "\t\t\t" . self::TERMS_LNK;
         $body .= "\t\t</p>\n";
-        $body .= "\t\t</p>\n";
-        $body .= "\t\t\tFind someone to play your favourite game at a time and place that suits you.\n";
+        $body .= "\t\t<p>\n";
+        $body .= "\t\t\t{tagline}\n";
         $body .= "\t\t</p>\n";
         $body .= "\t</body>\n";
         $body .= "</html>\n";
+
+        $lang = $this->lang();
+        $subject = $this->translate($subject, $lang);
+        $body = $this->translate($body, $lang);
 
         if (!mail($to, $subject, $body, implode("\r\n", $headers))){
 //            header("Location: error.php?msg=<b>The email was unable to be sent");

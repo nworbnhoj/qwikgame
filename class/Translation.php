@@ -11,9 +11,9 @@ class Translation extends Qwik {
     private $phrases = array();
     private $languages = array();
 
-    public function __construct($fileName='translation.xml', $path=''){
+    public function __construct($fileName='translation.xml'){
         parent::__construct();
-        $this->path = $path;
+        $this->path = self::PATH_LANG;
         $this->fileName = $fileName;
         $this->xml = self::readXML($path, $fileName);
         

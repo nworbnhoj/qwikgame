@@ -286,7 +286,7 @@ class Page extends Html {
     $player    XML            player data
     ********************************************************************************/
 
-    private function language($req, $player){
+    public function language($req, $player){
         $languages = $this->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 

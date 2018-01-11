@@ -10,6 +10,7 @@ class Qwik {
 
     const PATH_VENUE  = 'venue';
     const PATH_PLAYER = 'venue';
+    const PATH_PDF    = 'pdf';
     const PATH_LANG   = 'lang';
     const PATH_HTML   = 'html';
     const PATH_JSON   = 'json';

@@ -1,8 +1,8 @@
 <?php
 
-require_once 'class/Qwik.php';
-require_once 'class/Hours.php';
-require_once 'class/Page.php';
+require_once 'Qwik.php';
+require_once 'Hours.php';
+require_once 'Page.php';
 
 
 class Match extends Qwik {

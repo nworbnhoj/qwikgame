@@ -2,7 +2,6 @@
 
 
 require_once 'Logging.php';
-require_once 'Page.php';
 
 
 class Qwik {
@@ -598,8 +597,6 @@ class Qwik {
     static public function newToken($len = 10){
         return self::generateRandomString($len);
     }
-
-
 
 
 }

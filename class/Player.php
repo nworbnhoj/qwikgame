@@ -1,9 +1,9 @@
 <?php
 
-require_once 'class/Qwik.php';
-require_once 'class/Hours.php';
-include 'Orb.php';
-include 'Match.php';
+require_once 'Qwik.php';
+require_once 'Hours.php';
+require_once 'Orb.php';
+require_once 'Match.php';
 
 
 class Player extends Qwik {

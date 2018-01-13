@@ -1,7 +1,7 @@
 <?php
 
 
-require_once 'class/Qwik.php';
+require_once 'Qwik.php';
 
 class Ranking extends Qwik {
 

@@ -97,13 +97,13 @@ class Html extends Qwik {
 
 
     protected function template($templateName){
-        $path = self::PATH_LANG.'/'.$this->language();
+        $path = Qwik::PATH_LANG.'/'.$this->language();
         return file_get_contents("$path/$templateName.html");
     }
 
 
     public function make($html, $variables=array()){
-        $vars = merge_array($this->variables(), $variables);
+        $vars = array_merge($this->variables(), $variables);
         $html = $this->populate($html, $vars);
         $html = $this->translate($html, $this->language());
         return $html;

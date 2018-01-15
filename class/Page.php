@@ -69,7 +69,7 @@ class Page extends Html {
         $this->logReq($this->req);
         $this->player = $this->login($this->req);
 
-        $pageLanguage = $this->language($this->req, $this->player);
+        $pageLanguage = $this->selectLanguage($this->req, $this->player);
         parent::language($pageLanguage);
     }
 
@@ -90,7 +90,7 @@ class Page extends Html {
         $this->processRequest();
         $templateName = $this->templateName;
         $template = $this->template($templateName);
-        $html = $this->make($template);
+        $html = $this->make($template, $this->variables());
         echo($html);
     }
 
@@ -129,7 +129,7 @@ class Page extends Html {
     }
 
 
-    public function make($html, $variables){
+    public function make($html, $variables=array()){
         $html = $this->replicate($html, $this->player, $this->req);
         $html = parent::make($html, $variables);
         return $html;
@@ -226,11 +226,11 @@ class Page extends Html {
             } elseif($req['qwik'] == 'recover'){    // account recovery
                 self::logMsg("login: recover account " . self::snip($pid));    // todo rate limit
                 $player->emailLogin();
-                unset($player);	                    // AUTH: failure
+                $player=NULL;	                    // AUTH: failure
             }
         } else {
             self::logMsg("login: invalid token pid=" . self::snip($pid));
-            unset($player);                         // AUTH: failure
+            $player=NULL;                           // AUTH: failure
         }
 
         return $player;
@@ -286,7 +286,7 @@ class Page extends Html {
     $player    XML            player data
     ********************************************************************************/
 
-    public function language($req, $player){
+    public function selectLanguage($req, $player){
         $languages = $this->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 

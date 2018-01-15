@@ -1,6 +1,5 @@
 <?php
 
-require_once 'qwik.php';
 require_once 'Page.php';
 
 const HEAD = "
@@ -82,6 +81,7 @@ Class TranslatePage extends Page {
     private $langs;
     private $phraseKeys;
     private $files = array( 
+        'email.html',
         'index.html',
         'info.html',
         'locate.html',
@@ -141,7 +141,7 @@ Class TranslatePage extends Page {
     }
 
 
-    public function html(){
+    public function make(){
         $html = HEAD;
         $html .= "<body>\n";
         $html .= $this->translateTemplates();

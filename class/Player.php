@@ -4,6 +4,7 @@ require_once 'Qwik.php';
 require_once 'Hours.php';
 require_once 'Orb.php';
 require_once 'Match.php';
+require_once 'Email.php';
 
 
 class Player extends Qwik {
@@ -552,7 +553,7 @@ class Player extends Qwik {
         $query['qwik'] = 'login';
         $query['pid'] = $this->id();
         $query['token'] = $this->token($shelfLife);
-        return self::QWIK_URL."/player.php?" . http_build_query($query);
+        return Page::QWIK_URL."/player.php?" . http_build_query($query);
     }
 
     
@@ -575,7 +576,7 @@ class Player extends Qwik {
             "to"         => $this->email(),
             "authLink"   => $authLink
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         self::logEmail('welcome', $this->id());
@@ -589,7 +590,7 @@ class Player extends Qwik {
             "to"         => $this->email(),
             "authLink"   => $this->authLink(self::DAY)
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         self::logEmail('login', $this->id());
@@ -610,7 +611,7 @@ class Player extends Qwik {
             "venueName"  => $req['venue'],
             "authLink"   => $authLink
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         $this->logEmail('stash', $this->id());
@@ -636,7 +637,7 @@ class Player extends Qwik {
             "venueName"  => $venueName,
             "authLink"   => $this->authLink(self::WEEK)
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
         self::logEmail('invite', $this->id(), $game, $venueName);
     }
@@ -662,7 +663,7 @@ class Player extends Qwik {
             "venueName"  => $venueName,
             "authLink"   => $this->authLink(self::DAY)
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         self::logEmail('confirm', $this->id(), $game, $venueName, $time);
@@ -681,7 +682,7 @@ class Player extends Qwik {
             "email"      => $email,
             "authLink"   => $this->authLink(self::DAY)
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         self::logEmail('email', $this->id());
@@ -711,7 +712,7 @@ class Player extends Qwik {
             "venueName"  => $venueName,
             "authLink"   => $this->authLink(self::DAY)
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
 
         self::qwikEmail($subject, $msg, $this->email());
@@ -732,7 +733,7 @@ class Player extends Qwik {
             "time"       => $time,
             "venueName"  => $venueName
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
         self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
@@ -751,7 +752,7 @@ class Player extends Qwik {
             "paragraphs" => $paras,
             "to"         => $this->email()
         );
-        $email = new Email($vars, $this->language());
+        $email = new Email($vars, $this->lang());
         $email->send();
         self::logEmail('quit', $this->id());
     }

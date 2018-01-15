@@ -12,7 +12,7 @@ class Email extends Html {
 
     static $headers;
 
-    const EMAIL_TEMPLATE = "Email";
+    const EMAIL_TEMPLATE = "email";
 
     private $subject;
     private $body;
@@ -32,14 +32,14 @@ class Email extends Html {
 
     public function __construct($variables=array(), $language='en'){
         parent::__construct($language);
-        $this->$to = $variables['to'];
+        $this->to = $variables['to'];
         $this->subject = parent::make($variables['subject'], $variables);
         $template = $this->template(self::EMAIL_TEMPLATE);
         $this->body = parent::make($template, $variables);
     }
 
 
-    public function make($html, $variables){
+    public function make($html, $variables=array()){
         $html = $this->replicate($html, $variables['paragraphs']);
         $html = parent::make($html, $variables);
         return $html;

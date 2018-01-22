@@ -70,7 +70,7 @@ class Html extends Qwik {
 
 
     public function language($language=NULL){
-        if(isset($language)){
+        if(!is_null($language)){
             $this->language = $language;
         }
         return $this->language;

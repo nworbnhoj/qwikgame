@@ -123,12 +123,13 @@ class Player extends Qwik {
     }
 
 
-    public function rely($disparity=NULL){            // note disparity range [0,4]
-        $rely = $this->xml['rely']['val'];
-        if (isset($disparity)){
-            $this->xml->rely['val'] = $this->expMovingAvg($rely, 4-$disparity, 3);
+    public function rely($disparity=NULL){    // note disparity range [0,4]
+        $rely = floatval($this->xml['rely']['val']);
+        if (!is_null($disparity)){
+            $rely = $this->expMovingAvg($rely, 4-$disparity, 3);
+            $this->xml->rely['val'] = $rely;
         }
-        return (float) $this->xml['rely']['val'];
+        return $rely;
     }
 
 
@@ -584,9 +585,13 @@ class Player extends Qwik {
 
 
     public function emailLogin(){
+        $paras = array(
+            "Click to login",
+            "Safely Ignore"
+        );
         $vars = array(
             "subject"    => "{emailLoginSubject}",
-            "paragraphs" => array(),
+            "paragraphs" => $paras,
             "to"         => $this->email(),
             "authLink"   => $this->authLink(self::DAY)
         );
@@ -696,7 +701,6 @@ class Player extends Qwik {
         $game = $match->game();
         $gameName = self::qwikGames()["$game"];
         $pid = $this->id();
-        $token = $this->token(self::WEEK);
         $venueName = Venue::svid($match->venue());
         $paras = array(
             "game time venue",
@@ -756,55 +760,6 @@ class Player extends Qwik {
         $email->send();
         self::logEmail('quit', $this->id());
     }
-
-
-    function qwikEmail($subject, $msg, $to=null){
-        if(empty($to)){
-            $to = $this->email();
-            if (empty($to)){
-                self::logMsg("unable to email player without an email address");
-                return;
-            }
-        }
-        $headers = array();
-        $headers[] = "From: facilitator@qwikgame.org";
-        $headers[] = "MIME-Version: 1.0";
-        $headers[] = "Content-type: text/html; charset=UTF-8";
-
-        $body  = "<html>\n";
-        $body .= "\t<head>\n";
-        $body .= "\t\t<meta charset='UTF-8'>\n";
-        $body .= "\t\t<meta name='viewport' content='width=device-width, initial-scale=1.0'>\n";
-        $body .= "\t\t<link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>";
-        $body .= "\t\t<link rel='stylesheet' type='text/css' href='qwik.css'>";
-        $body .= "\t\t<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>";
-        $body .= "\t</head>\n";
-        $body .= "\t<body>\n";
-
-        $body .= "$msg";
-
-        $body .= "\t\t<br><hr>\n";
-        $body .= "\t\t<p>\n";
-        $body .= "\t\t\t" . self::TERMS_LNK;
-        $body .= "\t\t</p>\n";
-        $body .= "\t\t<p>\n";
-        $body .= "\t\t\t{tagline}\n";
-        $body .= "\t\t</p>\n";
-        $body .= "\t</body>\n";
-        $body .= "</html>\n";
-
-        $lang = $this->lang();
-        $subject = $this->translate($subject, $lang);
-        $body = $this->translate($body, $lang);
-
-        if (!mail($to, $subject, $body, implode("\r\n", $headers))){
-//            header("Location: error.php?msg=<b>The email was unable to be sent");
-        }
-    }
-
-
-
-
 
 
 
@@ -1245,7 +1200,10 @@ Requirements:
                     $include = ! in_array($rid, $filter);
                 }
                 if($include){
-                    $orb->addNode($rid, $par['parity'], $par['rely'], $par['date']);
+                    $parity = floatval($par['parity']);
+                    $rely = floatval($par['rely']);
+                    $date = $par['date'];
+                    $orb->addNode($rid, $parity, $rely, $date);
                 }
             }
         }

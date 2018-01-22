@@ -33,9 +33,18 @@ class Email extends Html {
     public function __construct($variables=array(), $language='en'){
         parent::__construct($language);
         $this->to = $variables['to'];
-        $this->subject = parent::make($variables['subject'], $variables);
-        $template = $this->template(self::EMAIL_TEMPLATE);
-        $this->body = parent::make($template, $variables);
+        $subject = $variables['subject'];
+        $this->subject = $this->make($subject, $variables);
+        $body = $this->template(self::EMAIL_TEMPLATE);
+        $this->body = $this->make($body, $variables);
+    }
+
+
+    public function toString(){
+        $str = "to:\t".$this->to."\n";
+        $str .= "subject:\t".$this->subject."\n";
+        $str .= $this->body;
+        return $str;
     }
 
 

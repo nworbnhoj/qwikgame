@@ -29,7 +29,7 @@ class IndexPage extends Page {
         && $this->req('game') !== null
         && isset($email)){
             $pid = Player::anonID($email);
-            $anon = new Player($pid, $log, TRUE);
+            $anon = new Player($pid, TRUE);
             if(isset($anon)){
                 $anon->emailFavourite($this->req(), $email);
             }

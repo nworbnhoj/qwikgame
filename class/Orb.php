@@ -141,7 +141,9 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             if (!array_key_exists($rid, $inv)){
                 $inv[$rid] = array();
             }
-            $inv[$rid][] = new Node($pid, -1 * $node->parity(), $node->rely());
+            $nodeParity = $node->parity();
+            $invParity = ! is_null($nodeParity) ? -1 * $nodeParity : NULL;
+            $inv[$rid][] = new Node($pid, $invParity, $node->rely());
 
             // recursion
             $orb = $node->orb();

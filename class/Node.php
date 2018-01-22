@@ -11,7 +11,7 @@ class Node {
 
     public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
         $this->rid = (string)$rivalID;
-        $this->parity = "$parity";
+        $this->parity = $parity;
         $this->rely = $this->rely($rely, $date);
     }
 

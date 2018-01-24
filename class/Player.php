@@ -510,8 +510,7 @@ class Player extends Qwik {
     }
 
 
-    public function matchAdd($rivalMatch, $parity=null, $inviteHours=null, $email=null){
-        $inviteHours = is_null($inviteHours) ? $rivalMatch->hours() : $inviteHours;
+    public function matchAdd($rivalMatch, $parity, $inviteHours, $email=null){
         $email = is_null($email) ? $this->email() : $email;
         if (is_null($inviteHours) | is_null($email)){
             self::logMsg("matchAdd() unable to add Match");
@@ -568,13 +567,13 @@ class Player extends Qwik {
     public function emailWelcome($email){
         $authLink = $this->authLink(self::MONTH, array("email"=>$email));
         $paras = array(
-            "Please activate",
-            "Safely Ignore"
+            "{Please activate}",
+            "{Safely ignore}"
         );
         $vars = array(
-            "subject"    => "{emailLoginSubject}",
+            "subject"    => "{EmailWelcomeSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->email(),
+            "to"         => $email,
             "authLink"   => $authLink
         );
         $email = new Email($vars, $this->lang());
@@ -586,11 +585,11 @@ class Player extends Qwik {
 
     public function emailLogin(){
         $paras = array(
-            "Click to login",
-            "Safely Ignore"
+            "{Click to login}",
+            "{Safely ignore}"
         );
         $vars = array(
-            "subject"    => "{emailLoginSubject}",
+            "subject"    => "{EmailLoginSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "authLink"   => $this->authLink(self::DAY)
@@ -605,11 +604,11 @@ class Player extends Qwik {
     function emailFavourite($req, $email){
         $authLink = $this->authLink(2*self::DAY, array("email"=>$email));
         $paras = array(
-            "Click to confirm",
-            "Safely Ignore"
+            "{Click to confirm}",
+            "{Safely ignore}"
         );
         $vars = array(
-            "subject"    => "{emailFavouriteSubject}",
+            "subject"    => "{EmailFavouriteSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "game"       => $req['game'],
@@ -624,23 +623,24 @@ class Player extends Qwik {
 
 
     function emailInvite($match, $email=null){
+        $email = is_null($email) ? $this->email() : $email ;
         $date = $match->dateTime();
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $email = is_null($email) ? $this->email : $email ;
+        $authLink = $this->authLink(self::WEEK, array("email"=>$email));
         $paras = array(
-            "You are invited",
-            "Please accept"
+            "{You are invited}",
+            "{Please accept}"
         );
         $vars = array(
-            "subject"    => "{emailInviteSubject}",
+            "subject"    => "{EmailInviteSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->email(),
+            "to"         => $email,
             "game"       => $game,
             "day"        => $day,
             "venueName"  => $venueName,
-            "authLink"   => $this->authLink(self::WEEK)
+            "authLink"   => $authLink
         );
         $email = new Email($vars, $this->lang());
         $email->send();
@@ -655,12 +655,12 @@ class Player extends Qwik {
         $game = $match->game();
         $venueName = $match->venueName();
         $paras = array(
-            "Game is set",
-            "Need to cancel",
-            "Have great game"
+            "{Game is set}",
+            "{Need to cancel}",
+            "{Have great game}"
         );
         $vars = array(
-            "subject"    => "{emailConfirmSubject}",
+            "subject"    => "{EmailConfirmSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "game"       => $game,
@@ -677,11 +677,11 @@ class Player extends Qwik {
 
     private function emailChange($email){
         $paras = array(
-            "Click to change",
-            "Safely ignore"
+            "{Click to change}",
+            "{Safely ignore}"
         );
         $vars = array(
-            "subject"    => "{emailChangeSubject}",
+            "subject"    => "{EmailChangeSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "email"      => $email,
@@ -703,12 +703,12 @@ class Player extends Qwik {
         $pid = $this->id();
         $venueName = Venue::svid($match->venue());
         $paras = array(
-            "game time venue",
-            "Your rival says...",
-            "Please reply"
+            "{game time venue}",
+            "{Your rival says...}",
+            "{Please reply}"
         );
         $vars = array(
-            "subject"    => "{emailMsgSubject}",
+            "subject"    => "{EmailMsgSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "game"       => $game,
@@ -730,7 +730,7 @@ class Player extends Qwik {
         $pid = $this->id();
         $venueName = $match->venueName();
         $vars = array(
-            "subject"    => "{emailCancelSubject}",
+            "subject"    => "{EmailCancelSubject}",
             "paragraphs" => array("{Game cancelled}"),
             "to"         => $this->email(),
             "game"       => $game,
@@ -752,7 +752,7 @@ class Player extends Qwik {
             "{Good luck}"
         );
         $vars = array(
-            "subject"    => "{emailQuitSubject}",
+            "subject"    => "{EmailQuitSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email()
         );
@@ -1071,6 +1071,7 @@ Requirements:
     $playerIsolated = $playerOrbSize == 0;
     $rivalIsolated = $rivalOrbSize == 0;
     $flipflop = FALSE;
+
     while (!($playerIsolated && $rivalIsolated)
     && count($orbIntersect) < 3
     && ($playerOrbSize + $rivalOrbSize) < 100){
@@ -1131,9 +1132,9 @@ Requirements:
 
 
     // prune both orbs back to retain just the paths to the intersection points
-    $playerOrb->prune($orbIntersect);
-    $rivalOrb->prune($orbIntersect);
-
+    $playerOrb = $playerOrb->prune($orbIntersect);
+    $rivalOrb = $rivalOrb->prune($orbIntersect);
+//print_r($orbIntersect);
 //echo "<br><br><br>playerOrb=";
 //print_r($playerOrb);
 //echo "<br><br><br>\n";

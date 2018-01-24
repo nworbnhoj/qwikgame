@@ -112,8 +112,6 @@ Class TranslatePage extends Page {
 
         $vars['tick']          = "<a class='".self::TICK_ICON."'></a>";
         $vars['cross']         = "<a class='".self::CROSS_ICON."'></a>";
-        $vars['termsLink']     = "<a href='".self::TERMS_URL."'>{terms & conditions}</a>";
-        $vars['privacyLink']   = "<a href='".self::PRIVACY_URL."'>{privacy policy}</a>";
         $vars['flyerLink']     = "<a href='".self::FLYER_URL."'>{flyer}</a>";
         $vars['emailLink']     = self::EMAIL_LNK;
         $vars['facebookLink']  = self::FACEBOOK_LNK;
@@ -141,7 +139,7 @@ Class TranslatePage extends Page {
     }
 
 
-    public function make(){
+    public function make($html, $variables=array()){
         $html = HEAD;
         $html .= "<body>\n";
         $html .= $this->translateTemplates();

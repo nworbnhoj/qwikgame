@@ -165,13 +165,12 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
 /********************************************************************************
 Splices 2 orbs together by inserting 'inverted' Nodes from a Rivel Orb into $orb.
 
-$orb    ArrayMap  the orb to be spliced
 $pid    String    the unique PlayerID at the root of the $orb
 $invOrb Arraymap  an Array mapping each rivalID to an array of nodes
 
 This function traverses the $orb and inserts the Nodes from $invOrb into the
-structure. The function orbInv() can prepar the nodes by swapping Player and Rival
-and by negating Parity.
+structure. The function orbInv() can prepar the nodes by swapping Player and
+Rival and by negating Parity.
 
 ********************************************************************************/
     public function splice($pid, $invOrb){
@@ -183,14 +182,18 @@ and by negating Parity.
             foreach ($invNodes as $invNode) {
                 $this->nodes[] = $invNode;
             }
+            unset($invOrb[$pid]);
         }
 
-        foreach($this->nodes as &$node){
+        foreach($this->nodes as $key => $node){
             $rid = $node->rid();
             $orb = $node->orb();
-            if(isset($orb)){
-                $orb->splice($rid, $invOrb);
+            if(!isset($orb)){
+                $node->orb(new ORB($this->game));
+                $orb = $node->orb();
             }
+            $node->orb($orb->splice($rid, $invOrb));
+            $this->nodes[$key] = $node;
         }
         return $this;
     }
@@ -210,7 +213,8 @@ and by negating Parity.
         foreach($this->nodes as &$node){
             $rid = $node->rid();
             $nodeOrb = $node->orb();
-            if(!$nodeOrb->empty()){                     // step further out
+            if(isset($nodeOrb)
+            && !$nodeOrb->empty()){                     // step further out
                 $crumbs = $nodeOrb->expand($crumbs);    // recursion
             } elseif(!in_array($rid, $crumbs)){         // found a new edge
                 $rival = new Player($rid);
@@ -243,6 +247,7 @@ and by negating Parity.
         foreach($this->nodes as $node){
             $rid = Player::subID($node->rid());
             if ($rid != $rootID){
+                $crumbs[$rid] = $orbID;
                 $nodeOrb = $node->orb();
                 if (isset($nodeOrb)){
                     $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
@@ -275,20 +280,23 @@ and by negating Parity.
 
     ********************************************************************************/
     public function prune($keepers){
-        //echo "PRUNEORB<br><br>\n";
-        foreach($this->nodes as $key => &$node){
+//echo "PRUNEORB<br><br>\n";
+        foreach($this->nodes as $key => $node){
             $subOrb = $node->orb();
-            if(isset($subOrb)){
-                if(!$subOrb->empty()){
-                    if($subOrb->prune($keepers)){
-                        $subOrb->wipe();
-                    }
-                } elseif(!in_array($node->rid(), $keepers)){
-                    $subOrb->wipe($key);
+            if(isset($subOrb)
+            && !$subOrb->empty()){
+                $pruned = $subOrb->prune($keepers);
+                if ($pruned->empty()){
+                    $this->wipe($key);
+                } else {
+                    $node->orb($pruned);
                 }
+                $this->nodes[$key] = $node;
+            } elseif(!in_array($node->rid(), $keepers)){
+                $this->wipe($key);
             }
         }
-        return $this->size() == 0; //denuded branch
+        return $this;
     }
 
 

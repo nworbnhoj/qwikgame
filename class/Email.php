@@ -51,6 +51,7 @@ class Email extends Html {
     public function make($html, $variables=array()){
         $html = $this->replicate($html, $variables['paragraphs']);
         $html = parent::make($html, $variables);
+        $html = parent::make($html, $variables);   //double pass necessary
         return $html;
     }
 

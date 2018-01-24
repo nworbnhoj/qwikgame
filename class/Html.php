@@ -53,7 +53,7 @@ class Html extends Qwik {
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
     const PRIVACY_URL  = self::PDF_URL.'qwikgame.org%20privacy%20policy.pdf';
     const TERMS_LNK    = "<a href='".self::TERMS_URL."' target='_blank'>{Terms and Conditions}</a>";
-    const PRIVACY_LNK    = "<a href='".self::PRIVACY_URL."' target='_blank'>{Privacy Policy}</a>";
+    const PRIVACY_LNK    = "<a href='".self::PRIVACY_URL."' target='_blank'>{Privacy_policy}</a>";
 
     private $language;
 

@@ -191,11 +191,12 @@ class Match extends Qwik {
     public function invite($rids){
         foreach($rids as $rid => $email){
             $rival = new Player($rid);
-            if(!is_null($rival)){
+            if($rival->exists()){
                 $parity = $this->player->parity($rival, $game);
+                $hours = $rivalMatch->hours();
                 $rivalMatch = is_null($email)
                     ? $rival->matchInvite($this, $parity)
-                    : $rival->matchAdd($this, $parity, null, $email);
+                    : $rival->matchAdd($this, $parity, $hours, $email);
                 if(!is_null($rivalMatch)){
                     $this->addRival($rid);
                 }

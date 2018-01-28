@@ -193,7 +193,7 @@ class Match extends Qwik {
             $rival = new Player($rid);
             if($rival->exists()){
                 $parity = $this->player->parity($rival, $game);
-                $hours = $rivalMatch->hours();
+                $hours = $this->hours();
                 $rivalMatch = is_null($email)
                     ? $rival->matchInvite($this, $parity)
                     : $rival->matchAdd($this, $parity, $hours, $email);
@@ -349,7 +349,7 @@ class Match extends Qwik {
 
 
     public function variables(){
-        global $THUMB_UP_ICON, $THUMB_DN_ICON;
+        $mid = $this->id();
         $status = $this->status();
         $game = $this->game();
         $rival = $this->rival();
@@ -366,7 +366,7 @@ class Match extends Qwik {
             'day'       => $this->mday(),
             'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),
-            'id'        => $this->id(),
+            'id'        => $mid,
             'parity'    => Page::parityStr($parity),
             'rivalLink' => empty($rivalLink) ? '' : ", $rivalLink",
             'rivalRep'  => strlen($repWord)==0 ? '' : " with a $repWord reputation"
@@ -380,10 +380,10 @@ class Match extends Qwik {
                 $vars['hour'] = $this->hourSelect($hours->list());
                 break;
             case 'history':
-                $outcome = $this->player->outcome($matchID);
-                if (null !== $outcome) {
-                    $vars['parity'] = parityStr($outcome['parity']);
-                    $vars['thumb'] = $outcome['rep'] == 1 ? $THUMB_UP_ICON : $THUMB_DN_ICON;
+                $outcome = $this->player->outcome($mid);
+                if (isset($outcome)) {
+                    $vars['parity'] = Page::parityStr($outcome['parity']);
+                    $vars['thumb'] = $outcome['rep'] == 1 ? Page::THUMB_UP_ICON : Page::THUMB_DN_ICON;
                 }
                 break;
         }

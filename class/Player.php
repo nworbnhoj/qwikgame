@@ -711,6 +711,7 @@ class Player extends Qwik {
             "subject"    => "{EmailMsgSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
+            "message"    => $message,
             "game"       => $game,
             "time"       => $time,
             "venueName"  => $venueName,
@@ -719,7 +720,7 @@ class Player extends Qwik {
         $email = new Email($vars, $this->lang());
         $email->send();
 
-        self::qwikEmail($subject, $msg, $this->email());
+        self::logEmail('msg', $pid, $game, $venueName, $time);
     }
 
 

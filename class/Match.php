@@ -354,6 +354,7 @@ class Match extends Qwik {
         $game = $this->game();
         $rival = $this->rival();
         $parity = $this->rivalParity();
+        $parityStr = Page::parityStr($parity);
         $hours = $this->hours();
         $rivalLink = isset($rival) ? $rival->htmlLink() : null;
         $repWord = $this->rivalRep();
@@ -367,9 +368,8 @@ class Match extends Qwik {
             'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),
             'id'        => $mid,
-            'parity'    => Page::parityStr($parity),
-            'rivalLink' => empty($rivalLink) ? '' : ", $rivalLink",
-            'rivalRep'  => strlen($repWord)==0 ? '' : " with a $repWord reputation"
+            'parity'    => strlen($parityStr)==0 ? '{unknown parity}' : $parityStr,
+            'rivalRep'  => strlen($repWord)==0 ? '{unknown}' : $repWord
         );
         switch ($status){
             case 'keen':
@@ -378,8 +378,16 @@ class Match extends Qwik {
                 break;
             case 'invitation':
                 $vars['hour'] = $this->hourSelect($hours->list());
+                $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
+                break;
+            case 'accepted':
+                $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
+                break;
+            case 'feedback':
+                $vars['rivalLink'] = empty($rivalLink) ? '{my_rival}' : $rivalLink;
                 break;
             case 'history':
+                $vars['rivalLink'] = empty($rivalLink) ? '{my_rival}' : $rivalLink;
                 $outcome = $this->player->outcome($mid);
                 if (isset($outcome)) {
                     $vars['parity'] = Page::parityStr($outcome['parity']);

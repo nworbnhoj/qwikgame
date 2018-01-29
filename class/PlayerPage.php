@@ -4,6 +4,16 @@ require_once 'Page.php';
 
 class PlayerPage extends Page {
 
+
+    const SELECT_PARITY = "<select name='parity'>
+            <option value='2'>{much_stronger}</option>
+            <option value='1'>{stronger}</option>
+            <option value='0' selected>{well_matched}</option>
+            <option value='-1'>{weaker}</option>
+            <option value='-2'>{much_weaker}</option>
+        </select>";
+    const BUTTON_THUMB = "<button type='button' id='rep-thumb'  class='" . self::THUMB_UP_ICON . "'></button>";
+
     private $game;
     private $venue;
 
@@ -148,6 +158,8 @@ class PlayerPage extends Page {
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
+            $vars['paritySelect']  = self::SELECT_PARITY;
+            $vars['thumbButton']   = self::BUTTON_THUMB;
 
             // special case: new un-activated player
             if (is_null($playerEmail)){

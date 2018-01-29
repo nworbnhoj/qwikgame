@@ -109,14 +109,13 @@
 <phrase key="Unfortunately_cancelled..."><en>Unfortunately the match has been cancelled by your rival [rivalLink]</en><es>Por desgracia, el partido ha sido cancelado por su rival, [rivalLink]</es><zh>Unfortunately the match has been cancelled by your rival [rivalLink]</zh></phrase>
 <phrase key="Cancelled_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</zh></phrase>
 <phrase key="Your_feedback_is..."><en>Your feedback is vitally important to maintain an estimate of the ability and reputation of all players.</en></phrase>
-<phrase key="Feedback_Game_at..."><en>My &lt;b&gt;[game]&lt;/b&gt; rival [rivalLink] at [hour] [day] at [venueLink] was a </en><es>Mi rival &lt;b&gt;[game]&lt;/b&gt; [rivalLink] a las [hour] [day] en [venueLink] era un jugador [parity]</es><zh>My &lt;b&gt;[game]&lt;/b&gt; rival [rivalLink] at [hour] [day] at [venueLink] was a </zh></phrase>
-<phrase key="player"><en>player</en><es>player</es><zh>player</zh></phrase>
+<phrase key="Feedback_Game_at..."><en>&lt;b&gt;[rivalLink]&lt;/b&gt; was a [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; player at [hour] [day] at [venueLink]</en><es>[rivalLink] era un [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; jugador a las [hour] [day] en [venueLink]</es></phrase>
 <phrase key="Your_game_confirmed..."><en>Your game is &lt;b&gt;confirmed&lt;/b&gt;. If you cannot make it then please login as soon as possibly to &lt;b&gt;cancel&lt;/b&gt; the match and &lt;b&gt;alert&lt;/b&gt; your rival.</en></phrase>
-<phrase key="Confirmed_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player[rivalRep][rivalLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con un jugadora [parity] [rivalRep], [rivalLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player [rivalRep], [rivalLink].</zh></phrase>
+<phrase key="Confirmed_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] [rivalRep])</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] [rivalRep])</es></phrase>
 <phrase key="Wait_for_confirmation..."><en>Wait for confirmation before travelling to the venue. You rival may have many alternatives to choose from and will Cancel or Confirm the game shortly.</en></phrase>
 <phrase key="Accepted_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player[rivalRep][rivalLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con un jugadora [parity] [rivalRep], [rivalLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player [rivalRep], [rivalLink].</zh></phrase>
 <phrase key="Select_a_time..."><en>Select a time that suits you (if there is more than one time offered) and [tick] to accept'. Otherwise [cross] to ignore the invitation.</en></phrase>
-<phrase key="Invitation_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player[rivalRep][rivalLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con un jugadora [parity] [rivalRep], [rivalLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player [rivalRep], [rivalLink].</zh></phrase>
+<phrase key="Invitation_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with &lt;b&gt;[rivalLink]&lt;/b&gt; ([parity] : [rivalRep] reputation)</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] : reputación [rivalRep])</es></phrase>
 <phrase key="Available_rivals_have..."><en>&lt;b&gt;Available&lt;/b&gt; rivals have been alerted that you are &lt;b&gt;keen&lt;/b&gt;. The number of Open Invitations are those which have not yet been refused. Before too long, you should receive &lt;b&gt;invitations&lt;/b&gt; to play.</en><es>&lt;b&gt;Disponible&lt;/b&gt; rivales han sido alertados de que son &lt;b&gt;agudo&lt;/b&gt;. El n&#xFA;mero de invitaciones abiertas son aquellas que a&#xFA;n no han sido denegada. En poco tiempo, usted debe recibir &lt;b&gt;invitaciones&lt;/b&gt; para jugar.</es><zh>&lt;b&gt;Available&lt;/b&gt; rivals have been alerted that you are &lt;b&gt;keen&lt;/b&gt;. The number of Open Invitations are those which have not yet been refused. Before too long, you should receive &lt;b&gt;invitations&lt;/b&gt; to play.</zh></phrase>
 <phrase key="Keen_Game_at..."><en>&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</zh></phrase>
 <phrase key="potential_rivals"><en>potential rivals</en><es>posibles rivales</es><zh>potential rivals</zh></phrase>
@@ -161,7 +160,7 @@
 <phrase key="a_list_of..."><en> a list of anonymous player rankings to improve rival parity</en><es>una lista de rankings de jugadores an&#xF3;nimos para mejorar la paridad rival</es></phrase>
 <phrase key="History"><en>History</en><es>Historia</es><zh>History</zh></phrase>
 <phrase key="You_can_disown..."><en>You can disown your match feedback so that it becomes an anonymous record of your rivals ability and politeness.</en><es>Usted puede negarse a su regeneraci&#xF3;n partido para que sea un registro an&#xF3;nimo de su capacidad rivales y cortes&#xED;a.</es><zh>You can disown your match feedback so that it becomes an anonymous record of your rivals ability and politeness.</zh></phrase>
-<phrase key="History_game_at..."><en>My [game] rival [rivalLink] at [hour] [day] at [venueLink] was a &lt;b&gt;[parity]&lt;/b&gt; &lt;span class='[thumb]'&gt;&lt;/span&gt; player.</en><es>Mi rival &lt;b&gt;[game]&lt;/b&gt; en [day] a las [hour] [venueLink] era un jugador &lt;b&gt;[parity]&lt;/b&gt; [reputation]</es></phrase>
+<phrase key="History_game_at..."><en>[rivalLink] was a &lt;b&gt;[parity]&lt;/b&gt; &lt;span class='[thumb]'&gt;&lt;/span&gt; &lt;b&gt;[game]&lt;/b&gt; player at [hour] [day] at [venueLink].</en></phrase>
 <phrase key="Account"><en>Account</en><es>Cuenta</es></phrase>
 <phrase key="public"><en>public</en><es>p&#xFA;blico</es><zh>public</zh></phrase>
 <phrase key="Your_nickname_will..."><en>Your &lt;b&gt;nick-name&lt;/b&gt; will be visible to other players in match invitations and the like. You can also provide the url of your favourite social networking page.</en><es>&lt;b&gt;apodo&lt;/b&gt; ser&#xE1; visible para otros jugadores en los partidos invitaciones y similares. Tambi&#xE9;n puede proporcionar la URL de su p&#xE1;gina favorita de red social.</es><zh>Your &lt;b&gt;nick-name&lt;/b&gt; will be visible to other players in match invitations and the like. You can also provide the url of your favourite social networking page.</zh></phrase>
@@ -337,5 +336,11 @@
 </phrase>
 <phrase key ="Good luck">
     <en>Good luck!</en>
+</phrase>
+<phrase key ="a_rival">
+    <en>a rival</en>
+</phrase>
+<phrase key ="my_rival">
+    <en>My rival</en>
 </phrase>
 </translation>

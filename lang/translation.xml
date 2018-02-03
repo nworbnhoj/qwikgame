@@ -112,16 +112,16 @@
 <phrase key="Feedback_Game_at..."><en>&lt;b&gt;[rivalLink]&lt;/b&gt; was a [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; player at [hour] [day] at [venueLink]</en><es>[rivalLink] era un [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; jugador a las [hour] [day] en [venueLink]</es></phrase>
 <phrase key="Your_game_confirmed..."><en>Your game is &lt;b&gt;confirmed&lt;/b&gt;. If you cannot make it then please login as soon as possibly to &lt;b&gt;cancel&lt;/b&gt; the match and &lt;b&gt;alert&lt;/b&gt; your rival.</en></phrase>
 <phrase key="Confirmed_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] [rivalRep])</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] [rivalRep])</es></phrase>
-<phrase key="Wait_for_confirmation..."><en>Wait for confirmation before travelling to the venue. You rival may have many alternatives to choose from and will Cancel or Confirm the game shortly.</en></phrase>
-<phrase key="Accepted_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player[rivalRep][rivalLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con un jugadora [parity] [rivalRep], [rivalLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with a [parity] player [rivalRep], [rivalLink].</zh></phrase>
-<phrase key="Select_a_time..."><en>Select a time that suits you (if there is more than one time offered) and [tick] to accept'. Otherwise [cross] to ignore the invitation.</en></phrase>
+<phrase key="Wait_for_confirmation..."><en>Wait for confirmation before travelling to the venue. You rival may have many alternatives to choose from and will Cancel or Confirm the game shortly.</en><ar>انتظر التأكيد قبل السفر إلى المكان. أنت منافس قد يكون العديد من البدائل للاختيار من بينها، وسوف إلغاء أو تأكيد اللعبة قريبا.</ar><hi>स्थल पर जाने से पहले पुष्टि के लिए प्रतीक्षा करें आप प्रतिद्वंद्वी से चुनने के कई विकल्प हो सकते हैं और शीघ्र ही इस खेल को रद्द कर सकते हैं या पुष्टि कर सकते हैं।</hi><fr>Attendez la confirmation avant de vous rendre au site. Votre rival peut avoir plusieurs options à choisir et annulera ou confirmera le jeu sous peu.</fr><zh>等待确认后再去会场。 你的竞争对手可能有很多选择，并将很快取消或确认游戏。</zh><es>Espere la confirmación antes de viajar al lugar. Su rival puede tener muchas alternativas para elegir y cancelará o confirmará el juego en breve.</es><ru>Подождите подтверждения, прежде чем отправиться на место. У конкурента может быть много альтернатив на выбор и скоро отменит или подтвердит игру.</ru><jp>会場に行く前に確認を待つ。 ライバルは選択肢がたくさんあるかもしれませんし、まもなくゲームをキャンセルまたは確認します。</jp></phrase>
+<phrase key="Accepted_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] : [rivalRep] reputation)</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con  [rivalLink] ([parity] : reputación [rivalRep])</es></phrase>
+<phrase key="Select_a_time..."><en>Select a time that suits you (if there is more than one time offered) and [tick] to accept'. Otherwise [cross] to ignore the invitation.</en><zh>あなたに合った時間を選択し（複数の時間がある場合）、[tick]を受け入れます。 それ以外の場合は[cross]をクリックして招待を無視します。</zh><ru>Выберите подходящее вам время (если предлагается более одного раза) и [tick], чтобы принять '. В противном случае [cross], чтобы игнорировать приглашение.</ru><jp>あなたに合った時間を選択し（複数の時間がある場合）、[tick]を受け入れます。 それ以外の場合は[cross]をクリックして招待を無視します。</jp><es>Seleccione una hora que le convenga (si hay más de una vez disponible) y [tick] para aceptar '. De lo contrario [cross] para ignorar la invitación.</es><fr>Choisissez une heure qui vous convient (s'il y a plus d'une heure offerte) et [tick] pour accepter. Sinon [cross] pour ignorer l'invitation.</fr><hi>एक समय चुनें, जो आप के लिए उपयुक्त है (यदि एक से अधिक समय की पेशकश की गई है) और [tick] स्वीकार करने के लिए '। अन्यथा [tick] आमंत्रण को अनदेखा करने के लिए</hi><ar>حدد الوقت الذي يناسبك (إذا كان هناك أكثر من مرة واحدة عرضت) و [tick] لقبول ". خلاف ذلك [cross] لتجاهل الدعوة.</ar></phrase>
 <phrase key="Invitation_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with &lt;b&gt;[rivalLink]&lt;/b&gt; ([parity] : [rivalRep] reputation)</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] : reputación [rivalRep])</es></phrase>
-<phrase key="Available_rivals_have..."><en>&lt;b&gt;Available&lt;/b&gt; rivals have been alerted that you are &lt;b&gt;keen&lt;/b&gt;. The number of Open Invitations are those which have not yet been refused. Before too long, you should receive &lt;b&gt;invitations&lt;/b&gt; to play.</en><es>&lt;b&gt;Disponible&lt;/b&gt; rivales han sido alertados de que son &lt;b&gt;agudo&lt;/b&gt;. El n&#xFA;mero de invitaciones abiertas son aquellas que a&#xFA;n no han sido denegada. En poco tiempo, usted debe recibir &lt;b&gt;invitaciones&lt;/b&gt; para jugar.</es><zh>&lt;b&gt;Available&lt;/b&gt; rivals have been alerted that you are &lt;b&gt;keen&lt;/b&gt;. The number of Open Invitations are those which have not yet been refused. Before too long, you should receive &lt;b&gt;invitations&lt;/b&gt; to play.</zh></phrase>
+<phrase key="Available_rivals_have..."><en>&lt;b&gt;Available&lt;/b&gt; rivals have been alerted that you are &lt;b&gt;keen&lt;/b&gt;. The number of Open Invitations are those which have not yet been refused. Before too long, you should receive &lt;b&gt;invitations&lt;/b&gt; to play.</en><es>&lt;b&gt;Disponible&lt;/b&gt; rivales han sido alertados de que son &lt;b&gt;agudo&lt;/b&gt;. El n&#xFA;mero de invitaciones abiertas son aquellas que a&#xFA;n no han sido denegada. En poco tiempo, usted debe recibir &lt;b&gt;invitaciones&lt;/b&gt; para jugar.</es><ar>وقد تم تنبيه المنافسين المتاحة التي كنت حريصة. عدد الدعوات المفتوحة هي تلك التي لم يتم رفضها بعد. قبل فترة طويلة جدا، يجب أن تتلقى دعوات للعب.</ar><fr>Les rivaux disponibles ont été alertés que vous êtes désireux. Le nombre d'invitations ouvertes est celui qui n'a pas encore été refusé. Avant longtemps, vous devriez recevoir des invitations à jouer.</fr><hi>उपलब्ध प्रतिद्वंद्वियों को सूचित किया गया है कि आप उत्सुक हैं। खुली निमंत्रणों की संख्या उन लोगों से है जो अभी तक इनकार नहीं की गई है बहुत समय से पहले, आपको खेलने के लिए निमंत्रण प्राप्त करना चाहिए।</hi><jp>利用可能なライバルにはあなたが熱心であることが警告されています。 公開招待状の数はまだ拒否されていないものです。 長すぎる前に、あなたは遊びの招待状を受け取るべきです。</jp><ru>Доступные соперники были предупреждены о том, что вы увлечены. Количество открытых приглашений - это те, на которые еще не было отказано. Слишком долго вы должны получать приглашения на игру.</ru><zh>可用的竞争对手已被警告，你是敏锐的。 公开邀请的数量是尚未被拒绝的数量。 太久之前，你应该收到邀请玩。</zh></phrase>
 <phrase key="Keen_Game_at..."><en>&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink].</es><zh>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink].</zh></phrase>
-<phrase key="potential_rivals"><en>potential rivals</en><es>posibles rivales</es><zh>potential rivals</zh></phrase>
-<phrase key="This_will_alert..."><en>This will alert the rivals who are &lt;b&gt;available&lt;/b&gt; that you are keen for a game. Before too long you should receive a few invitations to play.</en><es>Esto alertar&#xE1; a los rivales que son &lt;b&gt; disponible &lt;/b&gt; que son dispuestos para un juego. En poco tiempo usted debe recibir una pocas invitaciones para jugar.</es><zh>This will alert the rivals who are &lt;b&gt;available&lt;/b&gt; that you are keen for a game. Before too long you should receive a few invitations to play.</zh></phrase>
+<phrase key="potential_rivals"><en>potential rivals</en><es>posibles rivales</es><zh>潜在的对手</zh><ru>потенциальных соперников</ru><jp>潜在的なライバル</jp><fr>rivaux potentiels</fr><hi>संभावित प्रतिद्वंद्वियों</hi><ar>المنافسين المحتملين</ar></phrase>
+<phrase key="This_will_alert..."><en>This will alert the rivals who are &lt;b&gt;available&lt;/b&gt; that you are keen for a game. Before too long you should receive a few invitations to play.</en><es>Esto alertar&#xE1; a los rivales que son &lt;b&gt; disponible &lt;/b&gt; que son dispuestos para un juego. En poco tiempo usted debe recibir una pocas invitaciones para jugar.</es><ar>وهذا تنبيه المنافسين الذين تتوفر أنك حريص على لعبة. قبل فترة طويلة جدا يجب أن تتلقى بعض الدعوات للعب.</ar><hi>यह उन प्रतिद्वंद्वियों को सचेत करेगा जो उपलब्ध हैं जो कि आप किसी गेम के लिए उत्सुक हैं। बहुत समय से पहले आपको खेलने के लिए कुछ आमंत्रण प्राप्त होंगे।</hi><fr>Cela alertera les rivaux qui sont disponibles que vous êtes désireux d'un match. Avant longtemps, vous devriez recevoir quelques invitations à jouer.</fr><ru>Это будет предупреждать соперников, которые доступны, что вы заинтересованы в игре. Слишком долго вы должны получить несколько приглашений на игру.</ru><zh>这将会提醒那些你热衷于游戏的对手。 在太久之前，您应该会收到一些邀请。</zh><jp>这将会提醒那些你热衷于游戏的对手。 在太久之前，您应该会收到一些邀请。</jp></phrase>
 <phrase key="I_am_keen_to..."><en>I am &lt;b&gt;keen&lt;/b&gt; to play [selectGame] at [inputVenue]</en><es>Estoy dispuesto a jugar al [selectGame] en [inputVenue]</es></phrase>
-<phrase key="at"><en>at</en><es>a</es><zh>at</zh></phrase>
+<phrase key="at"><en>at</en><es>a</es><zh>在</zh><fr>à</fr><ru>в</ru><hi>पर</hi><ar>في</ar><jp>〜で</jp></phrase>
 <phrase key="am"><en>am</en><es>am</es><zh>&#x65E9;&#x4E0A;</zh></phrase>
 <phrase key="pm"><en>pm</en><es>pm</es><zh>&#x4E0B;&#x5348;</zh></phrase>
 <phrase key="today_or_tomorrow"><en>today or&lt;br&gt;tomorrow</en><es>hoy o&lt;br&gt;ma&#xF1;ana</es><zh>&#x4ECA;&#x5929;i&lt;br&gt;&#x6216;&#x660E;&#x5929;</zh></phrase>
@@ -234,11 +234,11 @@
 <phrase key="The_file_size..."><en>The &lt;b&gt;file size&lt;/b&gt; must not exceed 200k (or about 2000 ranks).</en><es>El tama&#xF1;o &lt;b&gt;del archivo&lt;/b&gt; no debe superar los 100k (o alrededor de 2000 rangos).</es></phrase>
 <phrase key="Please_help_translate..."><en>Please help to translate qwikgame.org into another language <a href='translate.php'>here</a></en></phrase>
 <phrase key="Please activate..."><en>Please &lt;b&gt;activate&lt;/b&gt; your account&lt;br&gt;An email has been sent with an activation link to click.</en></phrase>
-<phrase key="Terms and Conditions"><en>Terms and Conditions</en></phrase>
+<phrase key="Terms and Conditions"><en>Terms and Conditions</en><hi>नियम और शर्तें</hi><ar>الأحكام والشروط</ar><ru>Условия и положения</ru><fr>Termes et conditions</fr></phrase>
 <phrase key="By clicking on..."><en>By clicking on these links you are agreeing to be bound by these [termsLink]</en>
 </phrase>
 <phrase key ="EmailWelcomeSubject">
-    <en>Welcome to qwikgame.org</en>
+    <en>Welcome to qwikgame.org</en><zh>欢迎来到qwikgame.org</zh><fr>Bienvenue sur qwikgame.org</fr><ru>Добро пожаловать на qwikgame.org</ru><es>Bienvenido a qwikgame.org</es><jp>qwikgame.orgへようこそ</jp><ar>مرحبا بكم في qwikgame.org</ar><hi>qwikgame.org में आपका स्वागत है</hi>
 </phrase>
 <phrase key ="Please activate">
     <en>Please [authLink] to &lt;b&gt;activate&lt;/b&gt; your qwikgame account.</en>
@@ -258,7 +258,7 @@
     <es></es>
 </phrase>
 <phrase key ="EmailInviteSubject">
-    <en>Invitation: [game] at [venueName]</en>
+    <en>Invitation: [game] at [venueName]</en><es>invitación: [game] a [venueName]</es><zh>请帖: [game] 在 [venueName]</zh><fr>Invitation: [game] à [venueName]</fr><jp>招待: [game] 〜で [venueName]</jp>
 </phrase>
 <phrase key ="You are invited">
     <en>You have been invited to play &lt;b&gt;[game] [day]&lt;/b&gt; at [venueName].</en>
@@ -332,15 +332,18 @@
 </phrase>
 <phrase key ="Backups remain">
     <en>Your email address will continue to exist in system backup files until they become redundant and are deleted.</en>
-    <es>Su direcci&#xF3;n de correo electr&#xF3;nico Archivos de copia de seguridad del sistema hasta que se vuelvan redundantes y Se eliminan.</es>
+    <es>Su direcci&#xF3;n de correo electr&#xF3;nico Archivos de copia de seguridad del sistema hasta que se vuelvan redundantes y Se eliminan.</es><ar>سيظل عنوان بريدك الإلكتروني موجودا في ملفات النسخ الاحتياطي للنظام حتى تصبح زائدة عن الحاجة ويتم حذفها.</ar><jp>電子メールアドレスは、冗長化されて削除されるまで、システムバックアップファイルに存在し続けます。</jp><hi>आपका ईमेल पता सिस्टम बैकअप फ़ाइलों में तब तक मौजूद रहेगा जब तक वे अनावश्यक न हो जाएं और हटाए जाते हैं।</hi><fr>Votre adresse e-mail continuera d'exister dans les fichiers de sauvegarde du système jusqu'à ce qu'ils soient redondants et supprimés.</fr><ru>Ваш адрес электронной почты будет продолжать существовать в файлах резервной копии системы до тех пор, пока они не станут избыточными и будут удалены.</ru><zh>您的电子邮件地址将继续存在于系统备份文件中，直到它们变为冗余并被删除。</zh>
 </phrase>
 <phrase key ="Good luck">
-    <en>Good luck!</en>
+    <en>Good luck!</en><jp>がんばろう！</jp><zh>祝你好运！</zh><fr>Bonne chance!</fr><ru>Удачи!</ru><hi>सौभाग्य!</hi><ar>حظا طيبا وفقك الله!</ar><es>buena suerte</es>
 </phrase>
 <phrase key ="a_rival">
     <en>a rival</en>
 </phrase>
 <phrase key ="my_rival">
     <en>My rival</en>
+</phrase>
+<phrase key ="unknown parity">
+    <en>unknown parity</en>
 </phrase>
 </translation>

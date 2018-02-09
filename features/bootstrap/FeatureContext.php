@@ -305,6 +305,7 @@ class FeatureContext implements Context
                 }
             }        
         }
+        $rival->delete();
     }    
     
     
@@ -314,7 +315,7 @@ class FeatureContext implements Context
      */
     public function iWillBeAvailableToPlayMyFavouriteGame()
     {       
-        $this->iWillBeAvailableToPlay($this->req['game'], $this->venue, 'any', 'ALL');
+        $this->iWillBeAvailableToPlay($this->req['game'], $this->venue, 'any', 'ALL');   
     }
   
 
@@ -432,8 +433,8 @@ class FeatureContext implements Context
             $hours = new Hours(1);
 
             $keenMatch = $playerA->matchKeen('squash', $venue, $date, $hours);
-            $matchB = $playerB->matchAdd($keenMatch);
-            $matchA = $playerA->matchAdd($matchB);
+            $matchB = $playerB->matchAdd($keenMatch, 0, $hours);
+            $matchA = $playerA->matchAdd($matchB, 0, $hours);
             $matchA->status('confirmed');
             $matchB->status('confirmed');
             $keenMatch->cancel();
@@ -466,6 +467,7 @@ class FeatureContext implements Context
 
         $parityEstimate = $playerA->parity($playerB, 'squash');
         $parityStr = Page::parityStr($parityEstimate);
+        $msg = "$parityEstimate = $parityStr";
 
 //$nickA = $playerA['nick'];
 //$nickB = $playerB['nick'];
@@ -474,23 +476,23 @@ class FeatureContext implements Context
 //$rely = $playerA->rely;
 //print_r("$nickA rely=$relyA\n");
 //print_r("$nickB rely=$relyB\n");
-//print_r("$parity\t$parityEstimate\t$parityStr\n");
+print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':
-                Assert::assertSame($parityStr, "{much_weaker}");
+                Assert::assertSame($parityStr, "{much_weaker}", $msg);
                 break;
             case '<':
-                Assert::assertSame($parityStr, "{weaker}");
+                Assert::assertSame($parityStr, "{weaker}", $msg);
                 break;
             case '=':
-                Assert::assertSame($parityStr, "{well_matched}");
+                Assert::assertSame($parityStr, "{well_matched}", $msg);
                 break;
             case '>':
-                Assert::assertSame($parityStr, "{stronger}");
+                Assert::assertSame($parityStr, "{stronger}", $msg);
                 break;
             case '>>':
-                Assert::assertSame($parityStr, "{much_stronger}");
+                Assert::assertSame($parityStr, "{much_stronger}", $msg);
                 break;
         }
     }   

@@ -314,7 +314,7 @@ class Player extends Qwik {
 
 
     // https://stackoverflow.com/questions/262351/remove-a-child-with-a-specific-attribute-in-simplexml-for-php/16062633#16062633
-    public function delete($id){
+    public function deleteData($id){
         $rubbish = $this->xml->xpath("//*[@id='$id']");
         foreach($rubbish as $junk){
             self::removeElement($junk);
@@ -1216,20 +1216,31 @@ Requirements:
 
 
     function htmlLink(){
-    $name = $this->nick();
-    if(empty($name)){
-        return '';
+        $name = $this->nick();
+        if(empty($name)){
+            return '';
+        }
+
+        $url = $this->url();
+        if(empty($url)){
+            return $name;
+        }
+
+        return "<a href='$url' target='_blank'><b>$name</b></a>";
     }
 
-    $url = $this->url();
-    if(empty($url)){
-        return $name;
+
+
+    public function delete(){
+        self::removePlayer($this->id());
     }
 
-    return "<a href='$url' target='_blank'><b>$name</b></a>";
-}
 
-
+    static public function removePlayer($id){
+        $path = self::PATH_PLAYER;
+        $fileName = "$id.xml";
+        return self::deleteFile("$path/$fileName");
+    }
 
 
 }

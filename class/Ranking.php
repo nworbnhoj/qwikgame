@@ -2,6 +2,7 @@
 
 
 require_once 'Qwik.php';
+require_once 'Player.php';
 
 class Ranking extends Qwik {
 
@@ -110,7 +111,6 @@ class Ranking extends Qwik {
     private function parse($file){
         if($this->valid){
             $lineNo = 0;
-            $ranks = array();
             $rankCount = 0;
             while($this->valid && !feof($file)) {
             //                $line = SECURITYsanitizeHTML(fgets($file));
@@ -122,7 +122,6 @@ class Ranking extends Qwik {
                     $rank = (int) trim($tupple[0]);
                     $sha256 = trim($tupple[1]);
                     if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
-                        $ranks[$rank] = $sha256;
                         $child = $this->xml->addChild('sha256', $sha256);
                         $child->addAttribute('rank', $rank);
                         $rankCount++;
@@ -228,7 +227,7 @@ class Ranking extends Qwik {
             $anon = new Player($anonID);
             if ($anon){
                 if(empty($anon->email())){
-                    removePlayer($anonID);
+                    Player::removePlayer($anonID);
                 } else {
                     $ranks = $anon->xpath("rank[@id=$rankingID]");
                     foreach($ranks as $rank){
@@ -242,15 +241,4 @@ class Ranking extends Qwik {
     }
     
     
-    function removePlayer($id){
-    //echo "REMOVEPLAYER $id<br>";
-        $path = 'player';
-        $fileName = "$id.xml";
-        return self::deleteFile("$path/$fileName");
-    }
-
-
-
-
-
 }

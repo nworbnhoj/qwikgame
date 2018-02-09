@@ -8,7 +8,7 @@ class Qwik {
     const SUBDOMAIN  = 'www';
 
     const PATH_VENUE  = 'venue';
-    const PATH_PLAYER = 'venue';
+    const PATH_PLAYER = 'player';
     const PATH_PDF    = 'pdf';
     const PATH_LANG   = 'lang';
     const PATH_HTML   = 'html';

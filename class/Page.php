@@ -464,13 +464,18 @@ class Page extends Html {
     private function replicateEmailCheck($player, $html){
         if(!$player){ return; }
         $group = '';
-        $playerVars = $this->playerVariables($player);
+
+        $emails = array();
         $reckoning = $player->reckon("email");
         foreach($reckoning as $reckon){
-            $game = $reckon['game'];
-            $reckonVars = array('email' => $reckon['email']);
-            $vars = $playerVars + $reckonVars ;
-            $group .= $this->populate($html, $vars);
+            $emails[] = (string) $reckon['email'];
+        }
+        $emails = array_unique($emails);
+
+        $playerVars = $this->playerVariables($player);
+        foreach($emails as $email){
+                $playerVars['email'] = $email;
+                $group .= $this->populate($html, $playerVars);
         }
         return $group;
     }
@@ -481,16 +486,21 @@ class Page extends Html {
         $group = '';
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("rival");
+        $emails = array();
         foreach($reckoning as $reckon){
-            $game = $reckon['game'];
-            $reckonVars = array(
-                'id'        => $reckon['id'],
-                'email'     => $reckon['email'],
-                'game'      => self::qwikGames()["$game"],
-                'parity'    => self::parityStr($reckon['parity'])
-            );
-            $vars = $playerVars + $reckonVars + self::$icons;
-            $group .= $this->populate($html, $vars);
+            $email = $reckon['email'];
+            if (!array_key_exists($email, $emails)){
+                $emails[$email] = TRUE;
+                $game = $reckon['game'];
+                $reckonVars = array(
+                    'id'        => $reckon['id'],
+                    'email'     => $email,
+                    'game'      => self::qwikGames()["$game"],
+                    'parity'    => self::parityStr($reckon['parity'])
+                );
+                $vars = $playerVars + $reckonVars + self::$icons;
+                $group .= $this->populate($html, $vars);
+            }
         }
         return $group;
     }

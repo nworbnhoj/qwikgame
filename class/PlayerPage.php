@@ -142,13 +142,13 @@ class PlayerPage extends Page {
         if (!is_null($player)){
             $rnd = mt_rand(1,8);
             $playerEmail = $player->email();
-            $familiarCheckboxes = $this->familiarCheckboxes($player);
+	    $reckons = $player->reckon("email");
             $playerNick = $player->nick();
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
             $vars['message']       = "{Tip$rnd}";
             $vars['playerName']    = empty($playerNick) ? $playerEmail : $playerNick;
-            $vars['familiarHidden']= empty($familiarCheckboxes) ? 'hidden' : ' ';
+            $vars['familiarHidden']= empty($reckons) ? 'hidden' : ' ';
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
@@ -313,7 +313,7 @@ function qwikFeedback($player, $request){
 
 
 function qwikDelete($player, $request){
-    $player->delete($request['id']);
+    $player->deleteData($request['id']);
 }
 
 
@@ -384,25 +384,6 @@ function hourRows(){
     }
     return $hourRows;
 }
-
-
-function familiarCheckboxes($player){
-    $checkboxes = '';
-    $reckons = $player->reckon("email");
-    foreach($reckons as $reckon){
-        $email = $reckon['email'];
-        $rid = $reckon['rival'];
-        $checkboxes .= "
-            <span class='nowrap'>
-                <input type='checkbox' name='invite[]' value='$email'>
-                $email
-            </span>";
-    }
-    return $checkboxes;
-}
-
-
-
 
 
     function regionOptions($player, $tabs){

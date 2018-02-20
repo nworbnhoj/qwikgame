@@ -381,6 +381,7 @@ class Match extends Qwik {
                 $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
                 break;
             case 'accepted':
+            case 'confirmed':
                 $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
                 break;
             case 'feedback':

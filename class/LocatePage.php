@@ -64,7 +64,7 @@ class LocatePage extends Page {
     /*******************************************************************************
     Returns an Array of Venue ID's (vid) that match the $svid provided.
 
-    $svid    String    The Short Venue ID includes only the Name & Suburb of the Venue.
+    $svid  String  The Short Venue ID includes only the Name & Suburb of the Venue.
 
     The Short Venue ID $svid is a non-unique human convenient way of referring to a
     Venue. This functions finds zero or more $vid that match the $svid

@@ -82,8 +82,7 @@ by adding the parities to account for stronger outcomes (+1), and much-weaker
 (-2) outcomes for example. However shorter chains are given more weight than
 longer chains by introducing a decay (=0.9) at each link.
 ********************************************************************************/
-    public function parity($rivalID){
-//echo "<br>PARITYORB rid=$rivalID<br>\n";
+    public function parity($rivalID, $depth=0){
         $rivalID = Player::subID($rivalID);
         $relyChainDecay = 0.7;
         $parityTotal = 0.0;
@@ -94,23 +93,19 @@ longer chains by introducing a decay (=0.9) at each link.
             $subOrb = $node->orb();
             if (($node->rid() != $rivalID)
             && (isset($subOrb))){
-//print_r("\n\t" . self::snip($node->rid()) . "\t" . self::snip($rivalID) . "\n");            
-                $subParity = $subOrb->parity($rivalID);
+                $subParity = $subOrb->parity($rivalID, $depth+1);
                 if (!is_null($subParity)){
                     $parity += $subParity * $relyChainDecay;
-//print_r("\t$parity += $subParity * $relyChainDecay\t\tAAA\n");                    
                 }             
             }
             $rely = $node->rely();
             $relyTotal += $rely;
             $parityTotal += $parity * $rely;      // note rely range [0,4]
-//print_r("\t$parityTotal += $parity * $rely\t\tBBB\n");            
             $n++;
         }
         if ($n>0 && $relyTotal>0) {
             $relyAverage = $relyTotal / $n;
             $parityAverage = $parityTotal / ($n * $relyAverage);
-//print_r("\t$parityAverage = $parityTotal / ($n * $relyAverage)\t\tCCC\n");            
         } else {
             $parityAverage = null;
         }
@@ -213,18 +208,21 @@ Rival and by negating Parity.
         foreach($this->nodes as &$node){
             $rid = $node->rid();
             $nodeOrb = $node->orb();
+            $newCrumbs = array();
             if(isset($nodeOrb)
-            && !$nodeOrb->empty()){                     // step further out
-                $crumbs = $nodeOrb->expand($crumbs);    // recursion
-            } elseif(!in_array($rid, $crumbs)){         // found a new edge
+            && !$nodeOrb->empty()){                      // step further out
+                $newCrumbs = $nodeOrb->expand($crumbs);  // recursion
+            } elseif(!in_array($rid, $crumbs)){          // found a new edge
                 $rival = new Player($rid);
-                if ($rival->exists()){                  // expand the edge
-                    $nodeOrb = $node->orb($rival->orb($this->game, $crumbs, FALSE));
+                if ($rival->exists()){                   // expand the edge
+                    $rivalOrb = $rival->orb($this->game, $crumbs, FALSE);
+                    $nodeOrb = $node->orb($rivalOrb);
                     if (isset($nodeOrb)){
-                        $crumbs = array_merge($crumbs, $nodeOrb->crumbs($rid, $rid));
+                        $newCrumbs = $nodeOrb->crumbs($rid, $rid);
                     }
                 }
             }
+            $crumbs = array_merge($crumbs, $newCrumbs);
         }
         return $crumbs;
     }
@@ -243,17 +241,17 @@ Rival and by negating Parity.
     ********************************************************************************/
     public function crumbs($orbID, $rootID){
         $crumbs = array();
+        $crumbs[$rootID] = $rootID;
         $orbID = Player::subID($orbID);
         foreach($this->nodes as $node){
             $rid = Player::subID($node->rid());
             if ($rid != $rootID){
-                $crumbs[$rid] = $orbID;
                 $nodeOrb = $node->orb();
                 if (isset($nodeOrb)){
                     $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
                     $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
-                    $crumbs[$rid] = $orbID;    // this is the shortest path
                 }
+                $crumbs[$rid] = $orbID;    // this is the shortest path
             }
         }
         return $crumbs;

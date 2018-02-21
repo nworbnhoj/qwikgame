@@ -8,7 +8,9 @@ class Ranking extends Qwik {
 
     const CSV = '.csv';
     const XML = '.xml';
-    const RANK_PARITY = array(128=>-12.8, 64=>-6.4, 32=>-3.2, 16=>-1.6, 8=>-0.8, 4=>-0.4, 2=>-0.2, 1=>-0.1, -1=>0.1, -2=>0.2, -4=>0.4, -8=>0.8, -16=>1.6, -32=>3.2, -64=>6.4, -128=>12.8);
+//    const RANK_PARITY = array(128=>12.8, 64=>6.4, 32=>3.2, 16=>1.6, 8=>0.8, 4=>0.4, 2=>0.2, 1=>0.1, -1=>-0.1, -2=>-0.2, -4=>-0.4, -8=>-0.8, -16=>-1.6, -32=>-3.2, -64=>-6.4, -128=>-12.8);
+
+    const RANK_PARITY = array(4=>0.8, 3=>0.6, 2=>0.4, 1=>0.2, -1=>-0.2, -2=>-0.4, -3=>0.6, -4=>-0.8);
 
 
     private $xml;
@@ -202,7 +204,9 @@ class Ranking extends Qwik {
             $anon = new Player($anonID, TRUE);
 
             foreach($rankParity as $rnk => $parity){
-                $rivalRank = $anonRank + (int) $rnk;
+                $rnk = (int)$rnk;
+                $parity = (float)$parity;
+                $rivalRank = $anonRank + $rnk;
                 if (isset($ranks[$rivalRank])){
                     $rid = $ranks[$rivalRank];
                     $anon->rankAdd($rankingID, $game, $rid, $parity);

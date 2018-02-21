@@ -4,7 +4,7 @@ Feature: I like to play my game at my local venue
 	Players need to be able to register their favourite games, venues and suitable times
 	
 	Scenario: Register at qwikgame
-	  Given my email "new.player@qwikgame.org" is not registered with qwikgame
+	  Given "new.player@qwikgame.org" is not registered with qwikgame
 	  When I like to play Squash at "Qwikgame Venue | Milawa"
 	  And I do not specify a time
 	  And I provide my email "new.player@qwikgame.org"

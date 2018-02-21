@@ -11,8 +11,9 @@ class Node {
 
     public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
         $this->rid = (string)$rivalID;
-        $this->parity = $parity;
-        $this->rely = $this->rely($rely, $date);
+        $this->parity = floatval($parity);
+        $this->rely = $this->rely(floatval($rely), $date);
+        $this->date = DateTime::createFromFormat('d-m-Y', $date);
     }
 
 

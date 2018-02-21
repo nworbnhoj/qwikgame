@@ -427,18 +427,18 @@ function hourRows(){
     function updateCongCert($player, $matchID, $rival){
        $pOutcome = $player->outcome($matchID);
         $rOutcome = $rival->outcome($matchID);
-
         if (null !== $pOutcome && null !== $rOutcome){
 
             $pParity = intval($pOutcome['parity']);
             $rParity = intval($rOutcome['parity']);
+            $disparity = abs($rParity + $pParity);    // note '+' sign & range [0,4]
 
             $pRely = $player->rely();
             $rRely = $rival->rely();
+            $totalRely = $pRely + $rRely;
 
-            $disparity = abs($rParity + $pParity);    // note '+' sign & range [0,4]
-            $player->rely(($disparity * $rRely * $rRely) / 16);
-            $rival->rely(($disparity * $pRely * $pRely) / 16);
+            $player->rely($disparity * $pRely / $totalRely);
+            $rival->rely($disparity * $rRely / $totalRely);
 
             $congruence = 4 - $disparity;             // range [0,4]
             $player->outcome($matchID, ($pRely * $congruence) / 4);

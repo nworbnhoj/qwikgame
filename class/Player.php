@@ -48,7 +48,7 @@ class Player extends Qwik {
         $debut = $now->format('d-m-Y');
         $record  = "<player id='$pid' debut='$debut' lang='en'>";
         $record .= "<rep pos='0' neg='0'/>";
-        $record .= "<rely val='2.0'/>";
+        $record .= "<rely val='1.0'/>";
         $record .= "</player>";
         return new SimpleXMLElement($record);
     }
@@ -124,7 +124,7 @@ class Player extends Qwik {
 
 
     public function rely($disparity=NULL){    // note disparity range [0,4]
-        $rely = floatval($this->xml['rely']['val']);
+        $rely = floatval($this->xml->rely['val']);
         if (!is_null($disparity)){
             $rely = $this->expMovingAvg($rely, 4-$disparity, 3);
             $this->xml->rely['val'] = $rely;
@@ -323,7 +323,8 @@ class Player extends Qwik {
 
     public function quit(){
         $matches = $this->xml->xpath("match[@status!='history']");
-        foreach($matches as $match){
+        foreach($matches as $xml){
+            $match = new Match($this, $xml);
             $match->cancel();
         }
         $records = $this->xml->xpath("available | reckon");
@@ -1099,8 +1100,6 @@ Requirements:
                             array_keys($playerOrbCrumbs),
                             array_keys($rivalOrbCrumbs)
                         );
-        $orbIntersect[] = self::subID($playerID);
-        $orbIntersect[] = self::subID($rivalID);
 
 //echo "playerIsolated=$playerIsolated<br>\n";
 //echo "rivalIsolated=$rivalIsolated<br>\n";
@@ -1135,6 +1134,7 @@ Requirements:
     // prune both orbs back to retain just the paths to the intersection points
     $playerOrb = $playerOrb->prune($orbIntersect);
     $rivalOrb = $rivalOrb->prune($orbIntersect);
+
 //print_r($orbIntersect);
 //echo "<br><br><br>playerOrb=";
 //print_r($playerOrb);
@@ -1202,10 +1202,12 @@ Requirements:
                     $include = ! in_array($rid, $filter);
                 }
                 if($include){
-                    $parity = floatval($par['parity']);
-                    $rely = floatval($par['rely']);
-                    $date = $par['date'];
-                    $orb->addNode($rid, $parity, $rely, $date);
+                    $orb->addNode(
+                        $rid,
+                        $par['parity'],
+                        $par['rely'],
+                        $par['date']
+                    );
                 }
             }
         }

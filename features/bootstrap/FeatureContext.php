@@ -68,15 +68,15 @@ class FeatureContext implements Context
     
     
 
-//     * @Given my email \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is not registered with
+//     * @Given \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is not registered with
      
     /**
-     * @Given my email :address is not registered with qwikgame
+     * @Given :address is not registered with qwikgame
      */
-    public function myEmailIsNotRegisteredWithQwikgame($address)
+    public function emailIsNotRegisteredWithQwikgame($address)
     {
-        $this->pid = Player::anonID($address);
-        Ranking::removePlayer($this->pid);
+        $pid = Player::anonID($address);
+        Player::removePlayer($pid);
     }
 
 
@@ -88,7 +88,7 @@ class FeatureContext implements Context
         $this->email = $address;
 
         $this->pid = Player::anonID($address);
-        Ranking::removePlayer($this->pid);
+        Player::removePlayer($this->pid);
         $this->player = new Player($this->pid, TRUE);
         $this->player->email($address);
         $token = $this->player->token();
@@ -193,7 +193,7 @@ class FeatureContext implements Context
         $_GET = $this->req;
         $page = new PlayerPage();
         $this->id = $page->processRequest();
-        $this->player = new Player($this->pid, FALSE);
+        $this->player = new Player($this->pid, TRUE);
         $this->authURL = $this->player->authURL(2*Player::DAY, $this->req);
     }
 
@@ -386,7 +386,7 @@ class FeatureContext implements Context
             $name = "player.$char";
             $email = "$name@qwikgame.org";
             $id = Player::anonID($email);
-            Ranking::removePlayer($id);
+            Player::removePlayer($id);
             $player = new Player($id, TRUE);
             $player->nick($name);
             $player->email($email);
@@ -419,7 +419,8 @@ class FeatureContext implements Context
         $playerA = new Player($pidA);
         $playerB = new Player($pidB);
 
-        $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
+//        $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
+        $matches = $playerA->matchQuery("match[rival='$pidB']");
 
         if (count($matches) == 1) {
             $matchA = new Match($playerA, $matches[0]);
@@ -544,5 +545,34 @@ print_r("$parity\t$parityEstimate\t$parityStr\n");
     }
 
     
+    /**
+     * @Given I add :email as a :parity :game player
+     */
+    public function iAddAsAPlayer($email, $parity, $game)
+    {
+        $this->req['qwik'] = 'familiar';
+        $this->req['rival'] = $email;
+        $this->req['parity'] = $parity;
+        $this->req['game'] = $game;
+        $_GET = $this->req;
+        $page = new PlayerPage();
+        $this->id = $page->processRequest();
+        $this->player = new Player($this->pid, FALSE);
+    }
+
+    /**
+     * @Then :email is a :parity :game player
+     */
+    public function isAPlayer($email, $parityPhrase, $game)
+    {
+        $rid = Player::anonID($email);
+        $rival = new Player($rid, FALSE);
+        $checkParity = $this->parityPhrase[$parityPhrase];
+        $calcParity = $this->player->parity($rival, $game);
+
+        Assert::assertEquals($checkParity, $calcParity);
+    }
+
+
     
 }

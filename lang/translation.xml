@@ -111,7 +111,7 @@
 <phrase key="Your_feedback_is..."><en>Your feedback is vitally important to maintain an estimate of the ability and reputation of all players.</en></phrase>
 <phrase key="Feedback_Game_at..."><en>&lt;b&gt;[rivalLink]&lt;/b&gt; was a [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; player at [hour] [day] at [venueLink]</en><es>[rivalLink] era un [paritySelect][thumbButton] &lt;b&gt;[game]&lt;/b&gt; jugador a las [hour] [day] en [venueLink]</es></phrase>
 <phrase key="Your_game_confirmed..."><en>Your game is &lt;b&gt;confirmed&lt;/b&gt;. If you cannot make it then please login as soon as possibly to &lt;b&gt;cancel&lt;/b&gt; the match and &lt;b&gt;alert&lt;/b&gt; your rival.</en></phrase>
-<phrase key="Confirmed_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] [rivalRep])</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] [rivalRep])</es></phrase>
+<phrase key="Confirmed_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] : [rivalRep] reputation)</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con [rivalLink] ([parity] : reputación [rivalRep])</es></phrase>
 <phrase key="Wait_for_confirmation..."><en>Wait for confirmation before travelling to the venue. You rival may have many alternatives to choose from and will Cancel or Confirm the game shortly.</en><ar>انتظر التأكيد قبل السفر إلى المكان. أنت منافس قد يكون العديد من البدائل للاختيار من بينها، وسوف إلغاء أو تأكيد اللعبة قريبا.</ar><hi>स्थल पर जाने से पहले पुष्टि के लिए प्रतीक्षा करें आप प्रतिद्वंद्वी से चुनने के कई विकल्प हो सकते हैं और शीघ्र ही इस खेल को रद्द कर सकते हैं या पुष्टि कर सकते हैं।</hi><fr>Attendez la confirmation avant de vous rendre au site. Votre rival peut avoir plusieurs options à choisir et annulera ou confirmera le jeu sous peu.</fr><zh>等待确认后再去会场。 你的竞争对手可能有很多选择，并将很快取消或确认游戏。</zh><es>Espere la confirmación antes de viajar al lugar. Su rival puede tener muchas alternativas para elegir y cancelará o confirmará el juego en breve.</es><ru>Подождите подтверждения, прежде чем отправиться на место. У конкурента может быть много альтернатив на выбор и скоро отменит или подтвердит игру.</ru><jp>会場に行く前に確認を待つ。 ライバルは選択肢がたくさんあるかもしれませんし、まもなくゲームをキャンセルまたは確認します。</jp></phrase>
 <phrase key="Accepted_Game_at..."><en>&lt;b&gt;[game]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; at [venueLink] with [rivalLink] ([parity] : [rivalRep] reputation)</en><es>&lt;b&gt;[game]&lt;/b&gt; a las [hour] &lt;b&gt;[day]&lt;/b&gt; en [venueLink] con  [rivalLink] ([parity] : reputación [rivalRep])</es></phrase>
 <phrase key="Select_a_time..."><en>Select a time that suits you (if there is more than one time offered) and [tick] to accept'. Otherwise [cross] to ignore the invitation.</en><zh>あなたに合った時間を選択し（複数の時間がある場合）、[tick]を受け入れます。 それ以外の場合は[cross]をクリックして招待を無視します。</zh><ru>Выберите подходящее вам время (если предлагается более одного раза) и [tick], чтобы принять '. В противном случае [cross], чтобы игнорировать приглашение.</ru><jp>あなたに合った時間を選択し（複数の時間がある場合）、[tick]を受け入れます。 それ以外の場合は[cross]をクリックして招待を無視します。</jp><es>Seleccione una hora que le convenga (si hay más de una vez disponible) y [tick] para aceptar '. De lo contrario [cross] para ignorar la invitación.</es><fr>Choisissez une heure qui vous convient (s'il y a plus d'une heure offerte) et [tick] pour accepter. Sinon [cross] pour ignorer l'invitation.</fr><hi>एक समय चुनें, जो आप के लिए उपयुक्त है (यदि एक से अधिक समय की पेशकश की गई है) और [tick] स्वीकार करने के लिए '। अन्यथा [tick] आमंत्रण को अनदेखा करने के लिए</hi><ar>حدد الوقت الذي يناسبك (إذا كان هناك أكثر من مرة واحدة عرضت) و [tick] لقبول ". خلاف ذلك [cross] لتجاهل الدعوة.</ar></phrase>
@@ -294,7 +294,7 @@
     <en>Message from qwikgame rival</en>
 </phrase>
 <phrase key ="game time venue">
-    <en>[game] at [time] at [venue]</en>
+    <en>[game] at [time] at [venueName]</en>
 </phrase>
 <phrase key ="Your rival says...">
     <en>Your rival says: &lt;i&gt;'[message]'&lt;/i&gt;</en>
@@ -345,5 +345,8 @@
 </phrase>
 <phrase key ="unknown parity">
     <en>unknown parity</en>
+</phrase>
+<phrase key ="unknown">
+    <en>unknown</en>
 </phrase>
 </translation>

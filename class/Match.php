@@ -150,7 +150,10 @@ class Match extends Qwik {
 
     public function rivalParity($index=0){
         $element = $this->rivalElement($index);
-        return isset($element) ? (string) $element['parity'] : null;
+        if(isset($element)){
+            return floatval($element['parity']);
+        }
+        return null;
     }
 
 
@@ -189,17 +192,24 @@ class Match extends Qwik {
 
 
     public function invite($rids){
+        $game = $this->(game);
         foreach($rids as $rid => $email){
             $rival = new Player($rid);
             if($rival->exists()){
                 $parity = $this->player->parity($rival, $game);
+                $ytirap = -1 * $parity;
                 $hours = $this->hours();
                 $rivalMatch = is_null($email)
-                    ? $rival->matchInvite($this, $parity)
-                    : $rival->matchAdd($this, $parity, $hours, $email);
+                    ? $rival->matchInvite($this, $ytirap)
+                    : $rival->matchAdd($this, $ytirap, $hours, $email);
                 if(!is_null($rivalMatch)){
-                    $this->addRival($rid);
+                    $this->addRival($rid, 
+                                    $parity,
+                                    $rival->rep(),
+                                    $rival->nick()
+                    );
                 }
+                $rival->save();
             }
         }
     }
@@ -223,8 +233,8 @@ class Match extends Qwik {
                 $this->id($newMid); //make independent from keenMatch
                 $this->status('accepted');
                 $this->hours($acceptHour);
-                $rival->matchInvite($this);
-                $rival->emailInvite($this);
+                $ytirap = -1 * $this->rivalParity();
+                $rival->matchAdd($this, $ytirap, $acceptHour);
                 break;
             case 'accepted':
                 $hour = $acceptHour->first();
@@ -353,11 +363,11 @@ class Match extends Qwik {
         $status = $this->status();
         $game = $this->game();
         $rival = $this->rival();
-        $parity = $this->rivalParity();
-        $parityStr = Page::parityStr($parity);
+        $rivalParity = $this->rivalParity();
         $hours = $this->hours();
         $rivalLink = isset($rival) ? $rival->htmlLink() : null;
         $repWord = $this->rivalRep();
+        $rivalRep = strlen($repWord)==0 ? '{unknown}' : $repWord;
         $vars = array(
             'vid'       => $this->vid(),
             'venueName' => $this->venueName(),
@@ -368,8 +378,8 @@ class Match extends Qwik {
             'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),
             'id'        => $mid,
-            'parity'    => strlen($parityStr)==0 ? '{unknown parity}' : $parityStr,
-            'rivalRep'  => strlen($repWord)==0 ? '{unknown}' : $repWord
+            'parity'    => Page::parityStr($rivalParity),
+            'rivalRep'  => $rivalRep
         );
         switch ($status){
             case 'keen':

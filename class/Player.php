@@ -133,7 +133,7 @@ class Player extends Qwik {
     }
 
 
-    public function rep(){
+    function rep(){
         return $this->xml['rep'][0];
     }
 

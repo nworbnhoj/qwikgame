@@ -195,10 +195,17 @@ class PlayerPage extends Page {
                 $this->req('smtwtfs') ? $this->req('smtwtfs') : FALSE,
                 $this->req()
             );
+            if(is_null($venue)){
+                $pid = $player->id();
+                $vid = $this->req('vid');
+                $this->logMsg("Unable to add player to venue:\tpid=$pid\t vid=$vid");
+            } else {
+                $venue->addPlayer($player->id());
+                $venue->save();
+            }
+            return $newID;
         }
-        $venue->addPlayer($player->id());
-        $venue->save();
-        return $newID;
+        return NULL;
     }
 
 

@@ -40,7 +40,7 @@
     <a id='logout-icon' class='[LOGOUT_ICON]' href='player.php?qwik=logout'></a>
 </div>
 
-<h2 name='matches'>{Matches}</h2>
+<h2 id='matches'>{Matches}</h2>
 
 <p class='centre'>
 <b>{keen} ⇨ {invitation} ⇨ {accepted} ⇨ {confirmed} ⇨ {feedback}</b>
@@ -137,7 +137,7 @@
     onsubmit='return checkActive()'
     accountActive='1'>
     <input type="hidden" name="qwik" value="keen">
-    <input type='hidden' name='repost' value='player.php'>
+    <input type='hidden' name='repost' value='player.php#matches'>
     <button type='button' class='action help [INFO_ICON]'></button>
     <span class='help' hidden>
         {This_will_alert...}

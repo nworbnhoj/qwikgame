@@ -488,15 +488,16 @@ class Page extends Html {
         $reckoning = $player->reckon("rival");
         $emails = array();
         foreach($reckoning as $reckon){
-            $email = $reckon['email'];
+            $email = (string) $reckon['email'];
             if (!array_key_exists($email, $emails)){
                 $emails[$email] = TRUE;
+                $parity = (int) $reckon['parity'];
                 $game = $reckon['game'];
                 $reckonVars = array(
                     'id'        => $reckon['id'],
                     'email'     => $email,
                     'game'      => self::qwikGames()["$game"],
-                    'parity'    => self::parityStr($reckon['parity'])
+                    'parity'    => self::parityStr($parity)
                 );
                 $vars = $playerVars + $reckonVars + self::$icons;
                 $group .= $this->populate($html, $vars);
@@ -676,9 +677,8 @@ class Page extends Html {
 
 
     static public function parityStr($parity){
-//echo "<br>PARITYSTR $parity<br>";
-        if(!is_numeric("$parity")){
-            return '';
+        if(!is_numeric($parity)){
+            return '{unknown parity}';
         }
 
         $pf = floatval($parity);
@@ -723,9 +723,9 @@ class Page extends Html {
             return "";
         }
 
-        $dayX = substr($day, 0, 3);
+        $dayX = "<b>" . substr($day, 0, 3) . "</b>";
         if (count($hours) == 24){
-            return "<span class='lolite'><b>$dayX</b></span>";
+            return "<span class='lolite'>$dayX</span>";
         }
 
         $dayP = $clock24hr ? 0 : 12;
@@ -737,7 +737,7 @@ class Page extends Html {
             $str .= $consecutive ? "&middot" : self::clock($last) . ' ';
 
             if ($pm && !$clock24hr) {
-                $str .= "<b>$dayX</b>";
+                $str .= $dayX;
                 $dayX = null;
             }
 
@@ -745,7 +745,7 @@ class Page extends Html {
             $last = $hr;
         }
         $str .= $consecutive ? self::clock($last) : '';
-        $str .= $dayX!=null ? " <b>$dayX</b>" : '';
+        $str .= $dayX!=null ? " $dayX" : '';
         return "<span class='lolite'>$str</span>";
     }
 

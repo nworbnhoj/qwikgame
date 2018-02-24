@@ -477,7 +477,7 @@ class FeatureContext implements Context
 //$rely = $playerA->rely;
 //print_r("$nickA rely=$relyA\n");
 //print_r("$nickB rely=$relyB\n");
-print_r("$parity\t$parityEstimate\t$parityStr\n");
+//print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':

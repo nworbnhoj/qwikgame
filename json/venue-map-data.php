@@ -1,6 +1,6 @@
 <?php
-    require_once 'class/Qwik.php';
-    require_once 'class/Venue.php';
+    require_once '../class/Qwik.php';
+    require_once '../class/Venue.php';
      
     $game = $_GET['game'];
     $mapData = '';

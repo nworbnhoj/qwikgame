@@ -169,7 +169,7 @@ class Match extends Qwik {
 
 
     public function time($date=NULL, $hour=NULL){
-        if(!is_null($date) && !is_null($time)){
+        if(!is_null($date) && !is_null($hour)){
             $this->xml->addAttribute('time', "$date $hour:00");
         }
         return $this->xml['time'];
@@ -278,7 +278,7 @@ class Match extends Qwik {
 
         $rivals = $this->rivals();
         $mid = $this->id();
-        switch ($this->status()) {
+        switch ($status) {
             case 'confirmed':
                 foreach($rivals as $rival){    // usually only one rival
                     $rival->emailCancel($this);

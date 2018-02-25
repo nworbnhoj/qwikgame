@@ -698,7 +698,7 @@ class Player extends Qwik {
 
     function emailMsg($message, $match){
         $datetime = $match->dateTime();
-        $time = date_format($datetime, "ha D");
+        $time = date_format($datetime, "ga D");
         $game = $match->game();
         $gameName = self::qwikGames()["$game"];
         $pid = $this->id();
@@ -727,7 +727,7 @@ class Player extends Qwik {
 
     function emailCancel($match){
         $datetime = $match->dateTime();
-        $time = date_format($datetime, "ha D");
+        $time = date_format($datetime, "ga D");
         $game = $match->game();
         $pid = $this->id();
         $venueName = $match->venueName();

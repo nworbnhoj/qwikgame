@@ -677,22 +677,21 @@ class Page extends Html {
 
 
     static public function parityStr($parity){
-        if(!is_numeric($parity)){
-            return '{unknown parity}';
+        if(is_numeric($parity)){
+            $pf = floatval($parity);
+            if($pf <= -2){
+                return "{much_weaker}";
+            } elseif($pf <= -1){
+                return "{weaker}";
+            } elseif($pf < 1){
+                return "{well_matched}";
+            } elseif($pf < 2){
+                return "{stronger}";
+            } else {
+                return "{much_stronger}";
+            }
         }
-
-        $pf = floatval($parity);
-        if($pf <= -2){
-            return "{much_weaker}";
-        } elseif($pf <= -1){
-            return "{weaker}";
-        } elseif($pf < 1){
-            return "{well_matched}";
-        } elseif($pf < 2){
-            return "{stronger}";
-        } else {
-            return "{much_stronger}";
-        }
+        return '{unknown parity}';
     }
 
 

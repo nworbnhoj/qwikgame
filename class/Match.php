@@ -151,7 +151,20 @@ class Match extends Qwik {
     public function rivalParity($index=0){
         $element = $this->rivalElement($index);
         if(isset($element)){
-            return floatval($element['parity']);
+            $parityStr = (string) $element['parity'];
+            if(is_numeric($parityStr)){
+                return floatval($parityStr);
+            }
+        }
+        return null;
+    }
+
+
+
+    public function rivalName($index=0){
+        $element = $this->rivalElement($index);
+        if(isset($element)){
+            return (string) $element['name'];
         }
         return null;
     }
@@ -192,7 +205,7 @@ class Match extends Qwik {
 
 
     public function invite($rids){
-        $game = $this->(game);
+        $game = $this->game();
         foreach($rids as $rid => $email){
             $rival = new Player($rid);
             if($rival->exists()){
@@ -362,10 +375,8 @@ class Match extends Qwik {
         $mid = $this->id();
         $status = $this->status();
         $game = $this->game();
-        $rival = $this->rival();
         $rivalParity = $this->rivalParity();
         $hours = $this->hours();
-        $rivalLink = isset($rival) ? $rival->htmlLink() : null;
         $repWord = $this->rivalRep();
         $rivalRep = strlen($repWord)==0 ? '{unknown}' : $repWord;
         $vars = array(
@@ -381,6 +392,11 @@ class Match extends Qwik {
             'parity'    => Page::parityStr($rivalParity),
             'rivalRep'  => $rivalRep
         );
+
+        $rival = $this->rival();
+        $rivalLink = isset($rival) ? $rival->htmlLink() : null;
+        $rivalLink = empty($rivalLink) ? $this->rivalName() : $rivalLink;
+
         switch ($status){
             case 'keen':
                 $vars['hour'] = Page::daySpan($hours->list());
@@ -388,24 +404,27 @@ class Match extends Qwik {
                 break;
             case 'invitation':
                 $vars['hour'] = $this->hourSelect($hours->list());
-                $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
+                $rivalLink = empty($rivalLink) ? '{a_rival}' : $rivalLink;
                 break;
             case 'accepted':
             case 'confirmed':
-                $vars['rivalLink'] = empty($rivalLink) ? '{a_rival}' : $rivalLink;
+                $rivalLink = empty($rivalLink) ? '{a_rival}' : $rivalLink;
                 break;
             case 'feedback':
-                $vars['rivalLink'] = empty($rivalLink) ? '{my_rival}' : $rivalLink;
+                $rivalLink = empty($rivalLink) ? '{my_rival}' : $rivalLink;
                 break;
             case 'history':
-                $vars['rivalLink'] = empty($rivalLink) ? '{my_rival}' : $rivalLink;
+                $rivalLink = empty($rivalLink) ? '{my_rival}' : $rivalLink;
                 $outcome = $this->player->outcome($mid);
                 if (isset($outcome)) {
-                    $vars['parity'] = Page::parityStr($outcome['parity']);
+                    $outcomeParity = (string) $outcome['parity'];
+                    $vars['parity'] = Page::parityStr($outcomeParity);
                     $vars['thumb'] = $outcome['rep'] == 1 ? Page::THUMB_UP_ICON : Page::THUMB_DN_ICON;
                 }
                 break;
         }
+
+        $vars['rivalLink'] = $rivalLink;
         return $vars;
     }
 

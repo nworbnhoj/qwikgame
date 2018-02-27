@@ -13,7 +13,6 @@
             $lat = $venue['lat'];
             $lng = $venue['lng'];
             $name = $venue['name'];
-            $info = "<b>$name</b><br><a href='venue.php?vid=$vid'>more...</a><br>play <a href='player.php#matches?game=$game&venue=$svid'>now</a> or <a href='player.php#available?game=$game&venue=$svid'>later</a>";
             $count = $venue['playerCount'];
             $mapData .= "{\"vid\": \"$vid\", \"svid\": \"$svid\", \"name\": \"$name\", \"game\": \"$game\", \"lat\": \"$lat\", \"lng\": \"$lng\", \"playerCount\": \"$count\"}, ";
         }

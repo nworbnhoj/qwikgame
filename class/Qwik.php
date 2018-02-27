@@ -14,6 +14,7 @@ class Qwik {
     const PATH_HTML   = 'html';
     const PATH_JSON   = 'json';
     const PATH_UPLOAD = 'uploads';
+    const PATH_LOG    = '/var/log/'.self::SUBDOMAIN.'.qwikgame.org.log';
     
     const XML = '.xml';
 
@@ -304,7 +305,7 @@ class Qwik {
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
         self::$log = new Logging();
-        self::$log->lfile("/tmp/" . self::SUBDOMAIN . ".qwikgame.org.log");
+        self::$log->lfile(self::PATH_LOG);
     }
     
 

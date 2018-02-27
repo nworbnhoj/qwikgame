@@ -26,14 +26,14 @@ class Player extends Qwik {
     public function __construct($pid, $forge=FALSE){
         parent::__construct();
         $this->id = $pid;
-        $path = self::PATH_PLAYER; 
         $fileName = $this->fileName();
-        if (!file_exists("$path/$fileName") && $forge) {
+        $path = self::PATH_PLAYER . "/" . $fileName;
+        if (!file_exists($path) && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
             self::logMsg("login: new player " . self::snip($pid));
         }
-        $this->xml = $this->retrieve($fileName);
+        $this->xml = file_exists($path) ? $this->retrieve($fileName) : NULL ;
     }
     
     
@@ -289,7 +289,10 @@ class Player extends Qwik {
 
     public function isValidToken($token){
         $nekot = $this->nekot($token);
-        return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
+        if($this->exists()){
+            return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
+        }
+        return FALSE;
     }
 
 

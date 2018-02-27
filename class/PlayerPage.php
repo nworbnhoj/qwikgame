@@ -223,7 +223,7 @@ function qwikKeen($player, $req, $venue){
     $game = $req['game'];
 
     $rids = array();
-    if (isset($req['invite'])){   // add anon Rivals $rid=>null
+    if (isset($req['invite-available'])){   // add anon Rivals $rid=>null
         foreach($venue->playerIDs() as $rid){
             $rids[$rid] = null;
         }

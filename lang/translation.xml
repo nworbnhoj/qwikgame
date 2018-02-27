@@ -173,7 +173,7 @@
 <phrase key="This_will_immediately..."><en>This will immediately remove your email address from qwikgame.org and anonymise your match feedback history.</en><es>Esto eliminar&#xE1; inmediatamente a su direcci&#xF3;n de correo de qwikgame.org y anonimizaci&#xF3;n su historial de votaciones partido.</es><zh>This will immediately remove your email address from qwikgame.org and anonymise your match feedback history.</zh></phrase>
 <phrase key="Quit"><en>Quit</en><es>Dejar</es><zh>Quit</zh></phrase>
 <phrase key="qwikgame.org_was_launched..."><en>Qwikgame.org was launched in September 2016 out of dismay in the difficulty of finding a well matched game of Squash while travelling.</en></phrase>
-<phrase key="Please_let_me..."><en>Please let me know if you find a bug or new feature idea.</en></phrase>
+<phrase key="Please_log_issue"><en>Please log a new <a href='https://github.com/nworbnhoj/qwikgame/issues'>issue</a> if you find a bug or new feature idea.</en></phrase>
 <phrase key="Account_Recovery"><en>Account Recovery</en></phrase>
 <phrase key="About"><en>About</en></phrase>
 <phrase key="...link_to_login"><en>send me a link to login</en></phrase>
@@ -200,8 +200,6 @@
 <phrase key="...in_every_3_games"><en>More than 1 [thumb-dn] in every 3 games.</en></phrase>
 <phrase key="...in_every_2_games"><en>More than 1 [thumb-dn] in every 2 games.</en></phrase>
 <phrase key="New_players_with..."><en>&lt;b&gt;New players&lt;/b&gt; with less than 5 games can only have a good, mixed or poor reputation.</en></phrase>
-<phrase key="Known_Bugs"><en>Known Bugs</en></phrase>
-<phrase key="No_known_bugs..."><en>No known bugs at the moment.</en></phrase>
 <phrase key="Development"><en>Development</en></phrase>
 <phrase key="Github"><en>qwikgame source is available under GPL-3.0 at &lt;a href="https://github.com/nworbnhoj/qwikgame"&gt;Github&lt;/a&gt;.</en></phrase>
 <phrase key="There_are_so..."><en>There are so many little tweeks to make qwikgame better!&lt;br&gt;This To Do list is in rough focus order; but let me know if the order is wrong, or something is missing.</en></phrase>

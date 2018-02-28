@@ -565,20 +565,21 @@ class Page extends Html {
         $group = '';
         foreach($uploadIDs as $uploadID) {
             $ranking = $player->rankingGet($uploadID);
-            $status = $ranking->status('active');
+            $status = $ranking->status();
             $vars = array(
                 'status'   => $status,
-                'fileName' => $upload['fileName'],
+                'fileName' => $ranking->fileName(),
                 'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
                 'tickIcon' => $status == 'uploaded' ? self::TICK_ICON : '',
-                'title'    => $upload['title'],
-                'game'     => $upload['game'],
-                'time'     => $upload['time']
+                'title'    => $ranking->title(),
+                'game'     => $ranking->game(),
+                'time'     => $ranking->time()
             );
             $group .= $this->populate($html, $vars);
         }
         return $group;
     }
+
 
 
     function playerVariables($player){

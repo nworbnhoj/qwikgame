@@ -5,6 +5,7 @@ require_once 'Hours.php';
 require_once 'Orb.php';
 require_once 'Match.php';
 require_once 'Email.php';
+require_once 'Ranking.php';
 
 
 class Player extends Qwik {
@@ -823,13 +824,9 @@ class Player extends Qwik {
 
 
     public function rankingGet($fileName){
-    //echo "<br>GETUPLOAD<br>";
         $ranking = new Ranking($fileName);
-        if(!$ranking){
-            $missing = $this->xml->xpath("/player/upload[text()='$fileName']");
-            foreach($missing as $miss){
-                self::removeElement($miss);
-            }
+        if(!isset($ranking)){
+            $this->rankingDelete($fileName);
             return FALSE;
         }
         return $ranking;
@@ -845,6 +842,7 @@ class Player extends Qwik {
        foreach($delete as $del){
            self::removeElement($del);
        }
+       $this->logMsg("Deleted Ranking $fileName");
     }
 
 

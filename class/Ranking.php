@@ -78,14 +78,34 @@ class Ranking extends Qwik {
 
 
     public function attribute($name, $value=NULL){
-       	if(!is_null($value)){
-            if(empty($this->xml['$name'])){
+        if(isset($value)){
+            if(empty($this->xml[$name])){
        	        $this->xml->addAttribute($name, $value);
        	    } else {
-       	        $this->xml['$name'] = $value;
+                $this->xml[$name] = $value;
        	    }
        	}
-        return $this->xml[$name];
+        return (string) $this->xml[$name];
+    }
+
+
+    public function fileName($value=NULL){
+        return $this->attribute('fileName', $value);
+    }
+
+
+    public function title($value=NULL){
+        return $this->attribute('title', $value);
+    }
+
+
+    public function game($value=NULL){
+        return $this->attribute('game', $value);
+    }
+
+
+    public function time($value=NULL){
+        return $this->attribute('time', $value);
     }
 
 
@@ -154,18 +174,8 @@ class Ranking extends Qwik {
     }
 
 
-    private function fileName(){
-        return $this->xml['fileName'];
-    }
-
-
     private function id(){
         return $this->xml['id'];
-    }
-
-
-    private function game(){
-        return $this->xml['game'];
     }
 
 
@@ -246,3 +256,5 @@ class Ranking extends Qwik {
     
     
 }
+
+?>

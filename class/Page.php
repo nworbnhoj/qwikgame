@@ -727,23 +727,32 @@ class Page extends Html {
             return "<span class='lolite'>$dayX</span>";
         }
 
-        $dayP = $clock24hr ? 0 : 12;
-        $str =  $clock24hr ? $dayX : '';
-        $last = null;
+        $str = '';
+        if($clock24hr){
+            $str = $dayX;
+            $dayX = null;
+        }
+        $str .= ' ';
+        $prior = null;
         foreach($hours as $hr){
-            $pm = $hr > 12;
-            $consecutive = $hr == ($last + 1);
-            $str .= $consecutive ? "&middot" : self::clock($last) . ' ';
+             $lastChar = substr($str, strlen($str)-1, 1);
+             $consecutive = $hr == ($prior + 1);
+             if($consecutive){
+                 $str .= $lastChar == ' ' ? self::clock($prior) : '' ;
+                 $str .= '&middot';
+             } else {
+                 $str .= self::clock($prior) . ' ';
+             }
 
-            if ($pm && !$clock24hr) {
+            if ($hr > 12 && isset($dayX)) {
                 $str .= $dayX;
                 $dayX = null;
+                $str .= $consecutive ? '&middot' : '' ;
             }
 
-            $str .= $consecutive ? '' : " " . self::clock($hr);
-            $last = $hr;
+            $prior = $hr;
         }
-        $str .= $consecutive ? self::clock($last) : '';
+        $str .= self::clock($prior);
         $str .= $dayX!=null ? " $dayX" : '';
         return "<span class='lolite'>$str</span>";
     }

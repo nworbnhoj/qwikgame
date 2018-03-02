@@ -173,7 +173,7 @@
 <phrase key="This_will_immediately..."><en>This will immediately remove your email address from qwikgame.org and anonymise your match feedback history.</en><es>Esto eliminar&#xE1; inmediatamente a su direcci&#xF3;n de correo de qwikgame.org y anonimizaci&#xF3;n su historial de votaciones partido.</es><zh>This will immediately remove your email address from qwikgame.org and anonymise your match feedback history.</zh></phrase>
 <phrase key="Quit"><en>Quit</en><es>Dejar</es><zh>Quit</zh></phrase>
 <phrase key="qwikgame.org_was_launched..."><en>Qwikgame.org was launched in September 2016 out of dismay in the difficulty of finding a well matched game of Squash while travelling.</en></phrase>
-<phrase key="Please_log_issue"><en>Please log a new <a href='https://github.com/nworbnhoj/qwikgame/issues'>issue</a> if you find a bug or new feature idea.</en></phrase>
+<phrase key="Please_log_issue"><en>Please log a new &lt;a href='https://github.com/nworbnhoj/qwikgame/issues' target='_blank'&gt;issue&lt;/a&gt; if you find a bug or new feature idea.</en></phrase>
 <phrase key="Account_Recovery"><en>Account Recovery</en></phrase>
 <phrase key="About"><en>About</en></phrase>
 <phrase key="...link_to_login"><en>send me a link to login</en></phrase>

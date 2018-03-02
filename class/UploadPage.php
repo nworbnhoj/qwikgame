@@ -12,7 +12,7 @@ class UploadPage extends Page {
 	
     public function processRequest(){
 
-        $player = $this->player;
+        $player = $this->player();
         $qwik = $this->req('qwik');
         $game = $this->req('game');
         $title = $this->req('title');
@@ -50,7 +50,7 @@ class UploadPage extends Page {
     
     public function variables(){
         $variables = parent::variables();
-        $player = $this->player;
+        $player = $this->player();
 
         $variables['please_login']   = $player ? '' : '{prompt_login}';
         $variables['uploadHidden']   = $player ? '' : 'hidden';

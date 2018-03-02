@@ -169,7 +169,7 @@ class Ranking extends Qwik {
     public function retrieve($fileName){
         return self::readXML( 
             self::PATH_UPLOAD, 
-            $fileName         
+            $fileName . self::XML
         );
     }
 
@@ -207,7 +207,7 @@ class Ranking extends Qwik {
         $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
             $anonRank = (int) $anonID['rank'];
-            $ranks[$anonRank] = "$anonID";
+            $ranks[$anonRank] = (string) $anonID;
         }
 
         foreach($ranks as $anonRank => $anonID){
@@ -239,22 +239,15 @@ class Ranking extends Qwik {
         $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
             $anon = new Player($anonID);
-            if ($anon){
-                if(empty($anon->email())){
-                    Player::removePlayer($anonID);
-                } else {
-                    $ranks = $anon->xpath("rank[@id=$rankingID]");
-                    foreach($ranks as $rank){
-                        self::removeElement($rank);
-                    }
-                }
+            if (isset($anon)){
+                $anon->removeRanks($rankingID);
             }
+// possible to remove player here if there is no email and no other ranks (or other data)
         }
         $this->status('uploaded');
         $this->save();
     }
-    
-    
+
 }
 
 ?>

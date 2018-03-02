@@ -943,6 +943,14 @@ Requirements:
     }
 
 
+    public function removeRanks($id){
+        $ranks = $this->xml->xpath("rank[@id=$id]");
+        foreach($ranks as $rank){
+            self::removeElement($rank);
+        }
+    }
+
+
     public function repWord(){
 
         $rep = $this->rep();

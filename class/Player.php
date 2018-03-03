@@ -944,7 +944,7 @@ Requirements:
 
 
     public function removeRanks($id){
-        $ranks = $this->xml->xpath("rank[@id=$id]");
+        $ranks = $this->xml->xpath("rank[@id='$id']");
         foreach($ranks as $rank){
             self::removeElement($rank);
         }

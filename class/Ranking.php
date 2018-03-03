@@ -161,7 +161,7 @@ class Ranking extends Qwik {
         return self::writeXML(
             $this->xml, 
             self::PATH_UPLOAD, 
-            $this->fileName()
+            $this->fileName() . self::XML
         );
     }
 
@@ -239,7 +239,8 @@ class Ranking extends Qwik {
         $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
             $anon = new Player($anonID);
-            if (isset($anon)){
+            if (isset($anon)
+            && $anon->exists()){
                 $anon->removeRanks($rankingID);
             }
 // possible to remove player here if there is no email and no other ranks (or other data)

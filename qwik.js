@@ -150,8 +150,6 @@ $(document).ready(function(){
         if ($('#venue-id').value == null){
             var id = $('#venue-name').val() + '|';
             id += $('#venue-address').val() + '|';
-            id += $('#venue-suburb').val() + '|';
-            id += $('#venue-state').val() + '|';
             id += $('#venue-country').val();
             $('#venue-id').val(id);
         }
@@ -267,8 +265,6 @@ function initMap() {
 
         var point = {address: document.getElementById('venue-name').value
             + ", " + document.getElementById('venue-address').value
-            + ", " + document.getElementById('venue-suburb').value
-            + ", " + document.getElementById('venue-state').value
             + ", " + document.getElementById('venue-country').value };
 
         geocoder.geocode(point, function(results, status) {

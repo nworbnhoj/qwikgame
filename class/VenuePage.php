@@ -29,13 +29,11 @@ class VenuePage extends Page {
         }
 
         if($this->player() !== null
-	    && $this->req('name') !== null
+        && $this->req('name') !== null
         && $this->req('address') !== null
-        && $this->req('suburb') !== null
-        && $this->req('state') !== null
         && $this->req('country') !== null){
-		    $this->venue->update($this->req());
-	    }
+            $this->venue->update($this->req());
+        }
 
         $this->venue->concludeReverts();
     }
@@ -46,7 +44,6 @@ class VenuePage extends Page {
         $game = $this->req('game');
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
-        $venueState = (empty($this->venue->state())) ? $this->geolocate('region') : $this->venue->state();
         $venueCountry = $this->venue->country();
         $backLink = "<a href='".self::QWIK_URL;
         $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
@@ -67,8 +64,6 @@ class VenuePage extends Page {
         $vars['editHidden']    = 'hidden';
         $vars['venueName']     = $venueName;
         $vars['venueAddress']  = $this->venue->address();
-        $vars['venueSuburb']   = $this->venue->suburb();
-        $vars['venueState']    = $venueState;
         $vars['venueCountry']  = $venueCountry;
         $vars['countryOptions']= $this->countryOptions($venueCountry, "\t\t\t\t\t");
         $vars['venuePhone']    = $this->venue->phone();

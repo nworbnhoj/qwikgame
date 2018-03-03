@@ -734,7 +734,7 @@ class Page extends Html {
             $dayX = null;
         }
         $str .= ' ';
-        $prior = null;
+        $prior = $hours[0] - 1;
         foreach($hours as $hr){
              $lastChar = substr($str, strlen($str)-1, 1);
              $consecutive = $hr == ($prior + 1);

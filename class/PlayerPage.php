@@ -139,15 +139,14 @@ class PlayerPage extends Page {
         }
 
         $player = $this->player();
+        $playerName = empty($playerNick) ? $playerEmail : $playerNick;
         if (!is_null($player)){
-            $rnd = mt_rand(1,8);
             $playerEmail = $player->email();
 	    $reckons = $player->reckon("email");
             $playerNick = $player->nick();
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
-            $vars['message']       = "{Tip$rnd}";
-            $vars['playerName']    = empty($playerNick) ? $playerEmail : $playerNick;
+            $vars['message']       = "{Welcome} <b>$playerName</b>";
             $vars['familiarHidden']= empty($reckons) ? 'hidden' : ' ';
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';

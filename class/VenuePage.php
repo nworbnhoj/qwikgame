@@ -85,6 +85,61 @@ class VenuePage extends Page {
         return $vars;
     }
 
+
+    const GEOCODE_API_KEY = "AIzaSyC4zcdOxikM54AHNQjcSLSd8d6N8Kebmfg";
+    const GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/xml";
+
+    static function geocode($address, $country){
+        $param = array();
+	$param['components'] = "$address|$country";
+        $param['key'] = self::GEOCODE_API_KEY;
+        $query = http_build_query($param);
+        $GEOCODE_URL = self::GEOCODE_URL;
+        $url = "$GEOCODE_URL?$query";
+        return new SimpleXMLElement(file_get_contents($url));
+    }
+
+
+    const GEO_XPATH_STATUS       = "/GeocodeResponse/status/text()";
+    const GEO_XPATH_COUNTRY      = "/GeocodeResponse/result/address_component[type='country']/long_name/text()";
+    const GEO_XPATH_COUNTRY_CODE = "/GeocodeResponse/result/address_component[type='country']/short_name/text()";
+    const GEO_XPATH_ADMIN1       = "/GeocodeResponse/result/address_component[type='administrative_area_level_1']/long_name/text()";
+    const GEO_XPATH_ADMIN2       = "/GeocodeResponse/result/address_component[type='administrative_area_level_2']/long_name/text()";
+    const GEO_XPATH_ADMIN3       = "/GeocodeResponse/result/address_component[type='administrative_area_level_3']/long_name/text()";
+    const GEO_XPATH_LOCALITY     = "/GeocodeResponse/result/address_component[type='locality']/long_name/text()";
+    const GEO_XPATH_FORMATTED    = "/GeocodeResponse/result/formatted_address/text()";
+    const GEO_XPATH_LAT          = "/GeocodeResponse/result/geometry/location/lat/text()";
+    const GEO_XPATH_LNG          = "/GeocodeResponse/result/geometry/location/lng/text()";
+
+
+    static function parseAddress($address, $country){
+        $parsed = array();
+        $xml = self::geocode($address, $country);
+        $status = $xml->xpath(self::GEO_XPATH_STATUS);
+        switch ($status){
+            case "OK":
+                $parsed['country']      = $xml->xpath(self::GEO_XPATH_COUNTRY);
+                $parsed['country_code'] = $xml->xpath(self::GEO_XPATH_COUNTRY_CODE);
+                $parsed['admin1']       = $xml->xpath(self::GEO_XPATH_ADMIN1);
+                $parsed['admin2']       = $xml->xpath(self::GEO_XPATH_ADMIN2);
+                $parsed['admin3']       = $xml->xpath(self::GEO_XPATH_ADMIN3);
+                $parsed['locality']     = $xml->xpath(self::GEO_XPATH_LOCALITY);
+                $parsed['formatted']    = $xml->xpath(self::GEO_XPATH_FORMATTED);
+                $parsed['lat']          = $xml->xpath(self::GEO_XPATH_LAT);
+                $parsed['lng']          = $xml->xpath(self::GEO_XPATH_LNG);
+                break;
+
+            case "ZERO_RESULTS":
+            case "OVER_QUERY_LIMIT":
+            case "REQUEST_DENIED":
+            case "INVALID_REQUEST":
+            case "UNKNOWN_ERROR":
+            default:
+                self::logMsg("Geocode $status: $address | $country");
+        }
+        return $parsed;
+    }
+
 }
 
 ?>

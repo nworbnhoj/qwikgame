@@ -39,8 +39,6 @@
 
         <p id='venue-display' class='center' [displayHidden]>
             [venueAddress]<br>
-            [venueSuburb]<br>
-            [venueState],
             [venueCountry]<br>
             [venuePhone]<br>
             <a href='[venueURL]' target='_blank'>homepage</a><br>
@@ -72,10 +70,6 @@
                     value='[venueName]' placeholder='Name' autocomplete="off">
                 <input id='venue-address' name='address' class='center geocode' 
                     value='[venueAddress]' placeholder='Address' autocomplete="off">
-                <input id='venue-suburb' name='suburb' class='center geocode' 
-                    value='[venueSuburb]' placeholder='[suburb]'  autocomplete="off">
-                <input id='venue-state' name='state' class='center geocode' 
-                    value='[venueState]' placeholder='State/Provence' autocomplete="off">
                 <select id='venue-country' name='country' class='center geocode' required>
                     [countryOptions]
                 </select>

@@ -208,29 +208,7 @@ class Venue extends Qwik {
     }
 
 
-
-    public function update($update){
-        $save = $this->updateAtt('name', $update);
-        $save = $this->updateAtt('address', $update) || $save;
-        $save = $this->updateAtt('suburb', $update) || $save;
-        $save = $this->updateAtt('state', $update) || $save;
-        $save = $this->updateAtt('country', $update) || $save;
-        if($save){
-            $this->updateID();
-        }
-        $save = $this->updateAtt('phone', $update) || $save;
-        $save = $this->updateAtt('url', $update)  || $save;
-        $save = $this->updateAtt('tz', $update) || $save;
-        $save = $this->updateAtt('note', $update) || $save;
-        $save = $this->updateAtt('lat', $update) || $save;
-        $save = $this->updateAtt('lng', $update) || $save;
-        if($save){
-            $this->save();
-        }
-    }
-
-
-    private function updateID(){
+    public function updateID(){
         $vid = $this->venueID(
             $this->xml['name'],
             $this->xml['address'],
@@ -289,24 +267,25 @@ class Venue extends Qwik {
 
 
 
-    private function updateAtt($key, $update){
-    //echo "<br>updateAtt $key ";
-        if (isset($update[$key])){
-            $newVal = $update[$key];
-            $datetime = $this->dateTime('now');
-            $date = $datetime->format('d-m-y H:i');
-            $oldVal = $this->xml[$key];
-            if ($oldVal != $newVal){
-                if ( strlen(trim($oldVal)) > 0){
-                    $edit = $this->xml->addChild('edit', '');
-                    $edit->addAttribute('date', $date);
-                    $edit->addAttribute('id', self::newID());
-                    $edit->addChild('key', $key);
-                    $edit->addChild('val', $oldVal);
-                }
-                $this->xml[$key] = $newVal;
-                return true;
+    public function updateAtt($key, $value){
+        if (empty($key)
+        || empty($update)){
+            return false;
+        }
+
+        $datetime = $this->dateTime('now');
+        $date = $datetime->format('d-m-y H:i');
+        $oldVal = $this->xml[$key];
+        if ($oldVal != $value){
+            if ( strlen(trim($oldVal)) > 0){
+                $edit = $this->xml->addChild('edit', '');
+                $edit->addAttribute('date', $date);
+                $edit->addAttribute('id', self::newID());
+                $edit->addChild('key', $key);
+                $edit->addChild('val', $oldVal);
             }
+            $this->xml[$key] = $value;
+            return true;
         }
         return false;
     }

@@ -52,7 +52,7 @@ class VenuePage extends Page {
         $venueGames = "";
         foreach($this->venue->games() as $gameKey){
             $gameName = $qwikGames[$gameKey];
-            $venueGames .= "[$gameName] ";
+            $venueGames .= "{$gameName} ";
         }
 
         $vars = parent::variables();

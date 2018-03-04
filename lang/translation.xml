@@ -339,4 +339,13 @@
 <phrase key ="unknown">
     <en>unknown</en>
 </phrase>
+<phrase key ="information">
+    <en>information</en>
+</phrase>
+<phrase key ="qwik game of...">
+    <en>qwik game of squash badminton tennis chess go golf racquetball billiards bowls table-tennis</en>
+</phrase>
+<phrase key ="venues">
+    <en>venues</en>
+</phrase>
 </translation>

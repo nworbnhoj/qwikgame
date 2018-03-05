@@ -632,30 +632,30 @@ class Page extends Html {
     public function regions($player){
         $available = $player->available();
         $countries = array();
-        $states = array();
-        $towns = array();
+        $admin1s = array();
+        $localities = array();
         foreach($available as $avail){
             $venueID = $avail->venue;
             $reg = explode('|', $venueID);
             $last = count($reg);
             if ($last >= 3){
                 $countries[] = $reg[$last-1];
-                $states[] = $reg[$last-2];
-                $towns[] = $reg[$last-3];
+                $admin1s[] = $reg[$last-2];
+                $localities[] = $reg[$last-3];
             } else {
                 self::logMsg("warning: unable to extract region '$venueID'");
             }
         }
 
         $countries = array_unique($countries);
-        $states = array_unique($states);
-        $towns = array_unique($towns);
+        $admin1s = array_unique($admin1s);
+        $localities = array_unique($localities);
 
         sort($countries);
-        sort($states);
-        sort($towns);
+        sort($admin1s);
+        sort($localities);
 
-        return array_merge($countries, $states, $towns);
+        return array_merge($countries, $admin1s, $localities);
     }
 
 

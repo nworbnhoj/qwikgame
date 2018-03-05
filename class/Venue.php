@@ -49,7 +49,7 @@ class Venue extends Qwik {
 
         if(count($field) > 0){
                 $f = trim(array_shift($field));
-                $record .= " state='$f'";
+                $record .= " admin1='$f'";
         }
 
         if(count($field) > 0){
@@ -177,8 +177,8 @@ class Venue extends Qwik {
     }
 
 
-    public function state(){
-        return isset($this->xml['state']) ? $this->xml['state'] : '';
+    public function admin1(){
+        return isset($this->xml['admin1']) ? $this->xml['admin1'] : '';
     }
 
 
@@ -213,15 +213,15 @@ class Venue extends Qwik {
             $this->xml['name'],
             $this->xml['address'],
             $this->xml['locality'],
-            $this->xml['state'],
+            $this->xml['admin1'],
             $this->xml['country']
         );
         $this->rename($vid);
     }
 
 
-    static public function venueID($name, $address, $locality, $state, $country){
-        return "$name|$address|$locality|$state|$country";
+    static public function venueID($name, $address, $locality, $admin1, $country){
+        return "$name|$address|$locality|$admin1|$country";
     }
 
 

@@ -38,13 +38,13 @@ class LocatePage extends Page {
 	if($this->req('name') !== null
 	&& $this->req('address') !== null
 	&& $this->req('locality') !== null
-	&& $this->req('state') !== null
+	&& $this->req('admin1') !== null
 	&& $this->req('country') !== null){
 	    $vid = Venue::venueID(
                 $this->req('name'),
                 $this->req('address'),
                 $this->req('locality'),
-                $this->req('state'),
+                $this->req('admin1'),
                 $this->req('country')
             );
             $venue = new Venue($vid, TRUE);
@@ -101,8 +101,6 @@ class LocatePage extends Page {
 	$variables['repost']         = $this->repost;
         $variables['venueName']      = $venueName;
         $variables['venueAddress']   = $venue->address();
-        $variables['venueLocality']  = $venue->locality();
-        $variables['venueState']     = $venue->state();
         $variables['venueCountry']   = $venueCountry;
         $variables['countryOptions'] = $this->countryOptions($venueCountry, "\t\t\t\t\t");
         $variables['venuePhone']     = $venue->phone();

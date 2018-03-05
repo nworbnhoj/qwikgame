@@ -79,7 +79,6 @@ class Defend extends Qwik {
             'pid'      => array('filter'=>FILTER_CALLBACK,     'options'=>$fvPID),
             'qwik'     => array('filter'=>FILTER_CALLBACK,     'options'=>$fvQwik),
             'Sat'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'state'    => FILTER_DEFAULT,
             'Sun'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
             'Thu'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
             'time'     => FILTER_DEFAULT,
@@ -145,7 +144,6 @@ class Defend extends Qwik {
         'nickname'    => 20,
         'note'        => 2000,
         'region'      => 50,
-        'state'       => 50,
         'tz'          => 100,
         'venue'       => 150
     );

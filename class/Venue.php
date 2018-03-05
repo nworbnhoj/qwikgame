@@ -44,7 +44,7 @@ class Venue extends Qwik {
 
         if(count($field) > 0){
                 $f = trim(array_shift($field));
-                $record .= " suburb='$f'";
+                $record .= " locality='$f'";
         }
 
         if(count($field) > 0){
@@ -182,8 +182,8 @@ class Venue extends Qwik {
     }
 
 
-    public function suburb(){
-        return isset($this->xml['suburb']) ? $this->xml['suburb'] : '';
+    public function locality(){
+        return isset($this->xml['locality']) ? $this->xml['locality'] : '';
     }
 
 
@@ -212,7 +212,7 @@ class Venue extends Qwik {
         $vid = $this->venueID(
             $this->xml['name'],
             $this->xml['address'],
-            $this->xml['suburb'],
+            $this->xml['locality'],
             $this->xml['state'],
             $this->xml['country']
         );
@@ -220,8 +220,8 @@ class Venue extends Qwik {
     }
 
 
-    static public function venueID($name, $address, $suburb, $state, $country){
-        return "$name|$address|$suburb|$state|$country";
+    static public function venueID($name, $address, $locality, $state, $country){
+        return "$name|$address|$locality|$state|$country";
     }
 
 

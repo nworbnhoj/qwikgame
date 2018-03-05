@@ -148,7 +148,7 @@
             $row = "<tr>";
             $row .= "<td>$playerCount</td>";
             $row .= "<td><a href='venue.php?vid=$vid'>$name</a></td>";
-            $row .= "<td>" . $venue['suburb'] . "</td>";
+            $row .= "<td>" . $venue['locality'] . "</td>";
             $row .= "<td>" . $venue['country'] . "</td>";
             $row .= "<td>$lat</td>";
             $row .= "<td>$lng</td>";

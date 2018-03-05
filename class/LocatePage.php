@@ -37,13 +37,13 @@ class LocatePage extends Page {
 
 	if($this->req('name') !== null
 	&& $this->req('address') !== null
-	&& $this->req('suburb') !== null
+	&& $this->req('locality') !== null
 	&& $this->req('state') !== null
 	&& $this->req('country') !== null){
 	    $vid = Venue::venueID(
                 $this->req('name'),
                 $this->req('address'),
-                $this->req('suburb'),
+                $this->req('locality'),
                 $this->req('state'),
                 $this->req('country')
             );
@@ -64,7 +64,7 @@ class LocatePage extends Page {
     /*******************************************************************************
     Returns an Array of Venue ID's (vid) that match the $svid provided.
 
-    $svid  String  The Short Venue ID includes only the Name & Suburb of the Venue.
+    $svid  String 	 The Short Venue ID includes only the Name & Locality of the Venue.
 
     The Short Venue ID $svid is a non-unique human convenient way of referring to a
     Venue. This functions finds zero or more $vid that match the $svid
@@ -101,7 +101,7 @@ class LocatePage extends Page {
 	$variables['repost']         = $this->repost;
         $variables['venueName']      = $venueName;
         $variables['venueAddress']   = $venue->address();
-        $variables['venueSuburb']    = $venue->suburb();
+        $variables['venueLocality']  = $venue->locality();
         $variables['venueState']     = $venue->state();
         $variables['venueCountry']   = $venueCountry;
         $variables['countryOptions'] = $this->countryOptions($venueCountry, "\t\t\t\t\t");

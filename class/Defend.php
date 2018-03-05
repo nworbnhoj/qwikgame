@@ -80,7 +80,6 @@ class Defend extends Qwik {
             'qwik'     => array('filter'=>FILTER_CALLBACK,     'options'=>$fvQwik),
             'Sat'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
             'state'    => FILTER_DEFAULT,
-            'suburb'   => FILTER_DEFAULT,
             'Sun'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
             'Thu'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
             'time'     => FILTER_DEFAULT,
@@ -104,7 +103,7 @@ class Defend extends Qwik {
 
         if(in_array(FALSE, $result, TRUE)){
             $this->req = array();
-            $res = array_filter($result, function($var){return $var!=="";} );
+            $res = array_filter($result, function($var){return !empty($var);} );
             $resStr = print_r($res, true);
             Page::logMsg("The Defense Filter rejected the input request. $resStr");
         }
@@ -147,7 +146,6 @@ class Defend extends Qwik {
         'note'        => 2000,
         'region'      => 50,
         'state'       => 50,
-        'suburb'      => 50,
         'tz'          => 100,
         'venue'       => 150
     );

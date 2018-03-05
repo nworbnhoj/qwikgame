@@ -67,7 +67,7 @@
 <phrase key="When_a_rival..."><en>When a rival is &lt;b&gt;keen&lt;/b&gt; for a game you will be invited to play. Your email is never available to other players. You can also refine your availability once registered.</en><es>Cuando un rival es &lt;b&gt; agudo &lt;/b&gt; para un juego, se le invitar&#xE1; a jugar. Su correo electr&#xF3;nico no est&#xE1; disponible para otros jugadores. Tambi&#xE9;n puede filtrar la disponibilidad de una vez registrado.</es><zh>When a rival is &lt;b&gt;keen&lt;/b&gt; for a game you will be invited to play. Your email is never available to other players. You can also refine your availability once registered.</zh></phrase>
 <phrase key="What_is_your..."><en>What is your favourite game?</en><es>&#xBF;Cu&#xE1;l es tu juego favorito?</es><zh>&#x4F60;&#x6700;&#x559C;&#x7231;&#x7684;&#x6E38;&#x620F;&#x662F;&#x4EC0;&#x4E48;</zh></phrase>
 <phrase key="Let_me_know..."><en>&lt;b&gt;Let me know&lt;/b&gt; when someone is &lt;b&gt;keen&lt;/b&gt; to play [selectGame] at [inputVenue]</en><es>&lt;b&gt;Avisadme&lt;/b&gt; cuando alguien est&#xE1; dispuesto a jugar [selectGame] at [inputVenue]</es><zh>&#x8BA9;&#x6211;&#x77E5;&#x9053;&#x5F53;&#x6709;&#x4EBA;&#x559C;&#x6B22;&#x73A9;&#x65F6;[selectGame][inputVenue]</zh></phrase>
-<phrase key="Venue_name..."><en>Venue Name or Suburb</en><es>Nombre del lugar o del suburbio</es><zh/></phrase>
+<phrase key="Venue_name..."><en>Venue Name or Locality</en><es>Nombre del lugar o del suburbio</es><zh/></phrase>
 <phrase key="matched_ability"><en>matched ability</en><es>capacidad emparejado</es><zh>&#x5339;&#x914D;&#x7684;&#x80FD;&#x529B;</zh></phrase>
 <phrase key="Rate_the_ability..."><en>Rate the &lt;b&gt;ability&lt;/b&gt; of your opponent after each game to help qwik game org match you to rivals of similar ability.</en><es>La tasa de &lt;b&gt;capacidad&lt;/b&gt; de su oponente despu&#xE9;s de cada juego para ayudar a juego qwik o que coincida con sus rivales de similar capacidad.</es><zh>&#x6BCF;&#x573A;&#x6BD4;&#x8D5B;&#x540E;&#xFF0C;&#x5E2E;&#x52A9;qwik&#x6E38;&#x620F;&#x7EC4;&#x7EC7;&#xFF0C;&#x4F30;&#x7B97;&#x4E0E;&#x4F60;&#x6C34;&#x5E73;&#x76F8;&#x4F3C;&#x7684;&#x5BF9;&#x624B;&#x5BF9;&#x624B;&#x7684;&#x80FD;&#x529B;&#x3002;</zh></phrase>
 <phrase key="You_can_estimate..."><en>You can estimate your own skill to help in your first few games.</en><es>Usted puede calcular su propia habilidad para ayudar en sus primeros juegos.</es><zh>&#x4F60;&#x53EF;&#x4EE5;&#x4F30;&#x8BA1;&#x4F60;&#x81EA;&#x5DF1;&#x7684;&#x6280;&#x80FD;&#xFF0C;&#x4EE5;&#x5E2E;&#x52A9;&#x4F60;&#x7684;&#x524D;&#x51E0;&#x573A;&#x6BD4;&#x8D5B;&#x3002;</zh></phrase>
@@ -201,7 +201,7 @@
 <phrase key="New_Venue"><en>New Venue</en></phrase>
 <phrase key="name"><en>name</en></phrase>
 <phrase key="address"><en>address</en></phrase>
-<phrase key="suburb"><en>suburb</en></phrase>
+<phrase key="locality"><en>locality</en></phrase>
 <phrase key="state/provence"><en>state/provence</en></phrase>
 <phrase key="phone"><en>phone</en></phrase>
 <phrase key="notes"><en>...notes...</en></phrase>

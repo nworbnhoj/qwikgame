@@ -57,7 +57,7 @@ Each game **venue** has a single xml file in the `/venue` directory. This direct
 Players are able to add and maintain information about suitable venues to play each game including Name, Address, GPS location etc.
 
 A unique Venue ID (vid) is constructed from the venue's name and address in the form:
-	name|address|suburb|state|country
+	name|address|locality|state|country
 This is used as the XML file name which allows qwikgame to use rapid file-system tools to locate a venue without having to parse an XML file or utilize a database.
 
 ### matches

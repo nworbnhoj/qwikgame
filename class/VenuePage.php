@@ -38,7 +38,7 @@ class VenuePage extends Page {
 
             $save = $venue->updateAtt('name', $req['name']);
             $save = $venue->updateAtt('address', $address['formatted']) || $save;
-            $save = $venue->updateAtt('suburb', $address['locality']) || $save;
+            $save = $venue->updateAtt('locality', $address['locality']) || $save;
             $save = $venue->updateAtt('state', $address['admin1']) || $save;
             $save = $venue->updateAtt('country', $address['country']) || $save;
             if($save){

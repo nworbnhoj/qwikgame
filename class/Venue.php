@@ -5,7 +5,7 @@ require_once 'Qwik.php';
 
 class Venue extends Qwik {
 
-    const REVERT_CHAR    = '⟲';
+    const REVERT_CHAR = '⟲';
 
     private $id;
     private $xml;
@@ -13,11 +13,9 @@ class Venue extends Qwik {
     public function __construct($id, $forge=FALSE){
         parent::__construct();
         $this->id = $id;
-        $path = self::PATH_VENUE;
-        $fileName = $this->fileName();
-        $this->xml = file_exists("$path/$fileName") ?
-            $this->retrieve($fileName) :
-            $this->newXML($id);
+        $this->xml = self::exists($id) ?
+            $this->retrieve() :
+            $this->newXML();
         if ($forge){
             $this->save();
             self::logMsg("new Venue: $id");
@@ -25,21 +23,14 @@ class Venue extends Qwik {
     }
 
 
-    private function newXML($description){
-        $field =  explode('|', $description);
-        if(count($field) == 1){
-            $field =  explode(',', $description);
-        }
+    private function newXML(){
+        $id = $this->id();
+        $field =  explode('|', $id);
         $record = "<venue ";
 
         if(count($field) > 0){
                 $f = trim(array_shift($field));
                 $record .= " name='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " address='$f'";
         }
 
         if(count($field) > 0){
@@ -70,19 +61,15 @@ class Venue extends Qwik {
 
 
     public function save(){
-        $path_venue = self::PATH_VENUE;
+        $PATH = self::PATH_VENUE;
         $fileName = $this->fileName();
-        $result = self::writeXML(
-            $this->xml, 
-            $path_venue,
-            $fileName
-        );
-        
+        $result = self::writeXML($this->xml, $PATH, $fileName);
         if ($result){
             $games = $this->xml->xpath('game');
             foreach($games as $game){
-                if(!file_exists("$path_venue/$game/$fileName")){
-                    if(file_exists("$path_venue/$game") && chdir("$path_venue/$game")){
+                if(!file_exists("$PATH/$game/$fileName")){
+                    if(file_exists("$PATH/$game")
+                    && chdir("$PATH/$game")){
                         symlink("../$fileName", $fileName);
                         chdir("../..");
                     } else {
@@ -95,17 +82,22 @@ class Venue extends Qwik {
     }
 
 
-    public function retrieve($fileName){
-        $xml = self::readXML(
-            self::PATH_VENUE, 
-            $fileName         
-        );
+    private function retrieve(){
+        $fileName = $this->fileName();
+        $xml = self::readXML(self::PATH_VENUE, $fileName);
         return $xml!=null ? $xml : new SimpleXMLElement("<venue/>");
     }
 
 
-    public function exists(){
+    public function ok(){
         return !is_null($this->xml);
+    }
+
+
+    static function exists($vid){
+        $PATH = self::PATH_VENUE;
+        $XML = self::XML;
+        return file_exists("$PATH/$vid$XML");
     }
 
 
@@ -132,7 +124,7 @@ class Venue extends Qwik {
     static function svid($vid){
         $address = explode('|', $vid);
         $name = isset($address[0]) ? $address[0] : '';
-        $place = isset($address[2]) ? $address[2] : '';
+        $place = isset($address[1]) ? $address[1] : '';
         return "$name | $place";
     }
 
@@ -166,7 +158,7 @@ class Venue extends Qwik {
         $players = array();
         $xmlPlayers = $this->xml->xpath('player');
         foreach($xmlPlayers as $xmlPlayer){
-            $players[] = "$xmlPlayer";
+            $players[] = (string) $xmlPlayer;
         }
         return $players;
     }
@@ -209,25 +201,28 @@ class Venue extends Qwik {
 
 
     public function updateID(){
-        $vid = $this->venueID(
-            $this->xml['name'],
-            $this->xml['address'],
-            $this->xml['locality'],
-            $this->xml['admin1'],
-            $this->xml['country']
-        );
+        $xml = $this->xml;
+        $name = $xml['name'];
+        $locality = $xml['locality'];
+        $state = isset($xml['admin1_code'])
+            ? $xml['admin1_code']
+            : $xml['admin1'];
+        $country = isset($xml['country_code'])
+            ? $xml['country_code']
+            : $xml['country'];
+
+        $vid = self::venueID($name, $locality, $state, $country);
         $this->rename($vid);
     }
 
 
-    static public function venueID($name, $address, $locality, $admin1, $country){
-        return "$name|$address|$locality|$admin1|$country";
+    static public function venueID($name, $locality, $state, $country){
+        return "$name|$locality|$state|$country";
     }
 
 
     // may introduce inconsistent results under hi multi-user load
     private function rename($newID){
-    // echo "<br>RENAMEVENUE to $newID<br>";
         $oldID = (string) $this->xml['id'];
         if($newID != $oldID){
             $this->xml['id'] = $newID;
@@ -235,13 +230,13 @@ class Venue extends Qwik {
             // save the venue and game symlinks under the newID
             $this->save();
 
-            $path = self::PATH_VENUE;
-            $ext = self::XML;
-            $oldFile = "$path/$oldID$ext";
-            $newFile = "$path/$newID$ext";
+            $PATH = self::PATH_VENUE;
+            $XML = self::XML;
+            $oldFile = "$PATH/$oldID$XML";
+            $newFile = "$PATH/$newID$XML";
 
             // temporarily replace oldfile with a symlink
-            self::deleteFile($preFile);
+            self::deleteFile($preFile);    // ?is this necessary?
             symlink($newFile, $preFile);
 
             // rename the venue in all player records
@@ -255,7 +250,7 @@ class Venue extends Qwik {
             // remove the game symlinks to the oldID
             $games = $this->xml->xpath('game');
             foreach($games as $game){
-                self::deleteFile("$path/$game/$oldID$ext");
+                self::deleteFile("$PATH/$game/$oldID$XML");
             }
 
             // delete temp symlink

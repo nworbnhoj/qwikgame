@@ -7,7 +7,7 @@ require_once 'Venue.php';
 class LocatePage extends Page {
 
     private $game;
-    private $venueDesc;
+    private $description;
     private $repost;
     
 
@@ -15,13 +15,13 @@ class LocatePage extends Page {
         parent::__construct($template);
         
         $this->game = $this->req('game');
-        $this->venueDesc = $this->req('venue');
+        $this->description = $this->req('venue');
         $this->repost = $this->req('repost');
     }
 
 
     public function serve(){
-        if ($this->game == null){
+        if (empty($this->game){
             header("Location: ".self::QWIK_URL);
             return;
         }
@@ -30,27 +30,37 @@ class LocatePage extends Page {
 	
 	
     public function processRequest(){
-        $vids = $this->matchShortVenueID($this->venueDesc, $this->game);
-	$matchCount = count($vids);
+        $vid = NULL;
+        $description = $this->description;
 
-	$vid = ($matchCount == 1) ? $vids[0] : null;
+        // first check if the description is a vid (venue id)
+        if (Venue::exists($description)){
+            $vid = $description;
+        }
 
-	if($this->req('name') !== null
-	&& $this->req('address') !== null
-	&& $this->req('locality') !== null
-	&& $this->req('admin1') !== null
-	&& $this->req('country') !== null){
+        // Process a svid (short vid) submitted in PlayerPage
+        if($empty($vid)){    // check if the description is a svid
+            $vids = $this->matchShortVenueID($description, $this->game);
+	    $matchCount = count($vids);
+	    $vid = ($matchCount == 1) ? $vids[0] : null;
+        }
+
+        // Process a new venue submitted from LocatePage
+        if(empty($vid)
+        && $this->req('name') !== null
+        && $this->req('address') !== null
+        && $this->req('country') !== null){    // make a new venue from the request
+            $address = self::parseAddress($req['address'], $req['country']);
 	    $vid = Venue::venueID(
                 $this->req('name'),
-                $this->req('address'),
-                $this->req('locality'),
-                $this->req('admin1'),
+                $address['locality'],
+                $address['admin1'],
                 $this->req('country')
             );
             $venue = new Venue($vid, TRUE);
 	}
 
-	if ($vid !== null){
+	if ($vid !== null){    // repost the query with the located $vid
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
             $repost = $this->repost;
@@ -85,33 +95,19 @@ class LocatePage extends Page {
 
 
     public function variables(){
-        $game = $this->game;
-        $venue = new Venue($this->venueDesc);
-        $venueName = $venue->name();
-        $venueCountry = $venue->country();
-        $venueURL = $venue->url();
-        $backLink = "<a href='".self::QWIK_URL;
-        $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
+        $address = self::parseAddress($this->description);
+        $country = $address['country'];
+
+        $QWIK_URL = self::QWIK_URL;
 
         $variables = parent::variables();
-
-        $variables['vid']            = $venue->id();
         $variables['game']           = $this->game;
-        $variables['homeURL']        = self::QWIK_URL."/player.php";
+        $variables['homeURL']        = "$QWIK_URL/player.php";
 	$variables['repost']         = $this->repost;
-        $variables['venueName']      = $venueName;
-        $variables['venueAddress']   = $venue->address();
-        $variables['venueCountry']   = $venueCountry;
-        $variables['countryOptions'] = $this->countryOptions($venueCountry, "\t\t\t\t\t");
-        $variables['venuePhone']     = $venue->phone();
-        $variables['venueURL']       = $venueURL;
-        $variables['venueTZ']        = $venue->tz();
-        $variables['venueLat']       = $venue->lat();
-        $variables['venueLng']       = $venue->lng();
-        $variables['venueNote']      = $venue->note();
-//        $variables['venueRevertDiv'] = $venue->revertDiv();
-        $variables['backLink']       = $backLink;
-        $variables['venueUrlLink']   = "<a href='$venueURL'>{homepage}</a>";
+        $variables['venueName']      = $this->description;
+        $variables['venueAddress']   = $address['formatted'];
+        $variables['venueCountry']   = $country;
+        $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
         
         return $variables;
     }

@@ -236,22 +236,40 @@ $(document).ready(function(){
         initMap();
     });
 
+
+    $('input#venue-address').change(function(){
+        var input = $(this).val();
+        var list = $('datalist#address-autocomplete');
+        var $url = "json/address-autocomplete.php";
+        $.getJSON(url, {input: input}, function(json){
+            if (json.status == 'OK'){
+                list.empty();
+                for (i = 0; i < json.predictions.length; i++) {
+                    var prediction = json.predictions[i];
+                    list.end()
+                        .append($("<option></option>")
+                        .attr("value", prediction.placeid)
+                        .text(prediction.formatted_address);
+                }
+            }
+        });
+    });
+
 });
 
 
 var MSqC = {lat: -36.4497857, lng: 146.43003739999995};
 
 function initMap() {
-
-    var lat =  document.getElementById('venue-lat').value;
-    var lng =  document.getElementById('venue-lng').value;
+    var latInput = document.getElementById('venue-lat');
+    var lngInput = document.getElementById('venue-lng');
+    var lat = latInput.value;
+    var lng = lngInput.value;
     var latlngOK = isNumeric(lat) && isNumeric(lng);
     var resultsMap = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: latlngOK ? {lat: Number(lat), lng: Number(lng)} : MSqC
     });
-    var latInput = document.getElementById('venue-lat');
-    var lngInput = document.getElementById('venue-lng');
     var marker;
 
     if (latlngOK){
@@ -263,9 +281,10 @@ function initMap() {
     } else {
         var geocoder = new google.maps.Geocoder();
 
-        var point = {address: document.getElementById('venue-name').value
-            + ", " + document.getElementById('venue-address').value
-            + ", " + document.getElementById('venue-country').value };
+        var name    = document.getElementById('venue-name').value;
+        var address = document.getElementById('venue-address').value;
+        var country = document.getElementById('venue-country').value;
+        var point = {address: name + ", " + address + ", " + country };
 
         geocoder.geocode(point, function(results, status) {
             if (status === 'OK') {
@@ -280,7 +299,7 @@ function initMap() {
                 latInput.value = site.lat();
                 lngInput.value = site.lng();
             } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                alert('Geocoding failed: ' + status);
             }
     
         });
@@ -358,6 +377,8 @@ function jsonVenueMarkers(game, map){
         }
     })
 }
+
+
 
 
 // https://stackoverflow.com/questions/13/determine-a-users-timezone/5492192#5492192

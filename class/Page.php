@@ -666,7 +666,7 @@ class Page extends Html {
         $options = '';
         foreach(self::countries() as $val => $txt){
             $selected = ($val == $country) ? " selected" : '';
-            $options .= "$tabs<option value='$val'$selected>$txt</option>\n";
+            $options .= "$tabs<option value='$val' $selected>$txt</option>\n";
         }
         return $options;
     }

@@ -348,4 +348,8 @@
 <phrase key ="venues">
     <en>venues</en>
 </phrase>
+<phrase key="player">
+    <en>player</en>
+    <es>jugadore</es>
+</phrase>
 </translation>

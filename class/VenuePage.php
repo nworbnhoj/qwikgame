@@ -1,6 +1,6 @@
 <?php
 
-require 'Page.php';
+require_once 'Page.php';
 
 class VenuePage extends Page {
 
@@ -13,6 +13,7 @@ class VenuePage extends Page {
     const GEOCODE_API_KEY    = "AIzaSyC4zcdOxikM54AHNQjcSLSd8d6N8Kebmfg";
 
     const PDR_XPATH_STATUS       = "/PlaceDetailsResponse/status/text()";
+    const PDR_XPATH_ERROR        = "/PlaceDetailsResponse/error_message/text()";
     const PDR_XPATH_FORMATTED    = "/PlaceDetailsResponse/result/formatted_address/text()";
     const PDR_XPATH_COUNTRY      = "/PlaceDetailsResponse/result/address_component[type='country']/long_name/text()";
     const PDR_XPATH_COUNTRY_CODE = "/PlaceDetailsResponse/result/address_component[type='country']/short_name/text()";
@@ -27,6 +28,7 @@ class VenuePage extends Page {
     const PDR_XPATH_LNG          = "/PlaceDetailsResponse/result/geometry/location/lng/text()";
 
     const ACR_XPATH_STATUS     = "/AutocompletionResponse/status/text()";
+    const ACR_XPATH_ERROR        = "/PlaceDetailsResponse/error_message/text()";
     const ACR_XPATH_PREDICTION = "/AutocompletionResponse/prediction";
 
 
@@ -167,7 +169,7 @@ class VenuePage extends Page {
         $placeid = NULL;
         $xml = self::geoplace($address);
 
-        $status = (string) $xml->xpath(self::ACR_XPATH_STATUS);
+        $status = (string) $xml->xpath(self::ACR_XPATH_STATUS)[0];
         switch ($status){
             case "OK":
                 $predictions = $xml->xpath(self::ACR_XPATH_PREDICTION);
@@ -177,7 +179,8 @@ class VenuePage extends Page {
                 }
                 break;
             default:
-                self::logMsg("Geoplace $status: $address");
+                $msg = (string) $xml->xpath(self::ACR_XPATH_ERROR);
+                self::logMsg("Geoplace $status: $msg\n\t$address");
         }
         return $placeid;
     }
@@ -212,7 +215,8 @@ class VenuePage extends Page {
                 case "INVALID_REQUEST":
                 case "UNKNOWN_ERROR":
                 default:
-                    self::logMsg("Geodetails $status: $address");
+                    $msg = (string) $xml->xpath(self::PDR_XPATH_ERROR);
+                    self::logMsg("Geodetails $status: $msg\n\t$address");
             }
         }
 

@@ -2,6 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
+require_once 'VenuePage.php';
 
 
 class LocatePage extends Page {
@@ -21,7 +22,7 @@ class LocatePage extends Page {
 
 
     public function serve(){
-        if (empty($this->game){
+        if (empty($this->game)){
             header("Location: ".self::QWIK_URL);
             return;
         }
@@ -39,7 +40,7 @@ class LocatePage extends Page {
         }
 
         // Process a svid (short vid) submitted in PlayerPage
-        if($empty($vid)){    // check if the description is a svid
+        if(empty($vid)){    // check if the description is a svid
             $vids = $this->matchShortVenueID($description, $this->game);
 	    $matchCount = count($vids);
 	    $vid = ($matchCount == 1) ? $vids[0] : null;
@@ -50,7 +51,11 @@ class LocatePage extends Page {
         && $this->req('name') !== null
         && $this->req('address') !== null
         && $this->req('country') !== null){    // make a new venue from the request
-            $address = self::parseAddress($req['address'], $req['country']);
+            $reqName = $this->req('name');
+            $reqAddress = $this->req('address');
+            $reqCountry = $this->req('country');
+
+            $address = VenuePage::parseAddress("$reqName, $reqAddress, $reqCountry");
 	    $vid = Venue::venueID(
                 $this->req('name'),
                 $address['locality'],
@@ -95,7 +100,7 @@ class LocatePage extends Page {
 
 
     public function variables(){
-        $address = self::parseAddress($this->description);
+        $address = VenuePage::parseAddress($this->description);
         $country = $address['country'];
 
         $QWIK_URL = self::QWIK_URL;
@@ -106,7 +111,6 @@ class LocatePage extends Page {
 	$variables['repost']         = $this->repost;
         $variables['venueName']      = $this->description;
         $variables['venueAddress']   = $address['formatted'];
-        $variables['venueCountry']   = $country;
         $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
         
         return $variables;

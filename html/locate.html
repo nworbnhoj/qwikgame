@@ -11,6 +11,11 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="qwik.js"></script>
+
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=initMap">
+    </script>
 </head>
 
 <body>
@@ -42,12 +47,9 @@
 
         <form id='edit-venue-form' action='locate.php' method='post'
             class='commit center vwide shadow venue'>
-            <input type='hidden' id='vid' name='vid' value='[vid]'>
             <input type='hidden' id='placeid' name='placeid'>
             <input id='venue-game' name='game' class='center' type='hidden' 
                 value='[game]'>
-            <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
-            <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
             <repeat id='repost'>
                 <input type='hidden' name='[name]' value='[value]'>
             </repeat>
@@ -66,16 +68,15 @@
                 <br>
                 <br>
                 <input id='venue-phone' name='phone' class='center'
-                    value='[venuePhone]' placeholder='{phone}'>
+                    placeholder='{phone}'>
                 <input id='venue-url' name='url' type='url' class='center' 
-                    value='[venueURL]' placeholder='http://'><br>
+                    placeholder='http://'><br>
                 <select id='tz' name='tz' class='center' required>
                     <option disabled value>{timezone}</option>
-                    <option value='[venueTZ]'>[venueTZ]</option>
                 </select>
                 <br>
                 <br>
-                <textarea id='venue-note' name='note' class='center' placeholder='{notes}' >[venueNote]</textarea>
+                <textarea id='venue-note' name='note' class='center' placeholder='{notes}' ></textarea>
             </p>
             <br>
             <input id='venue-cancel' type='button' value='{Cancel}'>

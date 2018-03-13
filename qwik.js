@@ -237,17 +237,17 @@ $(document).ready(function(){
     });
 
 
-    $('input#venue-address').change(function(){
+    $('input#venue-address').keydown(function(){
         var input = $(this).val();
         var list = $('datalist#address-autocomplete');
-        var $url = "json/address-autocomplete.php";
+        var url = "json/address-autocomplete.php";
         $.getJSON(url, {input: input}, function(json){
             if (json.status == 'OK'){
                 list.empty();
                 for (i = 0; i < json.predictions.length; i++) {
                     var prediction = json.predictions[i];
                     list.end()
-                        .append($("<option></option>")
+                        .append($("<option></option>"))
                         .attr("value", prediction.placeid)
                         .text(prediction.formatted_address);
                 }
@@ -261,49 +261,39 @@ $(document).ready(function(){
 var MSqC = {lat: -36.4497857, lng: 146.43003739999995};
 
 function initMap() {
+    var mapElement = document.getElementById('map');
     var latInput = document.getElementById('venue-lat');
     var lngInput = document.getElementById('venue-lng');
+    if (typeof mapElement == 'undefined'){return;}
+    if (typeof latInput == 'undefined'){return;}
+    if (typeof lngInput == 'undefined'){return;}
+
+    var site = MSqC;   // default value
     var lat = latInput.value;
     var lng = lngInput.value;
-    var latlngOK = isNumeric(lat) && isNumeric(lng);
-    var resultsMap = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14,
-        center: latlngOK ? {lat: Number(lat), lng: Number(lng)} : MSqC
-    });
-    var marker;
 
-    if (latlngOK){
-        marker = new google.maps.Marker({
-                map: resultsMap,
-                position: {lat: Number(lat), lng: Number(lng)},
-                draggable: true
-        });
+    if (isNumeric(lat) && isNumeric(lng)){
+        site = {lat: Number(lat), lng: Number(lng)};
     } else {
         var geocoder = new google.maps.Geocoder();
-
         var name    = document.getElementById('venue-name').value;
         var address = document.getElementById('venue-address').value;
         var country = document.getElementById('venue-country').value;
-        var point = {address: name + ", " + address + ", " + country };
+        var point = {address: name+", "+address+", "+country };
 
         geocoder.geocode(point, function(results, status) {
             if (status === 'OK') {
-                var site = results[0].geometry.location;
-                resultsMap.setCenter(site);
-                marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: site,
-                    draggable: true
-                });
-
+                site = results[0].geometry.location;
                 latInput.value = site.lat();
                 lngInput.value = site.lng();
             } else {
                 alert('Geocoding failed: ' + status);
             }
-    
         });
     }
+
+    var map = new google.maps.Map(mapElement, {zoom:14, center:site});
+    var marker = new google.maps.Marker({map:map, position:site, draggable:true});
     google.maps.event.addListener(marker, 'dragend', function(evt){
         latInput.value = evt.latLng.lat();
         lngInput.value = evt.latLng.lng();
@@ -312,11 +302,10 @@ function initMap() {
 
 
 function venuesMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: MSqC
-    });
-    jsonVenueMarkers(document.getElementById('game').value, map);
+    var mapElement = document.getElementById('map');
+    var game = document.getElementById('game').value;
+    var map = new google.maps.Map(mapElelemt, {zoom: 7, center: MSqC});
+    jsonVenueMarkers(game, map);
 }
 
 
@@ -328,13 +317,14 @@ function isNumeric(n) {
 
 // https://stackoverflow.com/questions/6921827/best-way-to-populate-a-select-box-with-timezones
 function jsonTZoptions(country, selectElement){
-    $.getJSON("json/timezone.php",{country_iso: country}, function(j){
-        var selected = (j.length === 1) ? '' : 'selected';
-        var options = '<option disabled ' + selected + ' value>timezone</option>';
-        selected = (j.length === 1) ? 'selected' : '';
-        for (var i = 0; i < j.length; i++) {
-            options += '<option ' + selected + ' value="' + j[i].optionValue + '">';
-            options += j[i].optionDisplay + '</option>';
+    $.getJSON("json/timezone.php",{country_iso: country}, function(json){
+        var selected = (json.length === 1) ? '' : 'selected';
+        var options = '<option disabled '+selected+' value>timezone</option>';
+        selected = (json.length === 1) ? 'selected' : '';
+        for (var i = 0; i < json.length; i++) {
+            var value = json[i].optionValue;
+            var display = json[i].optionDisplay;
+            options += '<option '+selected+' value="'+value+'">'+display+'</option>';
         }
         selectElement.html(options);
     })
@@ -342,9 +332,9 @@ function jsonTZoptions(country, selectElement){
 
 
 function jsonVenueMarkers(game, map){
-    $.getJSON("json/venue-map-data.php",{game: game}, function(j){
-        for (var i = 0; i < j.length; i++) {
-            var mark = j[i];
+    $.getJSON("json/venue-map-data.php",{game: game}, function(json){
+        for (var i = 0; i < json.length; i++) {
+            var mark = json[i];
             var lat = mark.lat;
             var lng = mark.lng;
             var vid = mark.vid;

@@ -902,7 +902,9 @@ Requirements:
         $date = date_create();
         $tmp_name = $_FILES["filename"]["tmp_name"];
         $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $path = self::PATH_UPLOAD . "/" . $fileName . Ranking::CSV;
+        $PATH = self::PATH_UPLOAD;
+        $CSV = Ranking::CSV;
+        $path = "$PATH/$fileName$CSV";
         $this->moveUpload($tmp_name, $path);
 
         $ranking = importRanking($game, $path, $fileName);
@@ -913,9 +915,11 @@ Requirements:
         $ranking->attribute("uploadName", $uploadName);
 
         if ($ok){
+            $PATH = self::PATH_PLAYER;
+            $XML = self::XML;
             $existingCount = 0;
             foreach($ranks as $sha256){
-                if (file_exists("player/$sha256.xml")){
+                if (file_exists("$PATH/$sha256$XML")){
                     $existingCount++;
                 }
             }

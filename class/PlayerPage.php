@@ -139,11 +139,11 @@ class PlayerPage extends Page {
         }
 
         $player = $this->player();
-        $playerName = empty($playerNick) ? $playerEmail : $playerNick;
         if (!is_null($player)){
-            $playerEmail = $player->email();
-	    $reckons = $player->reckon("email");
             $playerNick = $player->nick();
+            $playerEmail = $player->email();
+            $playerName = empty($playerNick) ? $playerEmail : $playerNick;
+	    $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
             $vars['message']       = "{Welcome} <b>$playerName</b>";

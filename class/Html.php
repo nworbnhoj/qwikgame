@@ -97,8 +97,12 @@ class Html extends Qwik {
 
 
     protected function template($templateName){
-        $path = Qwik::PATH_LANG.'/'.$this->language();
-        return file_get_contents("$path/$templateName.html");
+        $template = '';
+        if(!empty($templateName)){
+            $PATH = Qwik::PATH_LANG.'/'.$this->language();
+            $template = file_get_contents("$PATH/$templateName.html");
+        }
+        return $template;
     }
 
 

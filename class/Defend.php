@@ -4,17 +4,15 @@ require_once 'Qwik.php';
 
 class Defend extends Qwik {
 
-
     private $get;
     private $post;
-    
 
-	public function __construct(){
+
+    public function __construct(){
         parent::__construct();
-	}
-	
-	
-    
+    }
+
+
     public function get(){
         if (is_null($this->get)){
             $get = $_GET;
@@ -22,8 +20,8 @@ class Defend extends Qwik {
         }
         return $this->get;
     }
-    
-    
+
+
     public function post(){
         if (is_null($this->post)){
             $post = $_POST;
@@ -31,22 +29,21 @@ class Defend extends Qwik {
         }
         return $this->post;
     }
-    
-    
+
+
     public function request(){
        return $this->post() + $this->get();
     }
-	
-	
-	
-	private function examine($request){
+
+
+    private function examine($request){
         $req = $this->declaw($request);
 
         $ability_opt = array('min_range' => 0, 'max_range' => 4);
         $parity_opt  = array('min_range' => -2, 'max_range' => 2);
         $rep_opt     = array('min_range' => -1, 'max_range' => 1);
         $hrs_opt     = array('min_range' => 0, 'max_range' => 16777215);
-        
+
         $fvCountry = array($this,'fvCountry');
         $fvGame    = array($this,'fvGame');
         $fvID      = array($this,'fvID');
@@ -108,12 +105,11 @@ class Defend extends Qwik {
             $resStr = print_r($res, true);
             Page::logMsg("The Defense Filter rejected the input request. $resStr");
         }
-        
+
         return $req;
-    //    return declaw($req);
     }
-    
-    
+
+
     /********************************************************************************
     Return the $data string with all but a small set of safe characters removed
 
@@ -121,7 +117,7 @@ class Defend extends Qwik {
 
     Safe character set:
         abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
-    
+
     ********************************************************************************/
     private function scrub($data){
         if (is_array($data)){
@@ -133,9 +129,9 @@ class Defend extends Qwik {
         }
         return $data;
     }
-    
-    
-    
+
+
+
 
     // An array of maximum string lengths.
     // Used by: clip()
@@ -228,7 +224,8 @@ class Defend extends Qwik {
         'msg',
         'recover',
         'region',
-        'upload');
+        'upload'
+    );
 
     private function fvQwik($val){
         return in_array($val, Defend::$qwiks) ? $val : FALSE;
@@ -238,9 +235,9 @@ class Defend extends Qwik {
     private function fvToken($val){
         return strlen($val) == 10 ? $val : FALSE;
     }
-    
-    
-    
+
+
+
     # SECURITY escape all parameters to prevent malicious code insertion
     # http://au.php.net/manual/en/function.htmlentities.php
     private function declaw($cat){

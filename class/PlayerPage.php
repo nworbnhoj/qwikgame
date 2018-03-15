@@ -4,8 +4,8 @@ require_once 'Page.php';
 
 class PlayerPage extends Page {
 
-
-    const SELECT_PARITY = "<select name='parity'>
+    const SELECT_PARITY = 
+        "<select name='parity'>
             <option value='2'>{much_stronger}</option>
             <option value='1'>{stronger}</option>
             <option value='0' selected>{well_matched}</option>
@@ -13,6 +13,7 @@ class PlayerPage extends Page {
             <option value='-2'>{much_weaker}</option>
         </select>";
     const BUTTON_THUMB = "<button type='button' id='rep-thumb'  class='" . self::THUMB_UP_ICON . "'></button>";
+    const LINK_REP = "<a href='info.php#reputation'>{reputation}</a>";
 
     private $game;
     private $venue;
@@ -50,14 +51,7 @@ class PlayerPage extends Page {
 
 
     public function processRequest(){
-        $player = $this->player();
-        if (is_null($player)){
-            $this->logout();
-            return;
-        }
-
         $qwik = $this->req('qwik');
-        $action = $this->req('action');
         $req = $this->req();
         $result = null;
         switch ($qwik) {
@@ -96,14 +90,12 @@ class PlayerPage extends Page {
                 break;
             case 'login':
                 $email = $this->req('email');
-                if(isset($email)){
-                    if($email != $player->email()){
-                        $player->email($email);
-
-                        if (!headers_sent()){
-                            $url = $player->authURL(Player::MINUTE);
-                            header("Location: $url");
-                        }
+                if(isset($email)
+                && $email != $player->email()){
+                    $player->email($email);
+                    if (!headers_sent()){
+                        $url = $player->authURL(Player::MINUTE);
+                        header("Location: $url");
                     }
                 }
                 break;
@@ -112,7 +104,6 @@ class PlayerPage extends Page {
                 break;
             default:
                 $result =  null;
-    //             header("Location: error.php?msg=<b>Invalid post:<b> $qwik<br>");
         }
 
         $player->concludeMatches();
@@ -142,7 +133,7 @@ class PlayerPage extends Page {
         $playerName = empty($playerNick) ? $playerEmail : $playerNick;
         if (!is_null($player)){
             $playerEmail = $player->email();
-	    $reckons = $player->reckon("email");
+            $reckons = $player->reckon("email");
             $playerNick = $player->nick();
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
@@ -151,7 +142,7 @@ class PlayerPage extends Page {
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
-            $vars['reputationLink']= "<a href='info.php#reputation'>reputation</a>";
+            $vars['reputationLink']= self::LINK_REP;
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;
             $vars['playerURL']     = $player->url();
@@ -210,7 +201,6 @@ class PlayerPage extends Page {
 
 
 function qwikKeen($player, $req, $venue){
-//echo "<br>QWIKKEEN<br>";
     if(empty($req)
     || empty($venue)
     || empty($req['game'])

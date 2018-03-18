@@ -49,13 +49,15 @@ class Defend extends Qwik {
 
 
     public function request(){
-       return $this->post() + $this->get();
+       $request = $this->post() + $this->get();
+       $this->logRejected();
+       return $request;
     }
 
 
     public function rejected(){
         if (is_null($this->rejected)){
-            $this->request();
+//            $this->request();i
         }
         return $this->rejected;
     }
@@ -63,7 +65,7 @@ class Defend extends Qwik {
 
     public function logRejected(){
         $rejected = print_r($this->rejected(), TRUE);
-        Page::logMsg("Defend rejected: $rejected");
+        self::logMsg("Defend rejected: $rejected");
     }
 
 

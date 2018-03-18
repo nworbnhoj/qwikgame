@@ -1,7 +1,9 @@
 <?php
 
 
-class Filter {
+require_once 'Qwik.php';
+
+class Filter extends Qwik {
 
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'familiar', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'upload');
@@ -53,7 +55,7 @@ class Filter {
 
 
     static function parity($val){
-        return in_array($val, Defend::VALID_PARITY) ? $val : FALSE;
+        return in_array($val, self::VALID_PARITY) ? $val : FALSE;
     }
 
 
@@ -73,7 +75,7 @@ class Filter {
 
 
     static function qwik($val){
-        return in_array($val, Defend::VALID_QWIK) ? $val : FALSE;
+        return in_array($val, self::VALID_QWIK) ? $val : FALSE;
     }
 
 

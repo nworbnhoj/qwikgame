@@ -32,8 +32,7 @@ class Defend extends Qwik {
 
     public function get(){
         if (is_null($this->get)){
-            $get = $_GET;
-            $this->get = empty($get) ? array() : $this->examine($_GET);
+            $this->get = $this->examine($_GET);
         }
         return $this->get;
     }
@@ -41,8 +40,7 @@ class Defend extends Qwik {
 
     public function post(){
         if (is_null($this->post)){
-            $post = $_POST;
-            $this->post = empty($post) ? array() : $this->examine($_POST);
+            $this->post = $this->examine($_POST);
         }
         return $this->post;
     }
@@ -57,15 +55,18 @@ class Defend extends Qwik {
 
     public function rejected(){
         if (is_null($this->rejected)){
-//            $this->request();i
+            $this->request();
         }
         return $this->rejected;
     }
 
 
     public function logRejected(){
-        $rejected = print_r($this->rejected(), TRUE);
-        self::logMsg("Defend rejected: $rejected");
+        $rejected = $this->rejected();
+        if(!empty($rejected)){
+            $msg = print_r($rejected, TRUE);
+            self::logMsg("Defend rejected: $msg");
+        }
     }
 
 
@@ -76,9 +77,9 @@ class Defend extends Qwik {
         $args = array(
             'smtwtfs'  => Filter::HOURS,
             'address'  => FILTER_DEFAULT,
-            'ability'  => array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_ABILITY),
+            'ability'  => Filter::ABILITY,
             'account'  => FILTER_DEFAULT,
-            'country'  => array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::country'),
+            'country'  => Filter::COUNTRY,
             'email'    => FILTER_VALIDATE_EMAIL,
             'Fri'      => Filter::HOURS,
             'filename' => FILTER_DEFAULT,
@@ -132,7 +133,7 @@ class Defend extends Qwik {
 
 
     private function rejects($raw, $processed){
-        $rejects = NULL;
+        $rejects = array();
         if(is_array($raw)){
             foreach($raw as $key => $value){
                 $missing = NULL;

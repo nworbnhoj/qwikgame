@@ -169,7 +169,7 @@ class Ranking extends Qwik {
     public function retrieve($fileName){
         return self::readXML( 
             self::PATH_UPLOAD, 
-            $fileName . self::XML
+            $fileName
         );
     }
 

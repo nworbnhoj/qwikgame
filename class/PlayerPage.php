@@ -51,6 +51,7 @@ class PlayerPage extends Page {
 
 
     public function processRequest(){
+        $player = $this->player();
         $qwik = $this->req('qwik');
         $req = $this->req();
         $result = null;

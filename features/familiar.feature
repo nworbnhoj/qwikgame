@@ -6,5 +6,5 @@ Feature: Familiar
 	Scenario: Invite unregistered player
 	  Given my email "player.A@qwikgame.org" is registered with qwikgame
 	  And "new.player@qwikgame.org" is not registered with qwikgame
-          And I add "new.player@qwikgame.org" as a "well matched" "squash" player
+          And I add "new.player@qwikgame.org" as a "well_matched" "squash" player
           Then "new.player@qwikgame.org" is a "well_matched" "squash" player

@@ -550,9 +550,10 @@ class FeatureContext implements Context
      */
     public function iAddAsAPlayer($email, $parity, $game)
     {
+        $options = array('much_stronger'=>'2', 'stronger'=>'1', 'well_matched'=>'0', 'weaker'=>'-1', 'much_weaker'=>'-2');
         $this->req['qwik'] = 'familiar';
         $this->req['rival'] = $email;
-        $this->req['parity'] = $parity;
+        $this->req['parity'] = $options[$parity];
         $this->req['game'] = $game;
         $_GET = $this->req;
         $page = new PlayerPage();

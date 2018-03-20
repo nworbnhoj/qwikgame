@@ -1,146 +1,17 @@
 <?php 
 
 require_once 'Qwik.php';
+require_once 'Filter.php';
+
 
 class Defend extends Qwik {
 
-
-    private $get;
-    private $post;
-    
-
-	public function __construct(){
-        parent::__construct();
-	}
-	
-	
-    
-    public function get(){
-        if (is_null($this->get)){
-            $get = $_GET;
-            $this->get = empty($get) ? array() : $this->examine($_GET);
-        }
-        return $this->get;
-    }
-    
-    
-    public function post(){
-        if (is_null($this->post)){
-            $post = $_POST;
-            $this->post = empty($post) ? array() : $this->examine($_POST);
-        }
-        return $this->post;
-    }
-    
-    
-    public function request(){
-       return $this->post() + $this->get();
-    }
-	
-	
-	
-	private function examine($request){
-        $req = $this->declaw($request);
-
-        $ability_opt = array('min_range' => 0, 'max_range' => 4);
-        $parity_opt  = array('min_range' => -2, 'max_range' => 2);
-        $rep_opt     = array('min_range' => -1, 'max_range' => 1);
-        $hrs_opt     = array('min_range' => 0, 'max_range' => 16777215);
-        
-        $fvCountry = array($this,'fvCountry');
-        $fvGame    = array($this,'fvGame');
-        $fvID      = array($this,'fvID');
-        $fvInvite  = array($this,'fvInvite');
-        $fvParity  = array($this,'fvParity');
-        $fvPhone   = array($this,'fvPhone');
-        $fvPID     = array($this,'fvPID');
-        $fvQwik    = array($this,'fvQwik');
-        $fvToken   = array($this,'fvToken');
-        $fvRepost  = array($this,'fvRepost');
-
-        $args = array(
-            'smtwtfs'  => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'address'  => FILTER_DEFAULT,
-            'ability'  => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$ability_opt),
-            'account'  => FILTER_DEFAULT,
-            'country'  => array('filter'=>FILTER_CALLBACK,     'options'=>$fvCountry),
-            'email'    => FILTER_VALIDATE_EMAIL,
-            'Fri'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'filename' => FILTER_DEFAULT,
-            'game'     => array('filter'=>FILTER_CALLBACK,     'options'=>$fvGame),
-            'id'       => array('filter'=>FILTER_CALLBACK,     'options'=>$fvID),
-            'invite'   => array('filter'=>FILTER_CALLBACK,     'options'=>$fvInvite),
-            'Mon'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'msg'      => FILTER_DEFAULT,
-            'name'     => FILTER_DEFAULT,
-            'nickname' => FILTER_DEFAULT,
-            'parity'   => array('filter'=>FILTER_CALLBACK,     'options'=>$fvParity),
-            'phone'    => array('filter'=>FILTER_CALLBACK,     'options'=>$fvPhone),
-            'pid'      => array('filter'=>FILTER_CALLBACK,     'options'=>$fvPID),
-            'qwik'     => array('filter'=>FILTER_CALLBACK,     'options'=>$fvQwik),
-            'Sat'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'Sun'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'Thu'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'time'     => FILTER_DEFAULT,
-            'today'    => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'token'    => array('filter'=>FILTER_CALLBACK,     'options'=>$fvToken),
-            'tomorrow' => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'Tue'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt),
-            'tz'       => FILTER_DEFAULT,
-            'region'   => FILTER_DEFAULT,
-            'rep'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$rep_opt),
-            'repost'   => array('filter'=>FILTER_CALLBACK,     'options'=>$fvRepost),
-            'rival'    => FILTER_VALIDATE_EMAIL,
-            'title'    => FILTER_DEFAULT,
-    //        'url'        => FILTER_VALIDATE_URL,
-            'url'      => FILTER_DEFAULT,
-            'venue'    => FILTER_DEFAULT,
-            'Wed'      => array('filter'=>FILTER_VALIDATE_INT, 'options'=>$hrs_opt)
-        );
-
-        $result = filter_var_array($req, $args);
-
-        if(in_array(FALSE, $result, TRUE)){
-            $this->req = array();
-            $res = array_filter($result, function($var){return !empty($var);} );
-            $resStr = print_r($res, true);
-            Page::logMsg("The Defense Filter rejected the input request. $resStr");
-        }
-        
-        return $req;
-    //    return declaw($req);
-    }
-    
-    
-    /********************************************************************************
-    Return the $data string with all but a small set of safe characters removed
-
-    $data    String    An arbitrary string
-
-    Safe character set:
-        abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
-    
-    ********************************************************************************/
-    private function scrub($data){
-        if (is_array($data)){
-            foreach($data as $key => $val){
-                $data[$key] = $this->clip($key, $this->scrub($val));
-            }
-        } else {
-            $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);
-        }
-        return $data;
-    }
-    
-    
-    
-
-    // An array of maximum string lengths.
-    // Used by: clip()
-    private $clip = array(
+    // An array of maximum string lengths. Used by: clip()
+    const CLIP = array(
         'address'     => 200,
         'description' => 200,
         'filename'    => 50,
+        'msg'         => 200,
         'nickname'    => 20,
         'note'        => 2000,
         'region'      => 50,
@@ -148,95 +19,208 @@ class Defend extends Qwik {
         'venue'       => 150
     );
 
+
+    private $get;
+    private $post;
+    private $rejected;
+
+
+    public function __construct(){
+        parent::__construct();
+    }
+
+
+    public function get(){
+        if (is_null($this->get)){
+            $this->get = $this->examine($_GET);
+        }
+        return $this->get;
+    }
+
+
+    public function post(){
+        if (is_null($this->post)){
+            $this->post = $this->examine($_POST);
+        }
+        return $this->post;
+    }
+
+
+    public function request(){
+       $request = $this->post() + $this->get();
+       $this->logRejected();
+       return $request;
+    }
+
+
+    public function rejected(){
+        if (is_null($this->rejected)){
+            $this->request();
+        }
+        return $this->rejected;
+    }
+
+
+    public function logRejected(){
+        $rejected = $this->rejected();
+        if(!empty($rejected)){
+            $msg = print_r($rejected, TRUE);
+            self::logMsg("Defend rejected: $msg");
+        }
+    }
+
+
+    private function examine($request){
+        $req = $this->declaw($request);
+        $req = $this->clip($req);
+
+        $args = array(
+            'smtwtfs'  => Filter::HOURS,
+            'address'  => FILTER_DEFAULT,
+            'ability'  => Filter::ABILITY,
+            'account'  => FILTER_DEFAULT,
+            'country'  => Filter::COUNTRY,
+            'email'    => FILTER_VALIDATE_EMAIL,
+            'Fri'      => Filter::HOURS,
+            'filename' => FILTER_DEFAULT,
+            'game'     => Filter::GAME,
+            'id'       => Filter::ID,
+            'invite'   => Filter::INVITE,
+            'lat'      => Filter::LAT,
+            'lng'      => Filter::LNG,
+            'Mon'      => Filter::HOURS,
+            'msg'      => FILTER_DEFAULT,
+            'name'     => FILTER_DEFAULT,
+            'note'     => FILTER_DEFAULT,
+            'nickname' => FILTER_DEFAULT,
+            'parity'   => Filter::PARITY,
+            'phone'    => Filter::PHONE,
+            'pid'      => Filter::PID,
+            'qwik'     => Filter::QWIK,
+            'Sat'      => Filter::HOURS,
+            'Sun'      => Filter::HOURS,
+            'Thu'      => Filter::HOURS,
+            'time'     => FILTER_DEFAULT,
+            'today'    => Filter::HOURS,
+            'token'    => Filter::TOKEN,
+            'tomorrow' => Filter::HOURS,
+            'Tue'      => Filter::HOURS,
+            'tz'       => FILTER_DEFAULT,
+            'region'   => FILTER_DEFAULT,
+            'rep'      => Filter::REP,
+            'repost'   => Filter::REPOST,
+            'rival'    => FILTER_VALIDATE_EMAIL,
+            'title'    => FILTER_DEFAULT,
+    //        'url'        => FILTER_VALIDATE_URL,
+            'url'      => FILTER_DEFAULT,
+            'venue'    => FILTER_DEFAULT,
+            'vid'      => FILTER_DEFAULT,
+            'Wed'      => Filter::HOURS
+        );
+
+        $result = filter_var_array($req, $args, FALSE);
+
+        $changed = $this->size($result) !== $this->size($req);
+        $rejects = $changed ? $this->rejects($req, $result) : array() ;
+        if(is_null($this->rejected)){
+            $this->rejected = $rejects;
+        } else {
+            $this->rejected += $rejects;
+        }
+
+        return $result;
+    }
+
+
+
+    private function rejects($raw, $processed){
+        $rejects = array();
+        if(is_array($raw)){
+            foreach($raw as $key => $value){
+                $missing = NULL;
+                if (array_key_exists($key, $processed)){
+                    $missing = $this->rejects($value, $processed[$key]);
+                } else {
+                    $missing = print_r($value, TRUE);
+                }
+                if(!is_null($missing)){
+                    $rejects[$key] = $missing;
+                }
+            }
+        } elseif($raw != $processed) {    // weak test as some filters convert type
+            $rejects = print_r($raw, TRUE);
+        }
+        return $rejects;
+    }
+
+
+    /*********************************************************
+    *
+    * returns the number of non-empty data (ie #keys + #value)
+    **********************************************************/
+    private function size($data){
+        $size = empty($data) ? 0 : 1;
+        if(is_array($data)){
+            $size += count(array_keys($data));
+            foreach($data as $value){
+                $size += $this->size($value);
+            }
+        }
+        return $size;
+    }
+
+
+    /********************************************************************************
+    Return the $data string with all but a small set of safe characters removed
+
+    $data    String    An arbitrary string
+
+    Safe character set:
+        abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
+
+    ********************************************************************************/
+    private function scrub($data){
+        if (is_array($data)){
+            foreach($data as $key => $val){
+                $data[$key] = $this->clip($this->scrub($val), $key);
+            }
+        } else {
+            $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);
+        }
+        return $data;
+    }
+
+
     /********************************************************************************
     Returns $val truncated to a maximum length specified in the global $clip array
 
     $key    String    the $key of the global $clip array specifying the truncated length
     $val    String    A string to be truncated according to global $clip array
     ********************************************************************************/
-    function clip($key, $val){
-        return array_key_exists($key, $this->clip) ? substr($val, 0, $this->clip[$key]) : $val ;
-    }
-
-
-/************* FILTERS ******************/
-
-
-    private function fvGame($val){
-        return array_key_exists($val, self::qwikGames()) ? $val : FALSE;
-    }
-
-
-    private function fvCountry($val){
-        return array_key_exists($val, self::countries()) ? $val : FALSE;
-    }
-
-
-    private function fvID($val){
-        return strlen($val) == 6 ? $val : FALSE;
-    }
-
-
-    private function fvInvite($val){
-        if (is_array($val)){
-            return true;    // *********** more validation required **************
+    function clip($data, $key=NULL){
+        $clipped = $data;
+        if (is_array($data)){
+            if(is_null($key)){
+                foreach($data as $key => $val){
+                    $clipped[$key] = $this->clip($val, $key);
+                }
+            } elseif(array_key_exists($key, $data)) {
+                $clipped[$key] = $this->clip($data[$key], $key);
+            }
+        } elseif(array_key_exists($key, self::CLIP)){
+            $clipped = substr($data, 0, self::CLIP[$key]);
+            if ($clipped !== $data){
+                Page::logMsg("Defend clipped [$key] $clipped");
+            }
         }
-        return false;
+        return $clipped;
     }
 
 
-    static private $parityFilter = array('any','similar','matching', '-2', '-1', '0', '1', '2');
-
-    private function fvParity($val){
-        return in_array($val, Defend::$parityFilter) ? $val : FALSE;
-    }
+/************* old code ******************/
 
 
-    private function fvPID($val){
-        return strlen($val) == 64 ? $val : FALSE;
-    }
 
-
-    private function fvPhone($val){
-        return strlen($val) <= 10 ? $val : FALSE;
-    }
-
-
-    private function fvRepost($val){
-        return $val;
-    }
-
-
-    static private $qwiks = array(
-        'accept',
-        'account',
-        'activate',
-        'available',
-        'cancel',
-        'deactivate',
-        'decline',
-        'delete',
-        'familiar',
-        'feedback',
-        'keen',
-        'login',
-        'logout',
-        'msg',
-        'recover',
-        'region',
-        'upload');
-
-    private function fvQwik($val){
-        return in_array($val, Defend::$qwiks) ? $val : FALSE;
-    }
-
-
-    private function fvToken($val){
-        return strlen($val) == 10 ? $val : FALSE;
-    }
-    
-    
-    
     # SECURITY escape all parameters to prevent malicious code insertion
     # http://au.php.net/manual/en/function.htmlentities.php
     private function declaw($cat){
@@ -264,9 +248,6 @@ class Defend extends Qwik {
         }
         return $data;
     }
-
-
-
 
 }
 

@@ -28,11 +28,9 @@ class VenuePage extends Page {
     const PDR_XPATH_LNG          = "/PlaceDetailsResponse/result/geometry/location/lng/text()";
 
     const ACR_XPATH_STATUS     = "/AutocompletionResponse/status/text()";
-    const ACR_XPATH_ERROR        = "/PlaceDetailsResponse/error_message/text()";
+    const ACR_XPATH_ERROR      = "/AutocompletionResponse/error_message/text()";
     const ACR_XPATH_PREDICTION = "/AutocompletionResponse/prediction";
 
-
-    const ADDRESS_DEFAULT = array('country_code'=>'_', 'country'=>'', 'admin1_code'=>'_', 'admin1'=>'', 'admin2'=>'', 'admin3'=>'', 'locality'=>'_', 'formatted'=>'', 'phone'=>'', 'url'=>'', 'lat'=>'', 'lng'=>'');
 
     private $venue;
 
@@ -188,7 +186,7 @@ class VenuePage extends Page {
 
 
     static function parseAddress($address){
-        $parsed = self::ADDRESS_DEFAULT;
+        $parsed = FALSE;
         $placeID = self::getPlace($address);
 
         if (isset($placeid)){

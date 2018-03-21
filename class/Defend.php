@@ -96,6 +96,7 @@ class Defend extends Qwik {
             'parity'   => Filter::PARITY,
             'phone'    => Filter::PHONE,
             'pid'      => Filter::PID,
+            'placeid'  => FILTER_DEFAULT,
             'qwik'     => Filter::QWIK,
             'Sat'      => Filter::HOURS,
             'Sun'      => Filter::HOURS,

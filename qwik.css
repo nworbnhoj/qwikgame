@@ -192,6 +192,13 @@ span.help {
 	line-height: 1em;
 }
 
+span.prompt {
+	margin:1em;
+	padding:1em;
+	border:1px #404040 solid;
+	line-height: 1em;
+}
+
 span.tag {
 	margin:5px;
 	padding:0px;

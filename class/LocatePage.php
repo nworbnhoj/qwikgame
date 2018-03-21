@@ -10,6 +10,7 @@ class LocatePage extends Page {
     private $game;
     private $description;
     private $repost;
+    private $hideAddressPrompt = 'hidden';
     
 
     public function __construct($template='locate'){
@@ -56,13 +57,17 @@ class LocatePage extends Page {
             $reqCountry = $this->req('country');
 
             $address = VenuePage::parseAddress("$reqName, $reqAddress, $reqCountry");
-	    $vid = Venue::venueID(
-                $this->req('name'),
-                $address['locality'],
-                $address['admin1'],
-                $this->req('country')
-            );
-            $venue = new Venue($vid, TRUE);
+            if($address){
+	        $vid = Venue::venueID(
+                    $this->req('name'),
+                    $address['locality'],
+                    $address['admin1'],
+                    $this->req('country')
+                );
+                $venue = new Venue($vid, TRUE);
+            } else {
+                $this->hideAddressPrompt = '';
+            }
 	}
 
 	if ($vid !== null){    // repost the query with the located $vid
@@ -100,8 +105,19 @@ class LocatePage extends Page {
 
 
     public function variables(){
-        $address = VenuePage::parseAddress($this->description);
-        $country = $address['country'];
+        // resupply the prior entries if they could not be geocoded
+        $name = $this->req('name');
+        $address = $this->req('address');
+        $country = $this->req('country');
+
+        if (empty($name)){
+            $name = $this->description;
+            $geocoded = VenuePage::parseAddress($this->description);
+            if($geocoded){
+                $address = $geocoded['formatted'];
+                $country = $geocoded['country'];
+            }
+        }
 
         $QWIK_URL = self::QWIK_URL;
 
@@ -109,9 +125,10 @@ class LocatePage extends Page {
         $variables['game']           = $this->game;
         $variables['homeURL']        = "$QWIK_URL/player.php";
 	$variables['repost']         = $this->repost;
-        $variables['venueName']      = $this->description;
-        $variables['venueAddress']   = $address['formatted'];
+        $variables['venueName']      = $name;
+        $variables['venueAddress']   = $address;
         $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
+        $variables['hideAddressPrompt'] = $this->hideAddressPrompt; 
         
         return $variables;
     }

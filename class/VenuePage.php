@@ -64,19 +64,20 @@ class VenuePage extends Page {
             $address = self::parseAddress($req['address'].', '.$req['country']);
 
             $save = $venue->updateAtt('name',     $req['name']);
-            $save = $venue->updateAtt('address',  $address['formatted']) || $save;
             $save = $venue->updateAtt('locality', $address['locality'])  || $save;
             $save = $venue->updateAtt('admin1',   $address['admin1'])    || $save;
             $save = $venue->updateAtt('country',  $address['country'])   || $save;
             if($save){
                 $venue->updateID();
             }
-            $save = $venue->updateAtt('phone',     $req['phone'])   || $save;
-            $save = $venue->updateAtt('url',       $req['url'])     || $save;
-            $save = $venue->updateAtt('tz',        $req['tz'])      || $save;
-            $save = $venue->updateAtt('note',      $req['note'])    || $save;
-            $save = $venue->updateAtt('lat',       $address['lat']) || $save;
-            $save = $venue->updateAtt('lng',       $address['lng']) || $save; $save;
+            $save = $venue->updateAtt('phone',     $req['phone'])         || $save;
+            $save = $venue->updateAtt('url',       $req['url'])           || $save;
+            $save = $venue->updateAtt('tz',        $req['tz'])            || $save;
+            $save = $venue->updateAtt('note',      $req['note'])          || $save;
+            $save = $venue->updateAtt('lat',       $address['lat'])       || $save;
+            $save = $venue->updateAtt('lng',       $address['lng'])       || $save;
+            $save = $venue->updateAtt('placeid',   $address['placeid'])   || $save;
+            $save = $venue->updateAtt('address',   $address['formatted']) || $save;
             if($save){
                 $venue->save();
             }

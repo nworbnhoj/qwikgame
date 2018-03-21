@@ -48,28 +48,14 @@ class LocatePage extends Page {
         }
 
         // Process a new venue submitted from LocatePage
-        if(empty($vid){
-            $reqName = $this->req('name');
-            $reqAddress = $this->req('address');
-            $reqCountry = $this->req('country');
+        if(empty($vid)){
+            $vid = $this->newVenue(
+                $this->req('name'),
+                $this->req('address'),
+                $this->req('country')
+            );
 
-            $placeid = $reqAddress;  //perhaps
-            $address = VenuePage::getDetails($placeid);
-
-            if($empty($address)){
-                $info = "$reqName, $reqAddress, $reqCountry";
-                $address = VenuePage::parseAddress($info);
-            }
-        
-            if($address){
-	        $vid = Venue::venueID(
-                    $reqName,
-                    $address['locality'],
-                    $address['admin1'],
-                    $reqCountry
-                );
-                $venue = new Venue($vid, TRUE);
-            } else {
+            if(empty($vid)){
                 $this->hideAddressPrompt = '';
             }
 	}
@@ -83,6 +69,37 @@ class LocatePage extends Page {
     }
     
     
+    private function newVenue($reqName, $reqAddress, $reqCountry){
+        $vid = NULL;
+        $placeid = $reqAddress;  //perhaps
+        $address = VenuePage::getDetails($placeid);
+
+        if($empty($address)){
+            $info = "$reqName, $reqAddress, $reqCountry";
+            $address = VenuePage::parseAddress($info);
+        }
+
+        if($address){
+            $vid = Venue::venueID(
+                $reqName,
+                $address['locality'],
+                $address['admin1'],
+                $reqCountry
+            );
+            $venue = new Venue($vid, TRUE);
+
+            $venue->updateAtt('phone',   $req['phone']);
+            $venue->updateAtt('url',     $req['url']);
+            $venue->updateAtt('tz',      $req['tz']);
+            $venue->updateAtt('note',    $req['note']);
+            $venue->updateAtt('lat',     $address['lat']);
+            $venue->updateAtt('lng',     $address['lng']);
+            $venue->updateAtt('placeid', $address['placeid']);
+            $venue->updateAtt('address', $address['formatted']);
+            $venue->save();
+        }
+        return $vid;
+    }
     
     
     /*******************************************************************************

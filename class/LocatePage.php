@@ -48,21 +48,25 @@ class LocatePage extends Page {
         }
 
         // Process a new venue submitted from LocatePage
-        if(empty($vid)
-        && $this->req('name') !== null
-        && $this->req('address') !== null
-        && $this->req('country') !== null){    // make a new venue from the request
+        if(empty($vid){
             $reqName = $this->req('name');
             $reqAddress = $this->req('address');
             $reqCountry = $this->req('country');
 
-            $address = VenuePage::parseAddress("$reqName, $reqAddress, $reqCountry");
+            $placeid = $reqAddress;  //perhaps
+            $address = VenuePage::getDetails($placeid);
+
+            if($empty($address)){
+                $info = "$reqName, $reqAddress, $reqCountry";
+                $address = VenuePage::parseAddress($info);
+            }
+        
             if($address){
 	        $vid = Venue::venueID(
-                    $this->req('name'),
+                    $reqName,
                     $address['locality'],
                     $address['admin1'],
-                    $this->req('country')
+                    $reqCountry
                 );
                 $venue = new Venue($vid, TRUE);
             } else {

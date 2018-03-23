@@ -264,7 +264,7 @@ class Venue extends Qwik {
 
     public function updateAtt($key, $value){
         if (empty($key)
-        || empty($update)){
+        || empty($value)){
             return false;
         }
 

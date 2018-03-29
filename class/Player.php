@@ -27,14 +27,12 @@ class Player extends Qwik {
     public function __construct($pid, $forge=FALSE){
         parent::__construct();
         $this->id = $pid;
-        $fileName = $this->fileName();
-        $path = self::PATH_PLAYER . "/" . $fileName;
-        if (!file_exists($path) && $forge) {
+        if (!self::exists($pid) && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
             self::logMsg("login: new player " . self::snip($pid));
         }
-        $this->xml = file_exists($path) ? $this->retrieve($fileName) : NULL ;
+        $this->xml = self::exists($pid) ? $this->retrieve($this->fileName()) : NULL ;
     }
     
     
@@ -72,8 +70,15 @@ class Player extends Qwik {
     }
 
 
-    public function exists(){
+    public function ok(){
         return !is_null($this->xml);
+    }
+
+
+    static function exists($pid){
+        $PATH = self::PATH_PLAYER;
+        $XML = self::XML;
+        return file_exists("$PATH/$pid$XML");
     }
     
     
@@ -290,7 +295,7 @@ class Player extends Qwik {
 
     public function isValidToken($token){
         $nekot = $this->nekot($token);
-        if($this->exists()){
+        if($this->ok()){
             return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
         }
         return FALSE;
@@ -546,7 +551,7 @@ class Player extends Qwik {
         $match = $this->matchID($mid);
         if (isset($match)){
             $rival = $match->rival();
-            if($rival->exists()){
+            if($rival->ok()){
                 $rival->emailMsg($msg, $match);
             }
         }
@@ -921,7 +926,7 @@ Requirements:
             $XML = self::XML;
             $existingCount = 0;
             foreach($ranks as $sha256){
-                if (file_exists("$PATH/$sha256$XML")){
+                if (self::exists($sha256)){
                     $existingCount++;
                 }
             }

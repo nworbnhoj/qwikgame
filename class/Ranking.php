@@ -240,7 +240,7 @@ class Ranking extends Qwik {
         foreach($anonIDs as $anonID){
             $anon = new Player($anonID);
             if (isset($anon)
-            && $anon->exists()){
+            && $anon->ok()){
                 $anon->removeRanks($rankingID);
             }
 // possible to remove player here if there is no email and no other ranks (or other data)

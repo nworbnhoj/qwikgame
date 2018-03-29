@@ -214,7 +214,7 @@ Rival and by negating Parity.
                 $newCrumbs = $nodeOrb->expand($crumbs);  // recursion
             } elseif(!in_array($rid, $crumbs)){          // found a new edge
                 $rival = new Player($rid);
-                if ($rival->exists()){                   // expand the edge
+                if ($rival->ok()){                   // expand the edge
                     $rivalOrb = $rival->orb($this->game, $crumbs, FALSE);
                     $nodeOrb = $node->orb($rivalOrb);
                     if (isset($nodeOrb)){

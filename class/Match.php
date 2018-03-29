@@ -208,7 +208,7 @@ class Match extends Qwik {
         $game = $this->game();
         foreach($rids as $rid => $email){
             $rival = new Player($rid);
-            if($rival->exists()){
+            if($rival->ok()){
                 $parity = $this->player->parity($rival, $game);
                 $ytirap = -1 * $parity;
                 $hours = $this->hours();

@@ -16,9 +16,9 @@ class LocatePage extends Page {
     public function __construct($template='locate'){
         parent::__construct($template);
         
-        $this->game = $this->req('game');
+        $this->game        = $this->req('game');
         $this->description = $this->req('venue');
-        $this->repost = $this->req('repost');
+        $this->repost      = $this->req('repost');
     }
 
 
@@ -57,17 +57,17 @@ class LocatePage extends Page {
 
         // Process a new venue submitted from LocatePage
         if(empty($vid)){
-            $name = $this->req('name');
+            $name     = $this->req('name');
             $locality = $this->req('locality');
-            $admin1 = $this->req('admin1');
-            $country = $this->req('country');
+            $admin1   = $this->req('admin1');
+            $country  = $this->req('country');
             if(isset($name)
             && isset($locality)
             && isset($admin1)
             && isset($country)){
                 $description = "$name, $locality, $admin1, $country";
                 $placeid = VenuePage::getPlace($description);
-                if(isset($address)){
+                if(isset($placeid)){
                     $vid = $this->newVenue($placeid, $name);
                 } else {
                     $vid = Venue::venueID($name, $locality, $admin1, $country);

@@ -237,25 +237,75 @@ $(document).ready(function(){
     });
 
 
-    $('input#venue-address').keydown(function(){
-        var input = $(this).val();
-        var list = $('datalist#address-autocomplete');
-        var url = "json/address-autocomplete.php";
-        $.getJSON(url, {input: input}, function(json){
-            if (json.status == 'OK'){
-                list.empty();
-                for (i = 0; i < json.predictions.length; i++) {
-                    var prediction = json.predictions[i];
-                    list.end()
-                        .append($("<option></option>"))
-                        .attr("value", prediction.placeid)
-                        .text(prediction.formatted_address);
-                }
-            }
-        });
+    $('input#venue-name').keydown(function(){
+        guessPlace(
+            $(this).val(),
+            $('input#venue-locality').val(),
+            $('input#venue-admin1').val(),
+            $('select#venue-country').val(),
+            $('div#guess-venue')
+        );
     });
 
+
+    $('input#venue-locality').keydown(function(){
+        guessPlace(
+            $('input#venue-name').val(),
+            $(this).val(),
+            $('input#venue-admin1').val(),
+            $('select#venue-country').val(),
+            $('div#guess-venue')
+        );
+    });
+
+
+    $('input#venue-admin1').keydown(function(){
+        guessPlace(
+            $('input#venue-name').val(),
+            $('input#venue-locality').val(),
+            $(this).val(),
+            $('select#venue-country').val(),
+            $('div#guess-venue')
+        );
+    });
+
+
+    $('input#venue-country').change(function(){
+        guessPlace(
+            $('input#venue-name').val(),
+            $('input#venue-locality').val(),
+            $('input#venue-admin1').val(),
+            $(this).val(),
+            $('div#guess-venue')
+        );
+    });
+
+
+
 });
+
+
+function guessPlace(name, locality, admin1, country, div){
+    var url = "json/address-autocomplete.php";
+    var input = name+', '+locality+', '+admin1+', '+country;
+    $.getJSON(url, {input: input}, function(json){
+        div.empty();
+        if (json.status == 'OK'){
+            var predictions = json.predictions;
+            for (i = 0; i < predictions.length; i++) {
+                var prediction = predictions[i];
+                var place_id = prediction.place_id;
+                var desc = prediction.description;
+                div.append($("<form method='post' action='locate.php'>"))
+                div.append($("<input type='hidden' name='placeid' value='"+place_id+"'>"));
+                div.append($("<input type='submit' value='"+desc+"'>"));
+                div.append($("</form>"));
+            }
+        }
+    });
+}
+
+
 
 
 var MSqC = {lat: -36.4497857, lng: 146.43003739999995};
@@ -264,9 +314,9 @@ function initMap() {
     var mapElement = document.getElementById('map');
     var latInput = document.getElementById('venue-lat');
     var lngInput = document.getElementById('venue-lng');
-    if (typeof mapElement == 'undefined'){return;}
-    if (typeof latInput == 'undefined'){return;}
-    if (typeof lngInput == 'undefined'){return;}
+    if (!mapElement){return;}
+    if (!latInput){return;}
+    if (!lngInput){return;}
 
     var site = MSqC;   // default value
     var lat = latInput.value;

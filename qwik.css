@@ -157,6 +157,7 @@ blockquote, q {
 
 .w10    { width:10% }
 .w20    { width:20% }
+.w90    { width:90% }
 .w00    { overflow:hidden; width:auto }
 .clear  { clear:both }
 

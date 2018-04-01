@@ -130,11 +130,22 @@ class VenuePage extends Page {
 
 
     static function geo($param, $key, $url){
+        $result = null;
         $param['key'] = $key;
         $query = http_build_query($param);
-        $result = file_get_contents("$url?$query");
-        return new SimpleXMLElement($result);
+        $contents = file_get_contents("$url?$query");
+        $xml = new SimpleXMLElement($contents);
+        $status = (string) $xml->status[0];
+        if($status === 'OK'){
+            $result = $xml->result;
+        } else {
+            $msg = $xml->error_message;
+            self::logMsg("Google $status: $msg\n\t$url?$query");
+        }
+        return $result;
     }
+
+
 
 
     static function geoplace($text){
@@ -164,58 +175,55 @@ class VenuePage extends Page {
     }
 
 
-    static function getPlace($address){
+    static function getPlace($description){
         $placeid = NULL;
-        $xml = self::geoplace($address);
-
-        $status = (string) $xml->xpath(self::ACR_XPATH_STATUS)[0];
-        switch ($status){
-            case "OK":
-                $predictions = $xml->xpath(self::ACR_XPATH_PREDICTION);
-                $prediction = $predictions[0];
-                if(isset($prediction)){
-                    $placeid = (string) $prediction['placeid'];
-                }
-                break;
-            default:
-                $msg = (string) $xml->xpath(self::ACR_XPATH_ERROR);
-                self::logMsg("Geoplace $status: $msg\n\t$address");
+        $xml = self::geoplace($description);
+        if(isset($xml)){
+            $prediction = $xml->prediction[0];
+            if(isset($prediction)){
+                $placeid = (string) $prediction->place_id;
+            }
         }
         return $placeid;
     }
 
 
+
     static function getDetails($placeid){
         $details = array();
         $xml = self::geodetails($placeid);
-        $status = (string) $xml->xpath(self::PDR_XPATH_STATUS);
-        switch ($status){
-            case "OK":
-                $details['placeid']      = $placeid;
-                $details['formatted']    = (string) $xml->xpath(self::PDR_XPATH_FORMATTED);
-                $details['country']      = (string) $xml->xpath(self::PDR_XPATH_COUNTRY);
-                $details['country_code'] = (string) $xml->xpath(self::PDR_XPATH_COUNTRY_CODE);
-                $details['admin1']       = (string) $xml->xpath(self::PDR_XPATH_ADMIN1);
-                $details['admin1_code']  = (string) $xml->xpath(self::PDR_XPATH_ADMIN1_CODE);
-                $details['admin2']       = (string) $xml->xpath(self::PDR_XPATH_ADMIN2);
-                $details['admin3']       = (string) $xml->xpath(self::PDR_XPATH_ADMIN3);
-                $details['locality']     = (string) $xml->xpath(self::PDR_XPATH_LOCALITY);
-                $details['phone']        = (string) $xml->xpath(self::PDR_XPATH_PHONE);
-                $details['url']          = (string) $xml->xpath(self::PDR_XPATH_URL);
-                $details['lat']          = (string) $xml->xpath(self::PDR_XPATH_LAT);
-                $details['lng']          = (string) $xml->xpath(self::PDR_XPATH_LNG);
-                break;
-            case "ZERO_RESULTS":
-            case "OVER_QUERY_LIMIT":
-            case "REQUEST_DENIED":
-            case "INVALID_REQUEST":
-            case "UNKNOWN_ERROR":
-            default:
-                $msg = (string) $xml->xpath(self::PDR_XPATH_ERROR);
-                self::logMsg("Geodetails $status: $msg\n\t$address");
+        if(isset($xml)){
+            $details['placeid'] = $placeid;
+
+            $result = $xml->result;
+            $details['formatted'] = (string) $result->formatted_address;
+
+            $location = $result->geometry->location;
+            $details['lat'] = (string) $location->lat;
+            $details['lng'] = (string) $location->lng;
+
+            $addr = $result->xpath("address_component[type='country']")[0];
+            $details['country'] = (string) $addr->long_name;
+            $details['country_code'] = (string) $addr->short_name;
+
+            $addr = $result->xpath("address_component[type='administrative_area_level_1']")[0];
+            $details['admin1'] = (string) $addr->long_name;
+            $details['admin1_code'] = (string) $addr->short_name;
+
+            $addr = $result->xpath("address_component[type='administrative_area_level_2']")[0];
+            $details['admin2'] = (string) $addr->long_name;
+
+            $addr = $result->xpath("address_component[type='administrative_area_level_3']")[0];
+            $details['admin3'] = (string) $addr->long_name;
+
+            $addr = $result->xpath("address_component[type='locality']")[0];
+            $details['locality'] = (string) $addr->long_name;
+
+            $details['phone'] = (string) $result->phone[0];            $details['url'] = (string) $result->website[0];
         }
         return $details;
     }
+
 
 
     static function parseAddress($address){

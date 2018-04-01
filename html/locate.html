@@ -47,19 +47,23 @@
         <h3>{New_Venue}</h3>
         <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide transparent venue'>
             <input type='hidden' id='placeid' name='placeid'>
-            <input id='venue-game' name='game' class='center' type='hidden' value='[game]'>
+            <input type='hidden' id='venue-game' name='game' class='center' value='[game]'>
             <repeat id='repost'>
                 <input type='hidden' name='[name]' value='[value]'>
             </repeat>
             <span class='help' hidden></span>
             <button type='button' class='action help [INFO_ICON]'></button>
-            <div class='clear'></div
-            <input id='venue-submit' type='submit' value='{Submit}' class='rgt'>
-            <input id='venue-name' name='name' class='w00' value='[venueName]' placeholder='{name}' autocomplete="off" required>
+            <div class='clear'></div>
+            <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
+            <div class='w00'>
+                <input id='venue-name' name='name' class='w90' value='[venueName]' placeholder='{name}' autocomplete="off" required>
+            </div>
             <div class='clear'></div>
             <input id='venue-country' name='country' class="rgt w10 caps" value='[venueCountry]' placeholder='[venueCountry]' list='country-codes' maxlength='2' required>
             <input id='venue-admin1' name='admin1' class="rgt w20" value='[venueAdmin1]' placeholder='{admin1}' required>
-            <input id='venue-locality' name='locality' class="w00" value='[venueLocality]' placeholder='{locality}' required>
+            <div class='w00'>
+                <input id='venue-locality' name='locality' class="w90" value='[venueLocality]' placeholder='{locality}' required>
+            </div>
         </form>
         <hr>
         <div class='center' id='guess-venue'>

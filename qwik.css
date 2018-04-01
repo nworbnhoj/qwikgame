@@ -132,7 +132,7 @@ blockquote, q {
 }
 
 .lft	{ float:left;	}
-.rgt	{float:right;	}
+.rgt	{ float:right;	}
 
 .person {
 	color:#404040;
@@ -154,6 +154,11 @@ blockquote, q {
 .bob	{ color:Brown;		}
 .jane	{ color:GoldenRod;	}
 .anon	{ 					}
+
+.w10    { width:10% }
+.w20    { width:20% }
+.w00    { overflow:hidden; width:auto }
+.clear  { clear:both }
 
 /* https://stackoverflow.com/questions/19954893/google-map-infowindow-displays-scroll-bars-in-google-chrome#21781513 */
 .infowindow	{line-height:1.35;}
@@ -483,6 +488,7 @@ select {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
+        margin: 0.5em;
 }
 
 select.sel {
@@ -525,8 +531,9 @@ input {
 }
 
 
-input[type='text']		{ text-align: center;		}
+input[type='text']	{ text-align: center;		}
 input[type='submit'] 	{ background-color: grey;	}
+input.caps           { text-transform: uppercase;}
 
 
 /************** <button> *********************/

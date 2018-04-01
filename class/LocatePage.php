@@ -44,19 +44,35 @@ class LocatePage extends Page {
         if(empty($vid)){    // check if the description is a svid
             $vids = $this->matchShortVenueID($description, $this->game);
 	    $matchCount = count($vids);
-	    $vid = ($matchCount == 1) ? $vids[0] : null;
+	    $vid = ($matchCount == 1) ? $vids[0] : NULL;
+        }
+
+        // Process a new venue from a placeid from LocatePage
+        if(empty($vid)){
+            $placeid = $this->req('placeid');
+            if(isset($placeid)){
+                $this->newVenue($placeid, $this->req('name'));
+            }
         }
 
         // Process a new venue submitted from LocatePage
         if(empty($vid)){
-            $vid = $this->newVenue(
-                $this->req('name'),
-                $this->req('address'),
-                $this->req('country')
-            );
-
-            if(empty($vid)){
-                $this->hideAddressPrompt = '';
+            $name = $this->req('name');
+            $locality = $this->req('locality');
+            $admin1 = $this->req('admin1');
+            $country = $this->req('country');
+            if(isset($name)
+            && isset($locality)
+            && isset($admin1)
+            && isset($country)){
+                $description = "$name, $locality, $admin1, $country";
+                $placeid = VenuePage::getPlace($description);
+                if(isset($address)){
+                    $vid = $this->newVenue($placeid, $name);
+                } else {
+                    $vid = Venue::venueID($name, $locality, $admin1, $country);
+                    $venue = new Venue($vid, TRUE);
+                }
             }
 	}
 
@@ -65,33 +81,26 @@ class LocatePage extends Page {
             $query = http_build_query($this->req());
             $repost = $this->repost;
             header("location: ".self::QWIK_URL."/$repost?$query");
-       }
+        }
     }
     
     
-    private function newVenue($reqName, $reqAddress, $reqCountry){
+    private function newVenue($placeid, $reqName){
         $vid = NULL;
-        $placeid = $reqAddress;  //perhaps
         $address = VenuePage::getDetails($placeid);
-
-        if($empty($address)){
-            $info = "$reqName, $reqAddress, $reqCountry";
-            $address = VenuePage::parseAddress($info);
-        }
 
         if($address){
             $vid = Venue::venueID(
                 $reqName,
                 $address['locality'],
                 $address['admin1'],
-                $reqCountry
+                $address['country_code'];
             );
             $venue = new Venue($vid, TRUE);
 
-            $venue->updateAtt('phone',   $req['phone']);
-            $venue->updateAtt('url',     $req['url']);
-            $venue->updateAtt('tz',      $req['tz']);
-            $venue->updateAtt('note',    $req['note']);
+            $venue->updateAtt('phone',   $address['phone']);
+            $venue->updateAtt('url',     $address['url']);
+            $venue->updateAtt('tz',      $address['tz']);
             $venue->updateAtt('lat',     $address['lat']);
             $venue->updateAtt('lng',     $address['lng']);
             $venue->updateAtt('placeid', $address['placeid']);
@@ -128,14 +137,16 @@ class LocatePage extends Page {
     public function variables(){
         // resupply the prior entries if they could not be geocoded
         $name = $this->req('name');
-        $address = $this->req('address');
+        $locality = $this->req('locality');
+        $admin1 = $this->req('admin1');
         $country = $this->req('country');
 
         if (empty($name)){
             $name = $this->description;
             $geocoded = VenuePage::parseAddress($this->description);
             if($geocoded){
-                $address = $geocoded['formatted'];
+                $locality = $geocoded['locality'];
+                $admin1 = $geocoded['admin1'];
                 $country = $geocoded['country'];
             }
         }
@@ -147,9 +158,11 @@ class LocatePage extends Page {
         $variables['homeURL']        = "$QWIK_URL/player.php";
 	$variables['repost']         = $this->repost;
         $variables['venueName']      = $name;
-        $variables['venueAddress']   = $address;
+        $variables['venueLocality']  = $locality;
+        $variables['venueAdmin1']    = $admin1;
+        $variables['venueCountry']   = isset($country) ? $country : $this->geolocate('countryCode') ;
         $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
-        $variables['hideAddressPrompt'] = $this->hideAddressPrompt; 
+        $variables['datalists']      = $this->countryDataList();
         
         return $variables;
     }

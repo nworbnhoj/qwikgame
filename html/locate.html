@@ -37,60 +37,37 @@
             </repeat>
             <repeat id='similarVenues'>
                 <button type='submit' class='venue' name='vid' value='[vid]'>
-                    <b>[players]</b> players @ [name]
+                    [name]<br>
+                    <b>[players]</b> {players}
                 </button>
             </repeat>
         </form>
 
-    <br>
+        <br>
         <h3>{New_Venue}</h3>
-
-        <form id='edit-venue-form' action='locate.php' method='post'
-            class='commit center vwide shadow venue'>
+        <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide transparent venue'>
             <input type='hidden' id='placeid' name='placeid'>
-            <input id='venue-game' name='game' class='center' type='hidden' 
-                value='[game]'>
+            <input id='venue-game' name='game' class='center' type='hidden' value='[game]'>
             <repeat id='repost'>
                 <input type='hidden' name='[name]' value='[value]'>
             </repeat>
-            <span class='help' hidden>
-            </span>
+            <span class='help' hidden></span>
             <button type='button' class='action help [INFO_ICON]'></button>
-            <div class='center'>
-                <input id='venue-name' name='name' class='center' 
-                    value='[venueName]' placeholder='{name}'
-                    autocomplete="off" required>
-                <input id='venue-address' name='address' class='center geocode'
-                    list='address-autocomplete' value='[venueAddress]'
-                    placeholder='{address}' required>
-                <div id='prompt-address' class='center prompt' [hideAddressPrompt]>{Unable_to_find_address}</div>
-                <select id='venue-country' name='country' class='center geocode' required>
-                    [countryOptions]
-                </select>
-                <br>
-                <br>
-                <input id='venue-phone' name='phone' class='center'
-                    placeholder='{phone}'>
-                <input id='venue-url' name='url' type='url' class='center' 
-                    placeholder='http://'><br>
-                <select id='tz' name='tz' class='center' required>
-                    <option disabled value>{timezone}</option>
-                </select>
-                <br>
-                <br>
-                <textarea id='venue-note' name='note' class='center' placeholder='{notes}' ></textarea>
-            </div>
-            <br>
-            <input id='venue-cancel' type='button' value='{Cancel}'>
-            <input id='venue-submit' type='submit' value='{Submit}'>
-            <br>
-            <br>
+            <div class='clear'></div
+            <input id='venue-submit' type='submit' value='{Submit}' class='rgt'>
+            <input id='venue-name' name='name' class='w00' value='[venueName]' placeholder='{name}' autocomplete="off" required>
+            <div class='clear'></div>
+            <input id='venue-country' name='country' class="rgt w10 caps" value='[venueCountry]' placeholder='[venueCountry]' list='country-codes' maxlength='2' required>
+            <input id='venue-admin1' name='admin1' class="rgt w20" value='[venueAdmin1]' placeholder='{admin1}' required>
+            <input id='venue-locality' name='locality' class="w00" value='[venueLocality]' placeholder='{locality}' required>
         </form>
-
+        <hr>
+        <div class='center' id='guess-venue'>
+        </div>
     </div>
 
 
-<br><br><br><br><br><br><br>
+<br><br><br><br><br>
 
 
     <div id='footer' class='center'>
@@ -99,7 +76,7 @@
 
 </body>
 
-<datalist id='address-autocomplete'></datalist>
+[datalists]
 
 </html>
 

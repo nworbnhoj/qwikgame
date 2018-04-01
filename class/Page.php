@@ -411,7 +411,7 @@ class Page extends Html {
 
     private function replicateSimilarVenues($html, $req){
         $group = '';
-        $similar = array_slice($this->similarVenues($req['venue']), 0, 10);
+        $similar = array_slice($this->similarVenues($req['venue']), 0, 5);
         foreach($similar as $vid){
             $venue = new Venue($vid);
             $vars = array(
@@ -596,6 +596,7 @@ class Page extends Html {
         foreach(self::qwikGames() as $game => $name){
             $datalists .= "\n\n" . $this->venueDatalist($game);
         }
+        $datalists .= $this->countryDatalist();
         return $datalists;
     }
     
@@ -606,6 +607,16 @@ class Page extends Html {
         foreach($vids as $vid){
             $svid = Venue::svid($vid);
             $datalist .= "\t<option value='$svid'>\n";
+        }
+        $datalist .= "</datalist>\n";
+        return $datalist;
+    }
+
+
+    protected function countryDatalist(){
+        $datalist = "<datalist id='country_codes'>\n";
+        foreach(self::countries() as $val => $txt){
+            $datalist .= "\t<option value='$val'>\n";
         }
         $datalist .= "</datalist>\n";
         return $datalist;

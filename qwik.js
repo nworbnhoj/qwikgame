@@ -301,6 +301,7 @@ function guessPlace(name, locality, admin1, country, div){
                 div.append($("<input type='submit' value='"+desc+"'>"));
                 div.append($("</form>"));
             }
+            div.append($("<img src='img/powered-by-google.png'>"));
         }
     });
 }

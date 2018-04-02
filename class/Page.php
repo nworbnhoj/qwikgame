@@ -614,7 +614,7 @@ class Page extends Html {
 
 
     protected function countryDatalist(){
-        $datalist = "<datalist id='country_codes'>\n";
+        $datalist = "<datalist id='country_iso'>\n";
         foreach(self::countries() as $val => $txt){
             $datalist .= "\t<option value='$val'>\n";
         }

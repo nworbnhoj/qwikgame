@@ -207,9 +207,7 @@ class Venue extends Qwik {
         $state = isset($xml['admin1_code'])
             ? $xml['admin1_code']
             : $xml['admin1'];
-        $country = isset($xml['country_code'])
-            ? $xml['country_code']
-            : $xml['country'];
+        $country = $xml['country'];
 
         $vid = self::venueID($name, $locality, $state, $country);
         $this->rename($vid);

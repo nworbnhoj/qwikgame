@@ -104,7 +104,7 @@ class LocatePage extends Page {
                 $reqName,
                 $address['locality'],
                 $address['admin1'],
-                $address['country_code']
+                $address['country_iso']
             );
             $venue = new Venue($vid, TRUE);
 
@@ -250,7 +250,7 @@ class LocatePage extends Page {
 
             $addr = $result->xpath("address_component[type='country']")[0];
             $details['country'] = (string) $addr->long_name;
-            $details['country_code'] = (string) $addr->short_name;
+            $details['country_iso'] = (string) $addr->short_name;
 
             $addr = $result->xpath("address_component[type='administrative_area_level_1']")[0];
             $details['admin1'] = (string) $addr->long_name;

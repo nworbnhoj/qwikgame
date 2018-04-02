@@ -104,7 +104,7 @@ class LocatePage extends Page {
                 $reqName,
                 $address['locality'],
                 $address['admin1'],
-                $address['country_code'];
+                $address['country_code']
             );
             $venue = new Venue($vid, TRUE);
 

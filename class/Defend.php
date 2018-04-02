@@ -8,10 +8,13 @@ class Defend extends Qwik {
 
     // An array of maximum string lengths. Used by: clip()
     const CLIP = array(
+        'admin1'      => 100,
         'address'     => 200,
         'description' => 200,
         'filename'    => 50,
+        'locality'    => 100,
         'msg'         => 200,
+        'name'        => 100,
         'nickname'    => 20,
         'note'        => 2000,
         'region'      => 50,
@@ -75,7 +78,7 @@ class Defend extends Qwik {
         $req = $this->clip($req);
 
         $args = array(
-            'smtwtfs'  => Filter::HOURS,
+            'admin1'   => FILTER_DEFAULT,
             'address'  => FILTER_DEFAULT,
             'ability'  => Filter::ABILITY,
             'account'  => FILTER_DEFAULT,
@@ -88,6 +91,7 @@ class Defend extends Qwik {
             'invite'   => Filter::INVITE,
             'lat'      => Filter::LAT,
             'lng'      => Filter::LNG,
+            'locality' => FILTER_DEFAULT,
             'Mon'      => Filter::HOURS,
             'msg'      => FILTER_DEFAULT,
             'name'     => FILTER_DEFAULT,
@@ -99,6 +103,7 @@ class Defend extends Qwik {
             'placeid'  => FILTER_DEFAULT,
             'qwik'     => Filter::QWIK,
             'Sat'      => Filter::HOURS,
+            'smtwtfs'  => Filter::HOURS,
             'Sun'      => Filter::HOURS,
             'Thu'      => Filter::HOURS,
             'time'     => FILTER_DEFAULT,

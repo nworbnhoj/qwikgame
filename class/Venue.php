@@ -13,12 +13,14 @@ class Venue extends Qwik {
     public function __construct($id, $forge=FALSE){
         parent::__construct();
         $this->id = $id;
-        $this->xml = self::exists($id) ?
-            $this->retrieve() :
-            $this->newXML();
-        if ($forge){
-            $this->save();
-            self::logMsg("new Venue: $id");
+        if (self::exists($id)){
+            $this->xml = $this->retrieve();
+        } else {
+            $this->xml = $this->newXML();
+            if ($forge){
+                $this->save();
+                self::logMsg("new Venue: $id");
+            }
         }
     }
 

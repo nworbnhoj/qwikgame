@@ -360,16 +360,16 @@ class Page extends Html {
             if(is_array($value)){
                 $nam = "$name" . "[]";
                 foreach($value as $val){
-                     $vars = array(
-                        'name'      => $nam,
-                        'value'     => $val,
+                    $vars = array(
+                        'name'  => $nam,
+                        'value' => $val
                     );
                     $group .= $this->populate($html, $vars);
                 }
             } else {
                 $vars = array(
-                    'name'      => $name,
-                    'value'     => $value,
+                    'name'  => $name,
+                    'value' => $value
                 );
                 $group .= $this->populate($html, $vars);
             }

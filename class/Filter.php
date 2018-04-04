@@ -7,7 +7,7 @@ class Filter extends Qwik {
 
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'familiar', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'upload');
-    const VALID_REPOST = array('player.php');
+    const VALID_REPOST = array('player.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
 
 
     const OPT_ABILITY = array('min_range' => 0, 'max_range' => 4);
@@ -71,7 +71,11 @@ class Filter extends Qwik {
 
 
     static function repost($val){
-        return in_array($val, self::VALID_REPOST) ? $val : FALSE;
+        $OK = TRUE;
+        foreach(explode('#', $val) as $v){
+            $OK = $OK && in_array($v, self::VALID_REPOST);
+        }
+        return $OK ? $val : FALSE;
     }
 
 

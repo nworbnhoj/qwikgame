@@ -11,15 +11,9 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="qwik.js"></script>
-
-
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=initMap">
-    </script>
 </head>
 
 <body>
-
 
 <h1>qwik game org</h1>
     <div id='menu' class='menu'>
@@ -32,9 +26,7 @@
 
         <h3>{Similar_Venues}</h3>
         <form action='[repost]' method='post' class='transparent'>
-            <repeat id='repost'>
-                <input type='hidden' name='[name]' value='[value]'>
-            </repeat>
+            <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
             <repeat id='similarVenues'>
                 <button type='submit' class='venue' name='vid' value='[vid]'>
                     [name]<br>
@@ -46,28 +38,24 @@
         <br>
         <h3>{New_Venue}</h3>
         <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide transparent venue'>
-            <input type='hidden' id='placeid' name='placeid'>
             <input type='hidden' id='venue-game' name='game' class='center' value='[game]'>
-            <repeat id='repost'>
-                <input type='hidden' name='[name]' value='[value]'>
-            </repeat>
+            <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
             <span class='help' hidden></span>
             <button type='button' class='action help [INFO_ICON]'></button>
             <div class='clear'></div>
             <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
             <div class='w00'>
-                <input id='venue-name' name='name' class='w90' value='[venueName]' placeholder='{name}' autocomplete="off" required>
+                <input id='venue-name' name='name' class="guess w90" value='[venueName]' placeholder='{name}' autocomplete="off" required>
             </div>
             <div class='clear'></div>
-            <input id='venue-country' name='country' class="rgt w10 caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
-            <input id='venue-admin1' name='admin1' class="rgt w20" value='[venueAdmin1]' placeholder='{admin1}' required>
+            <input id='venue-country' name='country' class="guess w10 rgt caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
+            <input id='venue-admin1' name='admin1' class="guess w20 rgt" value='[venueAdmin1]' placeholder='{admin1}' required>
             <div class='w00'>
-                <input id='venue-locality' name='locality' class="w90" value='[venueLocality]' placeholder='{locality}' required>
+                <input id='venue-locality' name='locality' class="guess w90" value='[venueLocality]' placeholder='{locality}' required>
             </div>
+            <hr>
+            <div id='venue-guess'></div>
         </form>
-        <hr>
-        <div class='center' id='guess-venue'>
-        </div>
     </div>
 
 

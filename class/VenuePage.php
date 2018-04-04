@@ -29,11 +29,11 @@ class VenuePage extends Page {
         }
 
         $venue = $this->venue;
-        $req = $this->req;
+        $req = $this->req();
         if($this->player() !== null
-        && $req('name') !== null
-        && $req('address') !== null
-        && $req('country') !== null){
+        && $req['name'] !== null
+        && $req['address'] !== null
+        && $req['country'] !== null){
             $address = LocatePage::parseAddress($req['address'].', '.$req['country']);
 
             $save = $venue->updateAtt('name',     $req['name']);

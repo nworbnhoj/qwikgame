@@ -237,50 +237,26 @@ $(document).ready(function(){
     });
 
 
-    $('input#venue-name').keydown(function(){
-        guessPlace(
-            $(this).val(),
-            $('input#venue-locality').val(),
-            $('input#venue-admin1').val(),
-            $('select#venue-country').val(),
-            $('div#guess-venue')
-        );
+    $('button.guess').click(function(){
+        $('input#venue-locality').val = $(this).attr('v-locality').val();
+        $('input#venue-admin1').val   = $(this).attr('v-admin1').val();
+        $('input#venue-country').val  = $(this).attr('v-country').val();
     });
 
 
-    $('input#venue-locality').keydown(function(){
-        guessPlace(
-            $('input#venue-name').val(),
-            $(this).val(),
-            $('input#venue-admin1').val(),
-            $('select#venue-country').val(),
-            $('div#guess-venue')
-        );
+    $('input.guess').keydown(function(){
+        var name     = $('input#venue-name').val();
+        var locality = $('input#venue-locality').val();
+        var admin1   = $('input#venue-admin1').val();
+        var country  = $('input#venue-country').val();
+        var div      = $('div#venue-guess');
+        guessPlace(name, locality, admin1, country, div);
     });
 
 
-    $('input#venue-admin1').keydown(function(){
-        guessPlace(
-            $('input#venue-name').val(),
-            $('input#venue-locality').val(),
-            $(this).val(),
-            $('select#venue-country').val(),
-            $('div#guess-venue')
-        );
+    $('input#venue-country').keydown(function(){
+        this.value = this.value.toLocaleUpperCase();
     });
-
-
-    $('input#venue-country').change(function(){
-        guessPlace(
-            $('input#venue-name').val(),
-            $('input#venue-locality').val(),
-            $('input#venue-admin1').val(),
-            $(this).val(),
-            $('div#guess-venue')
-        );
-    });
-
-
 
 });
 
@@ -294,14 +270,17 @@ function guessPlace(name, locality, admin1, country, div){
             var predictions = json.predictions;
             for (i = 0; i < predictions.length; i++) {
                 var prediction = predictions[i];
-                var place_id = prediction.place_id;
-                var desc = prediction.description;
-                div.append($("<form method='post' action='locate.php'>"))
-                div.append($("<input type='hidden' name='placeid' value='"+place_id+"'>"));
-                div.append($("<input type='submit' value='"+desc+"'>"));
-                div.append($("</form>"));
+                var button = "<button type='submit' ";
+                button += "class='venue guess' ";
+                button += "name='placeid' ";
+                button += "value='"+prediction.place_id+"' ";
+                button += "v-locality = '"+locality+"' ";
+                button += "v-admin1 = '"+admin1+"' ";
+                button += "v-country = '"+country+"'>";
+                button += prediction.description+"</button>";
+                div.append($(button));
             }
-            div.append($("<img src='img/powered-by-google.png'>"));
+            div.append($("<br><img src='img/powered-by-google.png'>"));
         }
     });
 }

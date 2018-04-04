@@ -78,10 +78,13 @@ class LocatePage extends Page {
                 $description = "$name, $locality, $admin1, $country";
                 $placeid = self::getPlace($description);
                 if(isset($placeid)){
+                    $this->req('placeid', $placeid);
                     $vid = $this->newVenue($placeid, $name);
                 } else {
                     $vid = Venue::venueID($name, $locality, $admin1, $country);
-                    $venue = new Venue($vid, TRUE);
+                    if (!Venue::exists($id)){
+                        $venue = new Venue($vid, TRUE);
+                    }
                 }
             }
 	}
@@ -167,9 +170,9 @@ class LocatePage extends Page {
         $variables['game']           = $this->game;
         $variables['homeURL']        = "$QWIK_URL/player.php";
 	$variables['repost']         = $this->repost;
-        $variables['venueName']      = $name;
-        $variables['venueLocality']  = $locality;
-        $variables['venueAdmin1']    = $admin1;
+        $variables['venueName']      = isset($name) ? $name : '';
+        $variables['venueLocality']  = isset($locality) ? $locality : '';
+        $variables['venueAdmin1']    = isset($admin1) ? $admin1 : '';
         $variables['venueCountry']   = isset($country) ? $country : $this->geolocate('countryCode') ;
         $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
         $variables['datalists']      = $this->countryDataList();

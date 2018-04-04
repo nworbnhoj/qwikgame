@@ -545,6 +545,7 @@ button {
 	background-color:#DDDDDD;	
 	}
 
+button[type='submit'] { background-color:grey; }
 
 button.icon {
     float:right;

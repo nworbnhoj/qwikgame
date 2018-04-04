@@ -140,8 +140,9 @@ class Defend extends Qwik {
 
 
     private function rejects($raw, $processed){
-        $rejects = array();
+        $rejects = NULL;
         if(is_array($raw)){
+            $rejects = array();
             foreach($raw as $key => $value){
                 $missing = NULL;
                 if (array_key_exists($key, $processed)){
@@ -149,14 +150,14 @@ class Defend extends Qwik {
                 } else {
                     $missing = print_r($value, TRUE);
                 }
-                if(!is_null($missing)){
+                if(!empty($missing)){
                     $rejects[$key] = $missing;
                 }
             }
         } elseif($raw != $processed) {    // weak test as some filters convert type
             $rejects = print_r($raw, TRUE);
         }
-        return $rejects;
+        return empty($rejects) ? NULL : $rejects;
     }
 
 

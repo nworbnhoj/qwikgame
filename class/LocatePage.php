@@ -8,13 +8,15 @@ require_once 'VenuePage.php';
 class LocatePage extends Page {
 
 
-    const GEOPLACE_URL   = "https://maps.googleapis.com/maps/api/place/autocomplete/xml";
-    const GEODETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/xml";
-    const GEOCODE_URL    = "https://maps.googleapis.com/maps/api/geocode/xml";
+    const GEOPLACE_URL    = "https://maps.googleapis.com/maps/api/place/autocomplete/xml";
+    const GEODETAILS_URL  = "https://maps.googleapis.com/maps/api/place/details/xml";
+    const GEOTIMEZONE_URL = "https://maps.googleapis.com/maps/api/timezone/xml";
+    const GEOCODE_URL     = "https://maps.googleapis.com/maps/api/geocode/xml";
 
-    const GEOPLACE_API_KEY   = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
-    const GEODETAILS_API_KEY = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
-    const GEOCODE_API_KEY    = "AIzaSyC4zcdOxikM54AHNQjcSLSd8d6N8Kebmfg";
+    const GEOPLACE_API_KEY    = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
+    const GEODETAILS_API_KEY  = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
+    const GEOTIMEZONE_API_KEY = "AIzaSyBuYfjKqrIP463HtMMMx1QnCh2VoO7GB-Q";
+    const GEOCODE_API_KEY     = "AIzaSyC4zcdOxikM54AHNQjcSLSd8d6N8Kebmfg";
 
 
     private $game;
@@ -61,7 +63,7 @@ class LocatePage extends Page {
         if(empty($vid)){
             $placeid = $this->req('placeid');
             if(isset($placeid)){
-                $this->newVenue($placeid, $this->req('name'));
+                $vid = $this->newVenue($placeid, $this->req('name'));
             }
         }
 
@@ -82,7 +84,7 @@ class LocatePage extends Page {
                     $vid = $this->newVenue($placeid, $name);
                 } else {
                     $vid = Venue::venueID($name, $locality, $admin1, $country);
-                    if (!Venue::exists($id)){
+                    if (!Venue::exists($vid)){
                         $venue = new Venue($vid, TRUE);
                     }
                 }
@@ -144,9 +146,6 @@ class LocatePage extends Page {
     }
 
 
-    
-
-
     public function variables(){
         // resupply the prior entries if they could not be geocoded
         $name = $this->req('name');
@@ -159,8 +158,9 @@ class LocatePage extends Page {
             $geocoded = self::parseAddress($this->description);
             if($geocoded){
                 $locality = $geocoded['locality'];
-                $admin1 = $geocoded['admin1'];
-                $country = $geocoded['country'];
+                $admin1   = $geocoded['admin1'];
+                $country  = $geocoded['country_iso'];
+                $placeid  = $geocoded['placeid'];
             }
         }
 
@@ -176,20 +176,21 @@ class LocatePage extends Page {
         $variables['venueCountry']   = isset($country) ? $country : $this->geolocate('countryCode') ;
         $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
         $variables['datalists']      = $this->countryDataList();
+        $variables['placeid']        = $placeid;
         
         return $variables;
     }
 
 
     static function geo($param, $key, $url){
-        $result = null;
+        $result = NULL;
         $param['key'] = $key;
         $query = http_build_query($param);
         $contents = file_get_contents("$url?$query");
         $xml = new SimpleXMLElement($contents);
         $status = (string) $xml->status[0];
         if($status === 'OK'){
-            $result = $xml->result;
+            $result = $xml;
         } else {
             $msg = $xml->error_message;
             self::logMsg("Google $status: $msg\n\t$url?$query");
@@ -208,20 +209,32 @@ class LocatePage extends Page {
 
 
     static function geodetails($placeid){
-        return self::geo(
+        $geo = self::geo(
             array('placeid'=>$placeid),
             self::GEODETAILS_API_KEY,
             self::GEODETAILS_URL
+        );
+        return isset($geo) ? $geo->result : NULL;
+    }
+
+
+    static function geotime($lat, $lng){
+        $location = "$lat,$lng";
+        return self::geo(
+            array('location'=>$location, 'timestamp'=>time()),
+            self::GEOTIMEZONE_API_KEY,
+            self::GEOTIMEZONE_URL
         );
     }
 
 
     static function geocode($address, $country){
-        return self::geo(
+        $geo = self::geo(
             array('components'=>"$address|$country"),
             self::GEOCODE_API_KEY,
             self::GEOCODE_URL
         );
+        return isset($geo) ? $geo->result : NULL;
     }
 
 
@@ -239,17 +252,20 @@ class LocatePage extends Page {
 
 
     static function getDetails($placeid){
-        $details = array();
-        $xml = self::geodetails($placeid);
-        if(isset($xml)){
+        $details = NULL;
+        $result = self::geodetails($placeid);
+        if(isset($result)){
+            $details = array();
             $details['placeid'] = $placeid;
 
-            $result = $xml->result;
             $details['formatted'] = (string) $result->formatted_address;
 
-            $location = $result->geometry->location;
-            $details['lat'] = (string) $location->lat;
-            $details['lng'] = (string) $location->lng;
+            $location = $result->xpath("//geometry/location")[0];
+            $lat = (string) $location->lat;
+            $lng = (string) $location->lng;
+            $details['lat'] = $lat;
+            $details['lng'] = $lng;
+            $details['tz'] = self::getTimezone($lat, $lng);
 
             $addr = $result->xpath("address_component[type='country']")[0];
             $details['country'] = (string) $addr->long_name;
@@ -268,9 +284,20 @@ class LocatePage extends Page {
             $addr = $result->xpath("address_component[type='locality']")[0];
             $details['locality'] = (string) $addr->long_name;
 
-            $details['phone'] = (string) $result->phone[0];            $details['url'] = (string) $result->website[0];
+            $details['phone'] = (string) $result->phone[0];
+            $details['url'] = (string) $result->website[0];
         }
         return $details;
+    }
+
+
+    static function getTimezone($lat, $lng){
+        $tz = '';
+        $xml = self::geotime($lat, $lng);
+        if(isset($xml)){
+            $tz = (string) $xml->time_zone_id;
+        }
+        return $tz;
     }
 
 

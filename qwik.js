@@ -238,9 +238,9 @@ $(document).ready(function(){
 
 
     $('button.guess').click(function(){
-        $('input#venue-locality').val = $(this).attr('v-locality').val();
-        $('input#venue-admin1').val   = $(this).attr('v-admin1').val();
-        $('input#venue-country').val  = $(this).attr('v-country').val();
+        $('input#venue-locality').val = ' ';
+        $('input#venue-admin1').val   = ' '
+        $('input#venue-country').val  = $(this).attr('v-country');
     });
 
 

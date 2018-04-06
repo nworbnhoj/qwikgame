@@ -366,7 +366,7 @@ class Page extends Html {
                     );
                     $group .= $this->populate($html, $vars);
                 }
-            } else {
+            } elseif(isset($value)){
                 $vars = array(
                     'name'  => $name,
                     'value' => $value

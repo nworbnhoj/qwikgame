@@ -141,7 +141,7 @@ class Page extends Html {
     }
 
 
-    public function req($key=null, $value=null){
+    public function req($key=NULL, $value=NULL){
         if(is_null($key)){
             return $this->req;
         } elseif (is_null($value) && isset($this->req[$key])){
@@ -149,7 +149,7 @@ class Page extends Html {
         } else {
             $this->req[$key] = $value;
         }
-        return null;
+        return NULL;
     }
 
 

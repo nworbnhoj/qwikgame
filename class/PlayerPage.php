@@ -44,7 +44,7 @@ class PlayerPage extends Page {
                 $this->req('repost', 'player.php');
             }
             $query = http_build_query($this->req());
-            header("location: ".self::QWIK_URL."/locate.php?$query");
+            header("Location: ".self::QWIK_URL."/locate.php?$query");
             return;
         }
     }
@@ -245,7 +245,7 @@ function qwikAccept($player, $request){
         $matchID = $request['id'];
         $match = $player->matchID($matchID);
         if (!isset($match)){
-            header("Location: error.php?msg=unable to locate match.");
+            self::logMsg("unable to locate match: $matchID");
             return;
         }
         $match->accept(new Hours($request['hour']));
@@ -302,7 +302,7 @@ function qwikFeedback($player, $request){
             $rival->save();
         }
     } else {
-        header("Location: error.php?msg=malformed feedback.");
+        self::logMsg("malformed feedback");
     }
 }
 

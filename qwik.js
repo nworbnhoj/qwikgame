@@ -266,6 +266,7 @@ function guessPlace(name, locality, admin1, country, div){
     var input = name+', '+locality+', '+admin1+', '+country;
     $.getJSON(url, {input: input}, function(json){
         div.empty();
+        div.append($("<hr>"));
         if (json.status == 'OK'){
             var predictions = json.predictions;
             for (i = 0; i < predictions.length; i++) {

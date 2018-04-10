@@ -26,21 +26,23 @@
 
         <h3>{Similar_Venues}</h3>
         <form action='[repost]' method='post' class='transparent'>
-            <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
+            <repeat id='repost'>
+            <input type='hidden' name='[name]' value='[value]'>
+            </repeat>
             <repeat id='similarVenues'>
-                <button type='submit' class='venue' name='vid' value='[vid]'>
-                    [name]<br>
-                    <b>[players]</b> {players}
-                </button>
+            <button type='submit' class='venue' name='vid' value='[vid]'>
+                [name]<br>
+                <b>[players]</b> {players}
+            </button>
             </repeat>
         </form>
 
         <br>
         <h3>{New_Venue}</h3>
-        <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide transparent venue'>
+        <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide shadow venue'>
             <input type='hidden' id='venue-game' name='game' value='[game]'>
             <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
-            <span class='help' hidden></span>
+            <span class='help' hidden>{Create new venue...}</span>
             <button type='button' class='action help [INFO_ICON]'></button>
             <div class='clear'></div>
             <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
@@ -53,7 +55,6 @@
             <div class='w00'>
                 <input id='venue-locality' name='locality' class="guess w90" value='[venueLocality]' placeholder='{locality}' required>
             </div>
-            <hr>
             <div id='venue-guess'></div>
         </form>
     </div>

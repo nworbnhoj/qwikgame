@@ -91,11 +91,13 @@ class LocatePage extends Page {
             }
 	}
 
-	if ($vid !== null){    // repost the query with the located $vid
+	if (isset($vid)){    // repost the query with the located $vid
+            $QWIK_URL = self::QWIK_URL;
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
             $repost = $this->repost;
-            header("location: ".self::QWIK_URL."/$repost?$query");
+            $url = "$QWIK_URL/$repost?$query";
+            header("Location: $url");
         }
     }
     
@@ -160,7 +162,6 @@ class LocatePage extends Page {
                 $locality = $geocoded['locality'];
                 $admin1   = $geocoded['admin1'];
                 $country  = $geocoded['country_iso'];
-                $placeid  = $geocoded['placeid'];
             }
         }
 
@@ -174,7 +175,6 @@ class LocatePage extends Page {
         $variables['venueLocality']  = isset($locality) ? $locality : '';
         $variables['venueAdmin1']    = isset($admin1) ? $admin1 : '';
         $variables['venueCountry']   = isset($country) ? $country : $this->geolocate('countryCode') ;
-        $variables['countryOptions'] = $this->countryOptions($country, "\t\t\t\t\t");
         $variables['datalists']      = $this->countryDataList();
         $variables['placeid']        = $placeid;
         

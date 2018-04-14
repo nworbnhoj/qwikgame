@@ -63,7 +63,18 @@ class LocatePage extends Page {
         if(empty($vid)){
             $placeid = $this->req('placeid');
             if(isset($placeid)){
-                $vid = $this->newVenue($placeid, $this->req('name'));
+                $address = self::getDetails($placeid);
+                if($address){
+                    $vid = Venue::venueID(
+                        $address['name'],
+                        $address['locality'],
+                        $address['admin1'],
+                        $address['country_iso']
+                    );
+                    $venue = new Venue($vid, TRUE);
+                    $venue->updateAtt('placeid', $placeid);
+                    $this->furnish($venue, $address);
+                }
             }
         }
 
@@ -77,15 +88,13 @@ class LocatePage extends Page {
             && isset($locality)
             && isset($admin1)
             && isset($country)){
-                $description = "$name, $locality, $admin1, $country";
-                $placeid = self::getPlace($description);
-                if(isset($placeid)){
-                    $this->req('placeid', $placeid);
-                    $vid = $this->newVenue($placeid, $name);
-                } else {
-                    $vid = Venue::venueID($name, $locality, $admin1, $country);
-                    if (!Venue::exists($vid)){
-                        $venue = new Venue($vid, TRUE);
+                $vid = Venue::venueID($name, $locality, $admin1, $country);
+                if (!Venue::exists($vid)){
+                    $venue = new Venue($vid, TRUE);
+                    $description = "$name, $locality, $admin1, $country";
+                    $placeid = self::getPlace($description);
+                    if(isset($placeid)){
+                        $this->furnish($venue, self::getDetails($placeid));
                     }
                 }
             }
@@ -100,31 +109,18 @@ class LocatePage extends Page {
             header("Location: $url");
         }
     }
-    
-    
-    private function newVenue($placeid, $reqName){
-        $vid = NULL;
-        $address = self::getDetails($placeid);
 
-        if($address){
-            $vid = Venue::venueID(
-                $reqName,
-                $address['locality'],
-                $address['admin1'],
-                $address['country_iso']
-            );
-            $venue = new Venue($vid, TRUE);
 
+    private function furnish($venue, $address){
+        if ($venue && $address){
             $venue->updateAtt('phone',   $address['phone']);
             $venue->updateAtt('url',     $address['url']);
             $venue->updateAtt('tz',      $address['tz']);
             $venue->updateAtt('lat',     $address['lat']);
             $venue->updateAtt('lng',     $address['lng']);
-            $venue->updateAtt('placeid', $address['placeid']);
             $venue->updateAtt('address', $address['formatted']);
             $venue->save();
         }
-        return $vid;
     }
     
     
@@ -258,6 +254,7 @@ class LocatePage extends Page {
             $details = array();
             $details['placeid'] = $placeid;
 
+            $details['name'] = (string) $result->name[0];
             $details['formatted'] = (string) $result->formatted_address;
 
             $location = $result->xpath("//geometry/location")[0];

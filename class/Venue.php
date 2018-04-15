@@ -109,7 +109,7 @@ class Venue extends Qwik {
 
 
     public function country(){
-        return $this->xml['country'];
+        return isset($this->xml['country']) ? $this->xml['country'] : '';
     }
 
 
@@ -168,6 +168,11 @@ class Venue extends Qwik {
 
     public function phone(){
         return isset($this->xml['phone']) ? $this->xml['phone'] : '';
+    }
+
+
+    public function placeid(){
+        return isset($this->xml['placeid']) ? $this->xml['placeid'] : '';
     }
 
 

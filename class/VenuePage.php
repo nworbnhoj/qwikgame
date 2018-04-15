@@ -24,48 +24,70 @@ class VenuePage extends Page {
 
 
     public function processRequest(){
-        if (!$this->venue->ok()){
+        $venue = $this->venue;
+        if (!$venue->ok()
+        || $this->player() == NULL){
             return;
         }
 
-        $venue = $this->venue;
         $req = $this->req();
-        if($this->player() !== null
-        && $req['name'] !== null
-        && $req['address'] !== null
-        && $req['country'] !== null){
-            $address = LocatePage::parseAddress($req['address'].', '.$req['country']);
-
-            $save = $venue->updateAtt('name',     $req['name']);
-            $save = $venue->updateAtt('locality', $address['locality'])  || $save;
-            $save = $venue->updateAtt('admin1',   $address['admin1'])    || $save;
-            $save = $venue->updateAtt('country',  $address['country'])   || $save;
-            if($save){
-                $venue->updateID();
+        $name     = $req['name'];
+        $locality = $req['locality'];
+        $admin1   = $req['admin1'];
+        $country  = $req['country'];
+        $placeid  = isset($req['placeid']) ? $req['placeid'] : $this->venue->placeid();
+        $details = NULL;
+        if(empty($placeid)
+            && isset($name)
+            && isset($locality)
+            && isset($admin1)
+            && isset($country)){
+            $placeid = LocatePage::getPlace("$name, $locality, $admin1, $country");
+            if(!empty($placeid)){
+                $details = LocatePage::getDetails($placeid);
             }
-            $save = $venue->updateAtt('phone',     $req['phone'])         || $save;
-            $save = $venue->updateAtt('url',       $req['url'])           || $save;
-            $save = $venue->updateAtt('tz',        $req['tz'])            || $save;
-            $save = $venue->updateAtt('note',      $req['note'])          || $save;
-            $save = $venue->updateAtt('lat',       $address['lat'])       || $save;
-            $save = $venue->updateAtt('lng',       $address['lng'])       || $save;
-            $save = $venue->updateAtt('placeid',   $address['placeid'])   || $save;
-            $save = $venue->updateAtt('address',   $address['formatted']) || $save;
-            if($save){
-                $venue->save();
-            }
+        } else {
+            $details = LocatePage::getDetails($placeid);
+            $req['locality'] = $details['locality'];
+            $req['admin1']   = $details['admin1'];
+            $req['country']  = $details['country'];
+            $req['address']  = $details['formatted'];
+            $req['tz']       = $details['tz'];
         }
 
+        if(isset($details)){
+            if(empty($req['phone'])){ $req['phone'] = $details['phone'];}
+            if(empty($req['url']))  { $req['url']   = $details['url'];  }
+            if(empty($req['lat']))  { $req['lat']   = $details['lat'];  }
+            if(empty($req['lng']))  { $req['lng']   = $details['lng'];  }
+        }
+
+        $keys = array('placeid','address','tz','phone','url','lat','lng');
+        $changed = $this->venueAttributes($venue, $req, $keys);
+        $keys = array('name','locality','admin1','country');
+        if($this->venueAttributes($venue, $req, $keys)){
+            $venue->updateID();
+        } elseif($changed){
+            $venue->save();
+        }
         $venue->concludeReverts();
     }
 
 
+    private function venueAttributes($venue, $vals, $keys){
+        $changed = FALSE;
+        foreach($keys as $key){
+            $changed = $venue->updateAtt($key, $vals[$key]) || $changed;
+        }
+        return $changed;
+    }
+
 
     public function variables(){
+        $placeid = $this->venue->placeid();
         $game = $this->req('game');
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
-        $venueCountry = $this->venue->country();
         $backLink = "<a href='".self::QWIK_URL;
         $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
@@ -84,9 +106,10 @@ class VenuePage extends Page {
         $vars['displayHidden'] = '';
         $vars['editHidden']    = 'hidden';
         $vars['venueName']     = $venueName;
+        $vars['localityL']     = $this->venue->locality();
+        $vars['admin1']        = $this->venue->admin1();
+        $vars['country']       = $this->venue->country();
         $vars['venueAddress']  = $this->venue->address();
-        $vars['venueCountry']  = $venueCountry;
-        $vars['countryOptions']= $this->countryOptions($venueCountry, "\t\t\t\t\t");
         $vars['venuePhone']    = $this->venue->phone();
         $vars['venueURL']      = $this->venue->url();
         $vars['venueTZ']       = $this->venue->tz();
@@ -97,6 +120,8 @@ class VenuePage extends Page {
         $vars['backLink']      = $backLink;
         $vars['venueUrlLink']  = "<a href='$venueUrl'>{homepage}</a>";
         $vars['games']         = $venueGames;
+        $vars['placeid']       = $placeid;
+        $vars['disabled']      = empty($placeid) ? '' : 'disabled';
         
         return $vars;
     }

@@ -63,17 +63,17 @@ class LocatePage extends Page {
         if(empty($vid)){
             $placeid = $this->req('placeid');
             if(isset($placeid)){
-                $address = self::getDetails($placeid);
-                if($address){
+                $details = self::getDetails($placeid);
+                if($details){
                     $vid = Venue::venueID(
-                        $address['name'],
-                        $address['locality'],
-                        $address['admin1'],
-                        $address['country_iso']
+                        $details['name'],
+                        $details['locality'],
+                        $details['admin1'],
+                        $details['country_iso']
                     );
                     $venue = new Venue($vid, TRUE);
                     $venue->updateAtt('placeid', $placeid);
-                    $this->furnish($venue, $address);
+                    $this->furnish($venue, $details);
                 }
             }
         }
@@ -95,6 +95,10 @@ class LocatePage extends Page {
                     $placeid = self::getPlace($description);
                     if(isset($placeid)){
                         $this->furnish($venue, self::getDetails($placeid));
+                    } else {
+                        $tz = self::guessTimezone($locality, $admin1, $country);
+                        $venue->updateAtt('tz', $tz);
+                        $venue->save();
                     }
                 }
             }
@@ -119,6 +123,8 @@ class LocatePage extends Page {
             $venue->updateAtt('lat',     $address['lat']);
             $venue->updateAtt('lng',     $address['lng']);
             $venue->updateAtt('address', $address['formatted']);
+            $venue->updateAtt('str-num', $address['street-number']);
+            $venue->updateAtt('route',   $address['route']);
             $venue->save();
         }
     }
@@ -150,31 +156,34 @@ class LocatePage extends Page {
         $locality = $this->req('locality');
         $admin1 = $this->req('admin1');
         $country = $this->req('country');
+        $placeid = $this->req('placeid');
+        $userCountry = $this->geolocate('countryCode');
 
         if (empty($name)){
             $name = $this->description;
-            $geocoded = self::parseAddress($this->description);
+            $geocoded = self::parseAddress($this->description, $userCountry);
             if($geocoded){
                 $locality = $geocoded['locality'];
                 $admin1   = $geocoded['admin1'];
                 $country  = $geocoded['country_iso'];
+                $placeid  = $geocoded['placeid'];
             }
         }
 
         $QWIK_URL = self::QWIK_URL;
 
-        $variables = parent::variables();
-        $variables['game']           = $this->game;
-        $variables['homeURL']        = "$QWIK_URL/player.php";
-	$variables['repost']         = $this->repost;
-        $variables['venueName']      = isset($name) ? $name : '';
-        $variables['venueLocality']  = isset($locality) ? $locality : '';
-        $variables['venueAdmin1']    = isset($admin1) ? $admin1 : '';
-        $variables['venueCountry']   = isset($country) ? $country : $this->geolocate('countryCode') ;
-        $variables['datalists']      = $this->countryDataList();
-        $variables['placeid']        = $placeid;
+        $vars = parent::variables();
+        $vars['game']           = $this->game;
+        $vars['homeURL']        = "$QWIK_URL/player.php";
+	$vars['repost']         = $this->repost;
+        $vars['venueName']      = isset($name)     ? $name     : '';
+        $vars['venueLocality']  = isset($locality) ? $locality : '';
+        $vars['venueAdmin1']    = isset($admin1)   ? $admin1   : '';
+        $vars['venueCountry']   = isset($country)  ? $country  : $userCountry;
+        $vars['datalists']      = $this->countryDataList();
+        $vars['placeid']        = $placeid;
         
-        return $variables;
+        return $vars;
     }
 
 
@@ -195,9 +204,9 @@ class LocatePage extends Page {
     }
 
 
-    static function geoplace($text){
+    static function geoplace($text, $country){
         return self::geo(
-            array('input'=>$text),
+            array('input'=>$text, 'components'=>"country:$country"),
             self::GEOPLACE_API_KEY,
             self::GEOPLACE_URL
         );
@@ -234,9 +243,9 @@ class LocatePage extends Page {
     }
 
 
-    static function getPlace($description){
+    static function getPlace($description, $country){
         $placeid = NULL;
-        $xml = self::geoplace($description);
+        $xml = self::geoplace($description, $country);
         if(isset($xml)){
             $prediction = $xml->prediction[0];
             if(isset($prediction)){
@@ -278,6 +287,12 @@ class LocatePage extends Page {
             $addr = $result->xpath("address_component[type='administrative_area_level_3']")[0];
             $details['admin3'] = (string) $addr->long_name;
 
+            $addr = $result->xpath("address_component[type='street-number']")[0];
+            $details['str-num'] = (string) $addr->long_name;
+
+            $addr = $result->xpath("address_component[type='route']")[0];
+            $details['route'] = (string) $addr->long_name;
+
             $addr = $result->xpath("address_component[type='locality']")[0];
             $details['locality'] = (string) $addr->long_name;
 
@@ -298,13 +313,31 @@ class LocatePage extends Page {
     }
 
 
-    static function parseAddress($address){
+    static function parseAddress($address, $country=NULL){
         $parsed = FALSE;
-        $placeid = self::getPlace($address);
+        $placeid = self::getPlace($address, $country);
         if (isset($placeid)){
             $parsed = self::getDetails($placeid);
         }
         return $parsed;
+    }
+
+
+    static function guessTimezone($location, $admin1, $country){
+        $tz = NULL;
+        $placeid = self::getPlace("$location, $admin1, $country");
+        if(isset($placeid)){
+            $detals = self::geodetails($placeid);
+            if(isset($details)){
+                $loc = $details->xpath("//geometry/location")[0];
+                if(isset($loc)){
+                    $lat = (string) $loc->lat;
+                    $lng = (string) $loc->lng;
+                    $tz = self::getTimezone($lat, $lng);
+                }
+            }
+        }
+        return $tz;
     }
     
 }

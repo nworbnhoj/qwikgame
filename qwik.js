@@ -187,20 +187,6 @@ $(document).ready(function(){
     });
 
 
-    $('#tz').focus(function(){
-        var tzSelect = $('#tz');
-        var tzVal = tzSelect.val();
-        jsonTZoptions($('select#venue-country').val(), tzSelect);
-//alert("tzVal");
-        tzSelect.val(tzVal).change();
-    });
-
-
-    $('select#venue-country').change(function(){
-        jsonTZoptions($(this).val(), $('#tz'));
-    });
-
-
     $('#hr-any').on('click', function(){
         if ($(this).is(':checked')){
             $('#hr').hide();
@@ -335,7 +321,7 @@ function initMap() {
 function venuesMap() {
     var mapElement = document.getElementById('map');
     var game = document.getElementById('game').value;
-    var map = new google.maps.Map(mapElelemt, {zoom: 7, center: MSqC});
+    var map = new google.maps.Map(mapElement, {zoom: 7, center: MSqC});
     jsonVenueMarkers(game, map);
 }
 

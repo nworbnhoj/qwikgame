@@ -18,6 +18,7 @@ class Defend extends Qwik {
         'nickname'    => 20,
         'note'        => 2000,
         'region'      => 50,
+        'route'       => 100,
         'tz'          => 100,
         'venue'       => 150
     );
@@ -102,8 +103,10 @@ class Defend extends Qwik {
             'pid'      => Filter::PID,
             'placeid'  => FILTER_DEFAULT,
             'qwik'     => Filter::QWIK,
+            'route'    => FILTER_DEFAULT,
             'Sat'      => Filter::HOURS,
             'smtwtfs'  => Filter::HOURS,
+            'str-num'  => Filter::STR_NUM,
             'Sun'      => Filter::HOURS,
             'Thu'      => Filter::HOURS,
             'time'     => FILTER_DEFAULT,

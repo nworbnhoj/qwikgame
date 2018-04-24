@@ -38,18 +38,15 @@
         </div>
 
         <p id='venue-display' class='center' [displayHidden]>
+            <button class='show-edit-venue' type='button' >Edit</button><br>
+            <br>
             [venueAddress]<br>
             [venuePhone]<br>
-            <a href='[venueURL]' target='_blank'>homepage</a><br>
+            [venueUrlLink]<br>
             [venueNote]<br>
-            <button class='show-edit-venue' type='button' >Edit</button>
-            <br>
-            <br>
         </p>
     </div>
 
-    <div id="map" class='center wide'></div>
-    <br>
     <div id='edit-venue-div' class='center wide' [editHidden]>
         [venueRevertDiv]
         <form id='edit-venue-form' action='venue.php' method='post' class='commit center vwide shadow venue'>
@@ -58,39 +55,27 @@
                 value='[game]'>
             <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
             <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
-
+            <input type='hidden' name='placeid' value='[placeid]' id='venue-placeid'>
             <span class='help' hidden>
                 {Please_correct...}<br>
                 {You_can_easily_revert...}
             </span>
             <button type='button' class='action help [INFO_ICON]'></button>
-            <p class='center'>
-                <fieldset>
-                    <div class='w00'>
-                        <input id='venue-name' name='name' class="center guess w90" value='[venueName]' placeholder='Name' autocomplete="off">
-                    </div>
-                     <input id='venue-country' name='country' class="guess w10 rgt caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
-                     <input id='venue-admin1' name='admin1' class="guess w20 rgt" value='[venueAdmin1]' placeholder='{admin1}' required>
-                     <div class='w00'>
-                        <input id='venue-locality' name='locality' class="guess w90" value='[venueLocality]' placeholder='{locality}' required>
-                     </div>
-                </fieldset>
-                <input id='venue-address' name='address' class='center geocode' 
-                    value='[venueAddress]' placeholder='Address' autocomplete="off" [disabled]>
-                <br>
-                <br>
-                <input id='venue-phone' name='phone' class='center'
-                    value='[venuePhone]' placeholder='phone'>
-                <input id='venue-url' name='url' type='url' class='center' 
-                    value='[venueURL]' placeholder='http://'><br>
-                <select id='tz' name='tz' class='center' [disabled] required>
-                    <option disabled value>{timezone}</option>
-                    <option value='[venueTZ]'>[venueTZ]</option>
-                </select>
-                <br>
-                <br>
-                <textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
-            </p>
+            <br><br>
+            <input id='venue-name' name='name' class="center guess" value='[venueName]' placeholder='Name' autocomplete="off">
+            <div class='center'>
+                <input id='venue-str-num' name='str-num' type='text' class="w20 lft guess" value='[venueStrNum]' placeholder='{number}'>
+                <input id='venue-route' name='route' type='text' class="w75 rgt guess" value='[venueRoute]' placeholder='{route}'>
+            </div>
+            <input id='venue-locality' name='locality' class="center guess" value='[venueLocality]' placeholder='{locality}' required>
+            <div class='center'>
+                <input id='venue-country' name='country'  type='text' class="w20 rgt guess caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
+                <input id='venue-admin1' name='admin1'  type='text' class="w75 lft guess" value='[venueAdmin1]' placeholder='{admin1}' required>
+            </div>
+            <input id='venue-phone' name='phone' class='center' value='[venuePhone]' placeholder='phone'>
+            <input id='venue-url' name='url' type='url' class='center' value='[venueURL]' placeholder='http://'>
+            <br>
+            <textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
             <br>
             <input id='venue-cancel' type='button' value='Cancel'>
             <input id='venue-submit' type='submit' value='Submit'>
@@ -100,6 +85,9 @@
     </div>
 
 
+    <br>
+    <div id="map" class='center wide'></div>
+    <br>
 
     <h2>{Jump_Start}</h2>
 

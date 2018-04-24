@@ -147,7 +147,7 @@ class Venue extends Qwik {
 
 
     public function note(){
-        return isset($this->xml['note']) ? $this->xml['note'] : '';
+        return isset($this->xml['note']) ? (string) $this->xml['note'] : '';
     }
 
 
@@ -167,32 +167,42 @@ class Venue extends Qwik {
 
 
     public function phone(){
-        return isset($this->xml['phone']) ? $this->xml['phone'] : '';
+        return isset($this->xml['phone']) ? (string) $this->xml['phone'] : '';
     }
 
 
     public function placeid(){
-        return isset($this->xml['placeid']) ? $this->xml['placeid'] : '';
+        return isset($this->xml['placeid']) ? (string) $this->xml['placeid'] : '';
     }
 
 
     public function admin1(){
-        return isset($this->xml['admin1']) ? $this->xml['admin1'] : '';
+        return isset($this->xml['admin1']) ? (string) $this->xml['admin1'] : '';
+    }
+
+
+    public function strNum(){
+        return isset($this->xml['str-num']) ? (string) $this->xml['str-num'] : '';
+    }
+
+
+    public function route(){
+        return isset($this->xml['route']) ? (string) $this->xml['route'] : '';
     }
 
 
     public function locality(){
-        return isset($this->xml['locality']) ? $this->xml['locality'] : '';
+        return isset($this->xml['locality']) ? (string) $this->xml['locality'] : '';
     }
 
 
     public function tz(){
-        return isset($this->xml['tz']) ? $this->xml['tz'] : '';
+        return isset($this->xml['tz']) ? (string) $this->xml['tz'] : '';
     }
 
 
     public function url(){
-        return isset($this->xml['url']) ? $this->xml['url'] : '';
+        return isset($this->xml['url']) ? (string) $this->xml['url'] : '';
     }
 
 
@@ -268,8 +278,7 @@ class Venue extends Qwik {
 
 
     public function updateAtt($key, $value){
-        if (empty($key)
-        || empty($value)){
+        if (empty($key)){
             return false;
         }
 
@@ -375,9 +384,6 @@ class Venue extends Qwik {
         self::deleteFile("venue/$game/$vid.xml");
     }
 
-
-
-
 }
-
+?>
 

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[game] {venue}</title>
+    <title>qwik [game] {venue}</title>
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
@@ -24,7 +24,7 @@
     <div class='center'>
         <p>{Please_click_an...}</p>
 
-        <h3>{Similar_Venues}</h3>
+        <h3>{Existing_Venues}</h3>
         <form action='[repost]' method='post' class='transparent'>
             <repeat id='repost'>
             <input type='hidden' name='[name]' value='[value]'>
@@ -41,19 +41,20 @@
         <h3>{New_Venue}</h3>
         <form id='new-venue-form' action='locate.php' method='post' class='commit center vwide shadow venue'>
             <input type='hidden' id='venue-game' name='game' value='[game]'>
+            <input type='hidden' id='placeid' name='placeid' value='[placeid]'>
             <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
             <span class='help' hidden>{Create new venue...}</span>
             <button type='button' class='action help [INFO_ICON]'></button>
             <div class='clear'></div>
             <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
             <div class='w00'>
-                <input id='venue-name' name='name' class="guess w90" value='[venueName]' placeholder='{name}' autocomplete="off" required>
+                <input id='venue-name' name='name' class="guess w95" value='[venueName]' placeholder='{name}' autocomplete="off" required>
             </div>
             <div class='clear'></div>
             <input id='venue-country' name='country' class="guess w10 rgt caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
             <input id='venue-admin1' name='admin1' class="guess w20 rgt" value='[venueAdmin1]' placeholder='{admin1}' required>
             <div class='w00'>
-                <input id='venue-locality' name='locality' class="guess w90" value='[venueLocality]' placeholder='{locality}' required>
+                <input id='venue-locality' name='locality' class="guess w95" value='[venueLocality]' placeholder='{locality}' required>
             </div>
             <div id='venue-guess'></div>
         </form>

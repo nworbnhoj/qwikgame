@@ -31,26 +31,38 @@ class VenuePage extends Page {
         }
 
         $req = $this->req();
-        $name     = $req['name'];
-        $locality = $req['locality'];
-        $admin1   = $req['admin1'];
-        $country  = $req['country'];
-        $placeid  = isset($req['placeid']) ? $req['placeid'] : $this->venue->placeid();
+        if(!isset($req['name'])
+        || !isset($req['locality'])
+        || !isset($req['admin1'])
+        || !isset($req['country'])){
+            return;
+        }
+
         $details = NULL;
-        if(empty($placeid)
-            && isset($name)
-            && isset($locality)
-            && isset($admin1)
-            && isset($country)){
-            $placeid = LocatePage::getPlace("$name, $locality, $admin1, $country");
-            if(!empty($placeid)){
-                $details = LocatePage::getDetails($placeid);
-            }
+//        $placeid = $req['placeid'];
+        $placeid = NULL;
+        if(empty($placeid)){
+            $name     = $req['name'];
+            $num      = $req['str-num'];
+            $route    = $req['route'];
+            $locality = $req['locality'];
+            $admin1   = $req['admin1'];
+            $country  = $req['country'];
+            $address = "$num $route, $locality, $admin1 $country";
+            $req['address'] = $address;
+//            $placeid = LocatePage::getPlace("$name, $address");
+//            if(empty($placeid)){
+                $req['tz'] = LocatePage::guessTimezone($locality, $admin1, $country);
+//            } else {
+//                $details = LocatePage::getDetails($placeid);
+//            }
         } else {
             $details = LocatePage::getDetails($placeid);
+            $req['str-num']  = $details['street-number'];
+            $req['route']    = $details['route'];
             $req['locality'] = $details['locality'];
             $req['admin1']   = $details['admin1'];
-            $req['country']  = $details['country'];
+            $req['country']  = $details['country_iso'];
             $req['address']  = $details['formatted'];
             $req['tz']       = $details['tz'];
         }
@@ -62,7 +74,7 @@ class VenuePage extends Page {
             if(empty($req['lng']))  { $req['lng']   = $details['lng'];  }
         }
 
-        $keys = array('placeid','address','tz','phone','url','lat','lng');
+        $keys = array('placeid','address','str-num','route','tz','phone','url','lat','lng','note');
         $changed = $this->venueAttributes($venue, $req, $keys);
         $keys = array('name','locality','admin1','country');
         if($this->venueAttributes($venue, $req, $keys)){
@@ -77,19 +89,21 @@ class VenuePage extends Page {
     private function venueAttributes($venue, $vals, $keys){
         $changed = FALSE;
         foreach($keys as $key){
-            $changed = $venue->updateAtt($key, $vals[$key]) || $changed;
+            if(isset($vals[$key])){
+                $changed = $venue->updateAtt($key, $vals[$key]) || $changed;
+            }
         }
         return $changed;
     }
 
 
     public function variables(){
-        $placeid = $this->venue->placeid();
         $game = $this->req('game');
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
-        $backLink = "<a href='".self::QWIK_URL;
-        $backLink .= "/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
+        $venueLink = empty($venueUrl) ? '' : "<a href='$venueUrl'>{homepage}</a>";
+        $QWIK_URL = self::QWIK_URL;
+        $backLink = "<a href='$QWIK_URL/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
         $qwikGames = $this->qwikGames();
         $venueGames = "";
@@ -106,23 +120,22 @@ class VenuePage extends Page {
         $vars['displayHidden'] = '';
         $vars['editHidden']    = 'hidden';
         $vars['venueName']     = $venueName;
-        $vars['localityL']     = $this->venue->locality();
-        $vars['admin1']        = $this->venue->admin1();
-        $vars['country']       = $this->venue->country();
+        $vars['venueStrNum']   = $this->venue->strNum();
+        $vars['venueRoute']    = $this->venue->route();
+        $vars['venueLocality'] = $this->venue->locality();
+        $vars['venueAdmin1']   = $this->venue->admin1();
+        $vars['venueCountry']  = $this->venue->country();
         $vars['venueAddress']  = $this->venue->address();
         $vars['venuePhone']    = $this->venue->phone();
         $vars['venueURL']      = $this->venue->url();
-        $vars['venueTZ']       = $this->venue->tz();
         $vars['venueLat']      = $this->venue->lat();
         $vars['venueLng']      = $this->venue->lng();
         $vars['venueNote']     = $this->venue->note();
         $vars['venueRevertDiv']= $this->venue->revertDiv();
         $vars['backLink']      = $backLink;
-        $vars['venueUrlLink']  = "<a href='$venueUrl'>{homepage}</a>";
+        $vars['venueUrlLink']  = $venueLink;
         $vars['games']         = $venueGames;
-        $vars['placeid']       = $placeid;
-        $vars['disabled']      = empty($placeid) ? '' : 'disabled';
-        
+        $vars['placeid']       = $this->venue->placeid();
         return $vars;
     }
 

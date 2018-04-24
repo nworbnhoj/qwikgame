@@ -16,6 +16,7 @@ class Filter extends Qwik {
     const OPT_HRS     = array('min_range' => 0, 'max_range' => 16777215);
     const OPT_LAT     = array('min_range' => -90, 'max_range' => 90);
     const OPT_LNG     = array('min_range' => -180, 'max_range' => 180);
+    const OPT_STR_NUM = array('min_range' => 0, 'max_range' => 10000);
 
 
     const ABILITY = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_ABILITY);
@@ -32,6 +33,7 @@ class Filter extends Qwik {
     const QWIK    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::qwik');
     const REP     = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_REP);
     const REPOST  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::repost');
+    const STR_NUM = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_STR_NUM);
     const TOKEN   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::token');
 
 

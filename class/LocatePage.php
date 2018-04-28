@@ -123,7 +123,7 @@ class LocatePage extends Page {
             $venue->updateAtt('lat',     $address['lat']);
             $venue->updateAtt('lng',     $address['lng']);
             $venue->updateAtt('address', $address['formatted']);
-            $venue->updateAtt('str-num', $address['street-number']);
+            $venue->updateAtt('str-num', $address['street_number']);
             $venue->updateAtt('route',   $address['route']);
             $venue->save();
         }
@@ -273,28 +273,22 @@ class LocatePage extends Page {
             $details['lng'] = $lng;
             $details['tz'] = self::getTimezone($lat, $lng);
 
-            $addr = $result->xpath("address_component[type='country']")[0];
-            $details['country'] = (string) $addr->long_name;
-            $details['country_iso'] = (string) $addr->short_name;
+            $addr = $result->xpath("address_component[type='country']");
+            $details['country'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
+            $details['country_iso'] = isset($addr[0]) ? (string) $addr[0]->short_name : NULL;
 
-            $addr = $result->xpath("address_component[type='administrative_area_level_1']")[0];
-            $details['admin1'] = (string) $addr->long_name;
-            $details['admin1_code'] = (string) $addr->short_name;
+            $addr = $result->xpath("address_component[type='administrative_area_level_1']");
+            $details['admin1'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
+            $details['admin1_code'] = isset($addr[0]) ? (string) $addr[0]->short_name : NULL;
 
-            $addr = $result->xpath("address_component[type='administrative_area_level_2']")[0];
-            $details['admin2'] = (string) $addr->long_name;
+            $addr = $result->xpath("address_component[type='street_number']");
+            $details['str-num'] = isset($addr[0]) ?  (string) $addr[0]->long_name : NULL;
 
-            $addr = $result->xpath("address_component[type='administrative_area_level_3']")[0];
-            $details['admin3'] = (string) $addr->long_name;
+            $addr = $result->xpath("address_component[type='route']");
+            $details['route'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
 
-            $addr = $result->xpath("address_component[type='street-number']")[0];
-            $details['str-num'] = (string) $addr->long_name;
-
-            $addr = $result->xpath("address_component[type='route']")[0];
-            $details['route'] = (string) $addr->long_name;
-
-            $addr = $result->xpath("address_component[type='locality']")[0];
-            $details['locality'] = (string) $addr->long_name;
+            $addr = $result->xpath("address_component[type='locality']");
+            $details['locality'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
 
             $details['phone'] = (string) $result->phone[0];
             $details['url'] = (string) $result->website[0];

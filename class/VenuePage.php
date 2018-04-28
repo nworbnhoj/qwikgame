@@ -58,7 +58,7 @@ class VenuePage extends Page {
 //            }
         } else {
             $details = LocatePage::getDetails($placeid);
-            $req['str-num']  = $details['street-number'];
+            $req['str-num']  = $details['street_number'];
             $req['route']    = $details['route'];
             $req['locality'] = $details['locality'];
             $req['admin1']   = $details['admin1'];

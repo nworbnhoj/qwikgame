@@ -223,13 +223,6 @@ $(document).ready(function(){
     });
 
 
-    $('button.guess').click(function(){
-        $('input#venue-locality').val = ' ';
-        $('input#venue-admin1').val   = ' '
-        $('input#venue-country').val  = $(this).attr('v-country');
-    });
-
-
     $('input.guess').keydown(function(){
         var name     = $('input#venue-name').val();
         var locality = $('input#venue-locality').val();
@@ -257,15 +250,16 @@ function guessPlace(name, locality, admin1, country, div){
             var predictions = json.predictions;
             for (i = 0; i < predictions.length; i++) {
                 var prediction = predictions[i];
-                var button = "<button type='submit' ";
-                button += "class='venue guess' ";
-                button += "name='placeid' ";
-                button += "value='"+prediction.place_id+"' ";
-                button += "v-locality = '"+locality+"' ";
-                button += "v-admin1 = '"+admin1+"' ";
-                button += "v-country = '"+country+"'>";
-                button += prediction.description+"</button>";
-                div.append($(button));
+                div.append($('<button/>')
+                    .text(prediction.description)
+                    .attr('type', 'submit')
+                    .attr('class', 'venue guess')
+                    .attr('name', 'placeid')
+                    .attr('value', prediction.place_id)
+                    .click(function(){
+                        $('input.guess').removeAttr('required');
+                    })
+                );
             }
             div.append($("<br><img src='img/powered-by-google.png'>"));
         }

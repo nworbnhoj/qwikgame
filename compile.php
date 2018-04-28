@@ -27,7 +27,7 @@
     $table = "<table>\n$rows</table>\n";
     echo $table;
 
-    $games = Qwik::games();
+    $games = Qwik::qwikGames();
     foreach($games as $game => $name){
         $venues = Qwik::venues($game);
         foreach($venues as $vid){

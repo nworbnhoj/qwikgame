@@ -310,9 +310,9 @@ class Player extends Qwik {
 
 
     public function venueRename($vid, $newID){
-        $matches = $player->xpath("available[venue='$vid'] | match[venue='$vid']");
-        foreach($matches as $match){
-            $match->venue = $newID;
+        $records = $this->xml->xpath("available[venue='$vid'] | match[venue='$vid']");
+        foreach($records as $rec){
+            $rec->venue = $newID;
         }
     }
 

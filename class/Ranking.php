@@ -17,14 +17,14 @@ class Ranking extends Qwik {
     public $transcript;
     public $valid;
 
-    public function __construct($fileName, $game=NULL, $path=NULL){
+    public function __construct($rankingID, $game=NULL, $path=NULL){
         parent::__construct();
         $this->valid = true;
         if(is_null($path)){
-            $this->xml = $this->retrieve($fileName);
+            $this->xml = $this->retrieve($rankingID);
         } else {
             $this->xml = new SimpleXMLElement("<upload></upload>");
-            $this->xml->addAttribute('fileName', $fileName);
+            $this->xml->addAttribute('fileName', $rankingID);
             $this->processUpload($game, $path);
             if ($this->valid){
                 $date = date_create();
@@ -166,10 +166,10 @@ class Ranking extends Qwik {
     }
 
 
-    public function retrieve($fileName){
+    public function retrieve($rankingID){
         return self::readXML( 
             self::PATH_UPLOAD, 
-            $fileName
+            $rankingID . self::XML
         );
     }
 

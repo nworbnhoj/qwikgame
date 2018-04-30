@@ -823,10 +823,10 @@ class Player extends Qwik {
     
 
 
-    public function rankingGet($fileName){
-        $ranking = new Ranking($fileName);
+    public function rankingGet($rankingID){
+        $ranking = new Ranking($rankingID);
         if(!isset($ranking)){
-            $this->rankingDelete($fileName);
+            $this->rankingDelete($rankingID);
             return FALSE;
         }
         return $ranking;

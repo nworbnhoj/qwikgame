@@ -88,6 +88,7 @@ class Defend extends Qwik {
             'Fri'      => Filter::HOURS,
             'filename' => FILTER_DEFAULT,
             'game'     => Filter::GAME,
+            'hour'     => Filter::HOURS,
             'id'       => Filter::ID,
             'invite'   => Filter::INVITE,
             'lat'      => Filter::LAT,

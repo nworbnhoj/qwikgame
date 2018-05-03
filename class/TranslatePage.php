@@ -88,7 +88,8 @@ Class TranslatePage extends Page {
         'player.html',
         'upload.html',
         'venue.html',
-        'venues.html');
+        'venues.html',
+        'offline.html');
     private $variables;
     private $pending;
 

@@ -372,4 +372,10 @@
 <phrase key="route">
     <en>street</en>
 </phrase>
+<phrase key="Sorry_offline">
+    <en>Sorry! qwikgame is temporarily offline.</en>
+</phrase>
+<phrase key="Please_return">
+    <en>Please visit again soon.</en>
+</phrase>
 </translation>

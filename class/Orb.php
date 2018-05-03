@@ -107,7 +107,7 @@ longer chains by introducing a decay (=0.9) at each link.
             $relyAverage = $relyTotal / $n;
             $parityAverage = $parityTotal / ($n * $relyAverage);
         } else {
-            $parityAverage = null;
+            $parityAverage = NULL;
         }
         return $parityAverage;
     }

@@ -87,7 +87,7 @@ class Venue extends Qwik {
     private function retrieve(){
         $fileName = $this->fileName();
         $xml = self::readXML(self::PATH_VENUE, $fileName);
-        return $xml!=null ? $xml : new SimpleXMLElement("<venue/>");
+        return $xml!=NULL ? $xml : new SimpleXMLElement("<venue/>");
     }
 
 

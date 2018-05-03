@@ -104,7 +104,7 @@ class PlayerPage extends Page {
                 $result = $this->logout();
                 break;
             default:
-                $result =  null;
+                $result =  NULL;
         }
 
         $player->concludeMatches();
@@ -213,9 +213,9 @@ function qwikKeen($player, $req, $venue){
     $game = $req['game'];
 
     $rids = array();
-    if (isset($req['invite-available'])){   // add anon Rivals $rid=>null
+    if (isset($req['invite-available'])){   // add anon Rivals $rid=>NULL
         foreach($venue->playerIDs() as $rid){
-            $rids[$rid] = null;
+            $rids[$rid] = NULL;
         }
     }
 
@@ -424,7 +424,7 @@ function hourRows(){
     function updateCongCert($player, $matchID, $rival){
        $pOutcome = $player->outcome($matchID);
         $rOutcome = $rival->outcome($matchID);
-        if (null !== $pOutcome && null !== $rOutcome){
+        if (NULL !== $pOutcome && NULL !== $rOutcome){
 
             $pParity = intval($pOutcome['parity']);
             $rParity = intval($rOutcome['parity']);

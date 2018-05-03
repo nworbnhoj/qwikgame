@@ -96,7 +96,7 @@ class Page extends Html {
 
 
     public function processRequest(){
-        return null;
+        return NULL;
     }
 
 
@@ -121,7 +121,7 @@ class Page extends Html {
         $game = $this->req('game');
         $vars['game']  = isset($game) ? self::qwikGames()["$game"] : '[game]';
         
-        if ($this->player != null){
+        if ($this->player != NULL){
             $vars['pid']         = $this->player->id();
         }
         
@@ -204,7 +204,7 @@ class Page extends Html {
         } elseif (isset($req['email'])){    // check for an email in the request
             $email = $req['email'];
             $pid = Player::anonID($email);  // and derive the pid from the email
-            $token = isset($req['token']) ? $req['token'] : null;
+            $token = isset($req['token']) ? $req['token'] : NULL;
         } else {                            // anonymous session: no player identifier
             return;                         // RETURN login fail
         }
@@ -301,7 +301,7 @@ class Page extends Html {
         && array_key_exists($_SESSION['lang'], $languages)){
             $lang = $_SESSION['lang'];
         } elseif ($player                                 // USER language
-        && (null !== $player->lang())
+        && (NULL !== $player->lang())
         && array_key_exists($player->lang(), $languages)){
             $lang = (string) $player->lang();
         } elseif (false){                                // geolocate language
@@ -742,7 +742,7 @@ class Page extends Html {
         $str = '';
         if($clock24hr){
             $str = $dayX;
-            $dayX = null;
+            $dayX = NULL;
         }
         $str .= ' ';
         $prior = $hours[0] - 1;
@@ -758,14 +758,14 @@ class Page extends Html {
 
             if ($hr > 12 && isset($dayX)) {
                 $str .= $dayX;
-                $dayX = null;
+                $dayX = NULL;
                 $str .= $consecutive ? '&middot' : '' ;
             }
 
             $prior = $hr;
         }
         $str .= self::clock($prior);
-        $str .= $dayX!=null ? " $dayX" : '';
+        $str .= $dayX!=NULL ? " $dayX" : '';
         return "<span class='lolite'>$str</span>";
     }
 

@@ -171,7 +171,7 @@ class Player extends Qwik {
 
         $xmlEmail = $this->xml->email[0];
         if (empty($xmlEmail)){
-            return null;
+            return NULL;
         } else if (count($xmlEmail) == 1){
             return (string) $xmlEmail[0];
         } else {
@@ -245,7 +245,7 @@ class Player extends Qwik {
     public function outcome($id, $rely=NULL){
         $outcomes = $this->xml->xpath("outcome[@id='$id']");
         if (empty($outcomes)){
-            return null;
+            return NULL;
         }
 
         $outcome = $outcomes[0];
@@ -340,8 +340,8 @@ class Player extends Qwik {
             self::removeElement($email);
         }
 
-        $this->nick(null);
-        $this->url(null);
+        $this->nick(NULL);
+        $this->url(NULL);
     }
 
 
@@ -438,7 +438,7 @@ class Player extends Qwik {
      *
      * @return bitfield representing the hours at the $rival is available
      */
-    function favouriteHours($vid, $game, $day, $parity=null){
+    function favouriteHours($vid, $game, $day, $parity=NULL){
         $favouriteHours = new Hours();
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
@@ -465,7 +465,7 @@ class Player extends Qwik {
     }
 
 
-    public function availableHours($vid, $game, $day, $parity=null){
+    public function availableHours($vid, $game, $day, $parity=NULL){
         $availableHours = $this->favouriteHours($vid, $game, $day, $parity);
         $availableHours->include($this->keenHours($vid, $game, $day));
         return $availableHours;
@@ -496,7 +496,7 @@ class Player extends Qwik {
     }
 
 
-    public function matchInvite($rivalMatch, $parity=null){
+    public function matchInvite($rivalMatch, $parity=NULL){
         $inviteHours = $rivalMatch->hours();
 
         $availableHours = $this->availableHours(
@@ -511,11 +511,11 @@ class Player extends Qwik {
             $match = $this->matchAdd($rivalMatch, $parity, $inviteHours);
             return $match;
         }
-        return null;
+        return NULL;
     }
 
 
-    public function matchAdd($rivalMatch, $parity, $inviteHours, $email=null){
+    public function matchAdd($rivalMatch, $parity, $inviteHours, $email=NULL){
         $email = is_null($email) ? $this->email() : $email;
         if (is_null($inviteHours) | is_null($email)){
             self::logMsg("matchAdd() unable to add Match");
@@ -553,7 +553,7 @@ class Player extends Qwik {
     }
 
 
-    public function authURL($shelfLife, $param=null){
+    public function authURL($shelfLife, $param=NULL){
         $query = is_array($param) ? $param : array();
         $query['qwik'] = 'login';
         $query['pid'] = $this->id();
@@ -562,7 +562,7 @@ class Player extends Qwik {
     }
 
     
-    public function authLink($shelfLife, $param=null){
+    public function authLink($shelfLife, $param=NULL){
         $authURL = $this->authURL($shelfLife, $param);
         return "<a href='$authURL'>{login}</a>";
   
@@ -627,7 +627,7 @@ class Player extends Qwik {
     }
 
 
-    function emailInvite($match, $email=null){
+    function emailInvite($match, $email=NULL){
         $email = is_null($email) ? $this->email() : $email ;
         $date = $match->dateTime();
         $day = $match->mday();
@@ -795,7 +795,7 @@ class Player extends Qwik {
 
     // update the reputation records for a player
     public function updateRep($feedback){
-        $rep = null !== $this->rep() ? $this->rep() : $this->xml->addChild('rep', '');
+        $rep = NULL !== $this->rep() ? $this->rep() : $this->xml->addChild('rep', '');
         switch ($feedback){
             case '+1':
                 $rep['pos'] = $rep['pos'] + 1;
@@ -943,7 +943,7 @@ Requirements:
             $this->uploadAdd($game, $fileName);
             return $ranking;
         }
-        return null;
+        return NULL;
     }
 
 

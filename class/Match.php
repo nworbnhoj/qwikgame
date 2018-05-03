@@ -48,7 +48,7 @@ class Match extends Qwik {
         $rival->addAttribute('parity', $parity);
         $rival->addAttribute('rep', $rep);
         $rival->addAttribute('name', $name);
-        $this->rivalElements = null; //reset
+        $this->rivalElements = NULL; //reset
     }
 
 
@@ -108,7 +108,7 @@ class Match extends Qwik {
         $rivalElements = $this->rivalElements();
         return isset($rivalElements[$index])
             ? $rivalElements[$index]
-            : null;
+            : NULL;
     }
 
 
@@ -116,7 +116,7 @@ class Match extends Qwik {
         $rivalElement = $this->rivalElement($index);
         return isset($rivalElement)
             ? (string) $rivalElement
-            : null ;
+            : NULL ;
     }
 
     private function rids(){
@@ -131,7 +131,7 @@ class Match extends Qwik {
 
     public function rival($index=0){
         $rid = $this->rid($index);
-        return isset($rid) ? new Player($rid) : null;
+        return isset($rid) ? new Player($rid) : NULL;
     }
 
 
@@ -156,7 +156,7 @@ class Match extends Qwik {
                 return floatval($parityStr);
             }
         }
-        return null;
+        return NULL;
     }
 
 
@@ -166,13 +166,13 @@ class Match extends Qwik {
         if(isset($element)){
             return (string) $element['name'];
         }
-        return null;
+        return NULL;
     }
 
 
     public function rivalRep($index=0){
         $element = $this->rivalElement($index);
-        return isset($element) ? (string) $element['rep'] : null;
+        return isset($element) ? (string) $element['rep'] : NULL;
     }
 
 
@@ -271,7 +271,7 @@ class Match extends Qwik {
     private function removeRival($rid){
         $rivalElement = $this->xml->xpath("rival='$rid'");
         self::removeElement($rivalElement[0]);
-        $this->rivalElements = null; // reset
+        $this->rivalElements = NULL; // reset
     }
 
 
@@ -394,7 +394,7 @@ class Match extends Qwik {
         );
 
         $rival = $this->rival();
-        $rivalLink = isset($rival) ? $rival->htmlLink() : null;
+        $rivalLink = isset($rival) ? $rival->htmlLink() : NULL;
         $rivalLink = empty($rivalLink) ? $this->rivalName() : $rivalLink;
 
         switch ($status){

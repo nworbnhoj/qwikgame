@@ -63,7 +63,7 @@ class Ranking extends Qwik {
 
     private function openUpload($path){
         if (!$this->valid){
-            return null;
+            return NULL;
         }
         // open the uploaded file
         $file = fopen($path, "r");

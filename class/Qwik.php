@@ -383,7 +383,7 @@ class Qwik {
     }
 
 
-    static public function venues($game=null){
+    static public function venues($game=NULL){
         $venues = array();
         $path = SELF::PATH_VENUE;
         $path .= $game ? "/$game" : '';
@@ -432,7 +432,7 @@ class Qwik {
     static public function readXML($path, $fileName){
         if (!file_exists("$path/$fileName")) {
             self::logMsg("unable to read xml $path/$fileName");
-            return null;
+            return NULL;
         }
 
         $cwd = getcwd();

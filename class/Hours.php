@@ -36,7 +36,7 @@ Class Hours {
 
     public function equals($that) {
         return $this->bits == $that->bits();
-//        return ($this::class === $that::class) && ($bits != null) 
+//        return ($this::class === $that::class) && ($bits != NULL) 
 //             ? $this->bits == $that->bits()
 //             : $this == $that;
     }

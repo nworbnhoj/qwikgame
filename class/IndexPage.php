@@ -11,7 +11,7 @@ class IndexPage extends Page {
 
 
     public function serve(){
-        if ($this->player() == null){
+        if ($this->player() == NULL){
             parent::serve();
         } else {
             $query = http_build_query($this->req());
@@ -25,8 +25,8 @@ class IndexPage extends Page {
         $qwik = $this->req('qwik');
         $email = $this->req('email');
         if ($qwik == 'available'
-        && $this->req('venue') !== null
-        && $this->req('game') !== null
+        && $this->req('venue') !== NULL
+        && $this->req('game') !== NULL
         && isset($email)){
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);

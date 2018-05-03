@@ -55,7 +55,7 @@ class Translation extends Qwik {
                 return $phrase[$fallback];
             }
         }
-        return null;
+        return NULL;
     }
 
 

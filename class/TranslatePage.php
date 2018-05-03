@@ -93,7 +93,7 @@ Class TranslatePage extends Page {
     private $pending;
 
 
-    public function __construct($template=null){
+    public function __construct($template=NULL){
         parent::__construct($template);
         
         $this->langs = self::$translation->languages();

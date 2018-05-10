@@ -35,7 +35,8 @@
 
 <h2>{Account_Recovery}</h2>
 
-<form action="info.php" method="post" class="commit center shadow account">
+<form action="quiz.php" method="post" class="commit center shadow account">
+    <input type="hidden" name="repost" value="info.php">
     <input type="hidden" name="qwik" value="recover">
     <br>{...link_to_login}<br>
     <input name="email" type="email" class="email" placeholder="{prompt_address}">

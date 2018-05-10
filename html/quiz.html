@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{venuePageTitle}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&callback=initMap">
+    </script>
+
+</head>
+
+<body>
+    <h1>{qwik_game_org}</h1>
+
+    <div id='menu' class='menu'>
+        <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+        <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
+    </div>
+
+    <h2>{quiz}</h2>
+
+    <p class='center'>{quiz_welcome}</p>
+
+    <h3>[progress]</h3>
+
+    <form id='quiz-form' action='quiz.php' method='post' class='commit center vwide shadow'>
+        <repeat id='repost'>
+        <input type='hidden' name='[name]' value='[value]'>
+        </repeat>
+        <input type='hidden' name='qid' value='[qid]'/>
+        [quiz]
+        <br>
+        <input type='text' placeholder='=' size='1'/>
+        <input type='submit' name='reply' value='{submit}'/>
+        <input type='submit' name='skip' value='{skip}'/>
+    </form>
+
+
+    <br><br><br><br><br><br>
+    <div id='footer' class='center'>
+        {license}
+    </div>
+
+</body>
+
+</html>

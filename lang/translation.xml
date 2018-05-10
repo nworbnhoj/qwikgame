@@ -378,4 +378,10 @@
 <phrase key="Please_return">
     <en>Please visit again soon.</en>
 </phrase>
+<phrase key="quiz">
+    <en>Quiz</en>
+</phrase>
+<phrase key="quiz_welcome">
+    <en>Welcome to the anti-robot quiz. We like robots, but we don't like bad robot behaviour (like sending you spam). Please submit your best answers to a few (robot difficult) questions. Sorry for the inconvenience.</en>
+</phrase>
 </translation>

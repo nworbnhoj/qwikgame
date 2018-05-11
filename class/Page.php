@@ -48,8 +48,6 @@ class Page extends Html {
 
     static $icons;
 
-    private $templateName;
-    private $req;
     private $player;
     private $language;
 
@@ -59,17 +57,17 @@ class Page extends Html {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($templateName='index'){
-        parent::__construct();  
-        $this->templateName = $templateName;
-       
+    public function __construct($templateName){
+        parent::__construct($templateName);
+
         $defend = new Defend();
         $this->req = $defend->request();
 
-        $this->logReq($this->req);
-        $this->player = $this->login($this->req);
+        $req = $this->req();
+        $this->logReq($req);
+        $this->player = $this->login($req);
 
-        $pageLanguage = $this->selectLanguage($this->req, $this->player);
+        $pageLanguage = $this->selectLanguage($req, $this->player);
         parent::language($pageLanguage);
     }
 
@@ -88,10 +86,7 @@ class Page extends Html {
 
     public function serve(){
         $this->processRequest();
-        $templateName = $this->templateName;
-        $template = $this->template($templateName);
-        $html = $this->make($template, $this->variables());
-        echo($html);
+        parent::serve();
     }
 
 
@@ -130,7 +125,7 @@ class Page extends Html {
 
 
     public function make($html, $variables=array()){
-        $html = $this->replicate($html, $this->player, $this->req);
+        $html = $this->replicate($html, $this->player, $this->req());
         $html = parent::make($html, $variables);
         return $html;
     }

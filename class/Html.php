@@ -55,16 +55,18 @@ class Html extends Qwik {
     const TERMS_LNK    = "<a href='".self::TERMS_URL."' target='_blank'>{Terms and Conditions}</a>";
     const PRIVACY_LNK    = "<a href='".self::PRIVACY_URL."' target='_blank'>{Privacy_policy}</a>";
 
+    private $templateName;
     private $language;
-
+    private $req;
 
     /*******************************************************************************
     Class Html is constructed with an optional language.
 
     $language  the 2 character language symbol (eg en = english)
     *******************************************************************************/
-    public function __construct($language='en'){
+    public function __construct($templateName='index', $language='en'){
         parent::__construct();
+        $this->templateName = $templateName;
         $this->language = $language;
     }
 
@@ -82,6 +84,14 @@ class Html extends Qwik {
             self::$translation = new Translation('translation.xml');
         }
         return self::$translation;
+    }
+
+
+    public function serve(){
+        $templateName = $this->templateName;
+        $template = $this->template($templateName);
+        $html = $this->make($template, $this->variables());
+        echo($html);
     }
 
 

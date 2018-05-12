@@ -22,18 +22,54 @@ class IndexPage extends Page {
 
 
     public function processRequest(){
-        $qwik = $this->req('qwik');
+        $result = null;
         $email = $this->req('email');
-        if ($qwik == 'available'
-        && $this->req('venue') !== NULL
-        && $this->req('game') !== NULL
+        $qwik = $this->req('qwik');
+        switch ($qwik) {
+            case "available":
+                $result = $this->qwikAvailable($email);
+                break;
+            case "recover":
+                $result = $this->qwikRecover($email);
+                break;
+        }
+        return $result;
+    }
+
+
+    function qwikAvailable($email){
+        $result = FALSE;
+        $venue = $this->req('venue');
+        $game = $this->req('game');
+        if (isset($venue)
+        && isset($game)
         && isset($email)){
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
+                $anon->emailWelcome($email);
                 $anon->emailFavourite($this->req(), $email);
+                $result = TRUE;
             }
         }
+        return $result;
+    }
+
+
+    function qwikRecover($email){
+        $result = FALSE;
+        if(isset($email)){
+            $pid = Player::anonID($email);
+            $player = new Player($pid);
+            if(isset($player)){
+                $id = self::snip($pid);
+                self::logMsg("login: recover account $id");
+                // todo rate limit
+                $player->emailLogin();
+                $result = TRUE;
+            }
+        }
+        return $result;
     }
 
 

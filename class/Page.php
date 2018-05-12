@@ -204,27 +204,20 @@ class Page extends Html {
             return;                         // RETURN login fail
         }
 
-        // Load up the Player from file (creating if necessary)
-        $player = new Player($pid, TRUE);
+        // Load up the Player from file
+        $player = new Player($pid);
 
         // return the Player iff authentication is possible
-        if($openSession){                            // AUTH: existing session
-        } elseif($player->isValidToken($token)){     // AUTH: token
-            self::logMsg("login: valid token " . self::snip($pid));
+        if($openSession){                   // AUTH: existing session
+        } elseif(isset($player)
+        && $player->isValidToken($token)){     // AUTH: token
+            $id = self::snip($pid);
+            self::logMsg("login: valid token $id");
             $this->setupSession($pid, $player->lang());
             $this->setupCookie($pid, $token);
-        } elseif(isset($email)){
-            if(empty($player->email())){            // AUTH: unvalidated player
-                self::logMsg("login: anon player " . self::snip($pid));
-                $this->setupSession($pid, $player->lang());
-                $player->emailWelcome($email);
-            } elseif($req['qwik'] == 'recover'){    // account recovery
-                self::logMsg("login: recover account " . self::snip($pid));    // todo rate limit
-                $player->emailLogin();
-                $player=NULL;	                    // AUTH: failure
-            }
         } else {
-            self::logMsg("login: invalid token pid=" . self::snip($pid));
+            $id = self::snip($pid);
+            self::logMsg("login: invalid token pid=$id");
             $player=NULL;                           // AUTH: failure
         }
 

@@ -17,7 +17,7 @@ class Quiz {
     const POINT = array('4↑'=>'1','5↑'=>'2','6↑'=>'3','7↑'=>'14','8↑'=>'25','9↑'=>'36','1→'=>'23','2→'=>'3','4→'=>'56','5→'=>'6','7→'=>'89','8→'=>'9','1↓'=>'47','2↓'=>'58','3↓'=>'69','4↓'=>'7','5↓'=>'8','6↓'=>'9','2←'=>'1','3←'=>'12','5←'=>'4','6←'=>'45','8←'=>'7','9←'=>'78','5↖'=>'1','6↖'=>'2','8↖'=>'4','9↖'=>'15','↗'=>'','4↗'=>'2','5↗'=>'3','7↗'=>'5','8↗'=>'6','1↘'=>'59','2↘'=>'6','4↘'=>'7','5↘'=>'9','2↙'=>'4','3↙'=>'5','5↙'=>'7','6↙'=>'8');
 
     const BASE_ITEM_STYLE = array('text-align'=>'center','border-style'=>'solid','border-width'=>'1px','padding'=>'5px','font-weight'=>'bold');
-    const DIV_STYLE = "width:200px;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
+    const DIV_STYLE = "width:100%;font-size:3vw;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
     
     private $items = array();
     private $solution = array();
@@ -374,9 +374,9 @@ class Quiz {
             case 'border-color':
             case 'background-color':
                 $hsl = explode(',', substr($value,4,-1));
-                $h = $this->far(array($hsl[0]),20,0,360);
-                $s = $this->far(array(substr($hsl[1],0,-1)),20,0,100);
-                $l = $this->far(array(substr($hsl[2],0,-1)),20,0,100);
+                $h = $this->far(array($hsl[0]),30,0,360);
+                $s = $this->far(array(substr($hsl[1],0,-1)),30,0,100);
+                $l = $this->far(array(substr($hsl[2],0,-1)),30,0,100);
                 return "hsl($h,$s%,$l%)";
                 break;
             case 'border-width':

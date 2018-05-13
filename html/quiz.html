@@ -28,22 +28,24 @@
 
     <h2>{quiz}</h2>
 
-    <p class='center'>{quiz_welcome}</p>
-
     <h3>[progress]</h3>
 
-    <form id='quiz-form' action='quiz.php' method='post' class='commit center vwide shadow'>
+    <form id='quiz-form' action='quiz.php' method='post' class='center vwide shadow'>
+        <input type='hidden' name='repost' value='[repost]'>
         <repeat id='repost'>
         <input type='hidden' name='[name]' value='[value]'>
         </repeat>
-        <input type='hidden' name='qid' value='[qid]'/>
-        [quiz]
+        <input type='hidden' name='qid' value='[qid]'>
+        <div class='center'>
+            [quiz]
+        </div>
         <br>
-        <input type='text' placeholder='=' size='1'/>
-        <input type='submit' name='reply' value='{submit}'/>
-        <input type='submit' name='skip' value='{skip}'/>
+        <input type='text' name='reply' placeholder='=' size='4'>
+        <input type='submit' name='submit' value='{Submit}'>
+        <input type='submit' name='skip' value='{Skip}'>
     </form>
 
+    <p class='center'>{quiz_welcome}</p>
 
     <br><br><br><br><br><br>
     <div id='footer' class='center'>

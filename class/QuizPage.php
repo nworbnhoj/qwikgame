@@ -7,14 +7,21 @@ class QuizPage extends Page {
 
     private $todo = 1;
     private $tally = 0;
+    private $quizID = NULL;
     private $quizDiv = "";
     private $repost;
 
     public function __construct($template='quiz'){
         parent::__construct($template);
         $this->repost = $this->req('repost');
-        $this->tally = isset($_SESSION['quiz_tally']) ? $_SESSION['quiz_tally']: 0 ;
+        $this->tally = isset($_SESSION['quiz_tally']) ? $_SESSION['quiz_tally'] : 0 ;
         $this->todo = isset($_SESSION['quiz_todo']) ? $_SESSION['quiz_todo'] : 1 ;
+    }
+
+
+    public function serve(){
+        $this->processRequest();
+        parent::serve();
     }
 
 
@@ -38,7 +45,8 @@ class QuizPage extends Page {
         if($this->tally < $this->todo){  // serve up another quiz
             $quiz = new Quiz();
             $_SESSION[$quiz->id()] = $quiz->answer();
-            $this->quizDiv = $quiz->quizDiv();
+            $this->quizID = $quiz->id();
+            $this->quizDiv = $quiz->quiz();
         } else {    // quiz passed! repost to destination page
             $QWIK_URL = self::QWIK_URL;
             $query = http_build_query($this->req());
@@ -51,9 +59,12 @@ class QuizPage extends Page {
 
     public function variables(){
         $vars = parent::variables();
+        $tally = $this->tally;
+        $todo = $this->todo;
 	$vars['repost']   = $this->repost;
         $vars['progress'] = "$tally/$todo";
         $vars['quiz']     = $this->quizDiv;
+        $vars['qid']      = $this->quizID;
         return $vars;
     }
 

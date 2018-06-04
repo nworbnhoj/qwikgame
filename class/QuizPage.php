@@ -5,11 +5,13 @@ require_once 'Quiz.php';
 
 class QuizPage extends Page {
 
-    const TALLY_KEY = 'quiz_tally';
-    const TODO_KEY  = 'quiz_todo';
+    const TALLY_KEY  = 'quiz_tally';
+    const TODO_KEY   = 'quiz_todo';
+    const SCORE_KEY  = 'quiz_score';
 
     private $todo = 1;
     private $tally = 0;
+    private $progress = '';
     private $quizID = NULL;
     private $quizDiv = "";
     private $repost;
@@ -32,9 +34,11 @@ class QuizPage extends Page {
                 if($reply == $answer){
                      $this->tally++;
                      $_SESSION[self::TALLY_KEY] = $this->tally;
+                     $_SESSION[self::SCORE_KEY] .= '☑';
                 } else {
                      $this->todo++;
                      $_SESSION[self::TODO_KEY] = $this->todo;
+                     $_SESSION[self::SCORE_KEY] .= '☒';
                 }
             }
         }
@@ -45,8 +49,9 @@ class QuizPage extends Page {
             $this->quizID = $quiz->id();
             $this->quizDiv = $quiz->quiz();
         } else {    // quiz passed! repost to destination page
-            unset($_SESSION[self::TALLY_KEY]);   // reset tally
-            unset($_SESSION[self::TODO_KEY]);    // reset todo
+            unset($_SESSION[self::TALLY_KEY]);    // reset tally
+            unset($_SESSION[self::TODO_KEY]);     // reset todo
+            unset($_SESSION[self::SCORE_KEY]);    // reset progress
             $QWIK_URL = self::QWIK_URL;
             $query = http_build_query($this->req());
             $repost = $this->repost;
@@ -58,10 +63,14 @@ class QuizPage extends Page {
 
     public function variables(){
         $vars = parent::variables();
-        $tally = $this->tally;
-        $todo = $this->todo;
+        $progress = "{quiz}";
+        if($this->todo > 1){
+            $progress = $_SESSION[self::SCORE_KEY];
+            $remaining = $this->todo - $this->tally;
+            $progress .= str_repeat('☐',$remaining);
+        }
 	$vars['repost']   = $this->repost;
-        $vars['progress'] = "$tally/$todo";
+        $vars['progress'] = $progress;
         $vars['quiz']     = $this->quizDiv;
         $vars['qid']      = $this->quizID;
         return $vars;

@@ -7,7 +7,7 @@ class Filter extends Qwik {
 
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'familiar', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'upload');
-    const VALID_REPOST = array('player.php', 'info.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
+    const VALID_REPOST = array('index.php', 'player.php', 'info.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
 
 
     const OPT_ABILITY = array('min_range' => 0, 'max_range' => 4);
@@ -30,6 +30,7 @@ class Filter extends Qwik {
     const PARITY  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::parity');
     const PHONE   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::phone');
     const PID     = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::PID');
+    const QID     = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::QID');
     const QWIK    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::qwik');
     const REP     = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_REP);
     const REPOST  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::repost');
@@ -64,6 +65,11 @@ class Filter extends Qwik {
 
     static function PID($val){
         return strlen($val) == 64 ? $val : FALSE;
+    }
+
+
+    static function QID($val){
+        return strlen($val) == 32 ? $val : FALSE;
     }
 
 

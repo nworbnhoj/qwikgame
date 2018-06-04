@@ -5,6 +5,9 @@ require_once 'Quiz.php';
 
 class QuizPage extends Page {
 
+    const TALLY_KEY = 'quiz_tally';
+    const TODO_KEY  = 'quiz_todo';
+
     private $todo = 1;
     private $tally = 0;
     private $quizID = NULL;
@@ -14,30 +17,24 @@ class QuizPage extends Page {
     public function __construct($template='quiz'){
         parent::__construct($template);
         $this->repost = $this->req('repost');
-        $this->tally = isset($_SESSION['quiz_tally']) ? $_SESSION['quiz_tally'] : 0 ;
-        $this->todo = isset($_SESSION['quiz_todo']) ? $_SESSION['quiz_todo'] : 1 ;
-    }
-
-
-    public function serve(){
-        $this->processRequest();
-        parent::serve();
+        $this->tally = isset($_SESSION[self::TALLY_KEY]) ? $_SESSION[self::TALLY_KEY] : 0 ;
+        $this->todo = isset($_SESSION[self::TODO_KEY]) ? $_SESSION[self::TODO_KEY] : 1 ;
     }
 
 
     public function processRequest(){
         $qid = $this->req('qid');
-        if(isset($qid)){
+        if(!empty($qid)){
             $answer = $_SESSION[$qid];
             unset($_SESSION[$qid]);    // one shot answer
             $reply = $this->req('reply');
-            if(isset($reply)){
+            if(!empty($reply)){
                 if($reply == $answer){
                      $this->tally++;
-                     $_SESSION['quiz_tally'] = $this->tally;
+                     $_SESSION[self::TALLY_KEY] = $this->tally;
                 } else {
                      $this->todo++;
-                     $_SESSION['quiz_todo'] = $this->todo;
+                     $_SESSION[self::TODO_KEY] = $this->todo;
                 }
             }
         }
@@ -48,6 +45,8 @@ class QuizPage extends Page {
             $this->quizID = $quiz->id();
             $this->quizDiv = $quiz->quiz();
         } else {    // quiz passed! repost to destination page
+            unset($_SESSION[self::TALLY_KEY]);   // reset tally
+            unset($_SESSION[self::TODO_KEY]);    // reset todo
             $QWIK_URL = self::QWIK_URL;
             $query = http_build_query($this->req());
             $repost = $this->repost;

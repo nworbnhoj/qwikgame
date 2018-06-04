@@ -104,6 +104,7 @@ class Defend extends Qwik {
             'phone'    => Filter::PHONE,
             'pid'      => Filter::PID,
             'placeid'  => FILTER_DEFAULT,
+            'qid'      => Filter::QID,
             'qwik'     => Filter::QWIK,
             'reply'    => FILTER_DEFAULT,
             'route'    => FILTER_DEFAULT,

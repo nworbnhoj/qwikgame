@@ -32,7 +32,7 @@ class Quiz {
 
     // base html styles for the quiz grid
     const BASE_ITEM_STYLE = array('text-align'=>'center','border-style'=>'solid','border-width'=>'1px','padding'=>'5px','font-weight'=>'bold');
-    const DIV_STYLE = "width:100%;font-size:3vw;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
+    const DIV_STYLE = "width:100%;font-size:3em;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
     
     private $items = array();        // one item for each slot in the quiz grid
     private $solution = array();
@@ -417,9 +417,9 @@ class Quiz {
             case 'border-color':
             case 'background-color':
                 $hsl = explode(',', substr($value,4,-1));
-                $h = $this->near($hsl[0],6,0,360);
-                $s = $this->near(substr($hsl[1],0,-1),3,0,100);
-                $l = $this->near(substr($hsl[2],0,-1),3,0,100);
+                $h = $this->near($hsl[0],10,0,360);
+                $s = $this->near(substr($hsl[1],0,-1),6,0,100);
+                $l = $this->near(substr($hsl[2],0,-1),1,0,100);
                 return "hsl($h,$s%,$l%)";
                 break;
             case 'border-width':
@@ -444,9 +444,9 @@ class Quiz {
             case 'border-color':
             case 'background-color':
                 $hsl = explode(',', substr($value,4,-1));
-                $h = $this->far(array($hsl[0]),30,0,360);
+                $h = $this->far(array($hsl[0]),50,0,360);
                 $s = $this->far(array(substr($hsl[1],0,-1)),30,0,100);
-                $l = $this->far(array(substr($hsl[2],0,-1)),30,0,100);
+                $l = $this->far(array(substr($hsl[2],0,-1)),10,0,100);
                 return "hsl($h,$s%,$l%)";
                 break;
             case 'border-width':

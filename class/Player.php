@@ -555,9 +555,11 @@ class Player extends Qwik {
 
     public function authURL($shelfLife, $param=NULL){
         $query = is_array($param) ? $param : array();
-        $query['qwik'] = 'login';
         $query['pid'] = $this->id();
         $query['token'] = $this->token($shelfLife);
+        if(!isset($query['qwik'])){
+            $query['qwik'] = 'login';
+        }
         return Page::QWIK_URL."/player.php?" . http_build_query($query);
     }
 
@@ -607,7 +609,7 @@ class Player extends Qwik {
 
 
     function emailFavourite($req, $email){
-        $authLink = $this->authLink(2*self::DAY, array("email"=>$email));
+        $authLink = $this->authLink(2*self::DAY, $req);
         $paras = array(
             "{Click to confirm}",
             "{Safely ignore}"

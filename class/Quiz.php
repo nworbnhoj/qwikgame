@@ -1,36 +1,55 @@
 <?php
 
-class Quiz {
+/*****************************************************************************
+Quiz aims to pose a question that is easy for humans and difficult for an
+automated robot. The quiz is rendered as a <html><div> containing a question
+in the form of a randomized collection of visual elements. Care is taken to
+include clues that are apparent to humans and opaque to robots; and to include
+distractors that are apparent to robots and opaque to humans.
 
+*****************************************************************************/
+
+
+class Quiz {
+    // contants used as keys in various arrays
     const LABEL = 'label';
     const OPERATOR = 'operator';
     const STYLE = 'style';
     const OPERAND = 'operand';
 
+    // the type of questions able to be posed
     const TYPES = array('+');    // '*','↗', '?');
 
+    // each slot in the quiz grid can contain a digit or letter
     const DIGITS = '0123456789';
     const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    // html styles are uses as both cues and distractors
     const STYLES = array('color','background-color','border-color','border-radius'); //,'border-width');
     const SLOTS = '123456789';
     const ARROWS = '↑→↓←↖↗↘↙';
     const POINT = array('4↑'=>'1','5↑'=>'2','6↑'=>'3','7↑'=>'14','8↑'=>'25','9↑'=>'36','1→'=>'23','2→'=>'3','4→'=>'56','5→'=>'6','7→'=>'89','8→'=>'9','1↓'=>'47','2↓'=>'58','3↓'=>'69','4↓'=>'7','5↓'=>'8','6↓'=>'9','2←'=>'1','3←'=>'12','5←'=>'4','6←'=>'45','8←'=>'7','9←'=>'78','5↖'=>'1','6↖'=>'2','8↖'=>'4','9↖'=>'15','↗'=>'','4↗'=>'2','5↗'=>'3','7↗'=>'5','8↗'=>'6','1↘'=>'59','2↘'=>'6','4↘'=>'7','5↘'=>'9','2↙'=>'4','3↙'=>'5','5↙'=>'7','6↙'=>'8');
 
+    // base html styles for the quiz grid
     const BASE_ITEM_STYLE = array('text-align'=>'center','border-style'=>'solid','border-width'=>'1px','padding'=>'5px','font-weight'=>'bold');
     const DIV_STYLE = "width:100%;font-size:3vw;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
     
-    private $items = array();
+    private $items = array();        // one item for each slot in the quiz grid
     private $solution = array();
-    private $div = "<div></div>";
+    private $div = "<div></div>";    // <html><div> containing the quiz grid
 
+    // elements are removed from these arrays as they are used to build the quiz
     private $digits;
     private $letters;
     private $styles;
     private $slots;
     private $arrows;
+
     private $base_item_style;
 
-
+    /**************************************************************************
+    /* The constructor initializes variables; then builds the randomized quiz
+    /*************************************************************************/
     public function __construct(){
         // initialize variables
         $this->digits  = str_shuffle(self::DIGITS);
@@ -46,8 +65,10 @@ class Quiz {
             $this->items[$i] = array();
         }
 
-        // select quiz type at random and create
+        // select quiz type at random
         $type = self::TYPES[rand(1,count(self::TYPES))-1];
+
+        // create the slots critical to the quiz solution
         $quizSlots = array();
         switch ($type){
             case '+': $quizSlots = $this->quizAdd(); break;
@@ -55,11 +76,15 @@ class Quiz {
             case '↗': $quizSlots = $this->quizPoint(); break;
             default: $quizSlots = $this->quizAdd(); break;
         }
+
+        // create contrast between the critical slots and the others
         $contrast = $this->labels();
         while($contrast < 2){
             $contrast++;
             $this->contrast($quizSlots);
         }
+
+        // transform the slots into a final quiz <div>
         $this->div = $this->quizDiv();
     }
 
@@ -163,6 +188,9 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / Create a quiz regarding the sum of 2 or 3 digits.
+    /*************************************************************************/
     private function quizAdd($operands=NULL){
         $slots = array();
 
@@ -188,6 +216,9 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / Create a quiz regarding the product of 2 digits.
+    /*************************************************************************/
     private function quizMult(){
         $slots = array();
         $answer = 1;
@@ -211,6 +242,9 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / Create a quiz involving an arrow pointing to the answer.
+    /*************************************************************************/
     private function quizPoint(){
         $slots = array();
 
@@ -237,6 +271,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available slot selected at random and remove from availability
+    / if $exclusive == TRUE
+    /*************************************************************************/
     private function rndSlot($exclusive=TRUE){
         $slot = NULL;
         if ($exclusive){
@@ -250,6 +288,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available digit selected at random and remove from availability
+    / if $exclusive == TRUE
+    /*************************************************************************/
     private function rndDigit($exclusive=FALSE){
         if ($exclusive){
             $a = substr($this->digits,0,1);
@@ -262,6 +304,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available letter selected at random and remove from
+    / availability if $exclusive == TRUE
+    /*************************************************************************/
     private function rndLetter($exclusive=FALSE){
         if ($exclusive){
             $a = substr($this->letters,0,1);
@@ -274,6 +320,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available arrow selected at random and remove from
+    / availability if $exclusive == TRUE
+    /*************************************************************************/
     private function rndArrow($exclusive=TRUE){
         $arrow = NULL;
         if ($exclusive){
@@ -287,6 +337,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available label selected at random and remove from
+    / availability if $exclusive == TRUE
+    /*************************************************************************/
     private function rndLabel($exclusive=FALSE){
         $labels = str_shuffle($this->digits . $this->letters);
         $label = substr($labels,0,1);
@@ -298,6 +352,10 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return an available style selected at random and remove from
+    / availability if $exclusive == TRUE
+    /*************************************************************************/
     private function rndStyle($exclusive=TRUE){
         $style = NULL;
         if ($exclusive){
@@ -313,6 +371,9 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / remove style from availabily
+    /*************************************************************************/
     private function removeStyle($style){
         foreach($this->styles as $key => $val){
             if($val == $style){
@@ -321,7 +382,10 @@ class Quiz {
         }
     }
 
-    
+
+    /**************************************************************************
+    / return a value for the $style, selected at random.
+    /*************************************************************************/
     private function randomStyleValue($style){
         switch($style){
             case 'color':
@@ -343,7 +407,10 @@ class Quiz {
         }
     }
 
-    
+
+    /**************************************************************************
+    / return a value for the $style, selected at random, but near to $value.
+    /*************************************************************************/
     private function nearStyleValue($style, $value){
         switch($style){
             case 'color':
@@ -368,6 +435,9 @@ class Quiz {
     }
 
 
+    /**************************************************************************
+    / return a value for the $style, selected at random, but far from $value.
+    /*************************************************************************/
     private function farStyleValue($style, $value){
         switch($style){
             case 'color':

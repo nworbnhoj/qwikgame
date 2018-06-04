@@ -617,7 +617,7 @@ class Player extends Qwik {
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "game"       => $req['game'],
-            "venueName"  => $req['venue'],
+            "venue"      => $req['venue'],
             "authLink"   => $authLink
         );
         $email = new Email($vars, $this->lang());

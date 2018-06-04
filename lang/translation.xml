@@ -245,7 +245,7 @@
     <es></es>
 </phrase>
 <phrase key ="Click to confirm">
-    <en>Please [authLink] to confirm that you are available to play &lt;b&gt;$game&lt;/b&gt; at &lt;b&gt;$venue&lt;/b&gt;.</en>
+    <en>Please [authLink] to confirm that you are available to play &lt;b&gt;[game]&lt;/b&gt; at &lt;b&gt;[venue]&lt;/b&gt;.</en>
     <es></es>
 </phrase>
 <phrase key ="EmailInviteSubject">

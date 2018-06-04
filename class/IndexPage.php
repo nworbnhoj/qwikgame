@@ -4,6 +4,8 @@ require_once 'Page.php';
 
 class IndexPage extends Page {
 
+    private $alert = '';
+
 
     public function __construct($template='index'){
         parent::__construct($template);
@@ -49,6 +51,7 @@ class IndexPage extends Page {
             if(isset($anon)){
                 $anon->emailWelcome($email);
                 $anon->emailFavourite($this->req(), $email);
+                $this->alert = "{Check_email}";
                 $result = TRUE;
             }
         }
@@ -66,6 +69,7 @@ class IndexPage extends Page {
                 self::logMsg("login: recover account $id");
                 // todo rate limit
                 $player->emailLogin();
+                $this->alert = "{Check_email}";
                 $result = TRUE;
             }
         }
@@ -85,8 +89,8 @@ class IndexPage extends Page {
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
         $variables['datalists']      = $this->datalists();
-        $variables['alert-hidden']   = 'hidden';
-        $variables['alert']          = '';
+        $variables['alert-hidden']   = empty($this->alert) ? 'hidden' : '';
+        $variables['alert']          = $this->alert;
         
         return $variables;
     }

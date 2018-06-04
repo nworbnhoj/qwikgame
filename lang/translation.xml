@@ -387,4 +387,7 @@
 <phrase key="quiz_welcome">
     <en>Welcome to the anti-robot quiz. We like robots, but we don't like bad robot behaviour (like sending you spam). Please submit your best answers to a few (robot difficult) questions. Sorry for the inconvenience.</en>
 </phrase>
+<phrase key="Check_email">
+    <en>You should receive a email shortly.</en>
+</phrase>
 </translation>

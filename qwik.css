@@ -62,6 +62,10 @@ blockquote, q {
 	max-width:600px;	
 }
 
+.alert {
+	border:solid red 3px;
+}
+
 .vnarrow{ width:30%;	}
 .narrow { width:50%;	}
 .wide 	{ width:90%;	}

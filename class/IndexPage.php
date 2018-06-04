@@ -85,6 +85,8 @@ class IndexPage extends Page {
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
         $variables['datalists']      = $this->datalists();
+        $variables['alert-hidden']   = 'hidden';
+        $variables['alert']          = '';
         
         return $variables;
     }

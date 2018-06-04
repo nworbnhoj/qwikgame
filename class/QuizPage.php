@@ -8,6 +8,7 @@ class QuizPage extends Page {
     const TALLY_KEY  = 'quiz_tally';
     const TODO_KEY   = 'quiz_todo';
     const SCORE_KEY  = 'quiz_score';
+    const DELAY      = 0.01;
 
     private $todo = 1;
     private $tally = 0;
@@ -44,6 +45,7 @@ class QuizPage extends Page {
         }
 
         if($this->tally < $this->todo){  // serve up another quiz
+            $this->rateLimit();
             $quiz = new Quiz();
             $_SESSION[$quiz->id()] = $quiz->answer();
             $this->quizID = $quiz->id();
@@ -74,6 +76,13 @@ class QuizPage extends Page {
         $vars['quiz']     = $this->quizDiv;
         $vars['qid']      = $this->quizID;
         return $vars;
+    }
+
+
+    private function rateLimit(){
+        $delay = self::DELAY;
+        $todo = $this->todo;
+        sleep($delay ^ $todo);
     }
 
 }

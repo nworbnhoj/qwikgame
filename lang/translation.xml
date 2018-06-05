@@ -390,4 +390,7 @@
 <phrase key="Check_email">
     <en>You should receive a email shortly.</en>
 </phrase>
+<phrase key="qwik_quiz">
+    <en>qwik quiz</en>
+</phrase>
 </translation>

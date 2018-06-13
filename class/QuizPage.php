@@ -22,6 +22,9 @@ class QuizPage extends Page {
         $this->repost = $this->req('repost');
         $this->tally = isset($_SESSION[self::TALLY_KEY]) ? $_SESSION[self::TALLY_KEY] : 0 ;
         $this->todo = isset($_SESSION[self::TODO_KEY]) ? $_SESSION[self::TODO_KEY] : 1 ;
+        if(!isset($_SESSION[self::SCORE_KEY])){
+            $_SESSION[self::SCORE_KEY] = '';
+        }
     }
 
 

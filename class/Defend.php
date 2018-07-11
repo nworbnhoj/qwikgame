@@ -84,6 +84,7 @@ class Defend extends Qwik {
             'address'  => FILTER_DEFAULT,
             'ability'  => Filter::ABILITY,
             'account'  => FILTER_DEFAULT,
+            'beckon'   => FILTER_DEFAULT,
             'country'  => Filter::COUNTRY,
             'email'    => FILTER_VALIDATE_EMAIL,
             'Fri'      => Filter::HOURS,

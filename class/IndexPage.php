@@ -63,14 +63,23 @@ class IndexPage extends Page {
         $result = FALSE;
         if(isset($email)){
             $pid = Player::anonID($email);
-            $player = new Player($pid);
-            if(isset($player)){
-                $id = self::snip($pid);
-                self::logMsg("login: recover account $id");
-                // todo rate limit
-                $player->emailLogin();
-                $this->alert = "{Check_email}";
-                $result = TRUE;
+            if(PLAYER::exists($pid)){
+                $player = new Player($pid);
+                if($player->ok()){
+                    $id = self::snip($pid);
+                    self::logMsg("login: recover account $id");
+                    // todo rate limit
+                    $player->emailLogin();
+                    $this->alert = "{Check_email}";
+                    $result = TRUE;
+                }
+            } else {
+                $anon = new Player($pid, TRUE);
+                if(isset($anon)){
+                    $anon->emailWelcome($email);
+                    $this->alert = "{Check_email}";
+                    $result = TRUE;
+                }
             }
         }
         return $result;

@@ -113,8 +113,8 @@ class Page extends Html {
         $vars['flyerLink']     = self::FLYER_LNK;
         $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
         $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";
-        $game = $this->req('game');
-        $vars['game']  = isset($game) ? self::qwikGames()["$game"] : '[game]';
+        $game = (string) $this->req('game');
+        $vars['game']  = empty($game) ? '[game]' : self::qwikGames()[$game];
         
         if ($this->player != NULL){
             $vars['pid']         = $this->player->id();

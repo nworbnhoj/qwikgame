@@ -22,7 +22,8 @@ class PlayerPage extends Page {
         parent::__construct($template);
 
         $player = $this->player();
-        if (is_null($player)){
+        if (is_null($player)
+        || !$player->ok()){
             $this->logout();
             return;
         }

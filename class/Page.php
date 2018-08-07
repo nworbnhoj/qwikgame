@@ -763,7 +763,7 @@ class Page extends Html {
         $hrs = $xml->xpath("hrs");
         foreach($hrs as $hr){
             $hours = new Hours($hr);
-            $html .= self::daySpan($hours->list(), $hr['day']);
+            $html .= self::daySpan($hours->roster(), $hr['day']);
         }
         return $html;
     }

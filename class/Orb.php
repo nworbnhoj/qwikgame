@@ -15,11 +15,10 @@ class Orb extends Qwik {
         $this->nodes = array();
     }
 
-
-    public function empty(){
+    
+    public function bare(){
         return empty($this->nodes);
     }
-
 
     public function wipe($key=NULL){
         if(is_null($key)) {
@@ -31,7 +30,7 @@ class Orb extends Qwik {
     }
 
 
-    public function print($tabs="\t"){
+    public function chart($tabs="\t"){
         $game = $this->game;
         $nodes = $this->nodes;
         $count = count($nodes);
@@ -42,8 +41,8 @@ class Orb extends Qwik {
             $rely = $node->rely();
             $str .= "\n$tabs" . self::snip($rid) . " $parity $rely";
             $orb = $node->orb();
-            if(isset($orb) && !$orb->empty()){
-                $str .= $orb->print("$tabs\t");
+            if(isset($orb) && !$orb->bare()){
+                $str .= $orb->chart("$tabs\t");
             }
         }
         return $str;
@@ -142,7 +141,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
 
             // recursion
             $orb = $node->orb();
-            if(isset($orb) && !$orb->empty()){
+            if(isset($orb) && !$orb->bare()){
                 $subOrbInv = $orb->inv($node->rid());
                 foreach ($subOrbInv as $rid => $subNode) {
                     if (!array_key_exists($rid, $inv)){
@@ -210,7 +209,7 @@ Rival and by negating Parity.
             $nodeOrb = $node->orb();
             $newCrumbs = array();
             if(isset($nodeOrb)
-            && !$nodeOrb->empty()){                      // step further out
+            && !$nodeOrb->bare()){                      // step further out
                 $newCrumbs = $nodeOrb->expand($crumbs);  // recursion
             } elseif(!in_array($rid, $crumbs)){          // found a new edge
                 $rival = new Player($rid);
@@ -282,9 +281,9 @@ Rival and by negating Parity.
         foreach($this->nodes as $key => $node){
             $subOrb = $node->orb();
             if(isset($subOrb)
-            && !$subOrb->empty()){
+            && !$subOrb->bare()){
                 $pruned = $subOrb->prune($keepers);
-                if ($pruned->empty()){
+                if ($pruned->bare()){
                     $this->wipe($key);
                 } else {
                     $node->orb($pruned);
@@ -302,7 +301,6 @@ Rival and by negating Parity.
     public function size(){
         return count($this->nodes);
     }
-
 
 }
 

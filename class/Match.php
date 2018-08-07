@@ -399,11 +399,11 @@ class Match extends Qwik {
 
         switch ($status){
             case 'keen':
-                $vars['hour'] = Page::daySpan($hours->list());
+                $vars['hour'] = Page::daySpan($hours->roster());
                 $vars['rivalCount'] = $this->rivalCount();
                 break;
             case 'invitation':
-                $vars['hour'] = $this->hourSelect($hours->list());
+                $vars['hour'] = $this->hourSelect($hours->roster());
                 $rivalLink = empty($rivalLink) ? '{a_rival}' : $rivalLink;
                 break;
             case 'accepted':

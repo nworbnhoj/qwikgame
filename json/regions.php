@@ -6,7 +6,7 @@
     $pid = $req['pid'];
     $player = new Player($pid, Page::$log, FALSE);
     $options = '';
-    if(isset($player){
+    if(isset($player)){
 
         $available = $player->available();
         $regions = array();

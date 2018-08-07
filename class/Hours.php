@@ -46,7 +46,7 @@ Class Hours {
     /* Includes the $hours provided into $this
     /* returns true if $this->bits has changed as a result;
     **/
-    public function include($hours){
+    public function append($hours){
         $priorBits = $this->bits;
         $this->bits = ($this->bits | $hours->bits);
         return $this->bits != $priorBits;
@@ -64,13 +64,13 @@ Class Hours {
     }
     
     
-    public function empty(){
+    public function purge(){
         return $this->bits === 0;
     }
     
     
     // Returns an array of hours
-    public function list(){
+    public function roster(){
         $hours = array();
         $mask = 1;
         for ($hour = 0; $hour < 24; $hour++){
@@ -84,12 +84,12 @@ Class Hours {
 
 
     public function first(){
-        return $this->list()[0];
+        return $this->roster()[0];
     }
 
 
     public function last(){
-        return max($this->list());
+        return max($this->roster());
     }
 }
 

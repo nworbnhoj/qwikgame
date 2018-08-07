@@ -298,7 +298,7 @@ function qwikFeedback($player, $request){
             $request['rep']
         );
 
-        if ($rival->exists()){
+        if ($rival->ok()){
             $rival->updateRep($request['rep']);
             $this->updateCongCert($player, $request['id'], $rival);
             $rival->save();

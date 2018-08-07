@@ -155,7 +155,7 @@ class FeatureContext implements Context
         $day = date("D", strtotime($day));        // convert Saturday to Sat.
         $hour = new Hours(date("H", strtotime($hour)));   // convert 12hr to 24hr format
         if (isset($this->req[$day])) {
-            $hour->include(new Hour($this->req[$day]));
+            $hour->append(new Hour($this->req[$day]));
         }
         $this->req[$day] = $hour->bits();
     }
@@ -295,7 +295,7 @@ class FeatureContext implements Context
                     case 'NONE':
                         $availableHours->includeOnly($hours);
                         Assert::assertTrue(
-                            $availableHours->empty(),
+                            $availableHours->purge(),
                             "Player Available when they should not be: $game $day $hours"
                         );
                         break;

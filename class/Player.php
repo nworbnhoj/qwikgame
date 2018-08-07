@@ -451,7 +451,7 @@ class Player extends Qwik {
                 $hours = $avail->xpath("hrs[@day='$day']");
                 foreach ($hours as $hrs){
                     $favHrs = new Hours(intval("$hrs"));
-                    $favouriteHours->include($favHrs);
+                    $favouriteHours->append($favHrs);
                 }
             }
         }
@@ -464,7 +464,7 @@ class Player extends Qwik {
         $keenHours = new Hours();
         $keens = $this->xml->xpath("match[status='keen' and venue='$vid' and game='$game']");
         foreach ($keens as $keen){
-            $keenHours->include($keen['hrs']);
+            $keenHours->append($keen['hrs']);
         }
         return $keenHours;
     }
@@ -472,7 +472,7 @@ class Player extends Qwik {
 
     public function availableHours($vid, $game, $day, $parity=NULL){
         $availableHours = $this->favouriteHours($vid, $game, $day, $parity);
-        $availableHours->include($this->keenHours($vid, $game, $day));
+        $availableHours->append($this->keenHours($vid, $game, $day));
         return $availableHours;
     }
 
@@ -512,7 +512,7 @@ class Player extends Qwik {
         );
         $inviteHours->includeOnly($availableHours);
 
-        if (!$inviteHours->empty()){
+        if (!$inviteHours->purge()){
             $match = $this->matchAdd($rivalMatch, $parity, $inviteHours);
             return $match;
         }
@@ -1172,7 +1172,7 @@ Requirements:
 //echo "<br><br><br>\n";
     $parity = $spliceOrb->parity($rivalID);
 
-//    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->print());
+//    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->chart());
 
     return $parity;
 

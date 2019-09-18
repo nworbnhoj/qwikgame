@@ -35,15 +35,17 @@
 
 <h2>{Account_Recovery}</h2>
 
-<form action="quiz.php" method="post" class="commit center shadow account">
-    <input type="hidden" name="repost" value="index.php">
-    <input type="hidden" name="qwik" value="recover">
-    <br>{...link_to_login}<br>
-    <input name="email" type="email" class="email" placeholder="{prompt_address}">
-    <br>
-    <input type="submit" value="Submit">
-    <br><br>
-</form>
+<div class="commit center shadow account">
+    <form action="quiz.php" method="post">
+        <input type="hidden" name="repost" value="index.php">
+        <input type="hidden" name="qwik" value="recover">
+        <br>{...link_to_login}<br>
+        <input name="email" type="email" class="email" placeholder="{prompt_address}">
+        <br>
+        <input type="submit" value="Submit">
+        <br><br>
+    </form>
+</div>
 
 
 
@@ -64,13 +66,15 @@
 
 <h2>{Feedback}</h2>
 
-<form action="info.php" method="post"  class="commit center shadow feedback">
-<br>
-<input type='hidden' name='qwik' value='feedback' class='center'>
-<textarea type="text" name="message" class='center' placeholder='{prompt_feedback}'></textarea><br>
-<input type="email" name="reply-email" placeholder='{prompt_address}'><br>
-<input value="Submit" type="submit">
-</form>
+<div class="commit center shadow feedback">
+    <form action="info.php" method="post">
+        <br>
+        <input type='hidden' name='qwik' value='feedback' class='center'>
+        <textarea type="text" name="message" class='center' placeholder='{prompt_feedback}'></textarea><br>
+        <input type="email" name="reply-email" placeholder='{prompt_address}'><br>
+        <input value="Submit" type="submit">
+    </form>
+</div>
 
 
 <h2>{Thanks}</h2>

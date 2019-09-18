@@ -34,38 +34,38 @@
     <h2>{Upload_Rankings}</h2>
 
     <repeat id='uploads'>
-    <form action='upload.php' method='post' class='center record [status]' [uploadHidden]>
-        <input type='hidden' name='filename' value='[fileName]'>
-        <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
-        <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
-        <button class='action [tickIcon]' name='qwik' value='activate' ></button>
-
-        <span class='help' hidden>{Once_you_have_uploaded...}</span>
-        <span class='tag {[status]}'>[status]</span>
-        [title]<br>
-        <b>[game]</b> [time]
-    </form>
+    <div class='center record [status]' [uploadHidden]>
+        <form action='upload.php' method='post'>
+            <input type='hidden' name='filename' value='[fileName]'>
+            <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
+            <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
+            <button class='action [tickIcon]' name='qwik' value='activate' ></button>
+            <span class='help' hidden>{Once_you_have_uploaded...}</span>
+            <span class='tag {[status]}'>[status]</span>
+            [title]<br>
+            <b>[game]</b> [time]
+        </form>
+    </div>
     </repeat>
 
 
-    <form action="upload.php" 
-        method="post" 
-        enctype="multipart/form-data" 
-        class='commit center wide shadow upload'
-        <br>
-        <input type='hidden' name='qwik' value='upload'>
-        <select name="game" class="game">
-            <repeat id='games'>
-            <option value='[game]' [selected]> [name]</option>
-            </repeat>
-        </select>
-        <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
-        <br>
-        <input required    name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
-        <br>
-        <input type="submit" value="Upload" name="submit" [uploadDisabled]>
-        <br>
-    </form>
+    <div class='commit center wide shadow upload'>
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+            <br>
+            <input type='hidden' name='qwik' value='upload'>
+            <select name="game" class="game">
+                <repeat id='games'>
+                <option value='[game]' [selected]> [name]</option>
+                </repeat>
+            </select>
+            <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
+            <br>
+            <input required    name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
+            <br>
+            <input type="submit" value="Upload" name="submit" [uploadDisabled]>
+            <br>
+        </form>
+    </div>
 <br>
 
     <p class='center'>{A_comma_delimited...}</p>

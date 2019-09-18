@@ -105,8 +105,6 @@ blockquote, q {
 .active     { border-color:ForestGreen;  }
 
 
-
-
 .bottom {
 	position:relative;
 	bottom:0px;
@@ -114,6 +112,7 @@ blockquote, q {
 
 .green	{ color:DarkGreen;	}
 .red	{ color:DarkRed;	}
+.shadow	{ box-shadow:  0 4em 5em 1em DimGrey;	}
 
 .thumb {
 	border:none;
@@ -198,6 +197,28 @@ div.prompt {
 	margin-bottom:1em;
 	border:1px #404040 solid;
 	line-height: 1em;
+}
+
+div.record {
+    line-height:140%;
+    background-color: DarkGray;
+    border-radius: 3px;
+    padding:0px;
+    margin: 0.5em auto 0px auto;
+    border-width:0px 0px 0px 1vw;
+    border-style:solid;
+}
+
+div.commit {
+    background-color: DarkGray;
+    margin: 0.5em auto 0px auto;
+    border-width:0px 0px 0px 1vw;
+    border-style:solid;
+}
+
+div.transparent {
+    background-color:inherit;
+    border:0px solid black;
 }
 
 /************** <span> *********************/
@@ -600,36 +621,10 @@ hr {
 }
 
 
-.shadow	{ box-shadow:  0 4em 5em 1em DimGrey;	}
-
-
 /************** <form> *********************/
 
 form { 
 	margin:0.5em;
-}
-
-form.record {
-	line-height:140%;
-    background-color: DarkGray;
-    border-radius: 3px;
-	padding:0px;
-
-    margin: 0.5em auto 0px auto;
-    border-width:0px 0px 0px 1vw;
-    border-style:solid;
-}
-
-form.commit {
-    background-color: DarkGray;
-	margin: 0.5em auto 0px auto;
-    border-width:0px 0px 0px 1vw;
-    border-style:solid;
-}
-
-form.transparent {
-    background-color:inherit;
-    border:0px solid black;
 }
 
 

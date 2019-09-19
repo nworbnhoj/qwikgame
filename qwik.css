@@ -628,8 +628,12 @@ hr {
 
 /************** <form> *********************/
 
-form { 
-	margin:0.5em;
+form {
+    padding: 1em 1em 1em 1em;
+}
+
+form.record {
+    padding: 0em 0em 0em 0em;
 }
 
 

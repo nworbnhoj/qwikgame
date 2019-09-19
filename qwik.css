@@ -561,7 +561,12 @@ input {
 
 
 input[type='text']	{ text-align: center;		}
-input[type='submit'] 	{ background-color: grey;	}
+input[type='submit'] 	{ 
+	background-color: grey; 
+	display: block; 
+	margin-left:auto;
+	margin-right:auto;
+}
 input.caps           { text-transform: uppercase;}
 
 

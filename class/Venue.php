@@ -353,23 +353,23 @@ class Venue extends Qwik {
     }
 
 
-    public function revertDiv(){
+    public function revertSet(){
         $edits = $this->xml->xpath('edit');
         if (count($edits) == 0){
             return '';
         }
 
-        $div = "<div id='edit-revert-div' class='middle'>\n";
-        $div .= "\tClick to revert a prior edit.<br>\n";
+        $set = "<fieldset id='edit-revert-div' class='middle'>\n";
+        $set .= "\t<legend>Click to revert a prior edit.</legend>\n";
         foreach($edits as $edit){
             $revertID = $edit['id'];
-            $div .= "\t<button class='revert' id='#venue-$edit->key' val='$edit->val'>";
-            $div .= "\t\t".self::REVERT_CHAR." <s>$edit->val</s>\n";
-            $div .= "\t</button>\n";
+            $set .= "\t<button class='revert' id='#venue-$edit->key' val='$edit->val'>";
+            $set .= "\t\t".self::REVERT_CHAR." <s>$edit->val</s>\n";
+            $set .= "\t</button>\n";
         }
-        $div .= "\t<br>\n";
-        $div .= "</div>\n";
-        return $div;
+        $set .= "\t<br>\n";
+        $set .= "</fieldset>\n";
+        return $set;
     }
     
     

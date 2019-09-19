@@ -131,7 +131,7 @@ class VenuePage extends Page {
         $vars['venueLat']      = $this->venue->lat();
         $vars['venueLng']      = $this->venue->lng();
         $vars['venueNote']     = $this->venue->note();
-        $vars['venueRevertDiv']= $this->venue->revertDiv();
+        $vars['venueRevertSet']= $this->venue->revertSet();
         $vars['backLink']      = $backLink;
         $vars['venueUrlLink']  = $venueLink;
         $vars['games']         = $venueGames;

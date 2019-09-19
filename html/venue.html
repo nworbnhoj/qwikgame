@@ -48,6 +48,11 @@
     </div>
 
     <div id='edit-venue-div' class='commit center wide shadow venue' [editHidden]>
+        <button type='button' class='action help [INFO_ICON]'></button>
+        <span class='help' hidden>
+            {Please_correct...}<br>
+            {You_can_easily_revert...}
+        </span>
         [venueRevertDiv]
         <form id='edit-venue-form' action='venue.php' method='post'>
             <input type='hidden' name='vid' value='[vid]'>
@@ -56,11 +61,6 @@
             <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
             <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
             <input type='hidden' name='placeid' value='[placeid]' id='venue-placeid'>
-            <span class='help' hidden>
-                {Please_correct...}<br>
-                {You_can_easily_revert...}
-            </span>
-            <button type='button' class='action help [INFO_ICON]'></button>
             <br><br>
             <input id='venue-name' name='name' class="center guess" value='[venueName]' placeholder='Name' autocomplete="off">
             <div class='center'>
@@ -79,8 +79,6 @@
             <br>
             <input id='venue-cancel' type='button' value='Cancel'>
             <input id='venue-submit' type='submit' value='Submit'>
-            <br>
-            <br>
         </form>
     </div>
 

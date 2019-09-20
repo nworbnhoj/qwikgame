@@ -221,6 +221,10 @@ div.transparent {
     border:0px solid black;
 }
 
+div.quiz {
+    font-size: 3em;
+}
+
 /************** <span> *********************/
 
 
@@ -536,7 +540,7 @@ option {
 
 input {	
 	font-family:'Pontano Sans', sans-serif;	
-    font-size:16px;
+    font-size:inherit;
 /*	vertical-align:middle; */
 	margin:0.5em;
 	border:Gray solid 1px;

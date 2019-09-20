@@ -32,7 +32,7 @@ class Quiz {
 
     // base html styles for the quiz grid
     const BASE_ITEM_STYLE = array('text-align'=>'center','border-style'=>'solid','border-width'=>'1px','padding'=>'5px','font-weight'=>'bold');
-    const DIV_STYLE = "width:100%;font-size:3em;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
+    const DIV_STYLE = "width:100%;display:grid;grid-template-columns:auto auto auto;grid-gap:5% 5%;";
     
     private $items = array();        // one item for each slot in the quiz grid
     private $solution = array();

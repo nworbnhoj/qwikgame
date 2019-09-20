@@ -26,22 +26,25 @@
         <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
     </div>
 
-    <h2>[progress]</h2>
-
-    <div id='quiz-form' class='center vwide shadow'>
+    <div id='quiz-div' class='center vwide shadow quiz`'>
+        <div class='center quiz'>
+            [progress]
+        </div>
+        <div class='center quiz'>
+            [quiz]
+        </div>
         <form action='quiz.php' method='post'>
             <input type='hidden' name='repost' value='[repost]'>
             <repeat id='repost'>
             <input type='hidden' name='[name]' value='[value]'>
             </repeat>
-            <br>
-            <div class='center'>
-                [quiz]
+            <div class='center quiz'>
+                <input type='text' name='reply' placeholder='= ?' size='3'>
             </div>
-            <br>
-            <input type='text' name='reply' placeholder='=' size='4'>
-            <button type='submit' name='qid' value='[qid]'>{Submit}</button>
-            <button type='submit' name='qid' value=''>{Skip}</button>
+            <div class='center'>
+                <button type='submit' name='qid' value='[qid]'>{Submit}</button>
+                <button type='submit' name='qid' value=''>{Skip}</button>
+            </div>
         </form>
     </div>
 

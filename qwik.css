@@ -595,7 +595,6 @@ button {
 button[type='submit'] {
     background-color:grey;
     border-color: DarkOrange;
-    padding:0.4em;
 }
 
 button.icon {

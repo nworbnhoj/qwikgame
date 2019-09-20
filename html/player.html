@@ -30,15 +30,15 @@
 <h1>{qwik_game_org}</h1>
 <p class="center alert" [alert-hidden]>[alert]</p>
 
-<p class='center'>
-    <br><br>[message]<br><br>
-</p>
+<p class='center message'>[message]</p>
 
 <div id='menu' class='menu'>
     <a id='info-icon'   class='[INFO_ICON]'   href='info.php'></a>
     <a id='reload-icon' class='[RELOAD_ICON]' href='player.php'></a>
     <a id='logout-icon' class='[LOGOUT_ICON]' href='player.php?qwik=logout'></a>
 </div>
+
+
 
 <h2 id='matches'>{Matches}</h2>
 
@@ -87,8 +87,8 @@
         <span class='help' hidden>{Your_game_confirmed...}</span>
         <p class='record'>
             <span class='tag confirmed'>{confirmed}</span>
-            {Confirmed_Game_at...}<br>
-            <input type='text' name='msg' placeholder='{prompt_msg}'>
+            {Confirmed_Game_at...}
+            <input type='text' name='msg' placeholder='{prompt_msg}' class='message'>
             <button type='submit' name='qwik' value='msg' class='thumb [SEND_ICON]'></button>
         </p>
     </form>
@@ -136,8 +136,7 @@
         <p class='record'>
             <span class='tag keen'>{keen}</span>
             {Keen_Game_at...}
-            <br>
-            <span class='count nowrap'>[rivalCount] {potential_rivals}</span>
+            <div class='count'>[rivalCount] {potential_rivals}</div>
         </p>
     </form>
 </div>
@@ -242,9 +241,8 @@
 </div>
 
 
-<span id='available'></span>
 
-<h2 name='available' class='available center'>{Available}</h2>
+<h2 id='available' name='available' class='available center'>{Available}</h2>
 
 <p class='center'>{...will_let_you_know...}</p>
 
@@ -255,7 +253,7 @@
         <input type='hidden' name='id' value='[id]'>
         <p class='record'>
             {Available_game_with...}<br>
-            [weekSpan]<br>
+            [weekSpan]
         </p>
     </form>
 </div>
@@ -329,9 +327,8 @@
 </div>
 
 
-<div id='familiar'></div>
 
-<h2>{Familiar}</h2>
+<h2 id='familiar'>{Familiar}</h2>
 
 <p class="center">
     {Familiar_players_help...}
@@ -366,10 +363,7 @@
 
 
 
-
-<div id='region'><br></div>
-
-<h2>{Ability}</h2>
+<h2 id='region'>{Ability}</h2>
 
 <p class="center">{Reckon_your_own...}</p>
 
@@ -429,9 +423,7 @@
 
 
 
-<div id='account'><br></div>
-
-<h2>{Account}</h2>
+<h2 id='account'>{Account}</h2>
 <p>[privacyLink]</p>
 <div class='center shadow commit account'>
     <button type='button' class='action help [INFO_ICON]'></button>

@@ -63,7 +63,9 @@ blockquote, q {
 }
 
 .alert {
-	border:solid red 3px;
+    border:solid red 3px;
+    margin-top: 2em;
+    margin-bottom: 2em;
 }
 
 .vnarrow{ width:30%;	}
@@ -226,6 +228,12 @@ div.quiz {
     padding: 0.5em 0 0 0;
 }
 
+div.info {
+    padding: 1em 1em 1em 1em;
+}
+
+div.count { padding:0px 0.3em 0px 0.3em; }
+
 /************** <span> *********************/
 
 
@@ -242,9 +250,6 @@ span.tag {
 	padding:0px;
 	font-weight:bold;
 }
-
-
-span.count	{ padding:0px 0.3em 0px 0.3em;	}
 
 span.hilite {
 	color:DarkOrange;
@@ -345,6 +350,9 @@ p {
 }
 
 p.record	{ padding:0.3em;	}
+p.message	{ padding:0.5em;    }
+p.tagline	{ padding:2em;    }
+p.players	{ padding:1em;    }
 
 
 /************** <ul> *********************/
@@ -564,8 +572,7 @@ input {
   text-align: center; 
 }
 
-
-input[type='text']	{ text-align: center;		}
+input[type='text'] { text-align: center; }
 input[type='submit'] 	{ 
 	background-color: grey; 
 	display: block; 
@@ -573,6 +580,8 @@ input[type='submit'] 	{
 	margin-right:auto;
 }
 input.caps           { text-transform: uppercase;}
+input.email     { display:block; }
+input.message { display:block; }
 
 
 /************** <button> *********************/

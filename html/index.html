@@ -19,13 +19,8 @@
 
 <h1>qwik game org</h1>
 <p class="center alert" [alert-hidden]>[alert]</p>
-<br>
-<br>
-<br>
-<p class="center">{tagline}</p>
-<br>
-<p>{players_at_venues}</p>
-<br>
+<p class="center tagline">{tagline}</p>
+<p class="center players">{players_at_venues}</p>
 
 <div id='menu' class='menu'>
     <form id='lang-form' action='index.php' method='post'>
@@ -40,7 +35,6 @@
     <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
 </div>
 
-<br><br>
 
 <div class="commit center shadow available">
     <button type='button' class='action help [INFO_ICON]'></button>
@@ -67,7 +61,7 @@
         <span class="lft [COMMENT_ICON]"></span>
         <span class="lft words">{We_are_available...}</span>
     </span>
-    <br>
+    <div>
     <span class="anon [FEMALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [FEMALE_ICON]"></span>
@@ -76,7 +70,8 @@
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [FEMALE_ICON]"></span>
-    <br>
+    </div>
+    <div>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [FEMALE_ICON]"></span>
@@ -85,7 +80,8 @@
     <span class="anon [FEMALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
-    <br>
+    </div>
+    <div>
     <span class="anon [FEMALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [MALE_ICON]"></span>
@@ -94,6 +90,7 @@
     <span class="anon [MALE_ICON]"></span>
     <span class="anon [FEMALE_ICON]"></span>
     <span class="anon [FEMALE_ICON]"></span>
+    </div>
 
     <br><br><br><br><br>
 
@@ -176,14 +173,14 @@
 
 
 <h2 id="matched_ability">{matched_ability}</h2>
-<div class="center shadow">
+<div class="center shadow info">
     <p>{Rate_the_ability...}</p>
     <p>{You_can_estimate...}</p>
 </div>
 
 
 <h2 id="polite players">{polite_players}</h2>
-<div class="center shadow">
+<div class="center shadow info">
     <p>{Rate_the_politeness...}</p>
     <p>{You_can_ignore...}</p>
 </div>
@@ -191,7 +188,7 @@
 
 
 <h2 id="email respect">{email_respect}</h2>
-<div class="center shadow">
+<div class="center shadow info">
     <p>{Your_email_will_not...}</b>.
         <a href='pdf/qwikgame.org%20privacy%20policy.pdf' target='_blank'>{Privacy_policy}</a>
     </p>
@@ -204,7 +201,7 @@
 
 
 <h2 id="your data">{your_data}</h2>
-<div class="center shadow">
+<div class="center shadow info">
     <p>{You_can_quit...}
         <a href='pdf/qwikgame.org%20privacy%20policy.pdf' target='_blank'>{Privacy_policy}</a>
     </p>
@@ -212,8 +209,7 @@
 
 
 <h2 id="please help">{spread_the_word}</h2>
-
-<div class='center shadow'>
+<div class='center shadow info'>
     <p>
         [twitterLink]
         [emailLink]

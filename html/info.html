@@ -39,9 +39,9 @@
     <form action="quiz.php" method="post">
         <input type="hidden" name="repost" value="index.php">
         <input type="hidden" name="qwik" value="recover">
-        <br>{...link_to_login}<br>
+        {...link_to_login}
         <input name="email" type="email" class="email" placeholder="{prompt_address}">
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" class="account">
     </form>
 </div>
 
@@ -66,9 +66,8 @@
 
 <div class="commit center shadow feedback">
     <form action="info.php" method="post">
-        <br>
         <input type='hidden' name='qwik' value='feedback' class='center'>
-        <textarea type="text" name="message" class='center' placeholder='{prompt_feedback}'></textarea><br>
+        <textarea type="text" name="message" class='center' placeholder='{prompt_feedback}'></textarea>
         <input type="email" name="reply-email" placeholder='{prompt_address}'>
         <input value="Submit" type="submit">
     </form>
@@ -77,15 +76,13 @@
 
 <h2>{Thanks}</h2>
 
-<div class='center shadow'>
-<br>
+<div class='center shadow info'>
 <ul>
     <li><a href='https://www.facebook.com/DavidCleggPSA/about/?__xt__=33.%7B%22logging_data%22%3A%7B%22page_id%22%3A114379538585735%2C%22event_type%22%3A%22clicked_view_page_about%22%7D%7D&tab=page_info' target='_blank'>David Clegg</a> 
         <a href='https://psaworldtour.com/players/view/3476/david%20clegg' target='_blank'>PSA</a> Squash player.</li>
     <li>Font Awesome by Dave Gandy - <a href='http://fontawesome.io' target='_blank'>http://fontawesome.io</a></li>
     <li><a href="http://www.geoplugin.com/geolocation/" target="_new">IP Geolocation</a> by <a href="http://www.geoplugin.com/" target="_new">geoPlugin</a></li>
 </ul>
-<br>
 
 </div>
 
@@ -93,7 +90,7 @@
 
 <h2 id='invitations'>{Invitations}</h2>
 
-<div class='center shadow'>
+<div class='center shadow info'>
     <p>{When_you_are_keen...}</p>
     <p>{After_the_game...}</p>
 </div>
@@ -104,7 +101,7 @@
 
 <h2 id='reputation'>{Reputation}</h2>
 
-<div class='center shadow'>
+<div class='center shadow info'>
     <p>
         {Reputation_is_based...}
     </p>
@@ -123,7 +120,7 @@
 
 <h2>{Development}</h2>
 
-<div class='center shadow'>
+<div class='center shadow info'>
     <p>{Github}</p>
     <p>{There_are_so...}</p>
     <p>{Please_help_translate...}</p>
@@ -149,7 +146,6 @@
         <li>Put match on personal calender.</li>    
         <li>qwikgame App</li>
     </ol>
-    <br><br>
 </div>
 
     <div id='footer' class='center'>

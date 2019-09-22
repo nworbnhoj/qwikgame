@@ -159,11 +159,12 @@ class Player extends Qwik {
 
     public function email($newEmail=NULL){
         if (!is_null($newEmail)){
+            newEmail = strtolower(newEmail);
             if(empty($this->email)){
                 $this->xml->addChild('email', $newEmail);
             } else {
                 $oldEmail = $this->xml->email[0];
-                if ($oldEmail != $newEmail) {
+                if (strcmp($oldEmail, $newEmail) != 0) {
                     $newID = Player::anonID($newEmail);
                     if (false){ // if newID already exists then log and abort
                         self::logMsg("abort change email from $oldEmail to $newEmail.");

@@ -246,6 +246,7 @@ Class TranslatePage extends Page {
         $td .= "    <div class='phrase'>$phrase</div>\n";
         $td .= "    <div class='pending'>$pending</div>\n";
         $td .= "    <form action='translate.php#$key' method='post' class='edit-phrase' $hidden>\n";
+        $td .= "      <input type='hidden' name='qwik' value='translate'>\n";
         $td .= "      <input type='hidden' name='key' value='$key'>\n";
         $td .= "      <input type='hidden' name='lang' value='$lang'>\n";
         $td .= "      <input type='text' name='phrase' value='$edit' size='$size' $rtl>\n";

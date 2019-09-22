@@ -11,13 +11,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="qwik.js"></script>
     <script>
-        function checkActive(){
-            if($('#keen-form').attr('accountActive')){
-                return true;
-            }
-            alert("Please activate your account.\nAn email has been sent with an activation link.");
-            return false;
-        }
         function checkQuit(){
             return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
         }
@@ -147,7 +140,7 @@
 <div id='keen-form' class="center commit shadow keen">
     <button type='button' class='action help [INFO_ICON]'></button>
     <span class='help' hidden>{This_will_alert...}</span>
-    <form action="locate.php" method="post" onsubmit='return checkActive()' accountActive='1'>
+    <form action="locate.php" method="post">
         <input type="hidden" name="qwik" value="keen">
         <input type='hidden' name='repost' value='player.php'>
         {I_am_keen_to...}
@@ -435,7 +428,7 @@
         <br>
         [thumbs]
         <br>
-        <input name="nick" type="text" class='center' value="[playerNick]" placeholder='{nickname}'>
+        <input name="nick" type="text" class='center' value="[playerNick]" placeholder='{nickname}' size='20'>
         <input name='url' type='url' class='center' value="[playerURL]"  placeholder='http://your.page.com'>
         <input type="submit" class="account" value="{Submit}">
     </form>

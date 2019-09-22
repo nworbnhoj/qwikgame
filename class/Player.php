@@ -765,7 +765,7 @@ class Player extends Qwik {
             "{Good luck}"
         );
         $vars = array(
-            "subject"    => "{EmailQuitSubject}",
+            "subject"    => "{emailQuitSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email()
         );

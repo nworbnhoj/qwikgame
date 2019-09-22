@@ -5,6 +5,7 @@ require_once 'Qwik.php';
 
 class Filter extends Qwik {
 
+    const VALID_LANG = array('ar', 'en','es','fr', 'hi', 'jp', 'ru', 'zh');
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'familiar', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'upload');
     const VALID_REPOST = array('index.php', 'player.php', 'info.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
@@ -25,6 +26,7 @@ class Filter extends Qwik {
     const GAME    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::game');
     const ID      = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::ID');
     const INVITE  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::invite');
+    const LANG    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::lang');
     const LAT     = array('filter'=>FILTER_VALIDATE_FLOAT, 'options'=>Filter::OPT_LAT);
     const LNG     = array('filter'=>FILTER_VALIDATE_FLOAT, 'options'=>Filter::OPT_LNG);
     const PARITY  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::parity');
@@ -55,6 +57,11 @@ class Filter extends Qwik {
 
     static function invite($val){
         return filter_var($val, FILTER_VALIDATE_EMAIL);
+    }
+
+
+    static function lang($val){
+        return in_array($val, self::VALID_LANG) ? $val : FALSE;
     }
 
 

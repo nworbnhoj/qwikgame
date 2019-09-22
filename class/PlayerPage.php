@@ -13,7 +13,7 @@ class PlayerPage extends Page {
             <option value='-2'>{much_weaker}</option>
         </select>";
     const BUTTON_THUMB = "<button type='button' id='rep-thumb'  class='" . self::THUMB_UP_ICON . "'></button>";
-    const LINK_REP = "<a href='info.php#reputation'>{reputation}</a>";
+    const LINK_REP = "<a href='info.php#reputation'>{Reputation}</a>";
 
     private $game;
     private $venue;

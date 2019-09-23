@@ -34,10 +34,10 @@
     <h2>{Upload_Rankings}</h2>
 
     <repeat id='uploads'>
-    <div class='center record [status]' [uploadHidden]>
+    <div class='record [status]' [uploadHidden]>
         <form action='upload.php' method='post'>
             <input type='hidden' name='filename' value='[fileName]'>
-            <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
+            <button type='button' class='action [INFO_ICON]' id='help-reckon'></button>
             <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
             <button class='action [tickIcon]' name='qwik' value='activate' ></button>
             <span class='help' hidden>{Once_you_have_uploaded...}</span>
@@ -49,7 +49,7 @@
     </repeat>
 
 
-    <div class='commit center wide shadow upload'>
+    <div class='commit wide upload'>
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <br>
             <input type='hidden' name='qwik' value='upload'>
@@ -73,7 +73,7 @@
 
 <h2>How does this work?</h2>
 
-<div class='center shadow'>
+<div class='info'>
     <p>{needs_a_unique...}
     <p>{The_sha256...}</p>
     <p>{uses_match_feedback...}</p>
@@ -86,7 +86,7 @@
 
 <h2>Requirements</h2>
 
-<div class='center shadow left'>
+<div class='info left'>
         <br>
         <ol>
             <li>{Every_line_must...}

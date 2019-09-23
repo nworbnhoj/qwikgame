@@ -41,13 +41,13 @@
 
         <br>
         <h3>{New_Venue}</h3>
-        <div id='new-venue-form' class='commit center vwide shadow venue'>
+        <div id='new-venue-form' class='commit vwide venue'>
             <form action='locate.php' method='post'>
                 <input type='hidden' id='venue-game' name='game' value='[game]'>
                 <input type='hidden' id='placeid' name='placeid' value='[placeid]'>
                 <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
                 <span class='help' hidden>{Create new venue...}</span>
-                <button type='button' class='action help [INFO_ICON]'></button>
+                <button type='button' class='action [INFO_ICON]'></button>
                 <div class='clear'></div>
                 <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
                 <div class='w00'>

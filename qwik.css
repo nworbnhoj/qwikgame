@@ -209,6 +209,10 @@ div.record {
     margin: 0.5em auto 0px auto;
     border-width:0px 0px 0px 1vw;
     border-style:solid;
+    text-align:center;
+    width:70%;
+    max-width:600px;
+    box-shadow:  0 4em 5em 1em DimGrey;
 }
 
 div.commit {
@@ -216,6 +220,10 @@ div.commit {
     margin: 0.5em auto 0px auto;
     border-width:0px 0px 0px 1vw;
     border-style:solid;
+    text-align:center;
+    width:70%;
+    max-width:600px;
+    box-shadow:  0 4em 5em 1em DimGrey;
 }
 
 div.transparent {
@@ -230,6 +238,11 @@ div.quiz {
 
 div.info {
     padding: 1em 1em 1em 1em;
+    margin: 0em auto 0em auto;
+    text-align:center;
+    width:70%;
+    max-width:600px;
+    box-shadow:  0 4em 5em 1em DimGrey;
 }
 
 div.count { padding:0px 0.3em 0px 0.3em; }
@@ -618,7 +631,6 @@ button.bug {
 
 button.tick		{ float:right;	}
 button.cross	{ float:right;	}
-button.help		{ float:right;	}
 button.venue	{ margin:0.3em;	}
 
 button.action {

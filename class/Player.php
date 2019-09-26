@@ -159,7 +159,7 @@ class Player extends Qwik {
 
     public function email($newEmail=NULL){
         if (!is_null($newEmail)){
-            newEmail = strtolower(newEmail);
+            $newEmail = strtolower(newEmail);
             if(empty($this->email)){
                 $this->xml->addChild('email', $newEmail);
             } else {

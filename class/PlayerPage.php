@@ -233,7 +233,7 @@ function qwikKeen($player, $req, $venue){
     foreach($days as $day){
         $date = $venue->dateTime($day);
         $hours = new Hours((int) $req[$day]);
-        if (!$hours->empty()){
+        if (!$hours->none()){
              $player->matchKeen($game, $venue, $date, $hours, $rids);
         }
     }

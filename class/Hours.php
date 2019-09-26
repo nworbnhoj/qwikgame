@@ -34,8 +34,8 @@ Class Hours {
     }
 
 
-    public function empty(){
-        return $bits === 0;
+    public function empty(var)(){
+        return $this->bits === 0;
     }
 
 

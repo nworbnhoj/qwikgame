@@ -34,7 +34,7 @@ Class Hours {
     }
 
 
-    public function empty(var)(){
+    public function none(){
         return $this->bits === 0;
     }
 

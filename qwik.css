@@ -211,8 +211,6 @@ div.record {
     border-width:0px 0px 0px 1vw;
     border-style:solid;
     text-align:center;
-    width:70%;
-    max-width:600px;
     box-shadow:  0 4em 5em 1em DimGrey;
 }
 
@@ -222,8 +220,6 @@ div.commit {
     border-width:0px 0px 0px 1vw;
     border-style:solid;
     text-align:center;
-    width:70%;
-    max-width:600px;
     box-shadow:  0 4em 5em 1em DimGrey;
 }
 
@@ -241,8 +237,6 @@ div.info {
     padding: 1em 1em 1em 1em;
     margin: 0em auto 0em auto;
     text-align:center;
-    width:70%;
-    max-width:600px;
     box-shadow:  0 4em 5em 1em DimGrey;
 }
 
@@ -761,11 +755,13 @@ progress.size {
 
 @media only screen {
     @media (max-width: 800px) {
-        [class*="center"]   { width: 84%; }
-        @media (max-width: 600px) {
-             [class*="center"]   { width: 92%; }
-             @media (max-width: 500px) {
-                 [class*="center"]   { width: 98%; }
+        [class*="center"]   { width: 75%; }
+        @media (max-width: 700px) {
+             [class*="center"]   { width: 85%; }
+             @media (max-width: 600px) {
+                 [class*="center"]   { width: 93%; }
+                 @media (max-width: 500px) {
+                     [class*="center"]   { width: 98%; }
              }
         }
     }

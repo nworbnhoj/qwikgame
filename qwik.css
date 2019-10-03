@@ -748,18 +748,6 @@ progress.size {
     top:0.5em;
 }
 
-#alpha-alert {
-    text-align:center;
-    margin-left:auto;
-    margin-right:auto;
-    width:90%;
-    background-color: red;
-    position:fixed;
-    top:0;
-    width:100%;
-    z-index:100;
-}
-
 #venue-desc {
     width:15em;
 }
@@ -774,17 +762,10 @@ progress.size {
 @media only screen {
     @media (max-width: 800px) {
         [class*="center"]   { width: 84%; }
-        [class*="narrow"]   { width: 68%; }
         @media (max-width: 600px) {
              [class*="center"]   { width: 92%; }
-             [class*="narrow"]   { width: 84%; }
-             @media (max-width: 600px) {
-                 [class*="center"]   { width: 96%; }
-                 [class*="narrow"]   { width: 92%; }
-                 @media (max-width: 500px) {
-                     [class*="center"]   { width: 98%; }
-                     [class*="narrow"]   { width: 84%; }
-                 }
+             @media (max-width: 500px) {
+                 [class*="center"]   { width: 98%; }
              }
         }
     }

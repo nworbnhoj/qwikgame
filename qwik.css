@@ -9,57 +9,57 @@ small, strike, strong, sub, sup, tt, var,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-weight: inherit;
-	font-style: inherit;
-	font-size: 100%;
-	font-family: inherit;
-	vertical-align: baseline;
-	box-sizing: border-box;
-	}
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
 /* remember to define focus styles! */
 :focus {
-	outline: 0;
-	}
+    outline: 0;
+}
 body {
-	line-height: 1;
-	color: black;
-	background: white;
-	}
+    line-height: 1;
+    color: black;
+    background: white;
+}
 ol, ul {
-	list-style: none;
-	}
+    list-style: none;
+}
 /* tables still need 'cellspacing="0"' in the markup */
 table {
-	border-collapse: separate;
-	border-spacing: 0;
-	}
+    border-collapse: separate;
+    border-spacing: 0;
+}
 caption, th, td {
-	text-align: left;
-	font-weight: normal;
-	}
+    text-align: left;
+    font-weight: normal;
+}
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: "";
-	}
+    content: "";
+}
 blockquote, q {
-	quotes: "" "";
-	}
+    quotes: "" "";
+}
 
 
 /************** . *********************/
 
-.noshow {	display:none;	}
+.noshow { display:none; }
 
 .center {
-	text-align:center;
-	margin-left:auto;
-	margin-right:auto;
-	width:70%;
-	max-width:600px;	
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    width:70%;
+    max-width:600px;
 }
 
 .alert {
@@ -68,58 +68,58 @@ blockquote, q {
     margin-bottom: 2em;
 }
 
-.vnarrow{ width:30%;	}
-.narrow { width:50%;	}
-.wide 	{ width:90%;	}
-.vwide 	{ width:98%;	}
-.fwide 	{ width:100%;	}
+.vnarrow { width:30%; }
+.narrow  { width:50%; }
+.wide    { width:90%; }
+.vwide   { width:98%; }
+.fwide   { width:100%; }
 
 
-.right 	{ float:right;					}
-.left 	{ text-align:left;				}
-.middle	{ vertical-align:middle;		}
-.hilite	{ border:solid DarkOrange 1px;	}
-.indent { margin-left:20px;				}
+.right   { float:right; }
+.left    { text-align:left; }
+.middle  { vertical-align:middle; }
+.hilite  { border:solid DarkOrange 1px; }
+.indent  { margin-left:20px; }
 .huge {
-	font-size:50px;
-	font-weight:bold;
+    font-size:50px;
+    font-weight:bold;
 }
 
 .hr-toggle {
-	float:right;
-	margin-right:1em;
+    float:right;
+    margin-right:1em;
 }
 
 
-.available	{ border-color:Brown;	}
-.keen		{ border-color:#8533ff;	}
-.invitation { border-color:#6600ff;	}
-.accepted	{ border-color:#5200cc; }
-.confirmed	{ border-color:#3d0099;	}
-.feedback	{ border-color:#290066;	}
-.history	{ border-color:#1f004d;	}
-.cancelled	{ border-color:#cc0099;	}
-.familiar	{ border-color:#004d99;	}
-.ability	{ border-color:DarkGreen;	}
-.account	{ border-color:DarkOrange;	}
-.upload		{ border-color:ForestGreen;	}
-.uploaded   { border-color:grey;  }
-.active     { border-color:ForestGreen;  }
+.available   { border-color:Brown; }
+.keen        { border-color:#8533ff; }
+.invitation  { border-color:#6600ff; }
+.accepted    { border-color:#5200cc; }
+.confirmed   { border-color:#3d0099; }
+.feedback    { border-color:#290066; }
+.history     { border-color:#1f004d; }
+.cancelled   { border-color:#cc0099; }
+.familiar    { border-color:#004d99; }
+.ability     { border-color:DarkGreen; }
+.account     { border-color:DarkOrange; }
+.upload      { border-color:ForestGreen; }
+.uploaded    { border-color:grey; }
+.active      { border-color:ForestGreen; }
 
 
 .bottom {
-	position:relative;
-	bottom:0px;
+    position:relative;
+    bottom:0px;
 }
 
-.green	{ color:DarkGreen;	}
-.red	{ color:DarkRed;	}
-.shadow	{ box-shadow:  0 4em 5em 1em DimGrey;	}
+.green  { color:DarkGreen; }
+.red    { color:DarkRed; }
+.shadow { box-shadow:  0 4em 5em 1em DimGrey; }
 
 .thumb {
-	border:none;
-	background-color:transparent;
-	font-size:1.2em;
+    border:none;
+    background-color:transparent;
+    font-size:1.2em;
 }
 .thumb-static {
     border:none;
@@ -127,38 +127,38 @@ blockquote, q {
 }
 
 .socialmedia {
-	height:30px;
+    height:30px;
 }
 
 .twitter {
-	color:#1da1f2;
-	font-size:1.3em;
-	text-decoration:none;
+    color:#1da1f2;
+    font-size:1.3em;
+    text-decoration:none;
 }
 
-.lft	{ float:left;	}
-.rgt	{ float:right;	}
+.lft    { float:left; }
+.rgt    { float:right; }
 
 .person {
-	color:#404040;
+    color:#404040;
     font-size:2.5em;
     margin:0.3em 0 0 0;
-	}
+ }
 
 .comment { 
-	font-size:1.5em;
-	margin:0 0 0 0;
-	}
+    font-size:1.5em;
+    margin:0 0 0 0;
+ }
 
 .words { 
     font-size:1em;
     margin:0 0 0 0.3em;
-    }
+ }
 
 
-.bob	{ color:Brown;		}
-.jane	{ color:GoldenRod;	}
-.anon	{ 					}
+.bob    { color:Brown; }
+.jane   { color:GoldenRod; }
+.anon   { }
 
 .w10    { width:10%; margin-left:0; margin-right:0 }
 .w20    { width:20%; margin-left:0; margin-right:0 }
@@ -170,35 +170,36 @@ blockquote, q {
 .clear  { clear:both }
 
 /* https://stackoverflow.com/questions/19954893/google-map-infowindow-displays-scroll-bars-in-google-chrome#21781513 */
-.infowindow	{line-height:1.35;}
+.infowindow    {line-height:1.35;}
 
 /************** <html> *********************/
 html {}
 
 /************** <body> *********************/
-body {	font-family:'Pontano Sans', Arial, Helvetica, sans-serif;
-	font-size:16px;
-	background-color:LightGray;	/* #D3D3D3 */
+body {
+    font-family:'Pontano Sans', Arial, Helvetica, sans-serif;
+    font-size:16px;
+    background-color:LightGray;    /* #D3D3D3 */
 }
 
 /************** <header> *******************/
-div.menu 			{ color:#404040;}
-div.menu a 			{ margin-left:0.4em;}
-div.menu a:link 	{ color:inherit;}      /* unvisited link */
-div.menu a:visited 	{ color:inherit;}  /* visited link */
-div.menu a:hover 	{ color:DarkOrange;}  /* mouse over link */
-div.menu a:active 	{ font-weight:bold;}  /* selected link */ 
+div.menu           { color:#404040;}
+div.menu a         { margin-left:0.4em;}
+div.menu a:link    { color:inherit;}      /* unvisited link */
+div.menu a:visited { color:inherit;}  /* visited link */
+div.menu a:hover   { color:DarkOrange;}  /* mouse over link */
+div.menu a:active  { font-weight:bold;}  /* selected link */ 
 
 div.col {
-	display:inline;
-	min-width:45%;
+    display:inline;
+    min-width:45%;
 }
 
 
 div.prompt {
-	margin-bottom:1em;
-	border:1px #404040 solid;
-	line-height: 1em;
+    margin-bottom:1em;
+    border:1px #404040 solid;
+    line-height: 1em;
 }
 
 div.record {
@@ -251,48 +252,48 @@ div.count { padding:0px 0.3em 0px 0.3em; }
 
 
 span.help {
-	float:right;
-	margin:1em;
-	padding:1em;
-	border:1px #404040 solid;
-	line-height: 1em;
+    float:right;
+    margin:1em;
+    padding:1em;
+    border:1px #404040 solid;
+    line-height: 1em;
 }
 
 span.tag {
-	margin:5px;
-	padding:0px;
-	font-weight:bold;
+    margin:5px;
+    padding:0px;
+    font-weight:bold;
 }
 
 span.hilite {
-	color:DarkOrange;
-	border:none;
-	font-weight:bold;
+    color:DarkOrange;
+    border:none;
+    font-weight:bold;
 }
 
 span.lolite {
-	border: 1px solid DimGrey;
-	border-radius: 3px;
-	margin: 0px 4px 0px 0px;
-	padding: 0px 2px 0px 2px;
+    border: 1px solid DimGrey;
+    border-radius: 3px;
+    margin: 0px 4px 0px 0px;
+    padding: 0px 2px 0px 2px;
 }
 
 span.csv {
-	padding:0px;
-	margin:0px;
+    padding:0px;
+    margin:0px;
 }
 
-span.rank	{ border: dotted 1px Blue;	}
+span.rank { border: dotted 1px Blue; }
 
 span.comma {
     border: dotted 1px Green;
-	font-weight:bold;
+    font-weight:bold;
 }
 
-span.hash	{ border: dotted 1px Red;	}
-span.nowrap	{ display:inline-block;		}
+span.hash       { border: dotted 1px Red; }
+span.nowrap     { display:inline-block; }
 
-span.available  { color:Brown;   }
+span.available  { color:Brown; }
 span.keen       { color:#8533ff; }
 span.invitation { color:#6600ff; }
 span.accepted   { color:#5200cc; }
@@ -301,12 +302,12 @@ span.feedback   { color:#290066; }
 span.history    { color:#1f004d; }
 span.cancelled  { color:#cc0099; }
 span.familiar   { color:#004d99; }
-span.ability    { color:DarkGreen;   }
-span.account    { color:DarkOrange;  }
-span.upload     { color:ForestGreen;  }
-span.uploaded   { color:grey;  }
-span.active     { color:ForestGreen;  }
-span.pending    { color:Gold;  }
+span.ability    { color:DarkGreen; }
+span.account    { color:DarkOrange; }
+span.upload     { color:ForestGreen; }
+span.uploaded   { color:grey; }
+span.active     { color:ForestGreen; }
+span.pending    { color:Gold; }
 
 
 
@@ -314,26 +315,26 @@ span.pending    { color:Gold;  }
 
 /************* <h> *********************/
 h1{ 
-	color:orange;
-	text-align:center;
-	font-size:3em;
-	font-weight:bold;
-	margin:2em 0em 0.7em 0em;
+    color:orange;
+    text-align:center;
+    font-size:3em;
+    font-weight:bold;
+    margin:2em 0em 0.7em 0em;
 }
 
 h2{
-	text-align:center;
-	font-size:1.5em;
-	font-weight:bold;
-	margin:5em 0em 2em 0em;
+    text-align:center;
+    font-size:1.5em;
+    font-weight:bold;
+    margin:5em 0em 2em 0em;
 }
-h2.inform 	{ margin:0.5em 0em 1.5em 0em;	}
+h2.inform { margin:0.5em 0em 1.5em 0em; }
 
 h3{
-	text-align:center;
-	font-size:1.2em;
-	font-weight:bold;
-	margin:0.3em 0em 0.3em 0em;
+    text-align:center;
+    font-size:1.2em;
+    font-weight:bold;
+    margin:0.3em 0em 0.3em 0em;
 }
 
 h4{
@@ -344,7 +345,7 @@ h4{
 }
 
 h5{
-	text-align:center;
+    text-align:center;
 }
 
 h6{}
@@ -352,144 +353,146 @@ h6{}
 
 /************** <small> *********************/
 
-small	{ font-size:0.7em;	}
+small { font-size:0.7em; }
 
 /************** <p> *********************/
 
 p {
-	margin:0.5em 0em 0.5em 0em;		
-	padding:1em;
-	text-align:center;
-	line-height:1.5em;
+    margin:0.5em 0em 0.5em 0em;
+    padding:1em;
+    text-align:center;
+    line-height:1.5em;
 }
 
-p.record	{ padding:0.3em;	}
-p.message	{ padding:0.5em;    }
-p.tagline	{ padding:2em;    }
-p.players	{ padding:1em;    }
+p.record  { padding:0.3em; }
+p.message { padding:0.5em; }
+p.tagline { padding:2em; }
+p.players { padding:1em; }
 
 
 /************** <ul> *********************/
 
-ul, ol	{ padding-left:1.5em;		}
-ul		{ list-style:disc;			}
-ol		{ list-style-type:decimal;	}
+ul, ol  { padding-left:1.5em; }
+ul      { list-style:disc; }
+ol      { list-style-type:decimal; }
 
 ul.clean {
-	padding-left:1em;
-	list-style-type: none;	}
-
-ul.naked {
-	list-style-type:none;
-	padding:0px;
-	margin:0px;
-	cursor: pointer;
+    padding-left:1em;
+    list-style-type: none;
 }
 
-ul.naked li:hover 	{ color:DarkOrange;	}
-ul.sorted			{ list-style:none;	}
+ul.naked {
+    list-style-type:none;
+    padding:0px;
+    margin:0px;
+    cursor: pointer;
+}
+
+ul.naked li:hover { color:DarkOrange; }
+ul.sorted { list-style:none; }
 
 /************** <li> *********************/
 
 li {
-	padding-left:0.3em;
+    padding-left:0.3em;
     text-align:left;
 }
 
-li.naked	{ padding:0px;	}
+li.naked  { padding:0px; }
 
 /************** <table> *********************/
 table {
-	text-align:center;
-	padding:12px;
-/*	border:solid #666666 1px; */
-	border:none;
-	border-collapse:collapse;	}
-
-table.layout {
-        border:#666666 none 1px;
-        text-align:left;        }
-
-table.header {
-	text-align:left;
-	border:#666666 solid 3px;	}
-
-table.time {
-	text-align:center;
-	padding:0px;
+    text-align:center;
+    padding:12px;
+/*    border:solid #666666 1px; */
+    border:none;
+    border-collapse:collapse;
 }
 
+table.layout {
+    border:#666666 none 1px;
+    text-align:left;
+}
+
+table.header {
+    text-align:left;
+    border:#666666 solid 3px;
+}
+
+table.time {
+    text-align:center;
+    padding:0px;
+}
 
 table.time th,td {
-	text-align:center;
+    text-align:center;
     vertical-align:middle;
-	padding:0px;
-	height:1.5em;
+    padding:0px;
+    height:1.5em;
 }
 
 table.time th {
-	font-weight: bold;
-	max-width:10%;
+    font-weight: bold;
+    max-width:10%;
 } 
 
 table.time td {
-	background-color:LightGrey;
-	border:solid 1px grey;
-	min-width:6%;
+    background-color:LightGrey;
+    border:solid 1px grey;
+    min-width:6%;
 }
 
 table.time td.past {
-	background-color:transparent;
-	border:none 0px transparent;
+    background-color:transparent;
+    border:none 0px transparent;
 }
 
 
 table.week {
-	empty-cells: show;
-	border:1;
+    empty-cells: show;
+    border:1;
 }
 
-table.week th {		
-	width:3px;
-	height:3px;
-	background-color:red;
-	padding:0px;
+table.week th {
+    width:3px;
+    height:3px;
+    background-color:red;
+    padding:0px;
 }
 
-table.week td {			
-	width:3px;
-	height:3px;	
-	background-color:gray;
-	padding:0px;
+table.week td {
+    width:3px;
+    height:3px;
+    background-color:gray;
+    padding:0px;
 }
-
 
 table.day {
-	empty-cells: show;
-	display:inline;
-	border:1;
+    empty-cells: show;
+    display:inline;
+    border:1;
 }
 
-table.day th {		
-	width:3px;
-	height:1em;
-	background-color:red;
-	padding:0px;
+table.day th {
+    width:3px;
+    height:1em;
+    background-color:red;
+    padding:0px;
 }
 
-table.day td {			
-	width:3px;
-	height:1em;	
-	background-color:gray;
-	padding:0px;
+table.day td {
+    width:3px;
+    height:1em;
+    background-color:gray;
+    padding:0px;
 }
 
 /************** <th> *********************/
 
 th {
-/*	padding:0.2em; */
-	font-weight:bold;
-	text-align:center;
+/*    padding:0.2em; */
+    font-weight:bold;
+    text-align:center;
 }
 
 /************** <td> *********************/
@@ -501,50 +504,50 @@ td {
 
 /************** <fieldset> *********************/
 fieldset {
-	margin:1em; 
-	padding:0.3em;
-	border:DimGrey inset 1px;
+    margin:1em; 
+    padding:0.3em;
+    border:DimGrey inset 1px;
 }
 
 fieldset.hrs {
-	border:DimGrey 1px solid;
-	text-align:left;
-	vertical-align:top;
+    border:DimGrey 1px solid;
+    text-align:left;
+    vertical-align:top;
 }
 
 /************** <legend> *********************/
 legend {
-	color:#000000;
-	font-weight:bold;
-	font-size:15px;	}
+    color:#000000;
+    font-weight:bold;
+    font-size:15px; }
 
 /************** <a> *********************/
-a:link {	color:black;}      /* unvisited link */
-a:visited {	color:black;}	  /* visited link */
-a:hover {	color:DarkOrange;}  /* mouse over link */
-a:active {	color:DarkOrange;}  /* selected link */ 
+a:link    { color:black;}      /* unvisited link */
+a:visited { color:black;}      /* visited link */
+a:hover   { color:DarkOrange;}  /* mouse over link */
+a:active  { color:DarkOrange;}  /* selected link */ 
 
 a.icon {
-	float:right;
-	text-decoration:none;
-	font-size:1.3em;
-	margin:0.2em;
+    float:right;
+    text-decoration:none;
+    font-size:1.3em;
+    margin:0.2em;
 }
 
 
 
 
 /************** <select> *********************/
-select {	
-	font-family:'Pontano Sans', sans-serif;	 
-	font-size:16px;
-	border:Gray solid 1px;	
-	border-radius:4px;
-	background-color:inherit;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-        margin: 0.5em;
+select {
+    font-family:'Pontano Sans', sans-serif;
+    font-size:16px;
+    border:Gray solid 1px;
+    border-radius:4px;
+    background-color:inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0.5em;
 }
 
 select.sel {
@@ -553,28 +556,28 @@ select.sel {
     appearance: default;
 }
 
-	
+    
 /************** <option> *********************/
-option {	
-	font-family:'Pontano Sans', sans-serif;	
-	background-color:#EEEEEE;	
+option {    
+    font-family:'Pontano Sans', sans-serif;
+    background-color:#EEEEEE;
 }
 /************** <input> *********************/
 
-input {	
-	font-family:'Pontano Sans', sans-serif;	
+input {    
+    font-family:'Pontano Sans', sans-serif;
     font-size:inherit;
-/*	vertical-align:middle; */
-	margin:0.5em;
-	border:Gray solid 1px;
-	border-radius:4px;
-	background-color:LightGrey;
+/*    vertical-align:middle; */
+    margin:0.5em;
+    border:Gray solid 1px;
+    border-radius:4px;
+    background-color:LightGrey;
 }
 
 
 /* https://stackoverflow.com/questions/7381446/center-html-input-text-field-placeholder */
 ::-webkit-input-placeholder {
-	text-align: center;
+    text-align: center;
 }
 :-moz-placeholder { /* Firefox 18- */
   text-align: center;  
@@ -587,24 +590,24 @@ input {
 }
 
 input[type='text'] { text-align: center; }
-input[type='submit'] 	{ 
-	background-color: grey; 
-	display: block; 
-	margin-left:auto;
-	margin-right:auto;
+input[type='submit'] { 
+    background-color: grey; 
+    display: block; 
+    margin-left:auto;
+    margin-right:auto;
 }
-input.caps           { text-transform: uppercase;}
-input.email     { display:block; }
+input.caps    { text-transform: uppercase;}
+input.email   { display:block; }
 input.message { display:block; }
 
 
 /************** <button> *********************/
 button {
-	font-family:'Pontano Sans', sans-serif; 
-	border:Gray solid 1px;	
-	border-radius:4px;
-	background-color:#DDDDDD;	
-	}
+    font-family:'Pontano Sans', sans-serif; 
+    border:Gray solid 1px;
+    border-radius:4px;
+    background-color:#DDDDDD;
+ }
 
 button[type='submit'] {
     background-color:grey;
@@ -615,56 +618,48 @@ button.icon {
     float:right;
     border: 1px Grey none;
     line-height: 1em;
-	background-color: Transparent;
-	text-align:center;
-	font-size:1.3em;
-	font-weight:200;
+    background-color: Transparent;
+    text-align:center;
+    font-size:1.3em;
+    font-weight:200;
 }
 
 button.bug {
-	position:fixed;
-	top:0em;
-	right:1em;
-	width:3em;
-	text-align:center;
+    position:fixed;
+    top:0em;
+    right:1em;
+    width:3em;
+    text-align:center;
 }
 
-button.tick		{ float:right;	}
-button.cross	{ float:right;	}
-button.venue	{ margin:0.3em;	}
+button.tick  { float:right; }
+button.cross { float:right; }
+button.venue { margin:0.3em; }
 
 button.action {
-	float:right;
-	border:none;
-	color:#404040;
-	background-color:transparent;
-	font-size:1.3em;
+    float:right;
+    border:none;
+    color:#404040;
+    background-color:transparent;
+    font-size:1.3em;
 }
+
 button.action:hover { color:DarkOrange; }
 
 
-button.revert {
-
-}
+button.revert { }
 
 
-	
-/*************** <hr> **********************/	
+    
+/*************** <hr> **********************/
 
-hr {
-	
-}
+hr { }
 
 
 /************** <form> *********************/
 
-form {
-    padding: 1em 1em 1em 1em;
-}
-
-form.record {
-    padding: 0em 0em 0em 0em;
-}
+form { padding: 1em 1em 1em 1em; }
+form.record { padding: 0em 0em 0em 0em; }
 
 
 /********************** sup sub **********************/
@@ -683,59 +678,59 @@ sub {
 /************ code **********************/
 
 code {
-	display:block;
+    display:block;
     margin-left:auto;
     margin-right:auto;
-
-	font-family:arial;
-	border: solid 1px DarkGrey;
-	background-color:Gainsboro;
-	text-align:left;
+    font-family:arial;
+    border: solid 1px DarkGrey;
+    background-color:Gainsboro;
+    text-align:left;
 }
 
 
 code.csv {
-	margin:0.5em;
-	padding:0.5em;
+    margin:0.5em;
+    padding:0.5em;
 }
 
 
 
 /************ progress ******************/
 
-progress { border:none;	}
-progress::-webkit-progress-bar { background-color:#666666	}
+progress { border:none; }
+progress::-webkit-progress-bar   { background-color:#666666 }
 progress::-webkit-progress-value { background-color:#666666 }
-progress::-moz-progress-bar { background-color:#666666	}
+progress::-moz-progress-bar      { background-color:#666666 }
 
 progress.over { background-color:DarkOrange; }
-progress.over::-webkit-progress-bar { background-color:DarkOrange;	}
-progress.over::-webkit-progress-value { background-color:DarkOrange;	}
-progress.over::-moz-progress-bar { 	background-color:DarkOrange;	}
+progress.over::-webkit-progress-bar   { background-color:DarkOrange; }
+progress.over::-webkit-progress-value { background-color:DarkOrange; }
+progress.over::-moz-progress-bar      { background-color:DarkOrange; }
 
 progress.size {
-	height:0.2em;
-	width:100%;
+    height:0.2em;
+    width:100%;
 }
 
 /************** # *********************/
 #alert {
-	color:DarkOrange;
-	margin:0.5em;	}
+    color:DarkOrange;
+    margin:0.5em;
+}
 
 
 #bug {
-	position:fixed;
-	top:1.2em;
-	right:0.2em;
-	background-color:yellow;
-	border-radius:5px;
+    position:fixed;
+    top:1.2em;
+    right:0.2em;
+    background-color:yellow;
+    border-radius:5px;
 }
 
 #twitter {
-	position:fixed;
-	top:2em;
-	right:0.2em;
+    position:fixed;
+    top:2em;
+    right:0.2em;
 }
 
 #lang-form {
@@ -743,23 +738,21 @@ progress.size {
 }
 
 #map {
-	height: 70%;
-	height:400px;
+    height: 70%;
+    height:400px;
 }
 
-
 #menu {
-	position:fixed;
-	right:0.5em;
-	top:0.5em;
+    position:fixed;
+    right:0.5em;
+    top:0.5em;
 }
 
 #alpha-alert {
-        text-align:center;
-        margin-left:auto;
-        margin-right:auto;
-        width:90%;
-
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    width:90%;
     background-color: red;
     position:fixed;
     top:0;
@@ -768,7 +761,7 @@ progress.size {
 }
 
 #venue-desc {
-	width:15em;
+    width:15em;
 }
 
 #footer {
@@ -778,26 +771,23 @@ progress.size {
 /************* media *****************/
 
 
-
-
-
 @media only screen {
-	@media (max-width: 800px) {
-        [class*="center"]   { width: 84%;   }
-		[class*="narrow"]   { width: 68%;   }
-		@media (max-width: 600px) {
-			[class*="center"]   { width: 92%;   }
-	        [class*="narrow"]   { width: 84%;   }
-	        @media (max-width: 600px) {
-    		    [class*="center"]   { width: 96%;   }
-	        	[class*="narrow"]   { width: 92%;   }
-	            @media (max-width: 500px) {
-			        [class*="center"]   { width: 98%;   }
-	            	[class*="narrow"]   { width: 84%;   }
-				}
-			}
-		}
-	}
+    @media (max-width: 800px) {
+        [class*="center"]   { width: 84%; }
+        [class*="narrow"]   { width: 68%; }
+        @media (max-width: 600px) {
+             [class*="center"]   { width: 92%; }
+             [class*="narrow"]   { width: 84%; }
+             @media (max-width: 600px) {
+                 [class*="center"]   { width: 96%; }
+                 [class*="narrow"]   { width: 92%; }
+                 @media (max-width: 500px) {
+                     [class*="center"]   { width: 98%; }
+                     [class*="narrow"]   { width: 84%; }
+                 }
+             }
+        }
+    }
 }
 
 

@@ -17,6 +17,7 @@
 
 
 <body>
+<div class='center'>
 
     <div id='menu' class='menu'>
         <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
@@ -26,7 +27,7 @@
 
     <h1>qwik game org</h1>
 
-    <p class='center'>
+    <p>
         {Upload_a_list...}<br>
         [please_login]
     </p>
@@ -49,7 +50,7 @@
     </repeat>
 
 
-    <div class='commit wide upload center'>
+    <div class="commit wide upload">
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <br>
             <input type='hidden' name='qwik' value='upload'>
@@ -60,20 +61,20 @@
             </select>
             <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
             <br>
-            <input required    name='title' type='text' class='center' placeholder='{prompt_title}' [uploadDisabled]>
+            <input required    name='title' type='text' placeholder='{prompt_title}' [uploadDisabled]>
             <input type="submit" value="Upload" name="submit" [uploadDisabled]>
         </form>
     </div>
 <br>
 
-    <p class='center'>{A_comma_delimited...}</p>
+    <p>{A_comma_delimited...}</p>
 
-    <p class='center'>{There_is_a_simple...}</p>
+    <p>{There_is_a_simple...}</p>
 <br><br>
 
 <h2>How does this work?</h2>
 
-<div class="info center">
+<div class="info">
     <p>{needs_a_unique...}
     <p>{The_sha256...}</p>
     <p>{uses_match_feedback...}</p>
@@ -86,7 +87,7 @@
 
 <h2>Requirements</h2>
 
-<div class="info center left">
+<div class="info left">
         <br>
         <ol>
             <li>{Every_line_must...}
@@ -103,10 +104,10 @@
     </div>
 
 
-    <div id='footer' class='center'>
+    <div id='footer'>
         {license}
     </div>
-
+</div>
 </body>
 
 </html>

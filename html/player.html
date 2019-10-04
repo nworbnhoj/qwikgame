@@ -18,12 +18,13 @@
 </head>
 
 <body>
+<div class='center'>
 
 
 <h1>{qwik_game_org}</h1>
-<p class="center alert" [alert-hidden]>[alert]</p>
+<p class="alert" [alert-hidden]>[alert]</p>
 
-<p class='center message'>[message]</p>
+<p class='message'>[message]</p>
 
 <div id='menu' class='menu'>
     <a id='info-icon'   class='[INFO_ICON]'   href='info.php'></a>
@@ -41,7 +42,7 @@
 
 
 <repeat id='cancelled'>
-<div class="record cancelled center">
+<div class="record cancelled">
     <form class='record' action='player.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -56,7 +57,7 @@
 </repeat>
 
 <repeat id='feedback'>
-<div class="record feedback center">
+<div class="record feedback">
     <form class='record' action='player.php#history' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' id='rep' name='rep' value='+1'>
@@ -72,7 +73,7 @@
 </repeat>
 
 <repeat id='confirmed'>
-<div class="record confirmed center">
+<div class="record confirmed">
     <form class='record' action='player.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -89,7 +90,7 @@
 </repeat>
 
 <repeat id='accepted'>
-<div class="record accepted center">
+<div class="record accepted">
     <form class='record' action='player.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -104,7 +105,7 @@
 </repeat>
 
 <repeat id='invitation'>
-<div class="record invitation center">
+<div class="record invitation">
     <form class='record' action='player.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -120,7 +121,7 @@
 </repeat>
 
 <repeat id='keen'>
-<div class="record keen center">
+<div class="record keen">
     <form class='record' action='player.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -145,7 +146,7 @@
         <input type='hidden' name='repost' value='player.php'>
         {I_am_keen_to...}
             <a id='map-icon' class='thumb [MAP_ICON]' href='venues.php?game=squash'></a>
-        <table class="time center wide">
+        <table class="time wide">
             <tr>
                 <th></th>
                 <th></th>
@@ -237,10 +238,10 @@
 
 <h2 id='available' name='available'>{Available}</h2>
 
-<p class='center'>{...will_let_you_know...}</p>
+<p>{...will_let_you_know...}</p>
 
 <repeat id='available'>
-<div class="record available center">
+<div class="record available">
     <form class='record'>
         <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
         <input type='hidden' name='id' value='[id]'>
@@ -253,7 +254,7 @@
 </repeat>
 
 
-<div class="commit available center">
+<div class="commit available">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{Make_yourself_available...}</span>
     <form action="locate.php" method="post">
@@ -302,7 +303,7 @@
             </div>
             <div id='hr-grid'>
                 <button type='button' class='fa fa-qrcode hr-toggle' disabled></button>
-                <table id='hour_table' class="time center wide">
+                <table id='hour_table' class="time wide">
                 <tr>
                     <th></th>
                     <th><<</th>
@@ -323,12 +324,12 @@
 
 <h2 id='familiar'>{Familiar}</h2>
 
-<p class="center">
+<p>
     {Familiar_players_help...}
 </p>
 
 <repeat id='familiar'>
-<div class="record familiar center">
+<div class="record familiar">
     <form class='record' action='player.php#familiar' method='post'>
         <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
         <input type='hidden' name='id' value='[id]'>
@@ -341,7 +342,7 @@
 
 
 
-<div class="commit familiar center">
+<div class="commit familiar">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>
         <p>{This_is_an_effective...}</p>
@@ -358,10 +359,10 @@
 
 <h2 id='region'>{Ability}</h2>
 
-<p class="center">{Reckon_your_own...}</p>
+<p>{Reckon_your_own...}</p>
 
 <repeat id='ability'>
-<div class="record ability center">
+<div class="record ability">
     <form class='record' action='player.php#reckon' method='post'>
         <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
         <input type='hidden' name='id' value='[id]'>
@@ -370,7 +371,7 @@
 </div>
 </repeat>
 
-<div class="commit ability center">
+<div class="commit ability">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{Be_as_specific...}</span>
     <form action="player.php#region" method="post">
@@ -383,7 +384,7 @@
 
     <h2>{Jump_Start}</h2>
 
-    <div class="info center">
+    <div class="info">
         <p>{Here_are_a_few_things...}</p>
         <p><b>{Get_the_word_out}</b>
             {Encourage_your_rivals...}
@@ -402,7 +403,7 @@
 <h2 id='history' [historyHidden]>{History}</h2>
 
 <repeat id='history'>
-<div class="record history center">
+<div class="record history">
     <form class='record' action='player.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action [INFO_ICON]'></button>
@@ -418,7 +419,7 @@
 
 <h2 id='account'>{Account}</h2>
 <p>[privacyLink]</p>
-<div class="commit account center">
+<div class="commit account">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{Your_nickname_will...}</span>
     <form action='player.php#account'>
@@ -428,19 +429,19 @@
         <br>
         [thumbs]
         <br>
-        <input name="nick" type="text" class='center' value="[playerNick]" placeholder='{nickname}' size='20'>
-        <input name='url' type='url' class='center' value="[playerURL]"  placeholder='http://your.page.com'>
+        <input name="nick" type="text" value="[playerNick]" placeholder='{nickname}' size='20'>
+        <input name='url' type='url' value="[playerURL]"  placeholder='http://your.page.com'>
         <input type="submit" class="account" value="{Submit}">
     </form>
 </div>
 
-<div class="commit account center">
+<div class="commit account">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{You_will_receive_validation...}</span>
     <form action='player.php#account'>
         <input type="hidden" name="qwik" value='account'>
         <h4>{private}</h4>
-        <input name="email" type="email" class='center' value="[playerEmail]" required><br>
+        <input name="email" type="email" value="[playerEmail]" required><br>
         <select name='lang'>
             <repeat id='language'>
             <option value='[code]' [selected]>[language]</option>
@@ -450,7 +451,7 @@
     </form>
 </div>
 
-<div class="commit account center">
+<div class="commit account">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{Your_anonymous_match...}</span>
     <form onsubmit='return checkQuit()'>
@@ -462,10 +463,10 @@
     </form>
 </div>
 
-    <div id='footer' class='center'>
+    <div id='footer'>
         {license}
     </div>
-
+</div>
 </body>
 
 [datalists]

@@ -591,8 +591,19 @@ input[type='submit'] {
     margin-right:auto;
 }
 input.caps    { text-transform: uppercase;}
-input.email   { display:block; }
-input.message { display:block; }
+
+input.brick {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 20em;
+    text-align:center
+}
+input.word {
+    display:inline;
+    margin-left: 0;
+    margin-right: 0;
+}
 
 
 /************** <button> *********************/

@@ -41,7 +41,7 @@
         <input type="hidden" name="repost" value="index.php">
         <input type="hidden" name="qwik" value="recover">
         {...link_to_login}
-        <input name="email" type="email" class="email" placeholder="{prompt_address}">
+        <input name="email" type="email" class="brick" placeholder="{prompt_address}">
         <input type="submit" value="Submit" class="account">
     </form>
 </div>
@@ -68,8 +68,8 @@
 <div class="commit feedback">
     <form action="info.php" method="post">
         <input type='hidden' name='qwik' value='feedback'>
-        <textarea type="text" name="message" placeholder='{prompt_feedback}'></textarea>
-        <input type="email" name="reply-email" placeholder='{prompt_address}'>
+        <textarea type="text" name="message" placeholder='{prompt_feedback}' class="brick"></textarea>
+        <input type="email" name="reply-email" class="brick" placeholder='{prompt_address}'>
         <input value="Submit" type="submit">
     </form>
 </div>

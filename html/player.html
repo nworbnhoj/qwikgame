@@ -82,7 +82,7 @@
         <p class='record'>
             <span class='tag confirmed'>{confirmed}</span>
             {Confirmed_Game_at...}
-            <input type='text' name='msg' placeholder='{prompt_msg}' class='message'>
+            <input type='text' name='msg'  class="brick" placeholder='{prompt_msg}'>
             <button type='submit' name='qwik' value='msg' class='thumb [SEND_ICON]'></button>
         </p>
     </form>
@@ -429,8 +429,8 @@
         <br>
         [thumbs]
         <br>
-        <input name="nick" type="text" value="[playerNick]" placeholder='{nickname}' size='20'>
-        <input name='url' type='url' value="[playerURL]"  placeholder='http://your.page.com'>
+        <input name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
+        <input name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
         <input type="submit" class="account" value="{Submit}">
     </form>
 </div>
@@ -441,7 +441,7 @@
     <form action='player.php#account'>
         <input type="hidden" name="qwik" value='account'>
         <h4>{private}</h4>
-        <input name="email" type="email" value="[playerEmail]" required><br>
+        <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
         <select name='lang'>
             <repeat id='language'>
             <option value='[code]' [selected]>[language]</option>

@@ -371,6 +371,11 @@ class Qwik {
     }
 
 
+    static public function logThrown(Throwable $t){
+        return self::logMsg($t->__toString());
+    }
+
+
     static public function snip($str){
         return substr($str, 0, 4);
     }

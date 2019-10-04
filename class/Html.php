@@ -48,6 +48,8 @@ class Html extends Qwik {
 
     static $translation;
 
+    const ERROR_TEMPLATE  = 'error.html';
+
     const QWIK_URL   = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
     const PDF_URL    = self::QWIK_URL.'/'.self::PATH_PDF.'/';
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
@@ -88,10 +90,29 @@ class Html extends Qwik {
 
 
     public function serve(){
-        $templateName = $this->templateName;
-        $template = $this->template($templateName);
-        $html = $this->make($template, $this->variables());
-        echo($html);
+        $html = "<html><head></head><body></body></html>";
+        try{
+            $templateName = $this->templateName;
+            $template = $this->template($templateName);
+            $html = $this->make($template, $this->variables());
+        } catch (Throwable $t){
+            Qwik::logThrown($t);
+            $html = errorHTML();
+        } finally {
+            echo($html);
+        }
+    }
+
+
+    private function errorHTML(){
+        $home = self::QWIK_URL;
+        $html = "<html><head><meta http-equiv='refresh' content='3;url={$home}' /></head><body><p>Opps! something went wrong.... <a href='{$home}'>home</a></p></body></html>";
+        try{
+            $html = $this->make(self::ERROR_TEMPLATE, $this->variables);
+        } catch (Throwable $t){
+            Qwik::logThrown($t);
+        } 
+        return $html;
     }
 
 

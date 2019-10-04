@@ -306,6 +306,7 @@ class Qwik {
     static function initStatic(){
         self::$log = new Logging();
         self::$log->lfile(self::PATH_LOG);
+        set_error_handler(array('Qwik','exception_error_handler'), E_ALL);
     }
     
 
@@ -322,6 +323,28 @@ class Qwik {
     
     
     
+    
+    /*****************************************************************
+        Error handing
+    *****************************************************************/
+    
+    // see: https://www.php.net/manual/en/class.errorexception.php
+    static public function exception_error_handler($number, $string, $file, $line, $context)
+    {
+        // Determine if this error is one of the enabled ones in php config (php.ini, .htaccess, etc)
+        $error_is_enabled = (bool)($number & ini_get('error_reporting') );
+       
+        // throw an Error Exception for Fatal Errors and simply log any other enabled errors.
+        if( in_array($number, array(E_USER_ERROR, E_RECOVERABLE_ERROR)) && $error_is_enabled ) {
+            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+        } else if( $error_is_enabled ) {
+            Qwik::logMsg($string);
+            return false;
+        }
+    }
+
+
+
     
     /*****************************************************************
         Logging Service functions
@@ -345,6 +368,11 @@ class Qwik {
         $msg = "email $type pid=$p $game $vid $time";
         self::log()->lwrite($msg);
         self::log()->lclose();
+    }
+
+
+    static public function logThrown(Throwable $t){
+        return self::logMsg($t->__toString());
     }
 
 

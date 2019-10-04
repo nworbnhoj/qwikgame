@@ -15,12 +15,13 @@
 
 
 <body>
+<div class='center'>
 
 
 <h1>qwik game org</h1>
-<p class="center alert" [alert-hidden]>[alert]</p>
-<p class="center tagline">{tagline}</p>
-<p class="center players">{players_at_venues}</p>
+<p class="alert" [alert-hidden]>[alert]</p>
+<p class="tagline">{tagline}</p>
+<p class="players">{players_at_venues}</p>
 
 <div id='menu' class='menu'>
     <form id='lang-form' action='index.php' method='post'>
@@ -36,7 +37,7 @@
 </div>
 
 
-<div class="commit available center">
+<div class="commit available">
     <button type='button' class='action [INFO_ICON]'></button>
     <span class='help' hidden>{When_a_rival...}</span>
     <form action="quiz.php" method="post">
@@ -46,8 +47,8 @@
         <input type='hidden' name='smtwtfs' value='16777215'>
         <h2 class='inform'>{What_is_your...}</h2>
         {Let_me_know...}
-        <input name="email" type="email" class="center email" placeholder="{prompt_address}">
-        <input type="submit" class='available' value="{Submit}">
+        <input name="email" type="email" class="email word" placeholder="{prompt_address}">
+        <input type="submit" class="available word" value="{Submit}">
     </form>
 </div>
 
@@ -56,7 +57,7 @@
 
 
 
-<div class="center vnarrow">
+<div>
     <span class="nowrap">
         <span class="lft [COMMENT_ICON]"></span>
         <span class="lft words">{We_are_available...}</span>
@@ -173,21 +174,21 @@
 
 
 <h2 id="matched_ability">{matched_ability}</h2>
-<div class="info center">
+<div class="info">
     <p>{Rate_the_ability...}</p>
     <p>{You_can_estimate...}</p>
 </div>
 
 
 <h2 id="polite players">{polite_players}</h2>
-<div class="info center">
+<div class="info">
     <p>{Rate_the_politeness...}</p>
     <p>{You_can_ignore...}</p>
 </div>
 
 
 <h2 id="email respect">{email_respect}</h2>
-<div class="info center">
+<div class="info">
     <p>{Your_email_will_not...}</b>.
         <a href='pdf/qwikgame.org%20privacy%20policy.pdf' target='_blank'>{Privacy_policy}</a>
     </p>
@@ -197,7 +198,7 @@
 
 
 <h2 id="your data">{your_data}</h2>
-<div class="info center">
+<div class="info">
     <p>{You_can_quit...}
         <a href='pdf/qwikgame.org%20privacy%20policy.pdf' target='_blank'>{Privacy_policy}</a>
     </p>
@@ -205,7 +206,7 @@
 
 
 <h2 id="please help">{spread_the_word}</h2>
-<div class='center shadow info'>
+<div class='shadow info'>
     <p>
         [twitterLink]
         [emailLink]
@@ -214,7 +215,7 @@
 </div>
 
 
-<p class="center" hidden>
+<p hidden>
 donate<br>
 <input type="button" value="bitcoin">
 <input type="button" value="paypal">
@@ -222,15 +223,16 @@ donate<br>
 </p>
 
 
-<p class="center" hidden>
+<p hidden>
 code<br>
 <input type="button" value="github">
 </p>
 
-    <div id='footer' class='center'>
+    <div id='footer'>
         {license}
     </div>
 
+</div>
 </body>
 
 

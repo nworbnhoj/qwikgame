@@ -15,6 +15,7 @@
 
 
 <body>
+<div class='center'>
 
 <h1>qwik game org</h1>
 
@@ -35,12 +36,12 @@
 
 <h2>{Account_Recovery}</h2>
 
-<div class="commit account center">
+<div class="commit account">
     <form action="quiz.php" method="post">
         <input type="hidden" name="repost" value="index.php">
         <input type="hidden" name="qwik" value="recover">
         {...link_to_login}
-        <input name="email" type="email" class="center email" placeholder="{prompt_address}">
+        <input name="email" type="email" class="brick" placeholder="{prompt_address}">
         <input type="submit" value="Submit" class="account">
     </form>
 </div>
@@ -49,7 +50,7 @@
 
 <h2>{About}</h2>
 
-<div class="info center">
+<div class="info">
     <p>{qwikgame.org_was_launched...}</p>
     <p>{Please_log_issue}</p>
     <a class='fa fa-twitter twitter' href='https://twitter.com/qwikgame' target='_blank'></a>
@@ -64,11 +65,11 @@
 
 <h2>{Feedback}</h2>
 
-<div class="commit feedback center">
+<div class="commit feedback">
     <form action="info.php" method="post">
-        <input type='hidden' name='qwik' value='feedback' class='center'>
-        <textarea type="text" name="message" class='center' placeholder='{prompt_feedback}'></textarea>
-        <input type="email" name="reply-email" placeholder='{prompt_address}'>
+        <input type='hidden' name='qwik' value='feedback'>
+        <textarea type="text" name="message" placeholder='{prompt_feedback}'></textarea>
+        <input type="email" name="reply-email" class="brick" placeholder='{prompt_address}'>
         <input value="Submit" type="submit">
     </form>
 </div>
@@ -76,7 +77,7 @@
 
 <h2>{Thanks}</h2>
 
-<div class="info center">
+<div class="info">
 <ul>
     <li><a href='https://www.facebook.com/DavidCleggPSA/about/?__xt__=33.%7B%22logging_data%22%3A%7B%22page_id%22%3A114379538585735%2C%22event_type%22%3A%22clicked_view_page_about%22%7D%7D&tab=page_info' target='_blank'>David Clegg</a> 
         <a href='https://psaworldtour.com/players/view/3476/david%20clegg' target='_blank'>PSA</a> Squash player.</li>
@@ -90,7 +91,7 @@
 
 <h2 id='invitations'>{Invitations}</h2>
 
-<div class="info center">
+<div class="info">
     <p>{When_you_are_keen...}</p>
     <p>{After_the_game...}</p>
 </div>
@@ -101,11 +102,11 @@
 
 <h2 id='reputation'>{Reputation}</h2>
 
-<div class="info center">
+<div class="info">
     <p>
         {Reputation_is_based...}
     </p>
-    <table class='center'>
+    <table class="center">
         <tr><th>{superb}</th><td>{Better_than_49...}</td></tr>
         <tr><th>{excellent}</th><td>{Better_than_19...}</td></tr>
         <tr><th>{great}</th><td>{Better_than_9...}</td></tr>
@@ -120,12 +121,12 @@
 
 <h2>{Development}</h2>
 
-<div class="info center">
+<div class="info">
     <p>{Github}</p>
     <p>{There_are_so...}</p>
     <p>{Please_help_translate...}</p>
     <h3>{To_Do}</h3>
-    <ol class='center'>
+    <ol>
         <li>multi-game venue support</li>
         <li>Venue duplicate management</li>
         <li>Español tidy-up</li>
@@ -148,10 +149,10 @@
     </ol>
 </div>
 
-    <div id='footer' class='center'>
+    <div id='footer'>
         {license}
     </div>
-
+</div>
 </body>
 
 </html>

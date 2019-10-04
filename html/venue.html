@@ -19,6 +19,7 @@
 </head>
 
 <body>
+<div class='center'>
     <h1>{qwik_game_org}</h1>
 
     <div id='menu' class='menu'>
@@ -26,7 +27,7 @@
         <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
     </div>
 
-    <p class='center'>[message]</p>
+    <p>[message]</p>
 
     <h2>[venueName]</h2>
 
@@ -47,7 +48,7 @@
         </p>
     </div>
 
-    <div id='edit-venue-div' class='commit wide venue' [editHidden]>
+    <div id='edit-venue-div' class="commit venue" [editHidden]>
         <button type='button' class='action [INFO_ICON]'></button>
         <span class='help' hidden>
             {Please_correct...}<br>
@@ -56,26 +57,26 @@
         [venueRevertSet]
         <form id='edit-venue-form' action='venue.php' method='post'>
             <input type='hidden' name='vid' value='[vid]'>
-            <input id='venue-game' name='game' class='center' type='hidden' 
+            <input id='venue-game' name='game' type='hidden' 
                 value='[game]'>
             <input type='hidden' name='lat' value='[venueLat]' id='venue-lat'>
             <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
             <input type='hidden' name='placeid' value='[placeid]' id='venue-placeid'>
             <br><br>
-            <input id='venue-name' name='name' class="center guess" value='[venueName]' placeholder='Name' autocomplete="off">
-            <div class='center'>
+            <input id='venue-name' name='name' class="guess" value='[venueName]' placeholder='Name' autocomplete="off">
+            <div>
                 <input id='venue-str-num' name='str-num' type='text' class="w20 lft guess" value='[venueStrNum]' placeholder='{number}'>
                 <input id='venue-route' name='route' type='text' class="w75 rgt guess" value='[venueRoute]' placeholder='{route}'>
             </div>
-            <input id='venue-locality' name='locality' class="center guess" value='[venueLocality]' placeholder='{locality}' required>
-            <div class='center'>
+            <input id='venue-locality' name='locality' class="guess" value='[venueLocality]' placeholder='{locality}' required>
+            <div>
                 <input id='venue-country' name='country'  type='text' class="w20 rgt guess caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
                 <input id='venue-admin1' name='admin1'  type='text' class="w75 lft guess" value='[venueAdmin1]' placeholder='{admin1}' required>
             </div>
-            <input id='venue-phone' name='phone' class='center' value='[venuePhone]' placeholder='phone'>
-            <input id='venue-url' name='url' type='url' class='center' value='[venueURL]' placeholder='http://'>
+            <input id='venue-phone' name='phone' value='[venuePhone]' placeholder='phone'>
+            <input id='venue-url' name='url' type='url' value='[venueURL]' placeholder='http://'>
             <br>
-            <textarea id='venue-note' name='note' class='center' placeholder='..notes...' >[venueNote]</textarea>
+            <textarea id='venue-note' name='note' placeholder='..notes...' >[venueNote]</textarea>
             <br>
             <input id='venue-cancel' type='button' value='Cancel'>
             <input id='venue-submit' type='submit' value='Submit'>
@@ -84,12 +85,12 @@
 
 
     <br>
-    <div id="map" class='center wide'></div>
+    <div id="map"></div>
     <br>
 
     <h2>{Jump_Start}</h2>
 
-    <div class='info center'>
+    <div class='info'>
         <p>{Here_are_a_few_things...}</p>
         <p><b>{Get_the_word_out}</b>
             {Encourage_your_rivals...}
@@ -102,10 +103,10 @@
         <p><b><a href='upload.php'>{Upload}</a></b>{a_list_of...}</p>
     </div>
 
-    <div id='footer' class='center'>
+    <div id='footer'>
         {license}
     </div>
-
+</div>
 </body>
 
 </html>

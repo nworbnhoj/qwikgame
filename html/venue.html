@@ -49,12 +49,11 @@
     </div>
 
     <div id='edit-venue-div' class="commit venue" [editHidden]>
-        <button type='button' class='action [INFO_ICON]'></button>
+        <button type='button' class='action help [INFO_ICON]'></button>
         <span class='help' hidden>
             {Please_correct...}<br>
             {You_can_easily_revert...}
         </span>
-        [venueRevertSet]
         <form id='edit-venue-form' action='venue.php' method='post'>
             <input type='hidden' name='vid' value='[vid]'>
             <input id='venue-game' name='game' type='hidden' 
@@ -63,12 +62,12 @@
             <input type='hidden' name='lng' value='[venueLng]' id='venue-lng'>
             <input type='hidden' name='placeid' value='[placeid]' id='venue-placeid'>
             <br><br>
-            <input id='venue-name' name='name' class="guess" value='[venueName]' placeholder='Name' autocomplete="off">
+            <input id='venue-name' name='name' class="guess w95" value='[venueName]' placeholder='Name' autocomplete="off">
             <div>
                 <input id='venue-str-num' name='str-num' type='text' class="w20 lft guess" value='[venueStrNum]' placeholder='{number}'>
                 <input id='venue-route' name='route' type='text' class="w75 rgt guess" value='[venueRoute]' placeholder='{route}'>
             </div>
-            <input id='venue-locality' name='locality' class="guess" value='[venueLocality]' placeholder='{locality}' required>
+            <input id='venue-locality' name='locality' class="guess w95" value='[venueLocality]' placeholder='{locality}' required>
             <div>
                 <input id='venue-country' name='country'  type='text' class="w20 rgt guess caps" value='[venueCountry]' placeholder='[venueCountry]' list='country_iso' maxlength='2' required>
                 <input id='venue-admin1' name='admin1'  type='text' class="w75 lft guess" value='[venueAdmin1]' placeholder='{admin1}' required>
@@ -81,6 +80,7 @@
             <input id='venue-cancel' type='button' value='Cancel'>
             <input id='venue-submit' type='submit' value='Submit'>
         </form>
+        [venueRevertSet]
     </div>
 
 

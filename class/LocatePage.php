@@ -91,8 +91,8 @@ class LocatePage extends Page {
                 $vid = Venue::venueID($name, $locality, $admin1, $country);
                 if (!Venue::exists($vid)){
                     $venue = new Venue($vid, TRUE);
-                    $description = "$name, $locality, $admin1, $country";
-                    $placeid = self::getPlace($description);
+                    $description = "$name, $locality, $admin1";
+                    $placeid = self::getPlace($description, $country);
                     if(isset($placeid)){
                         $this->furnish($venue, self::getDetails($placeid));
                     } else {
@@ -198,7 +198,8 @@ class LocatePage extends Page {
             $result = $xml;
         } else {
             $msg = $xml->error_message;
-            self::logMsg("Google $status: $msg\n\t$url?$query");
+            $message = "Google $status: $msg\n\t$url?$query";
+            self::logMsg($message);
         }
         return $result;
     }
@@ -319,7 +320,7 @@ class LocatePage extends Page {
 
     static function guessTimezone($location, $admin1, $country){
         $tz = NULL;
-        $placeid = self::getPlace("$location, $admin1, $country");
+        $placeid = self::getPlace("$location, $admin1", $country);
         if(isset($placeid)){
             $detals = self::geodetails($placeid);
             if(isset($details)){

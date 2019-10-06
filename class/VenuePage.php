@@ -49,7 +49,7 @@ class VenuePage extends Page {
             $country  = $req['country'];
             $address = "$num $route, $locality, $admin1 $country";
             $req['address'] = $address;
-            $placeid = LocatePage::getPlace("$name, $address", $country);
+            $placeid = LocatePage::getPlace($address, $country);
             if(empty($placeid)){
                 $req['tz'] = LocatePage::guessTimezone($locality, $admin1, $country);
             } else {

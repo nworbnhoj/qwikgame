@@ -39,8 +39,7 @@ class VenuePage extends Page {
         }
 
         $details = NULL;
-//        $placeid = $req['placeid'];
-        $placeid = NULL;
+        $placeid = $req['placeid'];
         if(empty($placeid)){
             $name     = $req['name'];
             $num      = $req['str-num'];
@@ -50,12 +49,12 @@ class VenuePage extends Page {
             $country  = $req['country'];
             $address = "$num $route, $locality, $admin1 $country";
             $req['address'] = $address;
-//            $placeid = LocatePage::getPlace("$name, $address");
-//            if(empty($placeid)){
+            $placeid = LocatePage::getPlace("$name, $address", $country);
+            if(empty($placeid)){
                 $req['tz'] = LocatePage::guessTimezone($locality, $admin1, $country);
-//            } else {
-//                $details = LocatePage::getDetails($placeid);
-//            }
+            } else {
+                $details = LocatePage::getDetails($placeid);
+            }
         } else {
             $details = LocatePage::getDetails($placeid);
             $req['str-num']  = $details['street_number'];

@@ -23,11 +23,11 @@ class LocatePage extends Page {
     private $description;
     private $repost;
     private $hideAddressPrompt = 'hidden';
-    
+
 
     public function __construct($template='locate'){
         parent::__construct($template);
-        
+
         $this->game        = $this->req('game');
         $this->description = $this->req('venue');
         $this->repost      = $this->req('repost');
@@ -39,7 +39,7 @@ class LocatePage extends Page {
             header("Location: ".self::QWIK_URL);
             return;
         }
-	parent::serve();
+	   parent::serve();
     }
 	
 	
@@ -55,8 +55,8 @@ class LocatePage extends Page {
         // Process a svid (short vid) submitted in PlayerPage
         if(empty($vid)){    // check if the description is a svid
             $vids = $this->matchShortVenueID($description, $this->game);
-	    $matchCount = count($vids);
-	    $vid = ($matchCount == 1) ? $vids[0] : NULL;
+        $matchCount = count($vids);
+        $vid = ($matchCount == 1) ? $vids[0] : NULL;
         }
 
         // Process a new venue from a placeid from LocatePage
@@ -102,9 +102,9 @@ class LocatePage extends Page {
                     }
                 }
             }
-	}
+        }
 
-	if (isset($vid)){    // repost the query with the located $vid
+        if (isset($vid)){    // repost the query with the located $vid
             $QWIK_URL = self::QWIK_URL;
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
@@ -128,8 +128,8 @@ class LocatePage extends Page {
             $venue->save();
         }
     }
-    
-    
+
+
     /*******************************************************************************
     Returns an Array of Venue ID's (vid) that match the $svid provided.
 
@@ -173,16 +173,15 @@ class LocatePage extends Page {
         $QWIK_URL = self::QWIK_URL;
 
         $vars = parent::variables();
-        $vars['game']           = $this->game;
-        $vars['homeURL']        = "$QWIK_URL/player.php";
-	$vars['repost']         = $this->repost;
-        $vars['venueName']      = isset($name)     ? $name     : '';
-        $vars['venueLocality']  = isset($locality) ? $locality : '';
-        $vars['venueAdmin1']    = isset($admin1)   ? $admin1   : '';
-        $vars['venueCountry']   = isset($country)  ? $country  : $userCountry;
-        $vars['datalists']      = $this->countryDataList();
-        $vars['placeid']        = $placeid;
-        
+        $vars['game']          = $this->game;
+        $vars['homeURL']       = "$QWIK_URL/player.php";
+        $vars['repost']        = $this->repost;
+        $vars['venueName']     = isset($name)     ? $name     : '';
+        $vars['venueLocality'] = isset($locality) ? $locality : '';
+        $vars['venueAdmin1']   = isset($admin1)   ? $admin1   : '';
+        $vars['venueCountry']  = isset($country)  ? $country  : $userCountry;
+        $vars['datalists']     = $this->countryDataList();
+        $vars['placeid']       = $placeid;
         return $vars;
     }
 

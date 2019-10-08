@@ -45,7 +45,13 @@ class AdminPage extends Page {
         $vars['message']       = "{Welcome} <b>$playerName</b>";
         $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
 
-
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_end_clean();
+        $matches = array();
+        preg_match("/(?:<body>)([\s\S]*)(?:<\/body>)/", $phpinfo, $matches);
+        $vars['phpinfo'] = $matches[0];
 
         return $vars;
     }

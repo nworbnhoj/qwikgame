@@ -117,6 +117,14 @@ class Player extends Qwik {
     }
 
 
+    public function admin($admin=NULL){
+        if (!is_null($admin)){
+            $this->xml['admin'] = $admin;
+        }
+        return (string) $this->xml['admin'];
+    }
+
+
     public function nick($nick=NULL){
         if (!is_null($nick)){
             if (isset($this->xml['nick'])){

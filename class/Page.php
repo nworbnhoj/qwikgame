@@ -85,7 +85,11 @@ class Page extends Html {
     }
 
 
-    function pending(){
+    /**
+     * This is a caching function that ensures the file pending.xml is only read once.
+     * Be sure to use &reference when wishing to make changes and call .save() 
+     */
+    function &pending(){
         if (is_null(self::$pending)){
             self::$pending = new Translation('pending.xml');
         }
@@ -284,7 +288,7 @@ class Page extends Html {
     ********************************************************************************/
 
     public function selectLanguage($req, $player){
-        $languages = $this->languages();
+        $languages = self::translation()->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
@@ -528,7 +532,7 @@ class Page extends Html {
 
 
     private function replicateLanguages($html){
-        $languages = $this->languages();
+        $languages = self::translation()->languages();
         $group = '';
         $current = $_SESSION['lang'];
         foreach($languages as $code => $lang){

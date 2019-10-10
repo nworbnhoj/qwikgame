@@ -98,8 +98,8 @@ Class TranslatePage extends Page {
     public function __construct($template=NULL){
         parent::__construct($template);
         
-        $this->langs = self::$translation->languages();
-        $this->phraseKeys = self::$translation->phraseKeys();
+        $this->langs = self::translation()->languages();
+        $this->phraseKeys = self::translation()->phraseKeys();
     
         $gameOptions = $this->replicateGames(
             "<option value='[game]' [selected]>[name]</option>",
@@ -132,7 +132,7 @@ Class TranslatePage extends Page {
         $key = $this->req('key');
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
-        $pending = self::pending();
+        $pending = &self::pending();
         if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
             $pending->set($key, $lang, $phrase);
         }

@@ -81,7 +81,11 @@ class Html extends Qwik {
     }
 
 
-    function translation(){
+    /**
+     * This is a caching function that ensures the file translation.xml is only read once.
+     * Be sure to use &reference when wishing to make changes and call .save() 
+     */
+    function &translation(){
         if (is_null(self::$translation)){
             self::$translation = new Translation('translation.xml');
         }
@@ -144,10 +148,6 @@ class Html extends Qwik {
         return $html;
     }
 
-
-    public function languages(){
-        return self::translation()->languages();
-    }
 
 
     /********************************************************************************

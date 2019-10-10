@@ -74,10 +74,10 @@ class AdminPage extends Page {
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
         if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $translation = self::translation();
+            $translation = &self::translation();
             $translation->set($key, $lang, $phrase);
             $translation->save();
-            $pending = self::pending();
+            $pending = &self::pending();
             $pending->unset($key, $lang);
             $pending->save();
             return true;
@@ -91,7 +91,7 @@ class AdminPage extends Page {
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
         if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $pending = self::pending();
+            $pending = &self::pending();
             $pending->unset($key, $lang);
             $pending->save();
             return true;

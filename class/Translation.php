@@ -69,12 +69,21 @@ class Translation extends Qwik {
         }
 
         $this->phrases[$key][$lang] = $phrase;
-        $langElement = $phraseElement->xpath($lang)[0];
+        $langElement = $phraseElement->xpath("$lang")[0];
         if(isset($langElement)){
             $langElement = $phrase;
         } else {
             $phraseElement->addChild($lang, $phrase);
         }
+    }
+
+
+    public function unset($key, $lang){
+        if (array_key_exists($key, $this->phrases)){
+            unset($this->phrases[$key][$lang]);
+            return TRUE;
+        }
+        return FALSE;
     }
 
 

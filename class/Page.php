@@ -47,6 +47,7 @@ class Page extends Html {
     const TWITTER_LNK  = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
 
     static $icons;
+    static $pending;
 
     private $player;
     private $language;
@@ -81,6 +82,14 @@ class Page extends Html {
             'THUMB_UP_ICON' => self::THUMB_UP_ICON,
             'THUMB_DN_ICON' => self::THUMB_DN_ICON
         );
+    }
+
+
+    function pending(){
+        if (is_null(self::$pending)){
+            self::$pending = new Translation('pending.xml');
+        }
+        return self::$pending;
     }
 
 
@@ -334,6 +343,7 @@ class Page extends Html {
                 case 'ability':    return $this->replicateAbility($player, $html);       break;
                 case 'reckon':     return $this->replicateReckons($player, $html);       break;
                 case 'uploads':    return $this->replicateUploads($player, $html);       break;
+                case 'translation':return $this->replicateTranslate($html);              break;
                 default:           return '';
             }
         };
@@ -564,6 +574,33 @@ class Page extends Html {
                 'time'     => $ranking->time()
             );
             $group .= $this->populate($html, $vars);
+        }
+        return $group;
+    }
+
+
+    private function replicateTranslate($html){
+        $group = '';
+        $translation = self::translation();
+        $pending = self::pending();
+        if(!$translation || !$pending){ return; }
+        $langs = $pending->languages();
+        $keys = $pending->phraseKeys();
+        foreach($keys as $key){
+            $en_phrase = $translation->phrase($key, 'en');
+            foreach($langs as $lang => $native){
+                $phrase = $pending->phrase($key, $lang);
+                if(isset($phrase)){
+                    $translationVars = array(
+                        'key'       => $key,
+                        'en_phrase' => $en_phrase,
+                        'lang'      => $lang,
+                        'phrase'    => $phrase
+                    );
+                    $vars = $translationVars + self::$icons;
+                    $group .= $this->populate($html, $vars);
+                }
+            }
         }
         return $group;
     }

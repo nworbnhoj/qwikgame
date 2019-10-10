@@ -83,7 +83,7 @@ class Defend extends Qwik {
         $req = $this->clip($req);
 
         $args = array(
-            'admin1'   => FILTER_DEFAULT,
+            'admin'    => FILTER_DEFAULT,
             'address'  => FILTER_DEFAULT,
             'ability'  => Filter::ABILITY,
             'account'  => FILTER_DEFAULT,

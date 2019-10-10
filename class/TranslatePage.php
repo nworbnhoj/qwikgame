@@ -93,7 +93,6 @@ Class TranslatePage extends Page {
         'venues.html',
         'offline.html');
     private $variables;
-    private $pending;
 
 
     public function __construct($template=NULL){
@@ -101,8 +100,6 @@ Class TranslatePage extends Page {
         
         $this->langs = self::$translation->languages();
         $this->phraseKeys = self::$translation->phraseKeys();
-
-        $this->pending = new Translation('pending.xml', 'lang');
     
         $gameOptions = $this->replicateGames(
             "<option value='[game]' [selected]>[name]</option>",
@@ -135,10 +132,11 @@ Class TranslatePage extends Page {
         $key = $this->req('key');
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
+        $pending = self::pending();
         if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $this->pending->set($key, $lang, $phrase);
+            $pending->set($key, $lang, $phrase);
         }
-        $this->pending->save();
+        $pending->save();
     }
 
 
@@ -231,7 +229,7 @@ Class TranslatePage extends Page {
 
     private function tdPhrase($key, $lang, $size=30){
         $phrase = self::$translation->phrase($key, $lang, '');
-        $pending = $this->pending->phrase($key, $lang, '');
+        $pending = self::pending()->phrase($key, $lang, '');
         $edit = is_null($pending) ? $phrase : $pending;
         $hidden = is_null($phrase) && is_null($pending) ? "" : "hidden";
         $submit = self::$translation->phrase('Submit', $lang);

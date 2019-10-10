@@ -5,10 +5,11 @@ require_once 'Qwik.php';
 
 class Filter extends Qwik {
 
+    const VALID_ADMIN = array('acceptTranslation', 'rejectTranslation');
     const VALID_LANG = array('ar', 'en','es','fr', 'hi', 'jp', 'ru', 'zh');
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'familiar', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'translate', 'upload');
-    const VALID_REPOST = array('index.php', 'player.php', 'info.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
+    const VALID_REPOST = array('admin.php', 'index.php', 'player.php', 'info.php', 'matches', 'familiar', 'history', 'reckon', 'region', 'account');
 
 
     const OPT_ABILITY = array('min_range' => 0, 'max_range' => 4);
@@ -38,6 +39,11 @@ class Filter extends Qwik {
     const REPOST  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::repost');
     const STR_NUM = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_STR_NUM);
     const TOKEN   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::token');
+
+
+    static function admin($val){
+        return in_array($val, self::VALID_ADMIN) ? $val : FALSE;
+    }
 
 
     static function game($val){

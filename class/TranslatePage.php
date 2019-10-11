@@ -81,7 +81,7 @@ Class TranslatePage extends Page {
     private $langs;
     private $phraseKeys;
     private $files = array(
-        'admin.php',
+        'admin.html',
         'email.html',
         'index.html',
         'info.html',

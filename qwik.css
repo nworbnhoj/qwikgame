@@ -231,6 +231,7 @@ div.transparent {
 div.quiz {
     font-size: 3em;
     padding: 0.5em 0 0 0;
+    margin: 0 5% 5% 5%;
 }
 
 div.info {
@@ -617,6 +618,7 @@ button {
 button[type='submit'] {
     background-color:grey;
     border-color: DarkOrange;
+    padding: 2%;
 }
 
 button.icon {

@@ -84,6 +84,7 @@ class Defend extends Qwik {
 
         $args = array(
             'admin'    => FILTER_DEFAULT,
+            'admin1'   => FILTER_DEFAULT,
             'address'  => FILTER_DEFAULT,
             'ability'  => Filter::ABILITY,
             'account'  => FILTER_DEFAULT,

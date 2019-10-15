@@ -354,8 +354,8 @@ class Player extends Qwik {
             self::removeElement($email);
         }
 
-        $this->nick(NULL);
-        $this->url(NULL);
+        self::removeAtt($this->xml, "nick");
+        self::removeAtt($this->xml, "url");
     }
 
 

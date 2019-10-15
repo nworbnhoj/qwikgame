@@ -46,44 +46,83 @@ class Translation extends Qwik {
     }
 
 
-    public function phrase($key, $lang, $fallback='en'){
-        if (array_key_exists($key, $this->phrases)){
-            $phrase = $this->phrases[$key];
-            if (array_key_exists($lang, $phrase)){
-                return $phrase[$lang];
-            } elseif (array_key_exists($fallback, $phrase)){
-                return $phrase[$fallback];
+    public function phrase($key, $lang, $fallback="en"){
+        $phraseArray = $this->xml->xpath("phrase[@key='$key']");
+        if($phraseArray){
+            $phraseElement = $phraseArray[0];
+            $words = $this->words($phraseElement, $lang);
+            if (isset($words)){
+                return $words;
+            } else {
+                return $this->words($phraseElement, $fallback);
             }
         }
         return NULL;
     }
 
 
-    public function set($key, $lang, $phrase){
-        if (array_key_exists($key, $this->phrases)){
-            $phraseElement = $this->xml->xpath("phrase[@key='$key']")[0];
-        } else {
-            $this->phrases[$key] = array();
-            $phraseElement = $this->xml->addChild('phrase');
-            $phraseElement['key'] = $key;
+    private function words($phraseElement, $lang){
+        $wordsArray = $phraseElement->xpath("words[@lang='$lang']");
+        if($wordsArray){
+            return (string) $wordsArray[0];
         }
+        return NULL;
+    }
 
-        $this->phrases[$key][$lang] = $phrase;
-        $langElement = $phraseElement->xpath("$lang")[0];
-        if(isset($langElement)){
-            $langElement = $phrase;
+
+    public function set($key, $lang, $phrase){
+        $wordsElement = array();
+        $phraseIndex = $this->phraseIndex($this->xml, $key);
+        if(isset($phraseIndex)){
+            $phraseElement = $this->xml->phrase[$phraseIndex];
+            $wordsIndex = $this->wordsIndex($phraseElement, $lang);
+            if(isset($wordsIndex)){
+                $phraseElement->words[$wordsIndex] = $phrase;
+            } else {
+                $wordsElement = $phraseElement->addChild("words", "$phrase");
+                $wordsElement['lang'] = $lang;
+            }
         } else {
-            $phraseElement->addChild($lang, $phrase);
+            $phraseElement = $this->xml->addChild("phrase");
+            $phraseElement["key"] = $key;
+            $wordsElement = $phraseElement->addChild("words", "$phrase");
+            $wordsElement['lang'] = $lang;
         }
     }
 
 
     public function unset($key, $lang){
-        if (array_key_exists($key, $this->phrases)){
-            unset($this->phrases[$key][$lang]);
-            return TRUE;
+        $phraseIndex = $this->phraseIndex($this->xml, $key);
+        if (isset($phraseIndex)){
+            $phraseElement = $this->xml->phrase[$phraseIndex];
+            $wordsIndex = $this->wordsIndex($phraseElement, $lang);
+            if(isset($wordsIndex)){
+                $wordsElement = $phraseElement->words[$wordsIndex];
+                unset($this->xml->phrase[$phraseIndex]->words[$wordsIndex]);
+            }
         }
-        return FALSE;
+    }
+
+
+    private function phraseIndex($element, $key){
+        $count = count($element->phrase);
+        for($i=0; $i<$count; $i++){
+            if((string)$element->phrase[$i]["key"] === "$key"){
+                return $i;
+            }
+        }
+        return NULL;
+    }
+
+
+    private function wordsIndex($element, $lang){
+        $count = count($element->words);
+        for($i=0; $i<$count; $i++){
+            if((string)$element->words[$i]["lang"] === "$lang"){
+                return $i;
+            }
+        }
+        return NULL;
     }
 
 

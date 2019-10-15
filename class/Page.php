@@ -593,7 +593,7 @@ class Page extends Html {
         foreach($keys as $key){
             $en_phrase = $translation->phrase($key, 'en');
             foreach($langs as $lang => $native){
-                $phrase = $pending->phrase($key, $lang);
+                $phrase = $pending->phrase($key, $lang, '');
                 if(isset($phrase)){
                     $translationVars = array(
                         'key'       => $key,

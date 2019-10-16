@@ -167,7 +167,7 @@ class Player extends Qwik {
 
     public function email($newEmail=NULL){
         if (!is_null($newEmail)){
-            $newEmail = strtolower(newEmail);
+            $newEmail = strtolower($newEmail);
             if(empty($this->email)){
                 $this->xml->addChild('email', $newEmail);
             } else {
@@ -631,7 +631,7 @@ class Player extends Qwik {
         $vars = array(
             "subject"    => "{EmailFavouriteSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->email(),
+            "to"         => $email,
             "game"       => $req['game'],
             "venue"      => $req['venue'],
             "authLink"   => $authLink

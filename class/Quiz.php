@@ -18,7 +18,7 @@ class Quiz {
     const OPERAND = 'operand';
 
     // the type of questions able to be posed
-    const TYPES = array('+');    // '*','↗', '?');
+    const TYPES = array(' ','↗','+','⨯');
 
     // each slot in the quiz grid can contain a digit or letter
     const DIGITS = '0123456789';
@@ -27,8 +27,8 @@ class Quiz {
     // html styles are uses as both cues and distractors
     const STYLES = array('color','background-color','border-color','border-radius'); //,'border-width');
     const SLOTS = '123456789';
-    const ARROWS = '↑→↓←↖↗↘↙';
-    const POINT = array('4↑'=>'1','5↑'=>'2','6↑'=>'3','7↑'=>'14','8↑'=>'25','9↑'=>'36','1→'=>'23','2→'=>'3','4→'=>'56','5→'=>'6','7→'=>'89','8→'=>'9','1↓'=>'47','2↓'=>'58','3↓'=>'69','4↓'=>'7','5↓'=>'8','6↓'=>'9','2←'=>'1','3←'=>'12','5←'=>'4','6←'=>'45','8←'=>'7','9←'=>'78','5↖'=>'1','6↖'=>'2','8↖'=>'4','9↖'=>'15','↗'=>'','4↗'=>'2','5↗'=>'3','7↗'=>'5','8↗'=>'6','1↘'=>'59','2↘'=>'6','4↘'=>'7','5↘'=>'9','2↙'=>'4','3↙'=>'5','5↙'=>'7','6↙'=>'8');
+    const ARROWS = array('↑','→','↓','←','↖','↗','↘','↙');
+    const POINT = array('4↑'=>'1','5↑'=>'2','6↑'=>'3','7↑'=>'14','8↑'=>'25','9↑'=>'36','1→'=>'23','2→'=>'3','4→'=>'56','5→'=>'6','7→'=>'89','8→'=>'9','1↓'=>'47','2↓'=>'58','3↓'=>'69','4↓'=>'7','5↓'=>'8','6↓'=>'9','2←'=>'1','3←'=>'12','5←'=>'4','6←'=>'45','8←'=>'7','9←'=>'78','5↖'=>'1','6↖'=>'2','8↖'=>'4','9↖'=>'15','↗'=>'','4↗'=>'2','5↗'=>'3','7↗'=>'5','8↗'=>'6','1↘'=>'59','2↘'=>'6','4↘'=>'8','5↘'=>'9','2↙'=>'4','3↙'=>'5','5↙'=>'7','6↙'=>'8');
 
     // base html styles for the quiz grid
     const BASE_ITEM_STYLE = array('text-align'=>'center','border-style'=>'solid','border-width'=>'1px','padding'=>'5px','font-weight'=>'bold');
@@ -71,10 +71,11 @@ class Quiz {
         // create the slots critical to the quiz solution
         $quizSlots = array();
         switch ($type){
+            case ' ': $quizSlots = $this->quizOdd(); break;
             case '+': $quizSlots = $this->quizAdd(); break;
-            case '*': $quizSlots = $this->quizMult(); break;
+            case '⨯': $quizSlots = $this->quizMult(); break;
             case '↗': $quizSlots = $this->quizPoint(); break;
-            default: $quizSlots = $this->quizAdd(); break;
+            default: $quizSlots = $this->quizOdd(); break;
         }
 
         // create contrast between the critical slots and the others
@@ -189,6 +190,28 @@ class Quiz {
 
 
     /**************************************************************************
+    / Create a quiz regarding an odd one out.
+    /*************************************************************************/
+    private function quizOdd($operands=NULL){
+        $slots = array();
+        $type = '';
+        switch(rand(0,1)){
+            case 0: $type='digit'; $answer = $this->rndDigit(FALSE); break;
+            case 1: $type='letter'; $answer = $this->rndLetter(FALSE); break;
+        }
+        $slot = $this->rndSlot();
+        $this->items[$slot] = array(self::LABEL=>$answer);
+        $slots[] = $slot;
+
+        $this->solution('operator',' ');
+        $this->solution('type', $type);
+        $this->solution('answer', $answer);
+
+        return $slots;
+    }
+
+
+    /**************************************************************************
     / Create a quiz regarding the sum of 2 or 3 digits.
     /*************************************************************************/
     private function quizAdd($operands=NULL){
@@ -231,7 +254,7 @@ class Quiz {
         }
 
         $slot = $this->rndSlot();
-        $this->items[$slot] = array(self::LABEL=>'*');
+        $this->items[$slot] = array(self::LABEL=>'⨯');
         $slots[] = $slot;
 
         $this->solution('operator','*');
@@ -247,9 +270,8 @@ class Quiz {
     /*************************************************************************/
     private function quizPoint(){
         $slots = array();
-
         $slot = $this->rndSlot();
-        $arrow = $this->rndArrow(TRUE);
+        $arrow = $this->rndArrow(FALSE);
         while (!isset(self::POINT["$slot$arrow"])) {
             $slot = $this->rndSlot();
         }
@@ -326,12 +348,13 @@ class Quiz {
     /*************************************************************************/
     private function rndArrow($exclusive=TRUE){
         $arrow = NULL;
+        $count = count($this->arrows);
+        $rnd = rand(0,$count-1);
         if ($exclusive){
-            $arrow = substr($this->arrows,0,1);
-            $this->arrows = substr($this->arrows,1);
+            $arrow = $this->arrows[$rnd];
+            unset($this->arrows[$rand]);
         } else {
-            $this->arrows = str_shuffle($this->arrows);
-            $arrow = substr($this->arrows,0,1);
+            $arrow = $this->arrows[$rnd];
         }
         return $arrow;
     }
@@ -417,8 +440,8 @@ class Quiz {
             case 'border-color':
             case 'background-color':
                 $hsl = explode(',', substr($value,4,-1));
-                $h = $this->near($hsl[0],10,0,360);
-                $s = $this->near(substr($hsl[1],0,-1),6,0,100);
+                $h = $this->near($hsl[0],8,0,360);
+                $s = $this->near(substr($hsl[1],0,-1),5,0,100);
                 $l = $this->near(substr($hsl[2],0,-1),1,0,100);
                 return "hsl($h,$s%,$l%)";
                 break;

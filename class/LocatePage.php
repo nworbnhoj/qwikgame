@@ -189,16 +189,23 @@ class LocatePage extends Page {
     static function geo($param, $key, $url){
         $result = NULL;
         $param['key'] = $key;
-        $query = http_build_query($param);
-        $contents = file_get_contents("$url?$query");
-        $xml = new SimpleXMLElement($contents);
-        $status = (string) $xml->status[0];
-        if($status === 'OK'){
-            $result = $xml;
-        } else {
-            $msg = $xml->error_message;
-            $message = "Google $status: $msg\n\t$url?$query";
-            self::logMsg($message);
+        $tidy = new tidy;
+        try{
+            $query = http_build_query($param);
+            $reply = $tidy->repairFile("$url?$query", self::TIDY_CONFIG, 'utf8');
+            $xml = new SimpleXMLElement($reply);
+            $status = (string) $xml->status[0];
+            if($status === 'OK'){
+                $result = $xml;
+            } else {
+                throw new RuntimeException($status);
+            }
+        } catch (RuntimeException $e){
+            $msg = $e->getMessage();
+            self::logMsg("Google geocoding: $msg\n$url?$query\n$reply");
+        } catch (Exception $e){
+            $msg = $e->getMessage();
+            self::logMsg("SimpleXML: $msg\n$query\n$reply");
         }
         return $result;
     }

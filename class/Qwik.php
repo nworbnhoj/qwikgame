@@ -18,6 +18,13 @@ class Qwik {
     
     const XML = '.xml';
 
+    const TIDY_CONFIG = array(
+        'indent' => true,
+        'input-xml' => true,
+        'output-xml' => true,
+        'wrap' => 200
+    );
+
     static private $games = array(
         'backgammon'  => '{Backgammon}',
         'badminton'   => '{Badminton}',
@@ -295,7 +302,6 @@ class Qwik {
         'ZM' => "Zambia",
         'ZW' => "Zimbabwe"
     );
-    
     
     static $log;
     

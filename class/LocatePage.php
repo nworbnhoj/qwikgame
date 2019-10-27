@@ -3,6 +3,7 @@
 require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'VenuePage.php';
+require_once 'Defend.php';
 
 
 class LocatePage extends Page {
@@ -189,11 +190,9 @@ class LocatePage extends Page {
     static function geo($param, $key, $url){
         $result = NULL;
         $param['key'] = $key;
-        $tidy = new tidy;
         try{
             $query = http_build_query($param);
-            $reply = $tidy->repairFile("$url?$query", self::TIDY_CONFIG, 'utf8');
-            $xml = new SimpleXMLElement($reply);
+            $xml = Defend::xml("$url?$query");
             $status = (string) $xml->status[0];
             if($status === 'OK'){
                 $result = $xml;
@@ -203,9 +202,6 @@ class LocatePage extends Page {
         } catch (RuntimeException $e){
             $msg = $e->getMessage();
             self::logMsg("Google geocoding: $msg\n$url?$query\n$reply");
-        } catch (Exception $e){
-            $msg = $e->getMessage();
-            self::logMsg("SimpleXML: $msg\n$query\n$reply");
         }
         return $result;
     }

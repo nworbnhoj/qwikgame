@@ -93,6 +93,19 @@ class Defend extends Qwik {
     private $rejected;
 
 
+    static function xml($url){
+        try{
+            $tidy = new tidy;
+            $reply = $tidy->repairFile("$url", self::TIDY_CONFIG, 'utf8');
+            return new SimpleXMLElement($reply);
+        } catch (Exception $e){
+            $msg = $e->getMessage();
+            self::logMsg("SimpleXML: $msg\n$url\n$reply");
+        }
+        return new SimpleXMLElement("<xml></xml>");
+    }
+
+
     public function __construct(){
         parent::__construct();
     }

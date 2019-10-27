@@ -28,6 +28,66 @@ class Defend extends Qwik {
     );
 
 
+    
+    const FILTER_ARGS = array(
+        'admin'    => FILTER_DEFAULT,
+        'admin1'   => FILTER_DEFAULT,
+        'address'  => FILTER_DEFAULT,
+        'ability'  => Filter::ABILITY,
+        'account'  => FILTER_DEFAULT,
+        'beckon'   => FILTER_DEFAULT,
+        'country'  => Filter::COUNTRY,
+        'email'    => FILTER_VALIDATE_EMAIL,
+        'Fri'      => Filter::HOURS,
+        'filename' => FILTER_DEFAULT,
+        'game'     => Filter::GAME,
+        'hour'     => Filter::HOURS,
+        'id'       => Filter::ID,
+        'key'      => FILTER_DEFAULT,
+        'invite'   => Filter::INVITE,
+        'lang'     => Filter::LANG,
+        'lat'      => Filter::LAT,
+        'lng'      => Filter::LNG,
+        'locality' => FILTER_DEFAULT,
+        'Mon'      => Filter::HOURS,
+        'msg'      => FILTER_DEFAULT,
+        'name'     => FILTER_DEFAULT,
+        'note'     => FILTER_DEFAULT,
+        'nick'     => FILTER_DEFAULT,
+        'parity'   => Filter::PARITY,
+        'phone'    => Filter::PHONE,
+        'phrase'   => FILTER_DEFAULT,
+        'pid'      => Filter::PID,
+        'placeid'  => FILTER_DEFAULT,
+        'qid'      => Filter::QID,
+        'qwik'     => Filter::QWIK,
+        'reply'    => FILTER_DEFAULT,
+        'route'    => FILTER_DEFAULT,
+        'Sat'      => Filter::HOURS,
+        'skip'     => FILTER_DEFAULT,
+        'smtwtfs'  => Filter::HOURS,
+        'str-num'  => Filter::STR_NUM,
+        'Sun'      => Filter::HOURS,
+        'Thu'      => Filter::HOURS,
+        'time'     => FILTER_DEFAULT,
+        'today'    => Filter::HOURS,
+        'token'    => Filter::TOKEN,
+        'tomorrow' => Filter::HOURS,
+        'Tue'      => Filter::HOURS,
+        'tz'       => FILTER_DEFAULT,
+        'region'   => FILTER_DEFAULT,
+        'rep'      => Filter::REP,
+        'repost'   => Filter::REPOST,
+        'rival'    => FILTER_VALIDATE_EMAIL,
+        'title'    => FILTER_DEFAULT,
+    //        'url'        => FILTER_VALIDATE_URL,
+        'url'      => FILTER_DEFAULT,
+        'venue'    => FILTER_DEFAULT,
+        'vid'      => FILTER_DEFAULT,
+        'Wed'      => Filter::HOURS
+    );
+
+
     private $get;
     private $post;
     private $rejected;
@@ -81,66 +141,7 @@ class Defend extends Qwik {
     private function examine($request){
         $req = $this->declaw($request);
         $req = $this->clip($req);
-
-        $args = array(
-            'admin'    => FILTER_DEFAULT,
-            'admin1'   => FILTER_DEFAULT,
-            'address'  => FILTER_DEFAULT,
-            'ability'  => Filter::ABILITY,
-            'account'  => FILTER_DEFAULT,
-            'beckon'   => FILTER_DEFAULT,
-            'country'  => Filter::COUNTRY,
-            'email'    => FILTER_VALIDATE_EMAIL,
-            'Fri'      => Filter::HOURS,
-            'filename' => FILTER_DEFAULT,
-            'game'     => Filter::GAME,
-            'hour'     => Filter::HOURS,
-            'id'       => Filter::ID,
-            'key'      => FILTER_DEFAULT,
-            'invite'   => Filter::INVITE,
-            'lang'     => Filter::LANG,
-            'lat'      => Filter::LAT,
-            'lng'      => Filter::LNG,
-            'locality' => FILTER_DEFAULT,
-            'Mon'      => Filter::HOURS,
-            'msg'      => FILTER_DEFAULT,
-            'name'     => FILTER_DEFAULT,
-            'note'     => FILTER_DEFAULT,
-            'nick'     => FILTER_DEFAULT,
-            'parity'   => Filter::PARITY,
-            'phone'    => Filter::PHONE,
-            'phrase'   => FILTER_DEFAULT,
-            'pid'      => Filter::PID,
-            'placeid'  => FILTER_DEFAULT,
-            'qid'      => Filter::QID,
-            'qwik'     => Filter::QWIK,
-            'reply'    => FILTER_DEFAULT,
-            'route'    => FILTER_DEFAULT,
-            'Sat'      => Filter::HOURS,
-            'skip'     => FILTER_DEFAULT,
-            'smtwtfs'  => Filter::HOURS,
-            'str-num'  => Filter::STR_NUM,
-            'Sun'      => Filter::HOURS,
-            'Thu'      => Filter::HOURS,
-            'time'     => FILTER_DEFAULT,
-            'today'    => Filter::HOURS,
-            'token'    => Filter::TOKEN,
-            'tomorrow' => Filter::HOURS,
-            'Tue'      => Filter::HOURS,
-            'tz'       => FILTER_DEFAULT,
-            'region'   => FILTER_DEFAULT,
-            'rep'      => Filter::REP,
-            'repost'   => Filter::REPOST,
-            'rival'    => FILTER_VALIDATE_EMAIL,
-            'title'    => FILTER_DEFAULT,
-    //        'url'        => FILTER_VALIDATE_URL,
-            'url'      => FILTER_DEFAULT,
-            'venue'    => FILTER_DEFAULT,
-            'vid'      => FILTER_DEFAULT,
-            'Wed'      => Filter::HOURS
-        );
-
-        $result = filter_var_array($req, $args, FALSE);
+        $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
 
         $changed = $this->size($result) !== $this->size($req);
         $rejects = $changed ? $this->rejects($req, $result) : array() ;
@@ -238,9 +239,6 @@ class Defend extends Qwik {
         }
         return $clipped;
     }
-
-
-/************* old code ******************/
 
 
 

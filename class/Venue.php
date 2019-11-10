@@ -7,6 +7,19 @@ class Venue extends Qwik {
 
     const REVERT_CHAR = '⟲';
 
+
+    static function exists($vid){
+        $PATH = self::PATH_VENUE;
+        $NAME = self::fileName($id);
+        return file_exists("$PATH/$NAME");
+    }
+
+ 
+    static function fileName($id){
+    	return htmlspecialchars_decode($id, ENT_HTML5) . self::XML;
+    }
+
+
     private $id;
     private $xml;
 
@@ -54,11 +67,10 @@ class Venue extends Qwik {
 
         return new SimpleXMLElement($record);
     }
-    
-    
+
   
     public function fileName(){
-        return $this->id() . self::XML;
+        return self::fileName($this->id());
     }
 
 
@@ -93,13 +105,6 @@ class Venue extends Qwik {
 
     public function ok(){
         return !is_null($this->xml);
-    }
-
-
-    static function exists($vid){
-        $PATH = self::PATH_VENUE;
-        $XML = self::XML;
-        return file_exists("$PATH/$vid$XML");
     }
 
 

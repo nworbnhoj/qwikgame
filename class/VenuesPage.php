@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Page.php';
-require_once 'Geo.php';
+require_once 'Locate.php';
 
 class VenuesPage extends Page {
 
@@ -12,7 +12,7 @@ class VenuesPage extends Page {
 
     public function variables(){
         $vars = parent::variables();
-        $loc = Geo::geolocate('location');
+        $loc = Locate::geolocate('location');
 
         $vars['game'] = $this->req('game');
         $vars['lat']  = $loc['lat'];

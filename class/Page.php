@@ -5,6 +5,7 @@ require_once 'Defend.php';
 require_once 'Player.php';
 require_once 'Venue.php';
 require_once 'Hours.php';
+require_once 'Locate.php';
 
 /*******************************************************************************
     Class Page constructs an html page beginning with a html template; 
@@ -701,7 +702,7 @@ class Page extends Html {
 
     function countryOptions($country, $tabs=''){
         if(!isset($country)){
-            $country = $this->geolocate('countryCode');
+            $country = Locate::geolocate('countryCode');
         }
         $options = '';
         foreach(self::countries() as $val => $txt){
@@ -845,15 +846,6 @@ class Page extends Html {
         }
         arsort($sorted);
         return $sorted;
-    }
-    
-
-    public function geolocate($key){
-        global $geo;
-        if(!isset($geo)){
-            $geo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
-        }
-        return $geo["geoplugin_$key"];
     }
 
 }

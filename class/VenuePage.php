@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Page.php';
-require_once 'LocatePage.php';
+require_once 'Locate.php';
 
 class VenuePage extends Page {
 
@@ -49,14 +49,14 @@ class VenuePage extends Page {
             $country  = $req['country'];
             $address = "$num $route, $locality, $admin1 $country";
             $req['address'] = $address;
-            $placeid = LocatePage::getPlace($address, $country);
+            $placeid = Locate::getPlace($address, $country);
             if(empty($placeid)){
-                $req['tz'] = LocatePage::guessTimezone($locality, $admin1, $country);
+                $req['tz'] = Locate::guessTimezone($locality, $admin1, $country);
             } else {
-                $details = LocatePage::getDetails($placeid);
+                $details = Locate::getDetails($placeid);
             }
         } else {
-            $details = LocatePage::getDetails($placeid);
+            $details = Locate::getDetails($placeid);
             $req['str-num']  = $details['street_number'];
             $req['route']    = $details['route'];
             $req['locality'] = $details['locality'];

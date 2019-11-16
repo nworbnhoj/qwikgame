@@ -95,7 +95,7 @@ class Defend extends Qwik {
 
     static function xml($url){
         try{
-            $reply = file_get_contents("url");
+            $reply = file_get_contents("$url");
             $tidy = tidy_parse_string($reply, self::TIDY_CONFIG, 'utf8');
             $tidy->cleanRepair();
             $clean = tidy_get_output($tidy);

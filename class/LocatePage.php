@@ -4,20 +4,24 @@ require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'VenuePage.php';
 require_once 'Defend.php';
+require_once 'Service.php';
 
 
 class LocatePage extends Page {
+    
+    static $geoplace;
+    static $geodetails;    
+    static $geotimezone;    
+    static $geocode;
 
-
-    const GEOPLACE_URL    = "https://maps.googleapis.com/maps/api/place/autocomplete/xml";
-    const GEODETAILS_URL  = "https://maps.googleapis.com/maps/api/place/details/xml";
-    const GEOTIMEZONE_URL = "https://maps.googleapis.com/maps/api/timezone/xml";
-    const GEOCODE_URL     = "https://maps.googleapis.com/maps/api/geocode/xml";
-
-    const GEOPLACE_API_KEY    = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
-    const GEODETAILS_API_KEY  = "AIzaSyDne6EhcdFtiEiUT-batwVilT9YFUAbYdM";
-    const GEOTIMEZONE_API_KEY = "AIzaSyBuYfjKqrIP463HtMMMx1QnCh2VoO7GB-Q";
-    const GEOCODE_API_KEY     = "AIzaSyC4zcdOxikM54AHNQjcSLSd8d6N8Kebmfg";
+    // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
+    static function initStatic(){
+        self::$geoplace = new Service("geoplace");
+        self::$geodetails = new Service("geodetails");
+        self::$geotimezone = new Service("geotimezone");
+        self::$geocode = new Service("geocode");
+    }
+    
 
 
     private $game;
@@ -210,8 +214,8 @@ class LocatePage extends Page {
     static function geoplace($text, $country){
         return self::geo(
             array('input'=>$text, 'components'=>"country:$country"),
-            self::GEOPLACE_API_KEY,
-            self::GEOPLACE_URL
+            self::$geoplace->key(),
+            self::$geoplace->url("xml")
         );
     }
 
@@ -219,8 +223,8 @@ class LocatePage extends Page {
     static function geodetails($placeid){
         $geo = self::geo(
             array('placeid'=>$placeid),
-            self::GEODETAILS_API_KEY,
-            self::GEODETAILS_URL
+            self::$geodetails->key(),
+            self::$geodetails->url("xml")
         );
         return isset($geo) ? $geo->result : NULL;
     }
@@ -230,8 +234,8 @@ class LocatePage extends Page {
         $location = "$lat,$lng";
         return self::geo(
             array('location'=>$location, 'timestamp'=>time()),
-            self::GEOTIMEZONE_API_KEY,
-            self::GEOTIMEZONE_URL
+            self::$geotimezone->key(),
+            self::$geotimezone->url("xml")
         );
     }
 
@@ -239,8 +243,8 @@ class LocatePage extends Page {
     static function geocode($address, $country){
         $geo = self::geo(
             array('components'=>"$address|$country"),
-            self::GEOCODE_API_KEY,
-            self::GEOCODE_URL
+            self::$geocode->key(),
+            self::$geocode->url("xml")
         );
         return isset($geo) ? $geo->result : NULL;
     }
@@ -336,7 +340,10 @@ class LocatePage extends Page {
         }
         return $tz;
     }
-    
+
 }
+
+
+LocatePage::initStatic();
 
 ?>

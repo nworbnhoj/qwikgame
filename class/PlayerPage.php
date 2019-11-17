@@ -69,8 +69,8 @@ class PlayerPage extends Page {
             case 'decline':
                 $result = $this->qwikDecline($player, $req);
                  break;
-            case 'familiar':
-                $result = $this->qwikFamiliar($player, $req);
+            case 'friend':
+                $result = $this->qwikFriend($player, $req);
                 break;
             case 'region':
                 $result = $this->qwikRegion($player, $req);
@@ -141,7 +141,7 @@ class PlayerPage extends Page {
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
             $vars['message']       = "{Welcome} <b>$playerName</b>";
-            $vars['familiarHidden']= empty($reckons) ? 'hidden' : ' ';
+            $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
@@ -222,7 +222,7 @@ function qwikKeen($player, $req, $venue){
     }
 
     $emails = $req['invite'];
-    if (is_array($emails)){    // add Familiar Rivals $rid=>$email
+    if (is_array($emails)){    // add friendly Rivals $rid=>$email
         foreach($emails as $email){
             $rids[Player::anonID($email)] = $email;
         }
@@ -264,11 +264,11 @@ function qwikDecline($player, $request){
     }
 }
 
-function qwikFamiliar($player, $request){
+function qwikFriend($player, $request){
     if(isset($request['game'])
     && isset($request['rival'])
     && isset($request['parity'])){
-        $player->familiar($request['game'], $request['rival'], $request['parity']);
+        $player->friend($request['game'], $request['rival'], $request['parity']);
     }
 }
 

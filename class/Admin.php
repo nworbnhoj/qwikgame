@@ -117,14 +117,6 @@ class Player extends Qwik {
     }
 
 
-    public function admin($admin=NULL){
-        if (!is_null($admin)){
-            $this->xml['admin'] = $admin;
-        }
-        return (string) $this->xml['admin'];
-    }
-
-
     public function nick($nick=NULL){
         if (!is_null($nick)){
             if (isset($this->xml['nick'])){
@@ -375,7 +367,7 @@ class Player extends Qwik {
 
 ////////// RECKON ///////////////////////////////////////
 
-    public function friend($game, $rivalEmail, $parity){
+    public function friends($game, $rivalEmail, $parity){
         $rid = Player::anonID($rivalEmail);
 
         $reckon = $this->xml->addChild('reckon', '');

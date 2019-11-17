@@ -262,11 +262,11 @@ class FeatureContext implements Context
     {
         $rid = Player::anonID("rival@qwikgame.org");
         $rival = new Player($rid, TRUE);  //dummy rival
-        // Set this player as a familiar of the rival, with suitable parity
+        // Set this player as a friend of the rival, with suitable parity
         $_GET = array(
                 'pid'=>$rid,
                 'token'=>$rival->token(),
-                'qwik'=>'familiar',
+                'qwik'=>'friends',
                 'game'=>$game, 
                 'rival'=>$this->email,
                 'parity'=>$this->parityPhrase[$rivalParity]
@@ -551,7 +551,7 @@ class FeatureContext implements Context
     public function iAddAsAPlayer($email, $parity, $game)
     {
         $options = array('much_stronger'=>'2', 'stronger'=>'1', 'well_matched'=>'0', 'weaker'=>'-1', 'much_weaker'=>'-2');
-        $this->req['qwik'] = 'familiar';
+        $this->req['qwik'] = 'friend';
         $this->req['rival'] = $email;
         $this->req['parity'] = $options[$parity];
         $this->req['game'] = $game;

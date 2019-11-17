@@ -133,9 +133,9 @@ $(document).ready(function(){
     });
 
 
-    $('#invite-familiars').click(function(){
+    $('#invite-friends').click(function(){
         $(this).hide();
-        $('#familiar-invites').show();    
+        $('#friend-invites').show();    
     });
 
 

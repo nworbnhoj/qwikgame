@@ -99,7 +99,7 @@ blockquote, q {
 .feedback    { border-color:#290066; }
 .history     { border-color:#1f004d; }
 .cancelled   { border-color:#cc0099; }
-.familiar    { border-color:#004d99; }
+.friend      { border-color:#004d99; }
 .ability     { border-color:DarkGreen; }
 .account     { border-color:DarkOrange; }
 .upload      { border-color:ForestGreen; }
@@ -296,7 +296,7 @@ span.confirmed  { color:#3d0099; }
 span.feedback   { color:#290066; }
 span.history    { color:#1f004d; }
 span.cancelled  { color:#cc0099; }
-span.familiar   { color:#004d99; }
+span.friend     { color:#004d99; }
 span.ability    { color:DarkGreen; }
 span.account    { color:DarkOrange; }
 span.upload     { color:ForestGreen; }

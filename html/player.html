@@ -211,13 +211,13 @@
                 <td class='toggle' bit='8388608' hidden>11</td>
             </tr>
         </table>
-        <div id='invite-familiars' [familiarHidden]>
+        <div id='invite-friends' [friendsHidden]>
             <span class='nowrap'>
                 <input type='checkbox'  autocomplete='off'>
-                {invite_familiar_rivals}
+                {invite_friends}
             </span>
         </div>
-        <div id='familiar-invites' hidden>
+        <div id='friend-invites' hidden>
             <span class='nowrap'>
                 <input type='checkbox' name='beckon' autocomplete='off' checked>
                 {invite_available_rivals}
@@ -322,19 +322,19 @@
 
 
 
-<h2 id='familiar'>{Familiar}</h2>
+<h2 id='friends'>{Friends}</h2>
 
 <p>
-    {Familiar_players_help...}
+    {friends_help...}
 </p>
 
-<repeat id='familiar'>
-<div class="record familiar">
-    <form class='record' action='player.php#familiar' method='post'>
+<repeat id='friends'>
+<div class="record friend">
+    <form class='record' action='player.php#friends' method='post'>
         <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
         <input type='hidden' name='id' value='[id]'>
         <p class='record'>
-            {email_is_familiar}
+            {email_is_friend}
         </p>
     </form>
 </div>
@@ -342,16 +342,16 @@
 
 
 
-<div class="commit familiar">
+<div class="commit friends">
     <button type='button' class='action help [INFO_ICON]'></button>
     <span class='help' hidden>
         <p>{This_is_an_effective...}</p>
         <p>{Your_rivals_will_not...}</p>
     </span>
-    <form action="player.php#familiar" method='post'>
-        <input type="hidden" name="qwik" value='familiar'>
+    <form action="player.php#friends" method='post'>
+        <input type="hidden" name="qwik" value='friend'>
         {rival_is_a...}
-        <input type='submit' class='familiar' value='{Submit}'>
+        <input type='submit' class='friend' value='{Submit}'>
     </form>
 </div>
 

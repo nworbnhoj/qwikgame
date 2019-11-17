@@ -344,7 +344,7 @@ class Page extends Html {
                 case 'history':    return $this->replicateMatches($player, $html, $id);  break;
                 case 'available':  return $this->replicateAvailable($player, $html);     break;
                 case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
-                case 'familiar':   return $this->replicateFamiliar($player, $html);      break;
+                case 'friends':   return $this->replicateFriends($player, $html);      break;
                 case 'ability':    return $this->replicateAbility($player, $html);       break;
                 case 'reckon':     return $this->replicateReckons($player, $html);       break;
                 case 'uploads':    return $this->replicateUploads($player, $html);       break;
@@ -484,7 +484,7 @@ class Page extends Html {
     }
 
 
-    private function replicateFamiliar($player, $html){
+    private function replicateFriends($player, $html){
         if(!$player){ return; }
         $group = '';
         $playerVars = $this->playerVariables($player);

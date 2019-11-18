@@ -19,10 +19,11 @@ class Qwik {
     const XML = '.xml';
 
     const TIDY_CONFIG = array(
-        'indent' => true,
-        'input-xml' => true,
-        'output-xml' => true,
-        'wrap' => 200
+        'indent' => TRUE,
+        'input-xml' => TRUE,
+        'output-xml' => TRUE,
+        'wrap' => 200,
+        'quote-ampersand' => TRUE
     );
 
     static private $games = array(

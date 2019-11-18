@@ -99,6 +99,7 @@ class Translation extends Qwik {
             if(isset($wordsIndex)){
                 $wordsElement = $phraseElement->words[$wordsIndex];
                 unset($this->xml->phrase[$phraseIndex]->words[$wordsIndex]);
+//                self::removeElement($this->xml->phrase[$phraseIndex]->words[$wordsIndex]);
             }
         }
     }

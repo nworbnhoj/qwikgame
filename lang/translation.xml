@@ -243,7 +243,7 @@
 <phrase key="You are invited"><words lang="en">You have been invited to play &lt;b&gt;[game] [day]&lt;/b&gt; at [venueName].</words></phrase>
 <phrase key="Please accept"><words lang="en">Please [authLink] and &lt;b&gt;accept&lt;/b&gt; if you would like to play.</words></phrase>
 <phrase key="EmailConfirmSubject"><words lang="en">Confirmed: [game] [time] at [venueName]</words></phrase>
-<phrase key="Game is set"><words lang="en">Your game of &lt;b&gt;[game]&lt;/b&gt; is set for &lt;b&gt;[time]&lt;b&gt; at [venueName].</words></phrase>
+<phrase key="Game is set"><words lang="en">Your game of &lt;b&gt;[game]&lt;/b&gt; is set for &lt;b&gt;[time] at [venueName]&lt;/b&gt;.</words></phrase>
 <phrase key="Need to cancel"><words lang="en">If you need to cancel for some reason, please [authLink] as soon as possible to let your rival know.</words></phrase>
 <phrase key="Have great game"><words lang="en">&lt;b&gt;Good Luck! and have a great game.&lt;/b&gt;</words></phrase>
 <phrase key="EmailChangeSubject"><words lang="en">Confirm email change for qwikgame.org</words><words lang="es"/></phrase>

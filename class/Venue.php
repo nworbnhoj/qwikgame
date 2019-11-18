@@ -8,14 +8,14 @@ class Venue extends Qwik {
     const REVERT_CHAR = '⟲';
 
 
-    static function exists($vid){
+    static function exists($id){
         $PATH = self::PATH_VENUE;
-        $NAME = self::fileName($id);
+        $NAME = self::nameFile($id);
         return file_exists("$PATH/$NAME");
     }
 
  
-    static function fileName($id){
+    static function nameFile($id){
     	return htmlspecialchars_decode($id, ENT_HTML5) . self::XML;
     }
 
@@ -70,7 +70,7 @@ class Venue extends Qwik {
 
   
     public function fileName(){
-        return self::fileName($this->id());
+        return self::nameFile($this->id());
     }
 
 
@@ -88,9 +88,12 @@ class Venue extends Qwik {
                         chdir("../..");
                     } else {
                        self::logMsg("Unable to create symlink for $game/$fileName");
+        	           throw new RuntimeException("Unable to create symlink for $game/$fileName");
                     }
                 }
             }
+        } else {
+        	throw new RuntimeException();
         }
         return $result;
     }

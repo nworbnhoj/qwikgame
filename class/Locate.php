@@ -188,6 +188,6 @@ class Locate extends Qwik {
 }
 
 
-LocatePage::initStatic();
+Locate::initStatic();
 
 ?>

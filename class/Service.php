@@ -5,6 +5,7 @@ require_once 'Qwik.php';
 
 class Service extends Qwik {
 
+    private $name;
     private $fileName;
     private $service;
     private $url;
@@ -12,14 +13,16 @@ class Service extends Qwik {
 
     public function __construct($name, $fileName='services.xml'){
         parent::__construct();
+        $this->name = $name;
         $this->fileName = $fileName;
-        $this->read($fileName);
+        $this->read();
     }
 
 
-    private function read($fileName){
-        $xml = self::readXML(".", $fileName);
-        $this->service = $xml->xpath("service[@name='$name']")[0];
+    private function read(){
+        $xml = self::readXML(".", $this->fileName);
+        $name = $this->name;
+        $this->service = $xml->xpath("/services/service[@name='$name']")[0];
         $this->url['xml'] = (string) $this->service->xml[0];
         $this->_url['json'] = (string) $this->service->json[0];
         $this->key = (string) $this->service->key[0];

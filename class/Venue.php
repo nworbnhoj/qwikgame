@@ -103,12 +103,12 @@ class Venue extends Qwik {
     * otherwise.
     * @throws RuntimeException if the linking operation fails in any way.
     */
-    private function saveGames($path, $fileName){
+    private function saveGames($PATH, $fileName){
     	$result = TRUE;
         $games = $this->xml->xpath('game');
         foreach($games as $game){
             if(!file_exists("$PATH/$game/$fileName")){
-            	if (!$this->linkGame($path, $game, $fileName)){
+            	if (!$this->linkGame($PATH, $game, $fileName)){
                     throw new RuntimeException("failed to add $games for venue $fileName");
                     $result = FALSE;
             	}

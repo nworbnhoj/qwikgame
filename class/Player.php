@@ -322,12 +322,18 @@ class Player extends Qwik {
     }
 
 
-
+    /**
+    * Find any instance of $vid in this Players xml and renames to $newID.
+    * @return True is $vid was found in this Players records and was renamed to $newID
+    */
     public function venueRename($vid, $newID){
+        $changed = FALSE;
         $records = $this->xml->xpath("available[venue='$vid'] | match[venue='$vid']");
         foreach($records as $rec){
             $rec->venue = $newID;
+            $changed = TRUE;
         }
+        return $changed;
     }
 
 

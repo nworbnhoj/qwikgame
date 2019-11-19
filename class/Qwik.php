@@ -393,12 +393,21 @@ class Qwik {
         File System Helper functions
     *****************************************************************/
     
+    /**
+    * Checks that a file is writable and attempts to unlink file.
+    * @return True if file is unlinked, and false otherwise.
+    * @throws RuntimeException if file is not unlinked
+    */
     static public function deleteFile($file){
-        if (is_writable($file)){
-            return unlink($file);
+        if (!is_writable($file)){
+            throw new RuntimeException("unable to write to $file");
+            return FALSE;           
         }
-        self::logMsg("Unable to delete file: $file");
-        return false;
+        if (!unlink($file)){
+            throw new RuntimeException("failed to unlink $file");
+            return FALSE;           
+        }
+        return TRUE;
     }
 
     
@@ -448,19 +457,26 @@ class Qwik {
         XML Helper functions
     *****************************************************************/
     
+    /**
+    * Calls SimpleXML->saveXML() to write $xml to $path/$fileName
+    * @throws RuntimeException if there is a problem writing the xml.
+    * @return True if the xml is written to file successfully, and false otherwise.
+    */
     static public function writeXML($xml, $path, $filename){
         $cwd = getcwd();
-        if(chdir($path)){
-            $xml->saveXML($filename);
-            if(!chdir($cwd)){
-                self::logMsg("failed to change working directory to $cwd");
-                return false;
-            }
-        } else {
-            self::logMsg("failed to change working directory to $path");
-            return false;
+        if(!chdir($path)){
+            throw new RuntimeException("failed to change working directory to $path");
+            return FALSE;
         }
-        return true;
+        if(!$xml->saveXML($filename)){
+            throw new RuntimeException("failed to save xml to $path/$fileName");
+            return FALSE;
+        }
+        if(!chdir($cwd)){
+            throw new RuntimeException("failed to return working directory to $cwd");
+            return FALSE;
+        }
+        return TRUE;
     }
 
 

@@ -6,6 +6,7 @@ require_once 'Locate.php';
 class VenuePage extends Page {
 
     private $venue;
+    private $alert;
 
     public function __construct($template='venue'){
         parent::__construct($template);
@@ -76,12 +77,18 @@ class VenuePage extends Page {
         $keys = array('placeid','address','str-num','route','tz','phone','url','lat','lng','note');
         $changed = $this->venueAttributes($venue, $req, $keys);
         $keys = array('name','locality','admin1','country');
-        if($this->venueAttributes($venue, $req, $keys)){
-            $venue->updateID();
-        } elseif($changed){
-            $venue->save();
+        try {
+            if($this->venueAttributes($venue, $req, $keys)){
+                $venue->updateID();
+            } elseif($changed){
+                $venue->save();
+            }
+            $venue->concludeReverts();
+        } catch (RuntimeException $e){
+            $this->alert = "{Oops}";
+            throw $e;
         }
-        $venue->concludeReverts();
+
     }
 
 
@@ -115,7 +122,7 @@ class VenuePage extends Page {
         
         $vars['vid']           = $this->venue->id();
         $vars['playerCount']   = $this->venue->playerCount();
-        $vars['message']       = '';
+        $vars['message']       = $this->alert;
         $vars['displayHidden'] = '';
         $vars['editHidden']    = 'hidden';
         $vars['venueName']     = $venueName;

@@ -74,28 +74,76 @@ class Venue extends Qwik {
     }
 
 
+    /**
+    * Saves the Venue records to a file named id.xml and ennsures that there is a
+    * symlink back to id.xml from each game directory.
+    * @return TRUE if the venue and game symlinks are saved successfully, and FALSE
+    * otherwise.
+    * @throws RuntimeException if the venue is not saved cleanly.
+    */
     public function save(){
         $PATH = self::PATH_VENUE;
         $fileName = $this->fileName();
-        $result = self::writeXML($this->xml, $PATH, $fileName);
-        if ($result){
-            $games = $this->xml->xpath('game');
-            foreach($games as $game){
-                if(!file_exists("$PATH/$game/$fileName")){
-                    if(file_exists("$PATH/$game")
-                    && chdir("$PATH/$game")){
-                        symlink("../$fileName", $fileName);
-                        chdir("../..");
-                    } else {
-                       self::logMsg("Unable to create symlink for $game/$fileName");
-        	           throw new RuntimeException("Unable to create symlink for $game/$fileName");
-                    }
-                }
+        if (!self::writeXML($this->xml, $PATH, $fileName)){
+        	throw new RuntimeException("failed to save venue $fileName");
+            return FALSE;
+        }
+        if(!$this->saveGames($PATH, $fileName)){
+            throw new RuntimeException("failed to save games for venue $fileName");
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+
+    /**
+    * Check that each game sub-directory has a symlink back to this Venue - and if not
+    * then create one.
+    * @return TRUE if all game symlinks are present and accounted for, and FALSE
+    * otherwise.
+    * @throws RuntimeException if the linking operation fails in any way.
+    */
+    private function saveGames($path, $fileName){
+    	$result = TRUE;
+        $games = $this->xml->xpath('game');
+        foreach($games as $game){
+            if(!file_exists("$PATH/$game/$fileName")){
+            	if (!$this->linkGame($path, $game, $fileName)){
+                    throw new RuntimeException("failed to add $games for venue $fileName");
+                    $result = FALSE;
+            	}
             }
-        } else {
-        	throw new RuntimeException();
         }
         return $result;
+    }
+
+
+    /**
+    * Create a symlink in the game directory back up to this venue fileName.
+    * @return TRUE if the symlink is successfully created, and FALSE otherwise.
+    * @throws RuntimeException if the linking operation fails in any way.
+    */
+    private function linkGame($path, $game, $fileName){
+        $cwd = getcwd();
+        if(!file_exists("$path/$game")){
+        	if (!mkdir("$path/$game", 0660, true)){
+        		throw new RuntimeException("failed to create $path/$game");
+        		return FALSE;
+        	}
+        }        
+        if (!chdir("$path/$game")){
+            throw new RuntimeException("failed to change working directory to $path/$game");
+            return FALSE;
+        }        
+        if (!symlink("../$fileName", $fileName)){
+            throw new RuntimeException("failed to create symlink for $game/$fileName");
+            return FALSE;
+        }
+        if(!chdir("$cwd")){
+            throw new RuntimeException("failed to return working directory to $cwd");
+            return FALSE;
+        }
+        return TRUE;
     }
 
 
@@ -225,6 +273,11 @@ class Venue extends Qwik {
     }
 
 
+    /**
+    * Updates the Venue ID when there is a change to the Venue Name, Locality, 
+    * Admin1 or Country.
+    * @throws RuntimeException if there is a problem saving the Venue with the new ID
+    */
     public function updateID(){
         $xml = $this->xml;
         $name = $xml['name'];
@@ -244,40 +297,81 @@ class Venue extends Qwik {
     }
 
 
-    // may introduce inconsistent results under hi multi-user load
+    /**
+    * Renames this Venue to $newID, and aso renames all references in Player files.
+    * The general approach is to:
+    * 1. change the Venue->id and save as newID.xml file
+    * 2. replace the oldID.xml file with a temporary symlink to the newID.xml file
+    * 3. rename all Player references to oldID with new ID
+    * 4. delete all symlinks from game directories back to the oldID file
+    * 5. delete the oldID.xml file
+    * WARNING: may introduce inconsistent results under hi multi-user load.
+    * @return True if the Venue is renamed successfully, and False if there is any problems.
+    * @throws RuntimeException if there is any problem renaming the Venue.
+    */
     private function rename($newID){
         $oldID = (string) $this->xml['id'];
-        if($newID != $oldID){
-            $this->xml['id'] = $newID;
+        if($newID === $oldID){
+        	return TRUE; // nothing to do
+        }
 
-            // save the venue and game symlinks under the newID
-            $this->save();
+        $this->xml['id'] = $newID;
 
-            $PATH = self::PATH_VENUE;
-            $XML = self::XML;
-            $oldFile = "$PATH/$oldID$XML";
-            $newFile = "$PATH/$newID$XML";
+        // save the venue and game symlinks under the newID
+        if(!$this->save()){
+            throw new RuntimeException("failed to resave venue $oldID as $newID");
+            return FALSE;
+        }
 
-            // temporarily replace oldfile with a symlink
-            self::deleteFile($preFile);    // ?is this necessary?
-            symlink($newFile, $preFile);
+        $PATH = self::PATH_VENUE;
+        $XML = self::XML;
+        $oldFile = "$PATH/$oldID$XML";
+        $newFile = "$PATH/$newID$XML";
+        $oldFileTmp = "$oldFile.tmp";
 
-            // rename the venue in all player records
-            $pids = $this->xml->xpath('player');
-            foreach($pids as $pid){
-                $player = new Player($pid);
-                $player->venueRename($preID, $newID);
-                $player->save();
+        // temporarily replace oldfile with a symlink to the newFile
+        // race risk here between renaming and creating symlink
+        // note: maybe wiser to use single step "exec('ln -sf source dest')"
+        if (!rename($oldFile, $oldFileTmp)){
+            throw new RuntimeException("failed to rename venue $oldFile as $oldFileTmp");
+            return FALSE;        	
+        }	
+        if (!symlink($newFile, $oldFile)){
+            throw new RuntimeException("failed to create symlink from venue $oldFile to $newFile");
+            // RECOVER FROM EXCEPTION: attempt to reinstate $oldID 
+            if (!rename($oldFileTmp, $oldFile)){
+                throw new RuntimeException("WARNING: INTEGRITY: failed to reinstate venue $oldFile");      	
             }
+            return FALSE;        	
+        } else {
+            self::deleteFile($oldFileTmp);
+        }
 
-            // remove the game symlinks to the oldID
-            $games = $this->xml->xpath('game');
-            foreach($games as $game){
-                self::deleteFile("$PATH/$game/$oldID$XML");
+        // rename the venue in all player records
+        // note: race risk here of alterations to Player.xml before the venue rename
+        // note: more efficient for the Venue to store a list of all Players
+        // who have ever used the venue.
+        $deleteSymlink = TRUE;
+        $pids = $this->xml->xpath('player');
+        foreach($pids as $pid){
+            $player = new Player($pid);
+            $changed = $player->venueRename($oldID, $newID);
+            if ($changed && !$player->save()){
+                throw new RuntimeException("WARNING: failed to rename Venue($oldID) in Player($id) to Venue($newID). A temporary Symlink from $oldID to $newID is in place to preserve operation (but should be deleted when this issue is resolved for all Players with a reference to $oldID)");
+            	$deleteSymlink = FALSE;
             }
+        }
 
-            // delete temp symlink
-            self::deleteFile($preFile);
+        // remove the game symlinks to the oldID
+        $games = $this->xml->xpath('game');
+        foreach($games as $game){
+        	// failure will result in broken links
+            self::deleteFile("$PATH/$game/$oldID$XML");
+        }
+
+        if ($deleteSymLink){
+            // delete temp symlink (rubbish but not integrity issue on failure)
+        	self::deleteFile($oldFile);
         }
     }
 
@@ -346,9 +440,12 @@ class Venue extends Qwik {
     }
 
 
-    //scans and removes edits over 1 week old
+    /**
+    * scans and removes edits over 1 week old
+    * @throws RuntimeException if there is some problem saving the venue after concluding reverts.
+    */
     public function concludeReverts(){
-        return;
+        return;  //@todo finish implimentation of function concludeReverts
 
         $edits = $this->xml->xpath('edit');
         foreach($edits as $edit){
@@ -357,7 +454,12 @@ class Venue extends Qwik {
                 self::removeElement($edit);
             }
         }
-        $this->save();
+
+        if(!$this->save()){
+        	$id = $this->id();
+            throw new RuntimeException("failed to conclude reverts for venue $id");
+            return FALSE;
+        }
     }
 
 

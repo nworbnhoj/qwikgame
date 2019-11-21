@@ -10,18 +10,22 @@
     $venues = Qwik::venues();
     $rows = "";
     foreach($venues as $vid){
-        $venue = new Venue($vid, FALSE);
-        if(isset($venue)){
-            $lat = $venue->lat();
-            $lng = $venue->lng();
-            $name = $venue->name();
-            $rows .= "<tr><td>$name</td><td>$lat</td><td>$lng</td></tr>\n";
-            $v = $xml->addChild('venue', '');
-            $v->addAttribute('id', $venue->id());
-            $v->addAttribute('name', $venue->name());
-            $v->addAttribute('lat', $venue->lat());
-            $v->addAttribute('lng', $venue->lng());
-            $v->addAttribute('playerCount', $venue->playerCount());
+        try {
+            $venue = new Venue($vid, FALSE);
+            if(isset($venue)){
+                $lat = $venue->lat();
+                $lng = $venue->lng();
+                $name = $venue->name();
+                $rows .= "<tr><td>$name</td><td>$lat</td><td>$lng</td></tr>\n";
+                $v = $xml->addChild('venue', '');
+                $v->addAttribute('id', $venue->id());
+                $v->addAttribute('name', $venue->name());
+                $v->addAttribute('lat', $venue->lat());
+                $v->addAttribute('lng', $venue->lng());
+                $v->addAttribute('playerCount', $venue->playerCount());
+            }
+        } catch (RuntimeException $e){
+            self::logThrown($e);
         }
     }
     $table = "<table>\n$rows</table>\n";

@@ -32,7 +32,13 @@ class PlayerPage extends Page {
 
         $vid = $this->req('vid');
         if(isset($vid)){
-            $this->venue = new Venue($vid);
+            try {
+                $this->venue = new Venue($vid);
+            } catch (RuntimeException $e){
+                self::alert("{Oops}");
+                self::logThrown($e);
+                unset($vid);
+            }
         }
 
         if (isset($this->venue)){

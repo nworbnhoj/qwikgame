@@ -23,6 +23,9 @@ class Venue extends Qwik {
     private $id;
     private $xml;
 
+    /**
+    * @throws RuntimeException if construction fails.
+    */
     public function __construct($id, $forge=FALSE){
         parent::__construct();
         $this->id = $id;
@@ -147,10 +150,20 @@ class Venue extends Qwik {
     }
 
 
+    /**
+    * @throws RuntimeException if the xml cannot be read from file.
+    */
     private function retrieve(){
-        $fileName = $this->fileName();
-        $xml = self::readXML(self::PATH_VENUE, $fileName);
-        return $xml!=NULL ? $xml : new SimpleXMLElement("<venue/>");
+    	try {
+            $fileName = $this->fileName();
+            $xml = self::readXML(self::PATH_VENUE, $fileName);
+        } catch (RuntimeException $e){
+        	self::logThrown($e);
+        	$xml = new SimpleXMLElement("<venue/>");
+        	$id = $this->id;
+        	throw new RuntimeException("failed to retrieve Venue: $id");
+        }
+        return $xml;
     }
 
 

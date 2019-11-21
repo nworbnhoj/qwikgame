@@ -60,9 +60,15 @@ class LocatePage extends Page {
                         $details['admin1'],
                         $details['country_iso']
                     );
-                    $venue = new Venue($vid, TRUE);
-                    $venue->updateAtt('placeid', $placeid);
-                    $this->furnish($venue, $details);
+                    try {
+                        $venue = new Venue($vid, TRUE);
+                        $venue->updateAtt('placeid', $placeid);
+                        $this->furnish($venue, $details);
+                    } catch (RuntimeException $e){
+                        self::alert("{Oops}");
+                        self::logThrown($e);
+                        unset($vid);
+                    }
                 }
             }
         }
@@ -79,15 +85,21 @@ class LocatePage extends Page {
             && isset($country)){
                 $vid = Venue::venueID($name, $locality, $admin1, $country);
                 if (!Venue::exists($vid)){
-                    $venue = new Venue($vid, TRUE);
-                    $description = "$name, $locality, $admin1";
-                    $placeid = Locate::getPlace($description, $country);
-                    if(isset($placeid)){
-                        $this->furnish($venue, Locate::getDetails($placeid));
-                    } else {
-                        $tz = Locate::guessTimezone($locality, $admin1, $country);
-                        $venue->updateAtt('tz', $tz);
-                        $venue->save();
+                    try {
+                        $venue = new Venue($vid, TRUE);
+                        $description = "$name, $locality, $admin1";
+                        $placeid = Locate::getPlace($description, $country);
+                        if(isset($placeid)){
+                            $this->furnish($venue, Locate::getDetails($placeid));
+                        } else {
+                            $tz = Locate::guessTimezone($locality, $admin1, $country);
+                            $venue->updateAtt('tz', $tz);
+                            $venue->save();
+                        }
+                    } catch (RuntimeException $e){
+                        self::alert("{Oops}");
+                        self::logThrown($e);
+                        unset($vid);
                     }
                 }
             }

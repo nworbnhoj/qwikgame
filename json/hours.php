@@ -7,15 +7,19 @@
     $max = $_GET['max'];
     $vid = $_GET['venue'];
 
-    $venue = new Venue($vid, FALSE);
-    $tz = empty($venue) ? local : $venue->tz();
+    try {
+        $venue = new Venue($vid, FALSE);
+        $tz = empty($venue) ? local : $venue->tz();
 
-    $tds = '';
-    $bit = 1;
-    for($hr=0; $hr<24; $hr++){
-        $hidden = ($hr<$min || $hr>$max) ? 'hidden' : '';
-        $table .= "\t\t<td class='toggle' bit='$bit' $hidden>$hr</td>\n";
-        $bit = $bit * 2;
+        $tds = '';
+        $bit = 1;
+        for($hr=0; $hr<24; $hr++){
+            $hidden = ($hr<$min || $hr>$max) ? 'hidden' : '';
+            $table .= "\t\t<td class='toggle' bit='$bit' $hidden>$hr</td>\n";
+            $bit = $bit * 2;
+        }
+    } catch (RuntimeException $e){
+        self::logThrown($e);
     }
     return $tds;
 

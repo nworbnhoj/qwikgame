@@ -6,6 +6,7 @@ require_once 'Logging.php';
 
 class Qwik {
     const SUBDOMAIN  = 'www';
+    const QWIK_URL   = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
 
     const PATH_VENUE  = 'venue';
     const PATH_PLAYER = 'player';
@@ -314,6 +315,7 @@ class Qwik {
         self::$log = new Logging();
         self::$log->lfile(self::PATH_LOG);
         set_error_handler(array('Qwik','exception_error_handler'), E_ALL);
+        set_exception_handler(Qwik::exception_handler);
     }
     
 
@@ -351,6 +353,13 @@ class Qwik {
     }
 
 
+    static public function exception_handler($uncaught){
+        self::logThrown($uncaught);
+        header('Location: ' . self::QWIK_URL, true, 303);
+        die();
+    }
+
+
 
     
     /*****************************************************************
@@ -379,7 +388,7 @@ class Qwik {
 
 
     static public function logThrown(Throwable $t){
-        return self::logMsg($t->__toString());
+        return self::logMsg((string)$t);
     }
 
 

@@ -50,7 +50,6 @@ class Html extends Qwik {
 
     const ERROR_TEMPLATE  = 'error.html';
 
-    const QWIK_URL   = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
     const PDF_URL    = self::QWIK_URL.'/'.self::PATH_PDF.'/';
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
     const PRIVACY_URL  = self::PDF_URL.'qwikgame.org%20privacy%20policy.pdf';

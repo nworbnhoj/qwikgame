@@ -99,8 +99,13 @@ class Page extends Html {
 
 
     public function serve(){
-        $this->processRequest();
-        parent::serve();
+        try {
+            $this->processRequest();
+        } catch (Throwable $t){
+            Qwik::logThrown($t);
+        } finally {
+            parent::serve();            
+        }
     }
 
 

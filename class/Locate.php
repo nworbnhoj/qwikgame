@@ -111,21 +111,21 @@ class Locate extends Qwik {
             $details['tz'] = self::getTimezone($lat, $lng);
 
             $addr = $result->xpath("address_component[type='country']");
-            $details['country'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
-            $details['country_iso'] = isset($addr[0]) ? (string) $addr[0]->short_name : NULL;
+            $details['country'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
+            $details['country_iso'] = isset($addr[0]) ? (string) $addr[0]->short_name : "";
 
             $addr = $result->xpath("address_component[type='administrative_area_level_1']");
-            $details['admin1'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
-            $details['admin1_code'] = isset($addr[0]) ? (string) $addr[0]->short_name : NULL;
+            $details['admin1'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
+            $details['admin1_code'] = isset($addr[0]) ? (string) $addr[0]->short_name : "";
 
             $addr = $result->xpath("address_component[type='street_number']");
-            $details['str-num'] = isset($addr[0]) ?  (string) $addr[0]->long_name : NULL;
+            $details['str-num'] = isset($addr[0]) ?  (string) $addr[0]->long_name : "";
 
             $addr = $result->xpath("address_component[type='route']");
-            $details['route'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
+            $details['route'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
 
             $addr = $result->xpath("address_component[type='locality']");
-            $details['locality'] = isset($addr[0]) ? (string) $addr[0]->long_name : NULL;
+            $details['locality'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
 
             $details['phone'] = (string) $result->phone[0];
             $details['url'] = (string) $result->website[0];

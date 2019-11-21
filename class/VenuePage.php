@@ -6,7 +6,6 @@ require_once 'Locate.php';
 class VenuePage extends Page {
 
     private $venue;
-    private $alert;
 
     public function __construct($template='venue'){
         parent::__construct($template);
@@ -85,7 +84,7 @@ class VenuePage extends Page {
             }
             $venue->concludeReverts();
         } catch (RuntimeException $e){
-            $this->alert = "{Oops}";
+            $this->alert("{Oops}");
             throw $e;
         }
 
@@ -122,7 +121,7 @@ class VenuePage extends Page {
         
         $vars['vid']           = $this->venue->id();
         $vars['playerCount']   = $this->venue->playerCount();
-        $vars['message']       = $this->alert;
+        $vars['message'];
         $vars['displayHidden'] = '';
         $vars['editHidden']    = 'hidden';
         $vars['venueName']     = $venueName;

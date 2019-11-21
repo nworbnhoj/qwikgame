@@ -52,6 +52,7 @@ class Page extends Html {
 
     private $player;
     private $language;
+    private $alert;
 
 
     /*******************************************************************************
@@ -138,6 +139,8 @@ class Page extends Html {
         if ($this->player != NULL){
             $vars['pid']         = $this->player->id();
         }
+
+        $vars['message'] = $this->alert;
         
         return $vars;
     }
@@ -190,6 +193,11 @@ class Page extends Html {
         }
         self::log()->lwrite($msg);
         self::log()->lclose();
+    }
+
+
+    function alert($msg){
+        $this->alert = empty($this->alert) ? $msg : $this->alert."<br>$msg";
     }
 
 

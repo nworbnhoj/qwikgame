@@ -140,7 +140,7 @@ class PlayerPage extends Page {
 	    $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
-            $vars['message']       = "{Welcome} <b>$playerName</b>";
+            $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
             $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
@@ -156,7 +156,7 @@ class PlayerPage extends Page {
 
             // special case: new un-activated player
             if (is_null($playerEmail)){
-                $vars['message']    = '{Please activate...}';
+                $vars['message']    .= '{Please activate...}';
                 $vars['playerName'] = ' ';
                 $vars['playerEmail'] = ' ';
             }

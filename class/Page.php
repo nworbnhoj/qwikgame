@@ -429,13 +429,17 @@ class Page extends Html {
         $group = '';
         $similar = array_slice($this->similarVenues($req['venue']), 0, 5);
         foreach($similar as $vid){
-            $venue = new Venue($vid);
-            $vars = array(
-                'vid'    => $vid,
-                'name'   => implode(', ',explode('|',$vid)),
-                'players'=> $venue->playerCount(),
-            );
-            $group .= $this->populate($html, $vars);
+            try {
+                $venue = new Venue($vid);
+                $vars = array(
+                    'vid'    => $vid,
+                    'name'   => implode(', ',explode('|',$vid)),
+                    'players'=> $venue->playerCount(),
+                );
+                $group .= $this->populate($html, $vars);
+            } catch (RuntimeException $e){
+                self::logThrown($e);
+            }
         }
         return $group;
     }

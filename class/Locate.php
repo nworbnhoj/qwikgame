@@ -185,6 +185,32 @@ class Locate extends Qwik {
         parent::__construct();
     }
 
+
+    static function geoGuess($input){
+        $result = "{}";
+    	$param = array();
+        $param['input'] = $input;
+        $param['key'] = self::$geoplace->key();
+        $url = self::$geoplace->url("json");
+        try{
+            $query = http_build_query($param);
+            $json = Defend::json("$url?$query");
+            $decoded = json_decode($json, TRUE);
+            $status = (string) $decoded["status"];
+            if($status === 'OK' || $status === 'ZERO_RESULTS'){
+                $result = $json;
+            } else {
+                throw new RuntimeException($status);
+            }
+        } catch (RuntimeException $e){
+            $msg = $e->getMessage();
+            self::logMsg("Google geocoding: $msg\n$url?$query\n$result");
+        }
+        return $result;
+    }
+
+
+
 }
 
 

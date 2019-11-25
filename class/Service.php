@@ -21,10 +21,13 @@ class Service extends Qwik {
 
     private function read(){
         $xml = self::readXML(".", $this->fileName);
+        if ($xml === FALSE){
+            return FALSE;
+        }
         $name = $this->name;
         $this->service = $xml->xpath("/services/service[@name='$name']")[0];
         $this->url['xml'] = (string) $this->service->xml[0];
-        $this->_url['json'] = (string) $this->service->json[0];
+        $this->url['json'] = (string) $this->service->json[0];
         $this->key = (string) $this->service->key[0];
         return $xml;
     }

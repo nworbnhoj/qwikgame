@@ -90,7 +90,7 @@ class Defend extends Qwik {
 
     private $get;
     private $post;
-    private $rejected;
+    private $rejected = array();
 
 
     static function xml($url){
@@ -137,7 +137,7 @@ class Defend extends Qwik {
 
 
     public function rejected(){
-        if (is_null($this->rejected)){
+        if (is_null($this->get) && is_null($this->post)){
             $this->request();
         }
         return $this->rejected;
@@ -157,15 +157,9 @@ class Defend extends Qwik {
         $req = $this->declaw($request);
         $req = $this->clip($req);
         $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
-
-        $changed = $this->size($result) !== $this->size($req);
-        $rejects = $changed ? $this->rejects($req, $result) : array() ;
-        if(is_null($this->rejected)){
-            $this->rejected = $rejects;
-        } else {
-            $this->rejected += $rejects;
+        if ($this->size($result) !== $this->size($req)){
+        	$this->rejected = $this->rejected + $this->rejects($req, $result);
         }
-
         return $result;
     }
 

@@ -6,7 +6,7 @@ require_once 'Logging.php';
 
 class Qwik {
     const SUBDOMAIN  = 'www';
-    const QWIK_URL   = 'http://' . self::SUBDOMAIN . '.qwikgame.org';
+    const QWIK_URL   = 'https://' . self::SUBDOMAIN . '.qwikgame.org';
 
     const PATH_VENUE  = 'venue';
     const PATH_PLAYER = 'player';
@@ -315,7 +315,7 @@ class Qwik {
         self::$log = new Logging();
         self::$log->lfile(self::PATH_LOG);
         set_error_handler(array('Qwik','exception_error_handler'), E_ALL);
-        set_exception_handler(Qwik::exception_handler);
+        set_exception_handler(array('Qwik','exception_handler'));
     }
     
 
@@ -517,7 +517,7 @@ class Qwik {
                 return FALSE;
             }
         }
-        return TRUE;
+        return $xml;
     }
     
     

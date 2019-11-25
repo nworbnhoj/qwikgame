@@ -12,6 +12,7 @@ class Defend extends Qwik {
         'address'     => 200,
         'description' => 200,
         'filename'    => 50,
+        'input'       => 200,
         'key'         => 30,
         'locality'    => 100,
         'msg'         => 200,
@@ -42,6 +43,7 @@ class Defend extends Qwik {
         'filename' => FILTER_DEFAULT,
         'game'     => Filter::GAME,
         'hour'     => Filter::HOURS,
+        'input'    => FILTER_DEFAULT,
         'id'       => Filter::ID,
         'key'      => FILTER_DEFAULT,
         'invite'   => Filter::INVITE,
@@ -88,11 +90,6 @@ class Defend extends Qwik {
     );
 
 
-    private $get;
-    private $post;
-    private $rejected = array();
-
-
     static function xml($url){
         try{
             $reply = file_get_contents("$url");
@@ -106,6 +103,56 @@ class Defend extends Qwik {
         }
         return new SimpleXMLElement("<xml></xml>");
     }
+
+
+    static function json($url){
+        try{
+            $json = file_get_contents("$url");
+            $decoded = json_decode($json, TRUE);
+            $clean = self::declaw($decoded);            
+            return json_encode($clean);
+        } catch (Exception $e){
+            $msg = $e->getMessage();
+            self::logMsg("JSON: $msg\n$url\n$json");
+        }
+        return "{}";
+    }
+
+
+
+    # SECURITY escape all parameters to prevent malicious code insertion
+    # http://au.php.net/manual/en/function.htmlentities.php
+    static private function declaw($cat){
+        if (is_array($cat)){
+            $kitten = array();
+            foreach($cat as $key => $val){
+                $kitten[self::declaw($key)] = self::declaw($val);
+            }
+        } else {
+            $kitten = htmlspecialchars(trim($cat), ENT_QUOTES | ENT_HTML5, "UTF-8");
+        }
+        return $kitten;
+    }
+
+
+    # SECURITY escape all parameters to prevent malicious code insertion
+    # http://au.php.net/manual/en/function.htmlentities.php
+    static private function reclaw($data){
+        if (is_array($data)){
+            foreach($data as $key => $val){
+                $data[$key] = self::reclaw($val);
+            }
+        } else {
+            $data = html_entity_decode($data, ENT_QUOTES | ENT_HTML5);
+        }
+        return $data;
+    }
+
+
+
+    private $get;
+    private $post;
+    private $rejected = array();
 
 
     public function __construct(){
@@ -154,7 +201,7 @@ class Defend extends Qwik {
 
 
     private function examine($request){
-        $req = $this->declaw($request);
+        $req = self::declaw($request);
         $req = $this->clip($req);
         $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
         if ($this->size($result) !== $this->size($req)){
@@ -247,36 +294,6 @@ class Defend extends Qwik {
             }
         }
         return $clipped;
-    }
-
-
-
-    # SECURITY escape all parameters to prevent malicious code insertion
-    # http://au.php.net/manual/en/function.htmlentities.php
-    private function declaw($cat){
-        if (is_array($cat)){
-            $kitten = array();
-            foreach($cat as $key => $val){
-                $kitten[$this->declaw($key)] = $this->declaw($val);
-            }
-        } else {
-            $kitten = htmlspecialchars(trim($cat), ENT_QUOTES | ENT_HTML5, "UTF-8");
-        }
-        return $kitten;
-    }
-
-
-    # SECURITY escape all parameters to prevent malicious code insertion
-    # http://au.php.net/manual/en/function.htmlentities.php
-    private function reclaw($data){
-        if (is_array($data)){
-            foreach($data as $key => $val){
-                $data[$key] = reclaw($val);
-            }
-        } else {
-            $data = html_entity_decode($data, ENT_QUOTES | ENT_HTML5);
-        }
-        return $data;
     }
 
 }

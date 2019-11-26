@@ -295,7 +295,6 @@ class Defend extends Qwik {
         }
         return $clipped;
     }
-
 }
 
 ?>

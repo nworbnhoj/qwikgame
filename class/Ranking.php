@@ -188,15 +188,16 @@ class Ranking extends Qwik {
 
 
 
-    /*******************************************************************************
-    Process a User request to activate a set of uploaded player rankings.
-
-    $ranking    XML    The uploaded rankings
-
-    The rankings are inserted into the XML data of the ranked players
-    (creating new anon players as required)
-
-    ********************************************************************************/
+    /**
+    * Process a User request to activate a set of uploaded player rankings.
+    *
+    * $ranking    XML    The uploaded rankings
+    *
+    * The rankings are inserted into the XML data of the ranked players
+    * (creating new anon players as required)
+    *
+    * @throws RuntimeException if there are problem activating the Ranking.
+    */
     public function insert(){
         $rankParity = self::RANK_PARITY;
 
@@ -211,21 +212,30 @@ class Ranking extends Qwik {
         }
 
         foreach($ranks as $anonRank => $anonID){
-            $anon = new Player($anonID, TRUE);
-
-            foreach($rankParity as $rnk => $parity){
-                $rnk = (int)$rnk;
-                $parity = (float)$parity;
-                $rivalRank = $anonRank + $rnk;
-                if (isset($ranks[$rivalRank])){
-                    $rid = $ranks[$rivalRank];
-                    $anon->rankAdd($rankingID, $game, $rid, $parity);
+            try {
+                $anon = new Player($anonID, TRUE);
+                foreach($rankParity as $rnk => $parity){
+                    $rnk = (int)$rnk;
+                    $parity = (float)$parity;
+                    $rivalRank = $anonRank + $rnk;
+                    if (isset($ranks[$rivalRank])){
+                        $rid = $ranks[$rivalRank];
+                        $anon->rankAdd($rankingID, $game, $rid, $parity);
+                    }
                 }
+                $anon->save();
+            } catch (RuntimeException $e){
+                self::logThown($e);
+                self::logMsg("failed to create new Anon Player $anonID from uploaded Ranking $rankingID");
             }
-            $anon->save();
         }
         $this->status('active');
-        $this->save();
+        try{
+            $this->save();
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            throw new RuntimeException("Failed to save Ranking $rankingID");
+        }
     }
 
 
@@ -238,15 +248,25 @@ class Ranking extends Qwik {
         $rankingID = $this->id();
         $anonIDs = $this->xml->xpath("sha256");
         foreach($anonIDs as $anonID){
-            $anon = new Player($anonID);
-            if (isset($anon)
-            && $anon->ok()){
-                $anon->removeRanks($rankingID);
+            try {
+                $anon = new Player($anonID);
+                if (isset($anon)
+                && $anon->ok()){
+                    $anon->removeRanks($rankingID);
+                }
+            } catch (RuntimeException $e){
+                self::logThown($e);
+                self::logMsg("failed to extract Player $anonID from Ranking $rankingID");
             }
 // possible to remove player here if there is no email and no other ranks (or other data)
         }
         $this->status('uploaded');
-        $this->save();
+        try{
+            $this->save();
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            throw new RuntimeException("Failed to save Ranking $rankingID");
+        }
     }
 
 }

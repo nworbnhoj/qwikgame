@@ -4,7 +4,14 @@
     require_once 'class/Page.php';
 
     $pid = $req['pid'];
-    $player = new Player($pid, Page::$log, FALSE);
+    try {
+        $player = new Player($pid, Page::$log, FALSE);
+    } catch (RuntimeException $e){
+        self::logThown($e);
+        self::logMsg("failed to retrieve Player $pid");
+        $player = NULL; 
+    }
+
     $options = '';
     if(isset($player)){
 

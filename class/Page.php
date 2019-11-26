@@ -232,7 +232,13 @@ class Page extends Html {
         }
 
         // Load up the Player from file
-        $player = new Player($pid);
+        try {
+            $player = new Player($pid);
+        } catch (RuntimeException $e){
+            self::logThown($e);
+            self::logMsg("failed to retrieve Player $pid");
+            $player = NULL; 
+        }
 
         // return the Player iff authentication is possible
         if($openSession){                   // AUTH: existing session

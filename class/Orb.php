@@ -212,13 +212,18 @@ Rival and by negating Parity.
             && !$nodeOrb->bare()){                      // step further out
                 $newCrumbs = $nodeOrb->expand($crumbs);  // recursion
             } elseif(!in_array($rid, $crumbs)){          // found a new edge
-                $rival = new Player($rid);
-                if ($rival->ok()){                   // expand the edge
-                    $rivalOrb = $rival->orb($this->game, $crumbs, FALSE);
-                    $nodeOrb = $node->orb($rivalOrb);
-                    if (isset($nodeOrb)){
-                        $newCrumbs = $nodeOrb->crumbs($rid, $rid);
+                try {
+                    $rival = new Player($rid);
+                    if ($rival->ok()){                   // expand the edge
+                        $rivalOrb = $rival->orb($this->game, $crumbs, FALSE);
+                        $nodeOrb = $node->orb($rivalOrb);
+                        if (isset($nodeOrb)){
+                            $newCrumbs = $nodeOrb->crumbs($rid, $rid);
+                        }
                     }
+                } catch (RuntimeException $e){
+                    self::logThrown($e);
+                    self::logMsg("Failed to retriece Player $rid to expand an Orb");
                 }
             }
             $crumbs = array_merge($crumbs, $newCrumbs);

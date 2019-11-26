@@ -130,8 +130,14 @@ class Match extends Qwik {
 
 
     public function rival($index=0){
-        $rid = $this->rid($index);
-        return isset($rid) ? new Player($rid) : NULL;
+        try {
+            $rid = $this->rid($index);
+            return isset($rid) ? new Player($rid) : NULL;
+        } catch (RuntimeException $e){
+            self::logThown($e);
+            self::logMsg("failed to retrieve Player $rid");
+        }
+        return NULL;
     }
 
 
@@ -207,22 +213,27 @@ class Match extends Qwik {
     public function invite($rids){
         $game = $this->game();
         foreach($rids as $rid => $email){
-            $rival = new Player($rid);
-            if($rival->ok()){
-                $parity = $this->player->parity($rival, $game);
-                $ytirap = -1 * $parity;
-                $hours = $this->hours();
-                $rivalMatch = is_null($email)
-                    ? $rival->matchInvite($this, $ytirap)
-                    : $rival->matchAdd($this, $ytirap, $hours, $email);
-                if(!is_null($rivalMatch)){
-                    $this->addRival($rid, 
-                                    $parity,
-                                    $rival->rep(),
-                                    $rival->nick()
-                    );
+            try 
+                $rival = new Player($rid);
+                if($rival->ok()){
+                    $parity = $this->player->parity($rival, $game);
+                    $ytirap = -1 * $parity;
+                    $hours = $this->hours();
+                    $rivalMatch = is_null($email)
+                        ? $rival->matchInvite($this, $ytirap)
+                        : $rival->matchAdd($this, $ytirap, $hours, $email);
+                    if(!is_null($rivalMatch)){
+                        $this->addRival($rid, 
+                                        $parity,
+                                        $rival->rep(),
+                                        $rival->nick()
+                        );
+                    }
+                    $rival->save();
                 }
-                $rival->save();
+            } catch (RuntimeException $e){
+                self::logThown($e);
+                self::logMsg("failed to invitebPlayer $rid");
             }
         }
     }

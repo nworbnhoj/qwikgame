@@ -367,11 +367,16 @@ class Venue extends Qwik {
         $deleteSymlink = TRUE;
         $pids = $this->xml->xpath('player');
         foreach($pids as $pid){
-            $player = new Player($pid);
-            $changed = $player->venueRename($oldID, $newID);
-            if ($changed && !$player->save()){
-                throw new RuntimeException("WARNING: failed to rename Venue($oldID) in Player($id) to Venue($newID). A temporary Symlink from $oldID to $newID is in place to preserve operation (but should be deleted when this issue is resolved for all Players with a reference to $oldID)");
-            	$deleteSymlink = FALSE;
+        	try {
+                $player = new Player($pid);
+                $changed = $player->venueRename($oldID, $newID);
+                if ($changed && !$player->save()){
+            	    self::logMsg("WARNING: failed to rename Venue($oldID) in Player($id) to Venue($newID). A temporary Symlink from $oldID to $newID is in place to preserve operation (but should be deleted when this issue is resolved for all Players with a reference to $oldID)");
+            	    $deleteSymlink = FALSE;
+                }
+            } catch (RuntimeException $e){
+            	self::logThrown($e);
+            	self::logMsg("Failed to inspect Player $pid to rename Venue($oldID) to Venue($newID)");
             }
         }
 

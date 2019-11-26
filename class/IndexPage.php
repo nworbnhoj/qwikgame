@@ -40,12 +40,14 @@ class IndexPage extends Page {
 
 
     function qwikAvailable($email){
-        $result = FALSE;
         $venue = $this->req('venue');
         $game = $this->req('game');
-        if (isset($venue)
-        && isset($game)
-        && isset($email)){
+        if (!isset($venue) 
+        || !isset($game) 
+        || !isset($email)){
+            return FALSE;
+        }
+        try {
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
@@ -54,14 +56,19 @@ class IndexPage extends Page {
                 $this->alert = "{Check_email}";
                 $result = TRUE;
             }
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            self::logMsg("Failed to create new Player $pid from IndexPage");
         }
-        return $result;
+        return FALSE;
     }
 
 
     function qwikRecover($email){
-        $result = FALSE;
         if(isset($email)){
+            return FALSE;
+        }
+        try{
             $pid = Player::anonID($email);
             if(PLAYER::exists($pid)){
                 $player = new Player($pid);
@@ -71,18 +78,22 @@ class IndexPage extends Page {
                     // todo rate limit
                     $player->emailLogin();
                     $this->alert = "{Check_email}";
-                    $result = TRUE;
+                    return TRUE;
                 }
             } else {
                 $anon = new Player($pid, TRUE);
                 if(isset($anon)){
                     $anon->emailWelcome($email);
                     $this->alert = "{Check_email}";
-                    $result = TRUE;
+                    return TRUE;
                 }
             }
+
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            self::logMsg("Failed to send a recovery email to Player $pid");
         }
-        return $result;
+        return FALSE;
     }
 
 

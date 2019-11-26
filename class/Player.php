@@ -20,10 +20,39 @@ class Player extends Qwik {
     const WEEK   = 604800;
     const MONTH  = 2678400;
     const YEAR   = 31536000;
+    
+    
+    /*******************************************************************************
+    Returns the sha256 hash of the $email address provided
+
+    $email    String    an email address
+
+    The unique player ID is chosen by taking the sha256 hash of the email address. 
+    This has a number of advantages:
+    - The player ID will be unique because the email address will be unique
+    - Qwikgame can accept and use a sha256 hash to store anonymous player data
+    - A new email address can be linked to existing anonymous player data
+
+    *******************************************************************************/
+    static function anonID($email){
+        return hash('sha256', $email);
+    }
+
+
+    static function exists($pid){
+        $PATH = self::PATH_PLAYER;
+        $XML = self::XML;
+        return file_exists("$PATH/$pid$XML");
+    }
+
 
     private $id;
     private $xml;
 
+
+    /**
+    * @throws RuntimeException if construction fails.
+    */
     public function __construct($pid, $forge=FALSE){
         parent::__construct();
         $this->id = $pid;
@@ -53,49 +82,42 @@ class Player extends Qwik {
     }
 
 
+    /**
+    * Saves the Player records to a file named id.xml 
+    * @return TRUE if the Payer xml is saved successfully, and FALSE
+    * otherwise.
+    * @throws RuntimeException if the Player is not saved cleanly.
+    */
     public function save(){
-        return self::writeXML(
-            $this->xml, 
-            self::PATH_PLAYER, 
-            $this->fileName()
-        );
+        $PATH = self::PATH_PLAYER;
+        $fileName = $this->fileName();
+        if (!self::writeXML($this->xml, $PATH, $fileName())){
+            throw new RuntimeException("failed to save Player $fileName");
+            return FALSE;
+        }
+        return TRUE;
     }
 
 
+    /**
+    * @throws RuntimeException if the xml cannot be read from file.
+    */
     public function retrieve($fileName){
-        return self::readXML( 
-            self::PATH_PLAYER, 
-            $fileName        
-        );
+        try {
+            $fileName = $this->fileName();
+            $xml = self::readXML(self::PATH_PLAYER, $fileName);
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            $xml = new SimpleXMLElement("<player/>");
+            $id = $this->id;
+            throw new RuntimeException("failed to retrieve Player: $id");
+        }
+        return $xml;
     }
 
 
     public function ok(){
         return !is_null($this->xml);
-    }
-
-
-    static function exists($pid){
-        $PATH = self::PATH_PLAYER;
-        $XML = self::XML;
-        return file_exists("$PATH/$pid$XML");
-    }
-    
-    
-    /*******************************************************************************
-    Returns the sha256 hash of the $email address provided
-
-    $email    String    an email address
-
-    The unique player ID is chosen by taking the sha256 hash of the email address. 
-    This has a number of advantages:
-    - The player ID will be unique because the email address will be unique
-    - Qwikgame can accept and use a sha256 hash to store anonymous player data
-    - A new email address can be linked to existing anonymous player data
-
-    *******************************************************************************/
-    static function anonID($email){
-        return hash('sha256', $email);
     }
 
 
@@ -167,23 +189,19 @@ class Player extends Qwik {
 
     public function email($newEmail=NULL){
         if (!is_null($newEmail)){
+            $xmlEmail = $this->xml->email;
             $newEmail = strtolower($newEmail);
-            if(empty($this->email)){
+            if(empty($xmlEmail)){
                 $this->xml->addChild('email', $newEmail);
             } else {
-                $oldEmail = $this->xml->email[0];
+                $oldEmail = $xmlEmail[0];
                 if (strcmp($oldEmail, $newEmail) != 0) {
-                    $newID = Player::anonID($newEmail);
-                    if (false){ // if newID already exists then log and abort
-                        self::logMsg("abort change email from $oldEmail to $newEmail.");
-                    } else {
-                        changeEmail($newEmail);
-                    }
+                    changeEmail($newEmail);
                 }
             }
         }
 
-        $xmlEmail = $this->xml->email[0];
+        $xmlEmail = $this->xml->email;
         if (empty($xmlEmail)){
             return NULL;
         } else if (count($xmlEmail) == 1){
@@ -195,17 +213,39 @@ class Player extends Qwik {
 
 
     private function changeEmail($newEmail){
-        $preID = $this->id();
         $newID = Player::anonID($newEmail);
+        $oldID = $this->id();
+        if (Player::exists($newID)){
+            self::logMsg("aborted change PlayerID from $oldID to $newID.");
+            return FALSE;
+        }
+
         self::removeElement($this->xml->email[0]);
         $this->xml->addChild('email', $newEmail);
         $this->id = $newID;
         $this->xml['id'] = $newID;
 
-        // replace old player file with a symlink to the new file
-        $path = self::PATH_PLAYER;
-        self::deleteFile("$path/$preID.xml");
-        symlink("$path/$newID.xml", "$path/$preID.xml");
+        try { // save Player xml with new ID
+            $this->save();
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            // back out email and id changes
+            self::removeElement($this->xml->email[0]);
+            $this->xml->addChild('email', $oldEmail);
+            $this->id = $oldID;
+            $this->xml['id'] = $oldID;
+            return FALSE;
+        }
+        try { // replace old player file with a symlink to the new file
+            $path = self::PATH_PLAYER;
+            self::deleteFile("$path/$oldID.xml");
+            symlink("$path/$newID.xml", "$path/$oldID.xml");
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            throw new RuntimeException("failed to replace Player $oldID.xml with a symlink.");
+            return FALSE;
+        }
+        return TRUE;
     }
 
 
@@ -381,6 +421,9 @@ class Player extends Qwik {
 
 ////////// RECKON ///////////////////////////////////////
 
+    /**
+    * @throws RuntimeException if the Friend cannot be created
+    */
     public function friend($game, $rivalEmail, $parity){
         $rid = Player::anonID($rivalEmail);
 
@@ -393,9 +436,13 @@ class Player extends Qwik {
         $reckon->addAttribute('date', $date->format("d-m-Y"));
         $reckon->addAttribute('id', self::newID());
         $reckon->addAttribute('rely', $this->rely()); //default value
-
-        $rival =  new Player($rid, true);
-        $rival->save();
+        try {
+            $rival =  new Player($rid, true);
+            $rival->save();
+        } catch (RuntimeException $e){
+            self::logThown($e);
+            throw new RuntimeException("failed to retrieve Player $rid");
+        }
     }
 
 
@@ -535,6 +582,9 @@ class Player extends Qwik {
     }
 
 
+    /**
+    * @throws RuntimeException if the Match cannot be added
+    */
     public function matchAdd($rivalMatch, $parity, $inviteHours, $email=NULL){
         $email = is_null($email) ? $this->email() : $email;
         if (is_null($inviteHours) | is_null($email)){
@@ -542,16 +592,23 @@ class Player extends Qwik {
             return;
         }
 
-        $rid = $rivalMatch->pid();
-        $rival = new Player($rid);
-        $match = $this->newMatch();
-        $match->copy($rivalMatch);
-        $match->status('invitation');
-        $match->hours($inviteHours);
-        $match->addRival($rid, $parity, $rival->repWord(), $rival->nick());
-        $this->save();
-        $this->emailInvite($match, $email);
-        return $match;
+        try {
+            $rid = $rivalMatch->pid();
+            $rival = new Player($rid);
+            $match = $this->newMatch();
+            $match->copy($rivalMatch);
+            $match->status('invitation');
+            $match->hours($inviteHours);
+            $match->addRival($rid, $parity, $rival->repWord(), $rival->nick());
+            $this->save();
+            $this->emailInvite($match, $email);
+            return $match;
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            $id = $this->id();
+            throw new RuntimeException("failed to add match for Player $id with Rival $rid");
+        }
+        return NULL;
     }
 
 
@@ -793,25 +850,36 @@ class Player extends Qwik {
 
 ////////// OUTCOME //////////////////////////////////////////
 
+    /**
+    * @throws RuntimeException if the Match Rival cannot be returned
+    */
     public function outcomeAdd($mid, $parity, $rep){
         $match = $this->matchID($mid);
-        if (isset($match)){
-            $match->status('history');
-
-            $outcome = $this->xml->addChild('outcome', '');
-            $outcome->addAttribute('game', $match->game());
-            $outcome->addAttribute('rival', $match->rid());
-            $date = $match->dateTime();
-            $outcome->addAttribute('date', $date->format("d-m-Y"));
-            $outcome->addAttribute('parity', $parity);
-            $outcome->addAttribute('rep', $rep);
-            $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
-            $outcome->addAttribute('id', $mid);
-
-            return new Player($match->rid());
-        } else {
-            header("Location: error.php?msg=unable to locate match.");
+        if (!isset($match)){
+            $id = $this->id();
+            throw new RuntimeException("failed to find Match $mid for Player $id");
         }
+        
+        $match->status('history');
+
+        $outcome = $this->xml->addChild('outcome', '');
+        $outcome->addAttribute('game', $match->game());
+        $outcome->addAttribute('rival', $match->rid());
+        $date = $match->dateTime();
+        $outcome->addAttribute('date', $date->format("d-m-Y"));
+        $outcome->addAttribute('parity', $parity);
+        $outcome->addAttribute('rep', $rep);
+        $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
+        $outcome->addAttribute('id', $mid);
+
+        try {
+            return new Player($match->rid());
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            $rid = $match->rid();
+            throw new RuntimeException("Failed to retrieve Rival $rid for Match $mid");
+        }
+        return NULL;
     }
 
 

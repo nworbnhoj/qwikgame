@@ -52,7 +52,7 @@ class Page extends Html {
 
     private $player;
     private $language;
-    private $alert;
+    private $alert = "";
 
 
     /*******************************************************************************

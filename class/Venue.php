@@ -129,7 +129,7 @@ class Venue extends Qwik {
     private function linkGame($path, $game, $fileName){
         $cwd = getcwd();
         if(!file_exists("$path/$game")){
-        	if (!mkdir("$path/$game", 0660, true)){
+        	if (!mkdir("$path/$game", 0755, true)){
         		throw new RuntimeException("failed to create $path/$game");
         		return FALSE;
         	}

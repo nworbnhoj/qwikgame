@@ -234,7 +234,7 @@ $(document).ready(function(){
 
 
     $('input#venue-country').keydown(function(){
-        this.value = this.value.toLocaleUpperCase();
+        this.value = this.value.toLocaleUpperCase('en-US');
     });
 
 });

@@ -106,7 +106,7 @@ class VenuePage extends Page {
         $game = $this->req('game');
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
-        $venueLink = empty($venueUrl) ? '' : "<a href='$venueUrl'>{homepage}</a>";
+        $venueLink = empty($venueUrl) ? '' : "<a href='$venueUrl' target='_blank'>{homepage}</a>";
         $QWIK_URL = self::QWIK_URL;
         $backLink = "<a href='$QWIK_URL/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 

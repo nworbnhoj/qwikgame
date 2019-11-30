@@ -91,7 +91,7 @@ class Player extends Qwik {
     public function save(){
         $PATH = self::PATH_PLAYER;
         $fileName = $this->fileName();
-        if (!self::writeXML($this->xml, $PATH, $fileName())){
+        if (!self::writeXML($this->xml, $PATH, $fileName)){
             throw new RuntimeException("failed to save Player $fileName");
             return FALSE;
         }

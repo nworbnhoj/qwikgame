@@ -213,7 +213,7 @@ class Match extends Qwik {
     public function invite($rids){
         $game = $this->game();
         foreach($rids as $rid => $email){
-            try 
+            try {
                 $rival = new Player($rid);
                 if($rival->ok()){
                     $parity = $this->player->parity($rival, $game);

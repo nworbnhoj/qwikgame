@@ -28,7 +28,7 @@ class Locate extends Qwik {
             $query = http_build_query($param);
             $xml = Defend::xml("$url?$query");
             $status = (string) $xml->status[0];
-            if($status === 'OK'){
+            if($status === 'OK' || $status === 'ZERO_RESULTS'){
                 $result = $xml;
             } else {
                 throw new RuntimeException($status);
@@ -119,7 +119,7 @@ class Locate extends Qwik {
             $details['admin1_code'] = isset($addr[0]) ? (string) $addr[0]->short_name : "";
 
             $addr = $result->xpath("address_component[type='street_number']");
-            $details['str-num'] = isset($addr[0]) ?  (string) $addr[0]->long_name : "";
+            $details['street_number'] = isset($addr[0]) ?  (string) $addr[0]->long_name : "";
 
             $addr = $result->xpath("address_component[type='route']");
             $details['route'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";

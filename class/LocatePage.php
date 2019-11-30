@@ -51,7 +51,7 @@ class LocatePage extends Page {
         // Process a new venue from a placeid from LocatePage
         if(empty($vid)){
             $placeid = $this->req('placeid');
-            if(isset($placeid)){
+            if(!empty($placeid)){
                 $details = Locate::getDetails($placeid);
                 if($details){
                     $vid = Venue::venueID(
@@ -182,7 +182,7 @@ class LocatePage extends Page {
         $vars['venueAdmin1']   = isset($admin1)   ? $admin1   : '';
         $vars['venueCountry']  = isset($country)  ? $country  : $userCountry;
         $vars['datalists']     = $this->countryDataList();
-        $vars['placeid']       = $placeid;
+        $vars['placeid']       = isset($placeid)  ? $placeid  : '';
         return $vars;
     }
 

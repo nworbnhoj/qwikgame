@@ -323,12 +323,12 @@ class Venue extends Qwik {
     * @throws RuntimeException if there is any problem renaming the Venue.
     */
     private function rename($newID){
-        $oldID = (string) $this->xml['id'];
+        $oldID = $this->id;
         if($newID === $oldID){
         	return TRUE; // nothing to do
         }
 
-        $this->xml['id'] = $newID;
+        $this->id = $newID;
 
         // save the venue and game symlinks under the newID
         if(!$this->save()){
@@ -339,7 +339,7 @@ class Venue extends Qwik {
         $PATH = self::PATH_VENUE;
         $XML = self::XML;
         $oldFile = "$PATH/$oldID$XML";
-        $newFile = "$PATH/$newID$XML";
+        $newFile = "$newID$XML";
         $oldFileTmp = "$oldFile.tmp";
 
         // temporarily replace oldfile with a symlink to the newFile
@@ -364,7 +364,7 @@ class Venue extends Qwik {
         // note: race risk here of alterations to Player.xml before the venue rename
         // note: more efficient for the Venue to store a list of all Players
         // who have ever used the venue.
-        $deleteSymlink = TRUE;
+        $deleteTempLink = TRUE;
         $pids = $this->xml->xpath('player');
         foreach($pids as $pid){
         	try {
@@ -372,7 +372,7 @@ class Venue extends Qwik {
                 $changed = $player->venueRename($oldID, $newID);
                 if ($changed && !$player->save()){
             	    self::logMsg("WARNING: failed to rename Venue($oldID) in Player($id) to Venue($newID). A temporary Symlink from $oldID to $newID is in place to preserve operation (but should be deleted when this issue is resolved for all Players with a reference to $oldID)");
-            	    $deleteSymlink = FALSE;
+            	    $deleteTempLink = FALSE;
                 }
             } catch (RuntimeException $e){
             	self::logThrown($e);
@@ -383,13 +383,23 @@ class Venue extends Qwik {
         // remove the game symlinks to the oldID
         $games = $this->xml->xpath('game');
         foreach($games as $game){
-        	// failure will result in broken links
-            self::deleteFile("$PATH/$game/$oldID$XML");
+            try {
+                self::deleteFile("$PATH/$game/$oldID$XML");
+            } catch (RuntimeException $e){
+                // may fail because link does not exist (no problem anymore)
+                // or because link is not writable (results in a broken link).
+                self::logThrown($e);
+                self::logMsg("Failed to remove $game game link to old venueID $oldID$XML");
+            }
         }
 
-        if ($deleteSymLink){
-            // delete temp symlink (rubbish but not integrity issue on failure)
+        if ($deleteTempLink){
+            try{  // delete temp symlink
         	self::deleteFile($oldFile);
+            } catch (RuntimeException $e){  // rubbish but not integrity issue on failure
+                self::logThrown($e);
+                self::logMsg("Failed to remove temporary link to old venueID $oldID$XML");                
+            }
         }
     }
 

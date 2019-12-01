@@ -408,7 +408,7 @@ class Qwik {
     * @throws RuntimeException if file is not unlinked
     */
     static public function deleteFile($file){
-        if (!is_writable($file)){
+        if (!is_writable($file) && !is_link($file)){
             throw new RuntimeException("unable to write to $file");
             return FALSE;           
         }

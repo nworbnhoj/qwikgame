@@ -11,24 +11,20 @@ class Match extends Qwik {
     private $xml;
     private $rivalElements;    // temp variable for performance
 
-    public function __construct($player, $xml){
+    public function __construct($player, $xml, $status=NULL, $game=NULL, $venue=NULL, $date=NULL, $hours=NULL, $id=NULL){
         parent::__construct();
         $this->player = $player;
         $this->xml = $xml;
-    }
-
-
-    public function init($status, $game, $venue, $date, $hours, $id=NULL){
-
-        $id = is_null($id) ? self::newID() : $id;
-        $this->xml->addAttribute('id', $id);
-
-        $this->xml->addAttribute('status', $status);
-        $this->xml->addAttribute('game', $game);
-        $this->xml->addAttribute('date', $date->format('d-m-Y'));
-        $this->xml->addAttribute('hrs', $hours->bits());
-        $v = $this->xml->addChild('venue', $venue->id());
-        $v->addAttribute('tz', $venue->tz());
+        if(isset($status, $game, $venue, $date, $hours)){
+            $id = is_null($id) ? self::newID() : $id;
+            $this->xml->addAttribute('id', $id);
+            $this->xml->addAttribute('status', $status);
+            $this->xml->addAttribute('game', $game);
+            $this->xml->addAttribute('date', $date->format('d-m-Y'));
+            $this->xml->addAttribute('hrs', $hours->bits());
+            $v = $this->xml->addChild('venue', $venue->id());
+            $v->addAttribute('tz', $venue->tz());
+        }
     }
 
 

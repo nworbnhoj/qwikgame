@@ -545,18 +545,9 @@ class Player extends Qwik {
 
 ////////// MATCH //////////////////////////////////////////
 
-    private function newMatch(){
-        $match = new Match(
-            $this, 
-            $this->xml->addChild('match', '')
-        );
-        return $match;
-    }
-
 
     public function matchKeen($game, $venue, $date, $hours, $rids=array()) {
-        $match = $this->newMatch();
-        $match->init('keen', $game, $venue, $date, $hours);
+        $match = new Match($this,  $this->xml->addChild('match', ''), 'keen', $game, $venue, $date, $hours);
         $venue->addPlayer($this->id());
         $match->invite($rids);
         return $match;
@@ -595,7 +586,7 @@ class Player extends Qwik {
         try {
             $rid = $rivalMatch->pid();
             $rival = new Player($rid);
-            $match = $this->newMatch();
+            $match = new Match($this,  $this->xml->addChild('match', ''));
             $match->copy($rivalMatch);
             $match->status('invitation');
             $match->hours($inviteHours);

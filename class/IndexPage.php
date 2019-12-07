@@ -65,7 +65,7 @@ class IndexPage extends Page {
 
 
     function qwikRecover($email){
-        if(isset($email)){
+        if(!isset($email)){
             return FALSE;
         }
         try{

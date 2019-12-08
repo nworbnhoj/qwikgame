@@ -94,7 +94,7 @@ class LocatePage extends Page {
                         } else {
                             $tz = Locate::guessTimezone($locality, $admin1, $country);
                             $venue->updateAtt('tz', $tz);
-                            $venue->save();
+                            $venue->save(TRUE);
                         }
                     } catch (RuntimeException $e){
                         self::alert("{Oops}");
@@ -126,7 +126,7 @@ class LocatePage extends Page {
             $venue->updateAtt('address', $address['formatted']);
             $venue->updateAtt('str-num', $address['street_number']);
             $venue->updateAtt('route',   $address['route']);
-            $venue->save();
+            $venue->save(TRUE);
         }
     }
 

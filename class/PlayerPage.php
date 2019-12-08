@@ -43,7 +43,7 @@ class PlayerPage extends Page {
 
         if (isset($this->venue)){
             if($this->venue->addGame($this->game)){
-                $this->venue->save();
+                $this->venue->save(TRUE);
                 self::logMsg("Added ".$this->game." to $vid");
             }
         } elseif (!is_null($this->req('venue'))){
@@ -200,7 +200,7 @@ class PlayerPage extends Page {
                 $this->logMsg("Unable to add player to venue:\tpid=$pid\t vid=$vid");
             } else {
                 $venue->addPlayer($player->id());
-                $venue->save();
+                $venue->save(TRUE);
             }
             return $newID;
         }

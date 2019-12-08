@@ -80,7 +80,7 @@ class VenuePage extends Page {
             if($this->venueAttributes($venue, $req, $keys)){
                 $venue->updateID();
             } elseif($changed){
-                $venue->save();
+                $venue->save(TRUE);
             }
             $venue->concludeReverts();
         } catch (RuntimeException $e){

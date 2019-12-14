@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Page.php';
+require_once 'Venue.php';
 
 class PlayerPage extends Page {
 
@@ -159,6 +160,7 @@ class PlayerPage extends Page {
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
             $vars['paritySelect']  = self::SELECT_PARITY;
             $vars['thumbButton']   = self::BUTTON_THUMB;
+            $vars['svenue']        = isset($this->venue) ? Venue::svid($this->venue->id()) : "";
 
             // special case: new un-activated player
             if (is_null($playerEmail)){
@@ -168,10 +170,7 @@ class PlayerPage extends Page {
             }
         }
 
-        $game = $this->game;
-        if (!is_null($game)){
-            $vars['gameOptions']   = $this->gameOptions($game, "\t\t");
-        }
+        $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");
 
         return $vars;
     }

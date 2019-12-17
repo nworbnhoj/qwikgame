@@ -9,6 +9,7 @@
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
+    <link rel="manifest" href="qwik.webmanifest">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src=qwik.js></script>
 </head>
@@ -16,12 +17,6 @@
 
 <body>
 <div class='center'>
-
-
-<h1>qwik game org</h1>
-<p class="alert" [alert-hidden]>[alert]</p>
-<p class="tagline">{tagline}</p>
-<p class="players">{players_at_venues}</p>
 
 <div id='menu' class='menu'>
     <form id='lang-form' action='index.php' method='post'>
@@ -35,6 +30,11 @@
     <a id='lang-icon' class='[LANG_ICON]'></a>
     <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
 </div>
+
+<h1>qwik game org</h1>
+<p class="alert" [alert-hidden]>[alert]</p>
+<p class="tagline">{tagline}</p>
+<p class="players">{players_at_venues}</p>
 
 
 <div class="commit available">

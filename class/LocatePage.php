@@ -175,7 +175,6 @@ class LocatePage extends Page {
 
         $vars = parent::variables();
         $vars['game']          = $this->game;
-        $vars['homeURL']       = "$QWIK_URL/player.php";
         $vars['repost']        = $this->repost;
         $vars['venueName']     = isset($name)     ? $name     : '';
         $vars['venueLocality'] = isset($locality) ? $locality : '';

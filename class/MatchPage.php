@@ -3,7 +3,7 @@
 require_once 'Page.php';
 require_once 'Venue.php';
 
-class PlayerPage extends Page {
+class MatchPage extends Page {
 
     const SELECT_PARITY = 
         "<select name='parity'>
@@ -14,12 +14,11 @@ class PlayerPage extends Page {
             <option value='-2'>{much_weaker}</option>
         </select>";
     const BUTTON_THUMB = "<button type='button' id='rep-thumb'  class='" . self::THUMB_UP_ICON . "'></button>";
-    const LINK_REP = "<a href='info.php#reputation'>{Reputation}</a>";
 
     private $game;
     private $venue;
 
-    public function __construct($template='player'){
+    public function __construct($template='match'){
         parent::__construct($template);
 
         $player = $this->player();
@@ -49,7 +48,7 @@ class PlayerPage extends Page {
             }
         } elseif (!is_null($this->req('venue'))){
             if(is_null($this->req('repost'))){
-                $this->req('repost', 'player.php');
+                $this->req('repost', 'match.php');
             }
             $query = http_build_query($this->req());
             header("Location: ".self::QWIK_URL."/locate.php?$query");
@@ -76,12 +75,6 @@ class PlayerPage extends Page {
             case 'decline':
                 $result = $this->qwikDecline($player, $req);
                  break;
-            case 'friend':
-                $result = $this->qwikFriend($player, $req);
-                break;
-            case 'region':
-                $result = $this->qwikRegion($player, $req);
-                break;
             case "cancel":
                 $result = $this->qwikCancel($player, $req);
                 break;
@@ -90,9 +83,6 @@ class PlayerPage extends Page {
                 break;
             case 'delete':
                 $result = $this->qwikDelete($player, $req);
-                break;
-            case 'account':
-                $result = $this->qwikAccount($player, $req);
                 break;
             case 'msg':
                 $result = $this->qwikMsg($player, $req);
@@ -149,10 +139,8 @@ class PlayerPage extends Page {
 
             $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
-            $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
-            $vars['reputationLink']= self::LINK_REP;
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;
             $vars['playerURL']     = $player->url();
@@ -269,24 +257,6 @@ function qwikDecline($player, $request){
     }
 }
 
-function qwikFriend($player, $request){
-    if(isset($request['game'])
-    && isset($request['rival'])
-    && isset($request['parity'])){
-        $player->friend($request['game'], $request['rival'], $request['parity']);
-    }
-}
-
-
-function qwikRegion($player, $request){
-    if(isset($request['game'])
-        && isset($request['ability'])
-        && isset($request['region'])){
-            $player->region($request['game'], $request['ability'], $request['region']);
-    }
-}
-
-
 
 function qwikCancel($player, $req){
     if(isset($req['id'])){
@@ -314,41 +284,8 @@ function qwikFeedback($player, $request){
 }
 
 
-
-
 function qwikDelete($player, $request){
     $player->deleteData($request['id']);
-}
-
-
-
-function qwikAccount($player, $request){
-    if(isset($request['nick'])){
-        $player->nick($request['nick']);
-    }
-
-    if(isset($request['url'])){
-        $player->url($request['url']);
-    }
-
-    if(isset($request['email'])){
-        $email = $request['email'];
-        if ($email != $player->email()){
-            $player->emailChange($email);
-        }
-    }
-
-    if(isset($request['lang'])){
-        $player->lang($request['lang']);
-    }
-
-    if(isset($request['account']) && ($request['account'] === 'quit')) {
-        $player->emailQuit();
-        $player->quit();
-        $this->logout();
-
-        header("Location: ".self::QWIK_URL);
-    }
 }
 
 
@@ -361,49 +298,36 @@ function qwikMsg($player, $req){
 
 
 
-function hourRows(){
-    $hourRows = '';
-    $days = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-    $tabs = "\t\t\t\t";
-    foreach($days as $day){
-        $bit = 1;
-        $hourRows .= "$tabs<tr>\n";
-        $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
-        $hourRows .= "$tabs\t<th>$day</th>\n";
-        for($hr24=0; $hr24<=23; $hr24++){
-            if (($hr24 < 6) | ($hr24 > 20)){
-                $hidden = 'hidden';
-            } else {
-                $hidden = '';
+    function hourRows(){
+        $hourRows = '';
+        $days = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+        $tabs = "\t\t\t\t";
+        foreach($days as $day){
+            $bit = 1;
+            $hourRows .= "$tabs<tr>\n";
+            $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
+            $hourRows .= "$tabs\t<th>$day</th>\n";
+            for($hr24=0; $hr24<=23; $hr24++){
+                if (($hr24 < 6) | ($hr24 > 20)){
+                    $hidden = 'hidden';
+                } else {
+                    $hidden = '';
+                }
+                if ($hr24 <= 12){
+                    $hr12 = $hr24;
+                } else {
+                    $hr12 = $hr24-12;
+                }
+                $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12</td>\n";
+                $bit = $bit * 2;
             }
-            if ($hr24 <= 12){
-                $hr12 = $hr24;
-            } else {
-                $hr12 = $hr24-12;
-            }
-            $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12</td>\n";
-            $bit = $bit * 2;
+            $hourRows .= "$tabs</tr>\n";
         }
-        $hourRows .= "$tabs</tr>\n";
+        return $hourRows;
     }
-    return $hourRows;
-}
-
-
-    function regionOptions($player, $tabs){
-        $regions = $this->regions($player);
-        $options = '';
-        foreach($regions as $region){
-               $options .= "$tabs<option value='$region'>$region</option>\n";
-        }
-        return $options;
-    }
-
-
 
 
     /*******************************************************************************
-
     qwikgame attempts to estimate the PARITY of possible RIVALs prior to each MATCH.
 
     After each MATCH both PLAYERSs rate the PARITY of their RIVAL's ability:

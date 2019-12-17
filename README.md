@@ -108,7 +108,7 @@ qwikgame supports multiple user languages. Translations are contained in  `/lang
 
 A call to `translate.php` reads each _html template_ in `/html`; replaces each {phrase-key}; and writes the now _language specific html template_ to a directory under `/lang` (ie `/lang/en` `/lang/es` `/lang/zh` etc).
 
-A subsequet call to `player.php` (for example) takes the appropriate _language specific html template_, processes the <repeat> elements, populates the [variables] and then translates the {phrases}, before serving the page to the user.
+A subsequet call to `match.php` (for example) takes the appropriate _language specific html template_, processes the <repeat> elements, populates the [variables] and then translates the {phrases}, before serving the page to the user.
 
 ### relative ability
 

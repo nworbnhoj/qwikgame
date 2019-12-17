@@ -18,16 +18,11 @@
 <div class='center'>
 
 <div id='menu' class='menu'>
-    <form id='lang-form' action='index.php' method='post'>
-        <select id='lang-select' name='lang' hidden>
-            <repeat id='language'>
-                <option value='[code]' [selected]>[language]</option>
-            </repeat>
-        </select>
-    </form>
-    <a id='home-icon' class='[HOME_ICON]' href='index.php'></a>
-    <a id='lang-icon' class='[LANG_ICON]'></a>
-    <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
+    <a id='info-icon'     class='[INFO_ICON] here' href='info.php'></a>
+    <a id='account-icon'  class='[ACCOUNT_ICON]'   href='account.php'></a>
+    <a id='friend-icon'   class='[FRIEND_ICON]'    href='friend.php'></a>
+    <a id='favorite-icon' class='[FAVORITE_ICON]'  href='favorite.php'></a>
+    <a id='match-icon'    class='[MATCH_ICON]'     href='match.php'></a>
 </div>
 
 
@@ -45,6 +40,25 @@
         <input type="submit" value="Submit" class="account">
     </form>
 </div>
+
+
+
+<h2>{Jump_Start}</h2>
+
+<div class="info">
+    <p>{Here_are_a_few_things...}</p>
+    <p><b>{Get_the_word_out}</b>
+        {Encourage_your_rivals...}
+        [twitterLink]
+        [emailLink]
+        [facebookLink]
+    </p>
+    <p>{Reckon_your_ability...}</p>
+    <p><b><a href='upload.php'>{Upload}</a></b>{a_list_of...}</p>
+    <br>
+    </span>
+</div>
+
 
 
 

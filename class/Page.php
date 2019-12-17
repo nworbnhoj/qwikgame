@@ -15,19 +15,24 @@ require_once 'Locate.php';
 
 class Page extends Html {
 
+    const ACCOUNT_ICON   = 'fa fa-cog icon';
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
     const COMMENT_ICON   = 'fa fa-comment-o comment';
     const CROSS_ICON     = 'fa fa-times-circle cross';
     const EMAIL_ICON     = 'fa fa-envelope-o icon';
     const FACEBOOK_ICON  = 'fa fa-facebook icon';
+    const FAVORITE_ICON  = 'fa fa-heart icon';
     const FEMALE_ICON    = 'fa fa-female person';
+    const FRIEND_ICON    = 'fa fa-user icon';
+    const HELP_ICON      = 'fa fa-question-circle icon';
     const HOME_ICON      = 'fa fa-home icon';
-    const INFO_ICON      = 'fa fa-question-circle icon';
+    const INFO_ICON      = 'fa fa-info-circle icon';
     const RELOAD_ICON    = 'fa fa-refresh icon';
     const LANG_ICON      = 'fa fa-globe icon';
     const LOGOUT_ICON    = 'fa fa-power-off icon';
     const MALE_ICON      = 'fa fa-male person';
     const MAP_ICON       = 'fa fa-map-marker';
+    const MATCH_ICON     = 'fa fa-percent icon';
     const SEND_ICON      = 'fa fa-send';
     const THUMB_DN_ICON  = 'fa fa-thumbs-o-down thumb red';
     const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
@@ -117,15 +122,19 @@ class Page extends Html {
 
     public function variables(){
         $vars = parent::variables();
+        $vars['ACCOUNT_ICON']  = self::ACCOUNT_ICON;
         $vars['CROSS_ICON']    = self::CROSS_ICON;
         $vars['COMMENT_ICON']  = self::COMMENT_ICON;
         $vars['EMAIL_ICON']    = self::EMAIL_ICON;
         $vars['FACEBOOK_ICON'] = self::FACEBOOK_ICON;
+        $vars['FAVORITE_ICON'] = self::FAVORITE_ICON;
+        $vars['FRIEND_ICON']   = self::FRIEND_ICON;
         $vars['FEMALE_ICON']   = self::FEMALE_ICON;
         $vars['HOME_ICON']     = self::HOME_ICON;
         $vars['INFO_ICON']     = self::INFO_ICON;
         $vars['LANG_ICON']     = self::LANG_ICON;
         $vars['MALE_ICON']     = self::MALE_ICON;
+        $vars['MATCH_ICON']    = self::MATCH_ICON;
         $vars['RELOAD_ICON']   = self::RELOAD_ICON;
         $vars['THUMB_DN_ICON'] = self::THUMB_DN_ICON;
         $vars['THUMB_UP_ICON'] = self::THUMB_UP_ICON;
@@ -637,7 +646,7 @@ class Page extends Html {
 
     function playerVariables($player){
         return array(
-            'target'    => 'player.php#matches',
+            'target'    => 'match.php',
             'reputation'=> $this->repStr($player->repWord())
         );
     }

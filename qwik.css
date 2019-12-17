@@ -185,8 +185,8 @@ body {
 /************** <header> *******************/
 div.menu           { color:#404040;}
 div.menu a         { margin-left:0.4em;}
-div.menu a:link    { color:inherit;}      /* unvisited link */
-div.menu a:visited { color:inherit;}  /* visited link */
+div.menu a:link    { }      /* unvisited link */
+div.menu a:visited { }  /* visited link */
 div.menu a:hover   { color:DarkOrange;}  /* mouse over link */
 div.menu a:active  { font-weight:bold;}  /* selected link */ 
 
@@ -216,7 +216,7 @@ div.record {
 
 div.commit {
     background-color: DarkGray;
-    margin: 0.5em auto 10em auto;
+    margin: 0.5em auto 8em auto;
     border-width:0px 0px 0px 1vw;
     border-style:solid;
     text-align:center;
@@ -236,7 +236,7 @@ div.quiz {
 
 div.info {
     padding: 1em 1em 1em 1em;
-    margin: 0em auto 0em auto;
+    margin: 0em auto 8em auto;
     text-align:center;
     box-shadow:  0 4em 5em 1em DimGrey;
 }
@@ -528,6 +528,8 @@ a.icon {
     font-size:1.3em;
     margin:0.2em;
 }
+
+a.here {color:Orange;} 
 
 
 

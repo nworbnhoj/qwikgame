@@ -82,10 +82,14 @@ Class TranslatePage extends Page {
     private $phraseKeys;
     private $files = array(
         'admin.html',
+        'account.html',
         'email.html',
+        'favorite.html',
+        'friend.html',
         'index.html',
         'info.html',
         'locate.html',
+        'match.html',
         'player.html',
         'quiz.html',
         'upload.html',

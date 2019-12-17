@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwik {player}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <link rel="manifest" href="qwik.webmanifest">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
+</head>
+
+<body>
+<div class='center'>
+
+<div id='menu' class='menu'>
+    <a id='info-icon'     class='[INFO_ICON]'        href='info.php'></a>
+    <a id='account-icon'  class='[ACCOUNT_ICON]'     href='account.php'></a>
+    <a id='friend-icon'   class='[FRIEND_ICON] here' href='friend.php'></a>
+    <a id='favorite-icon' class='[FAVORITE_ICON]'    href='favorite.php'></a>
+    <a id='match-icon'    class='[MATCH_ICON]'       href='match.php'></a>
+</div>
+
+
+<h1>{qwik_game_org}</h1>
+<p class="alert" [alert-hidden]>[alert]</p>
+<p class='message'>[message]</p>
+
+
+<h2 id='friends'>{Friends}</h2>
+
+<p>
+    {friends_help...}
+</p>
+
+<repeat id='friends'>
+<div class="record friend">
+    <form class='record' action='friend.php#friends' method='post'>
+        <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+        <input type='hidden' name='id' value='[id]'>
+        <p class='record'>
+            {email_is_friend}
+        </p>
+    </form>
+</div>
+</repeat>
+
+
+
+<div class="commit friend">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>
+        <p>{This_is_an_effective...}</p>
+        <p>{Your_rivals_will_not...}</p>
+    </span>
+    <form action="friend.php#friends" method='post'>
+        <input type="hidden" name="qwik" value='friend'>
+        {rival_is_a...}
+        <input type='submit' class='friend' value='{Submit}'>
+    </form>
+</div>
+
+
+<div id='footer'>
+    {license}
+</div>
+
+
+</div>
+</body>
+
+[datalists]
+
+
+</html>
+
+
+

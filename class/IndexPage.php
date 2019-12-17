@@ -17,7 +17,7 @@ class IndexPage extends Page {
             parent::serve();
         } else {
             $query = http_build_query($this->req());
-            header("Location: ".self::QWIK_URL."/player.php?$query");
+            header("Location: ".self::QWIK_URL."/match.php?$query");
         }
     }
 

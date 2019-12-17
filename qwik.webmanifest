@@ -31,7 +31,7 @@
             "sizes": "200x250",
             "type": "image/png"
     }],
-    "start_url": "/player.php",
+    "start_url": "/match.php",
     "display": "standalone",
     "theme_color": "#FFA500",
     "background_color": "#D3D3D3",

@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwik {player}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <link rel="manifest" href="qwik.webmanifest">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
+    <script>
+        function checkQuit(){
+            return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
+        }
+    </script>
+</head>
+
+<body>
+<div class='center'>
+
+<div id='menu' class='menu'>
+    <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
+    <a id='account-icon'  class='[ACCOUNT_ICON] here' href='account.php'></a>
+    <a id='friend-icon'   class='[FRIEND_ICON]'       href='friend.php'></a>
+    <a id='favorite-icon' class='[FAVORITE_ICON]'     href='favorite.php'></a>
+    <a id='match-icon'    class='[MATCH_ICON]'        href='match.php'></a>
+</div>
+
+
+<h1>{qwik_game_org}</h1>
+<p class="alert" [alert-hidden]>[alert]</p>
+<p class='message'>[message]</p>
+
+
+<h2 id='account'>{Account}</h2>
+<p>[privacyLink]</p>
+<div class="commit account">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{Your_nickname_will...}</span>
+    <form action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
+        <h4>{public}</h4>
+        {You_have_a...}
+        <br>
+        [thumbs]
+        <br>
+        <input name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
+        <input name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
+        <input type="submit" class="account" value="{Submit}">
+    </form>
+</div>
+
+<div class="commit account">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{You_will_receive_validation...}</span>
+    <form action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
+        <h4>{private}</h4>
+        <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
+        <select name='lang'>
+            <repeat id='language'>
+            <option value='[code]' [selected]>[language]</option>
+            </repeat>
+        </select>
+        <input type="submit" class="account" value="{Submit}">
+    </form>
+</div>
+
+<div class="commit account">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{logout_when...}</span>
+    <form action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
+        <input type="hidden" name="account" value='logout'>
+        <h4>{logout}</h4>
+        <p>{login_again...}</p>
+        <input id='quit-qwik' type="submit" class="account" value="{Logout}">
+    </form>
+</div>
+
+
+<div class="commit account">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{Your_anonymous_match...}</span>
+    <form onsubmit='return checkQuit()'>
+        <input type="hidden" name="qwik" value='account'>
+        <input type="hidden" name="account" value='quit'>
+        <h4>{Quit_qwikgame.org}</h4>
+        <p>{This_will_immediately...}</p>
+        <input id='quit-qwik' type="submit" class="account" value="{Quit}">
+    </form>
+</div>
+
+
+<div id='footer'>
+    {license}
+</div>
+
+
+</div>
+</body>
+
+[datalists]
+
+
+</html>
+
+
+

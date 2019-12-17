@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W2C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwik {player}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <link rel="manifest" href="qwik.webmanifest">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="qwik.js"></script>
+</head>
+
+<body>
+<div class='center'>
+
+<div id='menu' class='menu'>
+    <a id='info-icon'     class='[INFO_ICON]'          href='info.php'></a>
+    <a id='account-icon'  class='[ACCOUNT_ICON]'       href='account.php'></a>
+    <a id='friend-icon'   class='[FRIEND_ICON]'        href='friend.php'></a>
+    <a id='favorite-icon' class='[FAVORITE_ICON] here' href='favorite.php'></a>
+    <a id='match-icon'    class='[MATCH_ICON]'         href='match.php'></a>
+</div>
+
+
+<h1>{qwik_game_org}</h1>
+<p class="alert" [alert-hidden]>[alert]</p>
+<p class='message'>[message]</p>
+
+
+<h2 id='available' name='available'>{Available}</h2>
+
+<p>{...will_let_you_know...}</p>
+
+<repeat id='available'>
+<div class="record available">
+    <form class='record'>
+        <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+        <input type='hidden' name='id' value='[id]'>
+        <p class='record'>
+            {Available_game_with...}<br>
+            [weekSpan]
+        </p>
+    </form>
+</div>
+</repeat>
+
+
+<div class="commit available">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{Make_yourself_available...}</span>
+    <form id='favourite-form' action="locate.php" method="post">
+        <input type="hidden" name="qwik" value="available">
+        <input type='hidden' name='repost' value='favorite.php'>
+        {Let_me_know_when...}
+        <a id='map-icon' class='[MAP_ICON]' href='venues.php?game=squash'></a>
+        <span class='nowrap'>
+            <input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked>{anytime}
+        </span>
+            <div id='hr' style='display:none'>
+            <div id='hr-check' hidden>
+                <button type='button' class='fa fa-th hr-toggle'></button>
+                <div class='col'>
+                    <fieldset class='hrs'>
+                        <legend>week days</legend>
+                        <input type='checkbox' name='time' checked>day-time<br>
+                        <input type='checkbox' name='time'>night-time<br>
+                        <input type='checkbox' name='time'>business-hours<br>
+                        <input type='checkbox' name='time'>after-hours<br>
+                        <input type='checkbox' name='time'>school-hours<br>
+                        <input type='checkbox' name='time'>early<br>
+                        <input type='checkbox' name='time'>mornings<br>
+                        <input type='checkbox' name='time'>afternoons<br>
+                        <input type='checkbox' name='time'>evenings<br>
+                    </fieldset>
+                </div>
+                <div class='col'>
+                    <fieldset class='hrs'>
+                        <legend>Friday</legend>
+                        <input type='checkbox' name='time'>evening<br>
+                    </fieldset>
+                    <fieldset class='hrs'>
+                        <legend>Saturday</legend>
+                        <input type='checkbox' name='time' checked>morning<br>
+                        <input type='checkbox' name='time' checked>afternoon<br>
+                        <input type='checkbox' name='time'>evening<br>
+                    </fieldset>
+                    <fieldset class='hrs'>
+                        <legend>Sunday</legend>
+                        <input type='checkbox' name='time' checked>morning<br>
+                        <input type='checkbox' name='time' checked>afternoon<br>
+                        <input type='checkbox' name='time' checked>evening<br>
+                    </fieldset>
+                </div>
+            </div>
+            <div id='hr-grid'>
+                <button type='button' class='fa fa-qrcode hr-toggle' disabled></button>
+                <table id='hour_table' class="time wide">
+                <tr>
+                    <th></th>
+                    <th><<</th>
+                    <th colspan='2'>{am}</th>
+                    <th colspan='9'></th>
+                    <th colspan='2'>{pm}</th>
+                    <th>>></th>
+                </tr>
+                [hourRows]
+                </table>
+            </div>
+        </div>
+        <input type="submit" class="available" value="Submit">
+    </form>
+</div>
+
+
+
+
+
+<h2 id='region'>{Ability}</h2>
+
+<p>{Reckon_your_own...}</p>
+
+<repeat id='ability'>
+<div class="record ability">
+    <form class='record' action='favorite.php#reckon' method='post'>
+        <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+        <input type='hidden' name='id' value='[id]'>
+        <p class='record'>{parity_game_player...}</p>
+    </form>
+</div>
+</repeat>
+
+<div class="commit ability">
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help' hidden>{Be_as_specific...}</span>
+    <form action="favorite.php#region" method="post">
+        <input type="hidden" name="qwik" value='region'>
+        {I_am_a...}
+        <input type="submit" class='ability' value='{Submit}'>
+    </form>
+</div>
+
+
+
+<div id='footer'>
+    {license}
+</div>
+
+
+</div>
+</body>
+
+[datalists]
+
+
+</html>
+
+
+

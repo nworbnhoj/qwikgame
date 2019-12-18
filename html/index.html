@@ -27,6 +27,7 @@
     </form>
     <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
     <a id='lang-icon' class='[LANG_ICON]'></a>
+    <a id='login-toggle' class='icon'>{login}</a>
 </div>
 
 <h1>qwik game org</h1>
@@ -35,7 +36,7 @@
 <p class="players">{players_at_venues}</p>
 
 
-<div class="commit available">
+<div id='register-form' class="commit available">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{When_a_rival...}</span>
     <form action="quiz.php" method="post">
@@ -47,6 +48,17 @@
         {Let_me_know...}
         <input name="email" type="email" class="email word" placeholder="{prompt_address}">
         <input type="submit" class="available word" value="{Submit}">
+    </form>
+</div>
+
+
+<div id='login-form' class="commit account" hidden>
+    <form action="quiz.php" method="post">
+        <input type="hidden" name="repost" value="index.php">
+        <input type="hidden" name="qwik" value="recover">
+        <h2 class='inform'>{...link_to_login}</h2>
+        <input name="email" type="email" class="brick" placeholder="{prompt_address}">
+        <input type="submit" value="Submit" class="account">
     </form>
 </div>
 

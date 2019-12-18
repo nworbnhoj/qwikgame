@@ -213,6 +213,12 @@ $(document).ready(function(){
     });
 
 
+    $('#login-toggle').click(function(){
+        $('#register-form').toggle();
+        $('#login-form').toggle().select();
+    });
+
+
     $('.repost').change(function(){
         $(this).parent().submit();
     });

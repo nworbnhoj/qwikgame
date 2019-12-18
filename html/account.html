@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>qwik {player}</title>
+    <title>qwik {account}</title>
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
@@ -70,14 +70,13 @@
 </div>
 
 <div class="commit account">
-    <button type='button' class='action help [HELP_ICON]'></button>
-    <span class='help' hidden>{logout_when...}</span>
     <form action='account.php'>
         <input type="hidden" name="qwik" value='account'>
         <input type="hidden" name="account" value='logout'>
         <h4>{logout}</h4>
+        <p>{logout_when...}</p>
         <p>{login_again...}</p>
-        <input id='quit-qwik' type="submit" class="account" value="{Logout}">
+        <input id='quit-qwik' type="submit" class="account" value="{logout}">
     </form>
 </div>
 

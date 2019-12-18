@@ -39,7 +39,7 @@
 
     <repeat id='uploads'>
     <div class='record [status]' [uploadHidden]>
-        <form action='upload.php' method='post'>
+        <form class='record' action='upload.php' method='post'>
             <input type='hidden' name='filename' value='[fileName]'>
             <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
             <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]'></button>
@@ -53,7 +53,7 @@
     </repeat>
 
 
-    <div class="commit wide upload">
+    <div class="commit upload">
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <br>
             <input type='hidden' name='qwik' value='upload'>

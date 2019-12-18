@@ -19,20 +19,17 @@
 </head>
 
 <body>
+<div class='center'>
 
-<div id='menu' class='menu'>
-    <form id='lang-form' action='index.php' method='post'>
-        <select id='lang-select' name='lang' hidden>
-            <repeat id='language'>
-                <option value='[code]' [selected]>[language]</option>
-            </repeat>
-        </select>
-    </form>
-    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
-    <a id='lang-icon' class='[LANG_ICON]'></a>
-    <a id='back-icon' class='[HOME_ICON]' href='[homeURL]'></a>
-    <a id='logout-icon' class='[LOGOUT_ICON]' href='index.php?qwik=logout'></a>
-</div>
+
+    <div id='menu' class='menu'>
+    <a id='info-icon'     class='[INFO_ICON]'       href='info.php'></a>
+    <a id='account-icon'  class='[ACCOUNT_ICON]'    href='account.php'></a>
+    <a id='friend-icon'   class='[FRIEND_ICON]'     href='friend.php'></a>
+    <a id='favorite-icon' class='[FAVORITE_ICON]'   href='favorite.php'></a>
+    <a id='match-icon'    class='[MATCH_ICON]'      href='match.php'></a>
+    </div>
+
 
     <h1>qwik game org</h1>
 
@@ -52,22 +49,11 @@
     <div id="map" class='center wide'></div>
 
 
-<h2 id="please help">{spread_the_word}</h2>
-
-<div class='info center'>
-    <p>
-        [twitterLink]
-        [emailLink]
-        [facebookLink]
-    </p>
-</div>
-
-
     <div id='footer' class='center'>
         {license}
     </div>
 
-
+</div>
 </body>
 
 </html>

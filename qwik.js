@@ -362,7 +362,7 @@ function jsonVenueMarkers(game, map){
                 var content = "<div class='infowindow'>"  
                     + "<b><a href='venue.php?vid="+vid+"'>"+name+"</a></b><br>"
                     + "<a href='match.php?venue="+svid+"&game="+game+"#keen-form'>match</a> "
-                    + ": <a href='favorite.php#available?venue="+svid+"&game="+game+"#favourite-form'>favourite</a>"
+                    + ": <a href='favorite.php?venue="+svid+"&game="+game+"#favorite-form'>favorite</a>"
                     + "</div>";
                 google.maps.event.addListener(
                     marker,

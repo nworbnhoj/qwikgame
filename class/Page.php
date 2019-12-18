@@ -83,6 +83,7 @@ class Page extends Html {
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
         self::$icons = array (
+            'HELP_ICON'     => self::HELP_ICON,
             'INFO_ICON'     => self::INFO_ICON,
             'TICK_ICON'     => self::TICK_ICON,
             'CROSS_ICON'    => self::CROSS_ICON,
@@ -130,6 +131,7 @@ class Page extends Html {
         $vars['FAVORITE_ICON'] = self::FAVORITE_ICON;
         $vars['FRIEND_ICON']   = self::FRIEND_ICON;
         $vars['FEMALE_ICON']   = self::FEMALE_ICON;
+        $vars['HELP_ICON']     = self::HELP_ICON;
         $vars['HOME_ICON']     = self::HOME_ICON;
         $vars['INFO_ICON']     = self::INFO_ICON;
         $vars['LANG_ICON']     = self::LANG_ICON;

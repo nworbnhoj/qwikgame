@@ -1,7 +1,7 @@
 # qwikgame
 
 
-qwikgame is a system to help people find a rival to play their favourite (real-world) game at a convenient time and place. Players are able to rate each other for both behaviour and ability which enables the system to refine estimates of ability between new rivals. Care has been taken to provide a range privacy options for players. Players are able to add and maintain information about suitable venues to play a range of games from Chess to Squash.
+qwikgame is a system to help people find a rival to play their favorite (real-world) game at a convenient time and place. Players are able to rate each other for both behaviour and ability which enables the system to refine estimates of ability between new rivals. Care has been taken to provide a range privacy options for players. Players are able to add and maintain information about suitable venues to play a range of games from Chess to Squash.
 
 ## qwikgame.org
 
@@ -14,7 +14,7 @@ You can use qwikgame for free at [qwikgame.org](https://qwikgame.org)
 
 ## Deployment  
 
-After configuring your favourite web server ([nginx](https://nginx.org) is recommended)
+After configuring your favorite web server ([nginx](https://nginx.org) is recommended)
 - pull the qwikgame files wit `git pull origin master`
 - change the file ownership to the appropriate user `chown -r www-data:www-data *`
 - edit `/class/Qwik.php` if required to set `const SUBDOMAIN  = 'www';`
@@ -30,7 +30,7 @@ In qwikgame parlace; **matches** are played between **rival** **players** at **v
 
 Each registered **player** has a single xml file in the `/player` directory.
 
-A player registers by nominating a favourite game and venue, and an email address. The player is effectively registering that they are available to play Squash at the Milawa Courts (for example) and wish to be alerted when some-one else is keen to play. An email registration confirmation contains a link to the players home page and a cookie is set to maintain the user-login beyond a single session. If the user manually logs-out then another email can be requested with a new login link (ie traditional user passwords are replaced by persistent sessions and a simple password-reset email process). 
+A player registers by nominating a favorite game and venue, and an email address. The player is effectively registering that they are available to play Squash at the Milawa Courts (for example) and wish to be alerted when some-one else is keen to play. An email registration confirmation contains a link to the players home page and a cookie is set to maintain the user-login beyond a single session. If the user manually logs-out then another email can be requested with a new login link (ie traditional user passwords are replaced by persistent sessions and a simple password-reset email process). 
 
 The internal player ID (pid) is chosen by taking the sha256 hash of the email address. 
 This has a number of advantages:
@@ -40,7 +40,7 @@ This has a number of advantages:
 
 A player _must_ nominate:
 
-- at least one favourite game/venue/time combination when they are available to play
+- at least one favorite game/venue/time combination when they are available to play
 - an email address as a unique ID and for notifications
 
 A player may _optionally_ nominate:
@@ -64,7 +64,7 @@ This is used as the XML file name which allows qwikgame to use rapid file-system
 
 **Match** data is stored in the player xml file in the `/player` directory.
 
-When a player is keen for a match then they can nominate a game, a venue and a range of times over the next 48 hours. This will trigger invitations to be emailed to all other players who have registered a favourite for playing the game at the venue. The invitations contain the estimated relative ability, and reputation of the potential rival. The first player can then choose a rival from those who accept the invitation. After the match, the rivals can rate each other for behaviour and ability. 
+When a player is keen for a match then they can nominate a game, a venue and a range of times over the next 48 hours. This will trigger invitations to be emailed to all other players who have registered a favorite for playing the game at the venue. The invitations contain the estimated relative ability, and reputation of the potential rival. The first player can then choose a rival from those who accept the invitation. After the match, the rivals can rate each other for behaviour and ability. 
 
 Each match has a current status: *keen*, *invitation*, *accepted*, *confirmed*, *feedback*, or *cancelled*.
 

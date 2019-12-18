@@ -185,7 +185,7 @@ class FeatureContext implements Context
     
 
     /**
-     * @When I Submit this favourite
+     * @When I Submit this favorite
      */
     public function iSubmitThisFavourite()
     {
@@ -199,7 +199,7 @@ class FeatureContext implements Context
 
 
     /**
-     * @When I delete this favourite
+     * @When I delete this favorite
      */
     public function iDeleteThisFavourite()
     {
@@ -311,7 +311,7 @@ class FeatureContext implements Context
     
     
     /**
-     * @Then I will be available to play my favourite game
+     * @Then I will be available to play my favorite game
      */
     public function iWillBeAvailableToPlayMyFavouriteGame()
     {       

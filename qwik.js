@@ -1,4 +1,10 @@
 
+// Registering Service Worker
+if('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('sw.js');
+};
+
+
 $(document).ready(function(){
 
     var currentTime = new Date();

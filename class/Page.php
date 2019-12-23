@@ -76,6 +76,7 @@ class Page extends Html {
 
     private $player;
     private $language;
+    private $req;
     private $alert = "";
 
 
@@ -90,11 +91,10 @@ class Page extends Html {
         $defend = new Defend();
         $this->req = $defend->request();
 
-        $req = $this->req();
-        $this->logReq($req);
-        $this->player = $this->login($req);
+        $this->logReq($this->req);
+        $this->player = $this->login($this->req);
 
-        $pageLanguage = $this->selectLanguage($req, $this->player);
+        $pageLanguage = $this->selectLanguage($this->req, $this->player);
         parent::language($pageLanguage);
     }
 

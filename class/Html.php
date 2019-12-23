@@ -58,7 +58,6 @@ class Html extends Qwik {
 
     private $template;
     private $language;
-    private $req;
 
     /*******************************************************************************
     Class Html is constructed with an optional language.

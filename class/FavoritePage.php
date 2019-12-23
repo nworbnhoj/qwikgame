@@ -8,8 +8,8 @@ class FavoritePage extends Page {
     private $game;
     private $venue;
 
-    public function __construct($template='favorite'){
-        parent::__construct($template);
+    public function __construct($templateName='favorite'){
+        parent::__construct(Page::readTemplate($templateName));
 
         $player = $this->player();
         if (is_null($player)

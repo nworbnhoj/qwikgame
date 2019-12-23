@@ -56,7 +56,7 @@ class Html extends Qwik {
     const TERMS_LNK    = "<a href='".self::TERMS_URL."' target='_blank'>{Terms and Conditions}</a>";
     const PRIVACY_LNK    = "<a href='".self::PRIVACY_URL."' target='_blank'>{Privacy_policy}</a>";
 
-    private $templateName;
+    private $template;
     private $language;
     private $req;
 
@@ -65,10 +65,19 @@ class Html extends Qwik {
 
     $language  the 2 character language symbol (eg en = english)
     *******************************************************************************/
-    public function __construct($templateName='index', $language='en'){
+    public function __construct($template='<html></html>', $language='en'){
         parent::__construct();
-        $this->templateName = $templateName;
+        $this->template = $template;
         $this->language = $language;
+    }
+
+
+
+    public function template($template=NULL){
+        if(!is_null($template)){
+            $this->template = $template;
+        }
+        return $this->template;
     }
 
 
@@ -95,9 +104,7 @@ class Html extends Qwik {
     public function serve(){
         $html = "<html><head></head><body></body></html>";
         try{
-            $templateName = $this->templateName;
-            $template = $this->template($templateName);
-            $html = $this->make($template, $this->variables());
+            $html = $this->make($this->template, $this->variables());
         } catch (Throwable $t){
             Qwik::logThrown($t);
             $html = errorHTML();
@@ -127,16 +134,6 @@ class Html extends Qwik {
             'termsLink'     => self::TERMS_LNK,
             'privacyLink'   => self::PRIVACY_LNK,
         );
-    }
-
-
-    protected function template($templateName){
-        $template = '';
-        if(!empty($templateName)){
-            $PATH = Qwik::PATH_LANG.'/'.$this->language();
-            $template = file_get_contents("$PATH/$templateName.html");
-        }
-        return $template;
     }
 
 

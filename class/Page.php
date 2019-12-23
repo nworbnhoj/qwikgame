@@ -15,6 +15,25 @@ require_once 'Locate.php';
 
 class Page extends Html {
 
+
+    static public function readTemplate($name){
+        if(empty($name)){
+            return '';
+        }
+
+        $template = '';
+        try{
+            $PATH = Qwik::PATH_LANG.'/'.$this->language();
+            $template = file_get_contents("$PATH/$name.html");
+        } catch (Throwable $t){
+            Qwik::logThrown($t);
+            $html = errorHTML();
+        } finally {
+            return template;
+        }
+    }
+
+
     const ACCOUNT_ICON   = 'fa fa-cog icon';
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
     const COMMENT_ICON   = 'fa fa-comment-o comment';
@@ -65,8 +84,8 @@ class Page extends Html {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($templateName){
-        parent::__construct($templateName);
+    public function __construct($template){
+        parent::__construct($template);
 
         $defend = new Defend();
         $this->req = $defend->request();

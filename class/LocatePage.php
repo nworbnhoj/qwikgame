@@ -14,8 +14,8 @@ class LocatePage extends Page {
     private $hideAddressPrompt = 'hidden';
 
 
-    public function __construct($template='locate'){
-        parent::__construct($template);
+    public function __construct($templateName='locate'){
+        parent::__construct(Page::readTemplate($templateName));
 
         $this->game        = $this->req('game');
         $this->description = $this->req('venue');

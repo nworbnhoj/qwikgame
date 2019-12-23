@@ -5,8 +5,8 @@ require_once 'Page.php';
 
 class UploadPage extends Page {
 
-    public function __construct($template='upload'){
-        parent::__construct($template);
+    public function __construct($templateName='upload'){
+        parent::__construct(Page::readTemplate($templateName));
     }
 	
 	

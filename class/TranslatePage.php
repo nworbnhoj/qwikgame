@@ -99,8 +99,8 @@ Class TranslatePage extends Page {
     private $variables;
 
 
-    public function __construct($template=NULL){
-        parent::__construct($template);
+    public function __construct($templateName=NULL){
+        parent::__construct(Page::readTemplate($templateName));
         
         $this->langs = self::translation()->languages();
         $this->phraseKeys = self::translation()->phraseKeys();

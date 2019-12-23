@@ -7,8 +7,8 @@ class IndexPage extends Page {
     private $alert = '';
 
 
-    public function __construct($template='index'){
-        parent::__construct($template);
+    public function __construct($templateName='index'){
+        parent::__construct(Page::readTemplate($templateName));
     }
 
 

@@ -103,7 +103,7 @@ class Html extends Qwik {
     public function serve(){
         $html = "<html><head></head><body></body></html>";
         try{
-            $html = $this->make($this->template, $this->variables());
+            $html = $this->make();
         } catch (Throwable $t){
             Qwik::logThrown($t);
             $html = errorHTML();
@@ -117,7 +117,7 @@ class Html extends Qwik {
         $home = self::QWIK_URL;
         $html = "<html><head><meta http-equiv='refresh' content='3;url={$home}' /></head><body><p>Opps! something went wrong.... <a href='{$home}'>home</a></p></body></html>";
         try{
-            $html = $this->make(self::ERROR_TEMPLATE, $this->variables);
+            $html = $this->make(NULL, self::ERROR_TEMPLATE);
         } catch (Throwable $t){
             Qwik::logThrown($t);
         } 
@@ -136,8 +136,9 @@ class Html extends Qwik {
     }
 
 
-    public function make($html, $variables=array()){
-        $vars = array_merge($this->variables(), $variables);
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
         $html = $this->translate($html, $this->language());
         return $html;

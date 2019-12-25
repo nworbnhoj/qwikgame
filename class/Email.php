@@ -34,9 +34,9 @@ class Email extends Html {
         parent::__construct($language);
         $this->to = $variables['to'];
         $subject = $variables['subject'];
-        $this->subject = $this->make($subject, $variables);
+        $this->subject = $this->make($variables, $subject);
         $body = $this->template(self::EMAIL_TEMPLATE);
-        $this->body = $this->make($body, $variables);
+        $this->body = $this->make($variables, $body);
     }
 
 
@@ -48,10 +48,12 @@ class Email extends Html {
     }
 
 
-    public function make($html, $variables=array()){
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->replicate($html, $variables['paragraphs']);
-        $html = parent::make($html, $variables);
-        $html = parent::make($html, $variables);   //double pass necessary
+        $html = parent::make($variables, $html);
+        $html = parent::make($variables, $html);   //double pass necessary
         return $html;
     }
 

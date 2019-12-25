@@ -176,7 +176,9 @@ class Page extends Html {
     }
 
 
-    public function make($html, $variables=array()){
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->legacyReplicate($html, $this->player, $this->req());
         $html = parent::make($html, $variables);
         return $html;

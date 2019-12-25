@@ -177,7 +177,7 @@ class Page extends Html {
 
 
     public function make($html, $variables=array()){
-        $html = $this->replicate($html, $this->player, $this->req());
+        $html = $this->legacyReplicate($html, $this->player, $this->req());
         $html = parent::make($html, $variables);
         return $html;
     }
@@ -374,7 +374,7 @@ class Page extends Html {
     $player    XML            player data
     $req    ArrayMap    url parameters from post&get
     ********************************************************************************/
-    public function replicate($html, $player, $req){
+    public function legacyReplicate($html, $player, $req){
         $tr = function($match) use ($player, $req){
             $id = $match[3];
             $html = $match[4];

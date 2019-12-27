@@ -16,20 +16,20 @@ require_once 'Locate.php';
 class Page extends Html {
 
 
-    static public function readTemplate($name){
+    static public function readTemplate($name, $language='en'){
         if(empty($name)){
             return '';
         }
 
         $template = '';
         try{
-            $PATH = Qwik::PATH_LANG.'/'.$this->language();
+            $PATH = Qwik::PATH_LANG.'/'.$language;
             $template = file_get_contents("$PATH/$name.html");
         } catch (Throwable $t){
             Qwik::logThrown($t);
-            $html = errorHTML();
+            $template = $this->errorHTML();
         } finally {
-            return template;
+            return $template;
         }
     }
 
@@ -85,8 +85,8 @@ class Page extends Html {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($template){
-        parent::__construct($template);
+    public function __construct($template, $language='en', $templateName=NULL){
+        parent::__construct($template, $language);
 
         $defend = new Defend();
         $this->req = $defend->request();
@@ -94,8 +94,15 @@ class Page extends Html {
         $this->logReq($this->req);
         $this->player = $this->login($this->req);
 
-        $pageLanguage = $this->selectLanguage($this->req, $this->player);
-        parent::language($pageLanguage);
+        $language = $this->selectLanguage($this->req, $this->player);
+
+        if ($language !== $this->language){
+            $this->language($language);
+
+            if(isset($templateName)){
+                $this->template($this->readTemplate($templateName, $language));
+            }
+        }
     }
 
 
@@ -177,10 +184,10 @@ class Page extends Html {
 
 
     public function make($variables=NULL, $html=NULL){
-        $html = is_null($html) ? $this->template : $html;
+        $html = is_neull($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->legacyReplicate($html, $this->player, $this->req());
-        $html = parent::make($html, $variables);
+        $html = parent::make($variables, $html);
         return $html;
     }
 

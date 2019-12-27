@@ -106,14 +106,14 @@ class Html extends Qwik {
             $html = $this->make();
         } catch (Throwable $t){
             Qwik::logThrown($t);
-            $html = errorHTML();
+            $html = $this->errorHTML();
         } finally {
             echo($html);
         }
     }
 
 
-    private function errorHTML(){
+    public function errorHTML(){
         $home = self::QWIK_URL;
         $html = "<html><head><meta http-equiv='refresh' content='3;url={$home}' /></head><body><p>Opps! something went wrong.... <a href='{$home}'>home</a></p></body></html>";
         try{
@@ -137,7 +137,7 @@ class Html extends Qwik {
 
 
     public function make($variables=NULL, $html=NULL){
-        $html = is_null($html) ? $this->template : $html;
+        $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
         $html = $this->translate($html, $this->language());
@@ -154,7 +154,8 @@ class Html extends Qwik {
     $lang    String    language to replace {variables} with
     $fb      String    fallback language for when a translation is missing
     ********************************************************************************/
-    public function translate($html, $lang, $fb='en'){
+    public function translate($html, $lang=NULL, $fb='en'){
+        $lang = is_null($lang) ? $this->language() : $lang;
         $translation = self::translation();
         $pattern = '!(?s)\{([^\}]+)\}!';
         $tr = function($match) use ($translation, $lang, $fb){

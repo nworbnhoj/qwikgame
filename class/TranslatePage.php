@@ -140,7 +140,7 @@ Class TranslatePage extends Page {
 
 
     public function make($variables=NULL, $html=NULL){
-        $html = is_null($html) ? $this->template : $html;
+        $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = HEAD;
         $html .= "<body>\n";

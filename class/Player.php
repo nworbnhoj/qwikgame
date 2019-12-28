@@ -505,19 +505,19 @@ class Player extends Qwik {
      *
      * @return bitfield representing the hours at the $rival is available
      */
-    function favouriteHours($vid, $game, $day, $parity=NULL){
-        $favouriteHours = new Hours();
+    function FavoriteHours($vid, $game, $day, $parity=NULL){
+        $favoriteHours = new Hours();
         $available = $this->xml->xpath("available[venue='$vid' and @game='$game']");
         foreach ($available as $avail){
             if ($this->parityBand($avail->xpath("@parity"), $parity)){
                 $hours = $avail->xpath("hrs[@day='$day']");
                 foreach ($hours as $hrs){
                     $favHrs = new Hours(intval("$hrs"));
-                    $favouriteHours->append($favHrs);
+                    $favoriteHours->append($favHrs);
                 }
             }
         }
-        return $favouriteHours;
+        return $favoriteHours;
     }
 
 
@@ -533,7 +533,7 @@ class Player extends Qwik {
 
 
     public function availableHours($vid, $game, $day, $parity=NULL){
-        $availableHours = $this->favouriteHours($vid, $game, $day, $parity);
+        $availableHours = $this->favoriteHours($vid, $game, $day, $parity);
         $availableHours->append($this->keenHours($vid, $game, $day));
         return $availableHours;
     }
@@ -676,14 +676,14 @@ class Player extends Qwik {
     }
 
 
-    function emailFavourite($req, $email){
+    function emailFavorite($req, $email){
         $authLink = $this->authLink(2*self::DAY, $req);
         $paras = array(
             "{Click to confirm}",
             "{Safely ignore}"
         );
         $vars = array(
-            "subject"    => "{EmailFavouriteSubject}",
+            "subject"    => "{EmailFavoriteSubject}",
             "paragraphs" => $paras,
             "to"         => $email,
             "game"       => $req['game'],

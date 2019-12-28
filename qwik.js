@@ -249,7 +249,27 @@ $(document).ready(function(){
         this.value = this.value.toLocaleUpperCase('en-US');
     });
 
+
+
+    $('.base').each(function(){
+        var parentNode = $(this).parent();
+        var base = this.cloneNode(true);
+        var id = base.getAttribute('id');
+        var baseHtml = base.outerHTML;
+        var url = id+'.listing.json.php';
+        $.getJSON(url, {html: baseHtml}, function(json, stat){
+            console.log("json reply from "+url);
+            parentNode.empty();
+            parentNode.append(json);
+        }).fail(function(jqxhr, textStatus, error){
+            var err = textStatus + ", " + error;
+            console.log(err);
+        });
+    });
+
 });
+
+
 
 
 function guessPlace(name, locality, admin1, country, div){

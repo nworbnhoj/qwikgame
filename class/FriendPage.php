@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Page.php';
+require_once 'FriendListing.php';
 
 class FriendPage extends Page {
 
@@ -15,8 +16,8 @@ class FriendPage extends Page {
 
     private $game;
 
-    public function __construct($templateName='friend'){
-        parent::__construct(Page::readTemplate($templateName));
+    public function __construct($templateName='friend', $language='en'){
+        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
 
         $player = $this->player();
         if (is_null($player)
@@ -104,6 +105,20 @@ class FriendPage extends Page {
 
         return $vars;
     }
+
+
+
+
+
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $friendListing = new FriendListing($translated);
+        $variables['friendListing'] = $friendListing->make();
+        return Html::make($variables); 
+    }
+
 
 
 

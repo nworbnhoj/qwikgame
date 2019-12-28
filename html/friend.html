@@ -36,18 +36,19 @@
     {friends_help...}
 </p>
 
-<repeat id='friends'>
-<div class="record friend">
-    <form class='record' action='friend.php#friends' method='post'>
-        <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
-        <input type='hidden' name='id' value='[id]'>
-        <p class='record'>
-            {email_is_friend}
-        </p>
-    </form>
-</div>
-</repeat>
 
+<div>
+    <div id='friend' class='base record friend'>
+        <form class='record' action='friend.php#friends' method='post'>
+            <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+            <input type='hidden' name='id' value='[id]'>
+            <p class='record'>
+                {email_is_friend}
+            </p>
+        </form>
+    </div>
+    [friendListing]
+</div>
 
 
 <div class="commit friend">

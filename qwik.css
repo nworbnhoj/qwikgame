@@ -172,6 +172,9 @@ blockquote, q {
 /* https://stackoverflow.com/questions/19954893/google-map-infowindow-displays-scroll-bars-in-google-chrome#21781513 */
 .infowindow    {line-height:1.35;}
 
+
+.base { display: none; }
+
 /************** <html> *********************/
 html {}
 

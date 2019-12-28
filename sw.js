@@ -50,4 +50,11 @@ workbox.routing.registerRoute(
 );
 
 
+workbox.routing.registerRoute(
+  /friend.php/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'json-updated-pages',
+  })
+);
+
 

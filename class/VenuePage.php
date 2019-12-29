@@ -7,8 +7,9 @@ class VenuePage extends Page {
 
     private $venue;
 
-    public function __construct($templateName='venue'){
-        parent::__construct(Page::readTemplate($templateName));
+    public function __construct($templateName='venue', $language='en'){
+        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+
         $vid = $this->req('vid');
         $this->venue = new Venue($vid);
     }

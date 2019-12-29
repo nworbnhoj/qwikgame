@@ -6,11 +6,9 @@ class IndexPage extends Page {
 
     private $alert = '';
 
-
-    public function __construct($templateName='index'){
-        parent::__construct(Page::readTemplate($templateName));
+    public function __construct($templateName='index', $language='en'){
+        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
     }
-
 
     public function serve(){
         if ($this->player() == NULL){

@@ -61,6 +61,19 @@ class UploadPage extends Page {
 
         return $variables;
     }
+
+
+
+
+
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $uploadListing = new UploadListing($html);
+        $variables['uploadListing'] = $uploadListing->make();
+        return Html::make($variables); 
+    }
     
 }
 

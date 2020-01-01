@@ -37,8 +37,8 @@
 
     <h2>{Upload_Rankings}</h2>
 
-    <repeat id='uploads'>
-    <div class='record [status]' [uploadHidden]>
+    <div>
+    <div id='uploads' class='record [status]' [uploadHidden]>
         <form class='record' action='upload.php' method='post'>
             <input type='hidden' name='filename' value='[fileName]'>
             <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
@@ -50,7 +50,8 @@
             <b>[game]</b> [time]
         </form>
     </div>
-    </repeat>
+        [uploadListing]
+    </div>
 
 
     <div class="commit upload">

@@ -3,9 +3,8 @@
 require_once 'Listing.php';
 
 /*******************************************************************************
-    Class Page constructs an html page beginning with a html template; 
-    replicating html elements (such as rows in a <table>); replacing
-    [variables]; and making {translations}.
+    Class FriendListing replicates a html snippet for each qwik record.
+    The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
 class FriendListing extends Listing {
@@ -14,18 +13,19 @@ class FriendListing extends Listing {
     /*******************************************************************************
     Class FriendListing is constructed with a html template.
 
-    $templateName  String  fileName containing the html template.
+    $html String a html document containing a div to be replicated.
+    $id   String a html div id to identify the html snippet to be identified.
     *******************************************************************************/
-    public function __construct($html, $id='friend'){
+    public function __construct($html=NULL, $id='friend'){
         parent::__construct($html, $id);
     }
 
 
     public function replicate($html){
-        $html = html_entity_decode($html);
-        $group="";
 //        $group = $html;  // if more than one json update is required, may leave a copy of base here
         $html = parent::replicate($html); // removes 'base' class
+        $group="";
+        $html = html_entity_decode($html);
         $player = $this->player();
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("rival");

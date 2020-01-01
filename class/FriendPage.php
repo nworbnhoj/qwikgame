@@ -114,7 +114,7 @@ class FriendPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $friendListing = new FriendListing($translated);
+        $friendListing = new FriendListing($html);
         $variables['friendListing'] = $friendListing->make();
         return Html::make($variables); 
     }

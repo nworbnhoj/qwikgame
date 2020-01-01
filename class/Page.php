@@ -184,7 +184,7 @@ class Page extends Html {
 
 
     public function make($variables=NULL, $html=NULL){
-        $html = is_neull($html) ? $this->template() : $html;
+        $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->legacyReplicate($html, $this->player, $this->req());
         $html = parent::make($variables, $html);
@@ -393,19 +393,8 @@ class Page extends Html {
                 case 'games':     return $this->replicateGames($html, $req);             break;
                 case 'venues':    return $this->replicateVenues($html);                  break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
-                case 'keen':
-                case 'invitation':
-                case 'accepted':
-                case 'confirmed':
-                case 'feedback':
-                case 'cancelled':
-                case 'history':    return $this->replicateMatches($player, $html, $id);  break;
-                case 'available':  return $this->replicateAvailable($player, $html);     break;
                 case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
-                case 'friends':   return $this->replicateFriends($player, $html);      break;
-                case 'ability':    return $this->replicateAbility($player, $html);       break;
                 case 'reckon':     return $this->replicateReckons($player, $html);       break;
-                case 'uploads':    return $this->replicateUploads($player, $html);       break;
                 case 'translation':return $this->replicateTranslate($html);              break;
                 default:           return '';
             }
@@ -490,42 +479,6 @@ class Page extends Html {
     }
 
 
-    private function replicateMatches($player, $html, $status){
-        if(!$player){ return; }
-        $group = '';
-        $playerVars = $this->playerVariables($player);
-        foreach($player->matchStatus($status) as $matchXML) {
-            $match = new Match($player, $matchXML);
-            $matchVars = $match->variables();
-            $vars = $playerVars + $matchVars + self::$icons;
-            $vars['venueLink'] = $this->venueLink($match->vid());
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
-    }
-
-
-    private function replicateAvailable($player, $html){
-        if(!$player){ return; }
-        $group = '';
-        $playerVars = $this->playerVariables($player);
-        $available = $player->available();
-        foreach($available as $avail){
-            $game = (string) $avail['game'];
-            $availVars = array(
-                'id'        => (string) $avail['id'],
-                'game'      => self::qwikGames()[$game],
-                'parity'    => (string) $avail['parity'],
-                'weekSpan'  => $this->weekSpan($avail),
-                'venueLink' => $this->venueLink($avail->venue)
-            );
-            $vars = $playerVars + $availVars + self::$icons;
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
-    }
-
-
     private function replicateEmailCheck($player, $html){
         if(!$player){ return; }
         $group = '';
@@ -541,54 +494,6 @@ class Page extends Html {
         foreach($emails as $email){
                 $playerVars['email'] = $email;
                 $group .= $this->populate($html, $playerVars);
-        }
-        return $group;
-    }
-
-
-    private function replicateFriends($player, $html){
-        if(!$player){ return; }
-        $group = '';
-        $playerVars = $this->playerVariables($player);
-        $reckoning = $player->reckon("rival");
-        $emails = array();
-        foreach($reckoning as $reckon){
-            $email = (string) $reckon['email'];
-            if (!array_key_exists($email, $emails)){
-                $emails[$email] = TRUE;
-                $parity = (int) $reckon['parity'];
-                $game = $reckon['game'];
-                $reckonVars = array(
-                    'id'        => $reckon['id'],
-                    'email'     => $email,
-                    'game'      => self::qwikGames()["$game"],
-                    'parity'    => self::parityStr($parity)
-                );
-                $vars = $playerVars + $reckonVars + self::$icons;
-                $group .= $this->populate($html, $vars);
-            }
-        }
-        return $group;
-    }
-
-
-    private function replicateAbility($player, $html){
-        if(!$player){ return; }
-        $group = '';
-        $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
-        $playerVars = $this->playerVariables($player);
-        $reckoning = $player->reckon("region");
-        foreach($reckoning as $reckon){
-            $game = $reckon['game'];
-            $ability = $reckon['ability'];
-            $reckonVars = array(
-                'id'        => $reckon['id'],
-                'region'    => explode(',', $reckon['region'])[0],
-                'game'      => self::qwikGames()["$game"],
-                'ability'   => $abilities["$ability"]
-            );
-            $vars = $playerVars + $reckonVars + self::$icons;
-            $group .= $this->populate($html, $vars);
         }
         return $group;
     }
@@ -617,28 +522,6 @@ class Page extends Html {
         foreach($regions as $region){
             $vars = array(
                 'region' => $region,
-            );
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
-    }
-
-
-    private function replicateUploads($player, $html){
-        if(!$player){ return; }
-        $uploadIDs = $player->uploadIDs();
-        $group = '';
-        foreach($uploadIDs as $uploadID) {
-            $ranking = $player->rankingGet($uploadID);
-            $status = $ranking->status();
-            $vars = array(
-                'status'   => $status,
-                'fileName' => $ranking->fileName(),
-                'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
-                'tickIcon' => $status == 'uploaded' ? self::TICK_ICON : '',
-                'title'    => $ranking->title(),
-                'game'     => $ranking->game(),
-                'time'     => $ranking->time()
             );
             $group .= $this->populate($html, $vars);
         }

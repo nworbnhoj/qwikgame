@@ -51,10 +51,21 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /friend.php/,
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'json-updated-pages',
+  /(\S*.json\.php)$/,
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'json',
   })
 );
+
+
+workbox.routing.registerRoute(
+  /(?:favorite|friend)$\.php/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'json-updated',
+  })
+);
+
+console.log("Qwikgame Service Worker loaded.");
+
 
 

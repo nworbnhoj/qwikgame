@@ -2,6 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
+require_once 'FavoriteListing.php';
 
 class FavoritePage extends Page {
 
@@ -133,6 +134,17 @@ class FavoritePage extends Page {
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");
 
         return $vars;
+    }
+
+
+
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $favoriteListing = new FavoriteListing($html);
+        $variables['favororiteListing'] = $favoriteListing->make();
+        return Html::make($variables); 
     }
 
 

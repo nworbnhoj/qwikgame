@@ -252,7 +252,6 @@ $(document).ready(function(){
     });
 
 
-
     $('.base').each(function(){
         var parentNode = $(this).parent();
         var base = this.cloneNode(true);
@@ -268,6 +267,21 @@ $(document).ready(function(){
             console.log(err);
         });
     });
+
+
+    $('datalist').each(function(){
+        var id = $(this).getAttribute('id');
+        var url = id+'.datalist.json.php';
+        $.getJSON(url, {}, function(json, stat){
+            console.log("json reply from "+url);
+            $(this).empty();
+            $(this).append(json);
+        }).fail(function(jqxhr, textStatus, error){
+            var err = textStatus + ", " + error;
+            console.log(err);
+        });
+    });
+
 });
 
 

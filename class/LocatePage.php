@@ -179,7 +179,6 @@ class LocatePage extends Page {
         $vars['venueLocality'] = isset($locality) ? $locality : '';
         $vars['venueAdmin1']   = isset($admin1)   ? $admin1   : '';
         $vars['venueCountry']  = isset($country)  ? $country  : $userCountry;
-        $vars['datalists']     = $this->countryDataList();
         $vars['placeid']       = isset($placeid)  ? $placeid  : '';
         return $vars;
     }

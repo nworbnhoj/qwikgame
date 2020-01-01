@@ -571,7 +571,6 @@ class Page extends Html {
         foreach(self::qwikGames() as $game => $name){
             $datalists .= "\n\n" . $this->venueDatalist($game);
         }
-        $datalists .= $this->countryDatalist();
         return $datalists;
     }
     
@@ -582,16 +581,6 @@ class Page extends Html {
         foreach($vids as $vid){
             $svid = Venue::svid($vid);
             $datalist .= "\t<option value='$svid'>\n";
-        }
-        $datalist .= "</datalist>\n";
-        return $datalist;
-    }
-
-
-    protected function countryDatalist(){
-        $datalist = "<datalist id='country_iso'>\n";
-        foreach(self::countries() as $val => $txt){
-            $datalist .= "\t<option value='$val'>\n";
         }
         $datalist .= "</datalist>\n";
         return $datalist;
@@ -642,19 +631,6 @@ class Page extends Html {
         sort($localities);
 
         return array_merge($countries, $admin1s, $localities);
-    }
-
-
-    function countryOptions($country, $tabs=''){
-        if(!isset($country)){
-            $country = Locate::geolocate('countryCode');
-        }
-        $options = '';
-        foreach(self::countries() as $val => $txt){
-            $selected = ($val == $country) ? " selected" : '';
-            $options .= "$tabs<option value='$val' $selected>$txt</option>\n";
-        }
-        return $options;
     }
 
 

@@ -1,7 +1,9 @@
 
 // Registering Service Worker
 if('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('sw.js');
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+    });
 };
 
 
@@ -266,7 +268,6 @@ $(document).ready(function(){
             console.log(err);
         });
     });
-
 });
 
 

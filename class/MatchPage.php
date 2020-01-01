@@ -164,6 +164,35 @@ class MatchPage extends Page {
     }
 
 
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $keenListing = new MatchListing(NULL, 'match', 'keen');
+        $variables['keenMatches'] = $keenListing->make();
+
+        $invitationListing = new MatchListing(NULL, 'match', 'invitation');
+        $variables['invitationMatches'] = $invitationListing->make();
+
+        $acceptedListing = new MatchListing(NULL, 'match', 'accepted');
+        $variables['acceptedMatches'] = $acceptedListing->make();
+
+        $confirmedListing = new MatchListing(NULL, 'match', 'confirmed');
+        $variables['confirmedMatches'] = $confirmedListing->make();
+
+        $feedbackListing = new MatchListing(NULL, 'match', 'feedback');
+        $variables['feedbackMatches'] = $feedbackListing->make();
+
+        $cancelledListing = new MatchListing(NULL, 'match', 'cancelled');
+        $variables['canceledMatches'] = $cancelledListing->make();
+
+        $historyListing = new MatchListing(NULL, 'match', 'history');
+        $variables['historyMatches'] = $historyListing->make();
+	
+        return Html::make($variables); 
+    }
+
+
 
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
 

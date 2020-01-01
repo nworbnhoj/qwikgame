@@ -37,8 +37,8 @@
 </p>
 
 
-<repeat id='cancelled'>
-<div class="record cancelled">
+<div>
+<div id='cancelled.match' class="record cancelled">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -50,10 +50,11 @@
         </p>
     </form>
 </div>
-</repeat>
+    [cancelledMatches]
+</div>
 
-<repeat id='feedback'>
-<div class="record feedback">
+<div>
+<div id='feedback.match' class="record feedback">
     <form class='record' action='match.php#history' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' id='rep' name='rep' value='+1'>
@@ -66,10 +67,11 @@
         </p>
     </form>
 </div>
-</repeat>
+    [feedbackMatches]
+</div>
 
-<repeat id='confirmed'>
-<div class="record confirmed">
+<div>
+<div id='confirmed.match' class="record confirmed">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -83,10 +85,11 @@
         </p>
     </form>
 </div>
-</repeat>
+    [confirmedMatches]
+</div>
 
-<repeat id='accepted'>
-<div class="record accepted">
+<div>
+<div id='accepted.match' class="record accepted">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -98,10 +101,11 @@
         </p>
     </form>
 </div>
-</repeat>
+    [acceptedMatches]
+</div>
 
-<repeat id='invitation'>
-<div class="record invitation">
+<div>
+<div id='invitation.match' class="record invitation">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -114,10 +118,11 @@
         </p>
     </form>
 </div>
-</repeat>
+    [invitationMatches]
+</div>
 
-<repeat id='keen'>
-<div class="record keen">
+<div>
+<div id='keen.match' class="record keen">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -130,7 +135,8 @@
         </p>
     </form>
 </div>
-</repeat>
+    [keenMatches]
+</div>
 
 
 
@@ -237,8 +243,8 @@
 
 <h2 id='history' [historyHidden]>{History}</h2>
 
-<repeat id='history'>
-<div class="record history">
+<div>
+<div id='history.match' class="record history">
     <form class='record' action='match.php#history'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -248,7 +254,8 @@
         <p class='record'>{History_game_at...}</p>
     </form>
 </div>
-</repeat>
+    [historyMatches]
+</div>
 
 
 

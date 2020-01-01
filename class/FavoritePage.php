@@ -144,6 +144,8 @@ class FavoritePage extends Page {
 
         $favoriteListing = new FavoriteListing($html);
         $variables['favororiteListing'] = $favoriteListing->make();
+        $abilityListing = new AbilityListing($html);
+        $variables['abilityListing'] = $abilityListing->make();
         return Html::make($variables); 
     }
 

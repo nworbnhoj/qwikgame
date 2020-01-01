@@ -59,7 +59,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(?:favorite|friend)$\.php/,
+  /(?:ablity|favorite|friend)$\.php/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'json-updated',
   })

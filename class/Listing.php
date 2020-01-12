@@ -33,9 +33,16 @@ class Listing extends Page {
 
         // select a <div> with id='$id' and class='base'
         $path = "//x:div[@id='$id' and ".Listing::BASE_PATH;
-        $baseXML = $xml->xpath($path)[0];
+        $baseXML = $xml->xpath($path)[0]; 
 
-        return $baseXML->asXML();
+        if(is_null($baseXML)){
+            self::logMsg("failed to extract base = '$id'");
+            $baseXMLtxt = '';
+        } else {
+            $baseXMLtxt = $baseXML->asXML();
+        }
+
+        return $baseXMLtxt;
     }
 
 
@@ -84,6 +91,7 @@ class Listing extends Page {
     * remove the 'base' from the class (elements with class='base' are hidden with qwik.css)
     */
     public function replicate($html){
+        $html = html_entity_decode($html);
         return $this->removeFlag($html);
     }
 

@@ -259,25 +259,28 @@ $(document).ready(function(){
         var baseHtml = base.outerHTML;
         var url = id+'.listing.json.php';
         $.getJSON(url, {html: baseHtml}, function(json, stat){
-            console.log("json reply from "+url);
-            parentNode.empty();
-            parentNode.append(json);
+            json = !json ? '' : json ;
+            var length = nFormatter(json.length, 1) ;
+            console.log("json reply from "+url+" ("+length+")");
+            parentNode.html(json);
         }).fail(function(jqxhr, textStatus, error){
-            var err = textStatus + ", " + error;
+            var err = "json "+url+" : "+textStatus + ", " + error;
             console.log(err);
         });
     });
 
 
     $('datalist').each(function(){
-        var id = $(this).getAttribute('id');
+        var id = this.getAttribute('id');
         var url = id+'.datalist.json.php';
+        console.log('json call to ' + url);
         $.getJSON(url, {}, function(json, stat){
-            console.log("json reply from "+url);
-            $(this).empty();
-            $(this).append(json);
+            json = !json ? '' : json;
+            var length = nFormatter(json.length, 1);
+            console.log("json reply from "+url+" ("+length+")");
+            $(this).html(json);
         }).fail(function(jqxhr, textStatus, error){
-            var err = textStatus + ", " + error;
+            var err = "json "+url+" : "+textStatus + ", " + error;
             console.log(err);
         });
     });
@@ -471,5 +474,27 @@ function rtl(element){
     if(element.setSelectionRange){
         element.setSelectionRange(0,0);
     }
+}
+
+
+// https://stackoverflow.com/questions/9461621/format-a-number-as-2-5k-if-a-thousand-or-more-otherwise-900#9462382
+function nFormatter(num, digits) {
+  var si = [
+    { value: 1, symbol: "" },
+    { value: 1E3, symbol: "k" },
+    { value: 1E6, symbol: "M" },
+    { value: 1E9, symbol: "G" },
+    { value: 1E12, symbol: "T" },
+    { value: 1E15, symbol: "P" },
+    { value: 1E18, symbol: "E" }
+  ];
+  var rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var i;
+  for (i = si.length - 1; i > 0; i--) {
+    if (num >= si[i].value) {
+      break;
+    }
+  }
+  return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 

@@ -24,7 +24,7 @@ class FavoriteListing extends Listing {
     public function replicate($html){
         $html = parent::replicate($html); // removes 'base' class       
         $group = ''; 
-        $player = $this>player();
+        $player = $this->player();
         $playerVars = $this->playerVariables($player);
         $available = $player->available();
         foreach($available as $avail){
@@ -40,6 +40,17 @@ class FavoriteListing extends Listing {
             $group .= $this->populate($html, $vars);
         }
         return $group;
+    }
+
+
+    private function weekSpan($xml){
+        $html = "";
+        $hrs = $xml->xpath("hrs");
+        foreach($hrs as $hr){
+            $hours = new Hours($hr);
+            $html .= self::daySpan($hours->roster(), $hr['day']);
+        }
+        return $html;
     }
 
 }

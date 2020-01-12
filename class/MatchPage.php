@@ -2,6 +2,8 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
+require_once 'MatchListing.php';
+
 
 class MatchPage extends Page {
 
@@ -19,7 +21,7 @@ class MatchPage extends Page {
     private $venue;
 
     public function __construct($templateName='match', $language='en'){
-        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
 
         $player = $this->player();
         if (is_null($player)
@@ -168,25 +170,25 @@ class MatchPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $keenListing = new MatchListing(NULL, 'match', 'keen');
+        $keenListing = new MatchListing($html, 'match', 'keen');
         $variables['keenMatches'] = $keenListing->make();
 
-        $invitationListing = new MatchListing(NULL, 'match', 'invitation');
+        $invitationListing = new MatchListing($html, 'match', 'invitation');
         $variables['invitationMatches'] = $invitationListing->make();
 
-        $acceptedListing = new MatchListing(NULL, 'match', 'accepted');
+        $acceptedListing = new MatchListing($html, 'match', 'accepted');
         $variables['acceptedMatches'] = $acceptedListing->make();
 
-        $confirmedListing = new MatchListing(NULL, 'match', 'confirmed');
+        $confirmedListing = new MatchListing($html, 'match', 'confirmed');
         $variables['confirmedMatches'] = $confirmedListing->make();
 
-        $feedbackListing = new MatchListing(NULL, 'match', 'feedback');
+        $feedbackListing = new MatchListing($html, 'match', 'feedback');
         $variables['feedbackMatches'] = $feedbackListing->make();
 
-        $cancelledListing = new MatchListing(NULL, 'match', 'cancelled');
-        $variables['canceledMatches'] = $cancelledListing->make();
+        $cancelledListing = new MatchListing($html, 'match', 'cancelled');
+        $variables['cancelledMatches'] = $cancelledListing->make();
 
-        $historyListing = new MatchListing(NULL, 'match', 'history');
+        $historyListing = new MatchListing($html, 'match', 'history');
         $variables['historyMatches'] = $historyListing->make();
 	
         return Html::make($variables); 

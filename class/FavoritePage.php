@@ -3,6 +3,7 @@
 require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'FavoriteListing.php';
+require_once 'AbilityListing.php';
 
 class FavoritePage extends Page {
 
@@ -10,7 +11,7 @@ class FavoritePage extends Page {
     private $venue;
 
     public function __construct($templateName='favorite', $language='en'){
-        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
 
         $player = $this->player();
         if (is_null($player)
@@ -143,7 +144,7 @@ class FavoritePage extends Page {
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
         $favoriteListing = new FavoriteListing($html);
-        $variables['favororiteListing'] = $favoriteListing->make();
+        $variables['favoriteListing'] = $favoriteListing->make();
         $abilityListing = new AbilityListing($html);
         $variables['abilityListing'] = $abilityListing->make();
         return Html::make($variables); 

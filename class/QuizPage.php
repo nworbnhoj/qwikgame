@@ -18,7 +18,7 @@ class QuizPage extends Page {
     private $repost;
 
     public function __construct($templateName='quiz', $language='en'){
-        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
 
         $this->repost = $this->req('repost');
         $this->tally = isset($_SESSION[self::TALLY_KEY]) ? $_SESSION[self::TALLY_KEY] : 0 ;

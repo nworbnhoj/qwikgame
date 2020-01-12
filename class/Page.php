@@ -15,25 +15,6 @@ require_once 'Locate.php';
 
 class Page extends Html {
 
-
-    static public function readTemplate($name, $language='en'){
-        if(empty($name)){
-            return '';
-        }
-
-        $template = '';
-        try{
-            $PATH = Qwik::PATH_LANG.'/'.$language;
-            $template = file_get_contents("$PATH/$name.html");
-        } catch (Throwable $t){
-            Qwik::logThrown($t);
-            $template = $this->errorHTML();
-        } finally {
-            return $template;
-        }
-    }
-
-
     const ACCOUNT_ICON   = 'fa fa-cog icon';
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
     const COMMENT_ICON   = 'fa fa-comment-o comment';
@@ -671,7 +652,7 @@ class Page extends Html {
     }
 
 
-    private function venueLink($vid){
+    public function venueLink($vid){
         $name = explode("|", $vid)[0];
         $boldName = $this->firstWordBold($name);
         $url = self::QWIK_URL."/venue.php?vid=$vid";
@@ -718,19 +699,7 @@ class Page extends Html {
         $str .= self::clock($prior);
         $str .= $dayX!=NULL ? " $dayX" : '';
         return "<span class='lolite'>$str</span>";
-    }
-
-
-    private function weekSpan($xml){
-        $html = "";
-        $hrs = $xml->xpath("hrs");
-        foreach($hrs as $hr){
-            $hours = new Hours($hr);
-            $html .= self::daySpan($hours->roster(), $hr['day']);
-        }
-        return $html;
-    }
-    
+    }    
     
     
     function similarVenues($description, $game=NULL){

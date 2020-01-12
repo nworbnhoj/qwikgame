@@ -48,6 +48,25 @@ class Html extends Qwik {
 
     static $translation;
 
+
+    static public function readTemplate($name, $language='en'){
+        if(empty($name)){
+            return '';
+        }
+
+        $template = '';
+        try{
+            $PATH = Qwik::PATH_LANG.'/'.$language;
+            $template = file_get_contents("$PATH/$name.html");
+        } catch (Throwable $t){
+            Qwik::logThrown($t);
+            $template = $this->errorHTML();
+        } finally {
+            return $template;
+        }
+    }
+
+
     const ERROR_TEMPLATE  = 'error.html';
 
     const PDF_URL    = self::QWIK_URL.'/'.self::PATH_PDF.'/';

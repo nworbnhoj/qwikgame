@@ -38,7 +38,7 @@
 
 
 <div>
-<div id='cancelled.match' class="record cancelled">
+<div id='cancelled.match' class="base record cancelled">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -54,7 +54,7 @@
 </div>
 
 <div>
-<div id='feedback.match' class="record feedback">
+<div id='feedback.match' class="base record feedback">
     <form class='record' action='match.php#history' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' id='rep' name='rep' value='+1'>
@@ -71,7 +71,7 @@
 </div>
 
 <div>
-<div id='confirmed.match' class="record confirmed">
+<div id='confirmed.match' class="base record confirmed">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -89,7 +89,7 @@
 </div>
 
 <div>
-<div id='accepted.match' class="record accepted">
+<div id='accepted.match' class="base record accepted">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -105,7 +105,7 @@
 </div>
 
 <div>
-<div id='invitation.match' class="record invitation">
+<div id='invitation.match' class="base record invitation">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -122,7 +122,7 @@
 </div>
 
 <div>
-<div id='keen.match' class="record keen">
+<div id='keen.match' class="base record keen">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -131,8 +131,8 @@
         <p class='record'>
             <span class='tag keen'>{keen}</span>
             {Keen_Game_at...}
-            <div class='count'>[rivalCount] {potential_rivals}</div>
-        </p>
+        </p>  
+        <div class='count'>[rivalCount] {potential_rivals}</div>
     </form>
 </div>
     [keenMatches]
@@ -244,7 +244,7 @@
 <h2 id='history' [historyHidden]>{History}</h2>
 
 <div>
-<div id='history.match' class="record history">
+<div id='history.match' class="base record history">
     <form class='record' action='match.php#history'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -267,7 +267,6 @@
 </body>
 
 [datalists]
-<datalist id='country_iso' />
 
 
 </html>

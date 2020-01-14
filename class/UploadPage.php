@@ -72,8 +72,8 @@ class UploadPage extends Page {
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
         $uploadListing = new UploadListing($html);
-        $variables['uploadListing'] = $uploadListing->make();
-        return Html::make($variables); 
+        $vars['uploadListing'] = $uploadListing->make();
+        return parent::make($vars); 
     }
     
 }

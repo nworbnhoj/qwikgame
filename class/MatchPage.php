@@ -171,27 +171,27 @@ class MatchPage extends Page {
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
         $keenListing = new MatchListing($html, 'match', 'keen');
-        $variables['keenMatches'] = $keenListing->make();
+        $vars['keenMatches'] = $keenListing->make();
 
         $invitationListing = new MatchListing($html, 'match', 'invitation');
-        $variables['invitationMatches'] = $invitationListing->make();
+        $vars['invitationMatches'] = $invitationListing->make();
 
         $acceptedListing = new MatchListing($html, 'match', 'accepted');
-        $variables['acceptedMatches'] = $acceptedListing->make();
+        $vars['acceptedMatches'] = $acceptedListing->make();
 
         $confirmedListing = new MatchListing($html, 'match', 'confirmed');
-        $variables['confirmedMatches'] = $confirmedListing->make();
+        $vars['confirmedMatches'] = $confirmedListing->make();
 
         $feedbackListing = new MatchListing($html, 'match', 'feedback');
-        $variables['feedbackMatches'] = $feedbackListing->make();
+        $vars['feedbackMatches'] = $feedbackListing->make();
 
         $cancelledListing = new MatchListing($html, 'match', 'cancelled');
-        $variables['cancelledMatches'] = $cancelledListing->make();
+        $vars['cancelledMatches'] = $cancelledListing->make();
 
         $historyListing = new MatchListing($html, 'match', 'history');
-        $variables['historyMatches'] = $historyListing->make();
+        $vars['historyMatches'] = $historyListing->make();
 	
-        return Html::make($variables); 
+        return parent::make($vars); 
     }
 
 

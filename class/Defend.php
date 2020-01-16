@@ -13,7 +13,7 @@ class Defend extends Qwik {
         'description' => 200,
         'filename'    => 50,
         'input'       => 200,
-        'html'        => 1000,
+        'html'        => 2000,
         'key'         => 30,
         'locality'    => 100,
         'msg'         => 200,

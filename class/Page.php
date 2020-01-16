@@ -299,8 +299,10 @@ class Page extends Html {
     public function logout(){
         if (isset($_SESSION) && isset($_SESSION['pid'])){
             $pid = $_SESSION['pid'];
-            self::logMsg("logout $pid");
+            $id = self::snip($pid);
+            self::logMsg("logout $id");
             unset($_SESSION['pid']);
+            unset($_COOKIE['pid']);
         }
         if (!headers_sent()){
             setcookie("pid", "", time() - Player::DAY);

@@ -30,8 +30,8 @@ class Email extends Html {
     $language   string  the 2 character language symbol (default: en = english)
     *******************************************************************************/
 
-    public function __construct($variables=array(), $language='en'){
-        parent::__construct($language);
+    public function __construct($variables=array(), $language='en', $templateName=self::EMAIL_TEMPLATE){
+        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
         $this->to = $variables['to'];
         $subject = $variables['subject'];
         $this->subject = $this->make($variables, $subject);
@@ -51,9 +51,9 @@ class Email extends Html {
     public function make($variables=NULL, $html=NULL){
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
-        $html = $this->replicate($html, $variables['paragraphs']);
-        $html = parent::make($variables, $html);
-        $html = parent::make($variables, $html);   //double pass necessary
+        $html = $this->replicate($html, $vars['paragraphs']);
+        $html = parent::make($vars, $html);
+        $html = parent::make($vars, $html);   //double pass necessary
         return $html;
     }
 

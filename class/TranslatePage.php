@@ -90,7 +90,6 @@ Class TranslatePage extends Page {
         'info.html',
         'locate.html',
         'match.html',
-        'player.html',
         'quiz.html',
         'upload.html',
         'venue.html',

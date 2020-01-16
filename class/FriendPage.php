@@ -17,7 +17,7 @@ class FriendPage extends Page {
     private $game;
 
     public function __construct($templateName='friend', $language='en'){
-        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+        parent::__construct(Html::readTemplate($templateName, $language), $language, $templateName);
 
         $player = $this->player();
         if (is_null($player)

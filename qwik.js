@@ -263,6 +263,9 @@ $(document).ready(function(){
             var length = nFormatter(json.length, 1) ;
             console.log("json reply from "+url+" ("+length+")");
             parentNode.html(json);
+            parentNode.find("button.help").click(function(){
+                $(this).nextAll('span.help').toggle();
+            });
         }).fail(function(jqxhr, textStatus, error){
             var err = "json "+url+" : "+textStatus + ", " + error;
             console.log(err);

@@ -12,15 +12,15 @@ class MatchListing extends Listing {
     private $status = array();
 
     /*******************************************************************************
-    Class AbilityListing is constructed with a html template.
+    Class MatchListing is constructed with a html template.
 
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be replicated.
     *******************************************************************************/
     public function __construct($html=NULL, $id='match', $status=''){
-        parent::__construct($html, $id);
+        parent::__construct($html, "$status.$id");
 
-        // if a status was not provided to the constructor then get the ststus from
+        // if a status was not provided to the constructor then get the status from
         // the (json) request (see *.match.listing.json.php). 
         $this->status = empty($status) ? $this->req('status') : $status;
     }

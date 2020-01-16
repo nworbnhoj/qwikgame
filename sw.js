@@ -51,7 +51,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(\S*.json\.php)$/,
+  /(?:\.json\.php)$/,
   new workbox.strategies.NetworkFirst({
     cacheName: 'json',
   })
@@ -59,7 +59,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(?:ablity|favorite|friend|match|upload)$\.php/,
+  /(?:account|favorite|friend|info|match|upload)\.php$/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'json-updated',
   })

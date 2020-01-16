@@ -23,7 +23,8 @@ class UploadListing extends Listing {
 
     public function replicate($html){
         $html = parent::replicate($html); // removes 'base' class       
-        $group = ''; 
+        $group = '';
+        $player = $this->player();
         $uploadIDs = $player->uploadIDs();
         foreach($uploadIDs as $uploadID) {
             $ranking = $player->rankingGet($uploadID);

@@ -25,7 +25,6 @@ class FriendListing extends Listing {
 //        $group = $html;  // if more than one json update is required, may leave a copy of base here
         $html = parent::replicate($html); // removes 'base' class
         $group="";
-        $html = html_entity_decode($html);
         $player = $this->player();
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("rival");

@@ -147,10 +147,13 @@ Other important files include:
 
 General html templates prior to translation. 
 
+- html/**account.html** player account settings
+- html/**favourite.html** player favorite game/venues
+- html/**friend.html** player friends
 - html/**index.html** homepage
 - html/**info.html** user help and info
 - html/**locate.html** locate a game venue
-- html/**player.html** player specific homepage
+- html/**match.html** player matches
 - html/**upload.html** upload player rankings
 - html/**venue.html** venue details
 - html/**venues.html**

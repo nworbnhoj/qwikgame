@@ -548,28 +548,6 @@ class Page extends Html {
     }
 
 
-
-    public function datalists(){
-        $datalists = '';
-        foreach(self::qwikGames() as $game => $name){
-            $datalists .= "\n\n" . $this->venueDatalist($game);
-        }
-        return $datalists;
-    }
-    
-    
-    private function venueDatalist($game){
-        $vids = self::venues($game);
-        $datalist = "<datalist id='venue-$game'>\n";
-        foreach($vids as $vid){
-            $svid = Venue::svid($vid);
-            $datalist .= "\t<option value='$svid'>\n";
-        }
-        $datalist .= "</datalist>\n";
-        return $datalist;
-    }
-
-
     function gameOptions($game='squash', $tabs=''){
         if(empty($game)){
             $game='squash';

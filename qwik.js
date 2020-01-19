@@ -93,13 +93,9 @@ $(document).ready(function(){
 
 
     $("select.game").change( function(){
-        $(this).nextAll("input.venue").attr("list", "venue-"+$(this).val());
+        jsonOptions($('datalist#svid'), $(this).val());
     });
 
-
-    $("input.venue").ready(function(){
-        $(this).attr("list", "venue-squash");
-    });
 
 
     $("button.help").click(function(){
@@ -273,24 +269,30 @@ $(document).ready(function(){
     });
 
 
-    $('datalist').each(function(){
-        var id = this.getAttribute('id');
-        var url = id+'.datalist.json.php';
-        console.log('json call to ' + url);
-        $.getJSON(url, {}, function(json, stat){
-            json = !json ? '' : json;
-            var length = nFormatter(json.length, 1);
-            console.log("json reply from "+url+" ("+length+")");
-            $(this).html(json);
-        }).fail(function(jqxhr, textStatus, error){
-            var err = "json "+url+" : "+textStatus + ", " + error;
-            console.log(err);
-        });
-    });
+    jsonOptions($('datalist#svid'), $("select.game option:selected").val());
 
 });
 
 
+
+
+function jsonOptions(datalist, game){
+    var id = datalist.getAttribute('id');
+    if (!datalist || !id){
+        return false;
+    }
+    var url = id+".options.json.php"+"?game="+game;
+    console.log('json call to ' + url);
+    $.getJSON(url, {}, function(json, stat){
+        json = !json ? '' : json;
+        var length = nFormatter(json.length, 1);
+        console.log("json reply from "+url+" ("+length+")");
+        datalist.html(json);
+    }).fail(function(jqxhr, textStatus, error){
+        var err = "json "+url+" : "+textStatus + ", " + error;
+        console.log(err);
+    });
+}
 
 
 function guessPlace(name, locality, admin1, country, div){

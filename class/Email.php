@@ -31,11 +31,11 @@ class Email extends Html {
     *******************************************************************************/
 
     public function __construct($variables=array(), $language='en', $templateName=self::EMAIL_TEMPLATE){
-        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
+        parent::__construct(Html::readTemplate($templateName, $language), $language, $templateName);
         $this->to = $variables['to'];
         $subject = $variables['subject'];
         $this->subject = $this->make($variables, $subject);
-        $body = $this->template(self::EMAIL_TEMPLATE);
+        $body = $this->template();
         $this->body = $this->make($variables, $body);
     }
 

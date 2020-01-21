@@ -277,10 +277,9 @@ $(document).ready(function(){
 
 
 function jsonOptions(datalist, game){
-    var id = datalist.getAttribute('id');
-    if (!datalist || !id){
-        return false;
-    }
+    if (!datalist){ return false; }
+    var id = datalist.attr('id');
+    if (!id){ return false; }
     var url = id+".options.json.php"+"?game="+game;
     console.log('json call to ' + url);
     $.getJSON(url, {}, function(json, stat){

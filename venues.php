@@ -1,6 +1,6 @@
 <?php
-require_once 'class/Page.php';
+require_once 'class/VenuesPage.php';
 
-$page = new Page('venues');
+$page = new VenuesPage('venues');
 $page->serve();
 ?>

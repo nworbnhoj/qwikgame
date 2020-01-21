@@ -90,7 +90,7 @@ class FavoritePage extends Page {
     public function variables(){
         $vars = parent::variables();
 
-        $vars['datalists']     = $this->datalists();
+        $vars['hourRows']      = $this->hourRows();
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
         $vars['alert-hidden']  = 'hidden';
@@ -203,6 +203,39 @@ class FavoritePage extends Page {
                $options .= "$tabs<option value='$region'>$region</option>\n";
         }
         return $options;
+    }
+
+
+
+
+
+
+    function hourRows(){
+        $hourRows = '';
+        $days = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+        $tabs = "\t\t\t\t";
+        foreach($days as $day){
+            $bit = 1;
+            $hourRows .= "$tabs<tr>\n";
+            $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
+            $hourRows .= "$tabs\t<th>$day</th>\n";
+            for($hr24=0; $hr24<=23; $hr24++){
+                if (($hr24 < 6) | ($hr24 > 20)){
+                    $hidden = 'hidden';
+                } else {
+                    $hidden = '';
+                }
+                if ($hr24 <= 12){
+                    $hr12 = $hr24;
+                } else {
+                    $hr12 = $hr24-12;
+                }
+                $hourRows .= "$tabs\t<td class='toggle' bit='$bit' $hidden>$hr12</td>\n";
+                $bit = $bit * 2;
+            }
+            $hourRows .= "$tabs</tr>\n";
+        }
+        return $hourRows;
     }
 
 

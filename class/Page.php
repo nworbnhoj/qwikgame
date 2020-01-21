@@ -374,7 +374,6 @@ class Page extends Html {
                 case 'repost':    return $this->replicatePost($html, $req);              break;
                 case 'language':  return $this->replicateLanguages($html);               break;
                 case 'games':     return $this->replicateGames($html, $req);             break;
-                case 'venues':    return $this->replicateVenues($html);                  break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
                 case 'reckon':     return $this->replicateReckons($player, $html);       break;
@@ -419,22 +418,6 @@ class Page extends Html {
                 'game'      => $game,
                 'name'      => $name,
                 'selected'  => ($game == $default ? 'selected' : '')
-            );
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
-    }
-
-
-    private function replicateVenues($html, $default){
-        return "replicateVenues() has not been implemented";
-        $group = '';
-        $venueIDs = $this->listVenues('squash'); //$game);
-        foreach($venueIDs as $vid => $playerCount){
-            $vars = array(
-                'playerCount'   => $playerCount,
-                'vid'              => $vid,
-                'venueName'      => explode('|', $vid)[0]
             );
             $group .= $this->populate($html, $vars);
         }
@@ -639,6 +622,7 @@ class Page extends Html {
         $link = "<a href='$url'>$boldName</a>";
         return $link;
     }
+
 
 
     static public function daySpan($hours, $day='', $clock24hr=FALSE){

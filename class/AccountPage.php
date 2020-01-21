@@ -53,7 +53,6 @@ class AccountPage extends Page {
     public function variables(){
         $vars = parent::variables();
 
-        $vars['datalists']     = $this->datalists();
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
         $vars['alert-hidden']  = 'hidden';

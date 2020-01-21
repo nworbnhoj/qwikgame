@@ -19,7 +19,7 @@ class Options extends Page {
     }
 
 
-    public function vaues($values=NULL){
+    public function values($values=NULL){
         if(isset($values) && is_array($values)){
             $this->values = $values;
         }

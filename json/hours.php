@@ -1,7 +1,7 @@
 <?php
 
-    require_once('../class/Page.php');
-    require_once('../class/Venue.php');
+    require_once('class/Page.php');
+    require_once('class/Venue.php');
 
     $min = $_GET['min'];
     $max = $_GET['max'];

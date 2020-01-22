@@ -253,7 +253,7 @@ $(document).ready(function(){
         var base = this.cloneNode(true);
         var id = base.getAttribute('id');
         var baseHtml = base.outerHTML;
-        var url = id+'.listing.json.php';
+        var url = 'json/'+id+'.listing.php';
         $.getJSON(url, {html: baseHtml}, function(json, stat){
             json = !json ? '' : json ;
             var length = nFormatter(json.length, 1) ;
@@ -263,7 +263,7 @@ $(document).ready(function(){
                 $(this).nextAll('span.help').toggle();
             });
         }).fail(function(jqxhr, textStatus, error){
-            var err = "json "+url+" : "+textStatus + ", " + error;
+            var err = url+" : "+textStatus + ", " + error;
             console.log(err);
         });
     });
@@ -280,7 +280,7 @@ function jsonOptions(datalist, game){
     if (!datalist){ return false; }
     var id = datalist.attr('id');
     if (!id){ return false; }
-    var url = id+".options.json.php"+"?game="+game;
+    var url = "json/"+id+".options.php"+"?game="+game;
     console.log('json call to ' + url);
     $.getJSON(url, {}, function(json, stat){
         json = !json ? '' : json;
@@ -288,7 +288,7 @@ function jsonOptions(datalist, game){
         console.log("json reply from "+url+" ("+length+")");
         datalist.html(json);
     }).fail(function(jqxhr, textStatus, error){
-        var err = "json "+url+" : "+textStatus + ", " + error;
+        var err = url+" : "+textStatus + ", " + error;
         console.log(err);
     });
 }

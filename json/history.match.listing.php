@@ -5,13 +5,13 @@ require_once 'class/Qwik.php';
 require_once 'class/MatchListing.php';
 
 
-$matchListing = new MatchListing(NULL, 'match', 'confirmed');
+$matchListing = new MatchListing(NULL, 'match', 'history');
 $listing = $matchListing->make();
 $json = json_encode($listing);
 
 $json_error = json_last_error();
 if($json_error !== JSON_ERROR_NONE){
-    Qwik::logMsg("(confirmed.match.listing.json.php) json error: $json_error\n html = $html");
+    Qwik::logMsg("(history.match.listing.php) json error: $json_error\n html = $html");
 }
  
 echo $json;

@@ -1,5 +1,5 @@
 <?php
-    require_once 'Locate.php';
+    require_once 'class/Locate.php';
 
     $defend = new Defend();
     $get = $defend->get();

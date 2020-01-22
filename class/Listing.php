@@ -52,16 +52,14 @@ class Listing extends Page {
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
     public function __construct($html, $id){
-        parent::__construct(self::extractBase($html, $id));
+
+        $template = self::extractBase($html, $id);
 
         // if a base was not provided to the constructor then get the base from the 
         // (json) request (see *.listing.json.php). 
-        if(empty($this->template())){
-            $reqHtml = $this->req('html');
-            if(!empty($reqHtml)){
-                $this->template($reqHtml);
-            }
-        }
+        $template = empty($template) ? $this->req('html') : $template;
+
+        parent::__construct($template);
     }
 
 

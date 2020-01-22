@@ -97,8 +97,8 @@ Class TranslatePage extends Page {
         'offline.html');
     private $variables;
 
-    public function __construct($templateName=NULL, $language='en'){
-        parent::__construct(Page::readTemplate($templateName), $language, $templateName);
+    public function __construct($templateName=NULL){
+        parent::__construct(Page::readTemplate($templateName), $templateName);
         
         $this->langs = self::translation()->languages();
         $this->phraseKeys = self::translation()->phraseKeys();

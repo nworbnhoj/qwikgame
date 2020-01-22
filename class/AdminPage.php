@@ -7,8 +7,8 @@ class AdminPage extends Page {
 
     private $variables;
 
-    public function __construct($templateName='admin', $language='en'){
-        parent::__construct(Html::readTemplate($templateName), $language, $templateName);
+    public function __construct($templateName='admin'){
+        parent::__construct(Html::readTemplate($templateName), $templateName);
 
         $player = $this->player();
         if (empty($player->admin())){

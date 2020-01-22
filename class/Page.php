@@ -55,6 +55,7 @@ class Page extends Html {
     static $icons;
     static $pending;
 
+
     private $player;
     private $language;
     private $req;
@@ -66,8 +67,7 @@ class Page extends Html {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($template, $language='en', $templateName=NULL){
-        parent::__construct($template, $language);
+    public function __construct($template, $templateName=NULL){
 
         $defend = new Defend();
         $this->req = $defend->request();
@@ -76,14 +76,8 @@ class Page extends Html {
         $this->player = $this->login($this->req);
 
         $language = $this->selectLanguage($this->req, $this->player);
-
-        if ($language !== $this->language){
-            $this->language($language);
-
-            if(isset($templateName)){
-                $this->template($this->readTemplate($templateName, $language));
-            }
-        }
+        
+        parent::__construct($template, $language);
     }
 
 

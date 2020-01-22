@@ -7,7 +7,7 @@ class AccountPage extends Page {
     const LINK_REP = "<a href='info.php#reputation'>{Reputation}</a>";
 
     public function __construct($templateName='account'){
-        parent::__construct(Html::readTemplate($templateName), $templateName);
+        parent::__construct(NULL, $templateName);
 
         $player = $this->player();
         if (is_null($player)

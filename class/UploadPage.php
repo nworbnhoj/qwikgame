@@ -7,7 +7,7 @@ require_once'UploadListing.php';
 class UploadPage extends Page {
 
     public function __construct($templateName='upload'){
-        parent::__construct(Html::readTemplate($templateName), $templateName);
+        parent::__construct(NULL, $templateName);
 
     }
 	

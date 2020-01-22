@@ -6,7 +6,7 @@ require_once 'Locate.php';
 class VenuesPage extends Page {
 
     public function __construct($templateName='venues'){
-        parent::__construct(Html::readTemplate($templateName), $templateName);
+        parent::__construct(NULL, $templateName);
 
     }
 

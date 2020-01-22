@@ -76,6 +76,8 @@ class Page extends Html {
         $this->player = $this->login($this->req);
 
         $language = $this->selectLanguage($this->req, $this->player);
+
+        $template = empty($template) ? Html::readTemplate($templateName, $language) : $template;
         
         parent::__construct($template, $language);
     }

@@ -11,7 +11,7 @@ class FavoritePage extends Page {
     private $venue;
 
     public function __construct($templateName='favorite'){
-        parent::__construct(Html::readTemplate($templateName), $templateName);
+        parent::__construct(NULL, $templateName);
 
         $player = $this->player();
         if (is_null($player)

@@ -2,10 +2,13 @@
 header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
+require_once 'class/Defend.php';
 require_once 'class/AbilityListing.php';
 
+$defend = new Defend();
+$get = $defend->get();
 
-$abilityListing = new AbilityListing();
+$abilityListing = new AbilityListing($get['html']);
 $listing = $abilityListing->make();
 $json = json_encode($listing);
 

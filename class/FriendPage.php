@@ -113,7 +113,7 @@ class FriendPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $friendListing = new FriendListing($html);
+        $friendListing = new FriendListing(Listing::extractBase($html, 'friend'));
         $vars['friendListing'] = $friendListing->make();
         return parent::make($vars); 
     }

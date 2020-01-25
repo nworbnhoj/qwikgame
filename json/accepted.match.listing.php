@@ -2,10 +2,13 @@
 header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
+require_once 'class/Defend.php';
 require_once 'class/MatchListing.php';
 
+$defend = new Defend();
+$get = $defend->get();
 
-$matchListing = new MatchListing(NULL, 'match', 'accepted');
+$matchListing = new MatchListing($get['html'], 'accepted');
 $listing = $matchListing->make();
 $json = json_encode($listing);
 

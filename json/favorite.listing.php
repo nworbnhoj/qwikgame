@@ -2,9 +2,13 @@
 header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
+require_once 'class/Defend.php';
 require_once 'class/FavoriteListing.php';
 
-$favoriteListing = new FavoriteListing();
+$defend = new Defend();
+$get = $defend->get();
+
+$favoriteListing = new FavoriteListing($get['html']);
 $listing = $favoriteListing->make();
 $json = json_encode($listing);
 

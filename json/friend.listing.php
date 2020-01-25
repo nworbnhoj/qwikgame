@@ -2,10 +2,14 @@
 header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
+require_once 'class/Defend.php';
 require_once 'class/FriendListing.php';
 
 
-$friendListing = new FriendListing($html);
+$defend = new Defend();
+$get = $defend->get();
+
+$friendListing = new FriendListing($get['html']);
 $listing = $friendListing->make();
 $json = json_encode($listing);
 

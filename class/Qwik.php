@@ -488,7 +488,8 @@ class Qwik {
     */
     static public function writeXML($xml, $path, $filename){
         $cwd = getcwd();
-        if(!chdir($path)){
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        if(!chdir("$root/$path")){
             throw new RuntimeException("failed to change working directory to $path");
             return FALSE;
         }
@@ -511,12 +512,13 @@ class Qwik {
     */
     static public function readXML($path, $fileName){
         $cwd = getcwd();
-        if (!file_exists("$path/$fileName")) {
+        $root = $_SERVER['DOCUMENT_ROOT'];
+        if (!file_exists("$root/$path/$fileName")) {
             throw new RuntimeException("failed to read xml $path/$fileName");
             return FALSE;
         }
 
-        if(!chdir($path)){
+        if(!chdir("$root/$path")){
             throw new RuntimeException("failed to change working directory to $path");
             return FALSE;
         }

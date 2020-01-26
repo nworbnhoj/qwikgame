@@ -40,9 +40,10 @@ class Player extends Qwik {
 
 
     static function exists($pid){
+        $ROOT = $_SERVER['DOCUMENT_ROOT'];
         $PATH = self::PATH_PLAYER;
         $XML = self::XML;
-        return file_exists("$PATH/$pid$XML");
+        return file_exists("$ROOT/$PATH/$pid$XML");
     }
 
 

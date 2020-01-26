@@ -452,6 +452,7 @@ class Qwik {
 
     static public function svids($game=NULL){
         $svids = array();
+        $root = $_SERVER['DOCUMENT_ROOT'];
         $path = SELF::PATH_VENUE;
         $path .= $game ? "/$game" : '';
         $fileList = self::fileList($path);

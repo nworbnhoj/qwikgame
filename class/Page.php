@@ -203,6 +203,13 @@ class Page extends Html {
                 case 'token':
                     $msg .= substr($val, 0, 2);
                 break;
+                case  'html':
+                    $html = html_entity_decode($val);
+                    $matches = array();
+                    preg_match("/<(.*?)>/", $html, $matches);
+                    $msg .= $matches[0];
+                break;
+
                 default:
                     $msg .= is_array($val) ? print_r($val, true) : $val;
             }

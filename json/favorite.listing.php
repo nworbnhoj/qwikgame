@@ -12,8 +12,8 @@ $favoriteListing = new FavoriteListing($get['html']);
 $listing = $favoriteListing->make();
 $json = json_encode($listing);
 
-$json_error = json_last_error();
-if(!$json_error && $json_error !== JSON_ERROR_NONE){
+if(!$json){
+    $json_error = json_last_error();
     Qwik::logMsg("(favorite.listing.php) json error: $json_error\n html = $html");
 }
  

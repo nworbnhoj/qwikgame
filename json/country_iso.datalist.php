@@ -11,8 +11,8 @@ foreach(Qwik::countries() as $val => $txt){
 
 $json = json_encode($options);
 
-$json_error = json_last_error();
-if($json_error !== JSON_ERROR_NONE){
+if(!$json){
+    $json_error = json_last_error();
     Qwik::logMsg("(country_iso.datalist.php) json error: $json_error\n html = $html");
 }
  

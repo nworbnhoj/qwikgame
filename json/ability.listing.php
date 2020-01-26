@@ -7,8 +7,9 @@ require_once 'class/AbilityListing.php';
 
 $defend = new Defend();
 $get = $defend->get();
+$html = $get['html'];
 
-$abilityListing = new AbilityListing($get['html']);
+$abilityListing = new AbilityListing($html);
 $listing = $abilityListing->make();
 $json = json_encode($listing);
 

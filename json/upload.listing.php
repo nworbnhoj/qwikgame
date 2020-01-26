@@ -7,8 +7,9 @@ require_once 'class/UploadListing.php';
 
 $defend = new Defend();
 $get = $defend->get();
+$html = $get['html'];
 
-$uploadListing = new UploadListing($get['html']);
+$uploadListing = new UploadListing($html);
 $listing = $uploadListing->make();
 $json = json_encode($listing);
 

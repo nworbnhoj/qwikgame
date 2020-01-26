@@ -13,7 +13,7 @@ $json = json_encode($options);
 
 if(!$json){
     $json_error = json_last_error();
-    Qwik::logMsg("(country_iso.datalist.php) json error: $json_error\n html = $html");
+    Qwik::logMsg("(country_iso.datalist.php) json error: $json_error\n html = $options");
 }
  
 echo $json;

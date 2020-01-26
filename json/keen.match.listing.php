@@ -7,8 +7,9 @@ require_once 'class/MatchListing.php';
 
 $defend = new Defend();
 $get = $defend->get();
+$html = $get['html'];
 
-$matchListing = new MatchListing($get['html'], 'keen');
+$matchListing = new MatchListing($html, 'keen');
 $listing = $matchListing->make();
 $json = json_encode($listing);
 

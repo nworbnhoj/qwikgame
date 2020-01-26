@@ -8,8 +8,9 @@ require_once 'class/FriendListing.php';
 
 $defend = new Defend();
 $get = $defend->get();
+$html = $get['html'];
 
-$friendListing = new FriendListing($get['html']);
+$friendListing = new FriendListing($html);
 $listing = $friendListing->make();
 $json = json_encode($listing);
 

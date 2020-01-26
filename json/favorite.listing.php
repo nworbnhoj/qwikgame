@@ -7,8 +7,9 @@ require_once 'class/FavoriteListing.php';
 
 $defend = new Defend();
 $get = $defend->get();
+$html = $get['html'];
 
-$favoriteListing = new FavoriteListing($get['html']);
+$favoriteListing = new FavoriteListing($html);
 $listing = $favoriteListing->make();
 $json = json_encode($listing);
 

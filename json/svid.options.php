@@ -3,17 +3,17 @@ header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
 require_once 'class/Defend.php';
-require_once 'class/SvidOptions.php';
+require_once 'class/Options.php';
 
 $defend = new Defend();
 $get = $defend->get();
 $game = $get['game'];
 $country = ''; // $get['country'];
 
-$svidOptions = new SvidOptions($game, $country);
-$options = $svidOptions->make();
+$options = new Options(Qwik::svids($game, $country), TRUE);
+$opts = $options->make();
 
-$json = json_encode($options);
+$json = json_encode($opts);
 
 if(!$json){
     $json_error = json_last_error();

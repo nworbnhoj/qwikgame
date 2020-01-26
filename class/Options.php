@@ -9,21 +9,16 @@ require_once 'Page.php';
 class Options extends Page {
 
     const VAL = "[val]";
-    const OPTION_TEMPLATE = "<option value='".self::VAL."'>\n";
+    const KEY = "[key]";
+    const SELECT_TEMPLATE = "<option value='".self::KEY."'>".self::VAL."</option>";
+    const DATALIST_TEMPLATE = "<option value='".self::VAL."'>";
 
-    private $values = array();
-
-
-    public function __construct(){
-        parent::__construct(self::OPTION_TEMPLATE);
-    }
+    private $values;
 
 
-    public function values($values=NULL){
-        if(isset($values) && is_array($values)){
-            $this->values = $values;
-        }
-        return $this->values;
+    public function __construct($values, $isDatalist = TRUE){
+        parent::__construct($isDatalist ? self::DATALIST_TEMPLATE : self::SELECT_TEMPLATE);
+        $this->values = $values;
     }
 
 
@@ -39,8 +34,10 @@ class Options extends Page {
 
     public function replicate($html){
         $options = '';
-        foreach($this->values as $val){
-            $options .= str_replace(self::VAL, $val, $html);
+        foreach($this->values as $key => $val){
+            $opt = str_replace(self::KEY, $key, $html);
+            $opt = str_replace(self::VAL, $val, $opt);
+            $options .= "$opt\n";
         }
         return $options;
     }

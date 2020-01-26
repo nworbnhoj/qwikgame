@@ -254,7 +254,7 @@ $(document).ready(function(){
     });
 
 
-    $('.base').each(function(){
+    $('div.base').each(function(){
         var parentNode = $(this).parent();
         var base = this.cloneNode(true);
         var id = base.getAttribute('id');

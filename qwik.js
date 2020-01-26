@@ -93,7 +93,13 @@ $(document).ready(function(){
 
 
     $("select.game").change( function(){
-        jsonOptions($('datalist#svid'), $(this).val());
+        var game = $(this).val();
+        var form = $(this).parents('form:first');
+        var input = form.find("input[list]");
+        var id = input.attr('list');
+        if (!id){ return false; }
+        var datalist = $(":root").find("datalist#"+id);
+        jsonOptions(datalist, id, game);
     });
 
 
@@ -269,17 +275,21 @@ $(document).ready(function(){
     });
 
 
-    jsonOptions($('datalist#svid'), $("select.game option:selected").val());
+    $('datalist').each(function(){
+        var datalist = $(this);
+        var id = datalist.attr('id');
+        if (!id){ return false; }
+        var input = $(":root").find("[list='"+id+"']");
+        var form = input.parents('form:first');
+        var game = form.find("select.game option:selected").val();
+        jsonOptions(datalist, id, game);
+    });
+
 
 });
 
 
-
-
-function jsonOptions(datalist, game){
-    if (!datalist){ return false; }
-    var id = datalist.attr('id');
-    if (!id){ return false; }
+function jsonOptions(datalist, id, game){
     var url = "json/"+id+".options.php"+"?game="+game;
     console.log('json call to ' + url);
     $.getJSON(url, {}, function(json, stat){

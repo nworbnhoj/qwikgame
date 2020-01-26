@@ -13,7 +13,7 @@ $listing = $matchListing->make();
 $json = json_encode($listing);
 
 $json_error = json_last_error();
-if($json_error !== JSON_ERROR_NONE){
+if(!$json_error && $json_error !== JSON_ERROR_NONE){
     Qwik::logMsg("(feedback.match.listing.php) json error: $json_error\n html = $html");
 }
  

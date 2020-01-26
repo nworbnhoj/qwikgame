@@ -2,17 +2,22 @@
 header('Content-Type: application/json');
 
 require_once 'class/Qwik.php';
+require_once 'class/Defend.php';
 require_once 'class/SvidOptions.php';
 
+$defend = new Defend();
+$get = $defend->get();
+$game = $get['game'];
+$country = ''; // $get['country'];
 
-$svidOptions = new SvidOptions();
+$svidOptions = new SvidOptions($game, $country);
 $options = $svidOptions->make();
 
 $json = json_encode($options);
 
-$json_error = json_last_error();
-if($json_error !== JSON_ERROR_NONE){
-    Qwik::logMsg("(svid.options.php) json error: $json_error\n html = $html");
+if(!$json){
+    $json_error = json_last_error();
+    Qwik::logMsg("(svid.options.php) json error: $json_error\n game=$game country=$country");
 }
  
 echo $json;

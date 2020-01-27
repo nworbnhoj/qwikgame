@@ -4,6 +4,8 @@ require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'FavoriteListing.php';
 require_once 'AbilityListing.php';
+require_once 'Options.php';
+
 
 class FavoritePage extends Page {
 
@@ -111,10 +113,11 @@ class FavoritePage extends Page {
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
 	    $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
+            $regionOptions = new Options($this->regions(), Options::VALUE_TEMPLATE);
 
             $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
-            $vars['regionOptions'] = $this->regionOptions($player, "\t\t\t");
+            $vars['regionOptions'] = $regionOptions->make();
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
             $vars['thumbs']        = $player->repThumbs();
@@ -194,20 +197,6 @@ class FavoritePage extends Page {
     function qwikDelete($player, $request){
         $player->deleteData($request['id']);
     }
-
-
-    function regionOptions($player, $tabs){
-        $regions = $this->regions($player);
-        $options = '';
-        foreach($regions as $region){
-               $options .= "$tabs<option value='$region'>$region</option>\n";
-        }
-        return $options;
-    }
-
-
-
-
 
 
     function hourRows(){

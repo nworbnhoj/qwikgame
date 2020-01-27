@@ -379,7 +379,7 @@ class Page extends Html {
                 case 'games':     return $this->replicateGames($html, $req);             break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
-                case 'reckon':     return $this->replicateReckons($player, $html);       break;
+                case 'reckon':     return $this->replicateReckons($html);                break;
                 case 'translation':return $this->replicateTranslate($html);              break;
                 default:           return '';
             }
@@ -484,9 +484,8 @@ class Page extends Html {
     }
 
 
-    private function replicateReckons($player, $html){
-        if(!$player){ return; }
-        $regions = $this->regions($player);
+    private function replicateReckons($html){
+        $regions = $this->regions();
         $group = '';
         foreach($regions as $region){
             $vars = array(
@@ -551,7 +550,8 @@ class Page extends Html {
     }
     
     
-    public function regions($player){
+    public function regions(){
+        $player = $this->player();
         $available = $player->available();
         $countries = array();
         $admin1s = array();

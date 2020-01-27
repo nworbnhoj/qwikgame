@@ -95,13 +95,24 @@ $(document).ready(function(){
     $("select.game").change( function(){
         var game = $(this).val();
         var form = $(this).parents('form:first');
-        var input = form.find("input[list]");
-        var id = input.attr('list');
-        if (!id){ return false; }
-        var datalist = $(":root").find("datalist#"+id);
-        jsonOptions(datalist, id, game);
+        var json = form.find(".json");
+        json.each(function(){
+            var target = $(this);
+            switch(target.prop('nodeName')){
+                case 'INPUT':
+                    var id = target.attr('list');
+                    if (!id){ return false; }
+                    var datalist = $(":root").find("datalist#"+id);
+                    jsonOptions(datalist, id, game);
+                break;
+                case 'SELECT':
+                    var id = target.attr('id');
+                    if (!id){ return false; }
+                    jsonOptions(target, id, game);
+                break;
+            }
+        });
     });
-
 
 
     $("button.help").click(function(){
@@ -275,6 +286,23 @@ $(document).ready(function(){
     });
 
 
+    $('select.json').each(function(){
+        var select = $(this);
+        var id = select.attr('id');
+        if (!id){ return false; }
+        var url = 'json/'+id+'.options.php';
+        $.getJSON(url, {}, function(json, stat){
+            json = !json ? '' : json ;
+            var length = nFormatter(json.length, 1) ;
+            console.log("json reply from "+url+" ("+length+")");
+            select.html(json);
+        }).fail(function(jqxhr, textStatus, error){
+            var err = url+" : "+textStatus + ", " + error;
+            console.log(err);
+        });
+    });
+
+
     $('datalist').each(function(){
         var datalist = $(this);
         var id = datalist.attr('id');
@@ -289,14 +317,14 @@ $(document).ready(function(){
 });
 
 
-function jsonOptions(datalist, id, game){
+function jsonOptions(parent, id, game){
     var url = "json/"+id+".options.php"+"?game="+game;
-    console.log('json call to ' + url);
+    console.log("json call to "+url);
     $.getJSON(url, {}, function(json, stat){
         json = !json ? '' : json;
         var length = nFormatter(json.length, 1);
         console.log("json reply from "+url+" ("+length+")");
-        datalist.html(json);
+        parent.html(json);
     }).fail(function(jqxhr, textStatus, error){
         var err = url+" : "+textStatus + ", " + error;
         console.log(err);

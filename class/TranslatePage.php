@@ -23,7 +23,7 @@ const TICK = "<button class='TICK_ICON'></button>";
 const VENUE_INPUT = "
         <input id='venue-desc' 
             name='venue' 
-            class='venue' 
+            class='json venue' 
             list='svid'
             value='[venue]' 
             placeholder='{prompt_venue}' 
@@ -39,7 +39,7 @@ const RIVAL_INPUT = "
     ";
     
 const REGION_SELECT = "
-        <select name='region' class='region' required>
+        <select id='region' name='region' class='json region' required>
             <repeat id='reckon'>
                 <option value='[region]'>[region]</option>
             </repeat>

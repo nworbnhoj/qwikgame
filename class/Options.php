@@ -10,15 +10,24 @@ class Options extends Page {
 
     const VAL = "[val]";
     const KEY = "[key]";
-    const SELECT_TEMPLATE = "<option value='".self::KEY."'>".self::VAL."</option>";
+    const KEYVALUE_TEMPLATE = "<option value='".self::KEY."'>".self::VAL."</option>";
+    const VALUE_TEMPLATE = "<option value='".self::VAL."'>".self::VAL."</option>";
     const DATALIST_TEMPLATE = "<option value='".self::VAL."'>";
 
     private $values;
 
 
-    public function __construct($values, $isDatalist = TRUE){
-        parent::__construct($isDatalist ? self::DATALIST_TEMPLATE : self::SELECT_TEMPLATE);
+    public function __construct($values, $template = self::KEYVALUE_TEMPLATE){
+        parent::__construct($template);
         $this->values = $values;
+    }
+
+
+    public function values($values=NULL){
+        if(isset($values) && is_array($values)){
+            $this->values = $values;
+        }
+        return $this->values;
     }
 
 

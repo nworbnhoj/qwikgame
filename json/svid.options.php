@@ -10,7 +10,7 @@ $get = $defend->get();
 $game = $get['game'];
 $country = ''; // $get['country'];
 
-$options = new Options(Qwik::svids($game, $country), TRUE);
+$options = new Options(Qwik::svids($game, $country), Options::DATALIST_TEMPLATE);
 $opts = $options->make();
 
 $json = json_encode($opts);

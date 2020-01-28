@@ -27,9 +27,10 @@ class Venue extends Qwik {
 
 
     static function refreshID($vid){
+        $ROOT = $_SERVER['DOCUMENT_ROOT'];
         $PATH = self::PATH_VENUE;
         $fileName = self::file4id($vid);
-        $venueFile = "$PATH/$fileName";
+        $venueFile = "$ROOT/$PATH/$fileName";
         if (is_link($venueFile)){
             $target = readlink($venueFile);
             $vid = self::id4file($target);

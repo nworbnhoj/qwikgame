@@ -171,7 +171,7 @@ class MatchPage extends Page {
         $keenListing = new MatchListing(Listing::extractBase($html, 'keen.match'), 'keen');
         $vars['keenMatches'] = $keenListing->make();
 
-        $invitationListing = new MatchListing(Listing::extractBase($html, '.invitation.match'), 'invitation');
+        $invitationListing = new MatchListing(Listing::extractBase($html, 'invitation.match'), 'invitation');
         $vars['invitationMatches'] = $invitationListing->make();
 
         $acceptedListing = new MatchListing(Listing::extractBase($html, 'accepted.match'), 'accepted');

@@ -25,12 +25,12 @@ class Match extends Qwik {
             $this->xml->addAttribute('hrs', $hours->bits());
             $v = $this->xml->addChild('venue', $venue->id());
             $v->addAttribute('tz', $venue->tz());
-        } else {
-            try {  //refresh the VenueID in case it has been renamed
-                $vid = (string) $this->xml->venue[0];
-                $this->xml->venue[0] = Venue::refreshID($vid);
-            } catch (Exception $e){  // can throw a warning if not exist or non-symlink
-                self::logThrown($e);
+        } else { //refresh the VenueID in case it has been renamed
+            $vid = (string) $this->xml->venue[0];
+            $id = Venue::refreshID($vid);
+            if($id !== $vid){
+                unset($this->xml->venue[0];
+                $this->xml->addChild('venue', $id);
             }
         }
     }

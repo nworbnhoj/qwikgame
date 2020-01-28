@@ -32,8 +32,12 @@ class Venue extends Qwik {
         $fileName = self::file4id($vid);
         $venueFile = "$ROOT/$PATH/$fileName";
         if (is_link($venueFile)){
-            $target = readlink($venueFile);
-            $vid = self::id4file($target);
+            try {
+                $target = readlink($venueFile);
+                $vid = self::id4file($target);
+            } catch (Exception $e){  // can throw a warning if not exist or non-symlink
+                self::logThrown($e);
+            }
         }
         return $vid;
     }

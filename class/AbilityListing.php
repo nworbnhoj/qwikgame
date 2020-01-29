@@ -29,12 +29,12 @@ class AbilityListing extends Listing {
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("region");
         foreach($reckoning as $reckon){
-            $game = $reckon['game'];
+            $game = (string) $reckon['game'];
             $ability = $reckon['ability'];
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'region'    => explode(',', $reckon['region'])[0],
-                'game'      => self::qwikGames()["$game"],
+                'game'      => self::gameName($game),
                 'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + self::$icons;

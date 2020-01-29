@@ -31,7 +31,7 @@ class FavoriteListing extends Listing {
             $game = (string) $avail['game'];
             $availVars = array(
                 'id'        => (string) $avail['id'],
-                'game'      => self::qwikGames()[$game],
+                'gameName'  => self::gameName($game),
                 'parity'    => (string) $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)

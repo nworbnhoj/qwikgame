@@ -34,11 +34,11 @@ class FriendListing extends Listing {
             if (!array_key_exists($email, $emails)){
                 $emails[$email] = TRUE;
                 $parity = (int) $reckon['parity'];
-                $game = $reckon['game'];
+                $game = (string) $reckon['game'];
                 $reckonVars = array(
                     'id'        => $reckon['id'][0],
                     'email'     => $email,
-                    'game'      => self::qwikGames()["$game"],
+                    'gameName'  => self::gameName($game),
                     'parity'    => self::parityStr($parity)
                 );
                 $vars = $playerVars + $reckonVars + self::$icons;

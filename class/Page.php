@@ -190,7 +190,7 @@ class Page extends Html {
         $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
         $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";
         $game = (string) $this->req('game');
-        $vars['game']  = empty($game) ? '[game]' : self::qwikGames()[$game];
+        $vars['game']  = empty($game) ? '[game]' : self::gameName($game);
         
         if ($this->player != NULL){
             $vars['pid']         = $this->player->id();

@@ -322,8 +322,12 @@ class Qwik {
 
     static public function qwikGames(){
         return self::$games;
+    }    
+
+
+    static public function gameName($gameKey){
+        return self::$games[$gameKey];
     }
-    
     
 
     static public function countries(){

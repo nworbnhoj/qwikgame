@@ -687,7 +687,7 @@ class Player extends Qwik {
             "subject"    => "{EmailFavoriteSubject}",
             "paragraphs" => $paras,
             "to"         => $email,
-            "game"       => $req['game'],
+            "gameName"   => self::gameName($req['game']),
             "venue"      => $req['venue'],
             "authLink"   => $authLink
         );
@@ -713,7 +713,7 @@ class Player extends Qwik {
             "subject"    => "{EmailInviteSubject}",
             "paragraphs" => $paras,
             "to"         => $email,
-            "game"       => $game,
+            "gameName"   => self::gameName($game),
             "day"        => $day,
             "venueName"  => $venueName,
             "authLink"   => $authLink
@@ -739,7 +739,7 @@ class Player extends Qwik {
             "subject"    => "{EmailConfirmSubject}",
             "paragraphs" => $paras,
             "to"         => $this->email(),
-            "game"       => $game,
+            "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName,
             "authLink"   => $this->authLink(self::DAY)
@@ -775,7 +775,6 @@ class Player extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $gameName = self::qwikGames()["$game"];
         $pid = $this->id();
         $venueName = Venue::svid($match->venue());
         $paras = array(
@@ -788,7 +787,7 @@ class Player extends Qwik {
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "message"    => $message,
-            "game"       => $game,
+            "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName,
             "authLink"   => $this->authLink(self::DAY)
@@ -810,7 +809,7 @@ class Player extends Qwik {
             "subject"    => "{EmailCancelSubject}",
             "paragraphs" => array("{Game cancelled}"),
             "to"         => $this->email(),
-            "game"       => $game,
+            "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName
         );

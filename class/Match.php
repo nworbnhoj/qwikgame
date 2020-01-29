@@ -399,7 +399,7 @@ class Match extends Qwik {
             'venueName' => $this->venueName(),
             'status'    => $status,
             'game'      => $game,
-            'gameName'  => self::qwikGames()[$game],
+            'gameName'  => self::gameName($game),
             'day'       => $this->mday(),
             'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),

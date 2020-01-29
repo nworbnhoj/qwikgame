@@ -29,7 +29,7 @@ class Match extends Qwik {
             $vid = (string) $this->xml->venue[0];
             $id = Venue::refreshID($vid);
             if($id !== $vid){
-                unset($this->xml->venue[0];
+                unset($this->xml->venue[0]);
                 $this->xml->addChild('venue', $id);
             }
         }

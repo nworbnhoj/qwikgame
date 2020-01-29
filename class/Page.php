@@ -56,6 +56,48 @@ class Page extends Html {
     static $pending;
 
 
+    static public function daySpan($hours, $day='', $clock24hr=FALSE){
+        if (count($hours) == 0){
+            return "";
+        }
+
+        $dayX = "<b>" . substr($day, 0, 3) . "</b>";
+        if (count($hours) == 24){
+            return "<span class='lolite'>$dayX</span>";
+        }
+
+        $str = '';
+        if($clock24hr){
+            $str = $dayX." ";
+            $dayX = NULL;
+        }
+
+        $start = $hours[0];
+        $mid = '';
+        $end = $start;
+        $str .= Qwik::clock($start);
+        foreach($hours as $hr){
+            if($hr > $end+1){  // run has finished
+                $str .= $end==$start ? " " : $mid.Qwik::clock($end)." ";
+                $start = $hr;
+                $mid='';
+                $end = $start;
+                $str .= Qwik::clock($start);
+            } else {
+                $mid .= '&middot';
+                $end = $hr;
+            }
+            if ($hr > 12 && isset($dayX)) {
+                $mid .= $dayX;
+                $dayX = NULL;
+            }
+        }
+        $str .= $end==$start ? "" : $mid.Qwik::clock($end);
+
+        return "<span class='lolite'>$str</span>";
+    }
+
+
     private $player;
     private $language;
     private $req;
@@ -626,48 +668,6 @@ class Page extends Html {
         return $link;
     }
 
-
-
-    static public function daySpan($hours, $day='', $clock24hr=FALSE){
-        if (count($hours) == 0){
-            return "";
-        }
-
-        $dayX = "<b>" . substr($day, 0, 3) . "</b>";
-        if (count($hours) == 24){
-            return "<span class='lolite'>$dayX</span>";
-        }
-
-        $str = '';
-        if($clock24hr){
-            $str = $dayX;
-            $dayX = NULL;
-        }
-        $str .= ' ';
-        $prior = $hours[0] - 1;
-        foreach($hours as $hr){
-             $lastChar = substr($str, strlen($str)-1, 1);
-             $consecutive = $hr == ($prior + 1);
-             if($consecutive){
-                 $str .= $lastChar == ' ' ? self::clock($prior) : '' ;
-                 $str .= '&middot';
-             } else {
-                 $str .= self::clock($prior) . ' ';
-             }
-
-            if ($hr > 12 && isset($dayX)) {
-                $str .= $dayX;
-                $dayX = NULL;
-                $str .= $consecutive ? '&middot' : '' ;
-            }
-
-            $prior = $hr;
-        }
-        $str .= self::clock($prior);
-        $str .= $dayX!=NULL ? " $dayX" : '';
-        return "<span class='lolite'>$str</span>";
-    }    
-    
     
     function similarVenues($description, $game=NULL){
         $similar = array();

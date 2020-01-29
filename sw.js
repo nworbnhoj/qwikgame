@@ -28,6 +28,39 @@ workbox.routing.registerRoute(
 
 
 
+// Cache the font-awesome stylesheet with a stale-while-revalidate strategy.
+workbox.routing.registerRoute(
+  /\/\/netdna\.bootstrapcdn\.com\/font-awesome\/(.*?)\/css\/font-awesome.min.css/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'font-awesome-stylesheets',
+  })
+);
+
+
+
+
+// Cache the underlying font-awesome files with a cache-first strategy for 1 year.
+workbox.routing.registerRoute(
+  /^https:\/\/netdna\.bootstrapcdn\.com/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'font-awesome-icons',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+
+
+
+
+
 workbox.routing.registerRoute(
   /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
   new workbox.strategies.CacheFirst({
@@ -64,6 +97,11 @@ workbox.routing.registerRoute(
     cacheName: 'json-updated',
   })
 );
+
+
+workbox.precaching.precacheAndRoute([]);
+
+
 
 console.log("Qwikgame Service Worker loaded.");
 

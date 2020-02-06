@@ -34,7 +34,7 @@ class AbilityListing extends Listing {
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'region'    => explode(',', $reckon['region'])[0],
-                'game'      => self::gameName($game),
+                'gameName'  => self::gameName($game),
                 'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + self::$icons;

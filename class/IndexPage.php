@@ -14,7 +14,10 @@ class IndexPage extends Page {
         if ($this->player() == NULL){
             parent::serve();
         } else {
-            $query = http_build_query($this->req());
+            $req = $this->req();
+            unset($req['pid']);
+            unset($req['token']);
+            $query = http_build_query($req);
             header("Location: ".self::QWIK_URL."/match.php?$query");
         }
     }
@@ -31,6 +34,9 @@ class IndexPage extends Page {
                 break;
             case "recover":
                 $result = $this->qwikRecover($email);
+                break;
+            case 'logout':
+                $result = $this->logout();
                 break;
         }
         return $result;
@@ -106,7 +112,6 @@ class IndexPage extends Page {
         $variables['venuesLink']     = "<a href='venues.php?game=squash'>{venues}</a>";
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
-        $variables['datalists']      = $this->datalists();
         $variables['alert-hidden']   = empty($this->alert) ? 'hidden' : '';
         $variables['alert']          = $this->alert;
         

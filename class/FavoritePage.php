@@ -148,7 +148,7 @@ class FavoritePage extends Page {
 
         $favoriteListing = new FavoriteListing(Listing::extractBase($html, 'favorite'));
         $vars['favoriteListing'] = $favoriteListing->make();
-        $abilityListing = new AbilityListing(Listing::extractBase($html, 'abilty'));
+        $abilityListing = new AbilityListing(Listing::extractBase($html, 'ability'));
         $vars['abilityListing'] = $abilityListing->make();
         return parent::make($vars); 
     }

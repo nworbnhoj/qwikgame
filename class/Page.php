@@ -114,7 +114,7 @@ class Page extends Html {
         $defend = new Defend();
         $this->req = $defend->request();
 
-        $this->logReq($this->req);
+//        $this->logReq($this->req);
         $this->player = $this->login($this->req);
 
         $language = $this->selectLanguage($this->req, $this->player);
@@ -348,6 +348,7 @@ class Page extends Html {
             self::logMsg("logout $id");
             unset($_SESSION['pid']);
             unset($_COOKIE['pid']);
+            unset($this->player);
         }
         if (!headers_sent()){
             setcookie("pid", "", time() - Player::DAY);

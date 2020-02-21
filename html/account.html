@@ -20,6 +20,10 @@
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <script>
+        if (!("Notification" in window)) {
+            document.getElementById('notify-push').disabled = true;
+        } 
+
         function checkQuit(){
             return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
         }
@@ -57,7 +61,7 @@
         <br>
         <input name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
         <input name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
-        <input type="submit" class="account" value="{Submit}">
+        <input type="submit" id='account-public' class="account" value="{Submit}">
     </form>
 </div>
 
@@ -68,12 +72,17 @@
         <input type="hidden" name="qwik" value='account'>
         <h4>{private}</h4>
         <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
+        <fieldset class='brick'>
+            <legend>{notifications}</legend>
+            <input type='checkbox' id='notify-email' name='notify-email' [notify-email-checked]>{email}</input>
+            <input type='checkbox' id='notify-push' name='notify-push' [notify-push-checked]>{push}</input>
+        </fieldset>
         <select name='lang'>
             <repeat id='language'>
             <option value='[code]' [selected]>[language]</option>
             </repeat>
         </select>
-        <input type="submit" class="account" value="{Submit}">
+        <input type="submit" id='account-private' class="account" value="{Submit}">
     </form>
 </div>
 

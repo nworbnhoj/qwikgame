@@ -245,6 +245,28 @@ $(document).ready(function(){
     });
 
 
+    $('#notify-push').click(function(){
+        if (!('Notification' in window) | !('PushManager' in window)) {
+            alert('Unfortunately, this browser does not support push notifications.');
+        }
+        // The notify-push checkbox represents the player.xml record of a desire for notifications
+        // and, Notification.permission relates to the current browser in particular
+        // So blocking permission in the current browser should not over-ride player.xml 
+        if ($(this).prop('checked')){
+            if(Notification.permission === 'denied'){ // requires a manual change in browser
+                var name = browserName();
+                alert("Currently, 'notifications' are denied in "+name+" browser preferences");
+            } else {
+              Notification.requestPermission().then(function (permission) {
+                if (permission === "denied") {  // User baulked and changed their mind
+                  $(this).prop('checked', false);
+                }
+              });
+            }
+        }
+    });
+
+
     $('.geocode').blur(function(){
         initMap();
     });
@@ -540,3 +562,24 @@ function nFormatter(num, digits) {
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
 
+
+// https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+function browserName(){
+  var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+  var isFirefox = typeof InstallTrigger !== 'undefined';
+  var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+  var isIE = /*@cc_on!@*/false || !!document.documentMode;
+  var isEdge = !isIE && !!window.StyleMedia;
+  var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+  var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+  var isBlink = (isChrome || isOpera) && !!window.CSS;
+
+  return isOpera      ? 'Opera'       : (
+         isFirefox    ? 'Firefox'     : (
+         isSafari     ? 'Safari'      : (
+         isIE         ? 'Explorer'    : (
+         isEdge       ? 'Edge'        : (
+         isChrome     ? 'Chrome'      : (
+         isEdgeChrome ? 'Edge Chrome' : (
+         isBlink      ? 'Blink' : 'unrecognised' )))))));
+}

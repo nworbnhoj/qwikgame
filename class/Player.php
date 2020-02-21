@@ -6,20 +6,13 @@ require_once 'Orb.php';
 require_once 'Match.php';
 require_once 'Email.php';
 require_once 'Ranking.php';
+require_once 'Notify.php';
 
 
 class Player extends Qwik {
 
     const PATH_PLAYER   = 'player';
     const PATH_UPLOAD = 'uploads';
-
-    const SECOND = 1;
-    const MINUTE = 60;
-    const HOUR   = 3600;
-    const DAY    = 86400;
-    const WEEK   = 604800;
-    const MONTH  = 2678400;
-    const YEAR   = 31536000;
     
     
     /*******************************************************************************
@@ -78,6 +71,7 @@ class Player extends Qwik {
         $record  = "<player id='$pid' debut='$debut' lang='en'>";
         $record .= "<rep pos='0' neg='0'/>";
         $record .= "<rely val='1.0'/>";
+        $record .= "<notify default='1'/>";
         $record .= "</player>";
         return new SimpleXMLElement($record);
     }
@@ -593,7 +587,8 @@ class Player extends Qwik {
             $match->hours($inviteHours);
             $match->addRival($rid, $parity, $rival->repWord(), $rival->nick());
             $this->save();
-            $this->emailInvite($match, $email);
+            $notify = new Notify($this);
+            $notify->sendInvite($match, $email);
             return $match;
         } catch (RuntimeException $e){
             self::logThrown($e);
@@ -616,7 +611,8 @@ class Player extends Qwik {
         if (isset($match)){
             $rival = $match->rival();
             if($rival->ok()){
-                $rival->emailMsg($msg, $match);
+                $notify = new Notify($rival);
+                $notify->sendMsg($msg, $match);
             }
         }
     }
@@ -637,6 +633,26 @@ class Player extends Qwik {
         $authURL = $this->authURL($shelfLife, $param);
         return "<a href='$authURL'>{login}</a>";
   
+    }
+
+
+
+    public function notifyXML(){
+        $xmlArray = $this->xml->xpath("notify");
+
+        if (is_array($xmlArray) && isset($xmlArray[0])){
+            $xml = $xmlArray[0];
+        } else {
+            $xml = $this->xml->addChild('notify', '');
+            $xml->addAttribute('default', '1');
+        }
+
+        if (isset($xmlArray[1])){  // integrity check
+            $pid = self::snip($this->id());
+            self::logMsg("player $pid has duplicate <notify> elements");
+        }
+
+        return $xml;
     }
 
 
@@ -698,59 +714,6 @@ class Player extends Qwik {
     }
 
 
-    function emailInvite($match, $email=NULL){
-        $email = is_null($email) ? $this->email() : $email ;
-        $date = $match->dateTime();
-        $day = $match->mday();
-        $game = $match->game();
-        $venueName = $match->venueName();
-        $authLink = $this->authLink(self::WEEK, array("email"=>$email));
-        $paras = array(
-            "{You are invited}",
-            "{Please accept}"
-        );
-        $vars = array(
-            "subject"    => "{EmailInviteSubject}",
-            "paragraphs" => $paras,
-            "to"         => $email,
-            "gameName"   => self::gameName($game),
-            "day"        => $day,
-            "venueName"  => $venueName,
-            "authLink"   => $authLink
-        );
-        $email = new Email($vars, $this->lang());
-        $email->send();
-        self::logEmail('invite', $this->id(), $game, $venueName);
-    }
-
-
-    function emailConfirm($mid){
-        $match = $this->matchID($mid);
-        $datetime = $match->dateTime();
-        $time = date_format($datetime, "ga D");
-        $game = $match->game();
-        $venueName = $match->venueName();
-        $paras = array(
-            "{Game is set}",
-            "{Need to cancel}",
-            "{Have great game}"
-        );
-        $vars = array(
-            "subject"    => "{EmailConfirmSubject}",
-            "paragraphs" => $paras,
-            "to"         => $this->email(),
-            "gameName"   => self::gameName($game),
-            "time"       => $time,
-            "venueName"  => $venueName,
-            "authLink"   => $this->authLink(self::DAY)
-        );
-        $email = new Email($vars, $this->lang());
-        $email->send();
-
-        self::logEmail('confirm', $this->id(), $game, $venueName, $time);
-    }
-
-
     private function emailChange($email){
         $paras = array(
             "{Click to change}",
@@ -767,55 +730,6 @@ class Player extends Qwik {
         $email->send();
 
         self::logEmail('email', $this->id());
-    }
-
-
-
-    function emailMsg($message, $match){
-        $datetime = $match->dateTime();
-        $time = date_format($datetime, "ga D");
-        $game = $match->game();
-        $pid = $this->id();
-        $venueName = Venue::svid($match->venue());
-        $paras = array(
-            "{game time venue}",
-            "{Your rival says...}",
-            "{Please reply}"
-        );
-        $vars = array(
-            "subject"    => "{EmailMsgSubject}",
-            "paragraphs" => $paras,
-            "to"         => $this->email(),
-            "message"    => $message,
-            "gameName"   => self::gameName($game),
-            "time"       => $time,
-            "venueName"  => $venueName,
-            "authLink"   => $this->authLink(self::DAY)
-        );
-        $email = new Email($vars, $this->lang());
-        $email->send();
-
-        self::logEmail('msg', $pid, $game, $venueName, $time);
-    }
-
-
-    function emailCancel($match){
-        $datetime = $match->dateTime();
-        $time = date_format($datetime, "ga D");
-        $game = $match->game();
-        $pid = $this->id();
-        $venueName = $match->venueName();
-        $vars = array(
-            "subject"    => "{EmailCancelSubject}",
-            "paragraphs" => array("{Game cancelled}"),
-            "to"         => $this->email(),
-            "gameName"   => self::gameName($game),
-            "time"       => $time,
-            "venueName"  => $venueName
-        );
-        $email = new Email($vars, $this->lang());
-        $email->send();
-        self::logEmail('cancel', $pid, $game, $venueName, $time);
     }
 
 

@@ -16,8 +16,8 @@ class VenuesPage extends Page {
         $loc = Locate::geolocate('location');
 
         $vars['game'] = $this->req('game');
-        $vars['lat']  = $loc['lat'];
-        $vars['lng']  = $loc['lng'];
+        $vars['lat']  = isset($loc['lat']) ? $loc['lat'] : NULL ;
+        $vars['lng']  = isset($loc['lng']) ? $loc['lng'] : NULL ;
         return $vars;
     }
 

@@ -1,3 +1,10 @@
+function ready(callbackFunction){
+  if(document.readyState != 'loading')
+    callbackFunction(event)
+  else
+    document.addEventListener("DOMContentLoaded", callbackFunction)
+}
+
 
 // Registering Service Worker
 if('serviceWorker' in navigator) {

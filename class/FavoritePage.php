@@ -111,14 +111,10 @@ class FavoritePage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-	    $reckons = $player->reckon("email");
-            $historyCount = count($player->matchQuery("match[@status='history']"));
             $regionOptions = new Options($this->regions(), Options::VALUE_TEMPLATE);
 
             $vars['message']       .= "{Welcome} <b>$playerName</b>";
-            $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
             $vars['regionOptions'] = $regionOptions->make();
-            $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;
@@ -126,13 +122,6 @@ class FavoritePage extends Page {
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
             $vars['svenue']        = isset($this->venue) ? Venue::svid($this->venue->id()) : "";
-
-            // special case: new un-activated player
-            if (is_null($playerEmail)){
-                $vars['message']    .= '{Please activate...}';
-                $vars['playerName'] = ' ';
-                $vars['playerEmail'] = ' ';
-            }
         }
 
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");

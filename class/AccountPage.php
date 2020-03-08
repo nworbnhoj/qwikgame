@@ -62,8 +62,6 @@ class AccountPage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-	    $reckons = $player->reckon("email");
-            $historyCount = count($player->matchQuery("match[@status='history']"));
 
             $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
@@ -75,13 +73,6 @@ class AccountPage extends Page {
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
-
-            // special case: new un-activated player
-            if (is_null($playerEmail)){
-                $vars['message']    .= '{Please activate...}';
-                $vars['playerName'] = ' ';
-                $vars['playerEmail'] = ' ';
-            }
         }
         return $vars;
     }

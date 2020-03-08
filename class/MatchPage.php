@@ -149,13 +149,6 @@ class MatchPage extends Page {
             $vars['paritySelect']  = self::SELECT_PARITY;
             $vars['thumbButton']   = self::BUTTON_THUMB;
             $vars['svenue']        = isset($this->venue) ? Venue::svid($this->venue->id()) : "";
-
-            // special case: new un-activated player
-            if (is_null($playerEmail)){
-                $vars['message']    .= '{Please activate...}';
-                $vars['playerName'] = ' ';
-                $vars['playerEmail'] = ' ';
-            }
         }
 
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");

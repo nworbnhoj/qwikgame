@@ -252,26 +252,51 @@ $(document).ready(function(){
     });
 
 
+
+    /* The notify-push checkbox requests notifications to the CURRENT Browser.
+     * Browser notifications are independent so it is OK (expected) that the notify-push checkbox
+     * will be different in different browsers and devices simultaniously for the same Player.
+     * The notify-push checkbox may be disabled if the current browser does not support notifications.
+     */
     $('#notify-push').click(function(){
-        if (!('Notification' in window) | !('PushManager' in window)) {
-            alert('Unfortunately, this browser does not support push notifications.');
-        }
-        // The notify-push checkbox represents the player.xml record of a desire for notifications
-        // and, Notification.permission relates to the current browser in particular
-        // So blocking permission in the current browser should not over-ride player.xml 
-        if ($(this).prop('checked')){
-            if(Notification.permission === 'denied'){ // requires a manual change in browser
-                var name = browserName();
-                alert("Currently, 'notifications' are denied in "+name+" browser preferences");
+      if ($(this).prop('checked')){
+        if(Notification.permission === 'denied'){ // requires a manual change in browser
+          const name = browserName();
+          alert("Currently, 'notifications' are denied in "+name+" browser preferences");
+          $(this).prop('checked', false);
+        } else {
+          Notification.requestPermission()
+          .then(function (permission) {
+            if (permission === "denied") {  // User baulked and changed their mind
+              $(this).prop('checked', false);
             } else {
-              Notification.requestPermission().then(function (permission) {
-                if (permission === "denied") {  // User baulked and changed their mind
-                  $(this).prop('checked', false);
-                }
-              });
+              getPushSubscription(false);
+              if ($(this).attr('disabled')){
+                const name = browserName();
+                alert("Failed to setup notifications in "+name+" browser.");
+              }
             }
+          });
         }
+      } else {  // #notify-push !checked
+        clearPushSubscription();
+      }
     });
+
+
+    $('#notify-push-label').click(function(){
+      if (document.getElementById('notify-push').disabled){
+        alert('Unfortunately, this browser does not support push notifications.');
+      }
+    });
+
+
+    $('#account-private-form').submit(function(){
+      if (!$('#notify-push').prop('checked')){
+        clearPushSubscription();
+      }
+    });
+
 
 
     $('.geocode').blur(function(){
@@ -570,6 +595,7 @@ function nFormatter(num, digits) {
 }
 
 
+
 // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 function browserName(){
   var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -590,3 +616,76 @@ function browserName(){
          isEdgeChrome ? 'Edge Chrome' : (
          isBlink      ? 'Blink' : 'unrecognised' )))))));
 }
+
+
+
+/* Request a Push Subscription and populate fields ready for submission
+ * @param syncWithServer true will  ensure #notify-push checkbox reflects curent server state
+ * fields #push-endpoint #push-token & #push-key hold Subscription details from client 
+ * field #push-endpoint-sack holds all Push Subscriptions currently held at server 
+ * field #notify-push holds user request for push notifications
+ */
+function getPushSubscription(syncWithServer){
+  navigator.serviceWorker.ready
+  .then(function(serviceWorkerRegistration) {  // request a push subscription
+    var vapidPublicKey = "BFhoDaEHuf_ZF_OxnuPY9h5Jgb8f0-dKLwZFsedRDYJb0C_XDeCLeWijpYZPzQuYDE0tYKoBa8BFZxeoB6VCxII";
+    var serverKey = urlBase64ToUint8Array(vapidPublicKey);
+    var subscriptionParam = {userVisibleOnly: true, applicationServerKey: serverKey};
+    serviceWorkerRegistration.pushManager.subscribe(subscriptionParam)
+    .then(function(subscription) {  // prepare subscription details for submission to server
+      document.getElementById('push-endpoint').value = subscription.endpoint;
+      const token = subscription.getKey('auth');
+      const encodedToken = token ? btoa(String.fromCharCode.apply(null, new Uint8Array(token))) : null;
+      document.getElementById('push-token').value = encodedToken ;
+      const key = subscription.getKey('p256dh');
+      const encodedKey = key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : null ;
+      document.getElementById('push-key').value = encodedKey ;
+
+      if (syncWithServer){  // check notify-push checkbox if endpoint exists at server
+        const pushSack = document.getElementById('push-endpoint-sack').value;
+        const pushEnabled = pushSack.search(subscription.endpoint) >= 0;
+        document.getElementById('notify-push').checked = pushEnabled;
+      }
+
+    })
+    .catch(e => {
+      console.log('Failed to create push subscription', e);
+      const notifyPushCheckbox = document.getElementById('notify-push');
+      notifyPushCheckbox.checked = false;
+      notifyPushCheckbox.disabled = true;
+    });
+  })
+ .catch(e => {
+   console.log('Failed to create push subscription', e);
+   const notifyPushCheckbox = document.getElementById('notify-push');
+   notifyPushCheckbox.checked = false;
+   notifyPushCheckbox.disabled = true;
+  });
+}
+
+
+
+/* Clear Push Subscription fields ready for submission
+ * Field IDs: push-token & push-key
+ */
+function clearPushSubscription(){
+  document.getElementById('push-key').value = '' ;    // remove subscription at server on Submit
+  document.getElementById('push-token').value = '' ;  // remove subscription at server on Submit
+}
+
+
+// https://github.com/Minishlink/web-push-php-example/blob/master/src/app.js
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+

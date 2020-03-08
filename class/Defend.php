@@ -22,6 +22,8 @@ class Defend extends Qwik {
         'nick'        => 20,
         'note'        => 2000,
         'phrase'      => 2000,
+        'push-key'    => 88,
+        'push-token'  => 24,
         'region'      => 50,
         'reply'       => 3,
         'route'       => 100,
@@ -65,6 +67,9 @@ class Defend extends Qwik {
         'phrase'   => FILTER_DEFAULT,
         'pid'      => Filter::PID,
         'placeid'  => FILTER_DEFAULT,
+        'push-endpoint' => FILTER_VALIDATE_URL,
+        'push-key'      => FILTER_DEFAULT,
+        'push-token'    => FILTER_DEFAULT,
         'qid'      => Filter::QID,
         'qwik'     => Filter::QWIK,
         'reply'    => FILTER_DEFAULT,
@@ -209,29 +214,29 @@ class Defend extends Qwik {
         $req = $this->clip($req);
         $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
         if ($this->size($result) !== $this->size($req)){
-        	$this->rejected = $this->rejected + $this->rejects($req, $result);
+            $this->rejected = $this->rejected + $this->rejects($req, $result);
         }
         return $result;
     }
 
 
 
-    private function rejects($raw, $processed){
+    private function rejects($raw, $safe){
         $rejects = NULL;
         if(is_array($raw)){
             $rejects = array();
-            foreach($raw as $key => $value){
-                $missing = NULL;
-                if (array_key_exists($key, $processed)){
-                    $missing = $this->rejects($value, $processed[$key]);
+            foreach($raw as $rawKey => $rawVal){
+                $badVal = NULL;
+                if (array_key_exists($rawKey, $safe)){  // recursion
+                    $badVal = $this->rejects($rawVal, $safe[$rawKey]);
                 } else {
-                    $missing = print_r($value, TRUE);
+                    $badVal = print_r($rawVal, TRUE);
                 }
-                if(!empty($missing)){
-                    $rejects[$key] = $missing;
+                if(!empty($badVal)){
+                    $rejects[$rawKey] = $badVal;
                 }
             }
-        } elseif($raw != $processed) {    // weak test as some filters convert type
+        } elseif($raw != $safe) {    // weak test as some filters convert type
             $rejects = print_r($raw, TRUE);
         }
         return empty($rejects) ? NULL : $rejects;

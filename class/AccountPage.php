@@ -64,9 +64,10 @@ class AccountPage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-	    $reckons = $player->reckon("email");
+            $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
             $notify = new Notify($player);
+
 
             $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
@@ -78,8 +79,9 @@ class AccountPage extends Page {
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
-            $vars['notify-email-checked']  = $notify->open(Notify::CH_EMAIL) ? 'checked' : '';
-            $vars['notify-push-checked']   = $notify->open(Notify::CH_PUSH) ? 'checked' : '';
+            $vars['notify-email-checked']  = $notify->is_open($playerEmail) ? 'checked' : '';
+            $vars['push-endpoint-sack']   = $notify->pushSack();
+
 
             // special case: new un-activated player
             if (is_null($playerEmail)){
@@ -117,10 +119,18 @@ function qwikAccount($player, $request){
         $player->lang($request['lang']);
     }
 
-
+ 
     $notify = new Notify($player);
-    $notify->open(Notify::CH_EMAIL, isset($request['notify-email']) ? Notify::OPEN : Notify::SHUT);
-    $notify->open(Notify::CH_PUSH, isset($request['notify-push']) ? Notify::OPEN : Notify::SHUT);
+    $notify->email(
+        $player->email(), 
+        isset($request['notify-email']) ? Notify::MSG_ALL : Notify::MSG_NONE
+    );
+    $notify->push(
+        $request['push-endpoint'],
+        isset($request['notify-push']) ? Notify::MSG_ALL : Notify::MSG_NONE,
+        $request['push-token'],
+        $request['push-key']
+    );
 
 
     if(isset($request['account']) && ($request['account'] === 'quit')) {

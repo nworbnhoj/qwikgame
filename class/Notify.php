@@ -6,18 +6,14 @@ require_once 'Match.php';
 require_once 'Email.php';
 
 
-class Notify extends Qwik {
+class Notify extends Qwik {    
 
-
-    const CH_EMAIL = 0b0000000000000001;
-    const CH_PUSH  = 0b0000000000000010;
-
-    
-    const MSG_DEFAULT  = PHP_INT_MAX;
-
-
-    const OPEN = 0b1111111111111111;
-    const SHUT = 0b0000000000000000;
+    const MSG_NONE    = 0b0000000000000000;
+    const MSG_INVITE  = 0b0000000000000001;
+    const MSG_CONFIRM = 0b0000000000000010;
+    const MSG_MSG     = 0b0000000000000100;
+    const MSG_CANCEL  = 0b0000000000001000;
+    const MSG_ALL     = 0b1111111111111111;
 
     private $player;
     private $xml;
@@ -45,34 +41,83 @@ class Notify extends Qwik {
     }
 
 
-    /**************************************************************
-    * @param $channel [ Notify::CH_EMAIL | Notify::CH_PUSH ]
-    * @param $state   [ NULL | Notify::OPEN | Notify::SHUT ]
-    * @param $msg     [ 'default' ]
-    *
-    ***************************************************************/
-    public function open($channel, $state=NULL, $msg='default'){
-        $default = ($msg === 'default');
-        if(!$default){  // temporary warning
-            self::logMsg("Not implemented: Notify message = $msg");
-            return FALSE;
+
+    /* Set and Get the SimpleXML element representing an email notification path.
+     * @param $email the email address to receive notifications
+     * @param $msg a bitfield representing the specific notifications for this path
+     * @return a SimpleXML Element representing an email notification path.
+     */
+    public function email($email, $msg=NULL){
+        if (is_null($email)){
+            return NULL;
         }
 
-        if(!is_null($state)){
-            $current = $default ? $this->fallback() : 0 ;
-            $revised = ($current & ~$channel) | ($state & $channel);
-            if ($default){
-                $this->xml['default'] = $revised;
-            } else {
-                // handle bitfields for explicit message types here 
-            }
+        $paths = $this->xml->xpath("//path[@email='$email']");
+        $xml = empty($paths) ? NULL : $paths[0] ;
+
+        if (isset($xml) && $msg === self::MSG_NONE){
+            self::removeElement($xml);  // remove the current path
+            $xml = NULL;
+        } else if (isset($msg) && $msg != (string)$xml) {
+            unset($xml);  // replace the current path or add a new path
+            $xml = $this->xml->addChild("path", $msg);
+            $xml->addAttribute('email', $email);
+        }
+        return $xml;
+    }
+
+
+
+    /* Set and Get the SimpleXML element representing an push notification path.
+     * @param $endpoint the push subscription endpoint address to receive notifications
+     * @param $msg a bitfield representing the specific notifications for this path
+     * @param $token the push subscription token
+     * @param $key the push subscription key
+     * @return a SimpleXML Element representing an push notification path.
+     */
+    public function push($endpoint, $msg=NULL, $token=NULL, $key=NULL){
+        if (is_null($endpoint)){
+            return NULL;
         }
 
-        $fallback = $this->xml['default'];
-        $explicit = NULL; // $this->xml->xpath("$msg");
-        $bitfield = is_null($explicit) ? $fallback : $explicit ;
-         
-        return boolval($bitfield & $channel);
+        $paths = $this->xml->xpath("//path[@endpoint='$endpoint']");
+        $xml = empty($paths) ? NULL : $paths[0] ;
+
+        if (isset($xml) && $msg === self::MSG_NONE){
+            self::removeElement($xml);  // remove the current path
+            $xml = NULL;
+        } else if (isset($msg, $token, $key) && $msg != (string)$xml) {
+            unset($xml);  // replace the current path or add a new path
+            $xml = $this->xml->addChild("path", $msg);
+            $xml->addAttribute('endpoint', $endpoint);
+            $xml->addAttribute('token', $token);
+            $xml->addAttribute('key', $key);
+        }
+        return $xml;
+    }
+
+
+    public function is_open($address){
+        $emailXML = $this->email($address);
+        if (isset($emailXML)){
+            return TRUE;
+        }
+        $pushXML = $this->push($address);
+        if (isset($pushXML)){
+           return TRUE;
+        }
+        return FALSE;
+    }
+
+
+    public function pushSack(){
+        $sack='';
+        $paths = $this->xml->xpath("//path[@endpoint]");
+        foreach($paths as $path){
+            $sack .= $path['endpoint'];
+            $sack .= "   ";  // spacer for human readability
+        }
+        return $sack;
     }
 
 
@@ -81,29 +126,33 @@ class Notify extends Qwik {
 
 
     public function sendInvite($match, $email){
-        if ($this->open(self::CH_EMAIL)){
+        $email = $this->is_open($email) ? $email : $this->player->email();
+        if ($this->is_open($email)){
             $this->emailInvite($match, $email);
         }
     }
 
 
     public function sendConfirm($mid){
-        if ($this->open(self::CH_EMAIL)){
-            $this->emailConfirm($mid);
+        $email = $this->player->email(); 
+        if ($this->is_open($email)){
+            $this->emailConfirm($mid, $email);
         }
     }
 
 
     public function sendMsg($msg, $match){
-        if ($this->open(self::CH_EMAIL)){
-            $this->emailMsg($msg, $match);
+        $email = $this->player->email();
+        if ($this->is_open($email)){
+            $this->emailMsg($msg, $match, $email);
         }
     }
 
 
     public function sendCancel($match){
-        if ($this->open(self::CH_EMAIL)){
-            $this->emailCancel($match);
+        $email = $this->player->email();
+        if ($this->is_open($email)){
+            $this->emailCancel($match, $email);
         }
     }
 
@@ -136,7 +185,7 @@ class Notify extends Qwik {
     }
 
 
-    private function emailConfirm($mid){
+    private function emailConfirm($mid, $address){
         $match = $this->player->matchID($mid);
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
@@ -150,7 +199,7 @@ class Notify extends Qwik {
         $vars = array(
             "subject"    => "{EmailConfirmSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->player->email(),
+            "to"         => $address,
             "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName,
@@ -161,7 +210,7 @@ class Notify extends Qwik {
     }
 
 
-    private function emailMsg($message, $match){
+    private function emailMsg($message, $match, $address){
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
@@ -175,7 +224,7 @@ class Notify extends Qwik {
         $vars = array(
             "subject"    => "{EmailMsgSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->player->email(),
+            "to"         => $address,
             "message"    => $message,
             "gameName"   => self::gameName($game),
             "time"       => $time,
@@ -187,7 +236,7 @@ class Notify extends Qwik {
     }
 
 
-    private function emailCancel($match){
+    private function emailCancel($match, $address){
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
@@ -196,7 +245,7 @@ class Notify extends Qwik {
         $vars = array(
             "subject"    => "{EmailCancelSubject}",
             "paragraphs" => array("{Game cancelled}"),
-            "to"         => $this->player->email(),
+            "to"         => $address,
             "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName

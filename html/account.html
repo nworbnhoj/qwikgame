@@ -20,13 +20,19 @@
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <script>
-        if (!("Notification" in window)) {
-            document.getElementById('notify-push').disabled = true;
-        } 
-
-        function checkQuit(){
-            return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
+      ready(event => {
+        if (!("Notification" in window) | !('PushManager' in window)) {
+          document.getElementById('notify-push').disabled = true;
+        } else if ("Notification" in window){
+          if (Notification.permission === 'granted'){
+            getPushSubscription(true);  // get subscription and populate fields (endpoint, token & key)
+          }
         }
+      });
+
+      function checkQuit(){
+        return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
+      }
     </script>
 </head>
 
@@ -68,21 +74,27 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{You_will_receive_validation...}</span>
-    <form action='account.php'>
+    <form id='account-private-form' action='account.php'>
         <input type="hidden" name="qwik" value='account'>
         <h4>{private}</h4>
         <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
         <fieldset class='brick'>
             <legend>{notifications}</legend>
-            <input type='checkbox' id='notify-email' name='notify-email' [notify-email-checked]>{email}</input>
-            <input type='checkbox' id='notify-push' name='notify-push' [notify-push-checked]>{push}</input>
+            <label for='notify-email'>{email}</label>
+            <input type='checkbox' id='notify-email' name='notify-email' [notify-email-checked]>
+            <label for='notify-push' id='notify-push-label'>{push}</label>
+            <input type='checkbox' id='notify-push' name='notify-push'>
+            <input type='hidden' id='push-endpoint' name='push-endpoint'>
+            <input type='hidden' id='push-key' name='push-key'>
+            <input type='hidden' id='push-token' name='push-token'>
+            <input type='hidden' id='push-endpoint-sack' value='[push-endpoint-sack]'>
         </fieldset>
         <select name='lang'>
             <repeat id='language'>
             <option value='[code]' [selected]>[language]</option>
             </repeat>
         </select>
-        <input type="submit" id='account-private' class="account" value="{Submit}">
+        <input type="submit" id='account-private-submit' class="account" value="{Submit}">
     </form>
 </div>
 

@@ -571,7 +571,7 @@ class Page extends Html {
     function playerVariables($player){
         return array(
             'target'    => 'match.php',
-            'reputation'=> $this->repStr($player->repWord())
+            'reputation'=> $this->repStr(isset($player) ? $player->repWord() : '')
         );
     }
 

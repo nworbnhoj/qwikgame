@@ -9,6 +9,12 @@ class UploadPage extends Page {
     public function __construct($templateName='upload'){
         parent::__construct(NULL, $templateName);
 
+        $player = $this->player();
+        if (is_null($player)
+        || !$player->ok()){
+            $this->logout();
+            return;
+        }
     }
 	
 	

@@ -53,6 +53,13 @@ class Listing extends Page {
     *******************************************************************************/
     public function __construct($html){
         parent::__construct($html);
+
+        $player = $this->player();
+        if (is_null($player)
+        || !$player->ok()){
+            $this->logout();
+            return;
+        }
     }
 
 

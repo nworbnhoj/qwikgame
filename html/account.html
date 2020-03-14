@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <link rel="manifest" href="qwik.webmanifest">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="qwik.js"></script>
+    <script type="text/javascript"  src="qwik.js"></script>
+    <script type="text/javascript"  src="account.js" async></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -19,21 +20,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <script>
-      ready(event => {
-        if (!("Notification" in window) | !('PushManager' in window)) {
-          document.getElementById('notify-push').disabled = true;
-        } else if ("Notification" in window){
-          if (Notification.permission === 'granted'){
-            getPushSubscription(true);  // get subscription and populate fields (endpoint, token & key)
-          }
-        }
-      });
-
-      function checkQuit(){
-        return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
-      }
-    </script>
 </head>
 
 <body>

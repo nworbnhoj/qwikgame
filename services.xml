@@ -1,20 +1,34 @@
 <?xml version="1.0"?>
 <services>
 <service name="geoplace">
-    <xml>https://maps.googleapis.com/maps/api/place/autocomplete/xml</xml>
-    <json>https://maps.googleapis.com/maps/api/place/autocomplete/json</json>
-    <key></key>
+    <url type='xml'>https://maps.googleapis.com/maps/api/place/autocomplete/xml</url>
+    <url type='json'>https://maps.googleapis.com/maps/api/place/autocomplete/json</url>
+    <key>
+        <private></private>
+    </key>
  </service>
 <service name="geodetails">
-    <xml>https://maps.googleapis.com/maps/api/place/details/xml</xml>
-    <key></key>
+    <url type='xml'>https://maps.googleapis.com/maps/api/place/details/xml</url>
+    <key>
+        <private></private>
+    </key>
 </service>
 <service name="geotimezone">
-    <xml>https://maps.googleapis.com/maps/api/timezone/xml</xml>
-    <key></key>
+    <url type='xml'>https://maps.googleapis.com/maps/api/timezone/xml</url>
+    <key>
+        <private></private>
+    </key>
 </service>
 <service name="geocode">
-    <xml>https://maps.googleapis.com/maps/api/geocode/xml</xml>
-    <key></key>
+    <url type='xml'>https://maps.googleapis.com/maps/api/geocode/xml</url>
+    <key>
+        <private></private>
+    </key>
+</service>
+<service name="vapid">
+    <key>
+        <public></public>
+        <private></private>
+    </key>
 </service>
 </services>

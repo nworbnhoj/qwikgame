@@ -44,7 +44,7 @@ class Locate extends Qwik {
     static function geoplace($text, $country){
         return self::geo(
             array('input'=>$text, 'components'=>"country:$country"),
-            self::$geoplace->key(),
+            self::$geoplace->key('private'),
             self::$geoplace->url("xml")
         );
     }
@@ -53,7 +53,7 @@ class Locate extends Qwik {
     static function geodetails($placeid){
         $geo = self::geo(
             array('placeid'=>$placeid),
-            self::$geodetails->key(),
+            self::$geodetails->key('private'),
             self::$geodetails->url("xml")
         );
         return isset($geo) ? $geo->result : NULL;
@@ -64,7 +64,7 @@ class Locate extends Qwik {
         $location = "$lat,$lng";
         return self::geo(
             array('location'=>$location, 'timestamp'=>time()),
-            self::$geotimezone->key(),
+            self::$geotimezone->key('private'),
             self::$geotimezone->url("xml")
         );
     }
@@ -73,7 +73,7 @@ class Locate extends Qwik {
     static function geocode($address, $country){
         $geo = self::geo(
             array('components'=>"$address|$country"),
-            self::$geocode->key(),
+            self::$geocode->key('private'),
             self::$geocode->url("xml")
         );
         return isset($geo) ? $geo->result : NULL;
@@ -190,7 +190,7 @@ class Locate extends Qwik {
         $result = "{}";
     	$param = array();
         $param['input'] = $input;
-        $param['key'] = self::$geoplace->key();
+        $param['key'] = self::$geoplace->key('private');
         $url = self::$geoplace->url("json");
         try{
             $query = http_build_query($param);

@@ -4,6 +4,8 @@ require_once 'Qwik.php';
 require_once 'Player.php';
 require_once 'Match.php';
 require_once 'Email.php';
+require_once 'Html.php';
+require_once 'Push.php';
 
 
 class Notify extends Qwik {    
@@ -58,7 +60,7 @@ class Notify extends Qwik {
         if (isset($xml) && $msg === self::MSG_NONE){
             self::removeElement($xml);  // remove the current path
             $xml = NULL;
-        } else if (isset($msg) && $msg != (string)$xml) {
+        } else if (isset($msg) && $msg != (int)$xml) {
             unset($xml);  // replace the current path or add a new path
             $xml = $this->xml->addChild("path", $msg);
             $xml->addAttribute('email', $email);
@@ -73,11 +75,12 @@ class Notify extends Qwik {
      * @param $msg a bitfield representing the specific notifications for this path
      * @param $token the push subscription token
      * @param $key the push subscription key
-     * @return a SimpleXML Element representing an push notification path.
+     * @return a SimpleXML Element representing a push notification path; 
+     * or an array of Elements if $endpoint omitted.
      */
-    public function push($endpoint, $msg=NULL, $token=NULL, $key=NULL){
+    public function push($endpoint=NULL, $msg=NULL, $token=NULL, $key=NULL){
         if (is_null($endpoint)){
-            return NULL;
+            return $this->xml->xpath("//path[@endpoint]");
         }
 
         $paths = $this->xml->xpath("//path[@endpoint='$endpoint']");
@@ -97,16 +100,10 @@ class Notify extends Qwik {
     }
 
 
-    public function is_open($address){
-        $emailXML = $this->email($address);
-        if (isset($emailXML)){
-            return TRUE;
-        }
-        $pushXML = $this->push($address);
-        if (isset($pushXML)){
-           return TRUE;
-        }
-        return FALSE;
+    public function is_open($address, $msg=self::MSG_NONE){
+        $xml = $this->email($address);
+        $xml = isset($xml) ? $xml : $this->push($address);
+        return isset($xml) ? $msg && ((int)$xml) : FALSE ;
     }
 
 
@@ -121,39 +118,50 @@ class Notify extends Qwik {
     }
 
 
+    private function removeDeadEnds($deadEnds){
+        foreach ($deadEnds as $endpoint){
+            $this->push($endpoint, self::MSG_NONE);
+        }
+    }
+
+
 
 ////////// PUBLIC SEND ///////////////////////////////////////
 
 
     public function sendInvite($match, $email){
-        $email = $this->is_open($email) ? $email : $this->player->email();
-        if ($this->is_open($email)){
+        $email = $this->is_open($email, self::MSG_INVITE) ? $email : $this->player->email();
+        if ($this->is_open($email, self::MSG_INVITE)){
             $this->emailInvite($match, $email);
         }
+        $this->pushInvite($match, $this->subscriptions(self::MSG_INVITE));
     }
 
 
     public function sendConfirm($mid){
         $email = $this->player->email(); 
-        if ($this->is_open($email)){
+        if ($this->is_open($email, self::MSG_CONFIRM)){
             $this->emailConfirm($mid, $email);
         }
+        $this->pushConfirm($mid, $this->subscriptions(self::MSG_CONFIRM));
     }
 
 
     public function sendMsg($msg, $match){
         $email = $this->player->email();
-        if ($this->is_open($email)){
+        if ($this->is_open($email, self::MSG_MSG)){
             $this->emailMsg($msg, $match, $email);
         }
+        $this->pushMsg($msg, $match, $this->subscriptions(self::MSG_MSG));
     }
 
 
     public function sendCancel($match){
         $email = $this->player->email();
-        if ($this->is_open($email)){
+        if ($this->is_open($email, self::MSG_CANCEL)){
             $this->emailCancel($match, $email);
         }
+        $this->pushCancel($match, $this->subscriptions(self::MSG_CANCEL));
     }
 
 
@@ -162,7 +170,6 @@ class Notify extends Qwik {
 
     private function emailInvite($match, $email=NULL){
         $email = is_null($email) ? $this->player->email() : $email ;
-        $date = $match->dateTime();
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
@@ -214,7 +221,6 @@ class Notify extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $pid = $this->player->id();
         $venueName = Venue::svid($match->venue());
         $paras = array(
             "{game time venue}",
@@ -240,7 +246,6 @@ class Notify extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $pid = $this->player->id();
         $venueName = $match->venueName();
         $vars = array(
             "subject"    => "{EmailCancelSubject}",
@@ -252,6 +257,117 @@ class Notify extends Qwik {
         );
         $email = new Email($vars, $this->language());
         $email->send();
+    }
+
+
+////////// PRIVATE PUSH ///////////////////////////////////////
+
+
+
+    private function subscription($path){
+        return [
+            "endpoint" => $path['endpoint'],
+            "keys"     => [
+                'p256dh' => $path['key'],
+                'auth'   => $path['token']
+            ],
+        ];
+    }
+
+
+    private function subscriptions($msg){
+        $subscriptions = array();
+        foreach($this->push() as $path){
+            if ($this->is_open($path['endpoint'], $msg)){
+                $subscriptions[] = $this->subscription($path);
+            }
+        }
+        return $subscriptions;
+    }
+
+
+    private function pushInvite($match, $subscriptions){
+        $title = new Html("{PushInviteTitle}", $this->player->lang());
+        $body = new Html("{PushInviteBody}", $this->player->lang());
+        $vars = array(
+            "gameName"  => self::gameName($match->game()),
+            "day"       => $match->mday(),
+            "venueName" => $match->venueName()
+        );
+        $push = new Push(
+                    $subscriptions,
+                    $title->make($vars),
+                    $body->make($vars),
+                    Push::INVITE_OPTIONS
+                );
+        $push = new Push($subscriptions, $vars, $this->player->lang());
+        if(!$push->send()){
+            $this->removeDeadEnds($push->deadEnds());
+        }
+    }
+
+
+    private function pushConfirm($mid, $subscriptions){
+        $title = new Html("{PushConfirmTitle}", $this->player->lang());
+        $body = new Html("{PushConfirmBody}", $this->player->lang());
+        $match = $this->player->matchID($mid);
+        $vars = array(
+            "gameName"  => self::gameName($match->game()),
+            "time"      => date_format($match->dateTime(), "ga D"),
+            "venueName" => $match->venueName()
+        );
+        $push = new Push(
+                    $subscriptions,
+                    $title->make($vars),
+                    $body->make($vars),
+                    Push::CONFIRM_OPTIONS
+                );
+        $push = new Push($subscriptions, $vars, $this->player->lang());
+        if(!$push->send()){
+            $this->removeDeadEnds($push->deadEnds());
+        }
+    }
+
+
+    private function pushMsg($message, $match, $subscriptions){
+        $title = new Html("{PushMsgTitle}", $this->player->lang());
+        $body = new Html("{PushMsgBody}", $this->player->lang());
+        $vars = array(
+            "gameName"  => self::gameName($match->game()),
+            "time"      => date_format($match->dateTime(), "ga D"),
+            "venueName" => $match->venueName(),
+            "message"   => $message,
+            "rivalName" => $match->rival()
+        );
+        $push = new Push(
+                    $subscriptions,
+                    $title->make($vars),
+                    $body->make($vars),
+                    Push::MSG_OPTIONS
+                );
+        if(!$push->send()){
+            $this->removeDeadEnds($push->deadEnds());
+        }
+    }
+
+
+    private function pushCancel($match, $subscriptions){
+        $title = new Html("{PushCancelTitle}", $this->player->lang());
+        $body = new Html("{PushCancelBody}", $this->player->lang());
+        $vars = array(
+            "gameName"  => self::gameName($match->game()),
+            "time"      => date_format($match->dateTime(), "ga D"),
+            "venueName" => $match->venueName()
+        );
+        $push = new Push(
+                    $subscriptions,
+                    $title->make($vars),
+                    $body->make($vars),
+                    Push::CANCEL_OPTIONS
+                );
+        if(!$push->send()){
+            $this->removeDeadEnds($push->deadEnds());
+        }
     }
 
 

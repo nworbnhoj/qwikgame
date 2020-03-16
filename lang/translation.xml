@@ -205,9 +205,8 @@
 <phrase key="...in_every_2_games"><words lang="en">More than 1 [thumb-dn] in every 2 games.</words></phrase>
 <phrase key="New_players_with..."><words lang="en">&lt;b&gt;New players&lt;/b&gt; with less than 5 games can only have a good, mixed or poor reputation.</words></phrase>
 <phrase key="Development"><words lang="en">Development</words></phrase>
-<phrase key="Github"><words lang="en">qwikgame source is available under GPL-3.0 at &lt;a href="https://github.com/nworbnhoj/qwikgame"&gt;Github&lt;/a&gt;.</words></phrase>
+<phrase key="Github"><words lang="en">qwikgame source is available under GPL-3.0 at &lt;a href="https://github.com/nworbnhoj/qwikgame#readme"&gt;Github&lt;/a&gt;.</words></phrase>
 <phrase key="There_are_so..."><words lang="en">There are so many little tweeks to make qwikgame better!&lt;br&gt;This To Do list is in rough focus order; but let me know if the order is wrong, or something is missing.</words></phrase>
-<phrase key="To_Do"><words lang="en">To Do</words></phrase>
 <phrase key="Please_click_an..."><words lang="en">Please click an existing Venue or create a new one.</words></phrase>
 <phrase key="Existing_Venues"><words lang="en">Existing Venues</words></phrase>
 <phrase key="New_Venue"><words lang="en">New Venue</words></phrase>
@@ -294,4 +293,12 @@
 <phrase key="email"><words lang="en">email</words></phrase>
 <phrase key="push"><words lang="en">web/app</words></phrase>
 <phrase key="notifications"><words lang="en">notifications</words></phrase>
+<phrase key="PushInviteTitle"><words lang="en">Invitation [gameName]</words></phrase>
+<phrase key="PushInviteBody"><words lang="en">[day] [venueName]</words></phrase>
+<phrase key="PushConfirmTitle"><words lang="en">Confirmed [gameName]</words></phrase>
+<phrase key="PushConfirmBody"><words lang="en">[time] [venueName]</words></phrase>
+<phrase key="PushMsgTitle"><words lang="en">Message [gameName] [rivalName]</words></phrase>
+<phrase key="PushMsgBody"><words lang="en">[message]</words></phrase>
+<phrase key="PushCancelTitle"><words lang="en">Cancelled [gameName]</words></phrase>
+<phrase key="PushCancelBody"><words lang="en">[time] [venueName]</words></phrase>
 </translation>

@@ -1,2 +1,12 @@
 <?xml version="1.0"?>
-<translation><language key="en">"English"</language><language key="es">Espa&#xF1;ol"</language><language key="zh">&#x4E2D;&#x6587;</language><language key="ru" dir="ltr">русский</language><language key="fr">fran&#xE7;ais</language><language key="hi">&#x939;&#x93F;&#x928;&#x94D;&#x926;&#x940; &#x92D;&#x93E;&#x937;&#x93E;</language><language key="ar">&#x627;&#x644;&#x644;&#x63A;&#x629; &#x627;&#x644;&#x639;&#x631;&#x628;&#x64A;&#x629;</language><language key="jp">&#x65E5;&#x672C;&#x8A9E;</language></translation>
+<translation>
+<language key="en" dir="ltr">"English"</language>
+<language key="bg" dir="ltr">български</language>
+<language key="es" dir="ltr">Espa&#xF1;ol"</language>
+<language key="zh" dir="ltr">&#x4E2D;&#x6587;</language>
+<language key="ru" dir="ltr">русский</language>
+<language key="fr" dir="ltr">fran&#xE7;ais</language>
+<language key="hi" dir="ltr">&#x939;&#x93F;&#x928;&#x94D;&#x926;&#x940; &#x92D;&#x93E;&#x937;&#x93E;</language>
+<language key="ar" dir="rtl">&#x627;&#x644;&#x644;&#x63A;&#x629; &#x627;&#x644;&#x639;&#x631;&#x628;&#x64A;&#x629;</language>
+<language key="jp" dir="ltr">&#x65E5;&#x672C;&#x8A9E;</language>
+</translation>

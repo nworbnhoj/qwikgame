@@ -73,16 +73,24 @@ class AdminPage extends Page {
         $key = $this->req('key');
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
-        if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $translation = &self::translation();
-            $translation->set($key, $lang, $phrase);
-            $translation->save();
+        if (!isset($key, $lang, $phrase)){
+            return false;
+        }
+
+        $translation = &self::translation();
+        $translation->set($key, $lang, $phrase);
+        if ($translation->save()){
             $pending = &self::pending();
             $pending->unset($key, $lang);
-            $pending->save();
-            return true;
+            if (!$pending->save()){
+                self::logMsg("failed to unset pending translation for $key $lang $phrase.");
+                return false;
+            }
+        } else {
+            self::logMsg("failed to accept translation for $key $lang $phrase.");
+            return false;
         }
-        return false;
+        return true;
     }
 
 
@@ -90,13 +98,17 @@ class AdminPage extends Page {
         $key = $this->req('key');
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
-        if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $pending = &self::pending();
-            $pending->unset($key, $lang);
-            $pending->save();
-            return true;
+        if (!isset($key, $lang, $phrase)){
+            return false;
         }
-        return false;
+
+        $pending = &self::pending();
+        $pending->unset($key, $lang);
+        if (!$pending->save()){
+            self::logMsg("failed to unset pending translation for $key $lang $phrase.");
+            return false;
+        }
+        return true;
     }
 
 }

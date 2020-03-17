@@ -22,9 +22,11 @@ class UploadListing extends Listing {
 
 
     public function replicate($html){
+        $player = $this->player();
+        if (is_null($player)){ return '';}
+
         $html = parent::replicate($html); // removes 'base' class       
         $group = '';
-        $player = $this->player();
         $uploadIDs = $player->uploadIDs();
         foreach($uploadIDs as $uploadID) {
             $ranking = $player->rankingGet($uploadID);

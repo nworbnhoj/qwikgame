@@ -22,9 +22,11 @@ class AbilityListing extends Listing {
 
 
     public function replicate($html){
+        $player = $this->player();
+        if (is_null($player)){ return '';}
+
         $html = parent::replicate($html); // removes 'base' class
         $group = '';
-        $player = $this->player();
         $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("region");

@@ -22,9 +22,11 @@ class FavoriteListing extends Listing {
 
 
     public function replicate($html){
+        $player = $this->player();
+        if (is_null($player)){ return '';}
+
         $html = parent::replicate($html); // removes 'base' class       
         $group = ''; 
-        $player = $this->player();
         $playerVars = $this->playerVariables($player);
         $available = $player->available();
         foreach($available as $avail){

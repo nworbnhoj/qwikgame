@@ -25,8 +25,10 @@ class MatchListing extends Listing {
 
 
     public function replicate($html){
-        $html = parent::replicate($html); // removes 'base' class
         $player = $this->player();
+        if (is_null($player)){ return '';}
+
+        $html = parent::replicate($html); // removes 'base' class
         $status = $this->status;
         $group = '';
         $playerVars = $this->playerVariables($player);

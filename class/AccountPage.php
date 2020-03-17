@@ -63,9 +63,6 @@ class AccountPage extends Page {
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
 
-            $vars['message']       .= "{Welcome} <b>$playerName</b>";
-            $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
-            $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();
             $vars['reputationLink']= self::LINK_REP;
             $vars['thumbs']        = $player->repThumbs();

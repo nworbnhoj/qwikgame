@@ -1,3 +1,32 @@
+self.addEventListener('push', function(e) {
+  var payload = e.data.json();
+
+  var options = {
+    body: payload.msg,
+    badge: 'img/qwik.icon.48x48.png',
+    icon: 'img/qwik.icon.120x120.png',
+    vibrate: [10, 8, 6, 4, 2]
+  };
+  e.waitUntil(
+    self.registration.showNotification(payload.title, options)
+  );
+});
+
+
+self.addEventListener('notificationclick', function(e) {
+  var notification = e.notification;
+  var action = e.action;
+
+  if (action === 'close') {
+    notification.close();
+  } else {
+    clients.openWindow('https://www.qwikgame.org/match.php');
+    notification.close();
+  }
+});
+
+
+
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 

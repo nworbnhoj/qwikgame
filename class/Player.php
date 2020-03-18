@@ -62,7 +62,11 @@ class Player extends Qwik {
             $this->save();
             self::logMsg("login: new player " . self::snip($pid));
         }
-        $this->xml = self::exists($pid) ? $this->retrieve($this->fileName()) : NULL ;
+        if (self::exists($pid)){
+            $this->xml = $this->retrieve($this->fileName());
+        } else {
+            throw new RuntimeException("Player does not exist: $id");
+        }
     }
     
     

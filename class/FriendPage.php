@@ -43,17 +43,6 @@ class FriendPage extends Page {
             case 'delete':
                 $result = $this->qwikDelete($player, $req);
                 break;
-            case 'login':
-                $email = $this->req('email');
-                if(isset($email)
-                && $email != $player->email()){
-                    $player->email($email);
-                    if (!headers_sent()){
-                        $url = $player->authURL(Player::MINUTE);
-                        header("Location: $url");
-                    }
-                }
-                break;
             case 'logout':
                 $result = $this->logout();
                 break;

@@ -15,9 +15,16 @@ class InfoPage extends Page {
             case 'feedback':
                 $this->qwikContact($this->req('message'), $this->req('reply-email'));
                 break;
-		    default:
-	    }
-	}
+            default:
+        }
+    }
+
+
+    public function variables(){
+        $vars = parent::variables();
+        $vars['githubLink'] = self::GITHUB_LNK;
+        return $vars;
+    }
 
 
     private function qwikContact($msg, $from){

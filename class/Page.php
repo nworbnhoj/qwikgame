@@ -38,19 +38,23 @@ class Page extends Html {
     const THUMB_UP_ICON  = 'fa fa-thumbs-o-up thumb green';
     const TICK_ICON      = 'fa fa-check-circle tick';
     const TWITTER_ICON   = 'fa fa-twitter icon';
+    const GITHUB_ICON    = 'fa fa-github icon';
     
     const FLYER_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
     const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.self::QWIK_URL;
     const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.self::QWIK_URL;
+    const GITHUB_URL   = 'https://github.com/nworbnhoj/qwikgame#readme';
 
     const EMAIL_IMG    = "<img src='img/email.png' alt='email' class='socialmedia'>";
     const FACEBOOK_IMG = "<img src='img/facebook.png' alt='facebook' class='socialmedia'>";
     const TWITTER_IMG  = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
+    const GITHUB_IMG   = "<img src='img/GitHub.png' alt='github' class='socialmedia'>";
 
     const EMAIL_LNK    = "<a href='mailto:?subject=".self::QWIK_URL."&body=".self::QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
     const FACEBOOK_LNK = "<a href='".self::FACEBOOK_URL."' target='_blank'>".self::FACEBOOK_IMG."</a>";
     const FLYER_LNK    = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
     const TWITTER_LNK  = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
+    const GITHUB_LNK   = "<a href='".self::GITHUB_URL."' target='_blank'>".self::GITHUB_IMG."</a>";
 
     static $icons;
     static $pending;
@@ -186,6 +190,7 @@ class Page extends Html {
         $vars['THUMB_DN_ICON'] = self::THUMB_DN_ICON;
         $vars['THUMB_UP_ICON'] = self::THUMB_UP_ICON;
         $vars['TWITTER_ICON']  = self::TWITTER_ICON;
+        $vars['GITHUB_ICON']   = self::GITHUB_ICON;
         $vars['flyerLink']     = self::FLYER_LNK;
         $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
         $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";

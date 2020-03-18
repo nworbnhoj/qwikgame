@@ -1,3 +1,20 @@
+// https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
+function ready(callbackFunction){
+  if(document.readyState != 'loading')
+    callbackFunction(event)
+  else
+    document.addEventListener("DOMContentLoaded", callbackFunction)
+}
+
+
+// https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
+function addEvent(element, evnt, funct){
+  if (element.attachEvent)
+   return element.attachEvent('on'+evnt, funct);
+  else
+   return element.addEventListener(evnt, funct, false);
+}
+
 
 // Registering Service Worker
 if('serviceWorker' in navigator) {
@@ -243,6 +260,9 @@ $(document).ready(function(){
     $('.repost').change(function(){
         $(this).parent().submit();
     });
+
+
+
 
 
     $('.geocode').blur(function(){
@@ -539,4 +559,7 @@ function nFormatter(num, digits) {
   }
   return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
 }
+
+
+
 

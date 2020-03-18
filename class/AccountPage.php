@@ -1,6 +1,8 @@
 <?php
 
 require_once 'Page.php';
+require_once 'Player.php';
+require_once 'Notify.php';
 
 class AccountPage extends Page {
 
@@ -51,6 +53,7 @@ class AccountPage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
+            $notify = new Notify($player);
 
             $vars['reputation']    = $player->repWord();
             $vars['reputationLink']= self::LINK_REP;
@@ -59,6 +62,8 @@ class AccountPage extends Page {
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
+            $vars['notify-email-checked']  = $notify->is_open($playerEmail) ? 'checked' : '';
+            $vars['push-endpoint-sack']   = $notify->pushSack();
         }
         return $vars;
     }
@@ -88,6 +93,20 @@ function qwikAccount($player, $request){
     if(isset($request['lang'])){
         $player->lang($request['lang']);
     }
+
+ 
+    $notify = new Notify($player);
+    $notify->email(
+        $player->email(), 
+        isset($request['notify-email']) ? Notify::MSG_ALL : Notify::MSG_NONE
+    );
+    $notify->push(
+        $request['push-endpoint'],
+        isset($request['notify-push']) ? Notify::MSG_ALL : Notify::MSG_NONE,
+        $request['push-token'],
+        $request['push-key']
+    );
+
 
     if(isset($request['account']) && ($request['account'] === 'quit')) {
         $player->emailQuit();

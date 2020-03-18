@@ -26,9 +26,15 @@ class Service extends Qwik {
         }
         $name = $this->name;
         $this->service = $xml->xpath("/services/service[@name='$name']")[0];
-        $this->url['xml'] = (string) $this->service->xml[0];
-        $this->url['json'] = (string) $this->service->json[0];
-        $this->key = (string) $this->service->key[0];
+
+        $urls = $this->service->xpath("url[@type]");
+        foreach($urls as $url){
+            $type = (string) $url['type'];
+            $this->url[$type] = (string) $url;
+        }
+
+        $this->key['private'] = (string) $this->service->key->private;
+        $this->key['public'] = (string) $this->service->key->public;
         return $xml;
     }
 
@@ -48,8 +54,8 @@ class Service extends Qwik {
     }
 
 
-    public function key(){
-        return $this->key;
+    public function key($type){
+        return isset ($this->key["$type"]) ? $this->key["$type"] : NULL ;
     }   
 
 }

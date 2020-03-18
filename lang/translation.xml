@@ -291,4 +291,15 @@
 <phrase key="logout"><words lang="en">Logout</words></phrase>
 <phrase key="logout_when..."><words lang="en">logout when you want to switch accounts, or prevent another person using your account from this device.</words></phrase>
 <phrase key="login_again..."><words lang="en">You will need to login again on the qwikgame.org website. </words></phrase>
+<phrase key="email"><words lang="en">email</words></phrase>
+<phrase key="push"><words lang="en">web/app</words></phrase>
+<phrase key="notifications"><words lang="en">notifications</words></phrase>
+<phrase key="PushInviteTitle"><words lang="en">Invitation [gameName]</words></phrase>
+<phrase key="PushInviteBody"><words lang="en">[day] [venueName]</words></phrase>
+<phrase key="PushConfirmTitle"><words lang="en">Confirmed [gameName]</words></phrase>
+<phrase key="PushConfirmBody"><words lang="en">[time] [venueName]</words></phrase>
+<phrase key="PushMsgTitle"><words lang="en">Message [gameName] [rivalName]</words></phrase>
+<phrase key="PushMsgBody"><words lang="en">[message]</words></phrase>
+<phrase key="PushCancelTitle"><words lang="en">Cancelled [gameName]</words></phrase>
+<phrase key="PushCancelBody"><words lang="en">[time] [venueName]</words></phrase>
 </translation>

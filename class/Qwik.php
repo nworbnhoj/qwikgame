@@ -19,6 +19,14 @@ class Qwik {
     
     const XML = '.xml';
 
+    const SECOND = 1;
+    const MINUTE = 60;
+    const HOUR   = 3600;
+    const DAY    = 86400;
+    const WEEK   = 604800;
+    const MONTH  = 2678400;
+    const YEAR   = 31536000;
+
     const TIDY_CONFIG = array(
         'indent' => TRUE,
         'input-xml' => TRUE,

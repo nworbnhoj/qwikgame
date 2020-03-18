@@ -10,7 +10,8 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <link rel="manifest" href="qwik.webmanifest">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="qwik.js"></script>
+    <script type="text/javascript"  src="qwik.js"></script>
+    <script type="text/javascript"  src="account.js" async></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -19,11 +20,6 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
-    <script>
-        function checkQuit(){
-            return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
-        }
-    </script>
 </head>
 
 <body>
@@ -57,23 +53,34 @@
         <br>
         <input name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
         <input name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
-        <input type="submit" class="account" value="{Submit}">
+        <input type="submit" id='account-public' class="account" value="{Submit}">
     </form>
 </div>
 
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{You_will_receive_validation...}</span>
-    <form action='account.php'>
+    <form id='account-private-form' action='account.php'>
         <input type="hidden" name="qwik" value='account'>
         <h4>{private}</h4>
         <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
+        <fieldset class='brick'>
+            <legend>{notifications}</legend>
+            <label for='notify-email'>{email}</label>
+            <input type='checkbox' id='notify-email' name='notify-email' [notify-email-checked]>
+            <label for='notify-push' id='notify-push-label'>{push}</label>
+            <input type='checkbox' id='notify-push' name='notify-push'>
+            <input type='hidden' id='push-endpoint' name='push-endpoint'>
+            <input type='hidden' id='push-key' name='push-key'>
+            <input type='hidden' id='push-token' name='push-token'>
+            <input type='hidden' id='push-endpoint-sack' value='[push-endpoint-sack]'>
+        </fieldset>
         <select name='lang'>
             <repeat id='language'>
             <option value='[code]' [selected]>[language]</option>
             </repeat>
         </select>
-        <input type="submit" class="account" value="{Submit}">
+        <input type="submit" id='account-private-submit' class="account" value="{Submit}">
     </form>
 </div>
 

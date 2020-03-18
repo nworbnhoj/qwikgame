@@ -4,6 +4,7 @@ require_once 'Qwik.php';
 require_once 'Hours.php';
 require_once 'Page.php';
 require_once 'Venue.php';
+require_once 'Notify.php';
 
 
 class Match extends Qwik {
@@ -279,7 +280,8 @@ class Match extends Qwik {
     public function confirm($date, $hour){
         $this->status('confirmed');
         $this->time($date, $hour);
-        $this->player->emailConfirm($this->id());
+        $notify = new Notify($this->player);
+        $notify->sendConfirm($this->id());
     }
 
 
@@ -309,7 +311,8 @@ class Match extends Qwik {
         switch ($status) {
             case 'confirmed':
                 foreach($rivals as $rival){    // usually only one rival
-                    $rival->emailCancel($this);
+                    $notify = new Notify($rival);
+                    $notify->sendCancel($this);
                 }
                 // break; intentional drop-thru
             case 'keen':

@@ -1,11 +1,9 @@
 <?php
 
-require_once 'up.php';
-require_once UP.PATH_VENDOR.'autoload.php';
-
 require_once 'Qwik.php';
 require_once 'Service.php';
 
+require_once UP.PATH_VENDOR.'autoload.php';
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 
@@ -24,7 +22,7 @@ class Push extends Qwik {
         $vapid = new Service('vapid');
         self::$vapid = [
             'VAPID' => [
-                'subject' => Qwik::QWIK_URL,
+                'subject' => QWIK_URL,
                 'publicKey' => $vapid->key('public'),
                 'privateKey' => $vapid->key('private')
             ]

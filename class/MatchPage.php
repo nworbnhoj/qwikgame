@@ -53,7 +53,7 @@ class MatchPage extends Page {
                 $this->req('repost', 'match.php');
             }
             $query = http_build_query($this->req());
-            header("Location: ".self::QWIK_URL."/locate.php?$query");
+            header("Location: ".QWIK_URL."locate.php?$query");
             return;
         }
     }

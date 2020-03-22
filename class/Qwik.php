@@ -358,7 +358,7 @@ class Qwik {
 
     static public function exception_handler($uncaught){
         self::logThrown($uncaught);
-        header('Location: ' . self::QWIK_URL, true, 303);
+        header('Location: ' . QWIK_URL, true, 303);
         die();
     }
 

@@ -17,7 +17,7 @@ class VenuePage extends Page {
 
     public function serve(){
         if (!$this->venue->ok()){
-            header("Location: ".self::QWIK_URL);
+            header("Location: ".QWIK_URL);
             return;
         }
         parent::serve();
@@ -108,8 +108,7 @@ class VenuePage extends Page {
         $venueName = $this->venue->name();
         $venueUrl = $this->venue->url();
         $venueLink = empty($venueUrl) ? '' : "<a href='$venueUrl' target='_blank'>{homepage}</a>";
-        $QWIK_URL = self::QWIK_URL;
-        $backLink = "<a href='$QWIK_URL/index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
+        $backLink = "<a href='".QWIK_URL."index.php?venue=$venueName&game=$game' target='_blank'><b>link</b></a>";
 
         $qwikGames = $this->qwikGames();
         $venueGames = "";

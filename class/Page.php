@@ -40,9 +40,9 @@ class Page extends Html {
     const TWITTER_ICON   = 'fa fa-twitter icon';
     const GITHUB_ICON    = 'fa fa-github icon';
     
-    const FLYER_URL    = self::QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
-    const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.self::QWIK_URL;
-    const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.self::QWIK_URL;
+    const FLYER_URL    = QWIK_URL.'/pdf/qwikgame.org%20flyer.pdf';
+    const FACEBOOK_URL = 'https://www.facebook.com/sharer/sharer.php?u='.QWIK_URL;
+    const TWITTER_URL  = 'https://twitter.com/intent/tweet?text={tagline}&url='.QWIK_URL;
     const GITHUB_URL   = 'https://github.com/nworbnhoj/qwikgame#readme';
 
     const EMAIL_IMG    = "<img src='img/email.png' alt='email' class='socialmedia'>";
@@ -50,7 +50,7 @@ class Page extends Html {
     const TWITTER_IMG  = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
     const GITHUB_IMG   = "<img src='img/GitHub.png' alt='github' class='socialmedia'>";
 
-    const EMAIL_LNK    = "<a href='mailto:?subject=".self::QWIK_URL."&body=".self::QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
+    const EMAIL_LNK    = "<a href='mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank'>".self::EMAIL_IMG."</a>";
     const FACEBOOK_LNK = "<a href='".self::FACEBOOK_URL."' target='_blank'>".self::FACEBOOK_IMG."</a>";
     const FLYER_LNK    = "<a href='".self::FLYER_URL."' target='_blank'>{flyer}</a>";
     const TWITTER_LNK  = "<a href='".self::TWITTER_URL."' target='_blank'>".self::TWITTER_IMG."</a>";
@@ -366,9 +366,9 @@ class Page extends Html {
     public function goHome(){
         if (headers_sent()){
             echo("Redirect failed.<br>");
-            echo("Please click on this link: <a href='".self::QWIK_URL."'>this link</a>");
+            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
         } else {
-            header("location: ".self::QWIK_URL);
+            header("location: ".QWIK_URL);
         }
     }
 
@@ -669,7 +669,7 @@ class Page extends Html {
     public function venueLink($vid){
         $name = explode("|", $vid)[0];
         $boldName = $this->firstWordBold($name);
-        $url = self::QWIK_URL."/venue.php?vid=$vid";
+        $url = QWIK_URL."venue.php?vid=$vid";
         $link = "<a href='$url'>$boldName</a>";
         return $link;
     }

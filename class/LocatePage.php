@@ -24,7 +24,7 @@ class LocatePage extends Page {
 
     public function serve(){
         if (empty($this->game)){
-            header("Location: ".self::QWIK_URL);
+            header("Location: ".QWIK_URL);
             return;
         }
 	   parent::serve();
@@ -105,11 +105,10 @@ class LocatePage extends Page {
         }
 
         if (isset($vid)){    // repost the query with the located $vid
-            $QWIK_URL = self::QWIK_URL;
             $this->req('vid', $vid);
             $query = http_build_query($this->req());
             $repost = $this->repost;
-            $url = "$QWIK_URL/$repost?$query";
+            $url = QWIK_URL."$repost?$query";
             header("Location: $url");
         }
     }
@@ -169,8 +168,6 @@ class LocatePage extends Page {
                 $placeid  = $geocoded['placeid'];
             }
         }
-
-        $QWIK_URL = self::QWIK_URL;
 
         $vars = parent::variables();
         $vars['game']          = $this->game;

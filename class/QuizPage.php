@@ -58,10 +58,9 @@ class QuizPage extends Page {
             unset($_SESSION[self::TALLY_KEY]);    // reset tally
             unset($_SESSION[self::TODO_KEY]);     // reset todo
             unset($_SESSION[self::SCORE_KEY]);    // reset progress
-            $QWIK_URL = self::QWIK_URL;
             $query = http_build_query($this->req());
             $repost = $this->repost;
-            $url = "$QWIK_URL/$repost?$query";
+            $url = QWIK_URL."$repost?$query";
             header("Location: $url");
         }
     }

@@ -113,7 +113,7 @@ function qwikAccount($player, $request){
         $player->quit();
         $this->logout();
 
-        header("Location: ".self::QWIK_URL);
+        header("Location: ".QWIK_URL);
     }
 }
 

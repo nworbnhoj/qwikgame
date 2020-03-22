@@ -561,7 +561,7 @@ class Player extends Qwik {
         if(!isset($query['qwik'])){
             $query['qwik'] = 'login';
         }
-        return Page::QWIK_URL."/admin.php?" . http_build_query($query);
+        return QWIK_URL."admin.php?" . http_build_query($query);
     }
 
     

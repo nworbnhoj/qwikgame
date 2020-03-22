@@ -31,7 +31,7 @@ class Player extends Qwik {
 
     static function exists($pid){
         $XML = self::XML;
-        return file_exists(PATH_PLAYER."$pid$XML");
+        return file_exists(ROOT/PATH_PLAYER."$pid$XML");
     }
 
 
@@ -624,7 +624,7 @@ class Player extends Qwik {
         if(!isset($query['qwik'])){
             $query['qwik'] = 'login';
         }
-        return Page::QWIK_URL."/match.php?" . http_build_query($query);
+        return QWIK_URL."match.php?" . http_build_query($query);
     }
 
     

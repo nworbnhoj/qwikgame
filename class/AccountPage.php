@@ -101,10 +101,10 @@ function qwikAccount($player, $request){
         isset($request['notify-email']) ? Notify::MSG_ALL : Notify::MSG_NONE
     );
     $notify->push(
-        $request['push-endpoint'],
+        isset($request['push-endpoint']) ? $request['push-endpoint'] : NULL,
         isset($request['notify-push']) ? Notify::MSG_ALL : Notify::MSG_NONE,
-        $request['push-token'],
-        $request['push-key']
+        isset($request['push-token']) ? $request['push-token'] : NULL,
+        isset($request['push-key']) ? $request['push-key'] : NULL
     );
 
 

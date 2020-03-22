@@ -3,8 +3,8 @@
 require_once 'Qwik.php';
 require_once 'Service.php';
 
-use WebPush\src\WebPush;
-use WebPush\src\Subscription;
+use Minishlink\WebPush\Subscription;
+use Minishlink\WebPush\WebPush;
 
 /*******************************************************************************
     Class Push constructs a we push message by populating title and body
@@ -95,7 +95,7 @@ class Push extends Qwik {
 
 
     public function send(){
-        $webPush = new WebPush(self::$vapid, self::$webPushOptions);
+        $webPush = new WebPush(self::$vapid);
 
         foreach ($this->subscriptions as $subscription){
             $webPush->sendNotification($subscription, $this->payload);

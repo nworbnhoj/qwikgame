@@ -100,7 +100,7 @@ class Notify extends Qwik {
     }
 
 
-    public function is_open($address, $msg=self::MSG_NONE){
+    public function is_open($address, $msg=self::MSG_ALL){
         $xml = $this->email($address);
         $xml = isset($xml) ? $xml : $this->push($address);
         return isset($xml) ? $msg && ((int)$xml) : FALSE ;
@@ -266,12 +266,12 @@ class Notify extends Qwik {
 
     private function subscription($path){
         return [
-            "endpoint" => $path['endpoint'],
+            "endpoint" => (string) $path['endpoint'],
             "keys"     => [
-                'p256dh' => $path['key'],
-                'auth'   => $path['token']
+                'p256dh' => (string) $path['key'],
+                'auth'   => (string) $path['token']
             ],
-        ];
+       ];
     }
 
 

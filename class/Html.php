@@ -56,8 +56,7 @@ class Html extends Qwik {
 
         $template = '';
         try{
-            $PATH = Qwik::PATH_LANG.'/'.$language;
-            $template = file_get_contents("$PATH/$name.html");
+            $template = file_get_contents(PATH_LANG."$language/$name.html");
         } catch (Throwable $t){
             Qwik::logThrown($t);
             $template = $this->errorHTML();
@@ -69,7 +68,7 @@ class Html extends Qwik {
 
     const ERROR_TEMPLATE  = 'error.html';
 
-    const PDF_URL    = self::QWIK_URL.'/'.self::PATH_PDF.'/';
+    const PDF_URL    = self::QWIK_URL.'/'.PATH_PDF;
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
     const PRIVACY_URL  = self::PDF_URL.'qwikgame.org%20privacy%20policy.pdf';
     const TERMS_LNK    = "<a href='".self::TERMS_URL."' target='_blank'>{Terms and Conditions}</a>";

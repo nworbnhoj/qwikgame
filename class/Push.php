@@ -1,5 +1,8 @@
 <?php
 
+require_once 'up.php';
+require_once UP.PATH_VENDOR.'autoload.php';
+
 require_once 'Qwik.php';
 require_once 'Service.php';
 

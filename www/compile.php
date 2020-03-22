@@ -1,7 +1,8 @@
 <?php
-    require_once 'class/Qwik.php';
-    require_once 'class/Venue.php';
-    require_once 'class/Page.php';
+require_once 'up.php';
+require_once UP.PATH_CLASS.'Qwik.php';
+require_once UP.PATH_CLASS.'Venue.php';
+require_once UP.PATH_CLASS.'Page.php';
 
     $now = new DateTime('now');
     $compiled = $now->format('d-m-Y');
@@ -42,7 +43,7 @@
         }
     }
 
-    $path = "venue";
+    $path = $up.Qwik::PATH_VENUE;
     $filename = "venues$compiled.xml";
     $xml->saveXML("$path/$filename");
     $xml->saveXML("$path/venues.xml");

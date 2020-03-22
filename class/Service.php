@@ -20,7 +20,7 @@ class Service extends Qwik {
 
 
     private function read(){
-        $xml = self::readXML(".", $this->fileName);
+        $xml = self::readXML(PATH_SERVICE, $this->fileName);
         if ($xml === FALSE){
             return FALSE;
         }
@@ -40,10 +40,10 @@ class Service extends Qwik {
 
 
     private function save(){
-        $xml = self::readXML(".", $this->fileName);
+        $xml = self::readXML(PATH_SERVICE, $this->fileName);
         return self::writeXML(
             $xml,
-            Qwik::PATH_LANG,
+            PATH_LANG,
             $this->fileName
         );
     }

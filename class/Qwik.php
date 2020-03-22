@@ -1,21 +1,12 @@
 <?php
 
+require_once '../path.php';
+
 
 require_once 'Logging.php';
 
 
 class Qwik {
-    const SUBDOMAIN  = 'www';
-    const QWIK_URL   = 'https://' . self::SUBDOMAIN . '.qwikgame.org';
-
-    const PATH_VENUE  = 'venue';
-    const PATH_PLAYER = 'player';
-    const PATH_PDF    = 'pdf';
-    const PATH_LANG   = 'lang';
-    const PATH_HTML   = 'html';
-    const PATH_JSON   = 'json';
-    const PATH_UPLOAD = 'uploads';
-    const PATH_LOG    = '/var/log/'.self::SUBDOMAIN.'.qwikgame.org.log';
     
     const XML = '.xml';
 
@@ -321,7 +312,7 @@ class Qwik {
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
         self::$log = new Logging();
-        self::$log->lfile(self::PATH_LOG);
+        self::$log->lfile(PATH_LOG);
         set_error_handler(array('Qwik','exception_error_handler'), E_ALL);
         set_exception_handler(array('Qwik','exception_handler'));
     }
@@ -450,8 +441,8 @@ class Qwik {
 
     static public function venues($game=NULL){
         $venues = array();
-        $path = SELF::PATH_VENUE;
-        $path .= $game ? "/$game" : '';
+        $path = UP.PATH_VENUE;
+        $path .= $game ? "$game/" : '';
         $fileList = self::fileList($path);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
@@ -464,9 +455,8 @@ class Qwik {
 
     static public function svids($game=NULL){
         $svids = array();
-        $path = $_SERVER['DOCUMENT_ROOT'];
-        $path .= '/'.SELF::PATH_VENUE;
-        $path .= $game ? "/$game" : '';
+        $path = UP.PATH_VENUE;
+        $path .= $game ? "$game/" : '';
         $fileList = self::fileList($path);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
@@ -480,7 +470,7 @@ class Qwik {
 
     static public function pids($game){
         $pids = array();
-        $fileList = self::fileList(SELF::PATH_PLAYER);
+        $fileList = self::fileList(UP.PATH_PLAYER);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
                 $pids[] = str_replace('.xml', '', $file);
@@ -501,13 +491,12 @@ class Qwik {
     */
     static public function writeXML($xml, $path, $filename){
         $cwd = getcwd();
-        $root = $_SERVER['DOCUMENT_ROOT'];
-        if(!chdir("$root/$path")){
+        if(!chdir(ROOT."$path")){
             throw new RuntimeException("failed to change working directory to $path");
             return FALSE;
         }
         if(!$xml->saveXML($filename)){
-            throw new RuntimeException("failed to save xml to $path/$fileName");
+            throw new RuntimeException("failed to save xml to $path$fileName");
             return FALSE;
         }
         if(!chdir($cwd)){
@@ -525,13 +514,12 @@ class Qwik {
     */
     static public function readXML($path, $fileName){
         $cwd = getcwd();
-        $root = $_SERVER['DOCUMENT_ROOT'];
-        if (!file_exists("$root/$path/$fileName")) {
-            throw new RuntimeException("failed to read xml $path/$fileName");
+        if (!file_exists(ROOT."$path$fileName")) {
+            throw new RuntimeException("failed to read xml $path$fileName");
             return FALSE;
         }
 
-        if(!chdir("$root/$path")){
+        if(!chdir(ROOT."$path")){
             throw new RuntimeException("failed to change working directory to $path");
             return FALSE;
         }
@@ -540,7 +528,7 @@ class Qwik {
             $xml = simplexml_load_file($fileName);
         } catch (Exception $e){
             self::logThrown($e);
-            throw new RuntimeException("failed to read xml from $path/$fileName");
+            throw new RuntimeException("failed to read xml from $path$fileName");
         } finally {
             if(!chdir($cwd)){
                 throw new RuntimeException("failed to return working directory to $cwd");

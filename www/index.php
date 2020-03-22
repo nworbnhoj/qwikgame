@@ -1,5 +1,6 @@
 <?php
-require_once 'class/IndexPage.php';
+require_once 'up.php';
+require_once UP.PATH_CLASS.'IndexPage.php';
 
 $page = new IndexPage();
 $page->serve();

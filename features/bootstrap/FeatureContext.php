@@ -506,9 +506,8 @@ class FeatureContext implements Context
     public function aRankingFile($game, $fileName, $plyr)
     {
         $pid = $this->rivals[$plyr];
-        $PATH = Qwik::PATH_UPLOAD;
         $CSV = Ranking::CSV;
-        $path =  "$PATH/$fileName$CSV"; 
+        $path =  PATH_UPLOAD."$fileName$CSV"; 
         $this->player = new Player($pid);
         $ranking = $this->player->importRanking($game, $path, $fileName);
         $this->rankingFileName = "$fileName";

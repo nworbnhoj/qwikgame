@@ -10,9 +10,6 @@ require_once 'Notify.php';
 
 
 class Player extends Qwik {
-
-    const PATH_PLAYER   = 'player';
-    const PATH_UPLOAD = 'uploads';
     
     
     /*******************************************************************************
@@ -33,10 +30,8 @@ class Player extends Qwik {
 
 
     static function exists($pid){
-        $ROOT = $_SERVER['DOCUMENT_ROOT'];
-        $PATH = self::PATH_PLAYER;
         $XML = self::XML;
-        return file_exists("$ROOT/$PATH/$pid$XML");
+        return file_exists(PATH_PLAYER."$pid$XML");
     }
 
 
@@ -88,9 +83,8 @@ class Player extends Qwik {
     * @throws RuntimeException if the Player is not saved cleanly.
     */
     public function save(){
-        $PATH = self::PATH_PLAYER;
         $fileName = $this->fileName();
-        if (!self::writeXML($this->xml, $PATH, $fileName)){
+        if (!self::writeXML($this->xml, PATH_PLAYER, $fileName)){
             throw new RuntimeException("failed to save Player $fileName");
             return FALSE;
         }
@@ -104,7 +98,7 @@ class Player extends Qwik {
     public function retrieve($fileName){
         try {
             $fileName = $this->fileName();
-            $xml = self::readXML(self::PATH_PLAYER, $fileName);
+            $xml = self::readXML(PATH_PLAYER, $fileName);
         } catch (RuntimeException $e){
             self::logThrown($e);
             $xml = new SimpleXMLElement("<player/>");
@@ -236,9 +230,8 @@ class Player extends Qwik {
             return FALSE;
         }
         try { // replace old player file with a symlink to the new file
-            $path = self::PATH_PLAYER;
-            self::deleteFile("$path/$oldID.xml");
-            symlink("$path/$newID.xml", "$path/$oldID.xml");
+            self::deleteFile(PATH_PLAYER."$oldID.xml");
+            symlink(PATH_PLAYER."$newID.xml", PATH_PLAYER."$oldID.xml");
         } catch (RuntimeException $e){
             self::logThrown($e);
             throw new RuntimeException("failed to replace Player $oldID.xml with a symlink.");
@@ -835,9 +828,8 @@ class Player extends Qwik {
 
 
     public function rankingDelete($fileName){
-        $path = self::PATH_UPLOAD;
-        self::deleteFile("$path/$fileName.csv");
-        self::deleteFile("$path/$fileName.xml");
+        self::deleteFile(PATH_UPLOAD."$fileName.csv");
+        self::deleteFile(PATH_UPLOAD."$fileName.xml");
 
         $delete = $this->xml->xpath("/player/upload[text()='$fileName']");
        foreach($delete as $del){
@@ -903,9 +895,8 @@ Requirements:
         $date = date_create();
         $tmp_name = $_FILES["filename"]["tmp_name"];
         $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $PATH = self::PATH_UPLOAD;
         $CSV = Ranking::CSV;
-        $path = "$PATH/$fileName$CSV";
+        $path = PATH_UPLOAD."$fileName$CSV";
         $this->moveUpload($tmp_name, $path);
 
         $ranking = importRanking($game, $path, $fileName);
@@ -916,8 +907,6 @@ Requirements:
         $ranking->attribute("uploadName", $uploadName);
 
         if ($ok){
-            $PATH = self::PATH_PLAYER;
-            $XML = self::XML;
             $existingCount = 0;
             foreach($ranks as $sha256){
                 if (self::exists($sha256)){
@@ -1253,9 +1242,8 @@ Requirements:
 
 
     static public function removePlayer($id){
-        $path = self::PATH_PLAYER;
         $fileName = "$id.xml";
-        return self::deleteFile("$path/$fileName");
+        return self::deleteFile(PATH_PLAYER."$fileName");
     }
 
 

@@ -13,7 +13,7 @@ class Translation extends Qwik {
     public function __construct($fileName='translation.xml'){
         parent::__construct();
         $this->fileName = $fileName;
-        $this->xml = self::readXML(Qwik::PATH_LANG, $fileName);
+        $this->xml = self::readXML(PATH_LANG, $fileName);
         
         $xmlPhrases = $this->xml->xpath("phrase");
         foreach($xmlPhrases as $xmlPhrase){
@@ -40,7 +40,7 @@ class Translation extends Qwik {
     public function save(){
         return self::writeXML(
             $this->xml,
-            Qwik::PATH_LANG,
+            PATH_LANG,
             $this->fileName
         );
     }

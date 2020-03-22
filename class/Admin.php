@@ -10,9 +10,6 @@ require_once 'Ranking.php';
 
 class Player extends Qwik {
 
-    const PATH_PLAYER   = 'player';
-    const PATH_UPLOAD = 'uploads';
-
     const SECOND = 1;
     const MINUTE = 60;
     const HOUR   = 3600;
@@ -56,7 +53,7 @@ class Player extends Qwik {
     public function save(){
         return self::writeXML(
             $this->xml, 
-            self::PATH_PLAYER, 
+            PATH_PLAYER, 
             $this->fileName()
         );
     }
@@ -64,7 +61,7 @@ class Player extends Qwik {
 
     public function retrieve($fileName){
         return self::readXML( 
-            self::PATH_PLAYER, 
+            PATH_PLAYER, 
             $fileName        
         );
     }
@@ -76,9 +73,8 @@ class Player extends Qwik {
 
 
     static function exists($pid){
-        $PATH = self::PATH_PLAYER;
         $XML = self::XML;
-        return file_exists("$PATH/$pid$XML");
+        return file_exists(PATH_PLAYER."$pid$XML");
     }
     
     
@@ -195,9 +191,8 @@ class Player extends Qwik {
         $this->xml['id'] = $newID;
 
         // replace old player file with a symlink to the new file
-        $path = self::PATH_PLAYER;
-        self::deleteFile("$path/$preID.xml");
-        symlink("$path/$newID.xml", "$path/$preID.xml");
+        self::deleteFile(ROOT.PATH_PLAYER."$preID.xml");
+        symlink(ROOT.PATH_PLAYER."$newID.xml", ROOT.PATH_PLAYER."$preID.xml");
     }
 
 
@@ -841,9 +836,8 @@ class Player extends Qwik {
 
 
     public function rankingDelete($fileName){
-        $path = self::PATH_UPLOAD;
-        self::deleteFile("$path/$fileName.csv");
-        self::deleteFile("$path/$fileName.xml");
+        self::deleteFile(PATH_UPLOAD."$fileName.csv");
+        self::deleteFile(PATH_UPLOAD."$fileName.xml");
 
         $delete = $this->xml->xpath("/player/upload[text()='$fileName']");
        foreach($delete as $del){
@@ -909,9 +903,8 @@ Requirements:
         $date = date_create();
         $tmp_name = $_FILES["filename"]["tmp_name"];
         $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $PATH = self::PATH_UPLOAD;
         $CSV = Ranking::CSV;
-        $path = "$PATH/$fileName$CSV";
+        $path = $PATH_UPLOAD."$fileName$CSV";
         $this->moveUpload($tmp_name, $path);
 
         $ranking = importRanking($game, $path, $fileName);
@@ -922,8 +915,6 @@ Requirements:
         $ranking->attribute("uploadName", $uploadName);
 
         if ($ok){
-            $PATH = self::PATH_PLAYER;
-            $XML = self::XML;
             $existingCount = 0;
             foreach($ranks as $sha256){
                 if (self::exists($sha256)){
@@ -1259,9 +1250,8 @@ Requirements:
 
 
     static public function removePlayer($id){
-        $path = self::PATH_PLAYER;
         $fileName = "$id.xml";
-        return self::deleteFile("$path/$fileName");
+        return self::deleteFile(PATH_PLAYER."$fileName");
     }
 
 

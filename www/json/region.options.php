@@ -1,8 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
-require_once 'class/Qwik.php';
-require_once 'class/Options.php';
+require_once 'up.php';
+require_once UP.PATH_CLASS.'Qwik.php';
+require_once UP.PATH_CLASS.'Options.php';
 
 $options = new Options(NULL, Options::VALUE_TEMPLATE);
 $options->values($options->regions());

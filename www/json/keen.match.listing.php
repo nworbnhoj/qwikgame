@@ -1,9 +1,10 @@
 <?php
 header('Content-Type: application/json');
 
-require_once 'class/Qwik.php';
-require_once 'class/Defend.php';
-require_once 'class/MatchListing.php';
+require_once 'up.php';
+require_once UP.PATH_CLASS.'Qwik.php';
+require_once UP.PATH_CLASS.'Defend.php';
+require_once UP.PATH_CLASS.'MatchListing.php';
 
 $defend = new Defend();
 $get = $defend->get();

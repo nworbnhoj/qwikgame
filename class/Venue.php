@@ -9,9 +9,8 @@ class Venue extends Qwik {
 
 
     static function exists($id){
-        $PATH = self::PATH_VENUE;
         $NAME = self::file4id($id);
-        return file_exists("$PATH/$NAME");
+        return file_exists(PATH_VENUE."$NAME");
     }
 
  
@@ -27,10 +26,8 @@ class Venue extends Qwik {
 
 
     static function refreshID($vid){
-        $ROOT = $_SERVER['DOCUMENT_ROOT'];
-        $PATH = self::PATH_VENUE;
         $fileName = self::file4id($vid);
-        $venueFile = "$ROOT/$PATH/$fileName";
+        $venueFile = ROOT.PATH_VENUE."$fileName";
         if (is_link($venueFile)){
             try {
                 $target = readlink($venueFile);
@@ -108,17 +105,16 @@ class Venue extends Qwik {
     * @throws RuntimeException if the venue is not saved cleanly.
     */
     public function save($overwrite=FALSE){
-        $PATH = self::PATH_VENUE;
         $fileName = $this->fileName();
-        if(file_exists("$PATH/$fileName") && !$overwrite){
+        if(file_exists(ROOT.PATH_VENUE."$fileName") && !$overwrite){
         	throw new RuntimeException("failed to save venue $fileName - already exists");
             return FALSE;
         }
-        if (!self::writeXML($this->xml, $PATH, $fileName)){
+        if (!self::writeXML($this->xml, PATH_VENUE, $fileName)){
         	throw new RuntimeException("failed to save venue $fileName");
             return FALSE;
         }
-        if(!$this->saveGames($PATH, $fileName)){
+        if(!$this->saveGames(PATH_VENUE, $fileName)){
             throw new RuntimeException("failed to save games for venue $fileName");
             return FALSE;
         }
@@ -137,7 +133,7 @@ class Venue extends Qwik {
     	$result = TRUE;
         $games = $this->xml->xpath('game');
         foreach($games as $game){
-            if(!file_exists("$PATH/$game/$fileName")){
+            if(!file_exists("$PATH$game/$fileName")){
             	if (!$this->linkGame($PATH, $game, $fileName)){
                     throw new RuntimeException("failed to add $games for venue $fileName");
                     $result = FALSE;
@@ -155,14 +151,14 @@ class Venue extends Qwik {
     */
     private function linkGame($path, $game, $fileName){
         $cwd = getcwd();
-        if(!file_exists("$path/$game")){
-        	if (!mkdir("$path/$game", 0755, true)){
-        		throw new RuntimeException("failed to create $path/$game");
+        if(!file_exists("$path$game")){
+        	if (!mkdir("$path$game", 0755, true)){
+        		throw new RuntimeException("failed to create $path$game");
         		return FALSE;
         	}
         }        
-        if (!chdir("$path/$game")){
-            throw new RuntimeException("failed to change working directory to $path/$game");
+        if (!chdir("$path$game")){
+            throw new RuntimeException("failed to change working directory to $path$game");
             return FALSE;
         }        
         if (!symlink("../$fileName", $fileName)){
@@ -183,7 +179,7 @@ class Venue extends Qwik {
     private function retrieve(){
     	try {
             $fileName = $this->fileName();
-            $xml = self::readXML(self::PATH_VENUE, $fileName);
+            $xml = self::readXML(PATH_VENUE, $fileName);
         } catch (RuntimeException $e){
         	self::logThrown($e);
         	$xml = new SimpleXMLElement("<venue/>");
@@ -358,11 +354,11 @@ class Venue extends Qwik {
         $XML = self::XML;
 
         $oldName = "$oldID$XML";
-        $oldFile = "$PATH/$oldName";
+        $oldFile = PATH_VENUE."$oldName";
         $oldFileTmp = "$oldFile.tmp";
 
         $newName = "$newID$XML";
-        $newFile = "$PATH/$newName";
+        $newFile = PATH_VENUE."$newName";
 
         // save the venue and game symlinks under the newID
         $this->id = $newID;
@@ -418,7 +414,7 @@ class Venue extends Qwik {
         $games = $this->xml->xpath('game');
         foreach($games as $game){
             try {
-                self::deleteFile("$PATH/$game/$oldName");
+                self::deleteFile(PATH_VENUE."$game/$oldName");
             } catch (RuntimeException $e){
                 // may fail because link does not exist (no problem anymore)
                 // or because link is not writable (results in a broken link).

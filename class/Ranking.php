@@ -160,7 +160,7 @@ class Ranking extends Qwik {
     public function save(){
         return self::writeXML(
             $this->xml, 
-            self::PATH_UPLOAD, 
+            PATH_UPLOAD, 
             $this->fileName() . self::XML
         );
     }
@@ -168,7 +168,7 @@ class Ranking extends Qwik {
 
     public function retrieve($rankingID){
         return self::readXML( 
-            self::PATH_UPLOAD, 
+            PATH_UPLOAD, 
             $rankingID . self::XML
         );
     }

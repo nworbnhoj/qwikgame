@@ -1,3 +1,0 @@
-[submodule "class/WebPush"]
-	path = class/WebPush
-	url = https://github.com/web-push-libs/web-push-php.git

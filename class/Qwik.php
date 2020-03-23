@@ -492,7 +492,7 @@ class Qwik {
     static public function writeXML($xml, $path, $filename){
         $cwd = getcwd();
         if(!chdir("$path")){
-            throw new RuntimeException("failed to change working directory to $path");
+            throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
             return FALSE;
         }
         if(!$xml->saveXML($filename)){
@@ -519,8 +519,8 @@ class Qwik {
             return FALSE;
         }
 
-        if(!chdir(ROOT."$path")){
-            throw new RuntimeException("failed to change working directory to $path");
+        if(!chdir("$path")){
+            throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
             return FALSE;
         }
 

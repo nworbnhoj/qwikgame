@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 
 require_once 'up.php';
-require_once UP.PATH_CLASS.'Qwik.php';
+require_once PATH_CLASS.'Qwik.php';
 
 $options = '';
 foreach(Qwik::countries() as $val => $txt){

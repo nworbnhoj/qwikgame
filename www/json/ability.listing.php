@@ -2,9 +2,9 @@
 header('Content-Type: application/json');
 
 require_once 'up.php';
-require_once UP.PATH_CLASS.'Qwik.php';
-require_once UP.PATH_CLASS.'Defend.php';
-require_once UP.PATH_CLASS.'AbilityListing';
+require_once PATH_CLASS.'Qwik.php';
+require_once PATH_CLASS.'Defend.php';
+require_once PATH_CLASS.'AbilityListing';
 
 $defend = new Defend();
 $get = $defend->get();

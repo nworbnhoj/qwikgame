@@ -1,8 +1,8 @@
 <?php
 
 require_once 'up.php';
-require_once UP.PATH_CLASS.'Player.php';
-require_once UP.PATH_CLASS.'Page.php';
+require_once PATH_CLASS.'Player.php';
+require_once PATH_CLASS.'Page.php';
 
     $pid = $req['pid'];
     try {

@@ -1,4 +1,4 @@
 <?php
 define("UP", '../');
-require_once 'path.php';
+require_once UP.'path.php';
 ?>

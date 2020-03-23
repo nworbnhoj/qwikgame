@@ -287,8 +287,7 @@ class Notify extends Qwik {
 
 
     private function pushInvite($match, $subscriptions){
-        $title = new Html("{PushInviteTitle}", $this->player->lang());
-        $body = new Html("{PushInviteBody}", $this->player->lang());
+        $lang = $this->player->lang();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "day"       => $match->mday(),
@@ -296,8 +295,8 @@ class Notify extends Qwik {
         );
         $push = new Push(
                     $subscriptions,
-                    $title->make($vars),
-                    $body->make($vars),
+                    $this->pushMake("{PushInviteTitle}", $lang, $vars),
+                    $this->pushMake("{PushInviteBody}", $lang, $vars),
                     Push::INVITE_OPTIONS
                 );
         $push = new Push($subscriptions, $vars, $this->player->lang());
@@ -308,8 +307,7 @@ class Notify extends Qwik {
 
 
     private function pushConfirm($mid, $subscriptions){
-        $title = new Html("{PushConfirmTitle}", $this->player->lang());
-        $body = new Html("{PushConfirmBody}", $this->player->lang());
+        $lang = $this->player->lang();
         $match = $this->player->matchID($mid);
         $vars = array(
             "gameName"  => self::gameName($match->game()),
@@ -318,8 +316,8 @@ class Notify extends Qwik {
         );
         $push = new Push(
                     $subscriptions,
-                    $title->make($vars),
-                    $body->make($vars),
+                    $this->pushMake("{PushConfirmTitle}", $lang, $vars),
+                    $this->pushMake("{PushConfirmBody}", $lang, $vars),
                     Push::CONFIRM_OPTIONS
                 );
         $push = new Push($subscriptions, $vars, $this->player->lang());
@@ -330,19 +328,18 @@ class Notify extends Qwik {
 
 
     private function pushMsg($message, $match, $subscriptions){
-        $title = new Html("{PushMsgTitle}", $this->player->lang());
-        $body = new Html("{PushMsgBody}", $this->player->lang());
+        $lang = $this->player->lang();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "time"      => date_format($match->dateTime(), "ga D"),
             "venueName" => $match->venueName(),
             "message"   => $message,
-            "rivalName" => $match->rival()
+            "rivalName"  => $match->rival()->nick()
         );
         $push = new Push(
                     $subscriptions,
-                    $title->make($vars),
-                    $body->make($vars),
+                    $this->pushMake("{PushMsgTitle}", $lang, $vars),
+                    $this->pushMake("{PushMsgBody}", $lang, $vars),
                     Push::MSG_OPTIONS
                 );
         if(!$push->send()){
@@ -352,8 +349,7 @@ class Notify extends Qwik {
 
 
     private function pushCancel($match, $subscriptions){
-        $title = new Html("{PushCancelTitle}", $this->player->lang());
-        $body = new Html("{PushCancelBody}", $this->player->lang());
+        $lang = $this->player->lang();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "time"      => date_format($match->dateTime(), "ga D"),
@@ -361,13 +357,22 @@ class Notify extends Qwik {
         );
         $push = new Push(
                     $subscriptions,
-                    $title->make($vars),
-                    $body->make($vars),
+                    $this->pushMake("{PushCancelTitle}", $lang, $vars),
+                    $this->pushMake("{PushCancelBody}", $lang, $vars),
                     Push::CANCEL_OPTIONS
                 );
         if(!$push->send()){
             $this->removeDeadEnds($push->deadEnds());
         }
+    }
+
+
+    private function pushMake($phrase, $lang, $vars){
+        $html = new Html($phrase, $lang);
+        $txt = $html->translate($phrase);
+        $txt = $html->populate($txt, $vars);
+        $txt = $html->translate($txt);
+        return $txt;
     }
 
 

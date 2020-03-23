@@ -441,7 +441,7 @@ class Qwik {
 
     static public function venues($game=NULL){
         $venues = array();
-        $path = UP.PATH_VENUE;
+        $path = PATH_VENUE;
         $path .= $game ? "$game/" : '';
         $fileList = self::fileList($path);
         foreach($fileList as $file){
@@ -455,7 +455,7 @@ class Qwik {
 
     static public function svids($game=NULL){
         $svids = array();
-        $path = UP.PATH_VENUE;
+        $path = PATH_VENUE;
         $path .= $game ? "$game/" : '';
         $fileList = self::fileList($path);
         foreach($fileList as $file){
@@ -470,7 +470,7 @@ class Qwik {
 
     static public function pids($game){
         $pids = array();
-        $fileList = self::fileList(UP.PATH_PLAYER);
+        $fileList = self::fileList(PATH_PLAYER);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
                 $pids[] = str_replace('.xml', '', $file);
@@ -491,7 +491,7 @@ class Qwik {
     */
     static public function writeXML($xml, $path, $filename){
         $cwd = getcwd();
-        if(!chdir(ROOT."$path")){
+        if(!chdir("$path")){
             throw new RuntimeException("failed to change working directory to $path");
             return FALSE;
         }
@@ -514,7 +514,7 @@ class Qwik {
     */
     static public function readXML($path, $fileName){
         $cwd = getcwd();
-        if (!file_exists(ROOT."$path$fileName")) {
+        if (!file_exists("$path$fileName")) {
             throw new RuntimeException("failed to read xml $path$fileName");
             return FALSE;
         }

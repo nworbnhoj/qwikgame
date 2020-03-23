@@ -1,8 +1,8 @@
 <?php
 require_once 'up.php';
-require_once UP.PATH_CLASS.'Qwik.php';
-require_once UP.PATH_CLASS.'Venue.php';
-require_once UP.PATH_CLASS.'Page.php';
+require_once PATH_CLASS.'Qwik.php';
+require_once PATH_CLASS.'Venue.php';
+require_once PATH_CLASS.'Page.php';
 
     $now = new DateTime('now');
     $compiled = $now->format('d-m-Y');

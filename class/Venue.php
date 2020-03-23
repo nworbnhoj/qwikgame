@@ -27,7 +27,7 @@ class Venue extends Qwik {
 
     static function refreshID($vid){
         $fileName = self::file4id($vid);
-        $venueFile = ROOT.PATH_VENUE."$fileName";
+        $venueFile = PATH_VENUE."$fileName";
         if (is_link($venueFile)){
             try {
                 $target = readlink($venueFile);
@@ -106,7 +106,7 @@ class Venue extends Qwik {
     */
     public function save($overwrite=FALSE){
         $fileName = $this->fileName();
-        if(file_exists(ROOT.PATH_VENUE."$fileName") && !$overwrite){
+        if(file_exists(PATH_VENUE."$fileName") && !$overwrite){
         	throw new RuntimeException("failed to save venue $fileName - already exists");
             return FALSE;
         }
@@ -350,7 +350,7 @@ class Venue extends Qwik {
             return TRUE; // nothing to do
         }
 
-        $PATH = self::PATH_VENUE;
+        $PATH = PATH_VENUE;
         $XML = self::XML;
 
         $oldName = "$oldID$XML";

@@ -191,8 +191,8 @@ class Player extends Qwik {
         $this->xml['id'] = $newID;
 
         // replace old player file with a symlink to the new file
-        self::deleteFile(ROOT.PATH_PLAYER."$preID.xml");
-        symlink(ROOT.PATH_PLAYER."$newID.xml", ROOT.PATH_PLAYER."$preID.xml");
+        self::deleteFile(PATH_PLAYER."$preID.xml");
+        symlink(PATH_PLAYER."$newID.xml", PATH_PLAYER."$preID.xml");
     }
 
 

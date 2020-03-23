@@ -3,7 +3,7 @@
 require_once 'Qwik.php';
 require_once 'Service.php';
 
-require_once UP.PATH_VENDOR.'autoload.php';
+require_once PATH_VENDOR.'autoload.php';
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 

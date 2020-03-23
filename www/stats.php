@@ -2,7 +2,7 @@
 <?php
 
 require_once 'up.php';
-require_once UP.PATH_CLASS.'Qwik.php';
+require_once PATH_CLASS.'Qwik.php';
 
     $req = validate($_POST);
     if (!$req){

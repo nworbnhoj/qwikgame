@@ -30,22 +30,18 @@ class FriendListing extends Listing {
         $group="";
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("rival");
-        $emails = array();
         foreach($reckoning as $reckon){
             $email = (string) $reckon['email'];
-            if (!array_key_exists($email, $emails)){
-                $emails[$email] = TRUE;
-                $parity = (int) $reckon['parity'];
-                $game = (string) $reckon['game'];
-                $reckonVars = array(
-                    'id'        => $reckon['id'][0],
-                    'email'     => $email,
-                    'gameName'  => self::gameName($game),
-                    'parity'    => self::parityStr($parity)
-                );
-                $vars = $playerVars + $reckonVars + self::$icons;
-                $group .= $this->populate($html, $vars);
-            }
+            $parity = (int) $reckon['parity'];
+            $game = (string) $reckon['game'];
+            $reckonVars = array(
+                'id'        => $reckon['id'][0],
+                'email'     => $email,
+                'gameName'  => self::gameName($game),
+                'parity'    => self::parityStr($parity)
+            );
+            $vars = $playerVars + $reckonVars + self::$icons;
+            $group .= $this->populate($html, $vars);
         }
         return $group;
 

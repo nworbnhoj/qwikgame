@@ -212,8 +212,8 @@ Class TranslatePage extends Page {
             $html .= "<tr><td><big><b>$native</b></big></td>\n";
             $html .= "<td>$stat%</td>\n";
             foreach($this->files as $file){
-                $path = "lang/$lang/$file";
-                $htm = file_get_contents("html/$file");
+                $path = PATH_LANG."$lang/$file";
+                $htm = file_get_contents(PATH_HTML."$file");
                 $htm = $this->translate($htm, $lang);   // sentences with differing word order
                 $htm = $this->populate($htm, $this->variables); // select elements
                 $htm = $this->translate($htm, $lang);     // translate all remaining

@@ -285,6 +285,7 @@ class Player extends Qwik {
         if (is_array($xml) && isset($xml[0])){
             return new Match($this, $xml[0]);
         }
+        return NULL;
     }
 
 
@@ -615,8 +616,11 @@ class Player extends Qwik {
         if (isset($match)){
             $rival = $match->rival();
             if($rival->ok()){
-                $notify = new Notify($rival);
-                $notify->sendMsg($msg, $match);
+                $rivalMatch = $rival->matchID($mid);
+                if (isset($rivalMatch)){
+                    $notify = new Notify($rival);
+                    $notify->sendMsg($msg, $rivalMatch);
+                }
             }
         }
     }

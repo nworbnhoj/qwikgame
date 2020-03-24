@@ -107,8 +107,8 @@ class IndexPage extends Page {
         
         $variables = parent::variables();
 
-        $variables['playerCount']    = $this->countFiles('player');
-        $variables['venueCount']     = $this->countFiles('venue');
+        $variables['playerCount']    = $this->countFiles(PATH_PLAYER);
+        $variables['venueCount']     = $this->countFiles(PATH_VENUE);
         $variables['venuesLink']     = "<a href='venues.php?game=squash'>{venues}</a>";
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
@@ -142,7 +142,12 @@ class IndexPage extends Page {
 
 
     private function countFiles($path){
-        return iterator_count(new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS));
+       try {
+           return iterator_count(new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS));
+       } catch (RuntimeException $e){
+            self::logThrown($e);
+            self::logMsg("Failed to count files in $path");
+        }
     }
 
 }

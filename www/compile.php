@@ -43,13 +43,12 @@ require_once PATH_CLASS.'Page.php';
         }
     }
 
-    $path = $up.Qwik::PATH_VENUE;
     $filename = "venues$compiled.xml";
-    $xml->saveXML("$path/$filename");
-    $xml->saveXML("$path/venues.xml");
+    $xml->saveXML(PATH_VENUE."$filename");
+    $xml->saveXML(PATH_VENUE."venues.xml");
 
 
-    $html = file_get_contents("$path/$filename");
+    $html = file_get_contents(PATH_VENUE."$filename");
 
     echo "\n\n========================\n\n";
     echo "done";

@@ -119,7 +119,7 @@ class Push extends Qwik {
 
 
     public function deadEnds(){
-        return $this->$deadEnds;
+        return $this->deadEnds;
     }
 
 }

@@ -2,10 +2,10 @@ self.addEventListener('push', function(e) {
   var payload = e.data.json();
 
   var options = {
-    body: payload.msg,
+    body: payload.body,
     badge: 'img/qwik.icon.48x48.png',
     icon: 'img/qwik.icon.120x120.png',
-    vibrate: [10, 8, 6, 4, 2]
+    vibrate: [64, 32, 16, 8, 4]
   };
   e.waitUntil(
     self.registration.showNotification(payload.title, options)
@@ -20,7 +20,8 @@ self.addEventListener('notificationclick', function(e) {
   if (action === 'close') {
     notification.close();
   } else {
-    clients.openWindow('https://www.qwikgame.org/match.php');
+    var hostname = window.location.hostname;
+    clients.openWindow('https://' + hostname + '/match.php');
     notification.close();
   }
 });

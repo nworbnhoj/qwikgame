@@ -489,14 +489,14 @@ class Qwik {
     * @throws RuntimeException if there is a problem writing the xml.
     * @return True if the xml is written to file successfully, and false otherwise.
     */
-    static public function writeXML($xml, $path, $filename){
+    static public function writeXML($xml, $path, $fileName){
         $cwd = getcwd();
         if(!chdir("$path")){
             throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
             return FALSE;
         }
-        if(!$xml->saveXML($filename)){
-            throw new RuntimeException("failed to save xml to $path$fileName");
+        if(!$xml->saveXML($fileName)){
+            throw new RuntimeException("failed to save xml to $path$fileName from cwd $cwd");
             return FALSE;
         }
         if(!chdir($cwd)){
@@ -528,7 +528,7 @@ class Qwik {
             $xml = simplexml_load_file($fileName);
         } catch (Exception $e){
             self::logThrown($e);
-            throw new RuntimeException("failed to read xml from $path$fileName");
+            throw new RuntimeException("failed to read xml from $path$fileName from cwd $cwd");
         } finally {
             if(!chdir($cwd)){
                 throw new RuntimeException("failed to return working directory to $cwd");

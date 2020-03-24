@@ -309,10 +309,12 @@ class Notify extends Qwik {
     private function pushConfirm($mid, $subscriptions){
         $lang = $this->player->lang();
         $match = $this->player->matchID($mid);
+        $rivalName = $match->rival()->nick();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "time"      => date_format($match->dateTime(), "ga D"),
-            "venueName" => $match->venueName()
+            "venueName" => $match->venueName(),
+            "rivalName"  => empty($rivalName) ? '' : $rivalName
         );
         $push = new Push(
                     $subscriptions,
@@ -329,12 +331,13 @@ class Notify extends Qwik {
 
     private function pushMsg($message, $match, $subscriptions){
         $lang = $this->player->lang();
+        $rivalName = $match->rival()->nick();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "time"      => date_format($match->dateTime(), "ga D"),
             "venueName" => $match->venueName(),
             "message"   => $message,
-            "rivalName"  => $match->rival()->nick()
+            "rivalName"  => empty($rivalName) ? '{rival}' : $rivalName
         );
         $push = new Push(
                     $subscriptions,

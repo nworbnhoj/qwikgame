@@ -1,7 +1,6 @@
 <?php
 
-require_once '../path.php';
-
+require_once 'up.php';
 
 require_once 'Logging.php';
 
@@ -411,6 +410,9 @@ class Qwik {
     * @throws RuntimeException if file is not unlinked
     */
     static public function deleteFile($file){
+        if (!file_exists($file)){
+            return TRUE;
+        }
         if (!is_writable($file) && !is_link($file)){
             throw new RuntimeException("unable to write to $file");
             return FALSE;           

@@ -421,7 +421,7 @@ class Player extends Qwik {
         $rid = Player::anonID($rivalEmail);
 
         $existing = $this->xml->xpath("reckon[rival='$rid' and @game='$game']");
-        if (isset($existing[0]){ // replace a prior reckon for the same rival & game.
+        if (isset($existing[0])){ // replace a prior reckon for the same rival & game.
             self::removeElement($existing[0]);
         }
 

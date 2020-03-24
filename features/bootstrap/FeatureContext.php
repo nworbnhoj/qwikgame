@@ -2,12 +2,15 @@
 
 require_once 'class/Qwik.php';
 require_once 'class/Logging.php';
-require_once 'class/PlayerPage.php';
 require_once 'class/Player.php';
 require_once 'class/Ranking.php';
 require_once 'class/LocatePage.php';
 require_once 'class/Hours.php';
 require_once 'class/Page.php';
+require_once 'class/MatchPage.php';
+require_once 'class/FriendPage.php';
+require_once 'class/FavoritePage.php';
+require_once 'class/AccountPage.php';
 
 
 use Behat\Behat\Tester\Exception\PendingException;
@@ -191,7 +194,7 @@ class FeatureContext implements Context
     {
         $this->req['qwik'] = 'available';
         $_GET = $this->req;
-        $page = new PlayerPage();
+        $page = new FavoritePage();
         $this->id = $page->processRequest();
         $this->player = new Player($this->pid, TRUE);
         $this->authURL = $this->player->authURL(2*Player::DAY, $this->req);
@@ -206,7 +209,7 @@ class FeatureContext implements Context
         $this->req['qwik'] = 'delete';
         $this->req['id'] = $this->id;
         $_GET = $this->req;
-        $page = new PlayerPage();
+        $page = new FavoritePage();
         $this->id = $page->processRequest();
         $this->player = new Player($this->pid, FALSE);
     }
@@ -226,7 +229,7 @@ class FeatureContext implements Context
         Assert::assertNotNull($req);
 
         $_GET = $req;
-        $page = new PlayerPage();
+        $page = new MatchPage();
         $player = $page->player();
 
         Assert::assertTrue(
@@ -271,7 +274,7 @@ class FeatureContext implements Context
                 'rival'=>$this->email,
                 'parity'=>$this->parityPhrase[$rivalParity]
             ); 
-        $page = new PlayerPage();
+        $page = new MatchPage();
         $page->processRequest();
 
         $parity = $this->player->parity($rival, $game);
@@ -450,7 +453,7 @@ class FeatureContext implements Context
                 'rep'=>'0',
                 'parity'=>$this->paritySymbol[$parity]
             );
-        $page = new PlayerPage();
+        $page = new MatchPage();
         $page->processRequest();
     }
 
@@ -555,7 +558,7 @@ class FeatureContext implements Context
         $this->req['parity'] = $options[$parity];
         $this->req['game'] = $game;
         $_GET = $this->req;
-        $page = new PlayerPage();
+        $page = new FriendPage();
         $this->id = $page->processRequest();
         $this->player = new Player($this->pid, FALSE);
     }

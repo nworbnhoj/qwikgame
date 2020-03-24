@@ -215,16 +215,6 @@ $(document).ready(function(){
     });
 
 
-    $('.phrase').click(function(){
-        $(this).nextAll('.edit-phrase').toggle();
-    });
-
-    
-    $('.pending').click(function(){
-        $(this).nextAll('.edit-phrase').toggle();
-    });
-
-
     $('#hr-any').on('click', function(){
         if ($(this).is(':checked')){
             $('#hr').hide();

@@ -185,7 +185,7 @@ class FavoritePage extends Page {
             $bit = 1;
             $hourRows .= "$tabs<tr>\n";
             $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
-            $hourRows .= "$tabs\t<th>$day</th>\n";
+            $hourRows .= "$tabs\t<th class='tr-toggle'>$day</th>\n";
             for($hr24=0; $hr24<=23; $hr24++){
                 if (($hr24 < 6) | ($hr24 > 20)){
                     $hidden = 'hidden';

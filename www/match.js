@@ -10,9 +10,6 @@ function addMoreListeners(){
     for (var elem of document.querySelectorAll('button.thumb')) {
         elem.addEventListener('click', clickSetRep, false);
     }
-    for (var elem of document.querySelectorAll('td.toggle')) {
-        elem.addEventListener('click', clickTdToggle, false);
-    }
 
     addEvent(document.getElementById('invite-friends'), 'click'  , clickInviteFriends);
 }
@@ -52,23 +49,6 @@ function clickSetRep(){
         rep.val('+1');
     } else {
         rep.val('-1');
-    }
-}
-
-
-function clickTdToggle(){
-    var td = this;
-    var input = this.parentNode.firstChild;
-    var val = parseInt(input.nodeValue);
-    var bit = parseInt(td.getAttribute('bit'));
-    if (td.getAttribute('on') == 1){
-        td.style.backgroundColor = 'LightGrey';
-        td.setAttribute('on', '0');
-        input.value = val - bit;
-    } else {
-        td.style.backgroundColor = 'DarkOrange';
-        td.setAttribute('on', '1');
-        input.value = val + bit;
     }
 }
 

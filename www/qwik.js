@@ -38,7 +38,12 @@ function addListeners(){
     for (var elem of document.querySelectorAll('button.cross')) {
         elem.addEventListener('click', clickButtonCross, false);
     }
-    addEvent(document.getElementById('select-game'), 'change' , changeSelectGame);
+    for (var elem of document.querySelectorAll('.select-game')) {
+        elem.addEventListener('change', changeSelectGame, false);
+    }
+    for (var elem of document.querySelectorAll('td.toggle')) {
+        elem.addEventListener('click', clickTdToggle, false);
+    }
 
     // call addMoreListeners() if it has been defined somewhere
     if (typeof addMoreListeners == 'function') { addMoreListeners(); }
@@ -102,19 +107,28 @@ function toggle(element){
 }
 
 
+function clickTdToggle(){
+    var td = this;
+    var input = td.parentNode.firstElementChild;
+    var value = parseInt(input.getAttribute('value'));
+    var bit = parseInt(td.getAttribute('bit'));
+    if (td.getAttribute('on') == 1){
+        td.style.backgroundColor = 'LightGrey';
+        td.setAttribute('on', '0');
+        value -= bit;
+    } else {
+        td.style.backgroundColor = 'DarkOrange';
+        td.setAttribute('on', '1');
+        value += bit;
+    }
+    input.setAttribute('value', value);
+}
+
 
 
 
 
 $(document).ready(function(){
-
-
-    $('#later').click(function(){
-        $('table.time td').each(function(){
-            alert('jjj');
-        });
-    });
-
 
     $('span.anon').each(function(){
         $(this).css('color',getRandomColor());
@@ -207,21 +221,6 @@ $(document).ready(function(){
     });
 
 
-    $('#hr-any').on('click', function(){
-        if ($(this).is(':checked')){
-            $('#hr').hide();
-        } else {
-            $('#hr').show();
-        }
-    });
-
-
-    $('.hr-toggle').click(function(){
-        $('#hr-check').toggle();
-        $('#hr-grid').toggle();
-    });
-
-
     $('#lang-icon').click(function(){
         $(this).toggle();
         $('#lang-select').toggle().select();
@@ -242,9 +241,6 @@ $(document).ready(function(){
     $('.repost').change(function(){
         $(this).parent().submit();
     });
-
-
-
 
 
     $('.geocode').blur(function(){

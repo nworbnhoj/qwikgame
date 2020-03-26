@@ -104,7 +104,7 @@ Class TranslatePage extends Page {
         $this->langs = self::translation()->languages();
         $this->phraseKeys = self::translation()->phraseKeys();
 
-        $selectGame = "<select id='select-game' name='game' class='game'>[gameOptions]</select>";
+        $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
 
         $vars = parent::variables();
 

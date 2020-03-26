@@ -1,16 +1,17 @@
 ready(event => {
-
-  addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
-  addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
-  addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
-
-  initAccountPage();
-
+    initPage();
 });
 
 
+function addMoreListeners(){
+  addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
+  addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
+  addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
+}
 
-function initAccountPage(){
+
+
+function initPage(){
   if (!("Notification" in window) | !('PushManager' in window)) {
     document.getElementById('notify-push').disabled = true;
   } else if ("Notification" in window){

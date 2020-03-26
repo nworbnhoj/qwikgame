@@ -15,7 +15,7 @@ class MatchPage extends Page {
             <option value='-1'>{weaker}</option>
             <option value='-2'>{much_weaker}</option>
         </select>";
-    const BUTTON_THUMB = "<button type='button' id='rep-thumb'  class='" . self::THUMB_UP_ICON . "'></button>";
+    const BUTTON_THUMB = "<button type='button' class='" . self::THUMB_UP_ICON . "'></button>";
 
     private $game;
     private $venue;

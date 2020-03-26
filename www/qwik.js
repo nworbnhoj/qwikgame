@@ -16,6 +16,12 @@ function addEvent(element, evnt, funct){
 }
 
 
+// A general DOM document ready function
+ready(event => {
+    addListeners();
+});
+
+
 // Registering Service Worker
 if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -24,17 +30,83 @@ if('serviceWorker' in navigator) {
 };
 
 
-$(document).ready(function(){
+// add Listeners to elements on this page.
+function addListeners(){
+    for (var elem of document.querySelectorAll('button.help')) {
+        elem.addEventListener('click', clickButtonHelp, false);
+    }
+    for (var elem of document.querySelectorAll('button.cross')) {
+        elem.addEventListener('click', clickButtonCross, false);
+    }
+    addEvent(document.getElementById('select-game'), 'change' , changeSelectGame);
 
-    var currentTime = new Date();
-    var hour = currentTime.getHours();
+    // call addMoreListeners() if it has been defined somewhere
+    if (typeof addMoreListeners == 'function') { addMoreListeners(); }
+}
 
-    $('#hrs_trunc').children('td').each(function(){
-        var hr = $(this).attr('hr');
-        if(hr <= hour){
-            $(this).addClass('past').removeClass('toggle').unbind().css('color','DimGrey');
+
+//////////////// EVENT ACTIONS ////////////////////////////
+
+
+function clickButtonHelp(){
+    toggle(nextSibling(this, 'span.help'));
+}
+
+
+function clickButtonCross(){
+    for (var elem of this.parentNode.querySelectorAll('select')) {
+        elem.removeAttribute("required");
+    }
+}
+
+
+function changeSelectGame(){
+    var game = this.value;
+    for (var elem of this.parentNode.querySelectorAll('.json')){
+        switch(elem.tagName){
+            case 'INPUT':
+                var id = elem.getAttribute('list');
+                if (!id){ return false; }
+                var datalist = document.querySelectorAll("datalist#"+id)[0];
+                jsonOptions(datalist, id, game);
+            break;
+            case 'SELECT':
+                var id = elem.getAttribute('id');
+                if (!id){ return false; }
+                jsonOptions(elem, id, game);
+            break;
         }
-    });
+    }
+}
+
+
+///////////////// DOM helper functions ///////////////////
+
+
+// returns the next sibling element matching selector, or null otherwise
+function nextSibling(element, selector) {
+  if (!element) return null;
+  var sibling = element.nextElementSibling;
+  if (!sibling || !selector || sibling.matches(selector)) return sibling;
+  return nextSibling(sibling, selector);
+};
+
+
+// toggle the element visibility
+function toggle(element){
+    if(window.getComputedStyle(element).display !== 'none') {
+        element.style.display = 'none';
+        return;
+    }
+    element.style.display = 'block';
+}
+
+
+
+
+
+
+$(document).ready(function(){
 
 
     $('#later').click(function(){
@@ -82,86 +154,11 @@ $(document).ready(function(){
         });
     
 
-    $(".thumb").click(function(){
-        var thumb = $(this);
-        if(thumb.hasClass('fa-thumbs-o-up')){
-            thumb.removeClass('fa-thumbs-o-up');
-            thumb.addClass('fa-thumbs-o-down');
-            thumb.removeClass('green');
-            thumb.addClass('red');
-        } else {
-            thumb.removeClass('fa-thumbs-o-down');
-            thumb.addClass('fa-thumbs-o-up');
-            thumb.removeClass('red');
-            thumb.addClass('green');
-        }
-    });
-
-
-    $("#rep-thumb").click(function(){
-        var thumb = $(this);
-        var rep = $('#rep');
-        if(thumb.hasClass('fa-thumbs-o-up')){
-            rep.val('+1');
-        } else {
-            rep.val('-1');
-        }
-    });
-
-
-    $("select.game").change( function(){
-        var game = $(this).val();
-        var form = $(this).parents('form:first');
-        var json = form.find(".json");
-        json.each(function(){
-            var target = $(this);
-            switch(target.prop('nodeName')){
-                case 'INPUT':
-                    var id = target.attr('list');
-                    if (!id){ return false; }
-                    var datalist = $(":root").find("datalist#"+id);
-                    jsonOptions(datalist, id, game);
-                break;
-                case 'SELECT':
-                    var id = target.attr('id');
-                    if (!id){ return false; }
-                    jsonOptions(target, id, game);
-                break;
-            }
-        });
-    });
-
-
-    $("button.help").click(function(){
-        $(this).nextAll('span.help').toggle();
-    });
-
-
-    $("button.cross").click(function(){
-        $(this).parent().find('select').removeAttr('required');
-    });
-
 
     $(".email-alert").click(function(){
         alert("You should receive a confirmation email shortly.");
     });
 
-
-    $('td.toggle').click(function(){
-        var td = $(this);
-        var input = $('input:first-child', td.parents('tr'));
-        var val = parseInt(input.val());
-        var bit = parseInt(td.attr('bit'));
-        if (td.attr('on') == 1){
-            td.css('background-color', 'LightGrey');
-            td.attr('on', '0');
-            input.val(val - bit);
-        } else {
-            td.css('background-color', 'DarkOrange');
-            td.attr('on', '1');
-            input.val(val + bit);
-        }
-    });
 
 
     $('button.detail').click(function(){
@@ -170,11 +167,6 @@ $(document).ready(function(){
         window.location = url;
     });
 
-
-    $('#invite-friends').click(function(){
-        $(this).hide();
-        $('#friend-invites').show();    
-    });
 
 
     $('.show-edit-venue').click(function(){
@@ -286,9 +278,7 @@ $(document).ready(function(){
             var length = nFormatter(json.length, 1) ;
             console.log("json reply from "+url+" ("+length+")");
             parentNode.html(json);
-            parentNode.find("button.help").click(function(){
-                $(this).nextAll('span.help').toggle();
-            });
+            addListeners();
         }).fail(function(jqxhr, textStatus, error){
             var err = url+" : "+textStatus + ", " + error;
             console.log(err);
@@ -334,7 +324,7 @@ function jsonOptions(parent, id, game){
         json = !json ? '' : json;
         var length = nFormatter(json.length, 1);
         console.log("json reply from "+url+" ("+length+")");
-        parent.html(json);
+        parent.innerHTML = json;
     }).fail(function(jqxhr, textStatus, error){
         var err = url+" : "+textStatus + ", " + error;
         console.log(err);

@@ -142,53 +142,6 @@ function clickTdToggle(){
 
 $(document).ready(function(){
 
-    var dragging = false;
-    $('table.time')
-        .mousedown(function(e){
-            dragging = true;
-            $(this).data('p0', { x: e.pageX, y: e.pageY });
-        })
-        .mousemove(function(e){
-            if (dragging){
-            var p0 = $(this).data('p0');
-                var p1 = { x: e.pageX, y: e.pageY };
-//        d = Math.sqrt(Math.pow(p1.x - p0.x, 2) + Math.pow(p1.y - p0.y, 2));
-                var d = p1.x - p0.x;
-                if(Math.abs(d)>10){
-                    $('hrs_trunc').children('td').each(function(){
-                        if($(this).prop('hidden')){
-                            alert($(this).attr('hr'));
-                        }                    
-                    });
-                    if(d>0){    // alert('dragging left');
-                    } else {    // alert('dragging right');
-                    }
-                    $(this).data('p0', p1);
-                }
-            }
-        })
-        .mouseup(function(e){
-            dragging = false;
-        })
-        .mouseout(function(e){
-            dragging = false;
-        });
-    
-
-
-    $(".email-alert").click(function(){
-        alert("You should receive a confirmation email shortly.");
-    });
-
-
-
-    $('button.detail').click(function(){
-        var value = $(this).prev('input').val();
-        var url = "venue.php?description=" + value;
-        window.location = url;
-    });
-
-
     $('.back').click(function(){
         parent.history.back();
         return false;

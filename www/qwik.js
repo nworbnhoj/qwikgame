@@ -85,7 +85,7 @@ function changeSelectGame(){
                 var id = elem.getAttribute('list');
                 if (!id){ return false; }
                 var datalist = document.querySelectorAll("datalist#"+id)[0];
-                jsonDatalist(datalist, id, game);
+                jsonOptions(datalist, id, game);
             break;
             case 'SELECT':
                 var id = elem.getAttribute('id');
@@ -207,25 +207,15 @@ $(document).ready(function(){
         var input = $(":root").find("[list='"+id+"']");
         var form = input.parents('form:first');
         var game = form.find("select.game option:selected").val();
-        jsonDatalist(datalist, id, game);
+        jsonOptions(datalist, id, game);
     });
 
 
 });
 
 
-function jsonOptions(parent, id, game){
-    return jsonRequest(parent, id, 'options', game);
-}
-
-
-function jsonDatalist(parent, id, game){
-    return jsonRequest(parent, id, 'datalist', game);
-}
-
-
-function jsonRequest(parent, id, type, game){
-    var url = "json/"+id+"."+type+".php?game="+game;
+function jsonOptions(parent, id, type, game){
+    var url = "json/"+id+".options.php?game="+game;
     console.log("json call to "+url);
     $.getJSON(url, {}, function(json, stat){
         json = !json ? '' : json;

@@ -223,7 +223,7 @@ function qwikKeen($player, $req, $venue){
     || empty($venue)
     || empty($req['game'])
     || (empty($req['today']) && empty($req['tomorrow']))){
-        self::logMsg("qwikKeen() missing required arguments");
+        self::logMsg("qwikKeen() missing required arguments: post " . print_r($req, true));
         return;
     }
 

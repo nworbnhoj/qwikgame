@@ -22,8 +22,8 @@ self.addEventListener('notificationclick', function(e) {
   } else {
     var hostname = window.location.hostname;
     e.waitUntil(
-      clients.openWindow('https://' + hostname + '/match.php');
-    }
+      clients.openWindow("https://" + hostname + "/match.php")
+    );
     notification.close();
   }
 });

@@ -331,7 +331,9 @@ class Player extends Qwik {
 
     public function matchCancel($id){
         $match = $this->matchID($id);
-        $match->cancel();
+        if (isset($match)){
+            $match->cancel();
+        }
     }
 
 
@@ -1202,10 +1204,14 @@ Requirements:
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
     //echo "PLAYERORB $game $playerID<br>\n";
         $orb = new Orb($game);
-        $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
+        $parities = $this->xml->xpath("rank[@game='$game'] | outcome[@game='$game']");
+// waiting on the implementation of reckon support
+//        $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
         foreach($parities as $par){
             $rid = self::subID($par['rival']);
-            if(!is_null($rid)){
+            if(empty($rid)){
+                self::logMsg('Parity missing rival : ' . print_r($par, true));
+            } else {
                 if (!$filter){
                     $include=TRUE;
                 } elseif($positiveFilter){

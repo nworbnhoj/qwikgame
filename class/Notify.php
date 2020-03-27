@@ -299,7 +299,6 @@ class Notify extends Qwik {
                     $this->pushMake("{PushInviteBody}", $lang, $vars),
                     Push::INVITE_OPTIONS
                 );
-        $push = new Push($subscriptions, $vars, $this->player->lang());
         if(!$push->send()){
             $this->removeDeadEnds($push->deadEnds());
         }
@@ -322,7 +321,6 @@ class Notify extends Qwik {
                     $this->pushMake("{PushConfirmBody}", $lang, $vars),
                     Push::CONFIRM_OPTIONS
                 );
-        $push = new Push($subscriptions, $vars, $this->player->lang());
         if(!$push->send()){
             $this->removeDeadEnds($push->deadEnds());
         }

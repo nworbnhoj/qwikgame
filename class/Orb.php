@@ -223,7 +223,7 @@ Rival and by negating Parity.
                     }
                 } catch (RuntimeException $e){
                     self::logThrown($e);
-                    self::logMsg("Failed to retriece Player $rid to expand an Orb");
+                    self::logMsg("Failed to retrieve Player $rid to expand an Orb");
                 }
             }
             $crumbs = array_merge($crumbs, $newCrumbs);

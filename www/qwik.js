@@ -130,9 +130,6 @@ function clickTdToggle(){
 
 $(document).ready(function(){
 
-    $('span.anon').each(function(){
-        $(this).css('color',getRandomColor());
-    });
 
 
     var dragging = false;
@@ -232,10 +229,6 @@ $(document).ready(function(){
     });
 
 
-    $('#login-toggle').click(function(){
-        $('#register-form').toggle();
-        $('#login-form').toggle().select();
-    });
 
 
     $('.repost').change(function(){
@@ -496,15 +489,6 @@ function TimezoneDetect(){
 }
 
 
-// https://stackoverflow.com/questions/1484506/random-color-generator-in-javascript
-function getRandomColor() {
-    var letters = '789ABCD';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 6)];
-    }
-    return color;
-}
 
 
 // https://stackoverflow.com/questions/26361649/how-to-handle-right-to-left-text-input-fields-the-right-way?noredirect=1&lq=1

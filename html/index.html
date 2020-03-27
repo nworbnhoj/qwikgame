@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src=qwik.js></script>
+    <script src=index.js></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -53,7 +54,7 @@
         <input type='hidden' name='smtwtfs' value='16777215'>
         <h2 class='inform'>{What_is_your...}</h2>
         {Let_me_know...}
-        <input name="email" type="email" class="email word" placeholder="{prompt_address}">
+        <input id='register-email' name="email" type="email" class="email word" placeholder="{prompt_address}">
         <input type="submit" class="available word" value="{Submit}">
     </form>
 </div>
@@ -64,7 +65,7 @@
         <input type="hidden" name="repost" value="index.php">
         <input type="hidden" name="qwik" value="recover">
         <h2 class='inform'>{...link_to_login}</h2>
-        <input name="email" type="email" class="brick" placeholder="{prompt_address}">
+        <input id='login-email' name="email" type="email" class="brick" placeholder="{prompt_address}">
         <input type="submit" value="Submit" class="account">
     </form>
 </div>
@@ -254,7 +255,7 @@ code<br>
 
 
 
-<?php echo datalists(); ?>
+<datalist id='svid' />
 
 
 </html>

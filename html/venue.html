@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="qwik.js"></script>
+    <script src="venue.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -51,8 +52,8 @@
             <br>
         </div>
 
-        <p id='venue-display' class='center' [displayHidden]>
-            <button class='show-edit-venue' type='button' >Edit</button><br>
+        <p id='venue-display' class='center'>
+            <button id='show-edit-venue' type='button' >Edit</button><br>
             <br>
             [venueAddress]<br>
             [venuePhone]<br>
@@ -61,7 +62,8 @@
         </p>
     </div>
 
-    <div id='edit-venue-div' class="commit venue" [editHidden]>
+    <div id='edit-venue-div' class="commit venue"  style="display: none;">
+
         <button type='button' class='action help [INFO_ICON]'></button>
         <span class='help' hidden>
             {Please_correct...}<br>

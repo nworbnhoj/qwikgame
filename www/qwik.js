@@ -73,7 +73,7 @@ function changeSelectGame(){
                 var id = elem.getAttribute('list');
                 if (!id){ return false; }
                 var datalist = document.querySelectorAll("datalist#"+id)[0];
-                jsonOptions(datalist, id, game);
+                jsonDatalist(datalist, id, game);
             break;
             case 'SELECT':
                 var id = elem.getAttribute('id');
@@ -130,8 +130,6 @@ function clickTdToggle(){
 
 $(document).ready(function(){
 
-
-
     var dragging = false;
     $('table.time')
         .mousedown(function(e){
@@ -179,39 +177,6 @@ $(document).ready(function(){
     });
 
 
-
-    $('.show-edit-venue').click(function(){
-        $('#display-venue-div').hide();
-        $('#similar-venue-div').hide();
-        $('#edit-venue-div').show();
-    });
-
-
-    $('#venue-submit').click(function(){
-        if ($('#venue-id').value == null){
-            var id = $('#venue-name').val() + '|';
-            id += $('#venue-address').val() + '|';
-            id += $('#venue-country').val();
-            $('#venue-id').val(id);
-        }
-    });
-
-
-    $('#venue-cancel').click(function(){
-        $('#similar-venue-div').show();
-        $('#edit-venue-div').hide();
-        $('#display-venue-div').show();
-    });
-
-
-    $('.revert').click(function(){
-        var id = $(this).attr('id');
-        var val = $(this).attr('val');
-        $(id).val(val);
-        $('#edit-venue-form').show();
-    });
-
-
     $('.back').click(function(){
         parent.history.back();
         return false;
@@ -229,30 +194,8 @@ $(document).ready(function(){
     });
 
 
-
-
     $('.repost').change(function(){
         $(this).parent().submit();
-    });
-
-
-    $('.geocode').blur(function(){
-        initMap();
-    });
-
-
-    $('input.guess').keydown(function(){
-        var name     = $('input#venue-name').val();
-        var locality = $('input#venue-locality').val();
-        var admin1   = $('input#venue-admin1').val();
-        var country  = $('input#venue-country').val();
-        var div      = $('div#venue-guess');
-        guessPlace(name, locality, admin1, country, div);
-    });
-
-
-    $('input#venue-country').keydown(function(){
-        this.value = this.value.toLocaleUpperCase('en-US');
     });
 
 
@@ -299,7 +242,7 @@ $(document).ready(function(){
         var input = $(":root").find("[list='"+id+"']");
         var form = input.parents('form:first');
         var game = form.find("select.game option:selected").val();
-        jsonOptions(datalist, id, game);
+        jsonDatalist(datalist, id, game);
     });
 
 
@@ -307,7 +250,17 @@ $(document).ready(function(){
 
 
 function jsonOptions(parent, id, game){
-    var url = "json/"+id+".options.php"+"?game="+game;
+    return jsonRequest(parent, id, 'options', game);
+}
+
+
+function jsonDatalist(parent, id, game){
+    return jsonRequest(parent, id, 'datalist', game);
+}
+
+
+function jsonRequest(parent, id, type, game){
+    var url = "json/"+id+"."+type+".php?game="+game;
     console.log("json call to "+url);
     $.getJSON(url, {}, function(json, stat){
         json = !json ? '' : json;
@@ -320,77 +273,6 @@ function jsonOptions(parent, id, game){
     });
 }
 
-
-function guessPlace(name, locality, admin1, country, div){
-    var url = "json/address-autocomplete.php";
-    var input = name+', '+locality+', '+admin1+', '+country;
-    $.getJSON(url, {input: input}, function(json){
-        div.empty();
-        div.append($("<hr>"));
-        if (json.status == 'OK'){
-            var predictions = json.predictions;
-            for (i = 0; i < predictions.length; i++) {
-                var prediction = predictions[i];
-                div.append($('<button/>')
-                    .text(prediction.description)
-                    .attr('type', 'submit')
-                    .attr('class', 'venue guess')
-                    .attr('name', 'placeid')
-                    .attr('value', prediction.place_id)
-                    .click(function(){
-                        $('input.guess').removeAttr('required');
-                    })
-                );
-            }
-            div.append($("<br><img src='img/powered-by-google.png'>"));
-        }
-    });
-}
-
-
-
-
-var MSqC = {lat: -36.4497857, lng: 146.43003739999995};
-
-function initMap() {
-    var mapElement = document.getElementById('map');
-    var latInput = document.getElementById('venue-lat');
-    var lngInput = document.getElementById('venue-lng');
-    if (!mapElement){return;}
-    if (!latInput){return;}
-    if (!lngInput){return;}
-
-    var site = MSqC;   // default value
-    var lat = latInput.value;
-    var lng = lngInput.value;
-
-    if (isNumeric(lat) && isNumeric(lng)){
-        site = {lat: Number(lat), lng: Number(lng)};
-    } else {
-        var geocoder = new google.maps.Geocoder();
-        var name    = document.getElementById('venue-name').value;
-        var address = document.getElementById('venue-address').value;
-        var country = document.getElementById('venue-country').value;
-        var point = {address: name+", "+address+", "+country };
-
-        geocoder.geocode(point, function(results, status) {
-            if (status === 'OK') {
-                site = results[0].geometry.location;
-                latInput.value = site.lat();
-                lngInput.value = site.lng();
-            } else {
-                alert('Geocoding failed: ' + status);
-            }
-        });
-    }
-
-    var map = new google.maps.Map(mapElement, {zoom:14, center:site});
-    var marker = new google.maps.Marker({map:map, position:site, draggable:true});
-    google.maps.event.addListener(marker, 'dragend', function(evt){
-        latInput.value = evt.latLng.lat();
-        lngInput.value = evt.latLng.lng();
-    });
-}
 
 
 function venuesMap() {

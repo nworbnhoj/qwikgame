@@ -1,6 +1,9 @@
-ready(event => {
+docReady(event => {
     initPage();
 });
+
+
+winReady(event => {});
 
 
 function addMoreListeners(){

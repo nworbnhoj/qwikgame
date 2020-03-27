@@ -1,5 +1,9 @@
-ready(event => {
+docReady(event => {
     initPage();
+});
+
+winReady(event => {
+    initMap();
 });
 
 
@@ -13,13 +17,12 @@ function addMoreListeners(){
 
     addEvent(document.getElementById('show-edit-venue'),     'click',   clickEdit);
     addEvent(document.getElementById('venue-cancel'),        'click',   clickCancel);
-    addEvent(document.getElementById('input#venue-country'), 'keydown', keydownCountry);
+    addEvent(document.getElementById('venue-country'), 'keydown', keydownCountry);
 }
 
 
 
 function initPage(){
-    initMap();
 }
 
 

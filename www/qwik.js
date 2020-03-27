@@ -1,9 +1,17 @@
 // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
-function ready(callbackFunction){
+function docReady(callbackFunction){
   if(document.readyState != 'loading')
     callbackFunction(event)
   else
     document.addEventListener("DOMContentLoaded", callbackFunction)
+}
+
+
+function winReady(callbackFunction){
+  if(window.readyState != 'loading')
+    callbackFunction(event)
+  else
+    window.addEventListener("load", callbackFunction)
 }
 
 
@@ -17,9 +25,13 @@ function addEvent(element, evnt, funct){
 
 
 // A general DOM document ready function
-ready(event => {
+docReady(event => {
     addListeners();
 });
+
+
+// A general DOM Window ready function
+winReady(event => {});
 
 
 // Registering Service Worker

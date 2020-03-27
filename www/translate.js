@@ -1,3 +1,13 @@
+docReady(event => {
+    initPage();
+});
+
+
+winReady(event => {});
+
+
+function initPage(){}
+
 
 function addMoreListeners(){
     for (var elem of document.querySelectorAll('.phrase')) {

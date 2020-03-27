@@ -1,5 +1,9 @@
-ready(event => {
+docReady(event => {
     initPage();
+});
+
+winReady(event => {
+    initMap();
 });
 
 

@@ -1,6 +1,9 @@
-ready(event => {
+docReady(event => {
     initPage();
 });
+
+
+winReady(event => {});
 
 
 function addMoreListeners(){
@@ -45,7 +48,7 @@ function clickThumb(){
 
 function clickSetRep(){
     var rep = document.getElementById('rep');
-    if(thumb.hasClass('fa-thumbs-o-up')){
+    if(this.hasClass('fa-thumbs-o-up')){
         rep.val('+1');
     } else {
         rep.val('-1');

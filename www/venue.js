@@ -2,6 +2,7 @@ docReady(event => {
     initPage();
 });
 
+
 winReady(event => {
     initMap();
 });
@@ -62,9 +63,6 @@ function keydownCountry(){
     this.value = this.value.toLocaleUpperCase('en-US');
 }
 
-
-
-var MSqC = {lat: -36.4497857, lng: 146.43003739999995};
 
 
 function initMap() {

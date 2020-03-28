@@ -22,7 +22,7 @@ After configuring your favorite web server ([nginx](https://nginx.org) is recomm
 
 ## Development
 
-qwikgame is currently developed with html, css, php, json, javascript, jquery and xml data files. [Behat](http://behat.org/) is used for testing.
+qwikgame is currently developed with html, css, php, json, javascript and xml data files. [Behat](http://behat.org/) is used for testing.
 
 In qwikgame parlace; **matches** are played between **rival** **players** at **venues**.
 

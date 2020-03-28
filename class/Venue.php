@@ -522,7 +522,7 @@ class Venue extends Qwik {
         $set .= "\t<legend>Click to revert a prior edit.</legend>\n";
         foreach($edits as $edit){
             $revertID = $edit['id'];
-            $set .= "\t<button class='revert' id='#venue-$edit->key' val='$edit->val'>";
+            $set .= "\t<button class='revert' id='venue-$edit->key' val='$edit->val'>";
             $set .= "\t\t".self::REVERT_CHAR." <s>$edit->val</s>\n";
             $set .= "\t</button>\n";
         }

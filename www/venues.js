@@ -2,7 +2,9 @@ docReady(event => {
     initPage();
 });
 
-winReady(event => {});
+winReady(event => {
+    venuesMap();
+});
 
 
 function addMoreListeners(){}

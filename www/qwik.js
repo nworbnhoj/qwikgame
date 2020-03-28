@@ -1,3 +1,16 @@
+///////////////// Service Worker functions ///////////////////
+
+
+// Registering Service Worker
+if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+    });
+};
+
+
+///////////////// DOM Ready functions ///////////////////
+
 // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
 function docReady(callbackFunction){
   if(document.readyState != 'loading')
@@ -6,18 +19,19 @@ function docReady(callbackFunction){
     document.addEventListener("DOMContentLoaded", callbackFunction)
 }
 
-
+	
 function winReady(callbackFunction){
-  if(window.readyState != 'loading')
-    callbackFunction(event)
+  if(document.readyState == 'complete')
+    callbackFunction(event);
   else
-    window.addEventListener("load", callbackFunction)
+    window.addEventListener("load", callbackFunction);
 }
 
 
 // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
 function addEvent(element, evnt, funct){
-  if (element.attachEvent)
+  if (!element){return;}
+  if (element && element.attachEvent)
    return element.attachEvent('on'+evnt, funct);
   else
    return element.addEventListener(evnt, funct, false);
@@ -27,19 +41,21 @@ function addEvent(element, evnt, funct){
 // A general DOM document ready function
 docReady(event => {
     addListeners();
+
+    for (var base of document.querySelectorAll('div.base')) {
+        replicateBase(base);
+    }
+    for (var select of document.querySelectorAll('select.json')) {
+        fillSelect(select);
+    }
+    for (var datalist of document.querySelectorAll('datalist')) {
+        fillDatalist(datalist);
+    }
 });
 
 
 // A general DOM Window ready function
 winReady(event => {});
-
-
-// Registering Service Worker
-if('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
-    });
-};
 
 
 // add Listeners to elements on this page.
@@ -56,6 +72,13 @@ function addListeners(){
     for (var elem of document.querySelectorAll('td.toggle')) {
         elem.addEventListener('click', clickTdToggle, false);
     }
+    for (var elem of document.querySelectorAll('.repost')) {
+        elem.addEventListener('change', changeRepost, false);
+    }
+
+    addEvent(document.getElementById('back'),        'click',  clickBack);
+    addEvent(document.getElementById('lang-icon'),   'click',  clickButtonLanguage);
+    addEvent(document.getElementById('lang.select'), 'change', changeSelectLanguage);
 
     // call addMoreListeners() if it has been defined somewhere
     if (typeof addMoreListeners == 'function') { addMoreListeners(); }
@@ -63,6 +86,11 @@ function addListeners(){
 
 
 //////////////// EVENT ACTIONS ////////////////////////////
+
+
+function clickBack(){
+    window.history.back();
+}
 
 
 function clickButtonHelp(){
@@ -77,6 +105,24 @@ function clickButtonCross(){
 }
 
 
+function clickButtonLanguage(){
+    toggle(this);
+    var select = document.getElementById('lang.select');
+    toggle(select);
+    select.focus();
+}
+
+
+function changeSelectLanguage(){
+    document.getElementById('lang-form').submit();
+}
+
+
+function changeRepost(){
+    this.form.submit();
+}
+
+
 function changeSelectGame(){
     var game = this.value;
     for (var elem of this.parentNode.querySelectorAll('.json')){
@@ -84,7 +130,7 @@ function changeSelectGame(){
             case 'INPUT':
                 var id = elem.getAttribute('list');
                 if (!id){ return false; }
-                var datalist = document.querySelectorAll("datalist#"+id)[0];
+                var datalist = document.querySelector("datalist#"+id);
                 jsonOptions(datalist, id, game);
             break;
             case 'SELECT':
@@ -138,83 +184,69 @@ function clickTdToggle(){
 
 
 
+///////////////// JSON functions ///////////////////
 
 
-$(document).ready(function(){
-
-    $('.back').click(function(){
-        parent.history.back();
+function replicateBase(base){
+    var id = base.getAttribute('id');
+    if (!id){
+        console.log("Failed to replicate base: missing id attribute.");
         return false;
+    }
+    var parentNode = base.parentNode;
+    var baseHtml = base.outerHTML;
+    var url = 'json/'+id+'.listing.php';
+    $.getJSON(url, {html: baseHtml}, function(json, stat){
+        json = !json ? '' : json ;
+        var length = nFormatter(json.length, 1) ;
+        console.log("json reply from "+url+" ("+length+")");
+        parentNode.innerHTML = json;
+        addListeners();
+    }).fail(function(jqxhr, textStatus, error){
+        var err = url+" : "+textStatus + ", " + error;
+        console.log(err);
     });
+}
 
 
-    $('#lang-icon').click(function(){
-        $(this).toggle();
-        $('#lang-select').toggle().select();
+function fillSelect(select){
+    var id = select.getAttribute('id');
+    if (!id){
+        console.log("Failed to fill select: missing id attribute.");
+        return false;
+    }
+    var url = 'json/'+id+'.options.php';
+    $.getJSON(url, {}, function(json, stat){
+        json = !json ? '' : json ;
+        var length = nFormatter(json.length, 1) ;
+        console.log("json reply from "+url+" ("+length+")");
+        select.innerHTML = json;
+    }).fail(function(jqxhr, textStatus, error){
+        var err = url+" : "+textStatus + ", " + error;
+        console.log(err);
     });
+}
 
 
-    $('#lang-select').change(function(){
-        $('#lang-form').submit();
-    });
+function fillDatalist(datalist){
+    var id = datalist.getAttribute('id');
+    if (!id){
+        console.log("Failed to fill datalist: missing id attribute.");
+        return false;
+    }
+    var input = document.querySelector("[list='"+id+"']");
+    if (!input){
+        console.log("Failed to fill datalist: unable to find input with list=".id);
+        return false;
+    }
+    var selectGame = input.form.querySelector("select.game");
+    if (!selectGame){return false;}   // nothing to do
+    var game = selectGame.options[selectGame.selectedIndex].value;
+    jsonOptions(datalist, id, game);
+}
 
 
-    $('.repost').change(function(){
-        $(this).parent().submit();
-    });
-
-
-    $('div.base').each(function(){
-        var parentNode = $(this).parent();
-        var base = this.cloneNode(true);
-        var id = base.getAttribute('id');
-        var baseHtml = base.outerHTML;
-        var url = 'json/'+id+'.listing.php';
-        $.getJSON(url, {html: baseHtml}, function(json, stat){
-            json = !json ? '' : json ;
-            var length = nFormatter(json.length, 1) ;
-            console.log("json reply from "+url+" ("+length+")");
-            parentNode.html(json);
-            addListeners();
-        }).fail(function(jqxhr, textStatus, error){
-            var err = url+" : "+textStatus + ", " + error;
-            console.log(err);
-        });
-    });
-
-
-    $('select.json').each(function(){
-        var select = $(this);
-        var id = select.attr('id');
-        if (!id){ return false; }
-        var url = 'json/'+id+'.options.php';
-        $.getJSON(url, {}, function(json, stat){
-            json = !json ? '' : json ;
-            var length = nFormatter(json.length, 1) ;
-            console.log("json reply from "+url+" ("+length+")");
-            select.html(json);
-        }).fail(function(jqxhr, textStatus, error){
-            var err = url+" : "+textStatus + ", " + error;
-            console.log(err);
-        });
-    });
-
-
-    $('datalist').each(function(){
-        var datalist = $(this);
-        var id = datalist.attr('id');
-        if (!id){ return false; }
-        var input = $(":root").find("[list='"+id+"']");
-        var form = input.parents('form:first');
-        var game = form.find("select.game option:selected").val();
-        jsonOptions(datalist, id, game);
-    });
-
-
-});
-
-
-function jsonOptions(parent, id, type, game){
+function jsonOptions(parent, id, game){
     var url = "json/"+id+".options.php?game="+game;
     console.log("json call to "+url);
     $.getJSON(url, {}, function(json, stat){
@@ -227,6 +259,10 @@ function jsonOptions(parent, id, type, game){
         console.log(err);
     });
 }
+
+
+
+///////////////// Generic helper functions ///////////////////
 
 
 // https://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric
@@ -312,3 +348,4 @@ function nFormatter(num, digits) {
 
 
 
+const MSqC = {lat: -36.4497857, lng: 146.43003739999995};

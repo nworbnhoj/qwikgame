@@ -25,15 +25,15 @@
 <div class='center'>
 
 <div id='menu' class='menu'>
+    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
+    <a id='lang-icon' class='[LANG_ICON]'></a>
     <form id='lang-form' action='index.php' method='post'>
-        <select id='lang-select' name='lang' hidden>
+        <select id='lang-select' name='lang' style="float:right; display:none;">
             <repeat id='language'>
                 <option value='[code]' [selected]>[language]</option>
             </repeat>
         </select>
     </form>
-    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
-    <a id='lang-icon' class='[LANG_ICON]'></a>
     <a id='login-toggle' class='icon'>{login}</a>
 </div>
 

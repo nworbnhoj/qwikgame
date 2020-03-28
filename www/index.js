@@ -37,7 +37,7 @@ function clickLoginToggle(){
 
 function clickButtonLanguage(){
     toggle(this);
-    var select = document.getElementById('lang.select');
+    var select = document.getElementById('lang-select');
     toggle(select);
     select.focus();
 }

@@ -7,6 +7,8 @@ winReady(event => {});
 
 function addMoreListeners(){
     addEvent(document.getElementById('login-toggle'), 'click'  , clickLoginToggle);
+    addEvent(document.getElementById('lang-icon'),    'click',  clickButtonLanguage);
+    addEvent(document.getElementById('lang-select'),  'change', changeSelectLanguage);
 }
 
 
@@ -32,6 +34,18 @@ function clickLoginToggle(){
     }
 }
 
+
+function clickButtonLanguage(){
+    toggle(this);
+    var select = document.getElementById('lang.select');
+    toggle(select);
+    select.focus();
+}
+
+
+function changeSelectLanguage(){
+    document.getElementById('lang-form').submit();
+}
 
 
 // https://stackoverflow.com/questions/1484506/random-color-generator-in-javascript

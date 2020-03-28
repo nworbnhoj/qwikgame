@@ -77,8 +77,6 @@ function addListeners(){
     }
 
     addEvent(document.getElementById('back'),        'click',  clickBack);
-    addEvent(document.getElementById('lang-icon'),   'click',  clickButtonLanguage);
-    addEvent(document.getElementById('lang.select'), 'change', changeSelectLanguage);
 
     // call addMoreListeners() if it has been defined somewhere
     if (typeof addMoreListeners == 'function') { addMoreListeners(); }
@@ -102,19 +100,6 @@ function clickButtonCross(){
     for (var elem of this.parentNode.querySelectorAll('select')) {
         elem.removeAttribute("required");
     }
-}
-
-
-function clickButtonLanguage(){
-    toggle(this);
-    var select = document.getElementById('lang.select');
-    toggle(select);
-    select.focus();
-}
-
-
-function changeSelectLanguage(){
-    document.getElementById('lang-form').submit();
 }
 
 

@@ -116,12 +116,14 @@ function changeSelectGame(){
                 var id = elem.getAttribute('list');
                 if (!id){ return false; }
                 var datalist = document.querySelector("datalist#"+id);
-                jsonOptions(datalist, id, game);
+                var url = "json/"+id+".options.php?game="+game;
+                datalist.innerHTML = qwikJSON(url);
             break;
             case 'SELECT':
                 var id = elem.getAttribute('id');
                 if (!id){ return false; }
-                jsonOptions(elem, id, game);
+                var url = "json/"+id+".options.php?game="+game;
+                elem.innerHTML = qwikJSON(url);
             break;
         }
     }
@@ -201,15 +203,7 @@ function fillSelect(select){
         return false;
     }
     var url = 'json/'+id+'.options.php';
-    $.getJSON(url, {}, function(json, stat){
-        json = !json ? '' : json ;
-        var length = nFormatter(json.length, 1) ;
-        console.log("json reply from "+url+" ("+length+")");
-        select.innerHTML = json;
-    }).fail(function(jqxhr, textStatus, error){
-        var err = url+" : "+textStatus + ", " + error;
-        console.log(err);
-    });
+    select.innerHTML = qwikJSON(url);
 }
 
 
@@ -227,22 +221,20 @@ function fillDatalist(datalist){
     var selectGame = input.form.querySelector("select.game");
     if (!selectGame){return false;}   // nothing to do
     var game = selectGame.options[selectGame.selectedIndex].value;
-    jsonOptions(datalist, id, game);
+    var url = "json/"+id+".options.php?game="+game;
+    selectGame.innerHTML = qwikJSON(url);
 }
 
 
-function jsonOptions(parent, id, game){
-    var url = "json/"+id+".options.php?game="+game;
-    console.log("json call to "+url);
-    $.getJSON(url, {}, function(json, stat){
-        json = !json ? '' : json;
-        var length = nFormatter(json.length, 1);
-        console.log("json reply from "+url+" ("+length+")");
-        parent.innerHTML = json;
-    }).fail(function(jqxhr, textStatus, error){
-        var err = url+" : "+textStatus + ", " + error;
-        console.log(err);
-    });
+function qwikJSON(url){
+    var Httpreq = new XMLHttpRequest();
+    Httpreq.open("GET",url,false);
+    Httpreq.send(null);
+    var json = JSON.parse(Httpreq.responseText);
+    json = !json ? '' : json ;
+    var length = nFormatter(json.length, 1) ;
+    console.log("json reply from "+url+" ("+length+")");
+    return json;
 }
 
 
@@ -256,25 +248,7 @@ function isNumeric(n) {
 }
 
 
-// https://stackoverflow.com/questions/6921827/best-way-to-populate-a-select-box-with-timezones
-function jsonTZoptions(country, selectElement){
-    $.getJSON("json/timezone.php",{country_iso: country}, function(json){
-        var selected = (json.length === 1) ? '' : 'selected';
-        var options = '<option disabled '+selected+' value>timezone</option>';
-        selected = (json.length === 1) ? 'selected' : '';
-        for (var i = 0; i < json.length; i++) {
-            var value = json[i].optionValue;
-            var display = json[i].optionDisplay;
-            options += '<option '+selected+' value="'+value+'">'+display+'</option>';
-        }
-        selectElement.html(options);
-    })
-}
-
-
-
 // https://stackoverflow.com/questions/13/determine-a-users-timezone/5492192#5492192
-
 function TimezoneDetect(){
     var dtDate = new Date('1/1/' + (new Date()).getUTCFullYear());
     var intOffset = 10000; //set initial offset high so it is adjusted on the first attempt

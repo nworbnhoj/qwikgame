@@ -76,7 +76,7 @@ function addListeners(){
         elem.addEventListener('change', changeRepost, false);
     }
 
-    addEvent(document.getElementById('back'),        'click',  clickBack);
+    addEvent(document.getElementById('back'), 'click',  clickBack);
 
     // call addMoreListeners() if it has been defined somewhere
     if (typeof addMoreListeners == 'function') { addMoreListeners(); }
@@ -152,6 +152,7 @@ function toggle(element){
 }
 
 
+// toggle cells in hour selection tables between orange and grey
 function clickTdToggle(){
     var td = this;
     var input = td.parentNode.firstElementChild;
@@ -182,17 +183,12 @@ function replicateBase(base){
     }
     var parentNode = base.parentNode;
     var baseHtml = base.outerHTML;
-    var url = 'json/'+id+'.listing.php';
-    $.getJSON(url, {html: baseHtml}, function(json, stat){
-        json = !json ? '' : json ;
-        var length = nFormatter(json.length, 1) ;
-        console.log("json reply from "+url+" ("+length+")");
-        parentNode.innerHTML = json;
-        addListeners();
-    }).fail(function(jqxhr, textStatus, error){
-        var err = url+" : "+textStatus + ", " + error;
-        console.log(err);
-    });
+    var params = {html:baseHtml};
+    var esc = encodeURIComponent;
+    var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
+    var url = 'json/'+id+'.listing.php?'+query;
+    parentNode.innerHTML = qwikJSON(url);
+    addListeners();
 }
 
 
@@ -218,7 +214,7 @@ function fillDatalist(datalist){
         console.log("Failed to fill datalist: unable to find input with list=".id);
         return false;
     }
-    var selectGame = input.form.querySelector("select.game");
+    var selectGame = input.form.querySelector("select-game");
     if (!selectGame){return false;}   // nothing to do
     var game = selectGame.options[selectGame.selectedIndex].value;
     var url = "json/"+id+".options.php?game="+game;
@@ -233,6 +229,7 @@ function qwikJSON(url){
     var json = JSON.parse(Httpreq.responseText);
     json = !json ? '' : json ;
     var length = nFormatter(json.length, 1) ;
+    url = url.split("?")[0];
     console.log("json reply from "+url+" ("+length+")");
     return json;
 }
@@ -271,8 +268,6 @@ function TimezoneDetect(){
 
     return intOffset;
 }
-
-
 
 
 // https://stackoverflow.com/questions/26361649/how-to-handle-right-to-left-text-input-fields-the-right-way?noredirect=1&lq=1

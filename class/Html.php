@@ -1,15 +1,15 @@
 <?php
 
 require_once 'Qwik.php';
-require_once 'Translation.php';
+require_once 'PhraseBook.php';
 require_once 'Venue.php';
 
 /*******************************************************************************
     Class Html completes a html document by populating a html template with
-    [variables] and {translations}.
+    [variables] and {phrases}.
 
     The process begins with a html template; which is a file containing normal
-    html supplimented by [variable] and {translation} tags.
+    html supplimented by [variable] and {phrase} tags.
 
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
@@ -22,15 +22,15 @@ require_once 'Venue.php';
         </html>
 
     A call to Html::make() first populates the [variables] and this is 
-    followed by the {translations}. This sequence implies that variables
-    may contain {translation} tags. For example: variable [day] may be
+    followed by the {phrases}. This sequence implies that variables
+    may contain {phrase} tags. For example: variable [day] may be
     replaced by value {saturday}; which is then translated (in spanish) to
     Sabado.
 
     [variables] are obtained by a call to Html::variables() which returns an
     array mapping variable=>value, both strings.
 
-    {translations} are contained in an xml file of the form:
+    {phrases} are contained in an xml file of the form:
 
         <?xml version="1.0"?>
         <translation>
@@ -46,7 +46,15 @@ require_once 'Venue.php';
 
 class Html extends Qwik {
 
-    static $translation;
+
+    static $translationFileName = "translation.xml";
+    static $phrasebook;
+
+
+    // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
+    static function initStatic(){
+        self::$phrasebook = new PhraseBook(self::$translationFileName);
+    }
 
 
     static public function readTemplate($name, $language='en'){
@@ -106,18 +114,6 @@ class Html extends Qwik {
     }
 
 
-    /**
-     * This is a caching function that ensures the file translation.xml is only read once.
-     * Be sure to use &reference when wishing to make changes and call .save() 
-     */
-    function &translation(){
-        if (is_null(self::$translation)){
-            self::$translation = new Translation('translation.xml');
-        }
-        return self::$translation;
-    }
-
-
     public function serve(){
         $html = "<html><head></head><body></body></html>";
         try{
@@ -158,7 +154,7 @@ class Html extends Qwik {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
-        $html = self::translation()->translate($html, $this->language());
+        $html = self::$phraseBook()->translate($html, $this->language());
         return $html;
     }
 
@@ -174,7 +170,7 @@ class Html extends Qwik {
     ********************************************************************************/
     public function translate($html, $lang=NULL, $fb='en'){
         $lang = is_null($lang) ? $this->language() : $lang;
-        return self::translation()->translate($html, $lang, $fb);
+        return self::$phraseBook->translate($html, $lang, $fb);
     }
 
 
@@ -194,5 +190,8 @@ class Html extends Qwik {
     }
 
 }
+
+
+Html::initStatic();
 
 ?>

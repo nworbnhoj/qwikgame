@@ -77,7 +77,7 @@ class Listing extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $replicated = $this->replicate($html);
-        $retranslated = self::translation()->translate($replicated, $variables);
+        $retranslated = self::$phraseBook->translate($replicated, $variables);
         $populated = $this->populate($retranslated, $variables);
         return html_entity_decode($populated);
     }

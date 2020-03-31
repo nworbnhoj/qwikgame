@@ -142,18 +142,6 @@ class Page extends Html {
     }
 
 
-    /**
-     * This is a caching function that ensures the file pending.xml is only read once.
-     * Be sure to use &reference when wishing to make changes and call .save() 
-     */
-    function &pending(){
-        if (is_null(self::$pending)){
-            self::$pending = new Translation('pending.xml');
-        }
-        return self::$pending;
-    }
-
-
     public function serve(){
         try {
             $this->processRequest();
@@ -381,7 +369,7 @@ class Page extends Html {
     ********************************************************************************/
 
     public function selectLanguage($req, $player){
-        $languages = self::translation()->languages();
+        $languages = self::$phraseBook->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
@@ -517,7 +505,7 @@ class Page extends Html {
 
 
     private function replicateLanguages($html){
-        $languages = self::translation()->languages();
+        $languages = self::$phraseBook->languages();
         $group = '';
         $current = $_SESSION['lang'];
         foreach($languages as $code => $lang){
@@ -547,13 +535,13 @@ class Page extends Html {
 
     private function replicateTranslate($html){
         $group = '';
-        $translation = self::translation();
+        $phraseBook = self::$phraseBook;
         $pending = self::pending();
-        if(!$translation || !$pending){ return; }
+        if(!$phraseBook || !$pending){ return; }
         $langs = $pending->languages();
         $keys = $pending->phraseKeys();
         foreach($keys as $key){
-            $en_phrase = $translation->phrase($key, 'en');
+            $en_phrase = $phraseBook->phrase($key, 'en');
             foreach($langs as $lang => $native){
                 $phrase = $pending->phrase($key, $lang, '');
                 if(isset($phrase)){

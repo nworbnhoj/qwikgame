@@ -78,6 +78,8 @@ const PARITY5_SELECT = "
 
 Class TranslatePage extends Page {
 
+    private $translation;
+    private $pending;
     private $langs;
     private $phraseKeys;
     private $files = array(
@@ -100,8 +102,11 @@ Class TranslatePage extends Page {
     public function __construct($templateName=NULL){
         parent::__construct(NULL, $templateName);
         
-        $this->langs = self::translation()->languages();
-        $this->phraseKeys = self::translation()->phraseKeys();
+        $this->translation = new Translation(self::$translationFileName);
+        $this->pending = new Translation('pending.xml');
+
+        $this->langs = self::$phraseBook->languages();
+        $this->phraseKeys = self::$phraseBook()->phraseKeys();
 
         $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
 
@@ -129,11 +134,10 @@ Class TranslatePage extends Page {
         $key = $this->req('key');
         $lang = $this->req('lang');
         $phrase = $this->req('phrase');
-        $pending = &self::pending();
         if (!is_null($key) && !is_null($lang) && !is_null($phrase)){
-            $pending->set($key, $lang, $phrase);
+            $this->pending->set($key, $lang, $phrase);
         }
-        $pending->save();
+        $this->pending->save();
     }
 
 
@@ -156,7 +160,7 @@ Class TranslatePage extends Page {
         $count = count($this->langs) + 1;
 
         foreach($this->phraseKeys as $key){
-            $size = strlen(self::$translation->phrase($key, 'en'));
+            $size = strlen(self::$phraseBook->phrase($key, 'en'));
             $size = $size > 100 ? 100 : $size;
             $html .= "<table style='width:100%' id='$key'>\n";
             $html .= "<tr>";
@@ -185,7 +189,7 @@ Class TranslatePage extends Page {
 
         foreach($this->phraseKeys as $key){
             foreach($this->langs as $lang => $native){
-                $phrase = self::$translation->phrase($key, $lang, '');
+                $phrase = self::$phraseBook->phrase($key, $lang, '');
                 if (!empty($phrase)){
                     $count[$lang] += 1;
                 }
@@ -227,12 +231,12 @@ Class TranslatePage extends Page {
 
 
     private function tdPhrase($key, $lang, $size=30){
-        $phrase = self::$translation->phrase($key, $lang, '');
-        $pending = self::pending()->phrase($key, $lang, '');
+        $phrase = self::$phraseBook->phrase($key, $lang, '');
+        $pending = $this->pending->phrase($key, $lang, '');
         $edit = is_null($pending) ? $phrase : $pending;
         $hidden = is_null($phrase) && is_null($pending) ? "" : "hidden";
-        $submit = self::$translation->phrase('Submit', $lang);
-        $dir = self::$translation->direction($lang);
+        $submit = self::$phraseBook->phrase('Submit', $lang);
+        $dir = self::$phraseBook->direction($lang);
         $rtl = ($dir === 'rtl') ? "dir='rtl' onkeyup='rtl(this)'" : '';
 
         $key = htmlentities($key, ENT_QUOTES | ENT_HTML5);

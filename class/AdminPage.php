@@ -5,6 +5,8 @@ require_once 'Translation.php';
 
 class AdminPage extends Page {
 
+    private $translation;
+    private $pending;
     private $variables;
 
     public function __construct($templateName='admin'){
@@ -16,6 +18,8 @@ class AdminPage extends Page {
             return;
         }
 
+        $this->translation = new Translation(self::$translationFileName);
+        $this->pending = new Translation('pending.xml');
         $this->variables = parent::variables();
     }
 
@@ -80,9 +84,8 @@ class AdminPage extends Page {
         $translation = &self::translation();
         $translation->set($key, $lang, $phrase);
         if ($translation->save()){
-            $pending = &self::pending();
-            $pending->unset($key, $lang);
-            if (!$pending->save()){
+            $this->pending->unset($key, $lang);
+            if (!$this->pending->save()){
                 self::logMsg("failed to unset pending translation for $key $lang $phrase.");
                 return false;
             }
@@ -102,9 +105,8 @@ class AdminPage extends Page {
             return false;
         }
 
-        $pending = &self::pending();
-        $pending->unset($key, $lang);
-        if (!$pending->save()){
+        $this->pending->unset($key, $lang);
+        if (!$this->pending->save()){
             self::logMsg("failed to unset pending translation for $key $lang $phrase.");
             return false;
         }

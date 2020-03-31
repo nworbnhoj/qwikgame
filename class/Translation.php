@@ -37,6 +37,26 @@ class Translation extends Qwik {
     }
 
 
+
+    /********************************************************************************
+     * Return the test after replacing {phrases} in the requested language (or with
+     * the fallback language as required)
+     *
+     * $text    String    html template with variables of the form {name}
+     * $lang    String    language to replace {variables} with
+     * $fb      String    fallback language for when a translation is missing
+     *******************************************************************************/
+    public function translate($text, $lang='en', $fb='en'){
+        $pattern = '!(?s)\{([^\}]+)\}!';
+        $tr = function($match) use ($lang, $fb){
+            $key = $match[1];
+            $phrase = $this->phrase($key, $lang, $fb);
+            return empty($phrase) ? '{'."$key".'}' : $phrase;
+        };
+        return  preg_replace_callback($pattern, $tr, $text);
+    }
+
+
     public function save(){
         return self::writeXML(
             $this->xml,

@@ -158,14 +158,14 @@ class Html extends Qwik {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
-        $html = $this->translate($html, $this->language());
+        $html = self::translation()->translate($html, $this->language());
         return $html;
     }
 
 
 
     /********************************************************************************
-    Return the html template after replacing {variables} with the requested
+    Return the html template after replacing {phrases} with the requested
     language (or with the fallback language as required)
 
     $html    String    html template with variables of the form {name}
@@ -174,14 +174,7 @@ class Html extends Qwik {
     ********************************************************************************/
     public function translate($html, $lang=NULL, $fb='en'){
         $lang = is_null($lang) ? $this->language() : $lang;
-        $translation = self::translation();
-        $pattern = '!(?s)\{([^\}]+)\}!';
-        $tr = function($match) use ($translation, $lang, $fb){
-            $key = $match[1];
-            $phrase = $translation->phrase($key, $lang, $fb);
-            return empty($phrase) ? '{'."$key".'}' : $phrase;
-        };
-        return  preg_replace_callback($pattern, $tr, $html);
+        return self::translation()->translate($html, $lang, $fb);
     }
 
 

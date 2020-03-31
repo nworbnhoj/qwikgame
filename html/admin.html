@@ -43,21 +43,22 @@
 
     <p>Please accept or reject these pending translations.</p>
 
-    <repeat id='translation'>
-    <div class="record admin">
-        <form class='record' action='admin.php#translation' method='post'>
-            <input type='hidden' name='key' value='[key]'>
-            <input type='hidden' name='lang' value='[lang]'>
-            <input type='hidden' name='phrase' value='[phrase]'>
-            <button type='submit' name='admin' value='acceptTranslation' class='action [TICK_ICON]'></button>
-            <button type='submit' name='admin' value='rejectTranslation' class='action [CROSS_ICON]'></button>
-            <p class='record'>
-                <b>[key]:</b> [en_phrase]<br>
-                <b>[lang]:</b> [phrase]
-            </p>
-        </form>
+    <div>
+        <div id='pending' class="base record admin">
+            <form class='record' action='admin.php#translation' method='post'>
+                <input type='hidden' name='key' value='[key]'>
+                <input type='hidden' name='lang' value='[lang]'>
+                <input type='hidden' name='phrase' value='[phrase]'>
+                <button type='submit' name='admin' value='acceptTranslation' class='action [TICK_ICON]'></button>
+                <button type='submit' name='admin' value='rejectTranslation' class='action [CROSS_ICON]'></button>
+                <p class='record'>
+                    <b>[key]:</b> [en_phrase]<br>
+                    <b>[lang]:</b> [phrase]
+                </p>
+            </form>
+        </div>
+       [pendingListing]
     </div>
-    </repeat>
 
 
 

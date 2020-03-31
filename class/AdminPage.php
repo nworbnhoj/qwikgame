@@ -2,6 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Translation.php';
+require_once 'PendingListing.php';
 
 class AdminPage extends Page {
 
@@ -70,6 +71,16 @@ class AdminPage extends Page {
     }
 
 
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $pendingListing = new PendingListing(Listing::extractBase($html, 'pending'));
+        $vars['pendingListing'] = $pendingListing->make();
+        return parent::make($vars); 
+    }
+
+
 
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
 
@@ -81,7 +92,7 @@ class AdminPage extends Page {
             return false;
         }
 
-        $translation = &self::translation();
+        $translation = $this->translation;
         $translation->set($key, $lang, $phrase);
         if ($translation->save()){
             $this->pending->unset($key, $lang);

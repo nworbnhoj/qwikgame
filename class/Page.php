@@ -57,7 +57,6 @@ class Page extends Html {
     const GITHUB_LNK   = "<a href='".self::GITHUB_URL."' target='_blank'>".self::GITHUB_IMG."</a>";
 
     static $icons;
-    static $pending;
 
 
     static public function daySpan($hours, $day='', $clock24hr=FALSE){
@@ -369,7 +368,7 @@ class Page extends Html {
     ********************************************************************************/
 
     public function selectLanguage($req, $player){
-        $languages = self::$phraseBook->languages();
+        $languages = parent::$phraseBook->languages();
 //        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
@@ -416,7 +415,6 @@ class Page extends Html {
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
-                case 'translation':return $this->replicateTranslate($html);              break;
                 default:           return '';
             }
         };
@@ -531,34 +529,6 @@ class Page extends Html {
         }
         return $group;
     }
-
-
-    private function replicateTranslate($html){
-        $group = '';
-        $phraseBook = self::$phraseBook;
-        $pending = self::pending();
-        if(!$phraseBook || !$pending){ return; }
-        $langs = $pending->languages();
-        $keys = $pending->phraseKeys();
-        foreach($keys as $key){
-            $en_phrase = $phraseBook->phrase($key, 'en');
-            foreach($langs as $lang => $native){
-                $phrase = $pending->phrase($key, $lang, '');
-                if(isset($phrase)){
-                    $translationVars = array(
-                        'key'       => $key,
-                        'en_phrase' => $en_phrase,
-                        'lang'      => $lang,
-                        'phrase'    => $phrase
-                    );
-                    $vars = $translationVars + self::$icons;
-                    $group .= $this->populate($html, $vars);
-                }
-            }
-        }
-        return $group;
-    }
-
 
 
     function playerVariables($player){

@@ -18,41 +18,38 @@ class Base extends Page {
     * for elements in a Base. The class='base' must be removed from the 
     * element so that it becodes visible (and is not used as a basis for  json listing
     */
-    static public function extract($html, $id){
-        if(is_null($html) || is_null($id)) { return NULL; }
-
-        // tidy the $html to ensure the a SimpleXMLElement can parse OK
-        $config = array('output-xhtml' => true, 'indent' => true, 'drop-empty-elements' => false);
-        $tidy = new tidy;
-        $tidy->parseString($html, $config, 'utf8');
-        $tidy->cleanRepair();
-
-        // create a SimpleXMLElement from $html to assist manipulation
-        $xml = new SimpleXMLElement((string)$tidy);
-        $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
-
-        // select a <div> with id='$id' and class='base'
-        $path = "//x:*[@id='$id' and ".Base::BASE_PATH."]";
-        $baseXML = $xml->xpath($path)[0]; 
-
-        if(is_null($baseXML)){
-            self::logMsg("failed to extract base = '$id'");
-            $baseXMLtxt = '';
-        } else {
-            $baseXMLtxt = $baseXML->asXML();
-        }
-
-        return $baseXMLtxt;
-    }
-
 
     /*******************************************************************************
     Class Base is constructed with a html template.
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($html){
-        parent::__construct($html);
+    public function __construct($html, $id){
+ 
+        $baseHTML = '';
+        if(!empty($html) && !empty($id)) {
+            // tidy the $html to ensure the a SimpleXMLElement can parse OK
+            $config = array('output-xhtml' => true, 'indent' => true, 'drop-empty-elements' => false);
+            $tidy = new tidy;
+            $tidy->parseString($html, $config, 'utf8');
+            $tidy->cleanRepair();
+
+            // create a SimpleXMLElement from $html to assist manipulation
+            $xml = new SimpleXMLElement((string)$tidy);
+            $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
+
+            // select a <div> with id='$id' and class='base'
+            $path = "//x:*[@id='$id' and ".Base::BASE_PATH."]";
+            $baseXML = $xml->xpath($path)[0]; 
+
+            if(empty($baseXML)){
+                self::logMsg("failed to extract base = '$id'");
+            } else {
+                $baseHTML = $baseXML->asXML();
+            }
+        }
+
+        parent::__construct($baseHTML);
 
         $player = $this->player();
         if (is_null($player)

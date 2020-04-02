@@ -75,7 +75,7 @@ class AdminPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $pendingListing = new PendingListing(Base::extract($html, 'pending'));
+        $pendingListing = new PendingListing($html, 'pending');
         $vars['pendingListing'] = $pendingListing->make();
         return parent::make($vars); 
     }

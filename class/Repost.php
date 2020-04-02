@@ -16,8 +16,8 @@ class Repost extends Base {
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be identified.
     *******************************************************************************/
-    public function __construct($html, $request){
-        parent::__construct($html);
+    public function __construct($html, $id, $request){
+        parent::__construct($html, $id);
         $this->request = $request;
     }
 

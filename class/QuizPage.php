@@ -86,7 +86,7 @@ class QuizPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $repost = new Repost(Base::extract($html, 'repost'), $this->req());
+        $repost = new Repost($html, 'repost', $this->req());
         $vars['repost'] = $repost->make();
         return parent::make($vars); 
     }

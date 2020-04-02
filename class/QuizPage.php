@@ -2,6 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Quiz.php';
+require_once 'Repost.php';
 
 class QuizPage extends Page {
 
@@ -74,11 +75,20 @@ class QuizPage extends Page {
             $remaining = $this->todo - $this->tally;
             $progress .= str_repeat('☐',$remaining);
         }
-	$vars['repost']   = $this->repost;
         $vars['progress'] = $progress;
         $vars['quiz']     = $this->quizDiv;
         $vars['qid']      = $this->quizID;
         return $vars;
+    }
+
+
+    public function make($variables=NULL, $html=NULL){
+        $html = is_null($html) ? $this->template() : $html;
+        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $repost = new Repost(Listing::extractBase($html, 'repost'), $this->req());
+        $vars['repost'] = $repost->make();
+        return parent::make($vars); 
     }
 
 

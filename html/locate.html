@@ -37,9 +37,10 @@
         <h3>{Existing_Venues}</h3>
         <div class='transparent'>
             <form action='[repost]' method='post'>
-                <repeat id='repost'>
-                <input type='hidden' name='[name]' value='[value]'>
-                </repeat>
+                <div>
+                    <input id='repost' class='base' type='hidden' name='[name]' value='[value]'>
+                    [repost-existing]
+                </div>
                 <repeat id='similarVenues'>
                 <button type='submit' class='venue' name='vid' value='[vid]'>
                     [name]<br>
@@ -55,7 +56,9 @@
             <form action='locate.php' method='post'>
                 <input type='hidden' id='venue-game' name='game' value='[game]'>
                 <input type='hidden' id='placeid' name='placeid' value='[placeid]'>
-                <repeat id='repost'><input type='hidden' name='[name]' value='[value]'></repeat>
+                <div>
+                    [repost-new]
+                </div>
                 <span class='help' hidden>{Create new venue...}</span>
                 <button type='button' class='action help [INFO_ICON]'></button>
                 <div class='clear'></div>

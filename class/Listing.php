@@ -32,7 +32,7 @@ class Listing extends Page {
         $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
 
         // select a <div> with id='$id' and class='base'
-        $path = "//x:div[@id='$id' and ".Listing::BASE_PATH."]";
+        $path = "//x:*[@id='$id' and ".Listing::BASE_PATH."]";
         $baseXML = $xml->xpath($path)[0]; 
 
         if(is_null($baseXML)){

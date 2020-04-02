@@ -409,7 +409,6 @@ class Page extends Html {
             $id = $match[3];
             $html = $match[4];
             switch ($id){
-                case 'repost':    return $this->replicatePost($html, $req);              break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
@@ -417,30 +416,6 @@ class Page extends Html {
         };
         $pattern = "!(?s)\<repeat((\sid='(.+?)')|[^\>]*)\>(.+?)\<\/repeat\>!";
         return  preg_replace_callback($pattern, $tr, $html);
-    }
-
-
-    private function replicatePost($html, $req){
-        $group = '';
-        foreach($req as $name => $value){
-            if(is_array($value)){
-                $nam = "$name" . "[]";
-                foreach($value as $val){
-                    $vars = array(
-                        'name'  => $nam,
-                        'value' => $val
-                    );
-                    $group .= $this->populate($html, $vars);
-                }
-            } elseif(isset($value)){
-                $vars = array(
-                    'name'  => $name,
-                    'value' => $value
-                );
-                $group .= $this->populate($html, $vars);
-            }
-        }
-        return $group;
     }
 
 

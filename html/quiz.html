@@ -35,10 +35,10 @@
             [quiz]
         </div>
         <form action='quiz.php' method='post'>
-            <input type='hidden' name='repost' value='[repost]'>
-            <repeat id='repost'>
-            <input type='hidden' name='[name]' value='[value]'>
-            </repeat>
+            <div>
+                <input id='repost' class='base' type='hidden' name='[name]' value='[value]'>
+                [repost]
+            </div>
             <div>
                 <input type='text' name='reply' class="brick" placeholder='= ?' size='3' autocomplete='off' autofocus>
             </div>

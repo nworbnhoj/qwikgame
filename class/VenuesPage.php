@@ -18,6 +18,7 @@ class VenuesPage extends Page {
         $vars['game'] = $this->req('game');
         $vars['lat']  = isset($loc['lat']) ? $loc['lat'] : NULL ;
         $vars['lng']  = isset($loc['lng']) ? $loc['lng'] : NULL ;
+        $vars['gameOptions'] = $this->gameOptions($this->game, "\t\t");
         return $vars;
     }
 

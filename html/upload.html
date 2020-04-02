@@ -66,9 +66,7 @@
             <br>
             <input type='hidden' name='qwik' value='upload'>
             <select name="game" class="game">
-                <repeat id='games'>
-                <option value='[game]' [selected]> [name]</option>
-                </repeat>
+                [gameOptions]
             </select>
             <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
             <br>

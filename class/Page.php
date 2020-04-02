@@ -411,7 +411,6 @@ class Page extends Html {
             switch ($id){
                 case 'repost':    return $this->replicatePost($html, $req);              break;
                 case 'language':  return $this->replicateLanguages($html);               break;
-                case 'games':     return $this->replicateGames($html, $req);             break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
@@ -441,21 +440,6 @@ class Page extends Html {
                 );
                 $group .= $this->populate($html, $vars);
             }
-        }
-        return $group;
-    }
-
-
-    public function replicateGames($html, $req){
-        $default = $req['game'];
-        $group = '';
-        foreach(self::qwikGames() as $game => $name){
-            $vars = array(
-                'game'      => $game,
-                'name'      => $name,
-                'selected'  => ($game == $default ? 'selected' : '')
-            );
-            $group .= $this->populate($html, $vars);
         }
         return $group;
     }

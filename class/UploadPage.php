@@ -65,6 +65,7 @@ class UploadPage extends Page {
         $variables['uploadDisabled'] = $player ? '' : 'disabled';
         $variables['TICK_ICON']      = self::TICK_ICON;
         $variables['LOGOUT_ICON']    = isset($player) ? self::LOGOUT_ICON : '';
+        $variables['gameOptions']    = $this->gameOptions($this->game, "\t\t");
 
         return $variables;
     }

@@ -1,13 +1,13 @@
 <?php
 
-require_once 'Listing.php';
+require_once 'Base.php';
 
 /*******************************************************************************
     Class FriendListing replicates a html snippet for each qwik record.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class FriendListing extends Listing {
+class FriendListing extends Base {
 
 
     /*******************************************************************************

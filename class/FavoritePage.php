@@ -124,9 +124,9 @@ class FavoritePage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $favoriteListing = new FavoriteListing(Listing::extractBase($html, 'favorite'));
+        $favoriteListing = new FavoriteListing(Base::extract($html, 'favorite'));
         $vars['favoriteListing'] = $favoriteListing->make();
-        $abilityListing = new AbilityListing(Listing::extractBase($html, 'ability'));
+        $abilityListing = new AbilityListing(Base::extract($html, 'ability'));
         $vars['abilityListing'] = $abilityListing->make();
         return parent::make($vars); 
     }

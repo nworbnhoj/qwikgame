@@ -1,13 +1,13 @@
 <?php
 
-require_once 'Listing.php';
+require_once 'Base.php';
 
 /*******************************************************************************
     Class Repost replicates a html snippet post element.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class Repost extends Listing {
+class Repost extends Base {
 
     private $request;
     /*******************************************************************************

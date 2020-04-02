@@ -1,13 +1,13 @@
 <?php
 
-require_once 'Listing.php';
+require_once 'Base.php';
 
 /*******************************************************************************
  * Class Checkboxes constructs checkbox elements of the form:
  *   <input type='checkbox' name='$name[]' value='$key'>$key
  *******************************************************************************/
 
-class FriendCheckboxes extends Listing {
+class FriendCheckboxes extends Base {
 
     public function __construct($template){
         parent::__construct($template);

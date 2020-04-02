@@ -186,7 +186,7 @@ class LocatePage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $repost = new Repost(Listing::extractBase($html, 'repost'), $this->req());
+        $repost = new Repost(Base::extract($html, 'repost'), $this->req());
         $made = $repost->make();
         $vars['repost-new'] = $made;
         $vars['repost-existing'] = $made;

@@ -8,17 +8,17 @@ require_once 'Page.php';
     [variables]; and making {translations}.
 *******************************************************************************/
 
-class Listing extends Page {
+class Base extends Page {
 
     const BASE_CLASS_FLAG = 'base';
-    const BASE_PATH = "contains(concat(' ',normalize-space(@class),' '),' ".Listing::BASE_CLASS_FLAG." ')";
+    const BASE_PATH = "contains(concat(' ',normalize-space(@class),' '),' ".Base::BASE_CLASS_FLAG." ')";
 
     /**
     * class='base' is used to flag a hidden element to be used as a template
-    * for elements in a Listing. The class='base' must be removed from the 
+    * for elements in a Base. The class='base' must be removed from the 
     * element so that it becodes visible (and is not used as a basis for  json listing
     */
-    static public function extractBase($html, $id){
+    static public function extract($html, $id){
         if(is_null($html) || is_null($id)) { return NULL; }
 
         // tidy the $html to ensure the a SimpleXMLElement can parse OK
@@ -32,7 +32,7 @@ class Listing extends Page {
         $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
 
         // select a <div> with id='$id' and class='base'
-        $path = "//x:*[@id='$id' and ".Listing::BASE_PATH."]";
+        $path = "//x:*[@id='$id' and ".Base::BASE_PATH."]";
         $baseXML = $xml->xpath($path)[0]; 
 
         if(is_null($baseXML)){
@@ -47,7 +47,7 @@ class Listing extends Page {
 
 
     /*******************************************************************************
-    Class Listing is constructed with a html template.
+    Class Base is constructed with a html template.
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
@@ -85,7 +85,7 @@ class Listing extends Page {
 
     /**
     * return $html with class='base' inserted.
-    * class='base' is hidden by qwik.css and used by a listing.json.php call to update a Listing
+    * class='base' is hidden by qwik.css and used by a listing.json.php call to update a Base
     * remove the 'base' from the class (elements with class='base' are hidden with qwik.css)
     */
     public function replicate($html){
@@ -97,13 +97,13 @@ class Listing extends Page {
     /**
     * Removes class='base' from the html.
     * class='base' is used to flag a hidden element to be used as a template
-    * for elements in a Listing. The class='base' must be removed from the 
+    * for elements in a Base. The class='base' must be removed from the 
     * element so that it becomes visible (and is not used as a basis for
     * a subsequet (json) listing
     */
     private function removeFlag($html){
         $d ='"';
-        $base = Listing::BASE_CLASS_FLAG;
+        $base = Base::BASE_CLASS_FLAG;
         $pattern = "/class(\s*)=(\s*)($d|')(.*?)(\s*)$base(\s*)(.*?)('|$d)/";
         $replacement = "class=$3$4 $7$8";
         return preg_replace($pattern, $replacement, $html);
@@ -114,7 +114,7 @@ class Listing extends Page {
         $baseXML = new SimpleXMLElement($html);
         $baseClassString = (string)$baseXML['class'];
         $baseClassArray = explode(" ", $baseClassString);
-        $key = array_search(Listing::BASE_CLASS_FLAG, $baseClassArray);
+        $key = array_search(Base::BASE_CLASS_FLAG, $baseClassArray);
         if ($key !== false) {
             unset($array[$key]);
         }

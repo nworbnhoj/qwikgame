@@ -9,12 +9,12 @@ require_once 'Page.php';
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class PendingListing extends Listing {
+class PendingListing extends Base {
 
     private $pending;
 
     /*******************************************************************************
-    Class PendingListing is constructed with a html template.
+    Class PendingBase is constructed with a html template.
 
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be identified.

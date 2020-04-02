@@ -162,28 +162,28 @@ class MatchPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $keenListing = new MatchListing(Listing::extractBase($html, 'keen.match'), 'keen');
+        $keenListing = new MatchListing(Base::extract($html, 'keen.match'), 'keen');
         $vars['keenMatches'] = $keenListing->make();
 
-        $invitationListing = new MatchListing(Listing::extractBase($html, 'invitation.match'), 'invitation');
+        $invitationListing = new MatchListing(Base::extract($html, 'invitation.match'), 'invitation');
         $vars['invitationMatches'] = $invitationListing->make();
 
-        $acceptedListing = new MatchListing(Listing::extractBase($html, 'accepted.match'), 'accepted');
+        $acceptedListing = new MatchListing(Base::extract($html, 'accepted.match'), 'accepted');
         $vars['acceptedMatches'] = $acceptedListing->make();
 
-        $confirmedListing = new MatchListing(Listing::extractBase($html, 'confirmed.match'), 'confirmed');
+        $confirmedListing = new MatchListing(Base::extract($html, 'confirmed.match'), 'confirmed');
         $vars['confirmedMatches'] = $confirmedListing->make();
 
-        $feedbackListing = new MatchListing(Listing::extractBase($html, 'feedback.match'), 'feedback');
+        $feedbackListing = new MatchListing(Base::extract($html, 'feedback.match'), 'feedback');
         $vars['feedbackMatches'] = $feedbackListing->make();
 
-        $cancelledListing = new MatchListing(Listing::extractBase($html, 'cancelled.match'), 'cancelled');
+        $cancelledListing = new MatchListing(Base::extract($html, 'cancelled.match'), 'cancelled');
         $vars['cancelledMatches'] = $cancelledListing->make();
 
-        $friendCheckboxes = new FriendCheckboxes(Listing::extractBase($html, 'friendEmail'));
+        $friendCheckboxes = new FriendCheckboxes(Base::extract($html, 'friendEmail'));
         $vars['friendEmails'] = $friendCheckboxes->make();
 
-        $historyListing = new MatchListing(Listing::extractBase($html, 'history.match'), 'history');
+        $historyListing = new MatchListing(Base::extract($html, 'history.match'), 'history');
         $vars['historyMatches'] = $historyListing->make();
 	
         return parent::make($vars); 

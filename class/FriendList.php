@@ -16,7 +16,7 @@ class FriendList extends Card {
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be identified.
     *******************************************************************************/
-    public function __construct($html, $id){
+    public function __construct($html, $id=NULL){
         parent::__construct($html, $id);
     }
 

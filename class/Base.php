@@ -24,9 +24,9 @@ class Base extends Page {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($html, $id){
- 
-        $baseHTML = '';
+    public function __construct($html, $id=NULL){ 
+        $baseHTML = empty($id) ? $html : '';
+
         if(!empty($html) && !empty($id)) {
             // tidy the $html to ensure the a SimpleXMLElement can parse OK
             $config = array('output-xhtml' => true, 'indent' => true, 'drop-empty-elements' => false);

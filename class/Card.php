@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Card.php';
+require_once 'Base.php';
 
 /*******************************************************************************
     Class Card represents a portion of Player data.

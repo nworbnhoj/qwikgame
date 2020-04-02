@@ -9,8 +9,8 @@ require_once 'Card.php';
 
 class FriendCheckboxes extends Card {
 
-    public function __construct($template){
-        parent::__construct($template);
+    public function __construct($template, $id){
+        parent::__construct($template, $id);
     }
 
 

@@ -413,7 +413,6 @@ class Page extends Html {
                 case 'language':  return $this->replicateLanguages($html);               break;
                 case 'games':     return $this->replicateGames($html, $req);             break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
-                case 'rivalEmail': return $this->replicateEmailCheck($player, $html);    break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
             }
@@ -466,7 +465,7 @@ class Page extends Html {
         $group = '';
         $similar = array_slice($this->similarVenues($req['venue']), 0, 5);
         foreach($similar as $vid){
-            try {
+            try {	
                 $venue = new Venue($vid);
                 $vars = array(
                     'vid'    => $vid,
@@ -477,26 +476,6 @@ class Page extends Html {
             } catch (RuntimeException $e){
                 self::logThrown($e);
             }
-        }
-        return $group;
-    }
-
-
-    private function replicateEmailCheck($player, $html){
-        if(!$player){ return; }
-        $group = '';
-
-        $emails = array();
-        $reckoning = $player->reckon("email");
-        foreach($reckoning as $reckon){
-            $emails[] = (string) $reckon['email'];
-        }
-        $emails = array_unique($emails);
-
-        $playerVars = $this->playerVariables($player);
-        foreach($emails as $email){
-                $playerVars['email'] = $email;
-                $group .= $this->populate($html, $playerVars);
         }
         return $group;
     }

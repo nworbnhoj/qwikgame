@@ -246,6 +246,11 @@ div.info {
 
 div.count { padding:0px 0.3em 0px 0.3em; }
 
+div.checklist  { margin:auto;
+                 width: 70%;
+                 text-align:left;
+}
+
 /************** <span> *********************/
 
 
@@ -306,6 +311,7 @@ span.upload     { color:ForestGreen; }
 span.uploaded   { color:grey; }
 span.active     { color:ForestGreen; }
 span.pending    { color:Gold; }
+
 
 
 

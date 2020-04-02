@@ -3,6 +3,7 @@
 require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'MatchListing.php';
+require_once 'FriendCheckboxes.php';
 
 
 class MatchPage extends Page {
@@ -178,6 +179,9 @@ class MatchPage extends Page {
 
         $cancelledListing = new MatchListing(Listing::extractBase($html, 'cancelled.match'), 'cancelled');
         $vars['cancelledMatches'] = $cancelledListing->make();
+
+        $friendCheckboxes = new FriendCheckboxes(Listing::extractBase($html, 'friendEmail'));
+        $vars['friendEmails'] = $friendCheckboxes->make();
 
         $historyListing = new MatchListing(Listing::extractBase($html, 'history.match'), 'history');
         $vars['historyMatches'] = $historyListing->make();

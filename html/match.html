@@ -231,12 +231,12 @@
                 {invite_available_rivals}
             </span>
             <hr>
-            <repeat id='rivalEmail'>
-            <span class='nowrap'>
-                <input type='checkbox' name='invite[]' value='[email]'>
-                [email]
+            <div class='checklist'>
+            <span id='friendEmail' class="base">
+                <input type='checkbox' name='invite[]' value='[key]'>[val]<br>
             </span>
-            </repeat>
+                [friendEmails]
+            </div>
         </div>
         <input type="submit" class='keen' value="{Submit}">
     </form>

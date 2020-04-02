@@ -11,7 +11,7 @@ require_once 'Page.php';
 class Listing extends Page {
 
     const BASE_CLASS_FLAG = 'base';
-    const BASE_PATH = "contains(concat(' ',normalize-space(@class),' '),' ".Listing::BASE_CLASS_FLAG." ')]";
+    const BASE_PATH = "contains(concat(' ',normalize-space(@class),' '),' ".Listing::BASE_CLASS_FLAG." ')";
 
     /**
     * class='base' is used to flag a hidden element to be used as a template
@@ -32,7 +32,7 @@ class Listing extends Page {
         $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
 
         // select a <div> with id='$id' and class='base'
-        $path = "//x:div[@id='$id' and ".Listing::BASE_PATH;
+        $path = "//x:div[@id='$id' and ".Listing::BASE_PATH."]";
         $baseXML = $xml->xpath($path)[0]; 
 
         if(is_null($baseXML)){

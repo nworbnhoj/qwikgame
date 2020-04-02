@@ -324,6 +324,26 @@ class Player extends Qwik {
     }
 
 
+    public function friends(){
+        $emails = array();
+        $reckoning = $this->xml->xpath("reckon[@email]");
+        foreach($reckoning as $reckon){
+            $email = (string) $reckon['email'];
+            $nick = $email; //default
+            $anonID = Player::anonID($email);
+            if (Player::exists($anonID)){
+                $friend = new Player($anonID);
+                if ($friend->ok()){
+                    $nic = $friend->nick();
+                    $nick = empty($nic) ? $email : $nic ;
+                }
+            }             
+            $emails[$email] = $nick;
+        }
+        return $emails;
+    }
+
+
     public function matchQuery($query){
         return $this->xml->xpath("$query");
     }

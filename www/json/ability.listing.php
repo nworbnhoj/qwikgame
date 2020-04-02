@@ -4,14 +4,14 @@ header('Content-Type: application/json');
 require_once 'up.php';
 require_once PATH_CLASS.'Qwik.php';
 require_once PATH_CLASS.'Defend.php';
-require_once PATH_CLASS.'AbilityListing.php';
+require_once PATH_CLASS.'AbilityList.php';
 
 $defend = new Defend();
 $get = $defend->get();
 $html = $get['html'];
 
-$abilityListing = new AbilityListing($html);
-$listing = $abilityListing->make();
+$abilityList = new AbilityList($html);
+$listing = $abilityList->make();
 $json = json_encode($listing);
 
 if(!$json){

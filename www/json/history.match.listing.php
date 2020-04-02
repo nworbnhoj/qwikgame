@@ -4,14 +4,14 @@ header('Content-Type: application/json');
 require_once 'up.php';
 require_once PATH_CLASS.'Qwik.php';
 require_once PATH_CLASS.'Defend.php';
-require_once PATH_CLASS.'MatchListing.php';
+require_once PATH_CLASS.'MatchList.php';
 
 $defend = new Defend();
 $get = $defend->get();
 $html = $get['html'];
 
-$matchListing = new MatchListing($html, 'history');
-$listing = $matchListing->make();
+$matchList = new MatchList($html, 'history');
+$listing = $matchList->make();
 $json = json_encode($listing);
 
 if(!$json){

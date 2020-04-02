@@ -4,14 +4,14 @@ header('Content-Type: application/json');
 require_once 'up.php';
 require_once PATH_CLASS.'Qwik.php';
 require_once PATH_CLASS.'Defend.php';
-require_once PATH_CLASS.'FavoriteListing.php';
+require_once PATH_CLASS.'FavoriteList.php';
 
 $defend = new Defend();
 $get = $defend->get();
 $html = $get['html'];
 
-$favoriteListing = new FavoriteListing($html);
-$listing = $favoriteListing->make();
+$favoriteList = new FavoriteList($html);
+$listing = $favoriteList->make();
 $json = json_encode($listing);
 
 if(!$json){

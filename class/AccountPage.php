@@ -64,6 +64,7 @@ class AccountPage extends Page {
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
             $vars['notify-email-checked']  = $notify->is_open($playerEmail) ? 'checked' : '';
             $vars['push-endpoint-sack']   = $notify->pushSack();
+            $vars['languageOptions'] = $this->languageOptions($player->lang());
         }
         return $vars;
     }

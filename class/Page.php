@@ -410,7 +410,6 @@ class Page extends Html {
             $html = $match[4];
             switch ($id){
                 case 'repost':    return $this->replicatePost($html, $req);              break;
-                case 'language':  return $this->replicateLanguages($html);               break;
                 case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
@@ -465,22 +464,6 @@ class Page extends Html {
     }
 
 
-    private function replicateLanguages($html){
-        $languages = self::$phraseBook->languages();
-        $group = '';
-        $current = $_SESSION['lang'];
-        foreach($languages as $code => $lang){
-            $vars = array(
-                'code' => $code,
-                'language' => $lang,
-                'selected' => $code == $current ? 'selected' : ''
-            );
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
-    }
-
-
     private function replicateReckons($html){
         $regions = $this->regions();
         $group = '';
@@ -503,17 +486,20 @@ class Page extends Html {
 
 
     function gameOptions($game='squash', $tabs=''){
-        if(empty($game)){
-            $game='squash';
-        }
         $options = '';
         foreach(self::qwikGames() as $val => $txt){
-            if ($val == $game){
-                $selected = 'selected';
-            } else {
-                $selected = '';
-            }
+            $selected = ($val == $game) ? 'selected' : '';
             $options .= "$tabs<option value='$val' $selected>$txt</option>\n";
+        }
+        return $options;
+    }
+
+
+    function languageOptions($language='english'){
+        $options = '';
+        foreach(self::$phraseBook->languages() as $key => $val){
+            $selected = ($key == $language) ? 'selected' : '';
+            $options .= "<option value='$key' $selected>$val</option>\n";
         }
         return $options;
     }

@@ -104,6 +104,7 @@ class IndexPage extends Page {
     public function variables(){
         $venue = $this->req('venue');
         $game = $this->req('game');
+        $language = $this->language();
         
         $variables = parent::variables();
 
@@ -114,6 +115,8 @@ class IndexPage extends Page {
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
         $variables['alert-hidden']   = empty($this->alert) ? 'hidden' : '';
         $variables['alert']          = $this->alert;
+        $variables['language']       = $language;
+        $variables['languageOptions'] = $this->languageOptions($language);
         
         return $variables;
     }

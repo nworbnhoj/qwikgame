@@ -29,9 +29,7 @@
     <a id='lang-icon' class='[LANG_ICON]'></a>
     <form id='lang-form' action='index.php' method='post'>
         <select id='lang-select' name='lang' style="float:right; display:none;">
-            <repeat id='language'>
-                <option value='[code]' [selected]>[language]</option>
-            </repeat>
+            [languageOptions]
         </select>
     </form>
     <a id='login-toggle' class='icon'>{login}</a>
@@ -51,6 +49,7 @@
         <input type="hidden" name="qwik" value="available">
         <input type='hidden' name='parity' value='any'>
         <input type='hidden' name='smtwtfs' value='16777215'>
+        <input type='hidden' name='lang' value='[language]'>
         <h2 class='inform'>{What_is_your...}</h2>
         {Let_me_know...}
         <input id='register-email' name="email" type="email" class="email word" placeholder="{prompt_address}">

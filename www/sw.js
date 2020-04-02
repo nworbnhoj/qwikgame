@@ -116,7 +116,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(?:\.json\.php)$/,
+  /(?:json\.php)$/,
   new workbox.strategies.NetworkFirst({
     cacheName: 'json',
   })

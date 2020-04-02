@@ -13,6 +13,7 @@ class Options extends Page {
     const KEYVALUE_TEMPLATE = "<option value='".self::KEY."'>".self::VAL."</option>";
     const VALUE_TEMPLATE = "<option value='".self::VAL."'>".self::VAL."</option>";
     const DATALIST_TEMPLATE = "<option value='".self::VAL."'>";
+    const CHECKBOX_TEMPLATE = "<input type='checkbox' name='[name]' value='".self::KEY."'>".self::VAL;
 
     private $values;
 

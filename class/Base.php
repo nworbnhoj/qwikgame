@@ -51,12 +51,6 @@ class Base extends Page {
 
         parent::__construct($baseHTML);
 
-        $player = $this->player();
-        if (is_null($player)
-        || !$player->ok()){
-            $this->logout();
-            return;
-        }
     }
 
 

@@ -48,12 +48,12 @@ class Html extends Qwik {
 
 
     static $translationFileName = "translation.xml";
-    static $phrasebook;
+    static $phraseBook;
 
 
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
-        self::$phrasebook = new PhraseBook(self::$translationFileName);
+        self::$phraseBook = new PhraseBook(self::$translationFileName);
     }
 
 
@@ -154,7 +154,7 @@ class Html extends Qwik {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
-        $html = self::$phraseBook()->translate($html, $this->language());
+        $html = self::$phraseBook->translate($html, $this->language());
         return $html;
     }
 

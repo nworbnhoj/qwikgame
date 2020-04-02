@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Page.php';
+require_once 'Translation.php';
 
 const HEAD = "
 <!DOCTYPE html PUBLIC '-//W2C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
@@ -105,8 +106,8 @@ Class TranslatePage extends Page {
         $this->translation = new Translation(self::$translationFileName);
         $this->pending = new Translation('pending.xml');
 
-        $this->langs = self::$phraseBook->languages();
-        $this->phraseKeys = self::$phraseBook()->phraseKeys();
+        $this->langs = parent::$phraseBook->languages();
+        $this->phraseKeys = parent::$phraseBook->phraseKeys();
 
         $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
 

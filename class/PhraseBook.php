@@ -5,7 +5,7 @@ require_once 'Qwik.php';
 
 class PhraseBook extends Qwik {
 
-    private $fileName;
+    protected $fileName;
     protected $xml;
     private $phrases = array();
     private $languages = array();

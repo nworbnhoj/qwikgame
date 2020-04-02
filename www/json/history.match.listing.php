@@ -10,7 +10,7 @@ $defend = new Defend();
 $get = $defend->get();
 $html = $get['html'];
 
-$matchList = new MatchList($html, 'history');
+$matchList = new MatchList($html, 'history', FALSE);
 $listing = $matchList->make();
 $json = json_encode($listing);
 

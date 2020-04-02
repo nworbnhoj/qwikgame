@@ -2,7 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Translation.php';
-require_once 'PendingListing.php';
+require_once 'PendingList.php';
 
 class AdminPage extends Page {
 
@@ -75,8 +75,8 @@ class AdminPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $pendingListing = new PendingListing($html, 'pending');
-        $vars['pendingListing'] = $pendingListing->make();
+        $pendingList = new PendingList($html, 'pending');
+        $vars['pendingList'] = $pendingList->make();
         return parent::make($vars); 
     }
 

@@ -1,15 +1,15 @@
 <?php
 
-require_once 'Listing.php';
+require_once 'Card.php';
 require_once 'Page.php';
 
 /*******************************************************************************
-    Class PendingListing replicates a html snippet for each pending translation 
+    Class PendingList replicates a html snippet for each pending translation 
     record.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class PendingListing extends Base {
+class PendingList extends Card {
 
     private $pending;
 

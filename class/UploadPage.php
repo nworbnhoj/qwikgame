@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Page.php';
-require_once'UploadListing.php';
+require_once'UploadList.php';
 
 
 class UploadPage extends Page {
@@ -78,8 +78,8 @@ class UploadPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $uploadListing = new UploadListing($html, 'upload');
-        $vars['uploadListing'] = $uploadListing->make();
+        $uploadList = new UploadList($html, 'upload');
+        $vars['uploadList'] = $uploadList->make();
         return parent::make($vars); 
     }
     

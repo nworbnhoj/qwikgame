@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Page.php';
-require_once 'FriendListing.php';
+require_once 'FriendList.php';
 
 class FriendPage extends Page {
 
@@ -91,8 +91,8 @@ class FriendPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $friendListing = new FriendListing($html, 'friend');
-        $vars['friendListing'] = $friendListing->make();
+        $friendList = new FriendList($html, 'friend');
+        $vars['friendList'] = $friendList->make();
         return parent::make($vars); 
     }
 

@@ -1,17 +1,17 @@
 <?php
 
-require_once 'Base.php';
+require_once 'Card.php';
 
 /*******************************************************************************
-    Class FavoriteListing replicates a html snippet for each qwik record.
+    Class FavoriteList replicates a html snippet for each qwik record.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class FavoriteListing extends Base {
+class FavoriteList extends Card {
 
 
     /*******************************************************************************
-    Class FavoriteListing is constructed with a html template.
+    Class FavoriteList is constructed with a html template.
 
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be replicated.

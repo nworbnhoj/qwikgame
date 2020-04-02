@@ -1,20 +1,20 @@
 <?php
 
-require_once 'Base.php';
+require_once 'Card.php';
 
 /*******************************************************************************
-    Class FriendListing replicates a html snippet for each qwik record.
+    Class AbilityList replicates a html snippet for each qwik record.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class FriendListing extends Base {
+class AbilityList extends Card {
 
 
     /*******************************************************************************
-    Class FriendListing is constructed with a html template.
+    Class AbilityList is constructed with a html template.
 
     $html String a html document containing a div to be replicated.
-    $id   String a html div id to identify the html snippet to be identified.
+    $id   String a html div id to identify the html snippet to be replicated.
     *******************************************************************************/
     public function __construct($html){
         parent::__construct($html);
@@ -25,26 +25,24 @@ class FriendListing extends Base {
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-//        $group = $html;  // if more than one json update is required, may leave a copy of base here
         $html = parent::replicate($html); // removes 'base' class
-        $group="";
+        $group = '';
+        $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
         $playerVars = $this->playerVariables($player);
-        $reckoning = $player->reckon("rival");
+        $reckoning = $player->reckon("region");
         foreach($reckoning as $reckon){
-            $email = (string) $reckon['email'];
-            $parity = (int) $reckon['parity'];
             $game = (string) $reckon['game'];
+            $ability = $reckon['ability'];
             $reckonVars = array(
-                'id'        => $reckon['id'][0],
-                'email'     => $email,
+                'id'        => $reckon['id'],
+                'region'    => explode(',', $reckon['region'])[0],
                 'gameName'  => self::gameName($game),
-                'parity'    => self::parityStr($parity)
+                'ability'   => $abilities["$ability"]
             );
             $vars = $playerVars + $reckonVars + self::$icons;
             $group .= $this->populate($html, $vars);
         }
         return $group;
-
     }
 
 }

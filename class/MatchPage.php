@@ -2,7 +2,7 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
-require_once 'MatchListing.php';
+require_once 'MatchList.php';
 require_once 'FriendCheckboxes.php';
 
 
@@ -162,29 +162,29 @@ class MatchPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $keenListing = new MatchListing($html, 'keen.match', 'keen');
-        $vars['keenMatches'] = $keenListing->make();
+        $keenList = new MatchList($html, 'keen.match', 'keen');
+        $vars['keenMatches'] = $keenList->make();
 
-        $invitationListing = new MatchListing($html, 'invitation.match', 'invitation');
-        $vars['invitationMatches'] = $invitationListing->make();
+        $invitationList = new MatchList($html, 'invitation.match', 'invitation');
+        $vars['invitationMatches'] = $invitationList->make();
 
-        $acceptedListing = new MatchListing($html, 'accepted.match', 'accepted');
-        $vars['acceptedMatches'] = $acceptedListing->make();
+        $acceptedList = new MatchList($html, 'accepted.match', 'accepted');
+        $vars['acceptedMatches'] = $acceptedList->make();
 
-        $confirmedListing = new MatchListing($html, 'confirmed.match', 'confirmed');
-        $vars['confirmedMatches'] = $confirmedListing->make();
+        $confirmedList = new MatchList($html, 'confirmed.match', 'confirmed');
+        $vars['confirmedMatches'] = $confirmedList->make();
 
-        $feedbackListing = new MatchListing($html, 'feedback.match', 'feedback');
-        $vars['feedbackMatches'] = $feedbackListing->make();
+        $feedbackList = new MatchList($html, 'feedback.match', 'feedback');
+        $vars['feedbackMatches'] = $feedbackList->make();
 
-        $cancelledListing = new MatchListing($html, 'cancelled.match', 'cancelled');
-        $vars['cancelledMatches'] = $cancelledListing->make();
+        $cancelledList = new MatchList($html, 'cancelled.match', 'cancelled');
+        $vars['cancelledMatches'] = $cancelledList->make();
 
         $friendCheckboxes = new FriendCheckboxes($html, 'friendEmail');
         $vars['friendEmails'] = $friendCheckboxes->make();
 
-        $historyListing = new MatchListing($html, 'history.match', 'history');
-        $vars['historyMatches'] = $historyListing->make();
+        $historyList = new MatchList($html, 'history.match', 'history');
+        $vars['historyMatches'] = $historyList->make();
 	
         return parent::make($vars); 
     }

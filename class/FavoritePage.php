@@ -124,10 +124,10 @@ class FavoritePage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $favoriteListing = new FavoriteListing($html, 'favorite');
-        $vars['favoriteListing'] = $favoriteListing->make();
-        $abilityListing = new AbilityListing($html, 'ability');
-        $vars['abilityListing'] = $abilityListing->make();
+        $favoriteList = new FavoriteList($html, 'favorite');
+        $vars['favoriteList'] = $favoriteList->make();
+        $abilityList = new AbilityList($html, 'ability');
+        $vars['abilityList'] = $abilityList->make();
         return parent::make($vars); 
     }
 

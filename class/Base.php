@@ -40,12 +40,11 @@ class Base extends Page {
 
             // select a <div> with id='$id' and class='base'
             $path = "//x:*[@id='$id' and ".Base::BASE_PATH."]";
-            $baseXML = $xml->xpath($path)[0]; 
-
-            if(empty($baseXML)){
-                self::logMsg("failed to extract base = '$id'");
+            $results = $xml->xpath($path); 
+            if (isset($results[0])){
+                $baseHTML = $results[0]->asXML();
             } else {
-                $baseHTML = $baseXML->asXML();
+                self::logMsg("failed to extract base = '$id'");
             }
         }
 

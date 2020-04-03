@@ -461,9 +461,10 @@ class Page extends Html {
 
 
     function gameOptions($game='squash', $tabs=''){
+        $game = empty($game) ? 'squash' : $game ;
         $options = '';
         foreach(self::qwikGames() as $val => $txt){
-            $selected = ($val == $game) ? 'selected' : '';
+            $selected = ($val === $game) ? 'selected' : '';
             $options .= "$tabs<option value='$val' $selected>$txt</option>\n";
         }
         return $options;
@@ -471,9 +472,10 @@ class Page extends Html {
 
 
     function languageOptions($language='english'){
+        $game = empty($language) ? 'en' : $language ;
         $options = '';
         foreach(self::$phraseBook->languages() as $key => $val){
-            $selected = ($key == $language) ? 'selected' : '';
+            $selected = ($key === $language) ? 'selected' : '';
             $options .= "<option value='$key' $selected>$val</option>\n";
         }
         return $options;

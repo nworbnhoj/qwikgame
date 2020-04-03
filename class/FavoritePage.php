@@ -2,8 +2,8 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
-require_once 'FavoriteListing.php';
-require_once 'AbilityListing.php';
+require_once 'FavoriteList.php';
+require_once 'AbilityList.php';
 require_once 'Options.php';
 
 

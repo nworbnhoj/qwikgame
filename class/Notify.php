@@ -122,6 +122,7 @@ class Notify extends Qwik {
         foreach ($deadEnds as $endpoint){
             $this->push($endpoint, self::MSG_NONE);
         }
+        $this->player->save();
     }
 
 

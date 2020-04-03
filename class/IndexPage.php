@@ -55,8 +55,7 @@ class IndexPage extends Page {
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
-                $anon->emailWelcome($email);
-                $anon->emailFavourite($this->req(), $email);
+                $anon->emailWelcome($email, $this->req());
                 $this->alert = "{Check_email}";
                 $result = TRUE;
             }

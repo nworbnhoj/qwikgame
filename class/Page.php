@@ -292,7 +292,6 @@ class Page extends Html {
         try {
             $player = new Player($pid);
         } catch (RuntimeException $e){
-            self::logThown($e);
             self::logMsg("failed to retrieve Player $pid");
             $player = NULL; 
         }
@@ -423,7 +422,7 @@ class Page extends Html {
         $group = '';
         $similar = array_slice($this->similarVenues($req['venue']), 0, 5);
         foreach($similar as $vid){
-            try {	
+            try {
                 $venue = new Venue($vid);
                 $vars = array(
                     'vid'    => $vid,

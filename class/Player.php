@@ -53,7 +53,7 @@ class Player extends Qwik {
         if (self::exists($pid)){
             $this->xml = $this->retrieve($this->fileName());
         } else {
-            throw new RuntimeException("Player does not exist: $id");
+            throw new RuntimeException("Player does not exist: " . self::snip($pid));
         }
     }
     
@@ -103,7 +103,7 @@ class Player extends Qwik {
             self::logThrown($e);
             $xml = new SimpleXMLElement("<player/>");
             $id = $this->id;
-            throw new RuntimeException("failed to retrieve Player: $id");
+            throw new RuntimeException("failed to retrieve Player: " . self::snip($pid));
         }
         return $xml;
     }
@@ -648,21 +648,20 @@ class Player extends Qwik {
     }
 
 
-    public function authURL($shelfLife, $param=NULL){
+    public function authURL($shelfLife, $target='match.php', $param=NULL){
         $query = is_array($param) ? $param : array();
         $query['pid'] = $this->id();
         $query['token'] = $this->token($shelfLife);
         if(!isset($query['qwik'])){
             $query['qwik'] = 'login';
         }
-        return QWIK_URL."match.php?" . http_build_query($query);
+        return QWIK_URL."$target?" . http_build_query($query);
     }
 
     
-    public function authLink($shelfLife, $param=NULL){
-        $authURL = $this->authURL($shelfLife, $param);
+    public function authLink($shelfLife, $target='match.php', $param=NULL){
+        $authURL = $this->authURL($shelfLife, $target, $param);
         return "<a href='$authURL'>{login}</a>";
-  
     }
 
 
@@ -686,8 +685,16 @@ class Player extends Qwik {
     }
 
 
-    public function emailWelcome($email){
-        $authLink = $this->authLink(self::MONTH, array("email"=>$email));
+    public function emailWelcome($email, $req){
+        $param = array(
+            "email"   => $email,
+            "qwik"    => 'available',
+            "game"    => $req['game'],
+            "venue"   => $req['venue'],
+            "parity"  => 'similar',
+            "smtwtfs" => '16777215'
+        );
+        $authLink = $this->authLink(self::MONTH, 'favorite.php', $param);
         $paras = array(
             "{Please activate}",
             "{Safely ignore}"
@@ -724,7 +731,7 @@ class Player extends Qwik {
 
 
     function emailFavorite($req, $email){
-        $authLink = $this->authLink(2*self::DAY, $req);
+        $authLink = $this->authLink(2*self::DAY, 'favorite.php', $req);
         $paras = array(
             "{Click to confirm}",
             "{Safely ignore}"
@@ -754,7 +761,7 @@ class Player extends Qwik {
             "paragraphs" => $paras,
             "to"         => $this->email(),
             "email"      => $email,
-            "authLink"   => $this->authLink(self::DAY)
+            "authLink"   => $this->authLink(self::DAY, 'account.php')
         );
         $email = new Email($vars, $this->lang());
         $email->send();

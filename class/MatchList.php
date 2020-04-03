@@ -17,10 +17,10 @@ class MatchList extends Card {
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be replicated.
     *******************************************************************************/
-    public function __construct($html, $id, $extract=TRUE){
-        parent::__construct($html, ($extract ? $id : NULL));
+    public function __construct($html, $status, $id=NULL){
+        parent::__construct($html, $id);
  
-        $this->status = $id;
+        $this->status = $status;
     }
 
 

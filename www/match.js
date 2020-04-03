@@ -23,12 +23,13 @@ function initPage(){
     var currentTime = new Date();
     var hour = currentTime.getHours();
     for (var elem of document.getElementById('hrs_trunc').children) {
-        if (elem.type == 'td'){
-            var hr = this.getAttribute('hr');
+        if (elem.nodeName == 'TD'){
+            var hr = parseInt(elem.getAttribute('hr'), 10);
             if (hr <= hour){
                 elem.classList.add('past');
                 elem.classList.remove('toggle');
                 elem.style.color = '';
+                elem.removeEventListener('click', 'clickTdToggle');
             }
         }
     }

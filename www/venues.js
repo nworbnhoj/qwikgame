@@ -24,13 +24,13 @@ function venuesMap() {
     var mapElement = document.getElementById('map');
     var map = new google.maps.Map(mapElement, {zoom: 7, center: MSqC});
 
-    mapMarkers(map, qwikJSON(url));
+    qwikJSON(url, mapMarkers, map);
 }
 
 
 
 
-function mapMarkers(map, json){
+function mapMarkers(json, map){
     for (var i = 0; i < json.length; i++) {
         var mark = json[i];
         var lat = mark.lat;

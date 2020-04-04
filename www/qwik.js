@@ -117,13 +117,13 @@ function changeSelectGame(){
                 if (!id){ return false; }
                 var datalist = document.querySelector("datalist#"+id);
                 var url = "json/"+id+".options.php?game="+game;
-                datalist.innerHTML = qwikJSON(url);
+                qwikJSON(url, setInnerJSON, datalist);
             break;
             case 'SELECT':
                 var id = elem.getAttribute('id');
                 if (!id){ return false; }
                 var url = "json/"+id+".options.php?game="+game;
-                elem.innerHTML = qwikJSON(url);
+                qwikJSON(url, setInnerJSON, elem);
             break;
         }
     }
@@ -187,7 +187,7 @@ function replicateBase(base){
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var url = 'json/'+id+'.listing.php?'+query;
-    parentNode.innerHTML = qwikJSON(url);
+    qwikJSON(url, setInnerJSON, parentNode);
     addListeners();
 }
 
@@ -199,7 +199,7 @@ function fillSelect(select){
         return false;
     }
     var url = 'json/'+id+'.options.php';
-    select.innerHTML = qwikJSON(url);
+    qwikJSON(url, setInnerJSON, select);
 }
 
 
@@ -221,20 +221,41 @@ function fillDatalist(datalist){
     }
     var game = selectGame.value;
     var url = "json/"+id+".options.php?game="+game;
-    datalist.innerHTML = qwikJSON(url);
+    qwikJSON(url, setInnerJSON, datalist);
 }
 
 
-function qwikJSON(url){
-    var Httpreq = new XMLHttpRequest();
-    Httpreq.open("GET",url,false);
-    Httpreq.send(null);
-    var json = JSON.parse(Httpreq.responseText);
-    json = !json ? '' : json ;
-    var length = nFormatter(json.length, 1) ;
-    url = url.split("?")[0];
+function qwikJSON(url, callback, element){
+    args = Array.prototype.slice.call(arguments);
+    args.splice(1, 1);
+    var xhr = new XMLHttpRequest();
+    xhr.callback = callback;
+    xhr.arguments = args;
+    xhr.onload = xhrSuccess;
+    xhr.onerror = xhrError;
+    xhr.open("GET", url, true);
+    xhr.send(null);
+}
+
+
+function xhrSuccess() {
+    var args = this.arguments;
+    var url = args[0].split("?")[0];  
+    var json = JSON.parse(this.responseText);
+    args[0] = !json ? '' : json ;  // replace url with json in args
+    this.callback.apply(this, args);
+    var length = nFormatter(json.length, 1);
     console.log("json reply from "+url+" ("+length+")");
-    return json;
+}
+
+
+function xhrError() {
+    console.error("failed to get JSON: " . this.statusText);
+}
+
+
+function setInnerJSON(json, element){
+    element.innerHTML = json;
 }
 
 

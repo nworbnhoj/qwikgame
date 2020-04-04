@@ -115,7 +115,7 @@ workbox.routing.registerRoute(
 );
 
 
-workbox.routing.registerRoute(
+workbox.routing.registerRoute(	
   /(?:json\.php)$/,
   new workbox.strategies.NetworkFirst({
     cacheName: 'json',
@@ -127,6 +127,14 @@ workbox.routing.registerRoute(
   /(?:account|favorite|friend|info|match|upload)\.php$/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'json-updated',
+  })
+);
+
+
+workbox.routing.registerRoute(
+  /(?:account.php$/,
+  new workbox.strategies.NetworkFirst({
+    cacheName: 'network',
   })
 );
 

@@ -57,6 +57,9 @@ class FavoritePage extends Page {
         $req = $this->req();
         $result = null;
         switch ($qwik) {
+            case "register":
+                $this->qwikRegister($player, $req);
+                // intentional flow thru to available
             case "available":
                 $result = $this->qwikAvailable($player, $this->venue);
                 break;
@@ -135,6 +138,15 @@ class FavoritePage extends Page {
 
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
 
+
+    function qwikRegister($player, $req){
+        if(isset($req['email'])){
+            $player->email($req['email']);
+        } else {
+            $pid = Player::anonID($email);
+            self::logMsg("failed to register player: " . self::snip($pid));
+        }
+    }
 
 
     function qwikAvailable($player, $venue){

@@ -688,7 +688,7 @@ class Player extends Qwik {
     public function emailWelcome($email, $req){
         $param = array(
             "email"   => $email,
-            "qwik"    => 'available',
+            "qwik"    => 'register',
             "game"    => $req['game'],
             "venue"   => $req['venue'],
             "parity"  => 'similar',

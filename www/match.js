@@ -29,7 +29,7 @@ function initPage(){
                 elem.classList.add('past');
                 elem.classList.remove('toggle');
                 elem.style.color = '';
-                elem.removeEventListener('click', 'clickTdToggle');
+                elem.removeEventListener('click', clickTdToggle);
             }
         }
     }

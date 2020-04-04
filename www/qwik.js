@@ -214,11 +214,14 @@ function fillDatalist(datalist){
         console.log("Failed to fill datalist: unable to find input with list=".id);
         return false;
     }
-    var selectGame = input.form.querySelector("select-game");
-    if (!selectGame){return false;}   // nothing to do
-    var game = selectGame.options[selectGame.selectedIndex].value;
+    var selectGame = input.form.querySelector(".select-game");
+    if (!selectGame){
+        console.log("Failed to fill datalist: unable to find .selectGame");        
+        return false;
+    }
+    var game = selectGame.value;
     var url = "json/"+id+".options.php?game="+game;
-    selectGame.innerHTML = qwikJSON(url);
+    datalist.innerHTML = qwikJSON(url);
 }
 
 

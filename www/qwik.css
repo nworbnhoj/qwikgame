@@ -745,6 +745,13 @@ progress.size {
 }
 
 /************** # *********************/
+
+#qwik-logo {
+    float : left;
+    height : 2em;
+}
+
+
 #alert {
     color:DarkOrange;
     margin:0.5em;

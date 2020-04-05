@@ -67,7 +67,7 @@ class Base extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $replicated = $this->replicate($html);
-        $retranslated = self::$phraseBook->translate($replicated, $variables);
+        $retranslated = $this->translate($replicated);
         $populated = $this->populate($retranslated, $variables);
         return html_entity_decode($populated);
     }

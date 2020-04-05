@@ -132,7 +132,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(?:account.php$/,
+  /(?:account)\.php$/,
   new workbox.strategies.NetworkFirst({
     cacheName: 'network',
   })

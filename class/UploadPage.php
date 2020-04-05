@@ -59,13 +59,14 @@ class UploadPage extends Page {
     public function variables(){
         $variables = parent::variables();
         $player = $this->player();
+        $game = $this->req('game');
 
         $variables['please_login']   = $player ? '' : '{prompt_login}';
         $variables['uploadHidden']   = $player ? '' : 'hidden';
         $variables['uploadDisabled'] = $player ? '' : 'disabled';
         $variables['TICK_ICON']      = self::TICK_ICON;
         $variables['LOGOUT_ICON']    = isset($player) ? self::LOGOUT_ICON : '';
-        $variables['gameOptions']    = $this->gameOptions($this->game, "\t\t");
+        $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
 
         return $variables;
     }

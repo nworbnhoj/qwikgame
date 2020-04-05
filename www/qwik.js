@@ -55,7 +55,9 @@ docReady(event => {
 
 
 // A general DOM Window ready function
-winReady(event => {});
+winReady(event => {
+    addListeners();  // again to add listeners to JSON elements
+});
 
 
 // add Listeners to elements on this page.
@@ -135,9 +137,9 @@ function changeSelectGame(){
 
 // returns the next sibling element matching selector, or null otherwise
 function nextSibling(element, selector) {
-  if (!element) return null;
+  if (!element || !selector) return null;
   var sibling = element.nextElementSibling;
-  if (!sibling || !selector || sibling.matches(selector)) return sibling;
+  if (!sibling || sibling.matches(selector)) return sibling;
   return nextSibling(sibling, selector);
 };
 
@@ -188,7 +190,6 @@ function replicateBase(base){
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var url = 'json/'+id+'.listing.php?'+query;
     qwikJSON(url, setInnerJSON, parentNode);
-    addListeners();
 }
 
 

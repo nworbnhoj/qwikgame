@@ -18,10 +18,13 @@ class PhraseBook extends Qwik {
         $xmlPhrases = $this->xml->xpath("phrase");
         foreach($xmlPhrases as $xmlPhrase){
             $key = (string) $xmlPhrase['key'];
-            if(!is_null($key)){
+            if(!empty($key)){
                 $phrase = array();
                 foreach($xmlPhrase->children() as $child){
-                    $phrase[$child->getName()] = (string) $child;
+                    $lang = (string) $child['lang'];
+                    if (!empty($lang)){
+                        $phrase[$lang] = (string) $child;
+                    }
                 }            
                 $this->phrases[$key] = $phrase;
             }
@@ -30,7 +33,7 @@ class PhraseBook extends Qwik {
         $xmlLanguages = $this->xml->xpath("language");
         foreach($xmlLanguages as $xmlLanguage){
             $key = (string) $xmlLanguage['key'];
-            if(!is_null($key)){   
+            if(!empty($key)){   
                 $this->languages[$key] = html_entity_decode((string) $xmlLanguage);
             }
         }      
@@ -58,26 +61,15 @@ class PhraseBook extends Qwik {
 
 
     public function phrase($key, $lang, $fallback="en"){
-        $phraseArray = $this->xml->xpath("phrase[@key='$key']");
-        if($phraseArray){
-            $phraseElement = $phraseArray[0];
-            $words = $this->words($phraseElement, $lang);
-            if (isset($words)){
-                return $words;
-            } else {
-                return $this->words($phraseElement, $fallback);
-            }
-        }
-        return NULL;
-    }
+        if (!isset($key, $lang, $this->phrases[$key])) { return NULL; }
 
+        $phrase = $this->phrases[$key];
 
-    private function words($phraseElement, $lang){
-        $wordsArray = $phraseElement->xpath("words[@lang='$lang']");
-        if($wordsArray){
-            return (string) $wordsArray[0];
+        if (isset($phrase[$lang])) {
+            return $phrase[$lang];
+        } else {
+            return isset ($phrase[$fallback]) ? $phrase[$fallback] : NULL;
         }
-        return NULL;
     }
 
 

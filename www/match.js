@@ -49,10 +49,10 @@ function clickThumb(){
 
 function clickSetRep(){
     var rep = document.getElementById('rep');
-    if(this.hasClass('fa-thumbs-o-up')){
-        rep.val('+1');
+    if(this.classList.contains('fa-thumbs-o-up')){
+        rep.value = '+1';
     } else {
-        rep.val('-1');
+        rep.value = '-1';
     }
 }
 

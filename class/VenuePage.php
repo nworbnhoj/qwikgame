@@ -118,7 +118,6 @@ class VenuePage extends Page {
         }
 
         $vars = parent::variables();
-        $variables['alert-hidden'] = empty($this->alert) ? 'hidden' : '';
         
         $vars['vid']           = $this->venue->id();
         $vars['playerCount']   = $this->venue->playerCount();

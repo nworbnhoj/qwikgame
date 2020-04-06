@@ -29,20 +29,22 @@
 <body>
 <div class='center'>
 
-    <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    <div id='header'>
+        <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    </div>
 
     <div id='menu' class='menu'>
         <a id='match-icon'    class='[MATCH_ICON]'        href='match.php'></a>
         <a id='favorite-icon' class='[FAVORITE_ICON]'     href='favorite.php'></a>
         <a id='friend-icon'   class='[FRIEND_ICON]'       href='friend.php'></a>
-        <a id='account-icon'  class='[ACCOUNT_ICON] here' href='account.php'></a>
+        <a id='account-icon'  class='[ACCOUNT_ICON]'      href='account.php'></a>
         <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
     </div>
 
-    <h2 id='venue' name='venue'>[venueName]</h2>
-
     <p class="alert" [alert-hidden]>[alert]</p>
-    <p class='message'>[message]</p>
+    <p class='message' [msg-hiddden]>[message]</p>
+
+    <h2 id='venue' name='venue'>[venueName]</h2>
 
     <div id='display-venue-div' >
         <div class='center'>

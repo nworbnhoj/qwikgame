@@ -24,7 +24,9 @@
 <body>
 <div class='center'>
 
-    <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    <div id='header'>
+        <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    </div>
 
     <div id='menu' class='menu'>
         <a id='login-toggle' class='icon'>{login}</a>
@@ -36,7 +38,7 @@
     </div>
 
     <p class="alert" [alert-hidden]>[alert]</p>
-    <p class='message'>[message]</p>
+    <p class='message' [msg-hiddden]>[message]</p>
 
 <p class="tagline">{tagline}</p>
 <p class="players">{players_at_venues}</p>

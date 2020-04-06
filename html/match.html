@@ -24,21 +24,22 @@
 <body>
 <div class='center'>
 
-<div id='menu' class='menu'>
-    <a id='info-icon'     class='[INFO_ICON]'       href='info.php'></a>
-    <a id='account-icon'  class='[ACCOUNT_ICON]'    href='account.php'></a>
-    <a id='friend-icon'   class='[FRIEND_ICON]'     href='friend.php'></a>
-    <a id='favorite-icon' class='[FAVORITE_ICON]'   href='favorite.php'></a>
-    <a id='match-icon'    class='[MATCH_ICON] here' href='match.php'></a>
-</div>
+    <div id='header'>
+        <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    </div>
 
+    <div id='menu' class='menu'>
+        <a id='match-icon'    class='[MATCH_ICON] here'   href='match.php'></a>
+        <a id='favorite-icon' class='[FAVORITE_ICON]'     href='favorite.php'></a>
+        <a id='friend-icon'   class='[FRIEND_ICON]'       href='friend.php'></a>
+        <a id='account-icon'  class='[ACCOUNT_ICON]'      href='account.php'></a>
+        <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
+    </div>
 
-<img id='qwik-logo' src='img/qwik.icon.svg'>
-<p class="alert" [alert-hidden]>[alert]</p>
-<p class='message'>[message]</p>
+    <p class="alert" [alert-hidden]>[alert]</p>
+    <p class='message' [msg-hiddden]>[message]</p>
 
-
-<h2 id='matches'>{Matches}</h2>
+    <h2 id='matches' name='matches'>{Matches}</h2>
 
 <p class='centre'>
 <b>{keen} ⇨ {invitation} ⇨ {accepted} ⇨ {confirmed} ⇨ {feedback}</b>

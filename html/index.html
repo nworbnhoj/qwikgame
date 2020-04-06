@@ -24,19 +24,20 @@
 <body>
 <div class='center'>
 
-<div id='menu' class='menu'>
-    <a id='info-icon' class='[INFO_ICON]' href='info.php'></a>
-    <a id='lang-icon' class='[LANG_ICON]'></a>
-    <form id='lang-form' action='index.php' method='post'>
-        <select id='lang-select' name='lang' style="float:right; display:none;">
-            [languageOptions]
-        </select>
-    </form>
-    <a id='login-toggle' class='icon'>{login}</a>
-</div>
+    <a href='match.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
 
-<img id='qwik-logo' src='img/qwik.icon.svg'>
-<p class="alert" [alert-hidden]>[alert]</p>
+    <div id='menu' class='menu'>
+        <a id='login-toggle' class='icon'>{login}</a>
+        <a id='lang-icon' class='[LANG_ICON]'></a>
+        <form id='lang-form' action='index.php' method='post'>
+            <select id='lang-select' name='lang' style="float:right; display:none;">[languageOptions]</select>
+        </form>
+        <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
+    </div>
+
+    <p class="alert" [alert-hidden]>[alert]</p>
+    <p class='message'>[message]</p>
+
 <p class="tagline">{tagline}</p>
 <p class="players">{players_at_venues}</p>
 

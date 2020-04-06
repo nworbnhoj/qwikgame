@@ -188,7 +188,9 @@ class Page extends Html {
             $vars['pid']         = $this->player->id();
         }
 
-        $vars['message'] = $this->alert;
+
+        $variables['alert-hidden']   = empty($this->alert) ? 'hidden' : '';
+        $variables['alert']          = $this->alert;
         
         return $vars;
     }

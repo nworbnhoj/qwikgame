@@ -112,7 +112,6 @@ Class TranslatePage extends Page {
         $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
 
         $vars = parent::variables();
-
         $vars['tick']          = "<a class='".self::TICK_ICON."'></a>";
         $vars['cross']         = "<a class='".self::CROSS_ICON."'></a>";
         $vars['flyerLink']     = "<a href='".self::FLYER_URL."'>{flyer}</a>";

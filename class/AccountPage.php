@@ -46,7 +46,6 @@ class AccountPage extends Page {
 
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
-        $vars['alert-hidden']  = 'hidden';
 
         $player = $this->player();
         if (!is_null($player)){

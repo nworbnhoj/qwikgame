@@ -53,7 +53,6 @@ class AdminPage extends Page {
         $playerEmail = $player->email();
         $playerName = empty($playerNick) ? $playerEmail : $playerNick;
 
-        $vars['alert-hidden']  = 'hidden';
         $vars['message']       = "{Welcome} <b>$playerName</b>";
         $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
         $vars['TICK_ICON']     = self::TICK_ICON;

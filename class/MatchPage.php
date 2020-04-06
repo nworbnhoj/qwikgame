@@ -108,7 +108,6 @@ class MatchPage extends Page {
 
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
-        $vars['alert-hidden']  = 'hidden';
 
         $venue = $this->venue;
         if (!is_null($venue)){

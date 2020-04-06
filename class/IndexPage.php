@@ -4,8 +4,6 @@ require_once 'Page.php';
 
 class IndexPage extends Page {
 
-    private $alert = '';
-
     public function __construct($templateName='index'){
         parent::__construct(NULL, $templateName);
     }
@@ -112,8 +110,6 @@ class IndexPage extends Page {
         $variables['venuesLink']     = "<a href='venues.php?game=squash'>{venues}</a>";
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
-        $variables['alert-hidden']   = empty($this->alert) ? 'hidden' : '';
-        $variables['alert']          = $this->alert;
         $variables['language']       = $language;
         $variables['languageOptions'] = $this->languageOptions($language);
         

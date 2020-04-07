@@ -29,16 +29,18 @@ class InfoPage extends Page {
 
     private function qwikContact($msg, $from){
         $headers = array();
-        $headers[] = "From: $from";
+        $headers[] = "From: facilitator@qwikgame.org";
         $headers[] = "MIME-Version: 1.0";
         $headers[] = "Content-type: text/html; charset=UTF-8";
 
-    //    $to = 'facilitator@qwikgame.org';
-        $to = 'john@nhoj.info';
+        $to = 'feedback@qwikgame.org';
         $subject = "feedback from $from";
 
-        if (! mail($to, $subject, $msg, implode("\r\n", $headers))){
-            header("Location: error.php?msg=<b>The email was unable to be sent");
+        if (mail($to, $subject, $msg, implode("\r\n", $headers))){
+            $this->message('{thankyou_feedback}');
+        } else {
+            $this->alert("The feedback was unable to be sent.");
+            Qwik::logMsg("Failed to send feebback email: $subject\n$msg");
         }
     }
 

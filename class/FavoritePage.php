@@ -104,7 +104,6 @@ class FavoritePage extends Page {
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
             $regionOptions = new Options($this->regions(), Options::VALUE_TEMPLATE);
 
-            $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['regionOptions'] = $regionOptions->make();
             $vars['reputation']    = $player->repWord();
             $vars['thumbs']        = $player->repThumbs();

@@ -121,7 +121,6 @@ class VenuePage extends Page {
         
         $vars['vid']           = $this->venue->id();
         $vars['playerCount']   = $this->venue->playerCount();
-        $vars['message'];
         $vars['venueName']     = $venueName;
         $vars['venueStrNum']   = $this->venue->strNum();
         $vars['venueRoute']    = $this->venue->route();

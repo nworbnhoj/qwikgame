@@ -67,7 +67,6 @@ class FriendPage extends Page {
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
 
-            $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['reputation']    = $player->repWord();
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;

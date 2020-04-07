@@ -126,7 +126,6 @@ class MatchPage extends Page {
 	    $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
 
-            $vars['message']       .= "{Welcome} <b>$playerName</b>";
             $vars['friendsHidden'] = empty($reckons) ? 'hidden' : ' ';
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['reputation']    = $player->repWord();

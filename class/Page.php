@@ -418,25 +418,11 @@ class Page extends Html {
             $id = $match[3];
             $html = $match[4];
             switch ($id){
-                case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
             }
         };
         $pattern = "!(?s)\<repeat((\sid='(.+?)')|[^\>]*)\>(.+?)\<\/repeat\>!";
         return  preg_replace_callback($pattern, $tr, $html);
-    }
-
-
-    private function replicateReckons($html){
-        $regions = $this->regions();
-        $group = '';
-        foreach($regions as $region){
-            $vars = array(
-                'region' => $region,
-            );
-            $group .= $this->populate($html, $vars);
-        }
-        return $group;
     }
 
 

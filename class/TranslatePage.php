@@ -39,14 +39,6 @@ const RIVAL_INPUT = "
             placeholder='{prompt_rival}' 
             required>
     ";
-    
-const REGION_SELECT = "
-        <select id='region' name='region' class='json region' required>
-            <repeat id='reckon'>
-                <option value='[region]'>[region]</option>
-            </repeat>
-        </select>
-    ";
 
 const ABILITY_SELECT = "
         <select name='ability' required>
@@ -112,6 +104,7 @@ Class TranslatePage extends Html {
         $this->phraseKeys = parent::$phraseBook->phraseKeys();
 
         $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
+        $selectRegion = "<select id='region' name='region' class='json region' required>[regionOptions]</select>";
 
         $vars = parent::variables();
         $vars['tick']          = "<a class='".Page::TICK_ICON."'></a>";
@@ -124,7 +117,7 @@ Class TranslatePage extends Html {
         $vars['inputRival']    = RIVAL_INPUT;
         $vars['selectGame']    = $selectGame;
         $vars['selectAbility'] = ABILITY_SELECT;
-        $vars['selectRegion']  = REGION_SELECT;
+        $vars['selectRegion']  = $selectRegion;
         $vars['selectParity3'] = PARITY3_SELECT;
         $vars['selectParity5'] = PARITY5_SELECT;
         

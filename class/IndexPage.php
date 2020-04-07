@@ -78,14 +78,14 @@ class IndexPage extends Page {
                     self::logMsg("login: recover account $id");
                     // todo rate limit
                     $player->emailLogin();
-                    $this->alert = "{Check_email}";
+                    $this->message("{Check_email}");
                     return TRUE;
                 }
             } else {
                 $anon = new Player($pid, TRUE);
                 if(isset($anon)){
                     $anon->emailWelcome($email);
-                    $this->alert = "{Check_email}";
+                    $this->message("{Check_email}");
                     return TRUE;
                 }
             }

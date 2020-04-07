@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Html.php';
 require_once 'Page.php';
 require_once 'Translation.php';
 
@@ -77,7 +78,7 @@ const PARITY5_SELECT = "
     
 
 
-Class TranslatePage extends Page {
+Class TranslatePage extends Html {
 
     private $translation;
     private $pending;
@@ -101,7 +102,8 @@ Class TranslatePage extends Page {
     private $variables;
 
     public function __construct($templateName=NULL){
-        parent::__construct(NULL, $templateName);
+        $template = Html::readTemplate($templateName);
+        parent::__construct($template);
         
         $this->translation = new Translation(self::$translationFileName);
         $this->pending = new Translation('pending.xml');
@@ -112,12 +114,12 @@ Class TranslatePage extends Page {
         $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
 
         $vars = parent::variables();
-        $vars['tick']          = "<a class='".self::TICK_ICON."'></a>";
-        $vars['cross']         = "<a class='".self::CROSS_ICON."'></a>";
-        $vars['flyerLink']     = "<a href='".self::FLYER_URL."'>{flyer}</a>";
-        $vars['emailLink']     = self::EMAIL_LNK;
-        $vars['facebookLink']  = self::FACEBOOK_LNK;
-        $vars['twitterLink']   = self::TWITTER_LNK;
+        $vars['tick']          = "<a class='".Page::TICK_ICON."'></a>";
+        $vars['cross']         = "<a class='".Page::CROSS_ICON."'></a>";
+        $vars['flyerLink']     = "<a href='".Page::FLYER_URL."'>{flyer}</a>";
+        $vars['emailLink']     = Page::EMAIL_LNK;
+        $vars['facebookLink']  = Page::FACEBOOK_LNK;
+        $vars['twitterLink']   = Page::TWITTER_LNK;
         $vars['inputVenue']    = VENUE_INPUT;
         $vars['inputRival']    = RIVAL_INPUT;
         $vars['selectGame']    = $selectGame;

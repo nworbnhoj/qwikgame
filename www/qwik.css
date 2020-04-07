@@ -369,9 +369,20 @@ p {
 }
 
 p.record  { padding:0.3em; }
-p.message { padding:0.5em; }
 p.tagline { padding:2em; }
 p.players { padding:1em; }
+p.alert {
+    padding:0.5em;
+    font-weight:bold;
+    border: solid 3px DarkOrange;
+    background-color: lightGray;
+}
+p.message {
+    padding:0.5em;
+    font-weight:bold;
+    border: solid 1px DarkOrange;
+}
+
 
 
 /************** <ul> *********************/

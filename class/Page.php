@@ -192,6 +192,7 @@ class Page extends Html {
         $vars['alert-hidden'] = empty($this->alert) ? 'hidden' : '';
         $vars['alert']        = $this->alert;
         $vars['msg-hidden']   = empty($this->msg) ? 'hidden' : '';
+        $vars['message']      = $this->msg;
         
         return $vars;
     }
@@ -201,7 +202,7 @@ class Page extends Html {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->legacyReplicate($html, $this->player, $this->req());
-        $html = parent::make($variables, $html);
+        $html = parent::make($vars, $html);
         return $html;
     }
 
@@ -256,9 +257,15 @@ class Page extends Html {
     }
 
 
-    function alert($msg){
-        $this->alert = empty($this->alert) ? $msg : $this->alert."<br>$msg";
+    function alert($txt){
+        $this->alert = empty($this->alert) ? $txt : $this->alert."<br>$txt";
     }
+
+
+    function message($txt){
+        $this->msg = empty($this->msg) ? $txt : $this->msg."<br>$txt";
+    }
+
 
 
     /********************************************************************************

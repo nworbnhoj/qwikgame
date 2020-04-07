@@ -198,15 +198,6 @@ class Page extends Html {
     }
 
 
-    public function make($variables=NULL, $html=NULL){
-        $html = is_null($html) ? $this->template() : $html;
-        $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
-        $html = $this->legacyReplicate($html, $this->player, $this->req());
-        $html = parent::make($vars, $html);
-        return $html;
-    }
-
-
     public function player(){
         return $this->player;
     }
@@ -402,27 +393,6 @@ class Page extends Html {
 
         $_SESSION['lang'] = $lang;
         return $lang;
-    }
-
-
-
-    /********************************************************************************
-    Return the html template after replicating <r>elements</r> with data from $player & $req.
-
-    $html    String        html template with variables of the form [key]
-    $player    XML            player data
-    $req    ArrayMap    url parameters from post&get
-    ********************************************************************************/
-    public function legacyReplicate($html, $player, $req){
-        $tr = function($match) use ($player, $req){
-            $id = $match[3];
-            $html = $match[4];
-            switch ($id){
-                default:           return '';
-            }
-        };
-        $pattern = "!(?s)\<repeat((\sid='(.+?)')|[^\>]*)\>(.+?)\<\/repeat\>!";
-        return  preg_replace_callback($pattern, $tr, $html);
     }
 
 

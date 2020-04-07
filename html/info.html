@@ -24,11 +24,8 @@
 <div class='center'>
 
     <div id='menu' class='menu'>
-        <a id='match-icon'    class='[MATCH_ICON]'        href='match.php'></a>
-        <a id='favorite-icon' class='[FAVORITE_ICON]'     href='favorite.php'></a>
-        <a id='friend-icon'   class='[FRIEND_ICON]'       href='friend.php'></a>
-        <a id='account-icon'  class='[ACCOUNT_ICON]'      href='account.php'></a>
-        <a id='info-icon'     class='[INFO_ICON] here'    href='info.php'></a>
+        <a id='home-icon' class='[HOME_ICON]'      href='index.php'></a>
+        <a id='info-icon' class='[INFO_ICON] here' href='info.php'></a>
     </div>
 
     <div id='header'>
@@ -78,7 +75,7 @@
 <h2 id='feedback'>{Feedback}</h2>
 
 <div class="commit feedback">
-    <form action="info.php#feedback" method="post">
+    <form action="info.php" method="post">
         <input type='hidden' name='qwik' value='feedback'>
         <textarea type="text" name="message" placeholder='{prompt_feedback}' maxlength='200'></textarea>
         <input type="email" name="reply-email" class="brick" placeholder='{prompt_address}'>

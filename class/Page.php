@@ -418,33 +418,12 @@ class Page extends Html {
             $id = $match[3];
             $html = $match[4];
             switch ($id){
-                case 'similarVenues': return $this->replicateSimilarVenues($html, $req); break;
                 case 'reckon':     return $this->replicateReckons($html);                break;
                 default:           return '';
             }
         };
         $pattern = "!(?s)\<repeat((\sid='(.+?)')|[^\>]*)\>(.+?)\<\/repeat\>!";
         return  preg_replace_callback($pattern, $tr, $html);
-    }
-
-
-    private function replicateSimilarVenues($html, $req){
-        $group = '';
-        $similar = array_slice($this->similarVenues($req['venue']), 0, 5);
-        foreach($similar as $vid){
-            try {
-                $venue = new Venue($vid);
-                $vars = array(
-                    'vid'    => $vid,
-                    'name'   => implode(', ',explode('|',$vid)),
-                    'players'=> $venue->playerCount(),
-                );
-                $group .= $this->populate($html, $vars);
-            } catch (RuntimeException $e){
-                self::logThrown($e);
-            }
-        }
-        return $group;
     }
 
 

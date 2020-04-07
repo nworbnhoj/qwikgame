@@ -49,12 +49,14 @@
                     <input id='repost' class='base' type='hidden' name='[name]' value='[value]'>
                     [repost-existing]
                 </div>
-                <repeat id='similarVenues'>
-                <button type='submit' class='venue' name='vid' value='[vid]'>
-                    [name]<br>
-                    <b>[players]</b> {players}
-                </button>
-                </repeat>
+                <div>
+                    <div id='similar-venue' class='base'>
+                        <button type='submit' class='venue' name='vid' value='[vid]'>
+                            [name]<br><b>[players]</b> {players}
+                        </button>
+                    </div>
+                    [similarVenues]
+                </div>
             </form>
         </div>
 

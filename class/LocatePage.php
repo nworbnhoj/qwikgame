@@ -4,6 +4,7 @@ require_once 'Page.php';
 require_once 'Venue.php';
 require_once 'VenuePage.php';
 require_once 'Locate.php';
+require_once 'SimilarVenues.php';
 require_once 'Repost.php';
 
 
@@ -185,6 +186,9 @@ class LocatePage extends Page {
     public function make($variables=NULL, $html=NULL){
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
+
+        $similarVenues = new SimilarVenues($html, 'similar-venue', $this->description);
+        $vars['similarVenues'] = $similarVenues->make();
 
         $repost = new Repost($html, 'repost', $this->req());
         $made = $repost->make();

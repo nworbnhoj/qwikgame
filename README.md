@@ -80,17 +80,23 @@ The `/html` directory contains html templates in the form:
             <h1>{hello}</h1>
             <p>You have a game of [game] on [day] at [time]</p>
             <h1>{pastRivals}</h1>
-            <repeat id='past-rivals'>
-                [name] is a [parity] [game] player<br>
-            </repeat>
+            <div>
+                <div id='past-rivals' class='base json'>
+                    [name] is a [parity] [game] player<br>
+                </repeat>
+            </div>
         </body>
     </html>
 
 The process to construct a html page from a html template involves 3 steps:
-1. The html within a <repeat></repeat> element is replicated for each each data set
+1. The html element with class='base' is replicated for each each data set
 2. Each \[variable-key\] is replaced by a value.
 3. Each {phrase-key} is replaced by a phrase in the users language.
-Note: this implies that <repeat> elements may contain both \[\] and {}; and a value may also contain {}.
+
+Note: this implies that elements with class='base' may contain both \[\] and {}; and a value may also contain {}.
+
+4. The class='json' triggers a json update of the innerHTML of the parent <div>
+
 
 ### multilingual
 

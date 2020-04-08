@@ -112,8 +112,7 @@ function qwikAccount($player, $request){
         $player->emailQuit();
         $player->quit();
         $this->logout();
-
-        header("Location: ".QWIK_URL);
+        self::redirect();
     }
 }
 

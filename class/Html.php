@@ -74,7 +74,15 @@ class Html extends Qwik {
     }
 
 
-    const ERROR_TEMPLATE  = 'error.html';
+    static public function redirect($url=QWIK_URL){
+        const $template = self::readTemplate(self::REDIRECT_TEMPLATE);
+        const $html = str_replace("[url]", $url, $template);
+        echo($html);
+    }
+
+
+    const ERROR_TEMPLATE    = 'error';
+    const REDIRECT_TEMPLATE = 'redirect';
 
     const PDF_URL    = QWIK_URL.PATH_PDF;
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
@@ -125,6 +133,7 @@ class Html extends Qwik {
             echo($html);
         }
     }
+
 
 
     public function errorHTML(){

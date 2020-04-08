@@ -19,12 +19,12 @@ function venuesMap() {
     var params = {game: game};
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    var url = 'json/venue-map-data.php?'+query;
+    var path = 'json/venue-map-data.php?'+query;
 
     var mapElement = document.getElementById('map');
     var map = new google.maps.Map(mapElement, {zoom: 7, center: MSqC});
 
-    qwikJSON(url, mapMarkers, map);
+    qwikJSON(path, mapMarkers, map);
 }
 
 

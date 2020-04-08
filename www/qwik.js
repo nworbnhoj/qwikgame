@@ -118,14 +118,14 @@ function changeSelectGame(){
                 var id = elem.getAttribute('list');
                 if (!id){ return false; }
                 var datalist = document.querySelector("datalist#"+id);
-                var url = "json/"+id+".options.php?game="+game;
-                qwikJSON(url, setInnerJSON, datalist);
+                var path = "json/"+id+".options.php?game="+game;
+                qwikJSON(path, setInnerJSON, datalist);
             break;
             case 'SELECT':
                 var id = elem.getAttribute('id');
                 if (!id){ return false; }
-                var url = "json/"+id+".options.php?game="+game;
-                qwikJSON(url, setInnerJSON, elem);
+                var path = "json/"+id+".options.php?game="+game;
+                qwikJSON(path, setInnerJSON, elem);
             break;
         }
     }
@@ -147,9 +147,9 @@ function keydownGuess(){
     var params = {input: addr.join(', ')};
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    var url = 'json/address-autocomplete.php?'+query;
+    var path = 'json/address-autocomplete.php?'+query;
     var div = document.getElementById('venue-guess');
-    qwikJSON(url, guessLocation, div);
+    qwikJSON(path, guessLocation, div);
 }
 
 
@@ -241,8 +241,8 @@ function replicateBase(base){
     var params = {html:baseHtml};
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    var url = 'json/'+id+'.listing.php?'+query;
-    qwikJSON(url, setInnerJSON, parentNode);
+    var path = 'json/'+id+'.listing.php?'+query;
+    qwikJSON(path, setInnerJSON, parentNode);
 }
 
 
@@ -252,8 +252,8 @@ function fillSelect(select){
         console.log("Failed to fill select: missing id attribute.");
         return false;
     }
-    var url = 'json/'+id+'.options.php';
-    qwikJSON(url, setInnerJSON, select);
+    var path = 'json/'+id+'.options.php';
+    qwikJSON(path, setInnerJSON, select);
 }
 
 
@@ -276,12 +276,15 @@ function fillDatalist(datalist){
         console.log("Failed to fill datalist: unable to find .select-game");        
         var query = '';
     }
-    var url = "json/"+id+".options.php"+query;
-    qwikJSON(url, setInnerJSON, datalist);
+    var path = "json/"+id+".options.php"+query;
+    qwikJSON(path, setInnerJSON, datalist);
 }
 
 
-function qwikJSON(url, callback, element){
+function qwikJSON(path, callback, element){
+    var protocol = window.location.protocol;
+    var host = window.location.host;
+    var url = protocol + "//" + host + "/" + path;
     args = Array.prototype.slice.call(arguments);
     args.splice(1, 1);
     var xhr = new XMLHttpRequest();

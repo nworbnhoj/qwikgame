@@ -47,7 +47,7 @@
 
 
 <div>
-<div id='cancelled.match' class="base record cancelled">
+<div id='cancelled.match' class="base json record cancelled">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -63,7 +63,7 @@
 </div>
 
 <div>
-<div id='feedback.match' class="base record feedback">
+<div id='feedback.match' class="base json record feedback">
     <form class='record' action='match.php#history' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' id='rep' name='rep' value='+1'>
@@ -80,7 +80,7 @@
 </div>
 
 <div>
-<div id='confirmed.match' class="base record confirmed">
+<div id='confirmed.match' class="base json record confirmed">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -100,7 +100,7 @@
 </div>
 
 <div>
-<div id='accepted.match' class="base record accepted">
+<div id='accepted.match' class="base json record accepted">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -116,7 +116,7 @@
 </div>
 
 <div>
-<div id='invitation.match' class="base record invitation">
+<div id='invitation.match' class="base json record invitation">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -133,7 +133,7 @@
 </div>
 
 <div>
-<div id='keen.match' class="base record keen">
+<div id='keen.match' class="base json record keen">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
@@ -225,12 +225,14 @@
                 <input type='checkbox'  autocomplete='off'>
                 {invite_friends}
             </span>
+            <input type="submit" class='keen' value="{Submit}">
         </div>
         <div id='friend-invites' hidden>
             <span class='nowrap'>
                 <input type='checkbox' name='beckon' autocomplete='off' checked>
                 {invite_available_rivals}
             </span>
+            <input type="submit" class='keen' value="{Submit}">
             <hr>
             <div class='checklist'>
             <span id='friendEmail' class="base">
@@ -239,7 +241,6 @@
                 [friendEmails]
             </div>
         </div>
-        <input type="submit" class='keen' value="{Submit}">
     </form>
 </div>
 
@@ -251,7 +252,7 @@
 <h2 id='history' [historyHidden]>{History}</h2>
 
 <div>
-<div id='history.match' class="base record history">
+<div id='history.match' class="base json record history">
     <form class='record' action='match.php#history'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>

@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <link rel="manifest" href="qwik.webmanifest">
     <script src="qwik.js"></script>
+    <script src="locate.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -50,7 +51,7 @@
                     [repost-existing]
                 </div>
                 <div>
-                    <div id='similar-venue' class='base'>
+                    <div id='similar.venue' class='base'>
                         <button type='submit' class='venue' name='vid' value='[vid]'>
                             [name]<br><b>[players]</b> {players}
                         </button>
@@ -70,7 +71,6 @@
                     [repost-new]
                 </div>
                 <span class='help' hidden>{Create new venue...}</span>
-                <button type='button' class='action help [INFO_ICON]'></button>
                 <div class='clear'></div>
                 <input type='submit' id='venue-submit' value='{Submit}' class='rgt'>
                 <div class='w00'>
@@ -93,7 +93,7 @@
 </div>
 </body>
 
-[datalists]
+
 <datalist id='country_iso' />
 
 </html>

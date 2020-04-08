@@ -3,15 +3,15 @@
 require_once 'Base.php';
 
 /*******************************************************************************
-    Class SimilarVenues replicates a html snippet post element.
+    Class SimilarVenueList replicates a html snippet post element.
     The html snippet is embedded in a html template and located by a <div id=''>.
 *******************************************************************************/
 
-class SimilarVenues extends Base {
+class SimilarVenueList extends Base {
 
     private $venueDescription;
     /*******************************************************************************
-    Class SimilarVenues is constructed with a html template.
+    Class SimilarVenueList is constructed with a html template.
 
     $html String a html document containing a div to be replicated.
     $id   String a html div id to identify the html snippet to be identified.

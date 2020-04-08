@@ -25,7 +25,7 @@ const TICK = "<button class='TICK_ICON'></button>";
 const VENUE_INPUT = "
         <input id='venue-desc' 
             name='venue' 
-            class='json venue' 
+            class='venue' 
             list='svid'
             value='[venue]' 
             placeholder='{prompt_venue}' 

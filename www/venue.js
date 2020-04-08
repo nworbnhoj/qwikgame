@@ -13,7 +13,7 @@ function addMoreListeners(){
         elem.addEventListener('click', clickRevert, false);
     }
     for (var elem of document.querySelectorAll('input.guess')) {
-        elem.addEventListener('keydown', keydownInput, false);
+        elem.addEventListener('keydown', keydownGuess, false);
     }
 
     addEvent(document.getElementById('show-edit-venue'),     'click',   clickEdit);
@@ -45,24 +45,6 @@ function clickRevert(){
     document.getElementById(id).value = val;
     document.getElementById('edit-venue-form').style.display = 'block';
 }
-
-
-function keydownInput(){
-    guessPlace(
-        document.getElementById('input#venue-name').value,
-        document.getElementById('input#venue-locality').value,
-        document.getElementById('input#venue-admin1').value,
-        document.getElementById('input#venue-country').value,
-        document.getElementById('input#venue-guess').value
-    );
-}
-
-
-
-function keydownCountry(){
-    this.value = this.value.toLocaleUpperCase('en-US');
-}
-
 
 
 function initMap() {
@@ -104,35 +86,6 @@ function initMap() {
         lngInput.value = evt.latLng.lng();
     });
 }
-
-
-
-function guessPlace(name, locality, admin1, country, div){
-    var url = "json/address-autocomplete.php";
-    var input = name+', '+locality+', '+admin1+', '+country;
-    $.getJSON(url, {input: input}, function(json){
-        div.empty();
-        div.append($("<hr>"));
-        if (json.status == 'OK'){
-            var predictions = json.predictions;
-            for (i = 0; i < predictions.length; i++) {
-                var prediction = predictions[i];
-                div.append($('<button/>')
-                    .text(prediction.description)
-                    .attr('type', 'submit')
-                    .attr('class', 'venue guess')
-                    .attr('name', 'placeid')
-                    .attr('value', prediction.place_id)
-                    .click(function(){
-                        $('input.guess').removeAttr('required');
-                    })
-                );
-            }
-            div.append($("<br><img src='img/powered-by-google.png'>"));
-        }
-    });
-}
-
 
 
 

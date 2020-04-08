@@ -42,7 +42,7 @@ function addEvent(element, evnt, funct){
 docReady(event => {
     addListeners();
 
-    for (var base of document.querySelectorAll('div.base')) {
+    for (var base of document.querySelectorAll('div.base.json')) {
         replicateBase(base);
     }
     for (var select of document.querySelectorAll('select.json')) {
@@ -132,6 +132,59 @@ function changeSelectGame(){
 }
 
 
+function keydownCountry(){
+    this.value = this.value.toLocaleUpperCase('en-US');
+}
+
+
+function keydownGuess(){
+    var addr = [
+        document.getElementById('venue-name').value,
+        document.getElementById('venue-locality').value,
+        document.getElementById('venue-admin1').value,
+        document.getElementById('venue-country').value
+    ];
+    var params = {input: addr.join(', ')};
+    var esc = encodeURIComponent;
+    var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
+    var url = 'json/address-autocomplete.php?'+query;
+    var div = document.getElementById('venue-guess');
+    qwikJSON(url, guessLocation, div);
+}
+
+
+function guessLocation(json, div){
+    var html = '<hr>';
+    if (json.status == 'OK'){
+        var predictions = json.predictions;
+        for (i = 0; i < predictions.length; i++) {
+            var prediction = predictions[i];
+            var text = prediction.description;
+            var value = "value='" + prediction.place_id + "'";
+            html += "<button type='submit' class='venue guess' name='placeid' "+value+">"+text+"</button>";
+        }
+        html += "<br><img src='img/powered-by-google.png'>";
+        div.innerHTML = html;
+
+        // attach an event to each button
+        for (var element of div.children) {
+            addEvent(element, 'click', notRequired);
+        }
+    }
+}
+
+
+function notRequired(){
+    for (var input of document.querySelectorAll('input.guess')) {
+        input.removeAttribute('required');
+    }
+}
+
+
+
+
+
+
 ///////////////// DOM helper functions ///////////////////
 
 
@@ -216,12 +269,14 @@ function fillDatalist(datalist){
         return false;
     }
     var selectGame = input.form.querySelector(".select-game");
-    if (!selectGame){
-        console.log("Failed to fill datalist: unable to find .selectGame");        
-        return false;
+    if (selectGame){
+        var game = selectGame.value;
+        var query = "?game="+game;
+    } else {
+        console.log("Failed to fill datalist: unable to find .select-game");        
+        var query = '';
     }
-    var game = selectGame.value;
-    var url = "json/"+id+".options.php?game="+game;
+    var url = "json/"+id+".options.php"+query;
     qwikJSON(url, setInnerJSON, datalist);
 }
 

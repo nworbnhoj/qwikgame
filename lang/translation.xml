@@ -305,4 +305,5 @@
 <phrase key="PushCancelTitle"><words lang="en">Cancelled [gameName] [time]</words></phrase>
 <phrase key="PushCancelBody"><words lang="en">[venueName]</words></phrase>
 <phrase key="thankyou_feedback"><words lang='en'>\nThankyou for your feedback!</words></phrase>
+<phrase key="prompt_complete_vid"><words lang="en">Please provide an entry in all 4 fields ({name}, {locality}, {admin1}, {country})</words></phrase>
 </translation>

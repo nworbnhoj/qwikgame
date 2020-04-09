@@ -103,6 +103,8 @@ class LocatePage extends Page {
                         unset($vid);
                     }
                 }
+            } else {
+                self::message({prompt_complete_vid});
             }
         }
 

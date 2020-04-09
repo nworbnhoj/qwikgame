@@ -17,7 +17,7 @@ class VenuePage extends Page {
 
     public function serve(){
         if (!$this->venue->ok()){
-            self::redirect();
+            header("Location: ".QWIK_URL);
             return;
         }
         parent::serve();

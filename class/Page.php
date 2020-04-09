@@ -346,7 +346,17 @@ class Page extends Html {
             setcookie("pid", "", time() - Player::DAY);
             setcookie("token", "", time() - Player::DAY);
         }
-        self::redirect();
+        $this->goHome();
+    }
+
+
+    public function goHome(){
+        if (headers_sent()){
+            echo("Redirect failed.<br>");
+            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
+        } else {
+            header("location: ".QWIK_URL);
+        }
     }
 
 
@@ -359,6 +369,7 @@ class Page extends Html {
 
     public function selectLanguage($req, $player){
         $languages = parent::$phraseBook->languages();
+//        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
         && array_key_exists($req['lang'], $languages)){

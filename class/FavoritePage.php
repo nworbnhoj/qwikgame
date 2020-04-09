@@ -45,7 +45,7 @@ class FavoritePage extends Page {
                 $this->req('repost', 'favorite.php');
             }
             $query = http_build_query($this->req());
-            self::redirect("QWIK_URLlocate.php?$query");
+            header("Location: ".QWIK_URL."locate.php?$query");
             return;
         }
     }

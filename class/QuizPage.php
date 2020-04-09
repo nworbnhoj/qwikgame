@@ -61,7 +61,8 @@ class QuizPage extends Page {
             unset($_SESSION[self::SCORE_KEY]);    // reset progress
             $query = http_build_query($this->req());
             $repost = $this->repost;
-            self::redirect("QWIK_URL$repost?$query");
+            $url = QWIK_URL."$repost?$query";
+            header("Location: $url");
         }
     }
 

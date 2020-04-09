@@ -790,7 +790,8 @@ class Player extends Qwik {
 
             return new Player($match->rid());
         } else {
-            header("Location: error.php?msg=unable to locate match.");
+            header("Location: error.php?msg=unable to locate match.", TRUE, 307);
+            exit;
         }
     }
 

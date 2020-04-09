@@ -62,7 +62,8 @@ class QuizPage extends Page {
             $query = http_build_query($this->req());
             $repost = $this->repost;
             $url = QWIK_URL."$repost?$query";
-            header("Location: $url");
+            header("Location: $url", TRUE, 307);
+            exit;
         }
     }
 

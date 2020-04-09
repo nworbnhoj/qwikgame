@@ -26,8 +26,8 @@ class LocatePage extends Page {
 
     public function serve(){
         if (empty($this->game)){
-            header("Location: ".QWIK_URL);
-            return;
+            header("Location: ".QWIK_URL, TRUE, 307);
+            exit;
         }
 	   parent::serve();
     }
@@ -113,7 +113,8 @@ class LocatePage extends Page {
             $query = http_build_query($this->req());
             $repost = $this->repost;
             $url = QWIK_URL."$repost?$query";
-            header("Location: $url");
+            header("Location: $url", TRUE, 307);
+            exit;
         }
     }
 

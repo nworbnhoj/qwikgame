@@ -16,7 +16,8 @@ class IndexPage extends Page {
             unset($req['pid']);
             unset($req['token']);
             $query = http_build_query($req);
-            header("Location: ".QWIK_URL."match.php?$query");
+            header("Location: ".QWIK_URL."match.php?$query", TRUE, 307);
+            exit;
         }
     }
 

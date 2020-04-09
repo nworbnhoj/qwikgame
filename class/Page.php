@@ -355,7 +355,8 @@ class Page extends Html {
             echo("Redirect failed.<br>");
             echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
         } else {
-            header("location: ".QWIK_URL);
+            header("location: ".QWIK_URL, TRUE, 307);
+            exit;
         }
     }
 
@@ -369,7 +370,6 @@ class Page extends Html {
 
     public function selectLanguage($req, $player){
         $languages = parent::$phraseBook->languages();
-//        header('Cache-control: private'); // IE 6 FIX
 
         if(isset($req['lang'])                            // REQUESTED language
         && array_key_exists($req['lang'], $languages)){

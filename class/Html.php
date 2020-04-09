@@ -74,7 +74,7 @@ class Html extends Qwik {
     }
 
 
-    const ERROR_TEMPLATE  = 'error.html';
+    const ERROR_TEMPLATE  = 'error';
 
     const PDF_URL    = QWIK_URL.PATH_PDF;
     const TERMS_URL  = self::PDF_URL.'qwikgame.org%20terms%20and%20conditions.pdf'; 
@@ -128,8 +128,9 @@ class Html extends Qwik {
 
 
     public function errorHTML(){
-        $home = QWIK_URL;
-        $html = "<html><head><meta http-equiv='refresh' content='3;url={$home}' /></head><body><p>Opps! something went wrong.... <a href='{$home}'>home</a></p></body></html>";
+        $head = "<head><meta http-equiv='refresh' content='3' url='".QWIK_URL."' /></head>";
+        $body = "<body><p>Opps! something went wrong.... <a href='".QWIK_URL."'>home</a></p></body>";
+        $html = "<html>$head$body</html>";
         try{
             $html = $this->make(NULL, self::ERROR_TEMPLATE);
         } catch (Throwable $t){

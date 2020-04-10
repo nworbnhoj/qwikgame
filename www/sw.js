@@ -20,10 +20,30 @@ self.addEventListener('notificationclick', function(e) {
   if (action === 'close') {
     notification.close();
   } else {
-    var hostname = window.location.hostname;
-    e.waitUntil(
-      clients.openWindow("https://" + hostname + "/match.php")
-    );
+    const urlToOpen = new URL("/match.php", self.location.origin).href;
+
+    const promiseChain = clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true
+    }).then((windowClients) => {
+      let matchingClient = null;
+
+      for (let i = 0; i < windowClients.length; i++) {
+        const windowClient = windowClients[i];
+        if (windowClient.url === urlToOpen) {
+          matchingClient = windowClient;
+          break;
+        }
+      }
+
+      if (matchingClient) {
+        return matchingClient.focus();
+      } else {
+        return clients.openWindow(urlToOpen);
+      }
+    });
+
+    event.waitUntil(promiseChain);
     notification.close();
   }
 });

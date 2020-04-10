@@ -414,6 +414,10 @@ class Player extends Qwik {
         foreach($emails as $email){
             self::removeElement($email);
         }
+        $paths = $this->xml->xpath("//notify/path");
+        foreach($paths as $path){
+            self::removeElement($path);
+        }
 
         self::removeAtt($this->xml, "nick");
         self::removeAtt($this->xml, "url");

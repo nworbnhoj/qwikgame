@@ -10,6 +10,7 @@ function addMoreListeners(){
   addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
   addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
   addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
+  addEvent(document.getElementById('select-language'),      'change', changeSelectLanguage);
 }
 
 
@@ -73,6 +74,11 @@ function submitAccountPrivateForm(){
   if (!document.getElementById('notify-push').checked){
     clearPushSubscription();
   }
+}
+
+
+function changeSelectLanguage(){
+    clearCache('pages');  // ensure that current language pages deleted from cache
 }	
 
 

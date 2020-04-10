@@ -44,6 +44,7 @@ function clickButtonLanguage(){
 
 
 function changeSelectLanguage(){
+    clearCache('pages');  // ensure that current language pages deleted from cache
     document.getElementById('lang-form').submit();
 }
 

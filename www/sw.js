@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////// SERVICE WORKER EVENTS
+
+
+/////////////////////////////////////////////////////////////////////// INSTALL
+self.addEventListener('install', (event) => {
+ console.log("Service Worker installed.");
+});
+
+
+////////////////////////////////////////////////////////////////////////// PUSH
 self.addEventListener('push', function(e) {
   var payload = e.data.json();
 
@@ -13,6 +24,7 @@ self.addEventListener('push', function(e) {
 });
 
 
+//////////////////////////////////////////////////////////// NOTIFICATION-CLICK
 self.addEventListener('notificationclick', function(e) {
   var notification = e.notification;
   var action = e.action;
@@ -49,6 +61,31 @@ self.addEventListener('notificationclick', function(e) {
 });
 
 
+/////////////////////////////////////////////////////////////////////// MESSAGE
+self.addEventListener('message', function handler (event) {
+    switch (event.data.command) {
+        case 'clearCache':
+            caches.delete(event.data.key);
+            break;
+        default:
+            throw 'no aTopic on incoming message to ChromeWorker';
+    }
+});
+
+
+
+// https://stackoverflow.com/questions/54376355/clear-workbox-cache-of-all-content
+function clearAllCaches(){
+  caches.keys().then(cacheNames => {
+    cacheNames.forEach(cacheName => {
+      caches.delete(cacheName);
+    });
+  });
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////// WORKBOX
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
@@ -60,6 +97,7 @@ workbox.routing.registerRoute(
     cacheName: 'google-fonts-stylesheets',
   })
 );
+
 
 // Cache the underlying font files with a cache-first strategy for 1 year.
 workbox.routing.registerRoute(
@@ -79,7 +117,6 @@ workbox.routing.registerRoute(
 );
 
 
-
 // Cache the font-awesome stylesheet with a stale-while-revalidate strategy.
 workbox.routing.registerRoute(
   /\/\/netdna\.bootstrapcdn\.com\/font-awesome\/(.*?)\/css\/font-awesome.min.css/,
@@ -87,8 +124,6 @@ workbox.routing.registerRoute(
     cacheName: 'font-awesome-stylesheets',
   })
 );
-
-
 
 
 // Cache the underlying font-awesome files with a cache-first strategy for 1 year.
@@ -107,10 +142,6 @@ workbox.routing.registerRoute(
     ],
   })
 );
-
-
-
-
 
 
 workbox.routing.registerRoute(
@@ -146,24 +177,12 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   /(?:account|favorite|friend|info|match|upload)\.php$/,
   new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'json-updated',
+    cacheName: 'pages',
   })
 );
 
 
-workbox.routing.registerRoute(
-  /(?:account)\.php$/,
-  new workbox.strategies.NetworkFirst({
-    cacheName: 'network',
-  })
-);
-
-
-workbox.precaching.precacheAndRoute([]);
-
-
-
-console.log("Qwikgame Service Worker loaded.");
+console.log("serviceWorker loaded.");
 
 
 

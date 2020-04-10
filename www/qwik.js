@@ -156,6 +156,15 @@ function changeSelectGame(){
 }
 
 
+function clickMapIcon(){
+    var selectGame = input.form.querySelector(".select-game");
+    if (selectGame){
+        var game = selectGame.value;
+        this.setAttribute('href', "venues.php?game='"+game+"'");
+    }
+}
+
+
 function keydownCountry(){
     this.value = this.value.toLocaleUpperCase('en-US');
 }

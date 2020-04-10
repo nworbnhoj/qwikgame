@@ -15,6 +15,7 @@ function addMoreListeners(){
     }
 
     addEvent(document.getElementById('invite-friends'), 'click'  , clickInviteFriends);
+    addEvent(document.getElementById('map-icon'),       'click'  , clickMapIcon);
 }
 
 

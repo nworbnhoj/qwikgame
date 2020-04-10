@@ -12,6 +12,7 @@ function addMoreListeners(){
     }
 
     addEvent(document.getElementById('hr-any'), 'click', clickAnytime);
+    addEvent(document.getElementById('map-icon'), 'click' , clickMapIcon);
 }
 
 

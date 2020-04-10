@@ -11,6 +11,7 @@ function addMoreListeners(){
   addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
   addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
   addEvent(document.getElementById('select-language'),      'change', changeSelectLanguage);
+  addEvent(document.getElementById('account-logout-form'),  'submit', submitAccountLogoutForm);
 }
 
 
@@ -79,7 +80,16 @@ function submitAccountPrivateForm(){
 
 function changeSelectLanguage(){
     clearCache('pages');  // ensure that current language pages deleted from cache
-}	
+    clearCache('json');
+}
+
+
+function submitAccountLogoutForm(){
+  clearCache('pages');
+  clearCache('json')
+  var endpoint = document.getElementById('push-endpoint').value;
+  document.getElementById('logout-endpoint') = endpoint;
+}
 
 
 

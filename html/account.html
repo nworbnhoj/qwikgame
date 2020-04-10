@@ -45,7 +45,7 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Your_nickname_will...}</span>
-    <form action='account.php'>
+    <form id='account-public-form' action='account.php'>
         <input type="hidden" name="qwik" value='account'>
         <h4>{public}</h4>
         {You_have_a...}
@@ -85,12 +85,13 @@
 </div>
 
 <div class="commit account">
-    <form action='account.php'>
+    <form id='account-logout-form' action='account.php'>
         <input type="hidden" name="qwik" value='logout'>
+        <input type='hidden' id='logout-endpoint' name='push-endpoint'>
         <h4>{logout}</h4>
         <p>{logout_when...}</p>
         <p>{login_again...}</p>
-        <input id='quit-qwik' type="submit" class="account" value="{logout}">
+        <input id='logout-qwik' type="submit" class="account" value="{logout}">
     </form>
 </div>
 
@@ -98,7 +99,7 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Your_anonymous_match...}</span>
-    <form onsubmit='return checkQuit()'>
+    <form id='account-quit-form' onsubmit='return checkQuit()'>
         <input type="hidden" name="qwik" value='account'>
         <input type="hidden" name="account" value='quit'>
         <h4>{Quit_qwikgame.org}</h4>

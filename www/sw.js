@@ -175,11 +175,12 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /(?:account|favorite|friend|info|match|upload)\.php$/,
+  /(?:favorite|friend|info|match|upload)\.php$/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'pages',
   })
 );
+
 
 
 console.log("serviceWorker loaded.");

@@ -61,10 +61,16 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{You_will_receive_validation...}</span>
-    <form id='account-private-form' action='account.php'>
+    <h4>{private}</h4>
+    <form id='account-lang-form' name='account-lang' action='account.php'>
         <input type="hidden" name="qwik" value='account'>
-        <h4>{private}</h4>
-        <input name="email" type="email" class="brick" value="[playerEmail]" required><br>
+        <span id='lang-icon' class='[LANG_ICON]'></span>
+        <select id='select-language' name='lang'>
+            [languageOptions]
+        </select>
+    </form>
+    <form id='account-notify-form' name='account-notify' action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
         <fieldset class='brick'>
             <legend>{notifications}</legend>
             <label for='notify-email'>{email}</label>
@@ -76,11 +82,12 @@
             <input type='hidden' id='push-token' name='push-token'>
             <input type='hidden' id='push-endpoint-sack' value='[push-endpoint-sack]'>
         </fieldset>
-        <span id='lang-icon' class='[LANG_ICON]'></span>
-        <select id='select-language' name='lang'>
-            [languageOptions]
-        </select>
-        <input type="submit" id='account-private-submit' class="account" value="{Submit}">
+    </form>
+    <br>
+    <form id='account-email-form' name='account-email' action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
+        <input name="email" type="email" class="brick" value="[playerEmail]" required>
+        <input type="submit" id='account-email-submit' class="account" value="{Submit}">
     </form>
 </div>
 

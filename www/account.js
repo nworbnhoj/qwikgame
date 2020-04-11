@@ -7,11 +7,11 @@ winReady(event => {});
 
 
 function addMoreListeners(){
+  addEvent(document.getElementById('notify-email'),         'click' , clickNotifyEmail);
   addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
   addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
   addEvent(document.getElementById('account-nick'),         'blur',   blurInputAccountNick);
   addEvent(document.getElementById('account-url'),          'blur',   blurInputAccountUrl);
-  addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
   addEvent(document.getElementById('select-language'),      'change', changeSelectLanguage);
   addEvent(document.getElementById('account-logout-form'),  'submit', submitAccountLogoutForm);
 }
@@ -31,6 +31,11 @@ function initPage(){
 
 function checkQuit(){
   return confirm("This will cancel all of your matches and delete your account\nAre you sure?");
+}
+
+
+function clickNotifyEmail(){
+  this.form.submit();
 }
 
 
@@ -63,6 +68,7 @@ function clickNotifyPush(){
   } else {  // #notify-push !checked
     clearPushSubscription();
   }
+  this.form.submit();
 }
 
 
@@ -83,16 +89,10 @@ function blurInputAccountUrl(){
 }
 
 
-function submitAccountPrivateForm(){
-  if (!document.getElementById('notify-push').checked){
-    clearPushSubscription();
-  }
-}
-
-
 function changeSelectLanguage(){
     clearCache('pages');  // ensure that current language pages deleted from cache
     clearCache('json');
+    this.form.submit();
 }
 
 

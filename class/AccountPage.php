@@ -90,7 +90,7 @@ function qwikAccount($player, $request){
     if(isset($request['email'])){
         $email = $request['email'];
         if ($email != $player->email()){
-            $player->emailChange($email);
+            $player->email($email);
         }
     }
 

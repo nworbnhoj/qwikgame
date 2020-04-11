@@ -46,6 +46,7 @@ function clickNotifyEmail(){
  */
 function clickNotifyPush(){
   const notifyPushCheckbox = document.getElementById('notify-push');
+  const notifyForm = this.form;
   if (notifyPushCheckbox.checked){
     if(Notification.permission === 'denied'){ // requires a manual change in browser
       const name = browserName();
@@ -61,14 +62,16 @@ function clickNotifyPush(){
           if (notifyPushCheckbox.disabled){
             const name = browserName();
             alert("Failed to setup notifications in "+name+" browser.");
+          } else {
+            notifyForm.submit();
           }
         }
       });
     }
   } else {  // #notify-push !checked
     clearPushSubscription();
+    notifyForm.submit();
   }
-  this.form.submit();
 }
 
 

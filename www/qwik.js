@@ -157,10 +157,10 @@ function changeSelectGame(){
 
 
 function clickMapIcon(){
-    var selectGame = input.form.querySelector(".select-game");
+    var selectGame = document.querySelector(".select-game");
     if (selectGame){
         var game = selectGame.value;
-        this.setAttribute('href', "venues.php?game='"+game+"'");
+        this.setAttribute('href', "venues.php?game="+game);
     }
 }
 

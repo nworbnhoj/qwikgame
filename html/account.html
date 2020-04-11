@@ -45,16 +45,16 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Your_nickname_will...}</span>
-    <form id='account-public-form' action='account.php'>
+    <h4>{public}</h4>
+    {You_have_a...}<br>
+    [thumbs]<br>
+    <form id='account-nick-form' name='account-nick' action='account.php'>
         <input type="hidden" name="qwik" value='account'>
-        <h4>{public}</h4>
-        {You_have_a...}
-        <br>
-        [thumbs]
-        <br>
-        <input name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
-        <input name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
-        <input type="submit" id='account-public' class="account" value="{Submit}">
+        <input id='account-nick' name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
+    </form>
+    <form id='account-nick-form' name='account-url' action='account.php'>
+        <input type="hidden" name="qwik" value='account'>
+        <input id='account-url' name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
     </form>
 </div>
 

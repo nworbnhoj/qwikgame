@@ -219,7 +219,8 @@ div.record {
 
 div.commit {
     background-color: DarkGray;
-    margin: 0.5em auto 8em auto;
+    margin: 0.5em auto 5em auto;
+    padding: 0.5em 0.5em 0.5em 0.5em;
     border-width:0px 0px 0px 1vw;
     border-style:solid;
     text-align:center;
@@ -250,6 +251,7 @@ div.checklist  { margin:auto;
                  width: 70%;
                  text-align:left;
 }
+
 
 /************** <span> *********************/
 
@@ -344,7 +346,7 @@ h3{
 h4{
     font-size:1em;
     font-weight:bold;
-    margin:0em 0em 0.2em 0em;
+    margin: 0.2em 0.2em 0.2em 0.2em;
     text-align: left;
 }
 
@@ -700,8 +702,7 @@ hr { }
 
 /************** <form> *********************/
 
-form { padding: 1em 1em 1em 1em; }
-form.record { padding: 0em 0em 0em 0em; }
+form {}
 
 
 /********************** sup sub **********************/

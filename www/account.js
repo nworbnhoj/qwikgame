@@ -9,6 +9,8 @@ winReady(event => {});
 function addMoreListeners(){
   addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
   addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
+  addEvent(document.getElementById('account-nick'),         'blur',   blurInputAccountNick);
+  addEvent(document.getElementById('account-url'),          'blur',   blurInputAccountUrl);
   addEvent(document.getElementById('account-private-form'), 'submit', submitAccountPrivateForm);
   addEvent(document.getElementById('select-language'),      'change', changeSelectLanguage);
   addEvent(document.getElementById('account-logout-form'),  'submit', submitAccountLogoutForm);
@@ -68,6 +70,16 @@ function clickNotifyPushLabel(){
   if (document.getElementById('notify-push').disabled){
     alert('Unfortunately, this browser does not support push notifications.');
   }
+}
+
+
+function blurInputAccountNick(){
+    document.forms['account-nick'].submit();    
+}
+
+
+function blurInputAccountUrl(){
+    document.forms['account-url'].submit();    
 }
 
 

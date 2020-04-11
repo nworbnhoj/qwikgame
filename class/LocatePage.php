@@ -104,7 +104,7 @@ class LocatePage extends Page {
                     }
                 }
             } else {
-                self::message({prompt_complete_vid});
+                self::message("{prompt_complete_vid}");
             }
         }
 

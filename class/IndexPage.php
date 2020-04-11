@@ -55,7 +55,7 @@ class IndexPage extends Page {
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
                 $anon->emailWelcome($email, $this->req());
-                $this->alert = "{Check_email}";
+                $this->message("{Check_email}");
                 $result = TRUE;
             }
         } catch (RuntimeException $e){

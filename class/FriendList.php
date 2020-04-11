@@ -32,11 +32,19 @@ class FriendList extends Card {
         $reckoning = $player->reckon("rival");
         foreach($reckoning as $reckon){
             $email = (string) $reckon['email'];
+            $rid = (string) $reckon['rival'];
+            $rival = new Player($rid);
+            if (isset($rival) && $rival->ok()){
+                $nick = $rival->nick();
+            }
+            if(empty($nick)){
+               $nick = empty($email) ? Qwik::snip($rid) : $email;
+            }
             $parity = (int) $reckon['parity'];
             $game = (string) $reckon['game'];
             $reckonVars = array(
                 'id'        => $reckon['id'][0],
-                'email'     => $email,
+                'email'     => $nick,
                 'gameName'  => self::gameName($game),
                 'parity'    => self::parityStr($parity)
             );

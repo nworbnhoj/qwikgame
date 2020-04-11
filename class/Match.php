@@ -331,17 +331,19 @@ class Match extends Qwik {
     public function decline(){
         $rivals = $this->rivals();
         foreach($rivals as $rival){
-            $match = $rival->match($mid);
-            switch ($match->status()){
-                case 'accepted':
-                    $match->cancel();
-                    $rival->save();
-                break;
-                case 'keen':
-                    $this->removeRival($rid);
-                break;
+            $match = $rival->matchID($mid);
+            if (isset($match)) {
+                switch ($match->status()){
+                    case 'accepted':
+                        $match->cancel();
+                        $rival->save();
+                    break;
+                    case 'keen':
+                        $this->removeRival($rid);
+                    break;
+                }
+                $rival->save();
             }
-            $rival->save();
         }
 
         $rivalElements = $this->rivalElements();

@@ -400,27 +400,35 @@ class Player extends Qwik {
         }
     }
 
+
     public function quit(){
-        $matches = $this->xml->xpath("match[@status!='history']");
-        foreach($matches as $xml){
+        foreach($this->xml->xpath("match[@status='cancelled']") as $xml){
+            self::removeElement($xml);
+        }
+        foreach($this->xml->xpath("match[@status='feedback']") as $xml){
+            self::removeElement($xml);
+        }
+        foreach($this->xml->xpath("match[@status!='history']") as $xml){
             $match = new Match($this, $xml);
             $match->cancel();
         }
-        $records = $this->xml->xpath("available | reckon");
-        foreach($records as $record){
-            self::removeElement($record);
+        foreach($this->xml->xpath("available") as $xml){
+            self::removeElement($xml);
         }
-        $emails = $this->xml->xpath("email");
-        foreach($emails as $email){
-            self::removeElement($email);
+        foreach($this->xml->xpath("reckon") as $xml){
+            self::removeAtt($xml, "email");
         }
-        $paths = $this->xml->xpath("//notify/path");
-        foreach($paths as $path){
-            self::removeElement($path);
+        foreach($this->xml->xpath("email") as $xml){
+            self::removeElement($xml);
+        }
+        foreach($this->xml->xpath("notify/path") as $xml){
+            self::removeElement($xml);
         }
 
         self::removeAtt($this->xml, "nick");
         self::removeAtt($this->xml, "url");
+
+        $this->save();
     }
 
 

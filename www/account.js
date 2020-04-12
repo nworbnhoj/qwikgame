@@ -1,12 +1,5 @@
 docReady(event => {
-    initPage();
-});
-
-
-winReady(event => {});
-
-
-function addMoreListeners(){
+  initPage();
   document.getElementById('notify-email').addEventListener(        'click', clickNotifyEmail,        false);
   document.getElementById('notify-push').addEventListener(         'click', clickNotifyPush,         false);
   document.getElementById('notify-push-label').addEventListener(   'click', clickNotifyPushLabel,    false);
@@ -14,8 +7,10 @@ function addMoreListeners(){
   document.getElementById('account-url').addEventListener(          'blur', blurInputAccountUrl,     false);
   document.getElementById('select-language').addEventListener(    'change', changeSelectLanguage,    false);
   document.getElementById('account-logout-form').addEventListener('submit', submitAccountLogoutForm, false);
-}
+});
 
+
+winReady(event => {});
 
 
 function initPage(){

@@ -1,15 +1,11 @@
 docReady(event => {
     initPage();
-});
-
-winReady(event => {});
-
-
-function addMoreListeners(){
     document.getElementById('login-toggle').addEventListener('click', clickLoginToggle,     false);
     document.getElementById('lang-icon').addEventListener(   'click', clickButtonLanguage,  false);
     document.getElementById('lang-select').addEventListener('change', changeSelectLanguage, false);
-}
+});
+
+winReady(event => {});
 
 
 function initPage(){

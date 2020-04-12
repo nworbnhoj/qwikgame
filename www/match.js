@@ -1,23 +1,18 @@
 docReady(event => {
     initPage();
+    document.getElementById('invite-friends').addEventListener('click', clickInviteFriends, false);
+    document.getElementById('map-icon').addEventListener(      'click', clickMapIcon,       false);
+    var thumbs = document.querySelectorAll('button.thumb');
+    addListeners(thumbs, 'click', clickThumb);
+    addListeners(thumbs, 'click', clickSetRep);
 });
 
 
-winReady(event => {});
-
-
-function addMoreListeners(){
-    for (var elem of document.querySelectorAll('button.thumb')) {
-        elem.addEventListener('click', clickThumb, false);
-    }
-    for (var elem of document.querySelectorAll('button.thumb')) {
-        elem.addEventListener('click', clickSetRep, false);
-    }
-
-    addEvent(document.getElementById('invite-friends'), 'click'  , clickInviteFriends);
-    addEvent(document.getElementById('map-icon'),       'click'  , clickMapIcon);
-}
-
+winReady(event => {
+    var thumbs = document.querySelectorAll('button.thumb');
+    addListeners(thumbs, 'click', clickThumb);
+    addListeners(thumbs, 'click', clickSetRep);
+});
 
 
 function initPage(){

@@ -1,19 +1,12 @@
 docReady(event => {
     initPage();
+    addListeners(document.querySelectorAll('.tr-toggle'), 'click', clickTrToggle);
+    document.getElementById('hr-any').addEventListener(   'click', clickAnytime,  false);
+    document.getElementById('map-icon').addEventListener( 'click' , clickMapIcon, false);
 });
 
 
 winReady(event => {});
-
-
-function addMoreListeners(){
-    for (var elem of document.querySelectorAll('.tr-toggle')) {
-        elem.addEventListener('click', clickTrToggle, false);
-    }
-
-    addEvent(document.getElementById('hr-any'), 'click', clickAnytime);
-    addEvent(document.getElementById('map-icon'), 'click' , clickMapIcon);
-}
 
 
 

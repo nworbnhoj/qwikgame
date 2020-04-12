@@ -1,26 +1,17 @@
 docReady(event => {
     initPage();
+    addListeners(document.querySelectorAll('.revert'),       'click', clickRevert);
+    addListeners(document.querySelectorAll('input.guess'), 'keydown', keydownGuess);
+
+    document.getElementById('show-edit-venue').addEventListener('click', clickEdit,      false);
+    document.getElementById('venue-cancel').addEventListener(   'click', clickCancel,    false);
+    document.getElementById('venue-country').addEventListener('keydown', keydownCountry, false);
 });
 
 
 winReady(event => {
     initMap();
 });
-
-
-function addMoreListeners(){
-    for (var elem of document.querySelectorAll('.revert')) {
-        elem.addEventListener('click', clickRevert, false);
-    }
-    for (var elem of document.querySelectorAll('input.guess')) {
-        elem.addEventListener('keydown', keydownGuess, false);
-    }
-
-    addEvent(document.getElementById('show-edit-venue'),     'click',   clickEdit);
-    addEvent(document.getElementById('venue-cancel'),        'click',   clickCancel);
-    addEvent(document.getElementById('venue-country'), 'keydown', keydownCountry);
-}
-
 
 
 function initPage(){

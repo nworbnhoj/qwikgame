@@ -1,19 +1,12 @@
 docReady(event => {
     initPage();
+    addListeners(document.querySelectorAll('input.guess'), 'keydown', keydownGuess);
+    document.getElementById('venue-country').addEventListener('keydown', keydownCountry, false);
 });
 
 
 winReady(event => {
 });
-
-
-function addMoreListeners(){
-    for (var elem of document.querySelectorAll('input.guess')) {
-        elem.addEventListener('keydown', keydownGuess, false);
-    }
-
-    addEvent(document.getElementById('venue-country'), 'keydown', keydownCountry);
-}
 
 
 function initPage(){

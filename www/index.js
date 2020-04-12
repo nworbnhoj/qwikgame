@@ -6,9 +6,9 @@ winReady(event => {});
 
 
 function addMoreListeners(){
-    addEvent(document.getElementById('login-toggle'), 'click'  , clickLoginToggle);
-    addEvent(document.getElementById('lang-icon'),    'click',  clickButtonLanguage);
-    addEvent(document.getElementById('lang-select'),  'change', changeSelectLanguage);
+    document.getElementById('login-toggle').addEventListener('click', clickLoginToggle,     false);
+    document.getElementById('lang-icon').addEventListener(   'click', clickButtonLanguage,  false);
+    document.getElementById('lang-select').addEventListener('change', changeSelectLanguage, false);
 }
 
 

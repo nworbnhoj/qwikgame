@@ -7,13 +7,13 @@ winReady(event => {});
 
 
 function addMoreListeners(){
-  addEvent(document.getElementById('notify-email'),         'click' , clickNotifyEmail);
-  addEvent(document.getElementById('notify-push')         , 'click' , clickNotifyPush);
-  addEvent(document.getElementById('notify-push-label')   , 'click' , clickNotifyPushLabel);
-  addEvent(document.getElementById('account-nick'),         'blur',   blurInputAccountNick);
-  addEvent(document.getElementById('account-url'),          'blur',   blurInputAccountUrl);
-  addEvent(document.getElementById('select-language'),      'change', changeSelectLanguage);
-  addEvent(document.getElementById('account-logout-form'),  'submit', submitAccountLogoutForm);
+  document.getElementById('notify-email').addEventListener(        'click', clickNotifyEmail,        false);
+  document.getElementById('notify-push').addEventListener(         'click', clickNotifyPush,         false);
+  document.getElementById('notify-push-label').addEventListener(   'click', clickNotifyPushLabel,    false);
+  document.getElementById('account-nick').addEventListener(         'blur', blurInputAccountNick,    false);
+  document.getElementById('account-url').addEventListener(          'blur', blurInputAccountUrl,     false);
+  document.getElementById('select-language').addEventListener(    'change', changeSelectLanguage,    false);
+  document.getElementById('account-logout-form').addEventListener('submit', submitAccountLogoutForm, false);
 }
 
 

@@ -51,20 +51,14 @@ function winReady(callbackFunction){
 }
 
 
-// https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick
-function addEvent(element, evnt, funct){
-  if (!element){return;}
-  if (element && element.attachEvent)
-   return element.attachEvent('on'+evnt, funct);
-  else
-   return element.addEventListener(evnt, funct, false);
-}
-
-
 // A general DOM document ready function
 docReady(event => {
-    addListeners();
-
+    addListeners(document.querySelectorAll('button.help'),   'click', clickButtonHelp);
+    addListeners(document.querySelectorAll('button.cross'),  'click', clickButtonCross);
+    addListeners(document.querySelectorAll('.select-game'), 'change', changeSelectGame);
+    addListeners(document.querySelectorAll('td.toggle'),     'click', clickTdToggle);
+    addListeners(document.querySelectorAll('.repost'),      'change', changeRepost);
+    document.getElementById('back').addEventListener(        'click', clickBack, false ;
     for (var base of document.querySelectorAll('div.base.json')) {
         replicateBase(base);
     }
@@ -78,35 +72,16 @@ docReady(event => {
 
 
 // A general DOM Window ready function
-winReady(event => {
-    addListeners();  // again to add listeners to JSON elements
-});
+winReady(event => {});
 
 
-// add Listeners to elements on this page.
-function addListeners(){
-    for (var elem of document.querySelectorAll('button.help')) {
-        elem.addEventListener('click', clickButtonHelp, false);
-    }
-    for (var elem of document.querySelectorAll('button.cross')) {
-        elem.addEventListener('click', clickButtonCross, false);
-    }
-    for (var elem of document.querySelectorAll('.select-game')) {
-        elem.addEventListener('change', changeSelectGame, false);
-    }
-    for (var elem of document.querySelectorAll('td.toggle')) {
-        elem.addEventListener('click', clickTdToggle, false);
-    }
-    for (var elem of document.querySelectorAll('.repost')) {
-        elem.addEventListener('change', changeRepost, false);
-    }
-
-    addEvent(document.getElementById('back'), 'click',  clickBack);
-
-    // call addMoreListeners() if it has been defined somewhere
-    if (typeof addMoreListeners == 'function') { addMoreListeners(); }
+// adds an event Listener with callback on a NodeList or HTMLCollection 
+function addListeners(elements, event, callback){
+    const array = [...elements];
+    array.forEach(function (element, index) {
+        element.addEventListener(event, callback, false);
+    });
 }
-
 
 
 //////////////// EVENT ACTIONS ////////////////////////////
@@ -200,9 +175,7 @@ function guessLocation(json, div){
         div.innerHTML = html;
 
         // attach an event to each button
-        for (var element of div.children) {
-            addEvent(element, 'click', notRequired);
-        }
+        addListeners(div.children, 'click', notRequired);
     }
 }
 
@@ -263,6 +236,11 @@ function clickTdToggle(){
 ///////////////// JSON functions ///////////////////
 
 
+function setInnerJSON(json, element){
+    element.innerHTML = json;
+}
+
+
 function replicateBase(base){
     var id = base.getAttribute('id');
     if (!id){
@@ -276,6 +254,7 @@ function replicateBase(base){
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var path = 'json/'+id+'.listing.php?'+query;
     qwikJSON(path, setInnerJSON, parentNode);
+    addListeners(parentNode.querySelectorAll('button.help'),  'click', clickButtonHelp);
 }
 
 
@@ -344,12 +323,6 @@ function xhrSuccess() {
 function xhrError() {
     console.error("failed to get JSON: " . this.statusText);
 }
-
-
-function setInnerJSON(json, element){
-    element.innerHTML = json;
-}
-
 
 
 ///////////////// Generic helper functions ///////////////////

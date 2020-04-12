@@ -221,16 +221,16 @@
             </tr>
         </table>
         <div id='invite-friends' style='display:block;'>
-            <span class='nowrap' style='display:[checkboxFriendsDisplay];'
-                <input type='checkbox'  autocomplete='off'>
-                {invite_friends}
+            <span class='nowrap' style='display:[checkboxFriendsDisplay];'>
+                <input id='checkbox-friends' type='checkbox'  autocomplete='off'>
+                <label for='checkbox-friends'>{invite_friends}</label>
             </span>
             <input type="submit" class='keen' value="{Submit}">
         </div>
         <div id='friend-invites'  style='display:none;'>
             <span class='nowrap'>
-                <input type='checkbox' name='beckon' autocomplete='off' checked>
-                {invite_available_rivals}
+                <input id='checkbox-rivals' type='checkbox' name='beckon' autocomplete='off' checked>
+                <label for='checkbox-rivals'>{invite_available_rivals}</label>
             </span>
             <input type="submit" class='keen' value="{Submit}">
             <hr>

@@ -58,7 +58,6 @@ docReady(event => {
     addListeners(document.querySelectorAll('.select-game'), 'change', changeSelectGame);
     addListeners(document.querySelectorAll('td.toggle'),     'click', clickTdToggle);
     addListeners(document.querySelectorAll('.repost'),      'change', changeRepost);
-    document.getElementById('back').addEventListener(        'click', clickBack, false ;
     for (var base of document.querySelectorAll('div.base.json')) {
         replicateBase(base);
     }
@@ -236,8 +235,17 @@ function clickTdToggle(){
 ///////////////// JSON functions ///////////////////
 
 
+function initJSON(parentElement){
+    addListeners(parentElement.querySelectorAll('button.help'), 'click', clickButtonHelp);
+
+    // call moreInitJSON() if it has been defined somewhere
+    if (typeof moreInitJSON == 'function') { moreInitJSON(parentElement); }
+}
+
+
 function setInnerJSON(json, element){
     element.innerHTML = json;
+    initJSON(element);
 }
 
 
@@ -254,7 +262,6 @@ function replicateBase(base){
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var path = 'json/'+id+'.listing.php?'+query;
     qwikJSON(path, setInnerJSON, parentNode);
-    addListeners(parentNode.querySelectorAll('button.help'),  'click', clickButtonHelp);
 }
 
 

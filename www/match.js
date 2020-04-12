@@ -2,17 +2,11 @@ docReady(event => {
     initPage();
     document.getElementById('invite-friends').addEventListener('click', clickInviteFriends, false);
     document.getElementById('map-icon').addEventListener(      'click', clickMapIcon,       false);
-    var thumbs = document.querySelectorAll('button.thumb');
-    addListeners(thumbs, 'click', clickThumb);
-    addListeners(thumbs, 'click', clickSetRep);
+    addThumbListeners(document.documentElement);
 });
 
 
-winReady(event => {
-    var thumbs = document.querySelectorAll('button.thumb');
-    addListeners(thumbs, 'click', clickThumb);
-    addListeners(thumbs, 'click', clickSetRep);
-});
+winReady(event => {});
 
 
 function initPage(){
@@ -29,6 +23,18 @@ function initPage(){
             }
         }
     }
+}
+
+
+function moreInitJSON(parentElement){
+    addThumbListeners(parentElement);
+}
+
+
+function addThumbListeners(parentElement){
+    var thumbs = parentElement.querySelectorAll('button.thumb');
+    addListeners(thumbs, 'click', clickThumb);
+    addListeners(thumbs, 'click', clickSetRep);
 }
 
 

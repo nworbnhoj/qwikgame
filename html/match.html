@@ -52,7 +52,7 @@
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]'></button>
-        <span class='help' hidden>{Unfortunately_cancelled...}</span>
+        <span class='help'>{Unfortunately_cancelled...}</span>
         <p class='record'>
             <span class='tag cancelled'><s>{cancelled}</s></span>
             {Cancelled_Game_at...}
@@ -69,7 +69,7 @@
         <input type='hidden' id='rep' name='rep' value='+1'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='feedback' class='action [TICK_ICON]'></button>
-        <span class='help' hidden>{Your_feedback_is...}</span>
+        <span class='help'>{Your_feedback_is...}</span>
         <p class='record'>
             <span class='tag feedback'>{feedback}</span>
             {Feedback_Game_at...}
@@ -85,7 +85,7 @@
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
-        <span class='help' hidden>{Your_game_confirmed...}</span>
+        <span class='help'>{Your_game_confirmed...}</span>
         <p class='record'>
             <span class='tag confirmed'>{confirmed}</span>
             {Confirmed_Game_at...}
@@ -105,7 +105,7 @@
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
-        <span class='help' hidden>{Wait_for_confirmation...}</span>
+        <span class='help'>{Wait_for_confirmation...}</span>
         <p class='record'>
             <span class='tag accepted'>{accepted}</span>
             {Accepted_Game_at...}
@@ -122,7 +122,7 @@
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
         <button type='submit' name='qwik' value='accept' class='action [TICK_ICON]'></button>
-        <span class='help' hidden>{Select_a_time...}</span>
+        <span class='help'>{Select_a_time...}</span>
         <p class='record'>
             <span class='tag invitation'>{invitation}</span>
             {Invitation_Game_at...}
@@ -138,7 +138,7 @@
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
-        <span class='help' hidden>{Available_rivals_have...}</span>
+        <span class='help'>{Available_rivals_have...}</span>
         <p class='record'>
             <span class='tag keen'>{keen}</span>
             {Keen_Game_at...}
@@ -153,7 +153,7 @@
 
 <div id='keen-form' class="commit keen">
     <button type='button' class='action help [HELP_ICON]'></button>
-    <span class='help' hidden>{This_will_alert...}</span>
+    <span class='help'>{This_will_alert...}</span>
     <form action="locate.php" method="post">
         <input type="hidden" name="qwik" value="keen">
         <input type='hidden' name='repost' value='match.php'>
@@ -220,14 +220,14 @@
                 <td class='toggle' bit='8388608' hidden>11</td>
             </tr>
         </table>
-        <div id='invite-friends' [friendsHidden]>
-            <span class='nowrap'>
+        <div id='invite-friends' style='display:block;'>
+            <span class='nowrap' style='display:[checkboxFriendsDisplay];'
                 <input type='checkbox'  autocomplete='off'>
                 {invite_friends}
             </span>
             <input type="submit" class='keen' value="{Submit}">
         </div>
-        <div id='friend-invites' hidden>
+        <div id='friend-invites'  style='display:none;'>
             <span class='nowrap'>
                 <input type='checkbox' name='beckon' autocomplete='off' checked>
                 {invite_available_rivals}
@@ -258,7 +258,7 @@
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' class='action [CROSS_ICON]' name='qwik' value='delete'></button>
         <input type='hidden' name='qwik' value='delete'>
-        <span class='help' hidden>{You_can_disown...}</span>
+        <span class='help'>{You_can_disown...}</span>
         <p class='record'>{History_game_at...}</p>
     </form>
 </div>

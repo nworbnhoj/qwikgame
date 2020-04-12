@@ -24,32 +24,27 @@ class Base extends Page {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($html, $id=NULL){ 
-        $baseHTML = empty($id) ? $html : '';
-
-        if(!empty($html) && !empty($id)) {
-            // tidy the $html to ensure the a SimpleXMLElement can parse OK
-            $config = array('output-xhtml' => true, 'indent' => true, 'drop-empty-elements' => false);
-            $tidy = new tidy;
-            $tidy->parseString($html, $config, 'utf8');
-            $tidy->cleanRepair();
-
-            // create a SimpleXMLElement from $html to assist manipulation
-            $xml = new SimpleXMLElement((string)$tidy);
-            $xml->registerXPathNamespace("x", "http://www.w3.org/1999/xhtml");
-
-            // select a <div> with id='$id' and class='base'
-            $path = "//x:*[@id='$id' and ".Base::BASE_PATH."]";
-            $results = $xml->xpath($path); 
-            if (isset($results[0])){
-                $baseHTML = $results[0]->asXML();
-            } else {
-                self::logMsg("failed to extract base = '$id'");
+    public function __construct($html, $id=NULL){
+        $html = html_entity_decode($html);  
+        $baseHTML = '';
+      
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        // todo tidy html templates on save
+        $internalErrors = libxml_use_internal_errors(true);
+        $doc->loadHTML($html);
+        $element = empty($id) ? $doc->documentElement->firstChild->firstChild : $doc->getElementById($id);
+        if (isset($element)){
+            $element->removeAttribute('id');  //remove the id attribute
+            $classes = explode(" ", $element->getAttribute('class'));
+            if (($key = array_search(Base::BASE_CLASS_FLAG, $classes)) !== false) {
+                unset($classes[$key]);            // remove the base class
+                $element->setAttribute('class', implode(' ', $classes));
             }
+            $baseHTML = $doc->saveHTML($element);
+        } else {
+            self::logMsg("failed to extract a suitable base: id=$id");
         }
-
         parent::__construct($baseHTML);
-
     }
 
 
@@ -74,48 +69,11 @@ class Base extends Page {
 
 
     /**
-    * return $html with class='base' inserted.
-    * class='base' is hidden by qwik.css and used by a listing.json.php call to update a Base
-    * remove the 'base' from the class (elements with class='base' are hidden with qwik.css)
+    * return a single baseElement (ie $html without an id attribute or class='base'
     */
     public function replicate($html){
-        $html = html_entity_decode($html);
-        return $this->removeFlag($html);
+        return $html;
     }
-
-
-    /**
-    * Removes class='base' from the html.
-    * class='base' is used to flag a hidden element to be used as a template
-    * for elements in a Base. The class='base' must be removed from the 
-    * element so that it becomes visible (and is not used as a basis for
-    * a subsequet (json) listing
-    */
-    private function removeFlag($html){
-        $d ='"';
-        $base = Base::BASE_CLASS_FLAG;
-        $pattern = "/class(\s*)=(\s*)($d|')(.*?)(\s*)$base(\s*)(.*?)('|$d)/";
-        $replacement = "class=$3$4 $7$8";
-        return preg_replace($pattern, $replacement, $html);
-    }
-
-
-    private function removeFlag1($html){
-        $baseXML = new SimpleXMLElement($html);
-        $baseClassString = (string)$baseXML['class'];
-        $baseClassArray = explode(" ", $baseClassString);
-        $key = array_search(Base::BASE_CLASS_FLAG, $baseClassArray);
-        if ($key !== false) {
-            unset($array[$key]);
-        }
-        $baseXML['class'] = implode(" ", $baseClassArray);
-        return $baseXML->asXML();
-    }
-
-
-
-
-
 
 }
 

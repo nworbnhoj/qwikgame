@@ -28,7 +28,7 @@ class MatchList extends Card {
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-        $html = parent::replicate($html); // removes 'base' class
+        $html = parent::replicate($html); // the base template
         $status = $this->status;
         $group = '';
         $playerVars = $this->playerVariables($player);

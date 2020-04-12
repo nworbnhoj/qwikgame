@@ -65,7 +65,11 @@ self.addEventListener('notificationclick', function(e) {
 self.addEventListener('message', function handler (event) {
     switch (event.data.command) {
         case 'clearCache':
-            caches.delete(event.data.key);
+            if (event.data.key) {
+                caches.delete(event.data.key);
+            } else {
+                clearAllCaches();
+            }
             break;
         default:
             throw 'no aTopic on incoming message to ChromeWorker';

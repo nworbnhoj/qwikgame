@@ -20,13 +20,6 @@ class InfoPage extends Page {
     }
 
 
-    public function variables(){
-        $vars = parent::variables();
-        $vars['githubLink'] = self::GITHUB_LNK;
-        return $vars;
-    }
-
-
     private function qwikContact($msg, $from){
         $headers = array();
         $headers[] = "From: facilitator@qwikgame.org";

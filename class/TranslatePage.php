@@ -109,10 +109,12 @@ Class TranslatePage extends Html {
         $vars = parent::variables();
         $vars['tick']          = "<a class='".Page::TICK_ICON."'></a>";
         $vars['cross']         = "<a class='".Page::CROSS_ICON."'></a>";
-        $vars['flyerLink']     = "<a href='".Page::FLYER_URL."'>{flyer}</a>";
         $vars['emailLink']     = Page::EMAIL_LNK;
         $vars['facebookLink']  = Page::FACEBOOK_LNK;
+        $vars['tweetLink']     = Page::TWEET_LNK;
         $vars['twitterLink']   = Page::TWITTER_LNK;
+        $vars['githubLink']    = Page::GITHUB_LNK;
+        $vars['translateLink'] = Page::TRANSLATE_LNK;
         $vars['inputVenue']    = VENUE_INPUT;
         $vars['inputRival']    = RIVAL_INPUT;
         $vars['selectGame']    = $selectGame;

@@ -262,6 +262,7 @@ span.help {
     padding:1em;
     border:1px #404040 solid;
     line-height: 1em;
+    display:none;
 }
 
 span.tag {
@@ -340,7 +341,7 @@ h3{
     text-align:center;
     font-size:1.2em;
     font-weight:bold;
-    margin:0.3em 0em 0.3em 0em;
+    margin:1em 0em 0.3em 0em;
 }
 
 h4{

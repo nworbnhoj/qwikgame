@@ -9,7 +9,8 @@ require_once PATH_CLASS.'FriendList.php';
 
 $defend = new Defend();
 $get = $defend->get();
-$html = $get['html'];
+$html = html_entity_decode($get['html']);
+$html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
 
 $friendList = new FriendList($html);
 $listing = $friendList->make();

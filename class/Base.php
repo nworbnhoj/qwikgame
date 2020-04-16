@@ -25,13 +25,10 @@ class Base extends Page {
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
     public function __construct($html, $id=NULL){
-        $html = html_entity_decode($html);  
         $baseHTML = '';
-      
         $doc = new DOMDocument('1.0', 'UTF-8');
-        // todo tidy html templates on save
-        $internalErrors = libxml_use_internal_errors(true);
-        $doc->loadHTML($html);
+        $internalErrors = libxml_use_internal_errors(true);  // todo tidy html templates on save
+        $doc->loadHTML($html);                               // better to use LIBXML_HTML_NOIMPLIED here
         $element = empty($id) ? $doc->documentElement->firstChild->firstChild : $doc->getElementById($id);
         if (isset($element)){
             $element->removeAttribute('id');  //remove the id attribute
@@ -61,10 +58,9 @@ class Base extends Page {
     public function make($variables=NULL, $html=NULL){
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
-        $replicated = $this->replicate($html);
-        $retranslated = $this->translate($replicated);
-        $populated = $this->populate($retranslated, $variables);
-        return html_entity_decode($populated);
+        $html = $this->replicate($html);
+        $html = $this->translate($html);
+        return $html;
     }
 
 

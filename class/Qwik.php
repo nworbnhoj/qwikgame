@@ -347,7 +347,7 @@ class Qwik {
        
         // throw an Error Exception for Fatal Errors and simply log any other enabled errors.
         if( in_array($number, array(E_USER_ERROR, E_RECOVERABLE_ERROR)) && $error_is_enabled ) {
-            throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+            throw new ErrorException($string, 0, $number, $file, $line);
         } else if( $error_is_enabled ) {
             Qwik::logMsg($string);
             return false;

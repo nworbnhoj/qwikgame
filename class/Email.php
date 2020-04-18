@@ -89,7 +89,8 @@ class Email extends Html {
             $this->body, 
             self::$headers);
         if (!$mail){
-            self::logMsg("The email was unable to be sent");
+            $errorMessage = error_get_last()['message'];
+            self::logMsg("The email was unable to be sent\n$errorMessage");
         }
     }
 

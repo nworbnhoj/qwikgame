@@ -724,7 +724,7 @@ class Player extends Qwik {
     }
 
 
-    public function emailLogin(){
+    public function emailLogin($email){
         $paras = array(
             "{Click to login}",
             "{Safely ignore}"
@@ -732,7 +732,7 @@ class Player extends Qwik {
         $vars = array(
             "subject"    => "{EmailLoginSubject}",
             "paragraphs" => $paras,
-            "to"         => $this->email(),
+            "to"         => $email,
             "authLink"   => $this->authLink(self::DAY)
         );
         $email = new Email($vars, $this->lang());

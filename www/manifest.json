@@ -31,11 +31,11 @@
             "sizes": "200x250",
             "type": "image/png"
         },{
-            "src": "favicon/android-chrome-192x192.png",
+            "src": "img/qwik.icon.192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },{
-            "src": "favicon/android-chrome-512x512.png",
+            "src": "img/qwik.icon.512x512.png",
             "sizes": "512x512",
             "type": "image/png"
     }],
@@ -45,5 +45,5 @@
     "background_color": "#D3D3D3",
     "categories": "games fitness sports",
     "orientation": "portrait-primary",
-    "scope": "https://qwikgame.org"   
+    "scope": "/"   
 }

@@ -25,40 +25,43 @@ self.addEventListener('push', function(e) {
 
 
 //////////////////////////////////////////////////////////// NOTIFICATION-CLICK
-self.addEventListener('notificationclick', function(e) {
-  var notification = e.notification;
-  var action = e.action;
-
-  if (action === 'close') {
-    notification.close();
-  } else {
-    const urlToOpen = new URL("/match.php", self.location.origin).href;
-
-    const promiseChain = clients.matchAll({
-      type: 'window',
-      includeUncontrolled: true
-    }).then((windowClients) => {
-      let matchingClient = null;
-
-      for (let i = 0; i < windowClients.length; i++) {
-        const windowClient = windowClients[i];
-        if (windowClient.url === urlToOpen) {
-          matchingClient = windowClient;
-          break;
-        }
-      }
-
-      if (matchingClient) {
-        return matchingClient.focus();
-      } else {
-        return clients.openWindow(urlToOpen);
-      }
-    });
-
-    event.waitUntil(promiseChain);
-    notification.close();
+self.addEventListener('notificationclick', function(event) {
+  var notification = event.notification;
+  switch (event.action) {
+    case 'close':
+      notification.close();
+      break;
+    default:
+      notification.close();
+      const url = new URL("/match.php", self.location.origin).href;
+      promiseChain = focusWindow(url);
   }
+  event.waitUntil(promiseChain);
 });
+
+
+function focusWindow(url){
+  return clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true
+  }).then((windowClients) => {
+    let matchingClient = null;
+
+    for (let i = 0; i < windowClients.length; i++) {
+      const windowClient = windowClients[i];
+      if (windowClient.url === url) {
+        matchingClient = windowClient;
+        break;
+      }
+    }
+
+    if (matchingClient) {
+      return matchingClient.focus();
+    } else {
+      return clients.openWindow(url);
+    }
+  });
+}
 
 
 /////////////////////////////////////////////////////////////////////// MESSAGE

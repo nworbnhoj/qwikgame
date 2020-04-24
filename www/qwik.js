@@ -53,20 +53,12 @@ function winReady(callbackFunction){
 
 // A general DOM document ready function
 docReady(event => {
+    refreshData();
     addListeners(document.querySelectorAll('button.help'),   'click', clickButtonHelp);
     addListeners(document.querySelectorAll('button.cross'),  'click', clickButtonCross);
     addListeners(document.querySelectorAll('.select-game'), 'change', changeSelectGame);
     addListeners(document.querySelectorAll('td.toggle'),     'click', clickTdToggle);
     addListeners(document.querySelectorAll('.repost'),      'change', changeRepost);
-    for (var base of document.querySelectorAll('div.base.json')) {
-        replicateBase(base);
-    }
-    for (var select of document.querySelectorAll('select.json')) {
-        fillSelect(select);
-    }
-    for (var datalist of document.querySelectorAll('datalist')) {
-        fillDatalist(datalist);
-    }
 });
 
 
@@ -84,6 +76,33 @@ function addListeners(elements, event, callback){
 
 
 //////////////// EVENT ACTIONS ////////////////////////////
+
+function refreshData(){
+  refreshRecords();
+  refreshSelects();
+  refreshDatalists();
+}
+
+
+function refreshRecords(){
+  for (var base of document.querySelectorAll('div.base.json')) {
+    replicateBase(base);
+  }
+}
+
+
+function refreshSelects(){
+  for (var select of document.querySelectorAll('select.json')) {
+    fillSelect(select);
+  }
+}
+
+
+function refreshDatalists(){
+  for (var datalist of document.querySelectorAll('datalist')) {
+    fillDatalist(datalist);
+  }
+}
 
 
 function clickBack(){
@@ -333,6 +352,13 @@ function xhrError() {
 
 
 ///////////////// Generic helper functions ///////////////////
+
+
+// https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript/34064434#34064434
+function htmlDecode(input) {
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
 
 
 // https://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric

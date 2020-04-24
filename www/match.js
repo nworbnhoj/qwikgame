@@ -3,10 +3,14 @@ docReady(event => {
     document.getElementById('invite-friends').addEventListener('click', clickInviteFriends, false);
     document.getElementById('map-icon').addEventListener(      'click', clickMapIcon,       false);
     addThumbListeners(document.documentElement);
+    window.addEventListener('focus', repeatRefreshMatchRecords, false);
+    window.addEventListener('blur', stopRefreshMatchRecords, false);
 });
 
 
-winReady(event => {});
+winReady(event => {
+  repeatRefreshMatchRecords();
+});
 
 
 function initPage(){
@@ -64,3 +68,27 @@ function clickInviteFriends(){
     this.style.display = 'none';
     document.getElementById('friend-invites').style.display = 'block';
 }
+
+
+const REFRESH_RECORD_INTERVAL = 10000;  // 10 seconds
+var refreshID = [];
+
+function repeatRefreshMatchRecords(){
+  refreshMatchRecords();
+  refreshID.push(setTimeout(repeatRefreshMatchRecords, REFRESH_RECORD_INTERVAL));
+}
+
+
+function stopRefreshMatchRecords(){
+  for(var id of refreshID){
+    clearTimeout(id);
+  }
+}
+
+
+function refreshMatchRecords(){
+  replicateBase(document.getElementById('invitation.match'));
+  replicateBase(document.getElementById('accepted.match'));
+  replicateBase(document.getElementById('confirmed.match'));
+}
+

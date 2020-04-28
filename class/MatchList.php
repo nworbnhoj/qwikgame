@@ -35,7 +35,7 @@ class MatchList extends Card {
         foreach($player->matchStatus($status) as $matchXML) {
             $match = new Match($player, $matchXML);
             $matchVars = $match->variables();
-            $vars = $playerVars + $matchVars + self::$icons;
+            $vars = $playerVars + $matchVars;
             $vars['venueLink'] = $this->venueLink($match->vid());
             $group .= $this->populate($html, $vars);
         }

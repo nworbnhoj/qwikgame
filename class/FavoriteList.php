@@ -38,7 +38,7 @@ class FavoriteList extends Card {
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)
             );
-            $vars = $playerVars + $availVars + self::$icons;
+            $vars = $playerVars + $availVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

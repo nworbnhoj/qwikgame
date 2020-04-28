@@ -67,6 +67,8 @@ const PARITY5_SELECT = "
           <option value='-2'>{much_weaker}</option>
         </select>
     ";
+
+const BUTTON_THUMB = "<button type='button' class='" . Page::THUMB_UP_ICON . "'></button>";
     
 
 
@@ -107,6 +109,26 @@ Class TranslatePage extends Html {
         $selectRegion = "<select id='region' name='region' class='json region' required>[regionOptions]</select>";
 
         $vars = parent::variables();
+        $vars['ACCOUNT_ICON']  = Page::ACCOUNT_ICON;
+        $vars['CROSS_ICON']    = Page::CROSS_ICON;
+        $vars['COMMENT_ICON']  = Page::COMMENT_ICON;
+        $vars['EMAIL_ICON']    = Page::EMAIL_ICON;
+        $vars['FACEBOOK_ICON'] = Page::FACEBOOK_ICON;
+        $vars['FAVORITE_ICON'] = Page::FAVORITE_ICON;
+        $vars['FRIEND_ICON']   = Page::FRIEND_ICON;
+        $vars['FEMALE_ICON']   = Page::FEMALE_ICON;
+        $vars['HELP_ICON']     = Page::HELP_ICON;
+        $vars['HOME_ICON']     = Page::HOME_ICON;
+        $vars['INFO_ICON']     = Page::INFO_ICON;
+        $vars['LANG_ICON']     = Page::LANG_ICON;
+        $vars['MALE_ICON']     = Page::MALE_ICON;
+        $vars['MATCH_ICON']    = Page::MATCH_ICON;
+        $vars['RELOAD_ICON']   = Page::RELOAD_ICON;
+        $vars['THUMB_DN_ICON'] = Page::THUMB_DN_ICON;
+        $vars['THUMB_UP_ICON'] = Page::THUMB_UP_ICON;
+        $vars['TICK_ICON']     = Page::TICK_ICON;
+        $vars['TWITTER_ICON']  = Page::TWITTER_ICON;
+        $vars['GITHUB_ICON']   = Page::GITHUB_ICON;
         $vars['tick']          = "<a class='".Page::TICK_ICON."'></a>";
         $vars['cross']         = "<a class='".Page::CROSS_ICON."'></a>";
         $vars['emailLink']     = Page::EMAIL_LNK;
@@ -120,8 +142,9 @@ Class TranslatePage extends Html {
         $vars['selectGame']    = $selectGame;
         $vars['selectAbility'] = ABILITY_SELECT;
         $vars['selectRegion']  = $selectRegion;
-        $vars['selectParity3'] = PARITY3_SELECT;
-        $vars['selectParity5'] = PARITY5_SELECT;
+        $vars['parity3Select'] = PARITY3_SELECT;
+        $vars['parity5Select'] = PARITY5_SELECT;
+        $vars['thumbButton']   = BUTTON_THUMB;
         
         $this->variables = $vars;
     }

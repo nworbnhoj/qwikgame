@@ -46,13 +46,12 @@ class PendingList extends Card {
             foreach($langs as $lang => $native){
                 $phrase = $pending->phrase($key, $lang, '');
                 if(isset($phrase)){
-                    $translationVars = array(
+                    $vars = array(
                         'key'       => $key,
                         'en_phrase' => $en_phrase,
                         'lang'      => $lang,
                         'phrase'    => $phrase
                     );
-                    $vars = $translationVars + Page::$icons;
                     $group .= $this->populate($html, $vars);
                 }
             }

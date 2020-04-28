@@ -137,19 +137,6 @@ class Page extends Html {
     }
 
 
-    // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
-    static function initStatic(){
-        self::$icons = array (
-            'HELP_ICON'     => self::HELP_ICON,
-            'INFO_ICON'     => self::INFO_ICON,
-            'TICK_ICON'     => self::TICK_ICON,
-            'CROSS_ICON'    => self::CROSS_ICON,
-            'THUMB_UP_ICON' => self::THUMB_UP_ICON,
-            'THUMB_DN_ICON' => self::THUMB_DN_ICON
-        );
-    }
-
-
     public function serve(){
         try {
             $this->processRequest();
@@ -168,25 +155,6 @@ class Page extends Html {
 
     public function variables(){
         $vars = parent::variables();
-        $vars['ACCOUNT_ICON']  = self::ACCOUNT_ICON;
-        $vars['CROSS_ICON']    = self::CROSS_ICON;
-        $vars['COMMENT_ICON']  = self::COMMENT_ICON;
-        $vars['EMAIL_ICON']    = self::EMAIL_ICON;
-        $vars['FACEBOOK_ICON'] = self::FACEBOOK_ICON;
-        $vars['FAVORITE_ICON'] = self::FAVORITE_ICON;
-        $vars['FRIEND_ICON']   = self::FRIEND_ICON;
-        $vars['FEMALE_ICON']   = self::FEMALE_ICON;
-        $vars['HELP_ICON']     = self::HELP_ICON;
-        $vars['HOME_ICON']     = self::HOME_ICON;
-        $vars['INFO_ICON']     = self::INFO_ICON;
-        $vars['LANG_ICON']     = self::LANG_ICON;
-        $vars['MALE_ICON']     = self::MALE_ICON;
-        $vars['MATCH_ICON']    = self::MATCH_ICON;
-        $vars['RELOAD_ICON']   = self::RELOAD_ICON;
-        $vars['THUMB_DN_ICON'] = self::THUMB_DN_ICON;
-        $vars['THUMB_UP_ICON'] = self::THUMB_UP_ICON;
-        $vars['TWITTER_ICON']  = self::TWITTER_ICON;
-        $vars['GITHUB_ICON']   = self::GITHUB_ICON;
         $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
         $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";
         $game = (string) $this->req('game');
@@ -558,7 +526,5 @@ class Page extends Html {
     }
 
 }
-
-Page::initStatic();
 
 ?>

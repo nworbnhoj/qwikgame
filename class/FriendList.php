@@ -48,7 +48,7 @@ class FriendList extends Card {
                 'gameName'  => self::gameName($game),
                 'parity'    => self::parityStr($parity)
             );
-            $vars = $playerVars + $reckonVars + self::$icons;
+            $vars = $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

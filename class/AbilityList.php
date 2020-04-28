@@ -39,7 +39,7 @@ class AbilityList extends Card {
                 'gameName'  => self::gameName($game),
                 'ability'   => $abilities["$ability"]
             );
-            $vars = $playerVars + $reckonVars + self::$icons;
+            $vars = $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

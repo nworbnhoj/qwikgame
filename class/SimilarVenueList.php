@@ -22,18 +22,18 @@ class SimilarVenueList extends Base {
     }
 
 
-    public function replicate($html){
-        $html = parent::replicate($html); // removes 'base' class
+    public function replicate($html, $variables){
         $group = '';
         $similar = array_slice($this->similarVenues($this->venueDescription), 0, 5);
         foreach($similar as $vid){
             try {
                 $venue = new Venue($vid);
-                $vars = array(
+                $venueVars = array(
                     'vid'    => $vid,
                     'name'   => implode(', ',explode('|',$vid)),
                     'players'=> $venue->playerCount(),
                 );
+                $vars = $variables + $venueVars;
                 $group .= $this->populate($html, $vars);
             } catch (RuntimeException $e){
                 self::logThrown($e);

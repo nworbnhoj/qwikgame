@@ -24,18 +24,17 @@ class MatchList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-        $html = parent::replicate($html); // the base template
         $status = $this->status;
         $group = '';
         $playerVars = $this->playerVariables($player);
         foreach($player->matchStatus($status) as $matchXML) {
             $match = new Match($player, $matchXML);
             $matchVars = $match->variables();
-            $vars = $playerVars + $matchVars;
+            $vars = $variables + $playerVars + $matchVars;
             $vars['venueLink'] = $this->venueLink($match->vid());
             $group .= $this->populate($html, $vars);
         }

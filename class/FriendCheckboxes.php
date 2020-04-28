@@ -14,11 +14,9 @@ class FriendCheckboxes extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
-
-        $html = parent::replicate($html); // removes 'base' class
 
         $checkboxes = '';
         $values = $player->friends();

@@ -21,12 +21,10 @@ class FriendList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-//        $group = $html;  // if more than one json update is required, may leave a copy of base here
-        $html = parent::replicate($html); // removes 'base' class
         $group="";
         $playerVars = $this->playerVariables($player);
         $reckoning = $player->reckon("rival");
@@ -48,7 +46,7 @@ class FriendList extends Card {
                 'gameName'  => self::gameName($game),
                 'parity'    => self::parityStr($parity)
             );
-            $vars = $playerVars + $reckonVars;
+            $vars = $variables + $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

@@ -21,11 +21,10 @@ class FavoriteList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-        $html = parent::replicate($html); // removes 'base' class       
         $group = ''; 
         $playerVars = $this->playerVariables($player);
         $available = $player->available();
@@ -38,7 +37,7 @@ class FavoriteList extends Card {
                 'weekSpan'  => $this->weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue)
             );
-            $vars = $playerVars + $availVars;
+            $vars = $variables + $playerVars + $availVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

@@ -21,17 +21,16 @@ class UploadList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
-
-        $html = parent::replicate($html); // removes 'base' class       
+  
         $group = '';
         $uploadIDs = $player->uploadIDs();
         foreach($uploadIDs as $uploadID) {
             $ranking = $player->rankingGet($uploadID);
             $status = $ranking->status();
-            $vars = array(
+            $uploadVars = array(
                 'status'   => $status,
                 'fileName' => $ranking->fileName(),
                 'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
@@ -40,6 +39,7 @@ class UploadList extends Card {
                 'game'     => $ranking->game(),
                 'time'     => $ranking->time()
             );
+            $vars = $variables + $uploadVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

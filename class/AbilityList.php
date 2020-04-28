@@ -21,11 +21,10 @@ class AbilityList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}
 
-        $html = parent::replicate($html); // removes 'base' class
         $group = '';
         $abilities = array('{very_weak}', '{weak}', '{competent}', '{strong}', '{very_strong}');
         $playerVars = $this->playerVariables($player);
@@ -39,7 +38,7 @@ class AbilityList extends Card {
                 'gameName'  => self::gameName($game),
                 'ability'   => $abilities["$ability"]
             );
-            $vars = $playerVars + $reckonVars;
+            $vars = $variables + $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);
         }
         return $group;

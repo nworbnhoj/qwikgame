@@ -26,15 +26,13 @@ class PendingList extends Card {
     }
 
 
-    public function replicate($html){
+    public function replicate($html, $variables){
         $player = $this->player();
         if (empty($player->admin())){
             $this->logout();
             return;
         }
 
-//        $group = $html;  // if more than one json update is required, may leave a copy of base here
-        $html = parent::replicate($html); // removes 'base' class
         $group = '';
         $phraseBook = parent::$phraseBook;
         $pending = $this->pending;
@@ -46,12 +44,13 @@ class PendingList extends Card {
             foreach($langs as $lang => $native){
                 $phrase = $pending->phrase($key, $lang, '');
                 if(isset($phrase)){
-                    $vars = array(
+                    $phraseVars = array(
                         'key'       => $key,
                         'en_phrase' => $en_phrase,
                         'lang'      => $lang,
                         'phrase'    => $phrase
                     );
+                    $vars = $variables + $phraseVars;
                     $group .= $this->populate($html, $vars);
                 }
             }

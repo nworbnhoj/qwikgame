@@ -22,8 +22,7 @@ class Repost extends Base {
     }
 
 
-    public function replicate($html){
-        $html = parent::replicate($html); // removes 'base' class
+    public function replicate($html, $variables){
         $request = $this->request;
         $group = '';
         foreach($request as $name => $value){

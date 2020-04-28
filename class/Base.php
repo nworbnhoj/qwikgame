@@ -11,7 +11,7 @@ require_once 'Page.php';
 class Base extends Page {
 
     const BASE_CLASS_FLAG = 'base';
-    const BASE_PATH = "contains(concat(' ',normalize-space(@class),' '),' ".Base::BASE_CLASS_FLAG." ')";
+    var $baseHTML = '';
 
     /**
     * class='base' is used to flag a hidden element to be used as a template
@@ -31,6 +31,7 @@ class Base extends Page {
         $doc->loadHTML($html);                               // better to use LIBXML_HTML_NOIMPLIED here
         $element = empty($id) ? $doc->documentElement->firstChild->firstChild : $doc->getElementById($id);
         if (isset($element)){
+            $this->baseHTML = $doc->saveHTML($element);
             $element->removeAttribute('id');  //remove the id attribute
             $classes = explode(" ", $element->getAttribute('class'));
             if (($key = array_search(Base::BASE_CLASS_FLAG, $classes)) !== false) {
@@ -58,17 +59,14 @@ class Base extends Page {
     public function make($variables=NULL, $html=NULL){
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
-        $html = $this->replicate($html);
+        $html = $this->replicate($html, $vars);
         $html = $this->translate($html);
-        return $html;
+        return $this->baseHTML.$html;
     }
 
 
-    /**
-    * return a single baseElement (ie $html without an id attribute or class='base'
-    */
-    public function replicate($html){
-        return $html;
+    public function replicate($html, $variables){
+        return $this->populate($html, $vars);
     }
 
 }

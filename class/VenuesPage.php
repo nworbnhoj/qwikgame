@@ -13,12 +13,12 @@ class VenuesPage extends Page {
 
     public function variables(){
         $vars = parent::variables();
-        $loc = Locate::geolocate('location');
+        $loc = Locate::geolocate(array('latitude', 'longitude'));
         $game = $this->req('game');
 
         $vars['game']        = $game;
-        $vars['lat']         = isset($loc['lat']) ? $loc['lat'] : NULL ;
-        $vars['lng']         = isset($loc['lng']) ? $loc['lng'] : NULL ;
+        $vars['lat']         = isset($loc['latitude']) ? $loc['latitude'] : NULL ;
+        $vars['lng']         = isset($loc['longitude']) ? $loc['longitude'] : NULL ;
         $vars['gameOptions'] = $this->gameOptions($game, "\t\t");
         return $vars;
     }

@@ -16,13 +16,16 @@ function initPage(){}
 
 function venuesMap() {
     var game = document.getElementById('game').value;
+    var lat = parseFloat(document.getElementById('lat').value);
+    var lng = parseFloat(document.getElementById('lng').value);
     var params = {game: game};
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var path = 'json/venue-map-data.php?'+query;
 
+    const center = {lat: lat, lng: lng};
     var mapElement = document.getElementById('map');
-    var map = new google.maps.Map(mapElement, {zoom: 7, center: MSqC});
+    var map = new google.maps.Map(mapElement, {zoom: 10, center: center});
 
     qwikJSON(path, mapMarkers, map);
 }

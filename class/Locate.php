@@ -177,8 +177,17 @@ class Locate extends Qwik {
         if(!isset($geo)){
             $geo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
         }
-        $geoKey = "geoplugin_$key";
-        return isset($geo[$geoKey]) ? $geo[$geoKey] : NULL ;
+        if(is_array($key)){
+            $result = array();
+            foreach($key as $k){
+                $geoKey = "geoplugin_$k";
+                $result[$k] = isset($geo[$geoKey]) ? $geo[$geoKey] : NULL ;
+            }
+            return $result;
+        } else {
+            $geoKey = "geoplugin_$key";
+            return isset($geo[$geoKey]) ? $geo[$geoKey] : NULL ;
+        }
     }
 
 

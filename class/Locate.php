@@ -80,6 +80,18 @@ class Locate extends Qwik {
     }
 
 
+    static function revgeocode($lat, $lng){
+      $type = "country|administrative_area_level_1|locality";
+      $geo = self::geo(
+        array('latlng'=>"$lat,$lng", 'result_type'=>$type),
+        self::$geocode->key('private'),
+        self::$geocode->url("xml")
+      );
+      return isset($geo) ? $geo->result : NULL;
+    }
+
+
+
     static function getPlace($description, $country){
         $placeid = NULL;
         $xml = self::geoplace($description, $country);
@@ -214,12 +226,51 @@ class Locate extends Qwik {
             }
         } catch (RuntimeException $e){
             $msg = $e->getMessage();
-            self::logMsg("Google geocoding: $msg\n$url?$query\n$result");
+            self::logMsg("Google geocoding: $msg\n$url?$query\n$msg");
         }
         return $result;
     }
 
 
+  static function getAddress($lat, $lng){
+    $address = [];
+    $xml = self::revgeocode($lat, $lng);
+    foreach($xml->address_component as $component){
+      foreach($component->type as $type){
+        $name = (string) $component->short_name;
+        switch ((string) $type){
+          case 'country':                     $address['country']  = $name; break ;
+          case 'administrative_area_level_1': $address['admin1']   = $name; break ;
+          case 'locality':                    $address['locality'] = $name; break ;
+        }
+      }
+    }
+    return $address;
+  }
+
+
+  static function getGeometry($country, $admin1, $locality){
+    $geometry = NULL;
+    if(!empty($admin1) && !empty($locality)){
+      $input = "$locality, $admin1";
+    } elseif (!empty($admin1)){
+      $input = $admin1;
+    } elseif (!empty($locality)){
+      $input = $locality;
+    } elseif (isset(Qwik::countries()[$country])) {
+      $input = Qwik::countries()[$country];
+    } else {
+      return;
+    } 
+    $placeid = self::getPlace($input, $country);
+    if(isset($placeid)){
+      $details = self::geodetails($placeid);
+      if(isset($details)){
+        $geometry = $details->geometry;
+      }
+    }
+    return $geometry;
+  }
 
 }
 

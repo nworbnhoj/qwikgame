@@ -39,6 +39,7 @@ class Defend extends Qwik {
         'admin1'   => FILTER_DEFAULT,
         'address'  => FILTER_DEFAULT,
         'ability'  => Filter::ABILITY,
+        'avoidable'=> FILTER_DEFAULT,
         'account'  => FILTER_DEFAULT,
         'beckon'   => FILTER_DEFAULT,
         'country'  => Filter::COUNTRY,
@@ -242,7 +243,7 @@ class Defend extends Qwik {
         } elseif($raw != $safe) {    // weak test as some filters convert type
             $rejects = print_r($raw, TRUE);
         }
-        return empty($rejects) ? NULL : $rejects;
+        return empty($rejects) ? [] : $rejects;
     }
 
 

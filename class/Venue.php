@@ -224,12 +224,12 @@ class Venue extends Qwik {
 
 
     public function lat(){
-        return isset($this->xml['lat']) ? $this->xml['lat'] : '';
+        return isset($this->xml['lat']) ? (string) $this->xml['lat'] : '';
     }
 
 
     public function lng(){
-        return isset($this->xml['lng']) ? $this->xml['lng'] : '';
+        return isset($this->xml['lng']) ? (string) $this->xml['lng'] : '';
     }
 
 

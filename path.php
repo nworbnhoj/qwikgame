@@ -12,6 +12,7 @@ define( "ROOT",    DOC_ROOT.'../'  );
 define( "PATH_CLASS",   UP.'class/'   );
 define( "PATH_HTML",    UP.'html/'    );
 define( "PATH_LANG",    UP.'lang/'    );
+define( "PATH_MARK",    UP.'mark/'    );
 define( "PATH_PLAYER",  UP.'player/'  );
 define( "PATH_SERVICE", UP            );
 define( "PATH_UPLOAD",  UP.'uploads/' );

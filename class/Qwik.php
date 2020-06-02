@@ -403,7 +403,66 @@ class Qwik {
     /*****************************************************************
         File System Helper functions
     *****************************************************************/
-    
+
+
+    /**
+    * Writes $test to $path/$fileName
+    * @throws RuntimeException if there is a problem writing the test.
+    * @return True if the text is written to file successfully, and false otherwise.
+    */
+    static public function writeFile($text, $path, $fileName){
+        $cwd = getcwd();
+        if(!chdir("$path")){
+            throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
+            return FALSE;
+        }
+        $file = fopen($fileName, 'w');
+        if(!$file){
+            throw new RuntimeException("failed to open $path$fileName from cwd $cwd");
+            return FALSE;
+        }
+        if(!fwrite($file, $text)){
+            throw new RuntimeException("failed to save to $path$fileName from cwd $cwd");
+            return FALSE;
+        }
+        fclose($file);
+        if(!chdir($cwd)){
+            throw new RuntimeException("failed to return working directory to $cwd");
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+
+    /**
+    * Reads text from $path/$fileName
+    * @throws RuntimeException if there is a problem reading the file.
+    * @return True if the test is read from file successfully, and false otherwise.
+    */
+    static public function readFile($path, $fileName){
+        $cwd = getcwd();
+        if (!file_exists("$path$fileName")) {
+          throw new RuntimeException("failed to read $path$fileName");
+          return FALSE;
+        }
+        if(!chdir("$path")){
+          throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
+          return FALSE;
+        }
+        $file = fopen($fileName, 'r');
+        if(!$file){
+          throw new RuntimeException("failed to open $path$fileName from cwd $cwd");
+          return FALSE;
+        }
+        $text = fread($file, filesize($fileName));
+        fclose($file);
+        if(!chdir($cwd)){
+          throw new RuntimeException("failed to return working directory to $cwd");
+          return FALSE;
+        }
+        return $text;
+    }
+
     /**
     * Checks that a file is writable and attempts to unlink file.
     * @return True if file is unlinked, and false otherwise.
@@ -441,17 +500,56 @@ class Qwik {
     }
 
 
-    static public function venues($game=NULL){
-        $venues = array();
-        $path = PATH_VENUE;
-        $path .= $game ? "$game/" : '';
-        $fileList = self::fileList($path);
-        foreach($fileList as $file){
-            if (substr_count($file, '.xml') > 0){
-                $venues[] = str_replace('.xml', '', $file);
-            }
+    static public function venueCount($game=NULL){
+      $path = PATH_VENUE;
+      $count['all'] = count(self::fileList($path));
+      if (isset($game)) {
+        $fileList = self::fileList("$path$game/");
+        $count[$game] = count($fileList);
+        foreach($fileList as $fileName){
+          $file = mb_substr($fileName, 0, -4);   // remove .xml
+          $name = explode("|", $file);
+          if(count($name) === 4){
+            $key = $name[3];
+            $c = isset($count[$key]) ? $count[$key] + 1 : 1;
+            $count[$key] = $c;
+            $key = "$name[2]|$key";
+            $c = isset($count[$key]) ? $count[$key] + 1 : 1;
+            $count[$key] = $c;
+            $key = "$name[1]|$key";
+            $c = isset($count[$key]) ? $count[$key] + 1 : 1;
+            $count[$key] = $c;
+          }
         }
-        return $venues;
+      }
+      return $count;
+    }
+
+
+    static public function venues($game=NULL, $country=NULL, $admin1=NULL, $locality=NULL){
+      $venues = array();
+      if(isset($country)){
+        if(isset($admin1)){
+          if(isset($locality)){
+            $filter = "|$locality|$admin1|$country.xml";
+          } else {
+            $filter = "|$admin1|$country.xml";
+          }
+        } else { 
+          $filter = "|$country.xml";
+        }
+      } else {
+        $filter = ".xml";
+      }
+      $path = PATH_VENUE;
+      $path .= $game ? "$game/" : '';
+      $fileList = self::fileList($path);
+      foreach($fileList as $file){
+        if(strpos($file, $filter, -0) !== FALSE){
+          $venues[] = mb_substr($file, 0, -4);
+        }
+      }
+      return $venues;
     }
 
 

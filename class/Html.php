@@ -155,7 +155,7 @@ class Html extends Qwik {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->populate($html, $vars);
-        $html = self::$phraseBook->translate($html, $this->language());
+        $html = $this->translate($html);
         return $html;
     }
 

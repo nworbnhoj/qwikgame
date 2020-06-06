@@ -23,7 +23,7 @@ class PhraseBook extends Qwik {
                 foreach($xmlPhrase->children() as $child){
                     $lang = (string) $child['lang'];
                     if (!empty($lang)){
-                        $phrase[$lang] = (string) $child;
+                        $phrase[$lang] = html_entity_decode((string) $child);
                     }
                 }            
                 $this->phrases[$key] = $phrase;

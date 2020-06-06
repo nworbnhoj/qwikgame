@@ -341,7 +341,7 @@ function xhrSuccess() {
     var json = JSON.parse(this.responseText);
     args[0] = !json ? '' : json ;  // replace url with json in args
     this.callback.apply(this, args);
-    var length = nFormatter(json.length, 1);
+    var length = nFormatter(this.responseText.length, 1);
     console.log("json reply from "+url+" ("+length+")");
 }
 

@@ -250,7 +250,7 @@ class Mark extends Qwik {
       '[name]'=>$name,
       '[count]'=>$count
     ];
-    $html = $this->html(self::REGION, $this->lang, $vars);
+    $html = $this->html(self::REGION_TEMPLATE, $this->lang, $vars);
     $mark = array(
       self::LAT => (string) $coords->lat,
       self::LNG => (string) $coords->lng,

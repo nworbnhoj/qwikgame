@@ -139,7 +139,7 @@ class Match extends Qwik {
             $rid = $this->rid($index);
             return isset($rid) ? new Player($rid) : NULL;
         } catch (RuntimeException $e){
-            self::logThown($e);
+            self::logThrown($e);
             self::logMsg("failed to retrieve Player $rid");
         }
         return NULL;
@@ -237,7 +237,7 @@ class Match extends Qwik {
                     $rival->save();
                 }
             } catch (RuntimeException $e){
-                self::logThown($e);
+                self::logThrown($e);
                 self::logMsg("failed to invitebPlayer $rid");
             }
         }

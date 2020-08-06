@@ -2,11 +2,13 @@ docReady(event => {
     initPage();
     addListeners(document.querySelectorAll('.tr-toggle'), 'click', clickTrToggle);
     document.getElementById('hr-any').addEventListener(   'click', clickAnytime,  false);
-    document.getElementById('map-icon').addEventListener( 'click' , clickMapIcon, false);
+    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
 });
 
 
-winReady(event => {});
+winReady(event => {
+  venuesMap();
+});
 
 
 
@@ -41,6 +43,42 @@ function clickTrToggle(){
         td.style.backgroundColor = color;
         td.setAttribute('on', on);        
     }
+}
+
+
+function changeVenueSelect(){
+  showMap(this.value === 'show-map');
+}
+
+
+function clickMapMarkVenue(event, venueId){
+  event.preventDefault();
+    
+  // add a new option to venueSelect and select it
+  let venueSelect = document.getElementById('venue-select');
+  let option = document.createElement('option');
+  option.value = venueId;
+  option.text = venueId.split('|')[0];
+  venueSelect.add(option);
+  venueSelect.value=venueId;
+
+  showMap(false);
+}
+
+
+function showMap(show){
+  if (show){
+    document.getElementById('map').style.display = 'block';
+    document.getElementById('hr').style.display = 'none';
+    document.getElementById('hr-check').style.display = 'none';
+    document.getElementById('hr-grid').style.display = 'none';    
+  } else {   // hide the map div and show the other form elements
+    document.getElementById('map').style.display = 'none';
+    if(document.getElementById('hr-any').checked){    
+    } else {
+        document.getElementById('hr-grid').style.display = 'block';  
+    }
+  }
 }
 
 

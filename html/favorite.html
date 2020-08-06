@@ -8,8 +8,12 @@
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
+    <style>
+        div.map-mark-info-body { display : none; }
+    </style>
     <link rel="manifest" href="manifest.json">
     <script src="qwik.js"></script>
+    <script src="map.js"></script>
     <script src="favorite.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -19,6 +23,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo">
+    </script>
 </head>
 
 <body>
@@ -61,14 +68,17 @@
 <div class="commit available">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Make_yourself_available...}</span>
-    <form id='favorite-form' action="locate.php" method="post">
+    <form id='favorite-form' action="favorite.php" method="post">
         <input type="hidden" name="qwik" value="available">
-        <input type='hidden' name='repost' value='favorite.php'>
-        {Let_me_know_when...}
-        <a id='map-icon' class='[MAP_ICON]' href='venues.php?game=squash'></a>
-        <span class='nowrap'>
-            <input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked>{anytime}
-        </span>
+        <input type='hidden' id='lat' name='lat' value='[lat]'>
+        <input type='hidden' id='lng' name='lng' value='[lng]'>
+        <div>
+            {Let_me_know_when...}
+            <span class='nowrap'>
+                <input type='checkbox' id='hr-any' name='smtwtfs' autocomplete='off' value='16777215' checked>{anytime}
+            </span>
+        </div>
+        <div id='map' class='center wide' style='display:none;'></div>
             <div id='hr' style='display:none'>
             <div id='hr-check' hidden>
                 <button type='button' class='fa fa-th hr-toggle'></button>
@@ -162,10 +172,6 @@
 
 </div>
 </body>
-
-
-<datalist id='svid' />
-
 
 </html>
 

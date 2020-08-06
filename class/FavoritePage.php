@@ -115,6 +115,10 @@ class FavoritePage extends Page {
         }
 
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");
+        
+        $loc = Locate::geolocate(array('latitude', 'longitude'));
+        $vars['lat'] = isset($loc['latitude']) ? $loc['latitude'] : NULL ;
+        $vars['lng'] = isset($loc['longitude']) ? $loc['longitude'] : NULL ;
 
         return $vars;
     }

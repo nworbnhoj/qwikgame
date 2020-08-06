@@ -12,9 +12,21 @@ const QWIK_MARKS = new Map();
 const DUMMY = 'dummy';
 
 
+function venuesMap() {
+    const MAP_ELEMENT = document.getElementById('map');
+    const LAT = parseFloat(document.getElementById('lat').value);
+    const LNG = parseFloat(document.getElementById('lng').value);
+    const CENTER = {lat: LAT, lng: LNG};
+    const MAP = new google.maps.Map(MAP_ELEMENT, {zoom: 10, center: CENTER, mapTypeID: 'ROADMAP'});
+    const GAME = document.getElementById('game').value;
+    showMarkers(MAP, GAME);
+}
+
+
 function showMarkers(map, game){
   map.addListener('idle', function(){mapIdleHandler(map, game)});
   map.addListener('zoom_changed', function(){mapZoomChangedHandler(map, game)});
+  map.addListener('click', function(event){clickHandler(event)});
 }
 
 
@@ -38,6 +50,12 @@ function markerClickHandler(map, marker, infoWindow){
   map.panTo(marker.getPosition());
   infoWindow.open(map, marker);
 }
+
+
+function clickHandler(event){
+  console.log(event);
+}
+
 
 
 /******************************************************************************
@@ -284,6 +302,7 @@ function receiveMarks(json, map){
 }
 
 
+
 /******************************************************************************
  * Adds a new Mark to QWIK_MARKS, after hiding and disabling any existing
  * key:Mark mapping.
@@ -365,7 +384,7 @@ function markMarker(map, position){
 
 /******************************************************************************
  * Creates a Marker and associated infowindow to show on click
- * @param map google.maps.Map to receive the Marker
+ * @param map google.maps.Map to receive the Markers
  * @param marker google.maps.Marker to listen for click event
  * @param content String html for infowindow  
  * @return google.maps.Marker Object
@@ -377,7 +396,8 @@ function markInfoWindow(map, marker, content){
     marker,
     'click',
     function(){markerClickHandler(map, marker, INFO_WINDOW)}
-  ); 
+  );
+  
   return INFO_WINDOW;
 }
 

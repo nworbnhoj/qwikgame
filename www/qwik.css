@@ -252,6 +252,8 @@ div.checklist  { margin:auto;
                  text-align:left;
 }
 
+div.map-mark-info-head  {}
+div.map-mark-info-body  {}
 
 /************** <span> *********************/
 
@@ -559,7 +561,9 @@ a.icon {
 
 a.here {color:Orange;} 
 
-
+a.map-mark-venue    { font-weight:bold; }
+a.map-mark-match    {}
+a.map-mark-favorite {}
 
 
 /************** <select> *********************/
@@ -812,6 +816,14 @@ progress.size {
     text-align: right;
 }
 
+
+#venue-select {
+    max-width: 30%;
+}
+
+#select-from-map {
+    font-weight: bold;
+}
 
 
 /************* media *****************/

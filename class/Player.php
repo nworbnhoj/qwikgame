@@ -342,7 +342,31 @@ class Player extends Qwik {
         }
         return $emails;
     }
-
+    
+       
+    public function favoriteVenues($game){
+        $available = $this->xml->xpath("available[@game='$game']");
+        $venues = array();
+        foreach($available as $avail){
+            $vid = $avail->venue;
+            $name = explode("|", $vid)[0];
+            $venues["$vid"] = "$name";
+        }
+        return $venues;
+    }
+    
+       
+    public function matchVenues($game){
+        $available = $this->xml->xpath("match[game='$game']");
+        $venues = array();
+        foreach($available as $avail){
+            $vid = $avail->venue;
+            $name = explode("|", $vid)[0];
+            $venues["$vid"] = "$name";
+        }
+        return $venues;
+    }
+    
 
     public function matchQuery($query){
         return $this->xml->xpath("$query");

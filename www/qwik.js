@@ -79,7 +79,7 @@ function addListeners(elements, event, callback){
 
 function refreshData(){
   refreshRecords();
-  refreshSelects();
+  refreshOptions();
   refreshDatalists();
 }
 
@@ -91,9 +91,12 @@ function refreshRecords(){
 }
 
 
-function refreshSelects(){
+function refreshOptions(){
   for (var select of document.querySelectorAll('select.json')) {
-    fillSelect(select);
+    fillOptions(select);
+  }
+  for (var optgroup of document.querySelectorAll('optgroup.json')) {
+    fillOptions(optgroup);
   }
 }
 
@@ -144,6 +147,14 @@ function changeSelectGame(){
                 var path = "json/"+id+".options.php?game="+game;
                 qwikJSON(path, setInnerJSON, elem);
             break;
+            case 'OPTGROUP':
+                var id = elem.getAttribute('id');
+                if (!id){ return false; }
+                var path = "json/"+id+".options.php?game="+game;
+                qwikJSON(path, setInnerJSON, elem);
+            break;
+            default:
+                console.log("WARNING: unexpected element with class='json':\n"+elem);
         }
     }
 }
@@ -284,14 +295,16 @@ function replicateBase(base){
 }
 
 
-function fillSelect(select){
-    var id = select.getAttribute('id');
+function fillOptions(element){
+    var id = element.getAttribute('id');
     if (!id){
-        console.log("Failed to fill select: missing id attribute.");
+        console.log("Failed to fill options: missing id attribute.");
         return false;
     }
-    var path = 'json/'+id+'.options.php';
-    qwikJSON(path, setInnerJSON, select);
+    let selectGame = document.getElementById('game');
+    let query = (typeof selectGame !== 'undefined') ? '?game='+selectGame.value : '' ;    
+    var path = 'json/'+id+'.options.php'+query;
+    qwikJSON(path, setInnerJSON, element);
 }
 
 

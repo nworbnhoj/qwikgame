@@ -33,6 +33,17 @@ const VENUE_INPUT = "
             required>
     ";
 
+const VENUE_SELECT = "
+        <select id='venue-select' name='vid' value='[value]' required>
+            <option disabled selected>{prompt_venue}</option>
+            <option id='select-from-map' value='show-map'>{select_from_map}</option>
+            <optgroup id='venue-favorite' class='json' label='{favorite}'>
+            </optgroup>
+            <optgroup id='venue-other' class='json' label='{other}'>
+            </optgroup>
+        </select>
+    ";
+
 const RIVAL_INPUT = "
         <input name='rival' 
             type='email' 
@@ -105,7 +116,7 @@ Class TranslatePage extends Html {
         $this->langs = parent::$phraseBook->languages();
         $this->phraseKeys = parent::$phraseBook->phraseKeys();
 
-        $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
+        $selectGame = "<select id='game' name='game' class='game select-game'>[gameOptions]</select>";
         $selectRegion = "<select id='region' name='region' class='json region' required>[regionOptions]</select>";
 
         $vars = parent::variables();
@@ -138,6 +149,7 @@ Class TranslatePage extends Html {
         $vars['githubLink']    = Page::GITHUB_LNK;
         $vars['translateLink'] = Page::TRANSLATE_LNK;
         $vars['inputVenue']    = VENUE_INPUT;
+        $vars['selectVenue']   = VENUE_SELECT;
         $vars['inputRival']    = RIVAL_INPUT;
         $vars['selectGame']    = $selectGame;
         $vars['selectAbility'] = ABILITY_SELECT;

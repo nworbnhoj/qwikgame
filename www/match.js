@@ -1,7 +1,7 @@
 docReady(event => {
     initPage();
-    document.getElementById('invite-friends').addEventListener('click', clickInviteFriends, false);
-    document.getElementById('map-icon').addEventListener(      'click', clickMapIcon,       false);
+    document.getElementById('invite-friends').addEventListener('click', clickInviteFriends);
+    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
     addThumbListeners(document.documentElement);
     window.addEventListener('focus', repeatRefreshMatchRecords, false);
     window.addEventListener('blur', stopRefreshMatchRecords, false);
@@ -9,6 +9,7 @@ docReady(event => {
 
 
 winReady(event => {
+  venuesMap();
   repeatRefreshMatchRecords();
 });
 
@@ -62,6 +63,45 @@ function clickSetRep(){
     }
 }
 
+
+function changeVenueSelect(){
+  showMap(this.value === 'show-map');
+}
+
+
+function clickMapMarkVenue(event, venueId){
+  event.preventDefault();
+    
+  // add a new option to venueSelect and select it
+  let venueSelect = document.getElementById('venue-select');
+  let option = document.createElement('option');
+  option.value = venueId;
+  option.text = venueId.split('|')[0];
+  venueSelect.add(option);
+  venueSelect.value=venueId;
+
+  showMap(false);
+}
+
+
+function showMap(show){
+  if (show){
+    document.getElementById('map').style.display = 'block';
+    document.getElementById('match-hours').style.display = 'none';
+    document.getElementById('invite-friends').style.display = 'none';
+    document.getElementById('friend-invites').style.display = 'none';    
+  } else {   // hide the map div and show the other form elements
+    document.getElementById('map').style.display = 'none';
+    document.getElementById('match-hours').style.display = 'block';
+    if(document.getElementById('checkbox-friends').checked){
+      document.getElementById('invite-friends').style.display = 'none';
+      document.getElementById('friend-invites').style.display = 'block';    
+    } else {
+      document.getElementById('invite-friends').style.display = 'block';
+      document.getElementById('friend-invites').style.display = 'none';
+    }
+  }
+}
 
 
 function clickInviteFriends(){

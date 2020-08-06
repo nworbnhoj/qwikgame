@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>qwik {match}</title>
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        div.map-mark-info-body { display : none; }
+    </style>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
     <link rel="manifest" href="manifest.json">
     <script src="qwik.js"></script>
+    <script src="map.js"></script>
     <script src="match.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
@@ -19,6 +23,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo">
+    </script>
 </head>
 
 <body>
@@ -154,72 +161,75 @@
 <div id='keen-form' class="commit keen">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help'>{This_will_alert...}</span>
-    <form action="locate.php" method="post">
+    <form action="match.php" method="post">
         <input type="hidden" name="qwik" value="keen">
-        <input type='hidden' name='repost' value='match.php'>
-        {I_am_keen_to...}
-            <a id='map-icon' class='[MAP_ICON]' href='venues.php?game=squash'></a>
-        <table class="time wide">
-            <tr>
-                <th colspan=3>{am}</th>
-                <th colspan=9>{today_or_tomorrow}</th>
-                <th colspan=3>{pm}</th>
-            </tr>
-            <tr id='hrs_trunc'>
-            <input name='today' type='hidden' value='0'>
-                <td class='toggle' hr='0' bit='1' hidden>0</td>
-                <td class='toggle' hr='1' bit='2' hidden>1</td>
-                <td class='toggle' hr='2' bit='4' hidden>2</td>
-                <td class='toggle' hr='3' bit='8' hidden>3</td>
-                <td class='toggle' hr='4' bit='16' hidden>4</td>
-                <td class='toggle' hr='5' bit='32' hidden>5</td>
-                <td class='toggle' hr='6' bit='64'>6</td>
-                <td class='toggle' hr='7' bit='128'>7</td>
-                <td class='toggle' hr='8' bit='256'>8</td>
-                <td class='toggle' hr='9' bit='512'>9</td>
-                <td class='toggle' hr='10' bit='1024'>10</td>
-                <td class='toggle' hr='11' bit='2048'>11</td>
-                <td class='toggle' hr='12' bit='4096'>12</td>
-                <td class='toggle' hr='13' bit='8192'>1</td>
-                <td class='toggle' hr='14' bit='16384'>2</td>
-                <td class='toggle' hr='15' bit='32768'>3</td>
-                <td class='toggle' hr='16' bit='65536'>4</td>
-                <td class='toggle' hr='17' bit='131072'>5</td>
-                <td class='toggle' hr='18' bit='262144'>6</td>
-                <td class='toggle' hr='19' bit='524288'>7</td>
-                <td class='toggle' hr='20' bit='1048576'>8</td>
-                <td class='toggle' hr='21' bit='2097152' hidden>9</td>
-                <td class='toggle' hr='22' bit='4194304' hidden>10</td>
-                <td class='toggle' hr='23' bit='8388608' hidden>11</td>
-            </tr>
-            <tr>
-            <input name='tomorrow' type='hidden' value='0'>
-                <td class='toggle' bit='1' hidden>0</td>
-                <td class='toggle' bit='2' hidden>1</td>
-                <td class='toggle' bit='4' hidden>2</td>
-                <td class='toggle' bit='8' hidden>3</td>
-                <td class='toggle' bit='16' hidden>4</td>
-                <td class='toggle' bit='32' hidden>5</td>
-                <td class='toggle' bit='64' >6</td>
-                <td class='toggle' bit='128'>7</td>
-                <td class='toggle' bit='256'>8</td>
-                <td class='toggle' bit='512'>9</td>
-                <td class='toggle' bit='1024'>10</td>
-                <td class='toggle' bit='2048'>11</td>
-                <td class='toggle' bit='4096'>12</td>
-                <td class='toggle' bit='8192'>1</td>
-                <td class='toggle' bit='16384'>2</td>
-                <td class='toggle' bit='32768'>3</td>
-                <td class='toggle' bit='65536'>4</td>
-                <td class='toggle' bit='131072'>5</td>
-                <td class='toggle' bit='262144'>6</td>
-                <td class='toggle' bit='524288'>7</td>
-                <td class='toggle' bit='1048576'>8</td>
-                <td class='toggle' bit='2097152' hidden>9</td>
-                <td class='toggle' bit='4194304' hidden>10</td>
-                <td class='toggle' bit='8388608' hidden>11</td>
-            </tr>
-        </table>
+        <input type='hidden' id='lat' name='lat' value='[lat]'>
+        <input type='hidden' id='lng' name='lng' value='[lng]'>
+        <div>{I_am_keen_to...}</div>
+        <div id='map' class='center wide' style='display:none;'></div>
+        <div id='match-hours'>
+            <table class="time wide">
+                <tr>
+                    <th colspan=3>{am}</th>
+                    <th colspan=9>{today_or_tomorrow}</th>
+                    <th colspan=3>{pm}</th>
+                </tr>
+                <tr id='hrs_trunc'>
+                <input name='today' type='hidden' value='0'>
+                    <td class='toggle' hr='0' bit='1' hidden>0</td>
+                    <td class='toggle' hr='1' bit='2' hidden>1</td>
+                    <td class='toggle' hr='2' bit='4' hidden>2</td>
+                    <td class='toggle' hr='3' bit='8' hidden>3</td>
+                    <td class='toggle' hr='4' bit='16' hidden>4</td>
+                    <td class='toggle' hr='5' bit='32' hidden>5</td>
+                    <td class='toggle' hr='6' bit='64'>6</td>
+                    <td class='toggle' hr='7' bit='128'>7</td>
+                    <td class='toggle' hr='8' bit='256'>8</td>
+                    <td class='toggle' hr='9' bit='512'>9</td>
+                    <td class='toggle' hr='10' bit='1024'>10</td>
+                    <td class='toggle' hr='11' bit='2048'>11</td>
+                    <td class='toggle' hr='12' bit='4096'>12</td>
+                    <td class='toggle' hr='13' bit='8192'>1</td>
+                    <td class='toggle' hr='14' bit='16384'>2</td>
+                    <td class='toggle' hr='15' bit='32768'>3</td>
+                    <td class='toggle' hr='16' bit='65536'>4</td>
+                    <td class='toggle' hr='17' bit='131072'>5</td>
+                    <td class='toggle' hr='18' bit='262144'>6</td>
+                    <td class='toggle' hr='19' bit='524288'>7</td>
+                    <td class='toggle' hr='20' bit='1048576'>8</td>
+                    <td class='toggle' hr='21' bit='2097152' hidden>9</td>
+                    <td class='toggle' hr='22' bit='4194304' hidden>10</td>
+                    <td class='toggle' hr='23' bit='8388608' hidden>11</td>
+                </tr>
+                <tr>
+                <input name='tomorrow' type='hidden' value='0'>
+                    <td class='toggle' bit='1' hidden>0</td>
+                    <td class='toggle' bit='2' hidden>1</td>
+                    <td class='toggle' bit='4' hidden>2</td>
+                    <td class='toggle' bit='8' hidden>3</td>
+                    <td class='toggle' bit='16' hidden>4</td>
+                    <td class='toggle' bit='32' hidden>5</td>
+                    <td class='toggle' bit='64' >6</td>
+                    <td class='toggle' bit='128'>7</td>
+                    <td class='toggle' bit='256'>8</td>
+                    <td class='toggle' bit='512'>9</td>
+                    <td class='toggle' bit='1024'>10</td>
+                    <td class='toggle' bit='2048'>11</td>
+                    <td class='toggle' bit='4096'>12</td>
+                    <td class='toggle' bit='8192'>1</td>
+                    <td class='toggle' bit='16384'>2</td>
+                    <td class='toggle' bit='32768'>3</td>
+                    <td class='toggle' bit='65536'>4</td>
+                    <td class='toggle' bit='131072'>5</td>
+                    <td class='toggle' bit='262144'>6</td>
+                    <td class='toggle' bit='524288'>7</td>
+                    <td class='toggle' bit='1048576'>8</td>
+                    <td class='toggle' bit='2097152' hidden>9</td>
+                    <td class='toggle' bit='4194304' hidden>10</td>
+                    <td class='toggle' bit='8388608' hidden>11</td>
+                </tr>
+            </table>
+        </div>
         <div id='invite-friends' style='display:block;'>
             <span class='nowrap' style='display:[checkboxFriendsDisplay];'>
                 <input id='checkbox-friends' type='checkbox'  autocomplete='off'>
@@ -273,9 +283,6 @@
 
 </div>
 </body>
-
-
-<datalist id='svid' />
 
 
 </html>

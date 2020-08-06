@@ -114,6 +114,10 @@ class IndexPage extends Page {
         $variables['language']       = $language;
         $variables['languageOptions'] = $this->languageOptions($language);
         
+        $loc = Locate::geolocate(array('latitude', 'longitude'));
+        $vars['lat'] = isset($loc['latitude']) ? $loc['latitude'] : NULL ;
+        $vars['lng'] = isset($loc['longitude']) ? $loc['longitude'] : NULL ;
+        
         return $variables;
     }
 

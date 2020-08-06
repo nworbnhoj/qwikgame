@@ -3,9 +3,14 @@ docReady(event => {
     document.getElementById('login-toggle').addEventListener('click', clickLoginToggle,     false);
     document.getElementById('lang-icon').addEventListener(   'click', clickButtonLanguage,  false);
     document.getElementById('lang-select').addEventListener('change', changeSelectLanguage, false);
+    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
+    document.getElementById('venue-select').addEventListener('click', showMap, {once:true});
 });
 
-winReady(event => {});
+
+winReady(event => {
+  venuesMap();
+});
 
 
 function initPage(){
@@ -42,6 +47,31 @@ function clickButtonLanguage(){
 function changeSelectLanguage(){
     clearCache('pages');  // ensure that current language pages deleted from cache
     document.getElementById('lang-form').submit();
+}
+
+
+function changeVenueSelect(){
+  showMap(this.value === 'show-map');
+}
+
+
+function clickMapMarkVenue(event, venueId){
+  event.preventDefault();
+    
+  // add a new option to venueSelect and select it
+  let venueSelect = document.getElementById('venue-select');
+  let option = document.createElement('option');
+  option.value = venueId;
+  option.text = venueId.split('|')[0];
+  venueSelect.add(option);
+  venueSelect.value=venueId;
+
+  showMap(false);
+}
+
+
+function showMap(show=true){
+    document.getElementById('map').style.display = (show ? 'block' : 'none');
 }
 
 

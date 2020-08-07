@@ -19,14 +19,15 @@ function venuesMap() {
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
     const MAP = new google.maps.Map(MAP_ELEMENT, {zoom: 10, center: CENTER, mapTypeID: 'ROADMAP'});
     const GAME = document.getElementById('game').value;
-    showMarkers(MAP, GAME);
+    addListeners(MAP, GAME);
 }
 
 
-function showMarkers(map, game){
+function addListeners(map, game){
   map.addListener('idle', function(){mapIdleHandler(map, game)});
   map.addListener('zoom_changed', function(){mapZoomChangedHandler(map, game)});
   map.addListener('click', function(event){clickHandler(event)});
+  document.getElementById('game').addEventListener('change', resetMap);
 }
 
 
@@ -56,6 +57,17 @@ function clickHandler(event){
   console.log(event);
 }
 
+
+function resetMap(){
+    QWIK_MARKS.clear();
+    let venueSelect = document.getElementById('venue-select');
+    let options = venueSelect.querySelectorAll(':not([id])');
+    for(let option of options){
+        option.parentNode.removeChild(option);
+    }
+    document.getElementById('venue-prompt').selected=true;
+    venuesMap();
+}
 
 
 /******************************************************************************

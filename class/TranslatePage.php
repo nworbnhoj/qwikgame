@@ -35,8 +35,8 @@ const VENUE_INPUT = "
 
 const VENUE_SELECT = "
         <select id='venue-select' name='vid' value='[value]' required>
-            <option disabled selected>{prompt_venue}</option>
-            <option id='select-from-map' value='show-map'>{select_from_map}</option>
+            <option id='venue-prompt' disabled selected>{prompt_venue}</option>
+            <option id='venue-from-map' value='show-map'>{select_from_map}</option>
             <optgroup id='venue-favorite' class='json' label='{favorite}'>
             </optgroup>
             <optgroup id='venue-other' class='json' label='{other}'>

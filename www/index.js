@@ -4,7 +4,7 @@ docReady(event => {
     document.getElementById('lang-icon').addEventListener(   'click', clickButtonLanguage,  false);
     document.getElementById('lang-select').addEventListener('change', changeSelectLanguage, false);
     document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
-    document.getElementById('venue-select').addEventListener('click', showMap, {once:true});
+    document.getElementById('venue-select').addEventListener('focus', mapShortcut);
 });
 
 
@@ -70,8 +70,22 @@ function clickMapMarkVenue(event, venueId){
 }
 
 
+function mapShortcut(){
+    let map = document.getElementById('map');
+    if(map.style.display == 'none' && this.options.length <= 2){
+        showMap(true);
+    }
+}
+
+
 function showMap(show=true){
-    document.getElementById('map').style.display = (show ? 'block' : 'none');
+    let map = document.getElementById('map');
+    if (show){
+        map.style.display = 'block';
+        map.focus();
+    } else {
+        map.style.display = 'none';
+    }
 }
 
 

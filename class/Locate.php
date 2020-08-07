@@ -188,6 +188,7 @@ class Locate extends Qwik {
         global $geo;
         if(!isset($geo)){
             $geo = unserialize(file_get_contents('http://www.geoplugin.net/php.gp?ip='.$_SERVER['REMOTE_ADDR']));
+            if(!isset($geo)){ return NULL; }   // geoplugin.net is offline
         }
         if(is_array($key)){
             $result = array();

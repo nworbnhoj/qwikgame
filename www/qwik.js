@@ -302,7 +302,7 @@ function fillOptions(element){
         return false;
     }
     let selectGame = document.getElementById('game');
-    let query = (typeof selectGame !== 'undefined') ? '?game='+selectGame.value : '' ;    
+    let query = (selectGame !== null) ? '?game='+selectGame.value : '' ;    
     var path = 'json/'+id+'.options.php'+query;
     qwikJSON(path, setInnerJSON, element);
 }

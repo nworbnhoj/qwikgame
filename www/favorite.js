@@ -69,14 +69,12 @@ function clickMapMarkVenue(event, venueId){
 function showMap(show){
   if (show){
     document.getElementById('map').style.display = 'block';
-    document.getElementById('hr').style.display = 'none';
-    document.getElementById('hr-check').style.display = 'none';
-    document.getElementById('hr-grid').style.display = 'none';    
+    document.getElementById('hr').style.display = 'none';    
   } else {   // hide the map div and show the other form elements
     document.getElementById('map').style.display = 'none';
     if(document.getElementById('hr-any').checked){    
     } else {
-        document.getElementById('hr-grid').style.display = 'block';  
+        document.getElementById('hr').style.display = 'block';  
     }
   }
 }

@@ -19,15 +19,12 @@ function venuesMap() {
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
     const MAP = new google.maps.Map(MAP_ELEMENT, {zoom: 10, center: CENTER, mapTypeID: 'ROADMAP'});
     const GAME = document.getElementById('game').value;
-    addListeners(MAP, GAME);
-}
-
-
-function addListeners(map, game){
-  map.addListener('idle', function(){mapIdleHandler(map, game)});
-  map.addListener('zoom_changed', function(){mapZoomChangedHandler(map, game)});
-  map.addListener('click', function(event){clickHandler(event)});
-  document.getElementById('game').addEventListener('change', resetMap);
+    const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
+    
+    MAP.addListener('idle', function(){mapIdleHandler(MAP, GAME)});
+    MAP.addListener('zoom_changed', function(){mapZoomChangedHandler(MAP, GAME)});
+    MAP.addListener('click', function(event){clickHandler(event, MAP, INFOWINDOW)});
+    document.getElementById('game').addEventListener('change', resetMap);
 }
 
 
@@ -53,8 +50,12 @@ function markerClickHandler(map, marker, infoWindow){
 }
 
 
-function clickHandler(event){
-  console.log(event);
+function clickHandler(event, map, infowindow){
+  if (event.placeId) {
+    infowindow.setPosition(event.latLng);
+    clickPOI(event.placeId, infowindow, map);
+    event.stop();
+  }
 }
 
 
@@ -67,6 +68,44 @@ function resetMap(){
     }
     document.getElementById('venue-prompt').selected=true;
     venuesMap();
+}
+
+
+function clickPOI(placeId, infowindow, map){
+    const POI = document.getElementById("infowindow-poi").cloneNode(true);
+    POI.children['poi-name'].textContent = "";
+    POI.children['poi-link'].placeId = placeId;
+    POI.style.display = 'block';
+    infowindow.setContent(POI);
+    infowindow.open(map);
+    const PLACE_SERVICES = new google.maps.places.PlacesService(map);
+    const REQUEST = { placeId: placeId, fields: ['name', 'geometry']};
+    PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
+        if (status === "OK") {
+            POI.children['poi-name'].textContent = place.name;
+            POI.children['poi-link'].venueName = place.name;
+            infowindow.setPosition(place.geometry.location);
+        } else {
+            console.log(status);
+        }
+    });
+}
+
+
+function clickCreateVenue(event){
+  event.preventDefault();
+  let placeId = event.target.placeId;
+  let name = event.target.venueName;
+    
+  // add a new option to venueSelect and select it
+  let venueSelect = document.getElementById('venue-select');
+  let option = document.createElement('option');
+  option.value = placeId;
+  option.text = name;
+  venueSelect.add(option);
+  venueSelect.value = placeId;
+
+  showMap(false);
 }
 
 

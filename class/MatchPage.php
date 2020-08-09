@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 require_once 'Page.php';
 require_once 'Venue.php';
@@ -25,12 +25,34 @@ class MatchPage extends Page {
 
         $vid = $this->req('vid');
         if(isset($vid)){
-            try {
-                $this->venue = new Venue($vid);
-            } catch (RuntimeException $e){
-                self::alert("{Oops}");
-                self::logThrown($e);
-                unset($vid);
+            if (Venue::exists($vid)){
+                try {
+                    $this->venue = new Venue($vid);
+                } catch (RuntimeException $e){
+                    self::alert("{Oops}");
+                    self::logThrown($e);
+                    unset($vid);
+                }
+            } else {
+                $placeId = $vid;	// perhaps the $vid is actually a google placeId
+                $details = Locate::getDetails($placeId);  
+                if($details){  // the $vid provided is actually a valid google placeId
+                    $vid = Venue::venueID(
+                        $details['name'],
+                        $details['locality'],
+                        $details['admin1'],
+                        $details['country_iso']
+                    );
+                    try {
+                        $this->venue = new Venue($vid, TRUE);
+                        $this->venue->updateAtt('placeid', $placeid);
+                        $this->venue->furnish($details);
+                    } catch (RuntimeException $e){
+                        self::alert("{Oops}");
+                        self::logThrown($e);
+                        unset($vid);
+                    }
+                }
             }
         }
 

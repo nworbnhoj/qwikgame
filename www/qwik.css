@@ -825,6 +825,10 @@ progress.size {
     font-weight: bold;
 }
 
+#poi-name {
+    font-weight: bold;
+}
+
 
 /************* media *****************/
 @media only screen {

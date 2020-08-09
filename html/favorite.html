@@ -24,7 +24,7 @@
     <meta name="msapplication-config" content="favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLwj3zh-dfM-Q3i6ddSyfVUTKjXmChBjo&libraries=places">
     </script>
 </head>
 
@@ -79,6 +79,11 @@
             </span>
         </div>
         <div id='map' class='center wide' style='display:none;'></div>
+        <div id='infowindow-poi' style='display:none;'>
+            <div id='poi-id' style='display:none;'></div>
+            <div id='poi-name'></div>
+            <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+        </div>
             <div id='hr' style='display:none'>
             <div id='hr-check' hidden>
                 <button type='button' class='fa fa-th hr-toggle'></button>

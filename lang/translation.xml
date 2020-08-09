@@ -310,4 +310,5 @@
 <phrase key="prompt_complete_vid"><words lang="en">Please provide an entry in all 4 fields ({name}, {locality}, {admin1}, {country})</words></phrase><phrase key="select_from_map"><words lang="en">select from map</words></phrase>
 <phrase key="other"><words lang="en">other</words></phrase>
 <phrase key="select_from_map"><words lang="en">select from map</words></phrase>
+<phrase key="create_new_venue"><words lang="en">create new venue</words></phrase>
 </translation>

@@ -61,13 +61,8 @@ class MatchPage extends Page {
                 $this->venue->save(TRUE);
                 self::logMsg("Added ".$this->game." to $vid");
             }
-        } elseif (!is_null($this->req('venue'))){
-            if(is_null($this->req('repost'))){
-                $this->req('repost', 'match.php');
-            }
-            $query = http_build_query($this->req());
-            header("Location: ".QWIK_URL."locate.php?$query", TRUE, 307);
-            exit;
+        } else {
+            Qwik::logMsg("Failed to setup venue: ".$vid);
         }
     }
 

@@ -132,7 +132,6 @@ php Class files are located in `/class`
    - **Page.php** General code to serve a html page including <repeat> elements,  \[variables\] and {phrases}.
     - **IndexPage.php**
     - **InfoPage.php**
-    - **LocatePage.php**
     - **PlayerPage.php**
     - **TranslatePage.php**
     - **UploadPage.php**
@@ -158,7 +157,6 @@ General html templates prior to translation.
 - html/**friend.html** player friends
 - html/**index.html** homepage
 - html/**info.html** user help and info
-- html/**locate.html** locate a game venue
 - html/**match.html** player matches
 - html/**upload.html** upload player rankings
 - html/**venue.html** venue details

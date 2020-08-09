@@ -97,7 +97,6 @@ Class TranslatePage extends Html {
         'friend.html',
         'index.html',
         'info.html',
-        'locate.html',
         'match.html',
         'quiz.html',
         'upload.html',

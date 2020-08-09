@@ -4,7 +4,6 @@ require_once 'class/Qwik.php';
 require_once 'class/Logging.php';
 require_once 'class/Player.php';
 require_once 'class/Ranking.php';
-require_once 'class/LocatePage.php';
 require_once 'class/Hours.php';
 require_once 'class/Page.php';
 require_once 'class/MatchPage.php';
@@ -56,19 +55,7 @@ class FeatureContext implements Context
     public function __construct()
     {
         $this->log = new Logging();
-    }
-    
-    
-    /**
-     * Converts a Short Venue ID $svid to a unique Venue ID $vid if possible
-     */    
-    private function locateVenue($svid, $game = '')
-    {        
-        $vids = LocatePage::matchShortVenueID($svid, $game);
-        Assert::assertCount(1, $vids, "Please specify an existing Venue exactly");
-        return $vids[0];
-    }
-    
+    }    
     
 
 //     * @Given \b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b is not registered with
@@ -116,11 +103,10 @@ class FeatureContext implements Context
     /**
      * @When I like to play :game at :venue
      */
-    public function iLikeToPlaySquashAtQwikgame($game, $svid)
+    public function iLikeToPlaySquashAtQwikgame($game, $vid)
     {
         $this->game = $this->gameKey($game);
-        $this->svid = $svid;
-        $this->vid = $this->locateVenue($this->svid, $this->game);
+        $this->vid = $vid;
         $this->venue = new Venue($this->vid);
 
         $this->req['parity'] = 'any';
@@ -428,7 +414,7 @@ class FeatureContext implements Context
         if (count($matches) == 1) {
             $matchA = new Match($playerA, $matches[0]);
         } else {    // set up a dummy match between A & B, ready for feedback
-            $vid = $this->locateVenue("Qwikgame Venue | Milawa");
+            $vid = "Qwikgame Venue|Milawa|VIC|AU";
             $venue = new Venue($vid);
             $date = date_add(
                 $venue->dateTime("today"),
@@ -534,11 +520,10 @@ class FeatureContext implements Context
     /**
      * @When I am keen to play :game at :venue
      */
-    public function iAmKeenToPlaySquashAtQwikgame($game, $svid)
+    public function iAmKeenToPlaySquashAtQwikgame($game, $vid)
     {
         $this->game = $this->gameKey($game);
-        $this->svid = $svid;
-        $this->vid = $this->locateVenue($this->svid, $this->game);
+        $this->vid = $vid;
         $this->venue = new Venue($this->vid);
 
         $this->req['parity'] = 'any';

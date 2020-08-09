@@ -5,7 +5,7 @@ Feature: I like to play my game at my local venue
 	
 	Scenario: Register at qwikgame
 	  Given "new.player@qwikgame.org" is not registered with qwikgame
-	  When I like to play Squash at "Qwikgame Venue | Milawa"
+	  When I like to play Squash at "Qwikgame Venue|Milawa|VIC|AU"
 	  And I do not specify a time
 	  And I provide my email "new.player@qwikgame.org"
 	  And I submit this favorite
@@ -16,7 +16,7 @@ Feature: I like to play my game at my local venue
 	Scenario: Add a favorite and delete
 	  Given my email "player.A@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
-	  When I like to play Squash at "Qwikgame Venue | Milawa"
+	  When I like to play Squash at "Qwikgame Venue|Milawa|VIC|AU"
 	  And I like to play on Saturday at 3pm
 	  And I submit this favorite
 	  Then I will be available to play my favorite game
@@ -26,7 +26,7 @@ Feature: I like to play my game at my local venue
 	Scenario: Add a favorite with multiple times
 	  Given my email "player.B@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
-	  When I like to play Squash at "Qwikgame Venue | Milawa"
+	  When I like to play Squash at "Qwikgame Venue|Milawa|VIC|AU"
 	  And I like to play on Saturday at 3pm
 	  And I like to play on Sunday at 5pm
 	  And I submit this favorite
@@ -36,7 +36,7 @@ Feature: I like to play my game at my local venue
 	Scenario: Add a favorite with matched ability
 	  Given my email "player.C@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
-	  When I like to play Squash at "Qwikgame Venue | Milawa"
+	  When I like to play Squash at "Qwikgame Venue|Milawa|VIC|AU"
 	  And I like to play on Friday at 6pm
 	  And I like to play a rival of similar ability
 	  And I submit this favorite

@@ -64,7 +64,7 @@ class LocatePage extends Page {
                     try {
                         $venue = new Venue($vid, TRUE);
                         $venue->updateAtt('placeid', $placeid);
-                        $this->furnish($venue, $details);
+                        $venue->furnish($details);
                     } catch (RuntimeException $e){
                         self::alert("{Oops}");
                         self::logThrown($e);
@@ -91,7 +91,7 @@ class LocatePage extends Page {
                         $description = "$name, $locality, $admin1";
                         $placeid = Locate::getPlace($description, $country);
                         if(isset($placeid)){
-                            $this->furnish($venue, Locate::getDetails($placeid));
+                            $venue->furnish(Locate::getDetails($placeid));
                         } else {
                             $tz = Locate::guessTimezone($locality, $admin1, $country);
                             $venue->updateAtt('tz', $tz);
@@ -104,7 +104,7 @@ class LocatePage extends Page {
                     }
                 }
             } else {
-                self::message("{prompt_complete_vid}");
+//                self::message("{prompt_complete_vid}");
             }
         }
 
@@ -115,21 +115,6 @@ class LocatePage extends Page {
             $url = QWIK_URL."$repost?$query";
             header("Location: $url", TRUE, 307);
             exit;
-        }
-    }
-
-
-    private function furnish($venue, $address){
-        if ($venue && $address){
-            $venue->updateAtt('phone',   $address['phone']);
-            $venue->updateAtt('url',     $address['url']);
-            $venue->updateAtt('tz',      $address['tz']);
-            $venue->updateAtt('lat',     $address['lat']);
-            $venue->updateAtt('lng',     $address['lng']);
-            $venue->updateAtt('address', $address['formatted']);
-            $venue->updateAtt('str-num', $address['street_number']);
-            $venue->updateAtt('route',   $address['route']);
-            $venue->save(TRUE);
         }
     }
 

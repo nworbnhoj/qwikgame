@@ -37,7 +37,7 @@ class FavoritePage extends Page {
             } else {
                 $placeId = $vid;	// perhaps the $vid is actually a google placeId
                 $details = Locate::getDetails($placeId);  
-                if($details){  // the $vid provided is actually a valid google placeId
+                if($details){  // the $vid provided is a valid google placeId
                     $vid = Venue::venueID(
                         $details['name'],
                         $details['locality'],
@@ -46,7 +46,7 @@ class FavoritePage extends Page {
                     );
                     try {
                         $this->venue = new Venue($vid, TRUE);
-                        $this->venue->updateAtt('placeid', $placeid);
+                        $this->venue->updateAtt('placeid', $placeId);
                         $this->venue->furnish($details);
                     } catch (RuntimeException $e){
                         self::alert("{Oops}");

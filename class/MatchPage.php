@@ -45,7 +45,7 @@ class MatchPage extends Page {
                     );
                     try {
                         $this->venue = new Venue($vid, TRUE);
-                        $this->venue->updateAtt('placeid', $placeid);
+                        $this->venue->updateAtt('placeid', $placeId);
                         $this->venue->furnish($details);
                     } catch (RuntimeException $e){
                         self::alert("{Oops}");

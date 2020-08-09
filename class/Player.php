@@ -357,7 +357,7 @@ class Player extends Qwik {
     
        
     public function matchVenues($game){
-        $available = $this->xml->xpath("match[game='$game']");
+        $available = $this->xml->xpath("match[@game='$game']");
         $venues = array();
         foreach($available as $avail){
             $vid = $avail->venue;
@@ -580,7 +580,7 @@ class Player extends Qwik {
     // check rival keeness in the given hours
     function keenHours($vid, $game, $day){
         $keenHours = new Hours();
-        $keens = $this->xml->xpath("match[status='keen' and venue='$vid' and game='$game']");
+        $keens = $this->xml->xpath("match[@status='keen' and venue='$vid' and @game='$game']");
         foreach ($keens as $keen){
             $keenHours->append($keen['hrs']);
         }

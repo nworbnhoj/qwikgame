@@ -39,8 +39,8 @@ class Mark extends Qwik {
       <a class="map-mark-venue" onclick="clickMapMarkVenue(event, \'[vid]\')" href="venue.php?vid=[vid]">[name]</a>
     </div>
     <div class="map-mark-info-body">
-      <a class="map-mark-match" onclick="clickMapMarkMatch(event, \'[vid]\')" href="match.php?venue=[svid]&game=[game]#keen-form">{match}</a>
-      <a class="map-mark-favorite" onclick="clickMapMarkFavorite(event, \'[vid]\')" href="favorite.php?venue=[svid]&game=[game]#favorite-form">{favorite}</a>
+      <a class="map-mark-match" onclick="clickMapMarkMatch(event, \'[vid]\')" href="match.php?vid=[vid]&game=[game]#keen-form">{match}</a>
+      <a class="map-mark-favorite" onclick="clickMapMarkFavorite(event, \'[vid]\')" href="favorite.php?vid=[vid]&game=[game]#favorite-form">{favorite}</a>
     </div>
   </div>';
 
@@ -279,7 +279,6 @@ class Mark extends Qwik {
     $name = $venue->name();
     $vars = [
       '[vid]'=>$vid,
-      '[svid]'=>Venue::svid($vid),
       '[name]'=>$name,
       '[game]'=>$this->game
     ];

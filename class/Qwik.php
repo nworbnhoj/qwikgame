@@ -553,21 +553,6 @@ class Qwik {
     }
 
 
-    static public function svids($game=NULL){
-        $svids = array();
-        $path = PATH_VENUE;
-        $path .= $game ? "$game/" : '';
-        $fileList = self::fileList($path);
-        foreach($fileList as $file){
-            if (substr_count($file, '.xml') > 0){
-                $vid = str_replace('.xml', '', $file);
-                $svids[] = Venue::svid($vid); 
-            }
-        }
-        return $svids;
-    }
-
-
     static public function pids($game){
         $pids = array();
         $fileList = self::fileList(PATH_PLAYER);

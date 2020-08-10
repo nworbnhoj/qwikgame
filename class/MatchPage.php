@@ -141,7 +141,6 @@ class MatchPage extends Page {
             $vars['playerURL']     = $player->url();
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
-            $vars['svenue']        = isset($this->venue) ? Venue::svid($this->venue->id()) : "";
         }
 
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");

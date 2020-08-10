@@ -22,17 +22,6 @@ const HEAD = "
 
 const TICK = "<button class='TICK_ICON'></button>";
 
-const VENUE_INPUT = "
-        <input id='venue-desc' 
-            name='venue' 
-            class='venue' 
-            list='svid'
-            value='[venue]' 
-            placeholder='{prompt_venue}' 
-            size='120'
-            required>
-    ";
-
 const VENUE_SELECT = "
         <select id='venue-select' name='vid' value='[value]' required>
             <option id='venue-prompt' disabled selected>{prompt_venue}</option>
@@ -147,7 +136,6 @@ Class TranslatePage extends Html {
         $vars['twitterLink']   = Page::TWITTER_LNK;
         $vars['githubLink']    = Page::GITHUB_LNK;
         $vars['translateLink'] = Page::TRANSLATE_LNK;
-        $vars['inputVenue']    = VENUE_INPUT;
         $vars['selectVenue']   = VENUE_SELECT;
         $vars['inputRival']    = RIVAL_INPUT;
         $vars['selectGame']    = $selectGame;

@@ -171,7 +171,7 @@ language specific translation files
 json
 
 - json/**timezone.php** populate a select list with timezone options.
-- json/**venue-map-data** generate pins for a google map.
+- json/**venue-marks** generate markers for a google map.
 
 ### web push
 

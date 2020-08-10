@@ -40,6 +40,19 @@ class Venue extends Qwik {
     }
 
 
+    /*******************************************************************************
+    /* Creates a short recognisable venue identifier directly from a full unique vid.
+    /* 
+    /* @return name    String    name | suburb
+    *******************************************************************************/
+    static function svid($vid){
+        $address = explode('|', $vid);
+        $name = isset($address[0]) ? $address[0] : '';
+        $place = isset($address[1]) ? $address[1] : '';
+        return "$name | $place";
+    }
+
+
     private $id;
     private $xml;
 
@@ -207,19 +220,6 @@ class Venue extends Qwik {
 
     public function id(){
         return $this->id;
-    }
-
-
-    /*******************************************************************************
-    Returns the Name & Suburb of a Venue as a human convenient reference.
-
-    $vid    String    Venue ID
-    *******************************************************************************/
-    static function svid($vid){
-        $address = explode('|', $vid);
-        $name = isset($address[0]) ? $address[0] : '';
-        $place = isset($address[1]) ? $address[1] : '';
-        return "$name | $place";
     }
 
 

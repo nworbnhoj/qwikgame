@@ -40,7 +40,6 @@ class FeatureContext implements Context
     private $req = [];     // a post or get request
     private $time;
     private $token;
-    private $svid;
     private $venue;
     private $vid;
     private $log;

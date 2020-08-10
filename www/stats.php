@@ -129,7 +129,6 @@ require_once PATH_CLASS.'Qwik.php';
     foreach($vids as $vid){
         $venue = readVenueXML($vid);
         if (isset($venue)){
-            $svid = Venue::svid($vid);
             $players = $venue->xpath("player");
             $playerCount = count($players);
             $ids='';
@@ -158,7 +157,7 @@ require_once PATH_CLASS.'Qwik.php';
             $row .= "<td>$ids</td>";
 
             $row .= "</tr>\n";
-            $rows["$index $svid"] = $row;
+            $rows["$index $vid"] = $row;
         }
     }
     krsort($rows);

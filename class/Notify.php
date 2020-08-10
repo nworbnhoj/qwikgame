@@ -222,7 +222,6 @@ class Notify extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $venueName = Venue::svid($match->venue());
         $paras = array(
             "{game time venue}",
             "{Your rival says...}",
@@ -235,7 +234,7 @@ class Notify extends Qwik {
             "message"    => $message,
             "gameName"   => self::gameName($game),
             "time"       => $time,
-            "venueName"  => $venueName,
+            "venueName"  => Venue::svid($match->venue()),
             "authLink"   => $this->player->authLink(self::DAY)
         );
         $email = new Email($vars, $this->language());

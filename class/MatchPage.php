@@ -61,8 +61,6 @@ class MatchPage extends Page {
                 $this->venue->save(TRUE);
                 self::logMsg("Added ".$this->game." to $vid");
             }
-        } else {
-            Qwik::logMsg("Failed to setup venue: ".$vid);
         }
     }
 

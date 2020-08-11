@@ -17,7 +17,14 @@ function venuesMap() {
     const LAT = parseFloat(document.getElementById('lat').value);
     const LNG = parseFloat(document.getElementById('lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
-    const MAP = new google.maps.Map(MAP_ELEMENT, {zoom: 10, center: CENTER, mapTypeID: 'ROADMAP'});
+    const MAP_OPTIONS = {
+        zoom: 10,
+        center: CENTER,
+        mapTypeID: 'ROADMAP',
+        mapTypeControl: false,
+        streetViewControl: false
+    };
+    const MAP = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
     const GAME = document.getElementById('game').value;
     const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
     
@@ -411,10 +418,11 @@ function endowMarks(marks, map){
     let isVenue = key.split('|').length === 4;
     if(isVenue){
       mark.marker.setLabel(mark.num + '');       // + '' is a string conversion
+      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.icon.24x24.png");
     } else {  // metaMark
       mark.bounds = markBounds(mark);
       mark.area = degArea(mark.bounds);
-      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.icon.24x24.png");
+      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.cluster.24x24.png");
     }
   }
   return marks;

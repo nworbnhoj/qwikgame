@@ -10,6 +10,8 @@
  *****************************************************************************/
 const QWIK_MARKS = new Map();
 const DUMMY = 'dummy';
+const SEARCH_MARKERS = [];
+const PLACE_ICON = "https://www.qwikgame.org/img/qwik.place.24x24.png";
 
 
 function venuesMap() {
@@ -27,6 +29,17 @@ function venuesMap() {
     const MAP = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
     const GAME = document.getElementById('game').value;
     const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
+    
+    const INPUT = document.getElementById("map-search");
+    const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
+    MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
+    MAP.addListener("bounds_changed", () => {
+        SEARCHBOX.setBounds(MAP.getBounds());
+    });
+    SEARCHBOX.addListener("places_changed", () => {
+        searchChangeHandler(MAP, SEARCHBOX.getPlaces(), INFOWINDOW);
+      }
+    );
     
     MAP.addListener('idle', function(){mapIdleHandler(MAP, GAME)});
     MAP.addListener('zoom_changed', function(){mapZoomChangedHandler(MAP, GAME)});
@@ -51,6 +64,45 @@ function mapZoomChangedHandler(map, game){
 }
 
 
+function searchChangeHandler(map, places, infowindow){
+  if (places.length == 0) { return; }
+  
+  SEARCH_MARKERS.forEach(marker => {
+    marker.setMap(null);
+  });
+  SEARCH_MARKERS.length = 0;
+  
+  // For each place, get the icon, name and location.
+  const BOUNDS = new google.maps.LatLngBounds();
+  places.forEach(place => {
+    if (!place.geometry) {
+      console.log("Returned place contains no geometry");
+      return;
+    }
+    
+    const MARKER = new google.maps.Marker({
+      map: map,
+      icon: PLACE_ICON,
+      position: place.geometry.location
+    });
+    
+    SEARCH_MARKERS.push(MARKER);
+        
+    google.maps.event.addListener(MARKER, 'click', () => {
+      showInfowindowPlace(place, infowindow, map);
+    });    
+
+    if (place.geometry.viewport) {
+      // Only geocodes have viewport.
+      BOUNDS.union(place.geometry.viewport);
+    } else {
+      BOUNDS.extend(place.geometry.location);
+    }
+  });
+  map.fitBounds(BOUNDS);
+}
+
+
 function markerClickHandler(map, marker, infoWindow){
   map.panTo(marker.getPosition());
   infoWindow.open(map, marker);
@@ -60,7 +112,7 @@ function markerClickHandler(map, marker, infoWindow){
 function clickHandler(event, map, infowindow){
   if (event.placeId) {
     infowindow.setPosition(event.latLng);
-    clickPOI(event.placeId, infowindow, map);
+    showInfowindowPlaceId(event.placeId, infowindow, map);
     event.stop();
   }
 }
@@ -78,24 +130,29 @@ function resetMap(){
 }
 
 
-function clickPOI(placeId, infowindow, map){
-    const POI = document.getElementById("infowindow-poi").cloneNode(true);
-    POI.children['poi-name'].textContent = "";
-    POI.children['poi-link'].placeId = placeId;
-    POI.style.display = 'block';
-    infowindow.setContent(POI);
-    infowindow.open(map);
-    const PLACE_SERVICES = new google.maps.places.PlacesService(map);
-    const REQUEST = { placeId: placeId, fields: ['name', 'geometry']};
-    PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
-        if (status === "OK") {
-            POI.children['poi-name'].textContent = place.name;
-            POI.children['poi-link'].venueName = place.name;
-            infowindow.setPosition(place.geometry.location);
-        } else {
-            console.log(status);
-        }
-    });
+function showInfowindowPlace(place, infowindow, map){
+  const POI = document.getElementById("infowindow-poi").cloneNode(true);
+  POI.children['poi-name'].textContent = place.name;
+  POI.children['poi-link'].venueName = place.name;
+  infowindow.setOptions({
+    content: POI,
+    position: place.geometry.location,
+    pixelOffset: new google.maps.Size(0,-24)
+  });
+  infowindow.open(map);
+}
+
+
+function showInfowindowPlaceId(placeId, infowindow, map){    
+  const PLACE_SERVICES = new google.maps.places.PlacesService(map);
+  const REQUEST = { placeId: placeId, fields: ['name', 'geometry']};
+  PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
+    if (status === "OK") {
+      showInfowindowPlace(place, infowindow, map);
+    } else {
+      console.log(status);
+    }
+  });
 }
 
 

@@ -417,8 +417,8 @@ function endowMarks(marks, map){
     mark.infoWindow = markInfoWindow(map, mark.marker, mark.info);
     let isVenue = key.split('|').length === 4;
     if(isVenue){
-      mark.marker.setLabel(mark.num + '');       // + '' is a string conversion
-      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.icon.24x24.png");
+//      mark.marker.setLabel(mark.num + '');       // + '' is a string conversion
+      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.pin.30x50.png");
     } else {  // metaMark
       mark.bounds = markBounds(mark);
       mark.area = degArea(mark.bounds);

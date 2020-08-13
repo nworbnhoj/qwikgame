@@ -29,9 +29,13 @@ function venuesMap() {
         streetViewControl: false
     };
     const MAP = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
-    const GAME = document.getElementById('game').value;
     const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
     
+    const GAME_SELECT = document.getElementById('game');
+    const GAME = GAME_SELECT.value;
+    GAME_SELECT.addEventListener('change', resetMap);
+
+    // setup Places search box in map
     const INPUT = document.getElementById("map-search");
     const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
     MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
@@ -40,12 +44,14 @@ function venuesMap() {
     });
     SEARCHBOX.addListener("places_changed", () => {
         searchChangeHandler(MAP, SEARCHBOX.getPlaces(), INFOWINDOW);
-      }
-    );
+    });
     
-    MAP.addListener('idle', function(){mapIdleHandler(MAP, GAME, INFOWINDOW)});
-    MAP.addListener('click', function(event){clickHandler(event, MAP, INFOWINDOW)});
-    document.getElementById('game').addEventListener('change', resetMap);
+    MAP.addListener('idle', () => {
+        mapIdleHandler(MAP, GAME, INFOWINDOW)
+    });
+    MAP.addListener('click', (event) => {
+        clickHandler(event, MAP, INFOWINDOW)
+    });
 }
 
 
@@ -69,12 +75,9 @@ function searchChangeHandler(map, places, infowindow){
   SEARCH_MARKERS.length = 0;
   
   // For each place, get the icon, name and location.
-  const BOUNDS = new google.maps.LatLngBounds();
+  const BOUNDS = gBounds();
   places.forEach(place => {
-    if (!place.geometry) {
-      console.log("Returned place contains no geometry");
-      return;
-    }
+    if (!place.geometry) { return; }
     
     const MARKER = new google.maps.Marker({
       map: map,
@@ -88,8 +91,7 @@ function searchChangeHandler(map, places, infowindow){
       showInfowindowPlace(place, infowindow, map);
     });    
 
-    if (place.geometry.viewport) {
-      // Only geocodes have viewport.
+    if (place.geometry.viewport) { // Only geocodes have viewport.
       BOUNDS.union(place.geometry.viewport);
     } else {
       BOUNDS.extend(place.geometry.location);
@@ -107,6 +109,7 @@ function markerClickHandler(map, marker, infoWindow){
 
 function clickHandler(event, map, infowindow){
   if (event.placeId) {
+    map.panTo(event.latLng);
     infowindow.setPosition(event.latLng);
     showInfowindowPlaceId(event.placeId, infowindow, map);
     event.stop();
@@ -441,7 +444,7 @@ function addNewMark(key, mark){
  *****************************************************************************/
 function addDummyChildMark(key, lat, lng){
   let dummy = {lat:lat, lng:lng}
-  dummy.center = markCenter(dummy);
+  dummy.center = gLatLng(lat, lng);
   dummy.marker = new google.maps.Marker();
   dummy.infoWindow = new google.maps.InfoWindow();
   addNewMark(DUMMY+"|"+key, dummy);
@@ -462,7 +465,7 @@ function addDummyChildMark(key, lat, lng){
 function endowMarks(marks, map, infowindow){
   if (!marks || !map ){ return {}; }
   for (let [key, mark] of marks){
-    mark.center = markCenter(mark);
+    mark.center = gLatLng(mark.lat, mark.lng);
     mark.marker = markMarker(map, mark.center);
     
     google.maps.event.addListener(mark.marker, 'click', () => {
@@ -501,15 +504,20 @@ function markMarker(map, position){
 ******************************************************************************/
 
 
-function markCenter(mark){
-  return new google.maps.LatLng(Number(mark.lat), Number(mark.lng));
+function gLatLng(lat, lng){
+  return new google.maps.LatLng(Number(lat), Number(lng));
+}
+
+
+function gBounds(sw=null, ne=null){
+  return new google.maps.LatLngBounds(sw, ne);
 }
 
 
 function markBounds(mark){
-  let ne = new google.maps.LatLng(Number(mark.n), Number(mark.e));
-  let sw = new google.maps.LatLng(Number(mark.s), Number(mark.w));
-  return new google.maps.LatLngBounds(sw, ne);
+  let ne = gLatLng(mark.n, mark.e);
+  let sw = gLatLng(mark.s, mark.w);
+  return gBounds(sw, ne);
 }
 
 
@@ -522,10 +530,7 @@ function expand(bounds, center, factor=2.0){
   let e = degSum(center.lng(),  lng * factor);
   let w = degSum(center.lng(), -lng * factor);
   let s = degSum(center.lat(), -lat * factor);
-  return new google.maps.LatLngBounds(
-           new google.maps.LatLng(s, w),
-           new google.maps.LatLng(n, e)
-  );
+  return gBounds(gLatLng(s, w), gLatLng(n, e));
 }
 
 
@@ -561,8 +566,8 @@ function distanceComparator(center, marks){
   return function(a,b){
     let aMark = marks.get(a);
     let bMark = marks.get(b);
-    let aCoords = new google.maps.LatLng(aMark.lat, aMark.lng);
-    let bCoords = new google.maps.LatLng(bMark.lat, bMark.lng);
+    let aCoords = gLatLng(aMark.lat, aMark.lng);
+    let bCoords = gLatLng(bMark.lat, bMark.lng);
     let aDist = degDistance(center, aCoords);
     let bDist = degDistance(center, bCoords);
     return aDist - bDist  // closest first

@@ -11,6 +11,8 @@
 const QWIK_MARKS = new Map();
 const DUMMY = 'dummy';
 const SEARCH_MARKERS = [];
+const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
+const CLUSTER_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
 const PLACE_ICON = "https://www.qwikgame.org/img/qwik.place.24x24.png";
 
 
@@ -41,26 +43,20 @@ function venuesMap() {
       }
     );
     
-    MAP.addListener('idle', function(){mapIdleHandler(MAP, GAME)});
-    MAP.addListener('zoom_changed', function(){mapZoomChangedHandler(MAP, GAME)});
+    MAP.addListener('idle', function(){mapIdleHandler(MAP, GAME, INFOWINDOW)});
     MAP.addListener('click', function(event){clickHandler(event, MAP, INFOWINDOW)});
     document.getElementById('game').addEventListener('change', resetMap);
 }
 
 
-function mapIdleHandler(map, game){
+function mapIdleHandler(map, game, infowindow){
   const CENTER = map.getCenter();
   const LAT = Number((CENTER.lat()).toFixed(3));
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable();
-  fetchMarks(game, LAT, LNG, null, AVOIDABLE, map);
-  showMarks(game, map);
-//  preFetch(AVOIDABLE, map, game);
-}
-
-
-function mapZoomChangedHandler(map, game){
-  hideInfoWindows();
+  fetchMarks(game, LAT, LNG, null, AVOIDABLE, map, infowindow);
+  showMarks(game, map, infowindow);
+//  preFetch(AVOIDABLE, map, game, infowindow);
 }
 
 
@@ -127,6 +123,16 @@ function resetMap(){
     }
     document.getElementById('venue-prompt').selected=true;
     venuesMap();
+}
+
+
+function showInfowindowVenue(mark, map, infowindow){
+  infowindow.setOptions({
+    content: mark.info,
+    position: mark.center,
+    pixelOffset: new google.maps.Size(0,-30)
+  });
+  infowindow.open(map);
 }
 
 
@@ -207,7 +213,7 @@ function getAvoidable(){
  * @param max Integer the maximum number of markers to show on map
  * @return null
  *****************************************************************************/
-function showMarks(game, map, max=30){
+function showMarks(game, map, infowindow, max=30){
   const COUNTRY = 1;
   const ADMIN1 = 2;
   const LOCALITY = 3;
@@ -245,7 +251,7 @@ function showMarks(game, map, max=30){
         mark.marker.setVisible(true);
       } else if(FETCH_CHILDREN){                 // fetch markers for sub-region
         mark.marker.setVisible(true);
-        fetchMarks(game, mark.lat, mark.lng, key, parentKey(key), map);
+        fetchMarks(game, mark.lat, mark.lng, key, parentKey(key), map, infowindow);
       } else if(CHILDREN.size === 0                // dont show empty sub-region
              || CHILDREN.size > maxChildren){// dont show overcrowded sub region
         mark.marker.setVisible(true);
@@ -285,7 +291,7 @@ const META_TINY      = 1/400;
 const META_MICRO     = 1/500;
 const META_MINISCULE = 1/600;
 
-function preFetch(avoidable, map, game){
+function preFetch(avoidable, map, game, infowindow){
   const CENTER = map.getCenter();
   const BOUNDS = map.getBounds();
   const AREA = degArea(BOUNDS);
@@ -300,7 +306,7 @@ function preFetch(avoidable, map, game){
       let tinyMeta  = mark.area > META_TINY * AREA;
       if((tinyMeta && preZoom)                  // pre-fetch marks for zoom-in
       || (smallMeta && prePan)){                // pre-fetch marks for pan
-        fetchMarks(game, null, null, key, avoidable, map);
+        fetchMarks(game, null, null, key, avoidable, map, infowindow);
       }
     }
   }
@@ -329,19 +335,6 @@ function markNumComparator(marks){
 }
 
 
-/******************************************************************************
- * Hides all infoWindows
- * @return null
- *****************************************************************************/
-function hideInfoWindows(){
-  for (let [key, mark] of QWIK_MARKS){
-    if(mark.hasOwnProperty('infoWindow')){
-      mark.infoWindow.close();
-    }
-  }
-}
-
-
 
 /******************************************************************************
 *************************** JSON FUNCTIONS ************************************
@@ -365,7 +358,7 @@ function hideInfoWindows(){
  * @param map       google.maps.Map object to display the Markers
  * @return 
  *****************************************************************************/
-function fetchMarks(game, lat, lng, region, avoidable, map){
+function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
   if(game === null || typeof game === 'undefined'){ return; }
   if(map === null || typeof map === 'undefined'){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
@@ -375,7 +368,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map){
   const ESC = encodeURIComponent;
   const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
   const PATH = 'json/venue.marks.php?'+QUERY;
-  qwikJSON(PATH, receiveMarks, map);
+  qwikJSON(PATH, receiveMarks, map, infowindow);
   // report to console
   const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
   console.log("fetching marks for "+LOC);
@@ -394,7 +387,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map){
  * @param map  google.maps.Map object to display the Markers
  * @return null
  *****************************************************************************/
-function receiveMarks(json, map){
+function receiveMarks(json, map, infowindow){
   if(typeof json.status === 'undefined' || json.status === null){ return; }
   const COUNTRY = json.country !== null ? json.country : '';
   const ADMIN1 = json.admin1 !== null ? json.admin1+'|' : '';
@@ -404,13 +397,13 @@ function receiveMarks(json, map){
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
       if(typeof json.marks === 'undefined' || json.marks === null){ return; }
       const GAME = json.game;
-      const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)), map);
+      const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)), map, infowindow);
       for(let [key, mark] of NEW_MARKS){
         addNewMark(key, mark);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
       QWIK_MARKS.delete(DUMMY+'|'+LOCALITY+ADMIN1+COUNTRY);
-      showMarks(GAME, map);
+      showMarks(GAME, map, infowindow);
       break;
     default:
   }
@@ -466,20 +459,24 @@ function addDummyChildMark(key, lat, lng){
  * @param map google.maps.Map to receive the Marker
  * @return Map of endowed key:Marks
  *****************************************************************************/
-function endowMarks(marks, map){
+function endowMarks(marks, map, infowindow){
   if (!marks || !map ){ return {}; }
   for (let [key, mark] of marks){
     mark.center = markCenter(mark);
     mark.marker = markMarker(map, mark.center);
-    mark.infoWindow = markInfoWindow(map, mark.marker, mark.info);
+    
+    google.maps.event.addListener(mark.marker, 'click', () => {
+      showInfowindowVenue(mark, map, infowindow);
+    });
+    
     let isVenue = key.split('|').length === 4;
     if(isVenue){
 //      mark.marker.setLabel(mark.num + '');       // + '' is a string conversion
-      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.pin.30x50.png");
+      mark.marker.setIcon(VENUE_ICON);
     } else {  // metaMark
       mark.bounds = markBounds(mark);
       mark.area = degArea(mark.bounds);
-      mark.marker.setIcon("https://www.qwikgame.org/img/qwik.cluster.24x24.png");
+      mark.marker.setIcon(CLUSTER_ICON);
     }
   }
   return marks;
@@ -495,26 +492,6 @@ function endowMarks(marks, map){
 function markMarker(map, position){
   const MARKER_OPTIONS = {position:position, visible:false, map:map};
   return new google.maps.Marker(MARKER_OPTIONS);
-}
-
-
-/******************************************************************************
- * Creates a Marker and associated infowindow to show on click
- * @param map google.maps.Map to receive the Markers
- * @param marker google.maps.Marker to listen for click event
- * @param content String html for infowindow  
- * @return google.maps.Marker Object
- *****************************************************************************/
-function markInfoWindow(map, marker, content){
-  const INFO_WINDOW_OPTIONS = {content: content};
-  const INFO_WINDOW = new google.maps.InfoWindow(INFO_WINDOW_OPTIONS);
-  google.maps.event.addListener(
-    marker,
-    'click',
-    function(){markerClickHandler(map, marker, INFO_WINDOW)}
-  );
-  
-  return INFO_WINDOW;
 }
 
 

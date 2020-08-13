@@ -71,10 +71,13 @@
             <input id='register-email' name="email" type="email" class="email word" placeholder="{prompt_address}">
         </div>
         <div id='map' class='center wide' style='display:none;'></div>
-        <div id='infowindow-poi' style='display:none;'>
-            <div id='poi-id' style='display:none;'></div>
-            <div id='poi-name'></div>
-            <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+        <div id='map-elements' style='display:none;'>
+            <input id="map-search" class="controls" type="text" placeholder="Search Box" />
+            <div id='infowindow-poi'>
+                <div id='poi-id' style='display:none;'></div>
+                <div id='poi-name'></div>
+                <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+            </div>
         </div>
         <input type="submit" class="available word" value="{Submit}">
     </form>

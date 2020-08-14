@@ -88,7 +88,7 @@ function searchChangeHandler(map, places, infowindow){
     SEARCH_MARKERS.push(MARKER);
         
     google.maps.event.addListener(MARKER, 'click', () => {
-      showInfowindowPlace(place, infowindow, map);
+      clickSearchMarker(place, map, infowindow);
     });    
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
@@ -101,17 +101,9 @@ function searchChangeHandler(map, places, infowindow){
 }
 
 
-function markerClickHandler(map, marker, infoWindow){
-  map.panTo(marker.getPosition());
-  infoWindow.open(map, marker);
-}
-
-
 function clickHandler(event, map, infowindow){
   if (event.placeId) {
-    map.panTo(event.latLng);
-    infowindow.setPosition(event.latLng);
-    showInfowindowPlaceId(event.placeId, infowindow, map);
+    clickPOI(event.placeId, event.latLng, map, infowindow);
     event.stop();
   }
 }
@@ -129,8 +121,8 @@ function resetMap(){
 }
 
 
-function showInfowindowRegion(mark, map, infowindow){
-
+function clickRegionMarker(mark, map, infowindow){
+  map.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-region");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -149,7 +141,8 @@ function showInfowindowRegion(mark, map, infowindow){
 }
 
 
-function showInfowindowVenue(mark, map, infowindow){
+function clickVenueMarker(mark, map, infowindow){
+  map.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-venue");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -173,9 +166,19 @@ function showInfowindowVenue(mark, map, infowindow){
 
 
 
+function clickSearchMarker(place, map, infowindow){
+  map.panTo(place.geometry.location);
+  showInfowindowPlace(place, map, infowindow);
+}
 
 
-function showInfowindowPlace(place, infowindow, map){
+function clickPOI(placeId, latLng, map, infowindow){
+  map.panTo(latLng);
+  showInfowindowPlaceId(event.placeId, map, infowindow);
+}
+
+
+function showInfowindowPlace(place, map, infowindow){
   const TEMPLATE = document.getElementById("infowindow-poi");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -191,12 +194,12 @@ function showInfowindowPlace(place, infowindow, map){
 }
 
 
-function showInfowindowPlaceId(placeId, infowindow, map){    
+function showInfowindowPlaceId(placeId, map, infowindow){    
   const PLACE_SERVICES = new google.maps.places.PlacesService(map);
   const REQUEST = { placeId: placeId, fields: ['name', 'geometry']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
-      showInfowindowPlace(place, infowindow, map);
+      showInfowindowPlace(place, map, infowindow);
     } else {
       console.log(status);
     }
@@ -512,14 +515,14 @@ function endowMarks(marks, map, infowindow){
     if(isVenue){
       mark.marker.setIcon(VENUE_ICON);
       google.maps.event.addListener(mark.marker, 'click', () => {
-        showInfowindowVenue(mark, map, infowindow);
+        clickVenueMarker(mark, map, infowindow);
       });      
     } else {  // metaMark
       mark.marker.setIcon(REGION_ICON);
       mark.bounds = markBounds(mark);
       mark.area = degArea(mark.bounds);
       google.maps.event.addListener(mark.marker, 'click', () => {
-        showInfowindowRegion(mark, map, infowindow);
+        clickRegionMarker(mark, map, infowindow);
       }); 
     }
   }

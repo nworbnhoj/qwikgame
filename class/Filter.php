@@ -8,7 +8,7 @@ class Filter extends Qwik {
     const VALID_ADMIN = array('acceptTranslation', 'rejectTranslation');
     const VALID_LANG = array('ar', 'bg', 'en','es','fr', 'hi', 'jp', 'ru', 'zh');
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
-    const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'friend', 'feedback', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'register', 'translate', 'upload');
+    const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'friend', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'register', 'translate', 'upload');
     const VALID_REPOST = array('admin.php', 'index.php', 'match.php', 'favorite.php', 'info.php', 'matches', 'friend', 'history', 'reckon', 'region', 'account');
 
 

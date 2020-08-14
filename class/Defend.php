@@ -76,7 +76,6 @@ class Defend extends Qwik {
         'qid'      => Filter::QID,
         'qwik'     => Filter::QWIK,
         'reply'    => FILTER_DEFAULT,
-        'reply-email' => FILTER_VALIDATE_EMAIL,
         'route'    => FILTER_DEFAULT,
         'Sat'      => Filter::HOURS,
         'skip'     => FILTER_DEFAULT,

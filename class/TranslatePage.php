@@ -90,7 +90,6 @@ Class TranslatePage extends Html {
         'quiz.html',
         'upload.html',
         'venue.html',
-        'venues.html',
         'offline.html');
     private $variables;
 

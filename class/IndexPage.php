@@ -108,7 +108,6 @@ class IndexPage extends Page {
 
         $variables['playerCount']    = $this->countFiles(PATH_PLAYER);
         $variables['venueCount']     = $this->countFiles(PATH_VENUE);
-        $variables['venuesLink']     = "<a href='venues.php?game=squash'>{venues}</a>";
         $variables['venue']          = isset($venue) ? $venue : '';
         $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
         $variables['language']       = $language;

@@ -8,9 +8,6 @@
     <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="qwik.css">
-    <style>
-        div.map-mark-info-body { display : none; }
-    </style>
     <link rel="manifest" href="manifest.json">
     <script src="qwik.js"></script>
     <script src="map.js"></script>
@@ -81,11 +78,39 @@
         <div id='map' class='center wide' style='display:none;'></div>
         <div id='map-elements' style='display:none;'>
             <input id="map-search" class="controls" type="text" placeholder="Search Box" />
-            <div id='infowindow-poi'>
+            <template id="infowindow-venue">
+              <div>
+                <div class="map-mark-info-head">
+                  <a id="map-mark-venue-link" href="">name</a>
+                </div>
+                <div class="map-mark-info-body">
+                  <span class="map-mark-info-label">{players}: </span>
+                  <span id="map-mark-venue-players">number</span>
+                </div>
+              </div>
+            </template>
+            <template id="infowindow-region">
+              <div>
+                <div class="map-mark-info-head">
+                  <span id="map-mark-region-name"></span>
+                </div>
+                <div class="map-mark-info-body">
+                  <span class="map-mark-info-label">{venues}: </span>
+                  <span id="map-mark-region-venues">number</span>
+                </div>
+              </div>
+            </template>
+            <template id='infowindow-poi'>
+              <div>
                 <div id='poi-id' style='display:none;'></div>
-                <div id='poi-name'></div>
-                <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
-            </div>
+                <div class="map-mark-info-head">
+                  <div id='poi-name'>name</div>
+                </div>
+                <div class="map-mark-info-body">
+                  <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+                </div>
+              </div>
+            </template>
         </div>
             <div id='hr' style='display:none'>
             <div id='hr-check' hidden>

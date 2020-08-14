@@ -175,6 +175,10 @@ blockquote, q {
 
 .base { display: none; }
 
+.map-mark-info-head {
+    font-weight: bold;
+}
+
 /************** <html> *********************/
 html {}
 
@@ -825,12 +829,10 @@ progress.size {
     font-weight: bold;
 }
 
-#poi-name {
-    font-weight: bold;
-}
 
 #map-search {
   width: 50%;
+  max-width: 300px;
 }	
 
 

@@ -12,7 +12,7 @@ const QWIK_MARKS = new Map();
 const DUMMY = 'dummy';
 const SEARCH_MARKERS = [];
 const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
-const CLUSTER_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
+const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
 const PLACE_ICON = "https://www.qwikgame.org/img/qwik.place.24x24.png";
 
 
@@ -129,9 +129,19 @@ function resetMap(){
 }
 
 
-function showInfowindowVenue(mark, map, infowindow){
+function showInfowindowRegion(mark, map, infowindow){
+
+  const TEMPLATE = document.getElementById("infowindow-region");
+  const FRAG = TEMPLATE.content.cloneNode(true);
+
+  const SPAN_NAME = FRAG.getElementById("map-mark-region-name");
+  SPAN_NAME.textContent = mark.name;
+
+  const SPAN_NUM = FRAG.getElementById("map-mark-region-venues");
+  SPAN_NUM.textContent = mark.num + '';       // + '' is a string conversion
+  
   infowindow.setOptions({
-    content: mark.info,
+    content: FRAG.firstElementChild,
     position: mark.center,
     pixelOffset: new google.maps.Size(0,-30)
   });
@@ -139,12 +149,41 @@ function showInfowindowVenue(mark, map, infowindow){
 }
 
 
-function showInfowindowPlace(place, infowindow, map){
-  const POI = document.getElementById("infowindow-poi").cloneNode(true);
-  POI.children['poi-name'].textContent = place.name;
-  POI.children['poi-link'].venueName = place.name;
+function showInfowindowVenue(mark, map, infowindow){
+  const TEMPLATE = document.getElementById("infowindow-venue");
+  const FRAG = TEMPLATE.content.cloneNode(true);
+
+  const LINK = FRAG.getElementById("map-mark-venue-link");
+  LINK.textContent = mark.name;
+  LINK.href = "";
+  LINK.addEventListener('click', (event) => {
+    clickMapMarkVenue(event, mark.key);
+  });
+
+  const SPAN = FRAG.getElementById("map-mark-venue-players");
+  SPAN.textContent = mark.num + '';       // + '' is a string conversion
+
   infowindow.setOptions({
-    content: POI,
+    content: FRAG.firstElementChild,
+    position: mark.center,
+    pixelOffset: new google.maps.Size(0,-30)
+  });
+  infowindow.open(map);
+}
+
+
+
+
+
+function showInfowindowPlace(place, infowindow, map){
+  const TEMPLATE = document.getElementById("infowindow-poi");
+  const FRAG = TEMPLATE.content.cloneNode(true);
+
+  FRAG.getElementById("poi-name").textContent = place.name;
+  FRAG.getElementById("poi-link").venueName = place.name;
+  
+  infowindow.setOptions({
+    content: FRAG.firstElementChild,
     position: place.geometry.location,
     pixelOffset: new google.maps.Size(0,-24)
   });
@@ -426,7 +465,6 @@ function addNewMark(key, mark){
     let oldMark = QWIK_MARKS.get(key);
     oldMark.marker.setVisible(false);
     oldMark.marker.setMap(null);
-    oldMark.infoWindow.close();
   }
   QWIK_MARKS.set(key, mark);
 }
@@ -466,20 +504,23 @@ function endowMarks(marks, map, infowindow){
   if (!marks || !map ){ return {}; }
   for (let [key, mark] of marks){
     mark.center = gLatLng(mark.lat, mark.lng);
-    mark.marker = markMarker(map, mark.center);
-    
-    google.maps.event.addListener(mark.marker, 'click', () => {
-      showInfowindowVenue(mark, map, infowindow);
-    });
-    
-    let isVenue = key.split('|').length === 4;
+    mark.marker = markMarker(map, mark.center);    
+    mark.key = key;
+    let keys = key.split('|');
+    mark.name = keys[0];
+    let isVenue = keys.length === 4;
     if(isVenue){
-//      mark.marker.setLabel(mark.num + '');       // + '' is a string conversion
       mark.marker.setIcon(VENUE_ICON);
+      google.maps.event.addListener(mark.marker, 'click', () => {
+        showInfowindowVenue(mark, map, infowindow);
+      });      
     } else {  // metaMark
+      mark.marker.setIcon(REGION_ICON);
       mark.bounds = markBounds(mark);
       mark.area = degArea(mark.bounds);
-      mark.marker.setIcon(CLUSTER_ICON);
+      google.maps.event.addListener(mark.marker, 'click', () => {
+        showInfowindowRegion(mark, map, infowindow);
+      }); 
     }
   }
   return marks;

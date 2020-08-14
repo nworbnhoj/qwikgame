@@ -31,29 +31,6 @@ class Mark extends Qwik {
   const SOUTH = 's';
 
 
-  /***************************************************************************
-   * A html template intended for a Map Marker infowindow to Mark a Venue.
-   ***************************************************************************/
-  const VENUE_TEMPLATE = '<div class="infowindow">
-    <div class="map-mark-info-head">
-      <a class="map-mark-venue" onclick="clickMapMarkVenue(event, \'[vid]\')" href="venue.php?vid=[vid]">[name]</a>
-    </div>
-    <div class="map-mark-info-body">
-      <a class="map-mark-match" onclick="clickMapMarkMatch(event, \'[vid]\')" href="match.php?vid=[vid]&game=[game]#keen-form">{match}</a>
-      <a class="map-mark-favorite" onclick="clickMapMarkFavorite(event, \'[vid]\')" href="favorite.php?vid=[vid]&game=[game]#favorite-form">{favorite}</a>
-    </div>
-  </div>';
-
-
-  /****************************************************************************
-   * A html template intended for a Map Marker infowindow to Mark a Region
-   * with Venues.
-   ***************************************************************************/
-  const REGION_TEMPLATE = "<div class='infowindow'>
-    <b>[name]</b><br>[count] {venues}
-  </div>";
-
-
   private $game;
   private $lang;
   private $venueCount;
@@ -250,16 +227,10 @@ class Mark extends Qwik {
 
     $coords = $geometry->location;
     $name = isset($locality) ? $locality : (isset($admin1) ? $admin1 : $country);
-    $vars = [
-      '[name]'=>$name,
-      '[count]'=>$count
-    ];
-    $html = $this->html(self::REGION_TEMPLATE, $this->lang, $vars);
     $mark = array(
       self::LAT => (string) $coords->lat,
       self::LNG => (string) $coords->lng,
       self::NUM => $count,
-      self::INFO => $html,
       self::NAME => $name,
       self::NORTH => (float)$geometry->viewport->northeast->lat,
       self::EAST => (float)$geometry->viewport->northeast->lng,
@@ -277,28 +248,13 @@ class Mark extends Qwik {
       return;
     }
     $name = $venue->name();
-    $vars = [
-      '[vid]'=>$vid,
-      '[name]'=>$name,
-      '[game]'=>$this->game
-    ];
-    $html = $this->html(self::VENUE_TEMPLATE, $this->lang, $vars);
     $mark = array(
       self::LAT => $venue->lat(),
       self::LNG => $venue->lng(),
       self::NUM => $venue->playerCount(),
-      self::INFO => $html,
       self::NAME => $name
     );
     return $mark;
-  }
-  
-  
-  function html($template, $lang, $vars){
-    $search = array_keys($vars);
-    $replace = array_values($vars);    
-    $html = str_replace($search, $replace, $template);
-    return $this->translate($html, $lang);  
   }
   
   

@@ -132,6 +132,7 @@ Class TranslatePage extends Html {
         $vars['emailLink']     = Page::EMAIL_LNK;
         $vars['facebookLink']  = Page::FACEBOOK_LNK;
         $vars['tweetLink']     = Page::TWEET_LNK;
+        $vars['forumLink']     = Page::FORUM_LNK;
         $vars['twitterLink']   = Page::TWITTER_LNK;
         $vars['githubLink']    = Page::GITHUB_LNK;
         $vars['translateLink'] = Page::TRANSLATE_LNK;

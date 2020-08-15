@@ -179,6 +179,7 @@
 <phrase key="Quit"><words lang="en">Quit</words><words lang="es">Dejar</words><words lang="zh">Quit</words><words lang="bg">&#x418;&#x437;&#x445;&#x43E;&#x434;</words></phrase>
 <phrase key="qwikgame.org_was_launched..."><words lang="en">Qwikgame.org was launched in September 2016 out of dismay in the difficulty of finding a well matched game of Squash while travelling.</words><words lang="bg">Qwikgame &#x431;&#x435;&#x448;&#x435; &#x43E;&#x441;&#x43D;&#x43E;&#x432;&#x430;&#x43D; &#x43F;&#x440;&#x435;&#x437; &#x421;&#x435;&#x43F;&#x442;&#x435;&#x43C;&#x432;&#x440;&#x438; 2016 &#x43F;&#x43E;&#x440;&#x430;&#x434;&#x438; &#x43D;&#x435;&#x432;&#x44A;&#x437;&#x43C;&#x43E;&#x436;&#x43D;&#x43E;&#x441;&#x442; &#x434;&#x430; &#x43D;&#x430;&#x43C;&#x435;&#x440;&#x44F; &#x434;&#x43E;&#x431;&#x44A;&#x440; &#x43F;&#x440;&#x43E;&#x442;&#x438;&#x432;&#x43D;&#x438;&#x43A; &#x437;&#x430; &#x438;&#x433;&#x440;&#x430; &#x43D;&#x430; &#x421;&#x43A;&#x443;&#x43E;&#x448; &#x43F;&#x43E; &#x432;&#x440;&#x435;&#x43C;&#x435; &#x43D;&#x430; &#x43F;&#x44A;&#x442;&#x443;&#x432;&#x430;&#x43D;&#x435;.</words></phrase>
 <phrase key="Please_twitter"><words lang="en">join the conversation at [twitterLink] where bug and ideas are most welcome.</words></phrase>
+<phrase key="Please_forum"><words lang="en">join the conversation at [forumLink] where we are making qwikgame better.</words></phrase>
 <phrase key="Account_Recovery"><words lang="en">Account Recovery</words><words lang="bg">&#x412;&#x44A;&#x437;&#x441;&#x442;&#x430;&#x43D;&#x43E;&#x432;&#x44F;&#x432;&#x430;&#x43D;&#x435; &#x43D;&#x430; &#x43F;&#x440;&#x43E;&#x444;&#x438;&#x43B;</words></phrase>
 <phrase key="About"><words lang="en">About</words><words lang="bg">&#x417;&#x430; qwikgame</words></phrase>
 <phrase key="...link_to_login"><words lang="en">send me a link to login</words><words lang="bg">&#x418;&#x437;&#x43F;&#x440;&#x430;&#x442;&#x438; &#x43C;&#x438; &#x43B;&#x438;&#x43D;&#x43A;, &#x437;&#x430; &#x434;&#x430; &#x432;&#x43B;&#x44F;&#x437;&#x430; &#x432; &#x43F;&#x440;&#x43E;&#x444;&#x438;&#x43B;&#x430; &#x441;&#x438;</words></phrase>
@@ -311,4 +312,5 @@
 <phrase key="select_from_map"><words lang="en">select from map</words></phrase>
 <phrase key="create_new_venue"><words lang="en">create new venue</words></phrase>
 <phrase key="search_box"><words lang="en">Search Box</words></phrase>
+<phrase key="forum"><words lang="en">forum</words></phrase>
 </translation>

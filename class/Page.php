@@ -48,6 +48,10 @@ class Page extends Html {
     const TWITTER_IMG  = "<img src='img/twitter.png' alt='twitter' class='socialmedia'>";
     const TWITTER_LNK  = "<a class='fa fa-twitter twitter' href='".self::TWITTER_URL."' target='_blank'></a>";
 
+    const FORUM_URL  = "https://forum.qwikgame.org/";
+    const FORUM_IMG  = "";
+    const FORUM_LNK  = "<a href='".self::FORUM_URL."' target='_blank'>{forum}</a>";
+
     const GITHUB_URL   = "https://github.com/nworbnhoj/qwikgame#readme";
     const GITHUB_IMG   = "<img src='img/GitHub.png' alt='github' class='socialmedia'>";
     const GITHUB_LNK   = "<a href='".self::GITHUB_URL."' target='_blank'>".self::GITHUB_IMG."</a>";

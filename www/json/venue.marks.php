@@ -45,9 +45,9 @@ if (isset($get[REGION])){
 } elseif (isset($get[LAT]) && isset($get[LNG])){
   // get the region from lat-lng coordinates
   $region = Locate::getAddress($get[LAT], $get[LNG]);
-  $locality = $region[LOCALITY];
-  $admin1   = $region[ADMIN1];
-  $country  = $region[COUNTRY];
+  $locality = isset($region[LOCALITY]) ? $region[LOCALITY] : NULL ;
+  $admin1   = isset($region[ADMIN1])   ? $region[ADMIN1]   : NULL ;
+  $country  = isset($region[COUNTRY])  ? $region[COUNTRY]  : NULL ;
 } else {
   echo json_encode(array(STATUS=>'error', MSG=>'missing region or lat-lng parameters'));
   Qwik::logMsg("Missing [region] or [lat][lng] parameters in json call to venue.markers.php");

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Page.php';
+require_once 'Locate.php';
 
 class IndexPage extends Page {
 
@@ -104,20 +105,20 @@ class IndexPage extends Page {
         $game = $this->req('game');
         $language = $this->language();
         
-        $variables = parent::variables();
+        $vars = parent::variables();
 
-        $variables['playerCount']    = $this->countFiles(PATH_PLAYER);
-        $variables['venueCount']     = $this->countFiles(PATH_VENUE);
-        $variables['venue']          = isset($venue) ? $venue : '';
-        $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
-        $variables['language']       = $language;
-        $variables['languageOptions'] = $this->languageOptions($language);
+        $vars['playerCount']    = $this->countFiles(PATH_PLAYER);
+        $vars['venueCount']     = $this->countFiles(PATH_VENUE);
+        $vars['venue']          = isset($venue) ? $venue : '';
+        $vars['gameOptions']    = $this->gameOptions($game, "\t\t");
+        $vars['language']       = $language;
+        $vars['languageOptions'] = $this->languageOptions($language);
         
         $loc = Locate::geolocate(array('latitude', 'longitude'));
         $vars['lat'] = isset($loc) && isset($loc['latitude']) ? $loc['latitude'] : NULL ;
         $vars['lng'] = isset($loc) && isset($loc['longitude']) ? $loc['longitude'] : NULL ;
         
-        return $variables;
+        return $vars;
     }
 
 

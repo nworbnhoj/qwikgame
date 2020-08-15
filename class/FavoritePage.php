@@ -5,6 +5,7 @@ require_once 'Venue.php';
 require_once 'FavoriteList.php';
 require_once 'AbilityList.php';
 require_once 'Options.php';
+require_once 'Locate.php';
 
 
 class FavoritePage extends Page {

@@ -174,7 +174,7 @@ function clickSearchMarker(place, map, infowindow){
 
 function clickPOI(placeId, latLng, map, infowindow){
   map.panTo(latLng);
-  showInfowindowPlaceId(event.placeId, map, infowindow);
+  showInfowindowPlaceId(placeId, map, infowindow);
 }
 
 
@@ -183,7 +183,9 @@ function showInfowindowPlace(place, map, infowindow){
   const FRAG = TEMPLATE.content.cloneNode(true);
 
   FRAG.getElementById("poi-name").textContent = place.name;
-  FRAG.getElementById("poi-link").venueName = place.name;
+  const LINK = FRAG.getElementById("poi-link");
+  LINK.setAttribute("placeid", place.place_id);
+  LINK.setAttribute("venuename", place.name);
   
   infowindow.setOptions({
     content: FRAG.firstElementChild,
@@ -196,7 +198,7 @@ function showInfowindowPlace(place, map, infowindow){
 
 function showInfowindowPlaceId(placeId, map, infowindow){    
   const PLACE_SERVICES = new google.maps.places.PlacesService(map);
-  const REQUEST = { placeId: placeId, fields: ['name', 'geometry']};
+  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
       showInfowindowPlace(place, map, infowindow);
@@ -209,8 +211,8 @@ function showInfowindowPlaceId(placeId, map, infowindow){
 
 function clickCreateVenue(event){
   event.preventDefault();
-  let placeId = event.target.placeId;
-  let name = event.target.venueName;
+  let placeId = event.target.getAttribute("placeid");
+  let name = event.target.getAttribute("venuename");
     
   // add a new option to venueSelect and select it
   let venueSelect = document.getElementById('venue-select');

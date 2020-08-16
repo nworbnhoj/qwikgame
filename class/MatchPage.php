@@ -41,7 +41,7 @@ class MatchPage extends Page {
                     $vid = Venue::venueID(
                         $details['name'],
                         $details['locality'],
-                        $details['admin1'],
+                        $details['admin1_code'],
                         $details['country_iso']
                     );
                     try {

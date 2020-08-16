@@ -13,6 +13,12 @@ class Venue extends Qwik {
         return file_exists(PATH_VENUE."$NAME");
     }
 
+
+    static function modTime($id){
+        $FILENAME = PATH_VENUE.self::file4id($id);
+        return file_exists($FILENAME) ? filemtime($FILENAME) : NAN ;
+    }
+
  
     static function file4id($id){
     	return htmlspecialchars_decode($id, ENT_HTML5) . self::XML;

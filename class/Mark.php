@@ -58,12 +58,19 @@ class Mark extends Qwik {
       $name = explode('|', $region);
       $ord = count($name);
       $n0 = $name[0];
-      if($ord === 1 && !isset($country)){
-        $marks[$n0] = $this->get($n0);
+      if($region === $this->game){ // ignore (no coords)
+      } elseif($ord === 1 && !isset($country)){
+        $key = $n0;
+        $mark = $this->regionMark($count, $n0);
       } elseif($ord === 2 && !isset($admin1) && $name[1] === $country){
-        $marks["$n0|$country"] = $this->get($country, $n0);
+        $key = "$n0|$country";
+        $mark = $this->regionMark($count, $country, $n0);
       } elseif($ord === 3 && $name[1] === $admin1 && $name[2] === $country){
-        $marks["$n0|$admin1|$country"] = $this->get($country, $admin1, $n0);
+        $key = "$n0|$admin1|$country";
+        $mark = $this->regionMark($count, $country, $admin1, $n0);
+      }
+      if (isset($mark)){
+        $marks[$key] = $mark;
       }
     }
     return $marks;
@@ -81,8 +88,7 @@ class Mark extends Qwik {
     $marks = [];
     $vids = Qwik::venues($this->game, $country, $admin1, $locality);
     foreach($vids as $vid){
-      $name = explode('|', $vid);
-      $marks[$vid] = $this->get($name[3], $name[2], $name[1], $name[0]);
+      $marks[$vid] = $this->venueMark($vid);
     }
     return $marks;
   }
@@ -111,12 +117,13 @@ class Mark extends Qwik {
           break;
         default:
       }
-      $this->save($key, $mark);
+      if(!is_null($mark)){
+        $this->save($key, $mark);
+      }
     }
 
     foreach(Qwik::venues() as $vid){
-      $mark = venueMark($vid);
-      $this->save($vid, $mark);
+      venueMark($vid);
     }
   }
 
@@ -146,17 +153,21 @@ class Mark extends Qwik {
    * @param $key
    ***************************************************************************/
   private function retrieve($key){
-    try {
-      $game = $this->game;
-      $lang = $this->lang;
-      $path = PATH_MARK."$game/$lang/";
-      $fileName = "$key.json";
-      $json = self::readFile($path, $fileName);
-    } catch (RuntimeException $e){
-      self::logThrown($e);
+    $mark = FALSE;
+    $game = $this->game;
+    $lang = $this->lang;
+    $path = PATH_MARK."$game/$lang/";
+    $fileName = "$key.json";
+    if (file_exists("$path/$fileName")){
+      try {
+        $json = self::readFile($path, $fileName);
+      } catch (RuntimeException $e){
+        self::logThrown($e);
 //      throw new RuntimeException("failed to retrieve Mark: $fileName");
+      }
+      $mark = json_decode($json, true);
     }
-    return json_decode($json);
+    return $mark;
   }
 
 
@@ -165,9 +176,9 @@ class Mark extends Qwik {
    ***************************************************************************/
   private function save($key, $mark){
     $json = json_encode($mark);
-      $game = $this->game;
-      $lang = $this->lang;
-      $path = PATH_MARK."$game/$lang/";
+    $game = $this->game;
+    $lang = $this->lang;
+    $path = PATH_MARK."$game/$lang/";
     $fileName = "$key.json";
     if (!self::writeFile($json, $path, $fileName)){
 //      throw new RuntimeException("failed to save Mark: $fileName");
@@ -200,61 +211,72 @@ class Mark extends Qwik {
   }
 
 
-  private function get($country=NULL, $admin1=NULL, $locality=NULL, $name=NULL){
-    $mark = FALSE;
-    $key = $this->key($country, $admin1, $locality, $name);
-    $game = $this->game;
-    $lang = $this->lang;
-    if (file_exists(PATH_MARK."$game/$lang/$key.json")){
-      $mark = $this->retrieve($key);
-    }
-    if(!$mark){
-      if(isset($name)){
-        $mark = $this->venueMark($key);
-      } else {
-        $count = $this->venueCount[$key];
-        $mark = $this->regionMark($count, $country, $admin1, $locality);
-      }
+  private function regionMark($count, $country, $admin1=NULL, $locality=NULL){
+    $key = $this->key($country, $admin1, $locality);
+    $mark = $this->retrieve($key);
+    if($mark){
+      if($mark[self::NUM] != $count){
+        $mark[self::NUM] = $count;
+        $this->save($key, $mark);
+      }    
+    } else {
+      $geometry = Locate::getGeometry($country, $admin1, $locality);
+      if(!isset($geometry->location)){ return; }
+
+      $coords = $geometry->location;
+      $name = isset($locality) ? $locality : (isset($admin1) ? $admin1 : $country);
+      $mark = array(
+        self::LAT => (string) $coords->lat,
+        self::LNG => (string) $coords->lng,
+        self::NUM => $count,
+        self::NAME => $name,
+        self::NORTH => (float)$geometry->viewport->northeast->lat,
+        self::EAST => (float)$geometry->viewport->northeast->lng,
+        self::WEST => (float)$geometry->viewport->southwest->lng,
+        self::SOUTH => (float)$geometry->viewport->southwest->lat
+      );
       $this->save($key, $mark);
     }
     return $mark;
   }
 
 
-  private function regionMark($count, $country, $admin1=NULL, $locality=NULL){
-    $geometry = Locate::getGeometry($country, $admin1, $locality);
-    if(!isset($geometry->location)){ return array(); }
-
-    $coords = $geometry->location;
-    $name = isset($locality) ? $locality : (isset($admin1) ? $admin1 : $country);
-    $mark = array(
-      self::LAT => (string) $coords->lat,
-      self::LNG => (string) $coords->lng,
-      self::NUM => $count,
-      self::NAME => $name,
-      self::NORTH => (float)$geometry->viewport->northeast->lat,
-      self::EAST => (float)$geometry->viewport->northeast->lng,
-      self::WEST => (float)$geometry->viewport->southwest->lng,
-      self::SOUTH => (float)$geometry->viewport->southwest->lat
-    );
+  private function venueMark($vid){
+    $mark = false;
+    if($this->staleMark($vid)){  
+      $venue = new Venue($vid);
+      if(!$venue || !$venue->ok()){
+        Qwik::logMsg("failed to retrieve venue $vid");
+        return false;
+      }
+      if (!is_numeric($venue->lat()) || !is_numeric($venue->lng())){
+        Qwik::logMsg("venue missing coords: $vid");
+        return false;
+      }
+      $name = $venue->name();
+      $mark = array(
+        self::LAT => $venue->lat(),
+        self::LNG => $venue->lng(),
+        self::NUM => $venue->playerCount(),
+        self::NAME => $name
+      );
+      $this->save($vid, $mark);
+    } else {
+      $mark = $this->retrieve($vid);
+    }
+    
     return $mark;
   }
-
-
-  private function venueMark($vid){
-    $venue = new Venue($vid);
-    if(!$venue || !$venue->ok()){
-      Qwik::logMsg("failed to retrieve venue $vid");
-      return;
-    }
-    $name = $venue->name();
-    $mark = array(
-      self::LAT => $venue->lat(),
-      self::LNG => $venue->lng(),
-      self::NUM => $venue->playerCount(),
-      self::NAME => $name
-    );
-    return $mark;
+  
+  
+  private function staleMark($key){
+    $game = $this->game;
+    $lang = $this->lang;
+    $fileName = PATH_MARK."$game/$lang/$key.json";
+    $markTime = file_exists($fileName) ? filemtime($fileName) : NAN ;
+    $venueTime = Venue::modTime($key);
+    
+    return is_nan($markTime) || (!is_nan($venueTime) && $venueTime > $markTime);
   }
   
   

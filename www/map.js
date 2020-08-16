@@ -273,24 +273,25 @@ function showMarks(game, map, infowindow, max=30){
   const FAMILY = new Map();                         // parentKey:Set(childKey)
   const BOUNDS = map.getBounds();
   for (let [key, mark] of QWIK_MARKS){              //       survey QWIK_MARKS
+    if(!mark){ continue; }
     let inView = BOUNDS.contains(mark.center);
-    if(inView){                                    // categorize marks in view
-      mark.marker.setVisible(false);                    // default NOT visible
+    if(inView){                                     // categorize marks in view
+      mark.marker.setVisible(false);                //      default NOT visible
       let index = key.split('|').length;
       MARKS.get(index).set(key, mark);
-      let parent = parentKey(key);
-      if(!FAMILY.has(parent)){ FAMILY.set(parent, new Set()); }
-      FAMILY.get(parent).add(key);
     }
+    let parent = parentKey(key);
+    if(!FAMILY.has(parent)){ FAMILY.set(parent, new Set()); }
+    FAMILY.get(parent).add(key);
   }
   
   let visible = 0;
   for (let level=COUNTRY; level<VENUE; level++){
     const REGION = MARKS.get(level);
     let maxChildren = max - visible - REGION.size;
-    for (let [key, mark] of REGION){
-      const CHILDREN = FAMILY.get(key);                 // sub-regions of REGION 
-      const FETCH_CHILDREN = typeof CHILDREN === 'undefined';
+    for (let [key, mark] of REGION){ 
+      const FETCH_CHILDREN = !FAMILY.has(key);         // this mark sub-regions
+      const CHILDREN = FAMILY.get(key);                 // sub-regions of REGION
       const VISIBLE_B4 = mark.marker.getVisible();
       if(visible >= max){                                // enough marks already
           break;
@@ -346,7 +347,7 @@ function preFetch(avoidable, map, game, infowindow){
   const OUTER = expand(BOUNDS, CENTER, 2.0);
   for (let [key, mark] of QWIK_MARKS){
     let isMeta = key.split('|').length < 4;
-    if(isMeta){
+    if(isMeta && mark){
       let preZoom = INNER.contains(mark.center);
       let prePan  = OUTER.contains(map.center) && !BOUNDS.contains(map.center);
       let smallMeta = mark.area > META_SMALL * AREA;
@@ -421,7 +422,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
   console.log("fetching marks for "+LOC);
     
   if(region !== null){
-    addDummyChildMark(region, lat, lng); // acts has a placeholder to prevent duplication 
+    QWIK_MARKS.set(region, null);          // a placeholder to prevent duplication
   }
 }
 
@@ -446,7 +447,7 @@ function receiveMarks(json, map, infowindow){
       const GAME = json.game;
       const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)), map, infowindow);
       for(let [key, mark] of NEW_MARKS){
-        addNewMark(key, mark);
+        QWIK_MARKS.set(key, mark);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
       QWIK_MARKS.delete(DUMMY+'|'+LOCALITY+ADMIN1+COUNTRY);
@@ -454,43 +455,6 @@ function receiveMarks(json, map, infowindow){
       break;
     default:
   }
-}
-
-
-
-/******************************************************************************
- * Adds a new Mark to QWIK_MARKS, after hiding and disabling any existing
- * key:Mark mapping.
- * @param key String [[locality|]admin1|]country
- * @param mark Map()
- * @return null
- *****************************************************************************/
-function addNewMark(key, mark){
-  if(QWIK_MARKS.has(key)){
-    let oldMark = QWIK_MARKS.get(key);
-    oldMark.marker.setVisible(false);
-    oldMark.marker.setMap(null);
-  }
-  QWIK_MARKS.set(key, mark);
-}
-
-
-/******************************************************************************
- * Adds a DUMMY Mark to QWIK_MARKS to act as a placehlder during JSON latency.
- * A dummy mark is added to QWIK_MARKS byt fetchMarks() and removed in
- * receiveMarks(). Multiple identical calls to fetchMarks() are thus averted
- * during the time taken by the json call and response (see showMarks())
- * @param key String [[locality|]admin1|]country
- * @param lat Float latitude
- * @param lng Float longitude
- * @return Map null
- *****************************************************************************/
-function addDummyChildMark(key, lat, lng){
-  let dummy = {lat:lat, lng:lng}
-  dummy.center = gLatLng(lat, lng);
-  dummy.marker = new google.maps.Marker();
-  dummy.infoWindow = new google.maps.InfoWindow();
-  addNewMark(DUMMY+"|"+key, dummy);
 }
 
 
@@ -508,24 +472,28 @@ function addDummyChildMark(key, lat, lng){
 function endowMarks(marks, map, infowindow){
   if (!marks || !map ){ return {}; }
   for (let [key, mark] of marks){
-    mark.center = gLatLng(mark.lat, mark.lng);
-    mark.marker = markMarker(map, mark.center);    
-    mark.key = key;
-    let keys = key.split('|');
-    mark.name = keys[0];
-    let isVenue = keys.length === 4;
-    if(isVenue){
-      mark.marker.setIcon(VENUE_ICON);
-      google.maps.event.addListener(mark.marker, 'click', () => {
-        clickVenueMarker(mark, map, infowindow);
-      });      
-    } else {  // metaMark
-      mark.marker.setIcon(REGION_ICON);
-      mark.bounds = markBounds(mark);
-      mark.area = degArea(mark.bounds);
-      google.maps.event.addListener(mark.marker, 'click', () => {
-        clickRegionMarker(mark, map, infowindow);
-      }); 
+    if (isNaN(mark.lat) || isNaN(mark.lng)){
+      console.log("Warning: Received mark without lat-lng ".key);
+    } else {
+      mark.center = gLatLng(mark.lat, mark.lng);
+      mark.marker = markMarker(map, mark.center);    
+      mark.key = key;
+      let keys = key.split('|');
+      mark.name = keys[0];
+      let isVenue = keys.length === 4;
+      if(isVenue){
+        mark.marker.setIcon(VENUE_ICON);
+        google.maps.event.addListener(mark.marker, 'click', () => {
+          clickVenueMarker(mark, map, infowindow);
+        });      
+      } else {  // metaMark
+        mark.marker.setIcon(REGION_ICON);
+        mark.bounds = markBounds(mark);
+        mark.area = degArea(mark.bounds);
+        google.maps.event.addListener(mark.marker, 'click', () => {
+          clickRegionMarker(mark, map, infowindow);
+        }); 
+      }
     }
   }
   return marks;

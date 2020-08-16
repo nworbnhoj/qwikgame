@@ -1,6 +1,6 @@
 docReady(event => {
     initPage();
-    document.getElementById('invite-friends').addEventListener('click', clickInviteFriends);
+    document.getElementById('checkbox-friends').addEventListener('click', clickCheckboxFriends);
     document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
     addThumbListeners(document.documentElement);
     window.addEventListener('focus', repeatRefreshMatchRecords, false);
@@ -104,7 +104,7 @@ function showMap(show){
 }
 
 
-function clickInviteFriends(){
+function clickCheckboxFriends(){
     this.style.display = 'none';
     document.getElementById('friend-invites').style.display = 'block';
 }

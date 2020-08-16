@@ -9,7 +9,6 @@
  * on a Marker will show a Map InfoWindow with further actions.
  *****************************************************************************/
 const QWIK_MARKS = new Map();
-const DUMMY = 'dummy';
 const SEARCH_MARKERS = [];
 const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
 const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
@@ -293,6 +292,7 @@ function showMarks(game, map, infowindow, max=30){
       const FETCH_CHILDREN = !FAMILY.has(key);         // this mark sub-regions
       const CHILDREN = FAMILY.get(key);                 // sub-regions of REGION
       const VISIBLE_B4 = mark.marker.getVisible();
+      // first check all reasons to show this mark, and hide sub-region markers
       if(visible >= max){                                // enough marks already
           break;
       } else if(maxChildren <= 0){                 // enough sub-regions already
@@ -395,9 +395,9 @@ function markNumComparator(marks){
  * Load on server and bandwidth can be minimised by providing a string of
  * region keys (locality|admin1:country) for marks already held in QWIK_MARKS
  * and are thus avoidable.
- * A dummy mark is added to QWIK_MARKS here in fetchMarks() and removed in
- * reveiveMarks(). Multiple identical calls to fetchMarks() are thus averted
- * during the time taken by the json call and response (see showMarks())
+ * A null placeholder is added to QWIK_MARKS here in fetchMarks() and removed
+ * in revieveMarks(). Multiple identical calls to fetchMarks() are thus
+ * averted during the time taken by the json call and response (see showMarks())
  * @param game      String game to filter venue Markers
  * @param lat       Float latitude
  * @param lng       Float longitude
@@ -421,7 +421,8 @@ function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
   const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
   console.log("fetching marks for "+LOC);
     
-  if(region !== null){
+  if(region !== null
+    && !QWIK_MARKS.has(region)){
     QWIK_MARKS.set(region, null);          // a placeholder to prevent duplication
   }
 }
@@ -429,7 +430,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
 
 /******************************************************************************
  * A callback function to process the JSON response to fetchMarks().
- * A dummy mark added to QWIK_MARKS in fetchMarks() is removed here in
+ * A placeholder added to QWIK_MARKS in fetchMarks() is replaced here in
  * receiveMarks().
  * @param json 
  * @param map  google.maps.Map object to display the Markers
@@ -450,7 +451,6 @@ function receiveMarks(json, map, infowindow){
         QWIK_MARKS.set(key, mark);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
-      QWIK_MARKS.delete(DUMMY+'|'+LOCALITY+ADMIN1+COUNTRY);
       showMarks(GAME, map, infowindow);
       break;
     default:

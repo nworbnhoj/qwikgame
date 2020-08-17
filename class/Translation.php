@@ -28,13 +28,13 @@ class Translation extends PhraseBook {
             if(isset($wordsIndex)){
                 $phraseElement->words[$wordsIndex] = $phrase;
             } else {
-                $wordsElement = $phraseElement->addChild("words", "$phrase");
+                $wordsElement = $phraseElement->addChild("words", htmlspecialchars("$phrase"));
                 $wordsElement['lang'] = $lang;
             }
         } else {
             $phraseElement = $this->xml->addChild("phrase");
             $phraseElement["key"] = $key;
-            $wordsElement = $phraseElement->addChild("words", "$phrase");
+            $wordsElement = $phraseElement->addChild("words", htmlspecialchars("$phrase"));
             $wordsElement['lang'] = $lang;
         }
     }
@@ -88,7 +88,7 @@ class Translation extends PhraseBook {
             $phraseElement = $xml->addChild('phrase');
             $phraseElement->addAttribute('key', $key);
             foreach ($phrase as $lang => $dict){
-                $phraseElement->addChild($lang, $dict);
+                $phraseElement->addChild($lang, htmlspecialchars($dict));
             }     
         }
         $xml->saveXML("translation1.xml");

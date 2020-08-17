@@ -62,7 +62,7 @@ class Notify extends Qwik {
             $xml = NULL;
         } else if (isset($msg) && $msg != (int)$xml) {
             unset($xml);  // replace the current path or add a new path
-            $xml = $this->xml->addChild("path", $msg);
+            $xml = $this->xml->addChild("path", htmlspecialchars($msg));
             $xml->addAttribute('email', $email);
         }
         return $xml;
@@ -91,7 +91,7 @@ class Notify extends Qwik {
             $xml = NULL;
         } else if (isset($msg, $token, $key) && $msg != (string)$xml) {
             unset($xml);  // replace the current path or add a new path
-            $xml = $this->xml->addChild("path", $msg);
+            $xml = $this->xml->addChild("path", htmlspecialchars($msg));
             $xml->addAttribute('endpoint', $endpoint);
             $xml->addAttribute('token', $token);
             $xml->addAttribute('key', $key);

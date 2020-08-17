@@ -6,6 +6,7 @@ require_once 'Qwik.php';
 class Venue extends Qwik {
 
     const REVERT_CHAR = '⟲';
+    const DEFAULT_VENUE_XML = "<?xml version='1.0' encoding='UTF-8'?><venue/>";
 
 
     static function exists($id){
@@ -75,39 +76,25 @@ class Venue extends Qwik {
             if ($forge){
                 $this->save();
                 self::logMsg("new Venue: $id");
-            }
+            }           
         }
     }
 
 
     private function newXML(){
-        $id = $this->id();
-        $field =  explode('|', $id);
-        $record = "<venue ";
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " name='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " locality='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " admin1='$f'";
-        }
-
-        if(count($field) > 0){
-                $f = trim(array_shift($field));
-                $record .= " country='$f'";
-        }
-
-        $record .= " />";
-
-        return new SimpleXMLElement($record);
+      $xml = new SimpleXMLElement(self::DEFAULT_VENUE_XML);    
+      $id = $this->id();
+      $field = explode('|', $id);
+      if (count($field) === 4){
+        $xml->addAttribute("name",     $field[0]);
+        $xml->addAttribute("locality", $field[1]);
+        $xml->addAttribute("admin1",   $field[2]);
+        $xml->addAttribute("country",  $field[3]);      
+      } else {
+        Qwik::logMsg("Warning: unable to initialize venue - invalid venueId '$id'");
+        $xml = null;
+      }
+      return $xml;
     }
 
   
@@ -143,7 +130,7 @@ class Venue extends Qwik {
 
     /**
     * Check that each game sub-directory has a symlink back to this Venue - and if not
-    * then create one.
+    * then create one.s
     * @return TRUE if all game symlinks are present and accounted for, and FALSE
     * otherwise.
     * @throws RuntimeException if the linking operation fails in any way.
@@ -444,8 +431,8 @@ class Venue extends Qwik {
                 $edit = $this->xml->addChild('edit', '');
                 $edit->addAttribute('date', $date);
                 $edit->addAttribute('id', self::newID());
-                $edit->addChild('key', $key);
-                $edit->addChild('val', $oldVal);
+                $edit->addChild('key', htmlspecialchars($key));
+                $edit->addChild('val', htmlspecialchars($oldVal));
             }
             $this->xml[$key] = $value;
             return true;
@@ -471,14 +458,14 @@ class Venue extends Qwik {
 
     public function addPlayer($pid){
         if (count($this->xml->xpath("/venue[player='$pid']")) == 0){
-            $this->xml->addChild('player', "$pid");
+            $this->xml->addChild('player', htmlspecialchars("$pid"));
         }
     }
 
 
     public function addGame($game){
         if(count($this->xml->xpath("/venue[game='$game']")) == 0){
-            $this->xml->addChild('game', $game);
+            $this->xml->addChild('game', htmlspecialchars($game));
             return true;
         }
         return false;

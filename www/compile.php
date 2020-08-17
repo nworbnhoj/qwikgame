@@ -38,7 +38,7 @@ require_once PATH_CLASS.'Page.php';
         foreach($venues as $vid){
             $vids = $xml->xpath("venue[@id='$vid']");
             if (isset($vids[0])){
-                $vids[0]->addChild("game", $game);
+                $vids[0]->addChild("game", htmlspecialchars($game));
             }
         }
     }

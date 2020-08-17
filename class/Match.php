@@ -24,14 +24,14 @@ class Match extends Qwik {
             $this->xml->addAttribute('game', $game);
             $this->xml->addAttribute('date', $date->format('d-m-Y'));
             $this->xml->addAttribute('hrs', $hours->bits());
-            $v = $this->xml->addChild('venue', $venue->id());
+            $v = $this->xml->addChild('venue', htmlspecialchars($venue->id()));
             $v->addAttribute('tz', $venue->tz());
         } else { //refresh the VenueID in case it has been renamed
             $vid = (string) $this->xml->venue[0];
             $id = Venue::refreshID($vid);
             if($id !== $vid){
                 unset($this->xml->venue[0]);
-                $this->xml->addChild('venue', $id);
+                $this->xml->addChild('venue', htmlspecialchars($id));
             }
         }
     }
@@ -43,13 +43,13 @@ class Match extends Qwik {
         $this->xml->addAttribute('game', $match->game());
         $this->xml->addAttribute('date', $match->date());
         $this->xml->addAttribute('hrs', $match->hours()->bits());
-        $v = $this->xml->addChild('venue', $match->vid());
+        $v = $this->xml->addChild('venue', htmlspecialchars($match->vid()));
         $v->addAttribute('tz', $match->tz());
     }
 
 
     public function addRival($rid, $parity=NULL, $rep=NULL, $name=NULL){
-        $rival = $this->xml->addChild('rival', $rid);
+        $rival = $this->xml->addChild('rival', htmlspecialchars($rid));
         $rival->addAttribute('parity', $parity);
         $rival->addAttribute('rep', $rep);
         $rival->addAttribute('name', $name);

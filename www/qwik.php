@@ -49,7 +49,7 @@ function post($url, $data){
 function addHoursXML($element, $request, $day){
     $hourBits = hours2bits($request, $day);
     if ($hourBits > 0){
-        $element->addChild($day, hours2bits($request,$day));
+        $element->addChild($day, htmlspecialchars(hours2bits($request,$day)));
         return True;
     }
     return FALSE;

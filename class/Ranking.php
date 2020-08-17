@@ -144,7 +144,7 @@ class Ranking extends Qwik {
                     $rank = (int) trim($tupple[0]);
                     $sha256 = trim($tupple[1]);
                     if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
-                        $child = $this->xml->addChild('sha256', $sha256);
+                        $child = $this->xml->addChild('sha256', htmlspecialchars($sha256));
                         $child->addAttribute('rank', $rank);
                         $rankCount++;
                     } else {

@@ -185,7 +185,7 @@ class Player extends Qwik {
             $xmlEmail = $this->xml->email;
             $newEmail = strtolower($newEmail);
             if(empty($xmlEmail)){
-                $this->xml->addChild('email', $newEmail);
+                $this->xml->addChild('email', htmlspecialchars($newEmail));
             } else {
                 $oldEmail = $xmlEmail[0];
                 if (strcmp($oldEmail, $newEmail) != 0) {
@@ -214,7 +214,7 @@ class Player extends Qwik {
         }
 
         self::removeElement($this->xml->email[0]);
-        $this->xml->addChild('email', $newEmail);
+        $this->xml->addChild('email', htmlspecialchars($newEmail));
         $this->id = $newID;
         $this->xml['id'] = $newID;
 
@@ -224,7 +224,7 @@ class Player extends Qwik {
             self::logThrown($e);
             // back out email and id changes
             self::removeElement($this->xml->email[0]);
-            $this->xml->addChild('email', $oldEmail);
+            $this->xml->addChild('email', htmlspecialchars($oldEmail));
             $this->id = $oldID;
             $this->xml['id'] = $oldID;
             return FALSE;
@@ -244,7 +244,7 @@ class Player extends Qwik {
 
     public function token($term = Player::SECOND){
         $token = self::newToken(10);
-        $nekot = $this->xml->addChild('nekot', $this->nekot($token));
+        $nekot = $this->xml->addChild('nekot', htmlspecialchars($this->nekot($token)));
         $nekot->addAttribute('exp', time() + $term);
         $this->save();
         return $token;
@@ -523,7 +523,7 @@ class Player extends Qwik {
         $element->addAttribute('id', $newID);
         $element->addAttribute('game', $game);
         $element->addAttribute('parity', $parity);
-        $v = $element->addChild('venue', $vid);
+        $v = $element->addChild('venue', htmlspecialchars($vid));
         $v->addAttribute('tz', $tz);
         $days = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
         foreach($days as $day){
@@ -532,7 +532,7 @@ class Player extends Qwik {
                 $requestHrs = $req[$day];
             }
             if ($requestHrs) {
-                $hrs = $element->addChild('hrs', $requestHrs);
+                $hrs = $element->addChild('hrs', htmlspecialchars($requestHrs));
                 $hrs->addAttribute('day', $day);
             }
         }
@@ -885,7 +885,7 @@ class Player extends Qwik {
 
 
     public function uploadAdd($fileName){
-        $up = $this->xml->addChild('upload', $fileName);
+        $up = $this->xml->addChild('upload', htmlspecialchars($fileName));
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
     }
     

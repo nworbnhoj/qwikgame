@@ -1,7 +1,8 @@
 docReady(event => {
     initPage();
     document.getElementById('checkbox-friends').addEventListener('click', clickCheckboxFriends);
-    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
+    document.getElementById('venue-select').addEventListener('click', clickShowMapOption);
+    document.getElementById('venue-select').addEventListener('change', clickShowMapOption);
     addThumbListeners(document.documentElement);
     window.addEventListener('focus', repeatRefreshMatchRecords, false);
     window.addEventListener('blur', stopRefreshMatchRecords, false);
@@ -64,8 +65,8 @@ function clickSetRep(){
 }
 
 
-function changeVenueSelect(){
-  showMap(this.value === 'show-map');
+function clickShowMapOption(event){
+  showMap(this.value === 'show-map', event.target);
 }
 
 
@@ -84,9 +85,9 @@ function clickMapMarkVenue(event, venueId){
 }
 
 
-function showMap(show){
+function showMap(show, target){
   if (show){
-    document.getElementById('map').style.display = 'block';
+    showMapBelowForm(target);
     document.getElementById('match-hours').style.display = 'none';
     document.getElementById('invite-friends').style.display = 'none';
     document.getElementById('friend-invites').style.display = 'none';    

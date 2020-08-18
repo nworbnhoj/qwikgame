@@ -13,21 +13,23 @@ const SEARCH_MARKERS = [];
 const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
 const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
 const PLACE_ICON = "https://www.qwikgame.org/img/qwik.place.24x24.png";
-
+const MAP_OPTIONS = {
+  zoom: 10,
+  mapTypeID: 'ROADMAP',
+  mapTypeControl: false,
+  streetViewControl: false,
+  zoomControl: true
+};
+    
 
 function venuesMap() {
     const MAP_ELEMENT = document.getElementById('map');
     const LAT = parseFloat(document.getElementById('lat').value);
     const LNG = parseFloat(document.getElementById('lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
-    const MAP_OPTIONS = {
-        zoom: 10,
-        center: CENTER,
-        mapTypeID: 'ROADMAP',
-        mapTypeControl: false,
-        streetViewControl: false
-    };
-    const MAP = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
+    window.map = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
+    const MAP = window.map;
+    MAP.setCenter(CENTER);
     const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
     
     const GAME_SELECT = document.getElementById('game');
@@ -51,6 +53,18 @@ function venuesMap() {
     MAP.addListener('click', (event) => {
         clickHandler(event, MAP, INFOWINDOW)
     });
+}
+
+
+// https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
+function showMapBelowForm(element){
+  if(element){
+    const MAP_ELEMENT = document.getElementById("map");
+    const FORM = element.closest("form");
+    FORM.parentElement.insertBefore(MAP_ELEMENT, FORM.nextSibling);
+    MAP_ELEMENT.style.display = "block";
+    return MAP_ELEMENT;
+  }
 }
 
 
@@ -223,6 +237,18 @@ function clickCreateVenue(event){
 
   showMap(false);
 }
+
+
+function clickMapIcon(event){
+  const MAP = window.map;
+  const ELEMENT = event.target;
+  const COORDS = gLatLng(ELEMENT.dataset.lat, ELEMENT.dataset.lng);
+  const MAP_ELEMENT = showMapBelowForm(event.target);
+  google.maps.event.trigger(MAP,'resize');
+  MAP.panTo(COORDS);
+}
+
+
 
 
 /******************************************************************************

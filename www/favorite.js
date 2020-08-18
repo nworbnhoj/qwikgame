@@ -2,7 +2,8 @@ docReady(event => {
     initPage();
     addListeners(document.querySelectorAll('.tr-toggle'), 'click', clickTrToggle);
     document.getElementById('hr-any').addEventListener(   'click', clickAnytime,  false);
-    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
+    document.getElementById('venue-select').addEventListener('click', clickShowMapOption);
+    document.getElementById('venue-select').addEventListener('change', clickShowMapOption);
 });
 
 
@@ -46,8 +47,8 @@ function clickTrToggle(){
 }
 
 
-function changeVenueSelect(){
-  showMap(this.value === 'show-map');
+function clickShowMapOption(event){
+  showMap(this.value === 'show-map', event.target);
 }
 
 
@@ -66,8 +67,9 @@ function clickMapMarkVenue(event, venueId){
 }
 
 
-function showMap(show){
+function showMap(show, target){
   if (show){
+    showMapBelowForm(target);
     document.getElementById('map').style.display = 'block';
     document.getElementById('hr').style.display = 'none';    
   } else {   // hide the map div and show the other form elements

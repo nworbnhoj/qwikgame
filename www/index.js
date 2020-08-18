@@ -3,7 +3,8 @@ docReady(event => {
     document.getElementById('login-toggle').addEventListener('click', clickLoginToggle,     false);
     document.getElementById('lang-icon').addEventListener(   'click', clickButtonLanguage,  false);
     document.getElementById('lang-select').addEventListener('change', changeSelectLanguage, false);
-    document.getElementById('venue-select').addEventListener('change', changeVenueSelect);
+    document.getElementById('venue-select').addEventListener('click', clickShowMapOption);
+    document.getElementById('venue-select').addEventListener('change', clickShowMapOption);
     document.getElementById('venue-select').addEventListener('focus', mapShortcut);
 });
 
@@ -50,8 +51,8 @@ function changeSelectLanguage(){
 }
 
 
-function changeVenueSelect(){
-  showMap(this.value === 'show-map');
+function clickShowMapOption(event){
+  showMap(this.value === 'show-map', event.target);
 }
 
 
@@ -78,9 +79,10 @@ function mapShortcut(){
 }
 
 
-function showMap(show=true){
+function showMap(show=true, target){
     let map = document.getElementById('map');
     if (show){
+        showMapBelowForm(target);
         map.style.display = 'block';
         map.focus();
     } else {

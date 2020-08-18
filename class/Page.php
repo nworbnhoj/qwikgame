@@ -474,11 +474,17 @@ class Page extends Html {
 
 
     public function venueLink($vid){
-        $name = explode("|", $vid)[0];
-        $boldName = $this->firstWordBold($name);
-        $url = QWIK_URL."venue.php?vid=$vid";
-        $link = "<a href='$url'>$boldName</a>";
-        return $link;
+      $venue = new Venue($vid);
+      $name = $venue->name();
+      $boldName = $this->firstWordBold($name);
+      $icon = self::MAP_ICON;
+      $url = $venue->url();
+      $lat = $venue->lat();
+      $lng = $venue->lng();
+      $fn = "clickMapIcon(event)";
+      $venueLink = empty($url) ? $boldName : "<a href='$url' target='_blank'>$boldName</a>";
+      $mapIcon = "<span class='$icon' data-lat='$lat' data-lng='$lng' onclick='$fn'></span>";
+      return "$venueLink $mapIcon";
     }
 
     

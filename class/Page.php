@@ -487,38 +487,6 @@ class Page extends Html {
       return "$venueLink $mapIcon";
     }
 
-    
-    function similarVenues($description, $game=NULL){
-        $description = trim($description);
-        if (strlen($description) == 0) { return array(); }
-
-        $words = explode(" ", $description, 5);
-        foreach($words as $key=>$val){
-            $word = trim($val);
-            if (strlen($word) > 2){
-                $words[$key] = $word;
-            } else {
-                unset($words[$key]);
-            }
-        }
-        if (sizeof($words) == 0) { return array(); }
-
-        $similar = array();
-        $existingVenues = self::venues($game);
-        foreach($existingVenues as $venueID){
-            $venueid = strtolower($venueID);
-            $hits = 0;
-            foreach($words as $word){
-                $hits += substr_count($venueid, strtolower($word));
-            }
-            if($hits > 0){
-                $similar[$venueID] = $hits;
-            }
-        }
-        arsort($similar);
-        return array_keys($similar);
-    }
-
 
     function listVenues($game){
     //echo "<br>LISTVENUES<br>";

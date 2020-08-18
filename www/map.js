@@ -27,10 +27,10 @@ function venuesMap() {
     const LAT = parseFloat(document.getElementById('lat').value);
     const LNG = parseFloat(document.getElementById('lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
-    window.map = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
-    const MAP = window.map;
+    window.venue-map = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
+    window.infowindow = new google.maps.InfoWindow({content: "<div></div>"});
+    const MAP = window.venue-map;
     MAP.setCenter(CENTER);
-    const INFOWINDOW = new google.maps.InfoWindow({content: "<div></div>"});
     
     const GAME_SELECT = document.getElementById('game');
     const GAME = GAME_SELECT.value;
@@ -44,14 +44,14 @@ function venuesMap() {
         SEARCHBOX.setBounds(MAP.getBounds());
     });
     SEARCHBOX.addListener("places_changed", () => {
-        searchChangeHandler(MAP, SEARCHBOX.getPlaces(), INFOWINDOW);
+        searchChangeHandler(SEARCHBOX.getPlaces());
     });
     
     MAP.addListener('idle', () => {
-        mapIdleHandler(MAP, GAME, INFOWINDOW)
+        mapIdleHandler(GAME)
     });
     MAP.addListener('click', (event) => {
-        clickHandler(event, MAP, INFOWINDOW)
+        clickHandler(event)
     });
 }
 
@@ -68,18 +68,20 @@ function showMapBelowForm(element){
 }
 
 
-function mapIdleHandler(map, game, infowindow){
-  const CENTER = map.getCenter();
+function mapIdleHandler(game){
+  const MAP = window.venue-map;
+  const CENTER = MAP.getCenter();
   const LAT = Number((CENTER.lat()).toFixed(3));
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable();
-  fetchMarks(game, LAT, LNG, null, AVOIDABLE, map, infowindow);
-  showMarks(game, map, infowindow);
-//  preFetch(AVOIDABLE, map, game, infowindow);
+  fetchMarks(game, LAT, LNG, null, AVOIDABLE);
+  showMarks(game);
+//  preFetch(AVOIDABLE, game);
 }
 
 
-function searchChangeHandler(map, places, infowindow){
+function searchChangeHandler(places){
+  const MAP = window.venue-map;
   if (places.length == 0) { return; }
   
   SEARCH_MARKERS.forEach(marker => {
@@ -101,7 +103,7 @@ function searchChangeHandler(map, places, infowindow){
     SEARCH_MARKERS.push(MARKER);
         
     google.maps.event.addListener(MARKER, 'click', () => {
-      clickSearchMarker(place, map, infowindow);
+      clickSearchMarker(place);
     });    
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
@@ -110,13 +112,13 @@ function searchChangeHandler(map, places, infowindow){
       BOUNDS.extend(place.geometry.location);
     }
   });
-  map.fitBounds(BOUNDS);
+  MAP.fitBounds(BOUNDS);
 }
 
 
-function clickHandler(event, map, infowindow){
+function clickHandler(event){
   if (event.placeId) {
-    clickPOI(event.placeId, event.latLng, map, infowindow);
+    clickPOI(event.placeId, event.latLng);
     event.stop();
   }
 }
@@ -134,8 +136,10 @@ function resetMap(){
 }
 
 
-function clickRegionMarker(mark, map, infowindow){
-  map.panTo(mark.marker.getPosition());
+function clickRegionMarker(mark){
+  const MAP = window.venue-map;
+  const INFOWINDOW = window.infowindow;
+  MAP.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-region");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -145,17 +149,19 @@ function clickRegionMarker(mark, map, infowindow){
   const SPAN_NUM = FRAG.getElementById("map-mark-region-venues");
   SPAN_NUM.textContent = mark.num + '';       // + '' is a string conversion
   
-  infowindow.setOptions({
+  INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
     position: mark.center,
     pixelOffset: new google.maps.Size(0,-30)
   });
-  infowindow.open(map);
+  INFOWINDOW.open(map);
 }
 
 
-function clickVenueMarker(mark, map, infowindow){
-  map.panTo(mark.marker.getPosition());
+function clickVenueMarker(mark){
+  const INFOWINDOW = window.infowindow;
+  const MAP = window.venue-map;
+  MAP.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-venue");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -169,29 +175,32 @@ function clickVenueMarker(mark, map, infowindow){
   const SPAN = FRAG.getElementById("map-mark-venue-players");
   SPAN.textContent = mark.num + '';       // + '' is a string conversion
 
-  infowindow.setOptions({
+  INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
     position: mark.center,
     pixelOffset: new google.maps.Size(0,-30)
   });
-  infowindow.open(map);
+  INFOWINDOW.open(map);
 }
 
 
 
-function clickSearchMarker(place, map, infowindow){
-  map.panTo(place.geometry.location);
-  showInfowindowPlace(place, map, infowindow);
+function clickSearchMarker(place){
+  const MAP = window.venue-map;
+  MAP.panTo(place.geometry.location);
+  showInfowindowPlace(place);
 }
 
 
-function clickPOI(placeId, latLng, map, infowindow){
-  map.panTo(latLng);
-  showInfowindowPlaceId(placeId, map, infowindow);
+function clickPOI(placeId, latLng){
+  const MAP = window.venue-map;
+  MAP.panTo(latLng);
+  showInfowindowPlaceId(placeId);
 }
 
 
-function showInfowindowPlace(place, map, infowindow){
+function showInfowindowPlace(place){
+  const INFOWINDOW = window.infowindow;
   const TEMPLATE = document.getElementById("infowindow-poi");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -200,21 +209,21 @@ function showInfowindowPlace(place, map, infowindow){
   LINK.setAttribute("placeid", place.place_id);
   LINK.setAttribute("venuename", place.name);
   
-  infowindow.setOptions({
+  INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
     position: place.geometry.location,
     pixelOffset: new google.maps.Size(0,-24)
   });
-  infowindow.open(map);
+  INFOWINDOW.open(map);
 }
 
 
-function showInfowindowPlaceId(placeId, map, infowindow){    
+function showInfowindowPlaceId(placeId){    
   const PLACE_SERVICES = new google.maps.places.PlacesService(map);
   const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
-      showInfowindowPlace(place, map, infowindow);
+      showInfowindowPlace(place);
     } else {
       console.log(status);
     }
@@ -285,7 +294,8 @@ function getAvoidable(){
  * @param max Integer the maximum number of markers to show on map
  * @return null
  *****************************************************************************/
-function showMarks(game, map, infowindow, max=30){
+function showMarks(game, max=30){
+  const MAP = window.venue-map;
   const COUNTRY = 1;
   const ADMIN1 = 2;
   const LOCALITY = 3;
@@ -296,7 +306,7 @@ function showMarks(game, map, infowindow, max=30){
   MARKS.set(LOCALITY, new Map());                    //     3  key:localityMark
   MARKS.set(VENUE, new Map());                       //     4     key:venueMark
   const FAMILY = new Map();                         // parentKey:Set(childKey)
-  const BOUNDS = map.getBounds();
+  const BOUNDS = MAP.getBounds();
   for (let [key, mark] of QWIK_MARKS){              //       survey QWIK_MARKS
     if(!mark){ continue; }
     let inView = BOUNDS.contains(mark.center);
@@ -325,7 +335,7 @@ function showMarks(game, map, infowindow, max=30){
         mark.marker.setVisible(true);
       } else if(FETCH_CHILDREN){                 // fetch markers for sub-region
         mark.marker.setVisible(true);
-        fetchMarks(game, mark.lat, mark.lng, key, parentKey(key), map, infowindow);
+        fetchMarks(game, mark.lat, mark.lng, key, parentKey(key));
       } else if(CHILDREN.size === 0                // dont show empty sub-region
              || CHILDREN.size > maxChildren){// dont show overcrowded sub region
         mark.marker.setVisible(true);
@@ -365,9 +375,10 @@ const META_TINY      = 1/400;
 const META_MICRO     = 1/500;
 const META_MINISCULE = 1/600;
 
-function preFetch(avoidable, map, game, infowindow){
-  const CENTER = map.getCenter();
-  const BOUNDS = map.getBounds();
+function preFetch(avoidable, game){
+  const MAP = window.venue-map;
+  const CENTER = MAP.getCenter();
+  const BOUNDS = MAP.getBounds();
   const AREA = degArea(BOUNDS);
   const INNER = expand(BOUNDS, CENTER, 0.5);
   const OUTER = expand(BOUNDS, CENTER, 2.0);
@@ -375,12 +386,12 @@ function preFetch(avoidable, map, game, infowindow){
     let isMeta = key.split('|').length < 4;
     if(isMeta && mark){
       let preZoom = INNER.contains(mark.center);
-      let prePan  = OUTER.contains(map.center) && !BOUNDS.contains(map.center);
+      let prePan  = OUTER.contains(MAP.center) && !BOUNDS.contains(MAP.center);
       let smallMeta = mark.area > META_SMALL * AREA;
       let tinyMeta  = mark.area > META_TINY * AREA;
       if((tinyMeta && preZoom)                  // pre-fetch marks for zoom-in
       || (smallMeta && prePan)){                // pre-fetch marks for pan
-        fetchMarks(game, null, null, key, avoidable, map, infowindow);
+        fetchMarks(game, null, null, key, avoidable);
       }
     }
   }
@@ -432,7 +443,7 @@ function markNumComparator(marks){
  * @param map       google.maps.Map object to display the Markers
  * @return 
  *****************************************************************************/
-function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
+function fetchMarks(game, lat, lng, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }
   if(map === null || typeof map === 'undefined'){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
@@ -442,7 +453,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
   const ESC = encodeURIComponent;
   const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
   const PATH = 'json/venue.marks.php?'+QUERY;
-  qwikJSON(PATH, receiveMarks, map, infowindow);
+  qwikJSON(PATH, receiveMarks);
   // report to console
   const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
   console.log("fetching marks for "+LOC);
@@ -462,7 +473,7 @@ function fetchMarks(game, lat, lng, region, avoidable, map, infowindow){
  * @param map  google.maps.Map object to display the Markers
  * @return null
  *****************************************************************************/
-function receiveMarks(json, map, infowindow){
+function receiveMarks(json){
   if(typeof json.status === 'undefined' || json.status === null){ return; }
   const COUNTRY = json.country !== null ? json.country : '';
   const ADMIN1 = json.admin1 !== null ? json.admin1+'|' : '';
@@ -472,12 +483,12 @@ function receiveMarks(json, map, infowindow){
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
       if(typeof json.marks === 'undefined' || json.marks === null){ return; }
       const GAME = json.game;
-      const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)), map, infowindow);
+      const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
       for(let [key, mark] of NEW_MARKS){
         QWIK_MARKS.set(key, mark);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
-      showMarks(GAME, map, infowindow);
+      showMarks(GAME);
       break;
     default:
   }
@@ -495,14 +506,14 @@ function receiveMarks(json, map, infowindow){
  * @param map google.maps.Map to receive the Marker
  * @return Map of endowed key:Marks
  *****************************************************************************/
-function endowMarks(marks, map, infowindow){
+function endowMarks(marks){
   if (!marks || !map ){ return {}; }
   for (let [key, mark] of marks){
     if (isNaN(mark.lat) || isNaN(mark.lng)){
       console.log("Warning: Received mark without lat-lng ".key);
     } else {
       mark.center = gLatLng(mark.lat, mark.lng);
-      mark.marker = markMarker(map, mark.center);    
+      mark.marker = markMarker(mark.center);    
       mark.key = key;
       let keys = key.split('|');
       mark.name = keys[0];
@@ -510,14 +521,14 @@ function endowMarks(marks, map, infowindow){
       if(isVenue){
         mark.marker.setIcon(VENUE_ICON);
         google.maps.event.addListener(mark.marker, 'click', () => {
-          clickVenueMarker(mark, map, infowindow);
+          clickVenueMarker(mark);
         });      
       } else {  // metaMark
         mark.marker.setIcon(REGION_ICON);
         mark.bounds = markBounds(mark);
         mark.area = degArea(mark.bounds);
         google.maps.event.addListener(mark.marker, 'click', () => {
-          clickRegionMarker(mark, map, infowindow);
+          clickRegionMarker(mark);
         }); 
       }
     }
@@ -532,7 +543,7 @@ function endowMarks(marks, map, infowindow){
  * @param position LatLng coordinates for Marker placement on map
  * @return google.maps.Marker Object
  *****************************************************************************/
-function markMarker(map, position){
+function markMarker(position){
   const MARKER_OPTIONS = {position:position, visible:false, map:map};
   return new google.maps.Marker(MARKER_OPTIONS);
 }

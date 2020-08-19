@@ -9,6 +9,7 @@
  * on a Marker will show a Map InfoWindow with further actions.
  *****************************************************************************/
 const QWIK_MARKS = new Map();
+const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const SEARCH_MARKERS = [];
 const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
 const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
@@ -310,7 +311,6 @@ function showMarks(game, max=30){
   MARKS.set(ADMIN1, new Map());                      //     2    key:admin1Mark
   MARKS.set(LOCALITY, new Map());                    //     3  key:localityMark
   MARKS.set(VENUE, new Map());                       //     4     key:venueMark
-  const FAMILY = new Map();                         // parentKey:Set(childKey)
   const BOUNDS = MAP.getBounds();
   for (let [key, mark] of QWIK_MARKS){              //       survey QWIK_MARKS
     if(!mark){ continue; }
@@ -320,9 +320,6 @@ function showMarks(game, max=30){
       let index = key.split('|').length;
       MARKS.get(index).set(key, mark);
     }
-    let parent = parentKey(key);
-    if(!FAMILY.has(parent)){ FAMILY.set(parent, new Set()); }
-    FAMILY.get(parent).add(key);
   }
   
   let visible = 0;
@@ -330,8 +327,8 @@ function showMarks(game, max=30){
     const REGION = MARKS.get(level);
     let maxChildren = max - visible - REGION.size;
     for (let [key, mark] of REGION){ 
-      const FETCH_CHILDREN = !FAMILY.has(key);         // this mark sub-regions
-      const CHILDREN = FAMILY.get(key);                 // sub-regions of REGION
+      const FETCH_CHILDREN = !QWIK_REGION.has(key);    // this mark sub-regions
+      const CHILDREN = QWIK_REGION.get(key);           // sub-regions of REGION
       const VISIBLE_B4 = mark.marker.getVisible();
       // first check all reasons to show this mark, and hide sub-region markers
       if(visible >= max){                                // enough marks already
@@ -340,13 +337,13 @@ function showMarks(game, max=30){
         mark.marker.setVisible(true);
       } else if(FETCH_CHILDREN){                 // fetch markers for sub-region
         mark.marker.setVisible(true);
-        fetchMarks(game, mark.lat, mark.lng, key, parentKey(key));
+        fetchMarks(game, mark.lat, mark.lng, key, regionKey(key));
       } else if(CHILDREN.size === 0                // dont show empty sub-region
              || CHILDREN.size > maxChildren){// dont show overcrowded sub region
         mark.marker.setVisible(true);
       } else {                                        // show sub-region markers
         mark.marker.setVisible(false);
-        let childKeys = FAMILY.get(key);
+        let childKeys = QWIK_REGION.get(key);
         for(let childKey of childKeys){
           QWIK_MARKS.get(childKey).marker.setVisible(true);
         }
@@ -365,12 +362,6 @@ function showMarks(game, max=30){
       visible++;
     }
   }
-}
-
-
-function parentKey(key){
-  let i = key.indexOf("|");
-  return (i>0) ? key.slice(i+1) : '';
 }
 
 
@@ -445,7 +436,6 @@ function markNumComparator(marks){
  * @param lng       Float longitude
  * @param region    String [[locality|]admin1|]country
  * @param avoidable String
- * @param map       google.maps.Map object to display the Markers
  * @return 
  *****************************************************************************/
 function fetchMarks(game, lat, lng, region, avoidable){
@@ -473,8 +463,7 @@ function fetchMarks(game, lat, lng, region, avoidable){
  * A callback function to process the JSON response to fetchMarks().
  * A placeholder added to QWIK_MARKS in fetchMarks() is replaced here in
  * receiveMarks().
- * @param json 
- * @param map  google.maps.Map object to display the Markers
+ * @param json
  * @return null
  *****************************************************************************/
 function receiveMarks(json){
@@ -490,12 +479,21 @@ function receiveMarks(json){
       const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
       for(let [key, mark] of NEW_MARKS){
         QWIK_MARKS.set(key, mark);
+        let region = regionKey(key);
+        if(!QWIK_REGION.has(region)){ QWIK_REGION.set(region, new Set()); }
+        QWIK_REGION.get(region).add(key);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
       showMarks(GAME);
       break;
     default:
   }
+}
+
+
+function regionKey(key){
+  let i = key.indexOf("|");
+  return (i>0) ? key.slice(i+1) : '';
 }
 
 
@@ -507,7 +505,6 @@ function receiveMarks(json){
  * - a label for venueMarks
  * - google.maps.Bounds, degree Area and qwik icon for metaMarks
  * @param marks Map of key:Marks to be endowed
- * @param map google.maps.Map to receive the Marker
  * @return Map of endowed key:Marks
  *****************************************************************************/
 function endowMarks(marks){

@@ -20,6 +20,9 @@ const MAP_OPTIONS = {
   streetViewControl: false,
   zoomControl: true
 };
+
+var qwikMap;
+var qwikInfowindow;
     
 
 function venuesMap() {
@@ -27,9 +30,9 @@ function venuesMap() {
     const LAT = parseFloat(document.getElementById('lat').value);
     const LNG = parseFloat(document.getElementById('lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
-    window.venue-map = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
-    window.infowindow = new google.maps.InfoWindow({content: "<div></div>"});
-    const MAP = window.venue-map;
+    qwikMap = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
+    qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
+    const MAP = qwikMap;
     MAP.setCenter(CENTER);
     
     const GAME_SELECT = document.getElementById('game');
@@ -69,7 +72,7 @@ function showMapBelowForm(element){
 
 
 function mapIdleHandler(game){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   const CENTER = MAP.getCenter();
   const LAT = Number((CENTER.lat()).toFixed(3));
   const LNG = Number((CENTER.lng()).toFixed(3));
@@ -81,7 +84,7 @@ function mapIdleHandler(game){
 
 
 function searchChangeHandler(places){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   if (places.length == 0) { return; }
   
   SEARCH_MARKERS.forEach(marker => {
@@ -95,7 +98,7 @@ function searchChangeHandler(places){
     if (!place.geometry) { return; }
     
     const MARKER = new google.maps.Marker({
-      map: map,
+      map: MAP,
       icon: PLACE_ICON,
       position: place.geometry.location
     });
@@ -137,8 +140,8 @@ function resetMap(){
 
 
 function clickRegionMarker(mark){
-  const MAP = window.venue-map;
-  const INFOWINDOW = window.infowindow;
+  const MAP = qwikMap;
+  const INFOWINDOW = qwikInfowindow;
   MAP.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-region");
   const FRAG = TEMPLATE.content.cloneNode(true);
@@ -154,13 +157,13 @@ function clickRegionMarker(mark){
     position: mark.center,
     pixelOffset: new google.maps.Size(0,-30)
   });
-  INFOWINDOW.open(map);
+  INFOWINDOW.open(MAP);
 }
 
 
 function clickVenueMarker(mark){
-  const INFOWINDOW = window.infowindow;
-  const MAP = window.venue-map;
+  const INFOWINDOW = qwikInfowindow;
+  const MAP = qwikMap;
   MAP.panTo(mark.marker.getPosition());
   const TEMPLATE = document.getElementById("infowindow-venue");
   const FRAG = TEMPLATE.content.cloneNode(true);
@@ -180,27 +183,28 @@ function clickVenueMarker(mark){
     position: mark.center,
     pixelOffset: new google.maps.Size(0,-30)
   });
-  INFOWINDOW.open(map);
+  INFOWINDOW.open(MAP);
 }
 
 
 
 function clickSearchMarker(place){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   MAP.panTo(place.geometry.location);
   showInfowindowPlace(place);
 }
 
 
 function clickPOI(placeId, latLng){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   MAP.panTo(latLng);
   showInfowindowPlaceId(placeId);
 }
 
 
 function showInfowindowPlace(place){
-  const INFOWINDOW = window.infowindow;
+  const MAP = qwikMap;
+  const INFOWINDOW = qwikInfowindow;
   const TEMPLATE = document.getElementById("infowindow-poi");
   const FRAG = TEMPLATE.content.cloneNode(true);
 
@@ -214,12 +218,13 @@ function showInfowindowPlace(place){
     position: place.geometry.location,
     pixelOffset: new google.maps.Size(0,-24)
   });
-  INFOWINDOW.open(map);
+  INFOWINDOW.open(MAP);
 }
 
 
-function showInfowindowPlaceId(placeId){    
-  const PLACE_SERVICES = new google.maps.places.PlacesService(map);
+function showInfowindowPlaceId(placeId){
+  const MAP = qwikMap;   
+  const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
   const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
@@ -249,12 +254,12 @@ function clickCreateVenue(event){
 
 
 function clickMapIcon(event){
-  const MAP = window.map;
+  const MAP = qwikMap;
   const ELEMENT = event.target;
   const COORDS = gLatLng(ELEMENT.dataset.lat, ELEMENT.dataset.lng);
   const MAP_ELEMENT = showMapBelowForm(event.target);
   google.maps.event.trigger(MAP,'resize');
-  MAP.panTo(COORDS);
+  MAP.setCenter(COORDS);
 }
 
 
@@ -295,7 +300,7 @@ function getAvoidable(){
  * @return null
  *****************************************************************************/
 function showMarks(game, max=30){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   const COUNTRY = 1;
   const ADMIN1 = 2;
   const LOCALITY = 3;
@@ -376,7 +381,7 @@ const META_MICRO     = 1/500;
 const META_MINISCULE = 1/600;
 
 function preFetch(avoidable, game){
-  const MAP = window.venue-map;
+  const MAP = qwikMap;
   const CENTER = MAP.getCenter();
   const BOUNDS = MAP.getBounds();
   const AREA = degArea(BOUNDS);
@@ -445,7 +450,6 @@ function markNumComparator(marks){
  *****************************************************************************/
 function fetchMarks(game, lat, lng, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }
-  if(map === null || typeof map === 'undefined'){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
   const PARAMS = region === null ? 
                  {game:game, lat:lat, lng:lng, avoidable:avoidable} :
@@ -507,7 +511,7 @@ function receiveMarks(json){
  * @return Map of endowed key:Marks
  *****************************************************************************/
 function endowMarks(marks){
-  if (!marks || !map ){ return {}; }
+  if (!marks){ return {}; }
   for (let [key, mark] of marks){
     if (isNaN(mark.lat) || isNaN(mark.lng)){
       console.log("Warning: Received mark without lat-lng ".key);
@@ -544,7 +548,8 @@ function endowMarks(marks){
  * @return google.maps.Marker Object
  *****************************************************************************/
 function markMarker(position){
-  const MARKER_OPTIONS = {position:position, visible:false, map:map};
+  const MAP = qwikMap;
+  const MARKER_OPTIONS = {position:position, visible:false, map:MAP};
   return new google.maps.Marker(MARKER_OPTIONS);
 }
 

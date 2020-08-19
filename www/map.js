@@ -353,15 +353,6 @@ function showMarks(game, max=30){
       visible += +mark.marker.getVisible() -VISIBLE_B4;
     }
   }
-	
-  // Show venue markers up to max
-  for (let [key, venue] of MARKS.get(VENUE)){
-    if(visible >= max){ break; } 
-    if(!venue.marker.getVisible()){
-      venue.marker.setVisible(true);
-      visible++;
-    }
-  }
 }
 
 

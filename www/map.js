@@ -467,14 +467,9 @@ function fetchMarks(game, lat, lng, region, avoidable){
   const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
   console.log("fetching marks for "+LOC);
     
-<<<<<<< HEAD
   if(region !== null
     && !QWIK_REGION.has(region)){
     QWIK_REGION.set(region, new Set());          // a placeholder to prevent duplication
-=======
-  if(region !== null && !QWIK_REGION.has(region)){  
-    QWIK_REGION.set(region, new Set());  // placeholder to prevent duplicate calls
->>>>>>> 16cb3102212c6a3d00473785e2054f7ac9b7c667
   }
 }
 
@@ -498,7 +493,6 @@ function receiveMarks(json){
       const GAME = json.game;
       const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
       for(let [key, mark] of NEW_MARKS){
-<<<<<<< HEAD
         if (typeof mark !== 'undefined'){
           QWIK_MARKS.set(key, mark);
           mark.marker.setVisible(true);
@@ -506,12 +500,6 @@ function receiveMarks(json){
         const REGION_KEY = regionKey(key);
         if(REGION_KEY){
           if(!QWIK_REGION.has(REGION_KEY)){ QWIK_REGION.set(REGION_KEY, new Set()); }
-=======
-        QWIK_MARKS.set(key, mark);
-        const REGION_KEY = regionKey(key);
-        if(REGION_KEY){
-          if (!QWIK_REGION.has(REGION_KEY)){ QWIK_REGION.set(REGION_KEY, new Set()); }
->>>>>>> 16cb3102212c6a3d00473785e2054f7ac9b7c667
           QWIK_REGION.get(REGION_KEY).add(key);
         }
       }

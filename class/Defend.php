@@ -25,7 +25,7 @@ class Defend extends Qwik {
         'phrase'      => 2000,
         'push-key'    => 88,
         'push-token'  => 24,
-        'region'      => 50,
+        'region'      => 100,
         'reply'       => 3,
         'route'       => 100,
         'tz'          => 100,
@@ -302,7 +302,7 @@ class Defend extends Qwik {
         } elseif(array_key_exists($key, self::CLIP)){
             $clipped = substr($data, 0, self::CLIP[$key]);
             if ($clipped !== $data){
-                Page::logMsg("Defend clipped [$key] $clipped");
+                Qwik::logMsg("Defend clipped [$key] $clipped");
             }
         }
         return $clipped;

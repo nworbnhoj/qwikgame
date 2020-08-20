@@ -34,6 +34,7 @@ function venuesMap() {
     qwikMap = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
     qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
     const MAP = qwikMap;
+    const INFOWINDOW = qwikInfowindow;
     MAP.setCenter(CENTER);
     
     const GAME_SELECT = document.getElementById('game');
@@ -56,6 +57,12 @@ function venuesMap() {
     });
     MAP.addListener('click', (event) => {
         clickHandler(event)
+    });    
+    MAP.addListener('bounds_changed', () => {
+        showMarks(GAME);
+    });    
+    MAP.addListener('zoom_changed', () => {
+        INFOWINDOW.close();
     });
 }
 
@@ -300,57 +307,52 @@ function getAvoidable(){
  * @param max Integer the maximum number of markers to show on map
  * @return null
  *****************************************************************************/
-function showMarks(game, max=30){
+function showMarks(game, maxMarks=30){
   const MAP = qwikMap;
-  const COUNTRY = 1;
-  const ADMIN1 = 2;
-  const LOCALITY = 3;
-  const VENUE = 4;
-  const MARKS = new Map();                           //           key:regionMap
-  MARKS.set(COUNTRY, new Map());                     //     1   key:countryMark
-  MARKS.set(ADMIN1, new Map());                      //     2    key:admin1Mark
-  MARKS.set(LOCALITY, new Map());                    //     3  key:localityMark
-  MARKS.set(VENUE, new Map());                       //     4     key:venueMark
-  const BOUNDS = MAP.getBounds();
-  for (let [key, mark] of QWIK_MARKS){              //       survey QWIK_MARKS
-    if(!mark){ continue; }
-    let inView = BOUNDS.contains(mark.center);
-    if(inView){                                     // categorize marks in view
-      mark.marker.setVisible(false);                //      default NOT visible
-      let index = key.split('|').length;
-      MARKS.get(index).set(key, mark);
-    }
-  }
+  const VISIBLE = new Map();                          //        key:regionMap
+  VISIBLE.set(1,  new Map());                         //     1  key:countryMark
+  VISIBLE.set(2,  new Map());                         //     2  key:admin1Mark
+  VISIBLE.set(3,  new Map());                         //     3  key:localityMark
+  VISIBLE.set(4,  new Map());                         //     4  key:venueMark
   
-  let visible = 0;
-  for (let level=COUNTRY; level<VENUE; level++){
-    const REGION = MARKS.get(level);
-    let maxChildren = max - visible - REGION.size;
-    for (let [key, mark] of REGION){ 
-      const FETCH_CHILDREN = !QWIK_REGION.has(key);    // this mark sub-regions
-      const CHILDREN = QWIK_REGION.get(key);           // sub-regions of REGION
-      const VISIBLE_B4 = mark.marker.getVisible();
-      // first check all reasons to show this mark, and hide sub-region markers
-      if(visible >= max){                                // enough marks already
-          break;
-      } else if(maxChildren <= 0){                 // enough sub-regions already
-        mark.marker.setVisible(true);
-      } else if(FETCH_CHILDREN){                 // fetch markers for sub-region
-        mark.marker.setVisible(true);
-        fetchMarks(game, mark.lat, mark.lng, key, regionKey(key));
-      } else if(CHILDREN.size === 0                // dont show empty sub-region
-             || CHILDREN.size > maxChildren){// dont show overcrowded sub region
-        mark.marker.setVisible(true);
-      } else {                                        // show sub-region markers
-        mark.marker.setVisible(false);
-        let childKeys = QWIK_REGION.get(key);
-        for(let childKey of childKeys){
-          QWIK_MARKS.get(childKey).marker.setVisible(true);
-        }
-        visible += childKeys.size;
-        maxChildren -= childKeys.size;
+  const BOUNDS = MAP.getBounds();
+  for (const [KEY, MARK] of QWIK_MARKS){                  //       survey QWIK_MARKS
+    if(!MARK){ continue; }
+    if(BOUNDS.contains(MARK.center)){               // categorize marks in view
+      const LEVEL = KEY.split('|').length;
+      VISIBLE.get(LEVEL).set(KEY, MARK);
+    }
+  } 
+
+  let visibleMarks = 0;
+  for (const LEVEL of [1,2,3]){
+    const MARKS = VISIBLE.get(LEVEL);
+    let maxSubMarks = maxMarks - visibleMarks - MARKS.size;
+    for (const [REGION_KEY, MARK] of MARKS){
+      const HAS_REGION_KEY = QWIK_REGION.has(REGION_KEY);
+      const SUB_KEYS = HAS_REGION_KEY ? QWIK_REGION.get(REGION_KEY) : new Set();
+      let showSubMarks = false;
+      const MARK = QWIK_MARKS.get(REGION_KEY);
+      const VISIBLE_B4 = MARK.marker.getVisible();
+      if(visibleMarks >= maxMarks){                  // too manyMarkers already
+        MARK.marker.setVisible(false);
+      } else if(!HAS_REGION_KEY){
+        fetchMarks(game, null, null, REGION_KEY, [regionKey(REGION_KEY)]);
+      } else if(maxSubMarks <= 0                 // no more room for subMarkers
+             || SUB_KEYS.size === 0                // dont show empty subRegion
+             || SUB_KEYS.size > maxSubMarks){  // too many Markers in subRegion
+        MARK.marker.setVisible(true);
+      } else {                                     // show Markers in subRegion
+        MARK.marker.setVisible(false);
+        showSubMarks = true;
+        visibleMarks += SUB_KEYS.size;
+        maxSubMarks -= SUB_KEYS.size;
       }
-      visible += +mark.marker.getVisible() -VISIBLE_B4;
+      // show/hide children
+      for(const KEY of SUB_KEYS){
+        QWIK_MARKS.get(KEY).marker.setVisible(showSubMarks);
+      }
+      visibleMarks += +MARK.marker.getVisible() -VISIBLE_B4;
     }
   }
 }
@@ -444,8 +446,8 @@ function fetchMarks(game, lat, lng, region, avoidable){
   console.log("fetching marks for "+LOC);
     
   if(region !== null
-    && !QWIK_MARKS.has(region)){
-    QWIK_MARKS.set(region, null);          // a placeholder to prevent duplication
+    && !QWIK_REGION.has(region)){
+    QWIK_REGION.set(region, new Set());          // a placeholder to prevent duplication
   }
 }
 
@@ -469,13 +471,17 @@ function receiveMarks(json){
       const GAME = json.game;
       const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
       for(let [key, mark] of NEW_MARKS){
-        QWIK_MARKS.set(key, mark);
-        let region = regionKey(key);
-        if(!QWIK_REGION.has(region)){ QWIK_REGION.set(region, new Set()); }
-        QWIK_REGION.get(region).add(key);
+        if (typeof mark !== 'undefined'){
+          QWIK_MARKS.set(key, mark);
+          mark.marker.setVisible(true);
+        };
+        const REGION_KEY = regionKey(key);
+        if(REGION_KEY){
+          if(!QWIK_REGION.has(REGION_KEY)){ QWIK_REGION.set(REGION_KEY, new Set()); }
+          QWIK_REGION.get(REGION_KEY).add(key);
+        }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
-      showMarks(GAME);
       break;
     default:
   }
@@ -484,7 +490,7 @@ function receiveMarks(json){
 
 function regionKey(key){
   let i = key.indexOf("|");
-  return (i>0) ? key.slice(i+1) : '';
+  return (i>0) ? key.slice(i+1) : false;
 }
 
 

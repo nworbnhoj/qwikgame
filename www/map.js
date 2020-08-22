@@ -59,7 +59,7 @@ function venuesMap() {
         clickHandler(event)
     });    
     MAP.addListener('bounds_changed', () => {
-        showMarks(GAME);
+        fetchVisible(GAME);
     });    
     MAP.addListener('zoom_changed', () => {
         INFOWINDOW.close();
@@ -268,6 +268,7 @@ function clickMapIcon(event){
   const MAP_ELEMENT = showMapBelowForm(event.target);
   google.maps.event.trigger(MAP,'resize');
   MAP.setCenter(COORDS);
+  MAP.setZoom(15);
 }
 
 
@@ -292,21 +293,41 @@ function getAvoidable(){
 }
 
 
-function visibleRegion(game){
+/******************************************************************************
+ * Surveys all QWIK_MARKS and fetches missing sub-Marks from inside the Map
+ * viewport.
+ * @global QWIK_MARKS Map(marker-keys : Marks)
+ * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
+ *****************************************************************************/
+function fetchVisible(game){
+  const MAP = qwikMap;
+  const BOUNDS = MAP.getBounds();
+  for(const [KEY, MARK] of QWIK_MARKS){
+    if(!QWIK_REGION.has(KEY)
+    && BOUNDS.contains(MARK.center)){
+      fetchMarks(game, null, null, KEY, [superKey(KEY)]);  
+    }
+  }
+}
+
+
+/******************************************************************************
+ * A Map of marker-keys to Set(sub-marker-keys) for Markers inside the Map
+ * viewport. This is the visible portion of the QWIK_REGION global.
+ * @global QWIK_REGION Map(marker-keys : Set(sub-marker-keys))
+ * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
+ *****************************************************************************/
+function visibleRegion(){
   const VISIBLE = new Map();
   const REGION = QWIK_REGION;
   const MAP = qwikMap;
   const BOUNDS = MAP.getBounds();
-  for (const [REGION_KEY, SUB_KEYS] of REGION){
+  for (const [SUPER_KEY, SUB_KEYS] of REGION){
     for (const KEY of SUB_KEYS){
       const MARK = QWIK_MARKS.get(KEY);
       if(BOUNDS.contains(MARK.center)){
-        if(!VISIBLE.has(REGION_KEY)){ VISIBLE.set(REGION_KEY, new Set()); }
-        VISIBLE.get(REGION_KEY).add(KEY);
-        // fetch the subMarks for each visible Mark without subMarks
-        if(!REGION.has(KEY)){
-          fetchMarks(game, null, null, KEY, REGION_KEY);
-        }
+        if(!VISIBLE.has(SUPER_KEY)){ VISIBLE.set(SUPER_KEY, new Set()); }
+        VISIBLE.get(SUPER_KEY).add(KEY);
       }
     }
   }
@@ -315,68 +336,109 @@ function visibleRegion(game){
 
 
 /******************************************************************************
- * Shows a maximum number of Markers in the visible part of a google Map.
- * The following general process is completed until max markers are shown...
- * 1. Visible marks are categorized as country, admin1, locality or venue.
- * 2. Marks are each mapped to their set of sub-marks (parent:set(children))
- * 3. Visible country markers are shown, or replaced by admin1 sub-marks
- * 4. Visible admin1 markers are shown, or replaced by locality sub-marks
- * 5. Visible locality markers are shown, or replaced by venue sub-marks
- * 6. Visible venue markers are shown
- * Also, sub-marks are obtained on demand as required with fetchMarks().
- * @param game String the qwik game to show venue markers for.
- * @param map google.maps.Map object to display the Markers
- * @param max Integer the maximum number of markers to show on map
+ * Shows Markers on the Map representing qwikgame Venues and Venue clusters.
+ * The basic idea is to preferentially show the cluster markers that represent
+ * the largest number of sub-Markers (and to hide the sub-Markers). And, when
+ * the Map is zoomed in to an area represented by a cluster Marker, the cluster
+ * Marker is hidden (and the sub-Markers shown) at some suitable point.
+ *
+ * JSON requests are made to the server to obtain Marker data for the current
+ * Map view-port. This data is stored in the global variables QWIK_MARKS 
+ * Map(key:mark) and QWIK_REGION Map(key:Set(sub-key)). 
+ 
+ * Key steps in the process include:
+ * - a call to visibleRegion() returns the visible portion of the QWIK_REGION
+ *   data structure. Each cluster Marker key is mapped to a Set of sub-Marker
+ *   keys.
+ * - These cluster Markers are sorted by size (the number of sub-Markers).
+ *   This list is processed from largest to smallest to show or hide the
+ *   each Marker.
+ * - The largest cluster Marker is set to be visible. Each of it's
+ *   super-Markers and subMarkers are set to be hidden, and removed from the 
+ *   sorted list. This step is then repeated with the next largest Marker
+ *   (in the reduced list).
+ * - An exception to the prior step is made when the physical area
+ *   represented by the cluster Marker is larger that of the Map view-port.
+ *   In this case the cluster Marker is hidden and removed from the sorted
+ *   list - while the subMarkers remain in the sorted list (to be processed
+ *   in turn)
+ *
+ * @global QWIK_MARKS a Map of marker-keys to Marker-data
+ * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
  * @return null
  *****************************************************************************/
-function showMarks(game, maxMarks=30){
+function showMarks(){
   const MAP = qwikMap;
-  const VISIBLE = new Map();                          //        key:regionMap
-  VISIBLE.set(1,  new Map());                         //     1  key:countryMark
-  VISIBLE.set(2,  new Map());                         //     2  key:admin1Mark
-  VISIBLE.set(3,  new Map());                         //     3  key:localityMark
-  VISIBLE.set(4,  new Map());                         //     4  key:venueMark
+  // Use the diagonal distance across the Map as a proxy of Map area
+  const MAP_BOUNDS = MAP.getBounds();
+  const NE = MAP_BOUNDS.getNorthEast();
+  const SW = MAP_BOUNDS.getSouthWest();
+  const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
   
-  const BOUNDS = MAP.getBounds();
-  for (const [KEY, MARK] of QWIK_MARKS){                  //       survey QWIK_MARKS
-    if(!MARK){ continue; }
-    if(BOUNDS.contains(MARK.center)){               // categorize marks in view
-      const LEVEL = KEY.split('|').length;
-      VISIBLE.get(LEVEL).set(KEY, MARK);
-    }
-  } 
-
-  let visibleMarks = 0;
-  for (const LEVEL of [1,2,3]){
-    const MARKS = VISIBLE.get(LEVEL);
-    let maxSubMarks = maxMarks - visibleMarks - MARKS.size;
-    for (const [REGION_KEY, MARK] of MARKS){
-      const HAS_REGION_KEY = QWIK_REGION.has(REGION_KEY);
-      const SUB_KEYS = HAS_REGION_KEY ? QWIK_REGION.get(REGION_KEY) : new Set();
-      let showSubMarks = false;
-      const MARK = QWIK_MARKS.get(REGION_KEY);
-      const VISIBLE_B4 = MARK.marker.getVisible();
-      if(visibleMarks >= maxMarks){                  // too manyMarkers already
-        MARK.marker.setVisible(false);
-      } else if(!HAS_REGION_KEY){
-        fetchMarks(game, null, null, REGION_KEY, [regionKey(REGION_KEY)]);
-      } else if(maxSubMarks <= 0                 // no more room for subMarkers
-             || SUB_KEYS.size === 0                // dont show empty subRegion
-             || SUB_KEYS.size > maxSubMarks){  // too many Markers in subRegion
-        MARK.marker.setVisible(true);
-      } else {                                     // show Markers in subRegion
-        MARK.marker.setVisible(false);
-        showSubMarks = true;
-        visibleMarks += SUB_KEYS.size;
-        maxSubMarks -= SUB_KEYS.size;
-      }
-      // show/hide children
-      for(const KEY of SUB_KEYS){
-        QWIK_MARKS.get(KEY).marker.setVisible(showSubMarks);
-      }
-      visibleMarks += +MARK.marker.getVisible() -VISIBLE_B4;
+  // create a Set of Region Keys, sorted by the number of sub-Regions within  
+  const VISIBLE = visibleRegion();                  // a Map of visible regions 
+  const KEYS = Array.from(VISIBLE.keys());
+  KEYS.sort(function(a,b){
+    return QWIK_REGION.get(b).size - QWIK_REGION.get(a).size
+  });
+  const SORTED = new Set(KEYS);
+  
+  while (SORTED.size > 0) {
+    const KEY = SORTED.keys().next().value;
+    SORTED.delete(KEY);
+    
+    const MARK = QWIK_MARKS.get(KEY);
+    const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
+    if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
+      MARK.marker.setVisible(false);
+      hideSuperMarkers(KEY, SORTED);
+    } else if(VISIBLE.get(KEY).size === 1){      // is there only 1 subMarker?
+      MARK.marker.setVisible(false);
+      const SOLE_KEY = [...VISIBLE.get(KEY)][0];
+      QWIK_MARKS.get(SOLE_KEY).marker.setVisible(true);
+    } else {         // otherwise show this Marker and hide super & sub Markers
+      MARK.marker.setVisible(true);
+      hideSuperMarkers(KEY, SORTED);
+      hideSubMarkers(KEY, SORTED);
     }
   }
+}
+  
+  
+// hide all superMarkers of key and remove each key from keySet
+function hideSuperMarkers(key, keySet){
+  for(const K of superKeys(key)){
+    keySet.delete(K);
+    const MARK = QWIK_MARKS.get(K);
+    if (MARK){
+      MARK.marker.setVisible(false);
+    }
+  }    
+}
+
+
+// hide all subMarkers of key and remove each key from keySet
+function hideSubMarkers(key, keySet){
+  if(!QWIK_REGION.has(key)){ return; }
+  for (const K of QWIK_REGION.get(key)){
+    keySet.delete(K);
+    const MARK = QWIK_MARKS.get(K);
+    if (MARK){
+      MARK.marker.setVisible(false);
+    }
+    hideSubMarkers(K, keySet);
+  }
+}
+  
+
+function superKeys(key){
+  const KEYS = [];
+  let k = key.split("|");
+  while (k.length > 0){
+    k.shift();
+    KEYS.push(k.join("|"));
+  }
+  return KEYS;
 }
 
 
@@ -469,7 +531,7 @@ function fetchMarks(game, lat, lng, region, avoidable){
     
   if(region !== null
     && !QWIK_REGION.has(region)){
-    QWIK_REGION.set(region, new Set());          // a placeholder to prevent duplication
+    QWIK_REGION.set(region, new Set()); // a placeholder to prevent duplication
   }
 }
 
@@ -491,16 +553,21 @@ function receiveMarks(json){
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
       if(typeof json.marks === 'undefined' || json.marks === null){ return; }
       const GAME = json.game;
+      const MAP = qwikMap;
+      const BOUNDS = MAP.getBounds();
       const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
       for(let [key, mark] of NEW_MARKS){
+        const SUPER_KEY = superKey(key);
         if (typeof mark !== 'undefined'){
           QWIK_MARKS.set(key, mark);
           mark.marker.setVisible(true);
+          if(BOUNDS.contains(mark.center)){   // if visible fetch subMarks ASAP
+            fetchMarks(GAME, null, null, key, SUPER_KEY);
+          }
         };
-        const REGION_KEY = regionKey(key);
-        if(REGION_KEY){
-          if(!QWIK_REGION.has(REGION_KEY)){ QWIK_REGION.set(REGION_KEY, new Set()); }
-          QWIK_REGION.get(REGION_KEY).add(key);
+        if(SUPER_KEY){
+          if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
+          QWIK_REGION.get(SUPER_KEY).add(key);
         }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
@@ -510,14 +577,14 @@ function receiveMarks(json){
 }
 
 
-function regionKey(key){
+function superKey(key){
   let i = key.indexOf("|");
   return (i>0) ? key.slice(i+1) : false;
 }
 
 
 /******************************************************************************
- * Endows raw Marks received by JSON with additions required to organize and 
+ * Endows raw Marks received by JSON withn additions required to organize and 
  * show map Markers.
  * The endowments include:
  * - a LatLng center, a google.maps.Marker, and a google.,aps.InfoWindow
@@ -654,5 +721,35 @@ function sizeComparator(marks){
     return bMark.num - aMark.num;  // largest first 
   }
 }
+
+
+ 
+/**
+ * Calculates the haversine distance between point A, and B.
+ * @param google.maps.LatLng latlngA point A
+ * @param google.maps.LatLng latlngB point B
+ * https://stackoverflow.com/a/48805273/1438864
+ */
+const haversineDistance = (latA, lngA, latB, lngB) => {
+  const toRadian = angle => (Math.PI / 180) * angle;
+  const distance = (a, b) => (Math.PI / 180) * (a - b);
+  const RADIUS_OF_EARTH_IN_KM = 6371;
+
+  const dLat = distance(latB, latA);
+  const dLng = distance(lngB, lngA);
+
+  latA = toRadian(latA);
+  latB = toRadian(latB);
+
+  // Haversine Formula
+  const a =
+    Math.pow(Math.sin(dLat / 2), 2) +
+    Math.pow(Math.sin(dLng / 2), 2) * Math.cos(latA) * Math.cos(latB);
+  const c = 2 * Math.asin(Math.sqrt(a));
+
+  let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
+
+  return finalDistance;
+};
 
 

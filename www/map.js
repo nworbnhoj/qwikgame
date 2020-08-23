@@ -11,7 +11,7 @@
 const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const SEARCH_MARKERS = [];
-const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.30x50.png";
+const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.21x35.png";
 const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
 const PLACE_ICON = "https://www.qwikgame.org/img/qwik.place.24x24.png";
 const MAP_OPTIONS = {

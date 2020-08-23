@@ -305,7 +305,7 @@ function fetchVisible(game){
   for(const [KEY, MARK] of QWIK_MARKS){
     if(!QWIK_REGION.has(KEY)
     && BOUNDS.contains(MARK.center)){
-      fetchMarks(game, null, null, KEY, [superKey(KEY)]);  
+      fetchMarks(game, null, null, KEY, superKey(KEY));  
     }
   }
 }
@@ -367,7 +367,7 @@ function visibleRegion(){
  * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
  * @return null
  *****************************************************************************/
-function showMarks(){
+function showMarks(game){
   const MAP = qwikMap;
   // Use the diagonal distance across the Map as a proxy of Map area
   const MAP_BOUNDS = MAP.getBounds();
@@ -392,14 +392,42 @@ function showMarks(){
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, SORTED);
+      showSubMarkers(VISIBLE.get(KEY), game);
     } else if(VISIBLE.get(KEY).size === 1){      // is there only 1 subMarker?
       MARK.marker.setVisible(false);
-      const SOLE_KEY = [...VISIBLE.get(KEY)][0];
-      QWIK_MARKS.get(SOLE_KEY).marker.setVisible(true);
+      showSubMarkers(VISIBLE.get(KEY), game);
     } else {         // otherwise show this Marker and hide super & sub Markers
       MARK.marker.setVisible(true);
       hideSuperMarkers(KEY, SORTED);
       hideSubMarkers(KEY, SORTED);
+    }
+  }
+}
+
+
+/******************************************************************************
+ * Shows Markers from the supplied Set of Mark keys.
+ * Iterates thru the Marks:
+ * - Venue Markers are set visible
+ * - Region Marks are ignored other than to fetch the sub-marks if an entry
+ *   does not already exist in QWIK_REGION.
+ * @param marks
+ * @param game
+ * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
+ * @return null
+ *****************************************************************************/
+function showSubMarkers(KEYS, game){
+  for(const KEY of KEYS){
+    if(!QWIK_REGION.has(KEY)){   // ignore Regions Marks already in QWIK_REGION
+      if (KEY.split("|").length === 4){                         // Venue Marker
+        const MARK = QWIK_MARKS.get(KEY);
+        const MARKER = MARK.marker;
+        if(typeof MARKER !== "undefined"){
+          MARKER.setVisible(true);
+        }
+      } else {                                                 // Region Marker
+        fetchMarks(game, null, null, KEY, superKey(KEY));
+      }
     }
   }
 }
@@ -517,6 +545,7 @@ function markNumComparator(marks){
  *****************************************************************************/
 function fetchMarks(game, lat, lng, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }
+  if(region !== null && region.split("|").length > 3){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
   const PARAMS = region === null ? 
                  {game:game, lat:lat, lng:lng, avoidable:avoidable} :
@@ -565,7 +594,7 @@ function receiveMarks(json){
             fetchMarks(GAME, null, null, key, SUPER_KEY);
           }
         };
-        if(SUPER_KEY){
+        if(SUPER_KEY.length > 0){
           if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
           QWIK_REGION.get(SUPER_KEY).add(key);
         }
@@ -579,7 +608,7 @@ function receiveMarks(json){
 
 function superKey(key){
   let i = key.indexOf("|");
-  return (i>0) ? key.slice(i+1) : false;
+  return (i>0) ? key.slice(i+1) : '';
 }
 
 

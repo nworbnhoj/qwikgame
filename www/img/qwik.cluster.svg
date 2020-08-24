@@ -9,7 +9,7 @@
     <circle cx="100" cy="236" r="45" />
     <circle cx="200" cy="236" r="45" />
   </g>
-  <g fill="orange">
+  <g fill="darkorange">
     <circle cx="100" cy="64" r="15" />
     <circle cx="200" cy="64" r="15" />
     <circle cx="50" cy="150" r="15" />

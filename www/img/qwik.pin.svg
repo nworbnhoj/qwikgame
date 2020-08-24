@@ -4,13 +4,13 @@
     <circle cx="150" cy="150" r="150" />
     <polygon points="5,190 295,190 150,500" />
   </g>
-  <g fill="orange" transform="translate(50,35)">
+  <g fill="darkorange" transform="translate(50,35)">
     <mask id="mask">
       <rect  x="0" y="0" width="200" height="250" fill="white" />
       <ellipse cx="100" cy="125" rx="60" ry="80" fill="black" />
       <polygon points="100,100 100,150 200,150 200,0" fill="black" />
     </mask>
-    <ellipse cx="100" cy="125" rx="100" ry="125" stroke="orange" mask="url(#mask)" />
+    <ellipse cx="100" cy="125" rx="100" ry="125" stroke="darkorange" mask="url(#mask)" />
     <polygon points="100,150 200,150 200,250" />
     <circle cx="175" cy="125" r="25" />
   </g>

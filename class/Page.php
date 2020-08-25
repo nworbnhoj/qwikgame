@@ -473,7 +473,7 @@ class Page extends Html {
     }
 
 
-    public function venueLink($vid){
+    public function venueLink($vid, $game){
       $venue = new Venue($vid);
       $name = $venue->name();
       $boldName = $this->firstWordBold($name);
@@ -481,9 +481,10 @@ class Page extends Html {
       $url = $venue->url();
       $lat = $venue->lat();
       $lng = $venue->lng();
+      $num = $venue->playerCount();
       $fn = "clickMapIcon(event)";
-      $venueLink = empty($url) ? $boldName : "<a href='$url' target='_blank'>$boldName</a>";
-      $mapIcon = "<span class='$icon' data-lat='$lat' data-lng='$lng' onclick='$fn'></span>";
+      $venueLink = empty($url) ? $boldName : "<a href='$url' tsarget='_blank'>$boldName</a>";
+      $mapIcon = "<span class='$icon' data-vid='$vid' data-lat='$lat' data-lng='$lng' data-num='$num' data-game='$game' onclick='$fn'></span>";
       return "$venueLink $mapIcon";
     }
 

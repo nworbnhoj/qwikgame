@@ -35,7 +35,8 @@ class FavoriteList extends Card {
                 'gameName'  => self::gameName($game),
                 'parity'    => (string) $avail['parity'],
                 'weekSpan'  => $this->weekSpan($avail),
-                'venueLink' => $this->venueLink($avail->venue)
+                'venueLink' => $this->venueLink($avail->venue, $game),
+                'game'      => $game
             );
             $vars = $variables + $playerVars + $availVars;
             $group .= $this->populate($html, $vars);

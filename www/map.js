@@ -38,8 +38,7 @@ function venuesMap() {
     MAP.setCenter(CENTER);
     
     const GAME_SELECT = document.getElementById('game');
-    const GAME = GAME_SELECT.value;
-    GAME_SELECT.addEventListener('change', resetMap);
+    GAME_SELECT.addEventListener('change', changeGame);
 
     // setup Places search box in map
     const INPUT = document.getElementById("map-search");
@@ -53,13 +52,13 @@ function venuesMap() {
     });
     
     MAP.addListener('idle', () => {
-        mapIdleHandler(GAME)
+        mapIdleHandler()
     });
     MAP.addListener('click', (event) => {
         clickHandler(event)
     });    
     MAP.addListener('bounds_changed', () => {
-        fetchVisible(GAME);
+        fetchVisible();
     });    
     MAP.addListener('zoom_changed', () => {
         INFOWINDOW.close();
@@ -67,27 +66,86 @@ function venuesMap() {
 }
 
 
-// https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
-function showMapBelowForm(element){
+
+/******************************************************************************
+ * Relocates the Map Element (contains global qwikMap) to immediately after
+ * the Form Element containing the supplied element.
+ *
+ * element DOM Element indicating the form to locate the Map after
+ * display boolean true to display the Map immediately on relocation
+ * @global qwikMap google.maps.Map
+ * @return null
+ *
+ * https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
+ *****************************************************************************/
+function showMapBelowForm(element, display=true){
   if(element){
-    const MAP_ELEMENT = document.getElementById("map");
-    const FORM = element.closest("form");
-    FORM.parentElement.insertBefore(MAP_ELEMENT, FORM.nextSibling);
-    MAP_ELEMENT.style.display = "block";
-    return MAP_ELEMENT;
+    try {
+      const MAP = qwikMap;
+      const PRE_GAME = game();
+      const MAP_ELEMENT = document.getElementById("map");
+      const FORM = element.closest("form");
+      FORM.parentElement.insertBefore(MAP_ELEMENT, FORM.nextSibling);
+      if(game() !== PRE_GAME){
+        clearMarks();
+      }
+      MAP_ELEMENT.style.display = display ? "block" : "none";
+      google.maps.event.trigger(MAP, 'resize');
+      return MAP_ELEMENT;
+    } catch (error) {
+      console.log("Warning: failed to relocate map - missing map|form|game");
+      return null;
+    }
   }
 }
 
 
-function mapIdleHandler(game){
+/******************************************************************************
+ * Clears all Marks from globals QWIK_MARKS and QWIK_REGION and removes all
+ * Markers from qwikMap.
+ *
+ * @global QWIK_MARKS Map(marker-keys : Marks)
+ * @global QWIK_REGION Map(marker-key : Set(marker-sub-keys)
+ * @return null
+ *****************************************************************************/
+function clearMarks(){
+  for(const [KEY, MARK] of QWIK_MARKS){
+    MARK.marker.setMap(null);    
+  }
+  QWIK_MARKS.clear();
+  QWIK_REGION.clear();
+}
+
+
+/******************************************************************************
+ * Discovers the Game of the Form above the Map. (ie the currently Map game)
+ *
+ * @return the current Game.
+ *****************************************************************************/
+function game(){
+  try {
+    const MAP_ELEMENT = document.getElementById("map");
+    const FORM = MAP_ELEMENT.previousSibling;
+    const GAME = FORM.querySelector("[name=game]").value;
+    return GAME;
+  }
+  catch (error) {
+    return null;
+  }
+}
+
+
+function mapIdleHandler(){
   const MAP = qwikMap;
+  const GAME = game();
+  if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
   const CENTER = MAP.getCenter();
   const LAT = Number((CENTER.lat()).toFixed(3));
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable();
-  fetchMarks(game, LAT, LNG, null, AVOIDABLE);
-  showMarks(game);
-//  preFetch(AVOIDABLE, game);
+  fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
+  showMarks(GAME);
+//  preFetch(AVOIDABLE, GAME);
 }
 
 
@@ -135,12 +193,16 @@ function clickHandler(event){
 }
 
 
-function resetMap(){
-    QWIK_MARKS.clear();
-    let venueSelect = document.getElementById('venue-select');
-    let options = venueSelect.querySelectorAll(':not([id])');
-    for(let option of options){
-        option.parentNode.removeChild(option);
+function changeGame(){
+  clearMarks();
+  resetVenues();
+}    
+
+
+function resetVenues(){
+    const VENUE_SELECT = document.getElementById('venue-select');
+    for(const OPTION of VENUE_SELECT.querySelectorAll(':not([id])')){
+        OPTION.parentNode.removeChild(OPTION);
     }
     document.getElementById('venue-prompt').selected=true;
     venuesMap();
@@ -261,14 +323,28 @@ function clickCreateVenue(event){
 }
 
 
+/******************************************************************************
+ * Responds to a click on the Pin icon on a qwikgame record.
+ * The Map is relocated to below the Form containing the Pin, a new Venue
+ * Marker is created to and places on the Map, and the Map is focussed on the
+ * Pin.
+ *
+ * @return null
+ *****************************************************************************/
 function clickMapIcon(event){
-  const MAP = qwikMap;
   const ELEMENT = event.target;
-  const COORDS = gLatLng(ELEMENT.dataset.lat, ELEMENT.dataset.lng);
-  const MAP_ELEMENT = showMapBelowForm(event.target);
-  google.maps.event.trigger(MAP,'resize');
-  MAP.setCenter(COORDS);
-  MAP.setZoom(15);
+  const KEY = ELEMENT.dataset.vid;   
+  const GAME = ELEMENT.dataset.game;
+  fetchMarks(GAME, null, null, KEY, '');
+  showMapBelowForm(ELEMENT);
+  addVenueMark(
+    KEY,
+    ELEMENT.dataset.lat,
+    ELEMENT.dataset.lng,
+    ELEMENT.dataset.num,
+    GAME
+  );
+  focusOnMark(KEY, GAME);
 }
 
 
@@ -299,13 +375,15 @@ function getAvoidable(){
  * @global QWIK_MARKS Map(marker-keys : Marks)
  * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
  *****************************************************************************/
-function fetchVisible(game){
+function fetchVisible(){
   const MAP = qwikMap;
+  const GAME = game();
+  if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
   const BOUNDS = MAP.getBounds();
   for(const [KEY, MARK] of QWIK_MARKS){
     if(!QWIK_REGION.has(KEY)
     && BOUNDS.contains(MARK.center)){
-      fetchMarks(game, null, null, KEY, superKey(KEY));  
+      fetchMarks(GAME, null, null, KEY, superKey(KEY));
     }
   }
 }
@@ -324,7 +402,9 @@ function visibleRegion(){
   const BOUNDS = MAP.getBounds();
   for (const [SUPER_KEY, SUB_KEYS] of REGION){
     for (const KEY of SUB_KEYS){
+      if(!QWIK_MARKS.has(KEY)){ continue; }
       const MARK = QWIK_MARKS.get(KEY);
+      
       if(BOUNDS.contains(MARK.center)){
         if(!VISIBLE.has(SUPER_KEY)){ VISIBLE.set(SUPER_KEY, new Set()); }
         VISIBLE.get(SUPER_KEY).add(KEY);
@@ -581,27 +661,54 @@ function receiveMarks(json){
     case 'OK':
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
       if(typeof json.marks === 'undefined' || json.marks === null){ return; }
-      const GAME = json.game;
+      if(json.game !== game()){ return; }
       const MAP = qwikMap;
-      const BOUNDS = MAP.getBounds();
-      const NEW_MARKS = endowMarks(new Map(Object.entries(json.marks)));
+      const NEW_MARKS = new Map(Object.entries(json.marks));
       for(let [key, mark] of NEW_MARKS){
-        const SUPER_KEY = superKey(key);
-        if (typeof mark !== 'undefined'){
-          QWIK_MARKS.set(key, mark);
-          mark.marker.setVisible(true);
-          if(BOUNDS.contains(mark.center)){   // if visible fetch subMarks ASAP
-            fetchMarks(GAME, null, null, key, SUPER_KEY);
-          }
-        };
-        if(SUPER_KEY.length > 0){
-          if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
-          QWIK_REGION.get(SUPER_KEY).add(key);
-        }
+        addMark(key, mark, json.game);
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
       break;
     default:
+  }
+}
+
+
+
+function addMark(key, mark, game){
+  const MAP = qwikMap;
+  if (typeof key === 'undefined' || typeof mark === 'undefined'){
+    console.log("Warning: addMark() called without required parameters "+key+" "+mark);
+    return;
+  }
+  if (isNaN(mark.lat) || isNaN(mark.lng)){
+    console.log("Warning: Received mark without lat-lng ".key);
+    return;
+  } 
+  
+  if(QWIK_MARKS.has(key)){
+    disposeMark(key);    
+  }
+  
+  QWIK_MARKS.set(key, mark);
+  endowMark(key, mark);
+  const SUPER_KEY = superKey(key);
+  if(SUPER_KEY.length > 0){
+    if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
+    QWIK_REGION.get(SUPER_KEY).add(key);
+  }
+  const BOUNDS = MAP.getBounds();
+  if(BOUNDS.contains(mark.center)){   // if visible fetch subMarks ASAP
+    fetchMarks(game, null, null, key, SUPER_KEY);
+  }
+  return mark;
+}
+
+
+function disposeMark(key){
+  const MARK = QWIK_MARKS.get(key);
+  if(typeof MARK !== 'undefined'){
+    MARK.marker.setMap(null);
   }
 }
 
@@ -613,44 +720,43 @@ function superKey(key){
 
 
 /******************************************************************************
- * Endows raw Marks received by JSON withn additions required to organize and 
+ * Endows a raw Mark received by JSON withn additions required to organize and 
  * show map Markers.
  * The endowments include:
  * - a LatLng center, a google.maps.Marker, and a google.,aps.InfoWindow
  * - a label for venueMarks
  * - google.maps.Bounds, degree Area and qwik icon for metaMarks
- * @param marks Map of key:Marks to be endowed
- * @return Map of endowed key:Marks
+ * @param key unique id of the Mark
+ * @param mark the Mark to be endowed
+ * @return Mark
  *****************************************************************************/
-function endowMarks(marks){
-  if (!marks){ return {}; }
-  for (let [key, mark] of marks){
-    if (isNaN(mark.lat) || isNaN(mark.lng)){
-      console.log("Warning: Received mark without lat-lng ".key);
-    } else {
-      mark.center = gLatLng(mark.lat, mark.lng);
-      mark.marker = markMarker(mark.center);    
-      mark.key = key;
-      let keys = key.split('|');
-      mark.name = keys[0];
-      let isVenue = keys.length === 4;
-      if(isVenue){
-        mark.marker.setIcon(VENUE_ICON);
-        google.maps.event.addListener(mark.marker, 'click', () => {
-          clickVenueMarker(mark);
-        });      
-      } else {  // metaMark
-        mark.marker.setIcon(REGION_ICON);
-        mark.bounds = markBounds(mark);
-        mark.area = degArea(mark.bounds);
-        google.maps.event.addListener(mark.marker, 'click', () => {
-          clickRegionMarker(mark);
-        }); 
-      }
-    }
+function endowMark(key, mark){
+  const MAP = qwikMap;
+  mark.key = key;
+  mark.center = gLatLng(mark.lat, mark.lng);
+
+  const OPTIONS = {position:mark.center, visible:false, map:MAP};
+  mark.marker = new google.maps.Marker(OPTIONS);
+  
+  const K = key.split('|');
+  mark.name = K[0];
+  if(K.length === 4){  // venue Mark
+    mark.marker.setIcon(VENUE_ICON);
+    google.maps.event.addListener(mark.marker, 'click', () => {
+      clickVenueMarker(mark);
+    });      
+  } else {  // metaMark
+    mark.marker.setIcon(REGION_ICON);
+    mark.bounds = markBounds(mark);
+    mark.area = degArea(mark.bounds);
+    google.maps.event.addListener(mark.marker, 'click', () => {
+      clickRegionMarker(mark);
+    }); 
   }
-  return marks;
+  return mark;
 }
+
+
 
 
 /******************************************************************************
@@ -660,10 +766,48 @@ function endowMarks(marks){
  * @return google.maps.Marker Object
  *****************************************************************************/
 function markMarker(position){
-  const MAP = qwikMap;
-  const MARKER_OPTIONS = {position:position, visible:false, map:MAP};
-  return new google.maps.Marker(MARKER_OPTIONS);
 }
+
+
+function addVenueMark(key, lat, lng, num, game){
+  fetchMarks(game, null, null, key, '');
+  const SUPER_KEY = superKey(key);
+  if (!QWIK_REGION.has(SUPER_KEY)){
+    addRegionMark(SUPER_KEY, lat, lng, game);
+  }
+  const NAME = key.split("|")[0];  
+  const MARK = {lat:lat, lng:lng, name:NAME, num: num};
+  addMark(key, MARK, game);
+  return MARK;
+}
+
+
+function addRegionMark(key, lat, lng, game){
+  const SUPER_KEY = superKey(key);
+  if (SUPER_KEY.length > 0 && !QWIK_REGION.has(SUPER_KEY)){
+    addRegionMark(SUPER_KEY, lat, lng, game);
+  }
+  const NAME = key.split("|")[0];
+  const N = Math.round(lat) + 1;
+  const E = Math.round(lng) + 1;
+  const S = Math.round(lat) - 1;
+  const W = Math.round(lng) - 1;
+  const MARK = {lat:lat, lng:lng, name:NAME, num: 1, n:N, e:E, s:S, w:W};
+  addMark(key, MARK, game);
+  return MARK;
+}
+
+
+function focusOnMark(key, game){
+  const MAP = qwikMap;
+  const MARK = QWIK_MARKS.get(key);
+  MARK.marker.setVisible(true);
+  MAP.setCenter(gLatLng(MARK.lat, MARK.lng));
+  MAP.setZoom(15);
+  showMarks(game);
+}
+
+
 
 
 

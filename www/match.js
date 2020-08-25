@@ -106,7 +106,7 @@ function showMap(show, target){
 
 
 function clickCheckboxFriends(){
-    this.style.display = 'none';
+    document.getElementById('invite-friends').style.display = 'none';
     document.getElementById('friend-invites').style.display = 'block';
 }
 

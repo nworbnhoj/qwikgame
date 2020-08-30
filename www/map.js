@@ -335,7 +335,7 @@ function clickMapIcon(event){
   const ELEMENT = event.target;
   const KEY = ELEMENT.dataset.vid;   
   const GAME = ELEMENT.dataset.game;
-  fetchMarks(GAME, null, null, KEY, '');
+  fetchMarks(GAME, null, null, superKey(KEY), '');
   showMapBelowForm(ELEMENT);
   addVenueMark(
     KEY,

@@ -43,7 +43,7 @@ function addThumbListeners(parentElement){
 }
 
 
-function clickThumb(){
+function clickThumb(element){
     // toggle the thumb from up-green to down-red
     if (this.classList.contains('fa-thumbs-o-up')){
         this.classList.remove('fa-thumbs-o-up','green');
@@ -54,8 +54,8 @@ function clickThumb(){
     }
     
     // set the rep input of the form as +1 or -1
-    const FORM = element.closest("form");
-    const INPUT = FORM.querySelect("input[name=rep]");
+    const FORM = this.closest("form");
+    const INPUT = FORM.querySelector("input[name=rep]");
     if(this.classList.contains('fa-thumbs-o-up')){
         INPUT.value = '+1';
     } else {

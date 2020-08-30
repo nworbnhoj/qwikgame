@@ -3,10 +3,19 @@
 require_once 'Page.php';
 require_once 'Locate.php';
 
+
 class IndexPage extends Page {
 
+  /****************************************************************************
+   * POST['email'] is a spam robot honeypot
+   * Any data whatsoever in the 'email' field indicates an invalid post
+   * The authentic email data should exist in POST['name']
+   ****************************************************************************/
+  const HONEYPOT = array('email'=>'name');
+
+
     public function __construct($templateName='index'){
-        parent::__construct(NULL, $templateName);
+      parent::__construct(NULL, $templateName, self::HONEYPOT);
     }
 
     public function serve(){

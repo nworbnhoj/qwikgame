@@ -125,9 +125,9 @@ class Page extends Html {
 
     $templateName  String  fileName containing the html template.
     *******************************************************************************/
-    public function __construct($template, $templateName=NULL){
+    public function __construct($template, $templateName=NULL, $honeypot=array()){
 
-        $defend = new Defend();
+        $defend = new Defend($honeypot);
         $this->req = $defend->request();
 
 //        $this->logReq($this->req);

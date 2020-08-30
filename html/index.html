@@ -48,35 +48,44 @@
 <p class="players">{players_at_venues}</p>
 
 
-<div id='register-form' class="commit available">
+<div id='register-form' class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{When_a_rival...}</span>
-    <form action="index.php" method="post">
+    <form action="index.php" method="post" autocomplete="off">
         <input type="hidden" name="qwik" value="available">
         <input type='hidden' name='parity' value='any'>
         <input type='hidden' name='smtwtfs' value='16777215'>
         <input type='hidden' name='lang' value='[language]'>
         <input type='hidden' id='lat' name='lat' value='[lat]'>
         <input type='hidden' id='lng' name='lng' value='[lng]'>
-        <h2 class='inform'>{What_is_your...}</h2>
         <div>
-            {Let_me_know...}
+          <h2 class='inform'>{What_is_your...}</h2>
+          {Let_me_know...}
+        </div>
+        <div id="input-div">
+          <input id='email' name="email" type="email" autocomplete="new-password" >
+          <input id='name' name="name" type="text" autocomplete="off" placeholder="{prompt_address}">
         </div>
         <div>
-            <input id='register-email' name="email" type="email" class="email word" placeholder="{prompt_address}">
+          <input type="submit" class="available word" value="{Submit}">
         </div>
-        <input type="submit" class="available word" value="{Submit}">
     </form>
 </div>
 
 
 <div id='login-form' class="commit account" hidden>
-    <form action="quiz.php" method="post">
-        <input type="hidden" name="repost" value="index.php">
-        <input type="hidden" name="qwik" value="recover">
+    <form action="index.php" method="post" autocomplete="off">
+      <input type="hidden" name="qwik" value="recover">
+      <div>
         <h2 class='inform'>{...link_to_login}</h2>
-        <input id='login-email' name="email" type="email" class="brick" placeholder="{prompt_address}">
+      </div>
+      <div id="input-div">
+        <input id='email' name="email" type="email" autocomplete="new-password" >
+        <input id='name' name="name" type="text" autocomplete="off" placeholder="{prompt_address}">
+      </div>
+      <div>
         <input type="submit" value="Submit" class="account">
+      </div>
     </form>
 </div>
 
@@ -265,7 +274,7 @@ code<br>
 
 
 <div id='map-elements' style='display:none;'>      
-  <div id='map' class='center wide''></div>      
+  <div id='map' class='center wide'></div>      
   <input id="map-search" class="controls" type="text" form="not-register-form" placeholder="{search_box}" />
   <template id="infowindow-venue">
     <div>

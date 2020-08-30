@@ -6,6 +6,8 @@ require_once 'Filter.php';
 
 class Defend extends Qwik {
 
+  const POT = 'honeypot';
+
     // An array of maximum string lengths. Used by: clip()
     const CLIP = array(
         'admin1'      => 100,
@@ -47,6 +49,7 @@ class Defend extends Qwik {
         'Fri'      => Filter::HOURS,
         'filename' => FILTER_DEFAULT,
         'game'     => Filter::GAME,
+        self::POT  => Filter::HONEYPOT,
         'hour'     => Filter::HOURS,
         'html'     => FILTER_DEFAULT,
         'input'    => FILTER_DEFAULT,
@@ -167,8 +170,32 @@ class Defend extends Qwik {
     private $rejected = array();
 
 
-    public function __construct(){
-        parent::__construct();
+    /**************************************************************************
+     * @param honeypot an array mapping index of spambot honeypots to the index
+     *                 of the valid human data 
+     *************************************************************************/
+    public function __construct($honeypot=array()){
+      parent::__construct();
+      $this->checkHoneypot($_GET, $honeypot);
+      $this->checkHoneypot($_POST, $honeypot);
+    }
+    
+    
+    /**************************************************************************
+     * Checks for any data in $_POST & $GET at the honeypot-indices. Any such
+     * captured data is moved into $_POST[honeypot] - and the authentic human
+     * data at the human-indices are relocated back into the correct index
+     * @param honeypot an array mapping index of spambot honeypots to the index
+     *                 of the valid human data 
+     *************************************************************************/
+    private function checkHoneypot(&$req, $honeypot){
+      foreach($honeypot as $bot => $human){
+        if (!empty($req[$bot])){
+          if(!isset($req[self::POT])){ $req[self::POT] = '';  }   // initialize
+          $req[self::POT] .= "$bot=".$req[$bot]."  ";           // log honeypot
+        }
+        $req[$bot] = $req[$human];                       // relocate human data
+      }
     }
 
 

@@ -833,7 +833,25 @@ progress.size {
 #map-search {
   width: 50%;
   max-width: 300px;
-}	
+}
+
+#input-div {
+  position: relative;
+  margin-left:25%;
+  margin-right:25%;
+  height:50px; 
+}
+
+#email, #name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:100%;
+}
+
+#name {
+  z-index: 1;
+}
 
 
 /************* media *****************/

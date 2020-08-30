@@ -18,7 +18,7 @@ function initPage(){
     for (var elem of document.querySelectorAll('span.anon')) {
         elem.style.color = getRandomColor();
     }
-    document.getElementById('register-email').focus();
+    document.getElementById('name').focus();
 }
 
 
@@ -28,12 +28,11 @@ function clickLoginToggle(){
     if(window.getComputedStyle(loginForm).display !== 'none') {
         loginForm.style.display = 'none';
         registerForm.style.display = 'block';
-        document.getElementById('register-email').focus();
     } else {
         registerForm.style.display = 'none';
         loginForm.style.display = 'block';
-        document.getElementById('login-email').focus();
     }
+    document.getElementById('name').focus();
 }
 
 

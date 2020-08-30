@@ -23,6 +23,7 @@ class Filter extends Qwik {
 
     const ABILITY = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_ABILITY);
     const COUNTRY = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::country');
+    const HONEYPOT= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::honeypot');
     const HOURS   = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_HRS);
     const GAME    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::game');
     const ID      = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::ID');
@@ -53,6 +54,11 @@ class Filter extends Qwik {
 
     static function country($val){
         return array_key_exists($val, self::countries()) ? $val : FALSE;
+    }
+
+
+    static function honeypot($val){
+        return FALSE;
     }
 
 

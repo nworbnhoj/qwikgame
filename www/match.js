@@ -40,11 +40,11 @@ function moreInitJSON(parentElement){
 function addThumbListeners(parentElement){
     var thumbs = parentElement.querySelectorAll('button.thumb');
     addListeners(thumbs, 'click', clickThumb);
-    addListeners(thumbs, 'click', clickSetRep);
 }
 
 
 function clickThumb(){
+    // toggle the thumb from up-green to down-red
     if (this.classList.contains('fa-thumbs-o-up')){
         this.classList.remove('fa-thumbs-o-up','green');
         this.classList.add('fa-thumbs-o-down','red');
@@ -52,15 +52,14 @@ function clickThumb(){
         this.classList.remove('fa-thumbs-o-down','red');
         this.classList.add('fa-thumbs-o-up','green');
     }
-}
-
-
-function clickSetRep(){
-    var rep = document.getElementById('rep');
+    
+    // set the rep input of the form as +1 or -1
+    const FORM = element.closest("form");
+    const INPUT = FORM.querySelect("input[name=rep]");
     if(this.classList.contains('fa-thumbs-o-up')){
-        rep.value = '+1';
+        INPUT.value = '+1';
     } else {
-        rep.value = '-1';
+        INPUT.value = '-1';
     }
 }
 

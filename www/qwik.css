@@ -236,12 +236,6 @@ div.transparent {
     border:0px solid black;
 }
 
-div.quiz {
-    font-size: 2em;
-    padding: 0.5em 0 0 0;
-    margin: 0 5% 5% 5%;
-}
-
 div.info {
     padding: 1em 1em 1em 1em;
     margin: 0em auto 8em auto;

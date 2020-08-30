@@ -58,7 +58,6 @@ docReady(event => {
     addListeners(document.querySelectorAll('button.cross'),  'click', clickButtonCross);
     addListeners(document.querySelectorAll('.select-game'), 'change', changeSelectGame);
     addListeners(document.querySelectorAll('td.toggle'),     'click', clickTdToggle);
-    addListeners(document.querySelectorAll('.repost'),      'change', changeRepost);
 });
 
 
@@ -122,11 +121,6 @@ function clickButtonCross(){
     for (var elem of this.parentNode.querySelectorAll('select')) {
         elem.removeAttribute("required");
     }
-}
-
-
-function changeRepost(){
-    this.form.submit();
 }
 
 

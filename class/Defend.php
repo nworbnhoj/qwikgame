@@ -94,7 +94,6 @@ class Defend extends Qwik {
         'tz'       => FILTER_DEFAULT,
         'region'   => FILTER_DEFAULT,
         'rep'      => Filter::REP,
-        'repost'   => Filter::REPOST,
         'rival'    => FILTER_VALIDATE_EMAIL,
         'title'    => FILTER_DEFAULT,
     //        'url'        => FILTER_VALIDATE_URL,

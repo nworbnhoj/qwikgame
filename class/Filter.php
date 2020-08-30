@@ -9,7 +9,6 @@ class Filter extends Qwik {
     const VALID_LANG = array('ar', 'bg', 'en','es','fr', 'hi', 'jp', 'ru', 'zh');
     const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'friend', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'register', 'translate', 'upload');
-    const VALID_REPOST = array('admin.php', 'index.php', 'match.php', 'favorite.php', 'info.php', 'matches', 'friend', 'history', 'reckon', 'region', 'account');
 
 
     const OPT_ABILITY = array('min_range' => 0, 'max_range' => 4);
@@ -37,7 +36,6 @@ class Filter extends Qwik {
     const QID     = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::QID');
     const QWIK    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::qwik');
     const REP     = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_REP);
-    const REPOST  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::repost');
     const STR_NUM = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_STR_NUM);
     const TOKEN   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::token');
 
@@ -94,15 +92,6 @@ class Filter extends Qwik {
 
     static function phone($val){
         return strlen($val) <= 20 ? $val : FALSE;
-    }
-
-
-    static function repost($val){
-        $OK = TRUE;
-        foreach(explode('#', $val) as $v){
-            $OK = $OK && in_array($v, self::VALID_REPOST);
-        }
-        return $OK ? $val : FALSE;
     }
 
 

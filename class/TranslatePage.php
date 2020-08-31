@@ -101,7 +101,7 @@ Class TranslatePage extends Html {
         $this->langs = parent::$phraseBook->languages();
         $this->phraseKeys = parent::$phraseBook->phraseKeys();
 
-        $selectGame = "<select id='game' name='game' class='game select-game'>[gameOptions]</select>";
+        $selectGame = "<select name='game' class='game select-game'>[gameOptions]</select>";
         $selectRegion = "<select id='region' name='region' class='json region' required>[regionOptions]</select>";
 
         $vars = parent::variables();

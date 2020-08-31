@@ -295,8 +295,9 @@ function fillOptions(element){
         console.log("Failed to fill options: missing id attribute.");
         return false;
     }
-    let selectGame = document.getElementById('game');
-    let query = (selectGame !== null) ? '?game='+selectGame.value : '' ;    
+    const FORM = element.closest("form");
+    const GAME_ELEMENT = FORM.querySelector("[name=game]");
+    let query = (GAME_ELEMENT !== null) ? '?game='+GAME_ELEMENT.value : '' ;    
     var path = 'json/'+id+'.options.php'+query;
     qwikJSON(path, setInnerJSON, element);
 }

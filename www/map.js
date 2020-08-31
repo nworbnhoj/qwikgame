@@ -37,8 +37,8 @@ function venuesMap() {
     const INFOWINDOW = qwikInfowindow;
     MAP.setCenter(CENTER);
     
-    const GAME_SELECT = document.getElementById('game');
-    GAME_SELECT.addEventListener('change', changeGame);
+    const GAME_SELECTS = document.querySelectorAll("select[name=game]");
+    addListeners(GAME_SELECTS, 'change', changeGame);
 
     // setup Places search box in map
     const INPUT = document.getElementById("map-search");

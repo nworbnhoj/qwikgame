@@ -687,7 +687,7 @@ button.action {
 
 button.undo { 
   display:none;
-  margin: 0.1em 0.5em 0.1em 0.1em;
+  margin: 0.2em;
   font-size:1.1em;
   border:solid DarkOrange 1px;
 }

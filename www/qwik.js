@@ -227,9 +227,10 @@ function setUndo(event){
     return true;                                      // submit form if no-undo
   }
   
+  const OTHER_BUTTONS = FORM.querySelectorAll('button:not(.undo)');
   if (CLICKED.style.display === 'none'){               //  clicked by reClick()
     if (UNDO_BUTTON.style.display === 'none'){         // undo has been clicked
-      CLICKED.style.display = 'inline-block';          //          show clicked
+      setButtons(OTHER_BUTTONS, [UNDO_BUTTON]);
       return false;                                    //   prevent form submit
     } else {
       return true;                                     //  complete form submit
@@ -237,12 +238,11 @@ function setUndo(event){
   }
   
   // delay the form submission and setup the undu button
-  CLICKED.style.display='none';                        //          hide clicked
+  setButtons([UNDO_BUTTON], OTHER_BUTTONS);
   const RECORD_P = FORM.querySelector("p.record");
   if(RECORD_P){
     RECORD_P.style.textDecoration='line-through';      //    strike record text
   }
-  UNDO_BUTTON.style.display='inline-block';            //      show undo button
   setTimeout(reClick, 5000, CLICKED);                  //     re-click in 5 sec
   return false;                                        //   prevent this submit
 }
@@ -250,6 +250,17 @@ function setUndo(event){
 
 function reClick(element){
   element.click();
+}
+
+
+function setButtons(show, hide){
+  const DISPLAY = show ? 'inline-block' : 'none';
+  for (let button of show) {
+    button.style.display = 'inline-block';
+  }
+  for (let button of hide) {
+    button.style.display = 'none';
+  }
 }
 
 

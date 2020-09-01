@@ -193,7 +193,8 @@ class Defend extends Qwik {
           if(!isset($req[self::POT])){ $req[self::POT] = '';  }   // initialize
           $req[self::POT] .= "$bot=".$req[$bot]."  ";           // log honeypot
         }
-        $req[$bot] = $req[$human];                       // relocate human data
+        
+        $req[$bot] = isset($req[$human]) ? $req[$human] : '';  // relocate human data
       }
     }
 

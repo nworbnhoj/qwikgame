@@ -48,7 +48,8 @@
 <div>
     <div id='friend' class='base json record friend'>
         <form class='record' action='friend.php#friends' method='post'>
-            <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+            <button class='action [CROSS_ICON]' name='qwik' value='delete' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
             <input type='hidden' name='id' value='[id]'>
             <p class='record'>
                 {email_is_friend}

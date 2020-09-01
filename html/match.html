@@ -56,7 +56,8 @@
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]'></button>
+        <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Unfortunately_cancelled...}</span>
         <p class='record'>
             <span class='tag cancelled'><s>{cancelled}</s></span>
@@ -91,7 +92,8 @@
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Your_game_confirmed...}</span>
         <p class='record'>
             <span class='tag confirmed'>{confirmed}</span>
@@ -112,7 +114,8 @@
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Wait_for_confirmation...}</span>
         <p class='record'>
             <span class='tag accepted'>{accepted}</span>
@@ -129,8 +132,9 @@
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='submit' name='qwik' value='accept' class='action [TICK_ICON]'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Select_a_time...}</span>
         <p class='record'>
             <span class='tag invitation'>{invitation}</span>
@@ -147,7 +151,8 @@
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]'></button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON] onclick='return setUndo(event)''></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Available_rivals_have...}</span>
         <p class='record'>
             <span class='tag keen'>{keen}</span>
@@ -269,7 +274,8 @@
     <form class='record' action='match.php#history'  method='post'>
         <input type='hidden' name='id' value='[id]'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+        <button type='submit' class='action [CROSS_ICON]' name='qwik' value='delete' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <input type='hidden' name='qwik' value='delete'>
         <span class='help'>{You_can_disown...}</span>
         <p class='record'>{History_game_at...}</p>

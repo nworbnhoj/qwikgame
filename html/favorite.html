@@ -50,7 +50,8 @@
 <div>
 <div id="favorite" class="base json record available">
     <form class='record'>
-        <button class='action [CROSS_ICON]' name='qwik' value='delete'></button>
+        <button class='action [CROSS_ICON]' name='qwik' value='delete' onclick='return setUndo(event)'></button>
+        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <input type='hidden' name='id' value='[id]'>
         <input type='hidden' name='game' value='[game]'>
         <p class='record'>

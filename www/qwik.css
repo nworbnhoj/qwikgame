@@ -684,6 +684,14 @@ button.action {
     font-size:1.3em;
 }
 
+
+button.undo { 
+  display:none;
+  margin: 0.1em 0.5em 0.1em 0.1em;
+  font-size:1.1em;
+  border:solid DarkOrange 1px;
+}
+
 button.action:hover { color:DarkOrange; }
 
 

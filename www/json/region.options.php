@@ -5,7 +5,7 @@ require_once 'up.php';
 require_once PATH_CLASS.'Qwik.php';
 require_once PATH_CLASS.'Options.php';
 
-$options = new Options(NULL, Options::VALUE_TEMPLATE);
+$options = new Options(NULL, Options::KEYVALUE_TEMPLATE);
 $options->values($options->regions());
 $opts = $options->make();
 

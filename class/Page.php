@@ -414,25 +414,21 @@ class Page extends Html {
         foreach($available as $avail){
             $venueID = $avail->venue;
             $reg = explode('|', $venueID);
-            $last = count($reg);
-            if ($last >= 3){
-                $countries[] = $reg[$last-1];
-                $admin1s[] = $reg[$last-2];
-                $localities[] = $reg[$last-3];
+            if(count($reg) === 4){
+              array_shift($reg);  // discard venue name
+              $localities[implode("|",$reg)] = array_shift($reg);
+              $admin1s[implode("|",$reg)] = array_shift($reg);
+              $countries[implode("|",$reg)] = array_shift($reg);
             } else {
                 self::logMsg("warning: unable to extract region '$venueID'");
             }
         }
 
-        $countries = array_unique($countries);
-        $admin1s = array_unique($admin1s);
-        $localities = array_unique($localities);
+        asort($countries);
+        asort($admin1s);
+        asort($localities);
 
-        sort($countries);
-        sort($admin1s);
-        sort($localities);
-
-        return array_merge($countries, $admin1s, $localities);
+        return array_merge($localities, $admin1s, $countries);
     }
 
 

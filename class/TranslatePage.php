@@ -42,11 +42,11 @@ const RIVAL_INPUT = "
 
 const ABILITY_SELECT = "
         <select name='ability' required>
-            <option value='4'>{very_strong}</option>
-            <option value='3'>{strong}</option>
-            <option value='2' selected>{competent}</option>
-            <option value='1'>{weak}</option>
-            <option value='0'>{very_weak}</option>
+            <option value='-2'>{very_strong}</option>
+            <option value='-1'>{strong}</option>
+            <option value='0' selected>{competent}</option>
+            <option value='+1'>{weak}</option>
+            <option value='+2'>{very_weak}</option>
         </select>
     ";
 

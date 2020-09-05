@@ -194,9 +194,9 @@ class FavoritePage extends Page {
 
     function qwikRegion($player, $request){
         if(isset($request['game'])
-            && isset($request['ability'])
+            && isset($request['parity'])
             && isset($request['region'])){
-                $player->region($request['game'], $request['ability'], $request['region']);
+                $player->region($request['game'], $request['parity'], $request['region']);
         }
     }
 

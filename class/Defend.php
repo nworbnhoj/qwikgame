@@ -40,7 +40,6 @@ class Defend extends Qwik {
         'admin'    => FILTER_DEFAULT,
         'admin1'   => FILTER_DEFAULT,
         'address'  => FILTER_DEFAULT,
-        'ability'  => Filter::ABILITY,
         'avoidable'=> FILTER_DEFAULT,
         'account'  => FILTER_DEFAULT,
         'beckon'   => FILTER_DEFAULT,

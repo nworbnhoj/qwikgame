@@ -11,7 +11,6 @@ class Filter extends Qwik {
     const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'friend', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'register', 'translate', 'upload');
 
 
-    const OPT_ABILITY = array('min_range' => 0, 'max_range' => 4);
     const OPT_PARITY  = array('min_range' => -2, 'max_range' => 2);
     const OPT_REP     = array('min_range' => -1, 'max_range' => 1);
     const OPT_HRS     = array('min_range' => 0, 'max_range' => 16777215);
@@ -20,7 +19,6 @@ class Filter extends Qwik {
     const OPT_STR_NUM = array('min_range' => 0, 'max_range' => 10000);
 
 
-    const ABILITY = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_ABILITY);
     const COUNTRY = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::country');
     const HONEYPOT= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::honeypot');
     const HOURS   = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_HRS);

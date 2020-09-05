@@ -31,12 +31,12 @@ class AbilityList extends Card {
         $reckoning = $player->reckon("region");
         foreach($reckoning as $reckon){
             $game = (string) $reckon['game'];
-            $ability = intval($reckon['ability']) + 2;
+            $parity = intval($reckon['parity']) + 2;
             $reckonVars = array(
                 'id'        => $reckon['id'],
                 'region'    => explode(',', $reckon['region'])[0],
                 'gameName'  => self::gameName($game),
-                'ability'   => $abilities[$ability]
+                'parity'    => $abilities[$parity]
             );
             $vars = $variables + $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);

@@ -36,7 +36,7 @@ class Orb extends Qwik {
         $count = count($nodes);
         $str = "Orb: $game ($count)";
         foreach($nodes as $node){
-            $rid = $node->rid();
+            $rid = $node->id();
             $parity = $node->parity();
             $rely = $node->rely();
             $str .= "\n$tabs" . self::snip($rid) . " $parity $rely";
@@ -90,7 +90,7 @@ longer chains by introducing a decay (=0.9) at each link.
         foreach($this->nodes as $node){
             $parity = $node->parity();
             $subOrb = $node->orb();
-            if (($node->rid() != $rivalID)
+            if (($node->id() != $rivalID)
             && (isset($subOrb))){
                 $subParity = $subOrb->parity($rivalID, $depth+1);
                 if (!is_null($subParity)){
@@ -131,7 +131,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
     //echo "function orbInv()";
         $inv = array();
         foreach($this->nodes as $node){
-            $rid = $node->rid();
+            $rid = $node->id();
             if (!array_key_exists($rid, $inv)){
                 $inv[$rid] = array();
             }
@@ -142,7 +142,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             // recursion
             $orb = $node->orb();
             if(isset($orb) && !$orb->bare()){
-                $subOrbInv = $orb->inv($node->rid());
+                $subOrbInv = $orb->inv($node->id());
                 foreach ($subOrbInv as $rid => $subNode) {
                     if (!array_key_exists($rid, $inv)){
                         $inv[$rid] = array();
@@ -180,7 +180,7 @@ Rival and by negating Parity.
         }
 
         foreach($this->nodes as $key => $node){
-            $rid = $node->rid();
+            $rid = $node->id();
             $orb = $node->orb();
             if(!isset($orb)){
                 $node->orb(new ORB($this->game));
@@ -205,7 +205,7 @@ Rival and by negating Parity.
     ********************************************************************************/
     public function expand($crumbs){
         foreach($this->nodes as &$node){
-            $rid = $node->rid();
+            $rid = $node->id();
             $nodeOrb = $node->orb();
             $newCrumbs = array();
             if(isset($nodeOrb)
@@ -248,7 +248,7 @@ Rival and by negating Parity.
         $crumbs[$rootID] = $rootID;
         $orbID = Player::subID($orbID);
         foreach($this->nodes as $node){
-            $rid = Player::subID($node->rid());
+            $rid = Player::subID($node->id());
             if ($rid != $rootID){
                 $nodeOrb = $node->orb();
                 if (isset($nodeOrb)){
@@ -294,7 +294,7 @@ Rival and by negating Parity.
                     $node->orb($pruned);
                 }
                 $this->nodes[$key] = $node;
-            } elseif(!in_array($node->rid(), $keepers)){
+            } elseif(!in_array($node->id(), $keepers)){
                 $this->wipe($key);
             }
         }

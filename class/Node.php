@@ -3,22 +3,22 @@
 
 class Node {
 
-    private $rid;
+    private $id;
     private $parity;
     private $rely;
     private $date;
     private $orb;
 
-    public function __construct($rivalID, $parity=NULL, $rely=NULL, $date=NULL){
-        $this->rid = (string)$rivalID;
+    public function __construct($id, $parity=NULL, $rely=NULL, $date=NULL){
+        $this->rid = (string)$id;
         $this->parity = floatval($parity);
         $this->rely = $this->rely(floatval($rely), $date);
         $this->date = DateTime::createFromFormat('d-m-Y', $date);
     }
 
 
-    public function rid(){
-        return $this->rid;
+    public function id(){
+        return $this->id;
     }
 
 

@@ -182,7 +182,7 @@ class FeatureContext implements Context
         $page = new FavoritePage();
         $this->id = $page->processRequest();
         $this->player = new Player($this->pid, TRUE);
-        $this->authURL = $this->player->authURL(2*Player::DAY, $this->req);
+        $this->authURL = $this->player->authURL(2*Player::DAY, 'favorite.php', $this->req);
     }
 
 

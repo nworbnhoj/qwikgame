@@ -174,7 +174,7 @@ class Notify extends Qwik {
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $authLink = $this->player->authLink(self::WEEK, array("email"=>$email));
+        $authLink = $this->player->authLink(self::WEEK, 'match.php', array("email"=>$email));
         $paras = array(
             "{You are invited}",
             "{Please accept}"

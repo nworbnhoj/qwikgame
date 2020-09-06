@@ -502,9 +502,9 @@ class Player extends Qwik {
     }
 
 
-    public function region($game, $ability, $region){
+    public function region($game, $parity, $region){
         $reckon = $this->xml->addChild('reckon', '');
-        $reckon->addAttribute('ability', $ability);
+        $reckon->addAttribute('parity', $parity);
         $reckon->addAttribute('region', $region);
         $reckon->addAttribute('game', $game);
         $date = date_create();
@@ -1265,36 +1265,28 @@ Requirements:
 
     ********************************************************************************/
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
-    //echo "PLAYERORB $game $playerID<br>\n";
-        $orb = new Orb($game);
-        $parities = $this->xml->xpath("rank[@game='$game'] | outcome[@game='$game']");
-// waiting on the implementation of reckon support
-//        $parities = $this->xml->xpath("rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']");
-        foreach($parities as $par){
-            $rid = self::subID($par['rival']);
-            if(empty($rid)){
-                self::logMsg('Parity missing rival : ' . print_r($par, true));
-            } else {
-                if (!$filter){
-                    $include=TRUE;
-                } elseif($positiveFilter){
-                    $include = in_array($rid, $filter);
-                } else {
-                    $include = ! in_array($rid, $filter);
-                }
-                if($include){
-                    $orb->addNode(
-                        $rid,
-                        $par['parity'],
-                        $par['rely'],
-                        $par['date']
-                    );
-                }
-            }
+      $orb = new Orb($game);
+      $path = "rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']";
+      $parities = $this->xml->xpath($path);
+      foreach($parities as $par){
+        $key = isset($par['rival']) ? 'rival' : (isset($par['region']) ? 'region' : '');
+        if(empty($key)){
+          self::logMsg('Parity missing rival/region : ' . print_r($par, true));
+          continue;
         }
-        //print_r($orb);
-        //echo "<br><br>";
-        return $orb;
+        $id = $par[$key];
+        if (!$filter){
+          $include=TRUE;
+        } elseif($positiveFilter){
+          $include = in_array($id, $filter);
+        } else {
+          $include = ! in_array($id, $filter);
+        }
+        if($include){
+          $orb->addNode($id, $par['parity'], $par['rely'], $par['date']);
+        }
+      }
+      return $orb;
     }
 
 

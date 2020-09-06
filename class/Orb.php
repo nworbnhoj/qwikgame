@@ -205,25 +205,26 @@ Rival and by negating Parity.
     ********************************************************************************/
     public function expand($crumbs){
         foreach($this->nodes as &$node){
-            $rid = $node->id();
+            $id = $node->id();
             $nodeOrb = $node->orb();
             $newCrumbs = array();
             if(isset($nodeOrb)
             && !$nodeOrb->bare()){                      // step further out
                 $newCrumbs = $nodeOrb->expand($crumbs);  // recursion
-            } elseif(!in_array($rid, $crumbs)){          // found a new edge
+            } elseif(!in_array($id, $crumbs)             // found a new edge
+              && Player::exists($id)){
                 try {
-                    $rival = new Player($rid);
+                    $rival = new Player($id);
                     if ($rival->ok()){                   // expand the edge
                         $rivalOrb = $rival->orb($this->game, $crumbs, FALSE);
                         $nodeOrb = $node->orb($rivalOrb);
                         if (isset($nodeOrb)){
-                            $newCrumbs = $nodeOrb->crumbs($rid, $rid);
+                            $newCrumbs = $nodeOrb->crumbs($id, $id);
                         }
                     }
                 } catch (RuntimeException $e){
                     self::logThrown($e);
-                    self::logMsg("Failed to retrieve Player $rid to expand an Orb");
+                    self::logMsg("Failed to retrieve Player $id to expand an Orb");
                 }
             }
             $crumbs = array_merge($crumbs, $newCrumbs);
@@ -248,14 +249,14 @@ Rival and by negating Parity.
         $crumbs[$rootID] = $rootID;
         $orbID = Player::subID($orbID);
         foreach($this->nodes as $node){
-            $rid = Player::subID($node->id());
-            if ($rid != $rootID){
+            $id = $node->id();
+            if ($id != $rootID){
                 $nodeOrb = $node->orb();
                 if (isset($nodeOrb)){
-                    $nodeOrbCrumbs = $nodeOrb->crumbs($rid, $rootID);    // recursion
+                    $nodeOrbCrumbs = $nodeOrb->crumbs($id, $rootID);    // recursion
                     $crumbs = array_merge($nodeOrbCrumbs, $crumbs);
                 }
-                $crumbs[$rid] = $orbID;    // this is the shortest path
+                $crumbs[$id] = $orbID;    // this is the shortest path
             }
         }
         return $crumbs;

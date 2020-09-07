@@ -10,6 +10,14 @@ require_once 'Notify.php';
 
 
 class Player extends Qwik {
+
+    const DEFAULT_PLAYER_XML = 
+   "<?xml version='1.0' encoding='UTF-8'?>
+    <player lang='en' ok='true'>
+      <rep pos='0' neg='0'/>
+      <rely val='1.0'/>
+      <notify default='1'/>
+    </player>";
     
     
     /*******************************************************************************
@@ -65,15 +73,11 @@ class Player extends Qwik {
 
 
     private function newXML(){
-        $pid = $this->id();
+        $xml = new SimpleXMLElement(self::DEFAULT_PLAYER_XML);
+        $xml->addAttribute('id', $this->id());
         $now = new DateTime('now');
-        $debut = $now->format('d-m-Y');
-        $record  = "<player id='$pid' debut='$debut' lang='en' ok='true'>";
-        $record .= "<rep pos='0' neg='0'/>";
-        $record .= "<rely val='1.0'/>";
-        $record .= "<notify default='1'/>";
-        $record .= "</player>";
-        return new SimpleXMLElement($record);
+        $xml->addAttribute('debut', $now->format('d-m-Y'));
+        return $xml;
     }
 
 

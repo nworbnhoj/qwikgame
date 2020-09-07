@@ -112,11 +112,13 @@ class Player extends Qwik {
     public function ok(){
       if(is_null($this->xml)){
         return false;
-      } elseif (isset($this->xml['ok'])){
-        return (boolean) $this->xml['ok'];
+      } elseif (isset($this->xml['ok'])
+        && ((string) $this->xml['ok'] !== 'true')){
+          return false;
       }
       return true;
     }
+
 
 
     public function id(){

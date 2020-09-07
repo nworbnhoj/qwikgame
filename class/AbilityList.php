@@ -34,7 +34,7 @@ class AbilityList extends Card {
             $parity = intval($reckon['parity']) + 2;
             $reckonVars = array(
                 'id'        => $reckon['id'],
-                'region'    => explode(',', $reckon['region'])[0],
+                'region'    => explode('|', $reckon['region'])[0],
                 'gameName'  => self::gameName($game),
                 'parity'    => $abilities[$parity]
             );

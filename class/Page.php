@@ -272,26 +272,24 @@ class Page extends Html {
         try {
             $player = new Player($pid);
             if(!$player->ok()){
-              throw new RuntimeException("player not OK $pid");
+              $sid = self::snip($pid);
+              self::logMsg("player not OK $sid");
+              return;                       // RETURN login fail
             }
         } catch (RuntimeException $e){
-            $msg = $e->getMessage();
-            self::logMsg("failed to retrieve Player $pid\n\n$msg");
-            $player = NULL; 
+            self::logThrown($e);
+            return;                         // RETURN login fail
         }
 
         // return the Player iff authentication is possible
         if($openSession){                   // AUTH: existing session
-        } elseif(isset($player)
-        && $player->isValidToken($token)){     // AUTH: token
-            $id = self::snip($pid);
-            self::logMsg("login: valid token $id");
+        } elseif($player->isValidToken($token)){     // AUTH: token
             $this->setupSession($pid, $player->lang());
             $this->setupCookie($pid, $token);
         } else {
-            $id = self::snip($pid);
-            self::logMsg("login: invalid token pid=$id");
-            $player=NULL;                           // AUTH: failure
+            $sid = self::snip($pid);
+            self::logMsg("token invalid $sid $token");
+            return;                         // RETURN authentication failure
         }
 
         return $player;

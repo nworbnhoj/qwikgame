@@ -48,12 +48,13 @@ class Player extends Qwik {
         if (!self::exists($pid) && $forge) {
             $this->xml = $this->newXML($pid);
             $this->save();
-            self::logMsg("login: new player " . self::snip($pid));
+            self::logMsg("player new $pid");
         }
         if (self::exists($pid)){
             $this->xml = $this->retrieve($this->fileName());
         } else {
-            throw new RuntimeException("Player does not exist: " . self::snip($pid));
+            $sid = self::snip($pid);
+            throw new RuntimeException("player missing $sid");
         }
     }
     
@@ -85,7 +86,8 @@ class Player extends Qwik {
     public function save(){
         $fileName = $this->fileName();
         if (!self::writeXML($this->xml, PATH_PLAYER, $fileName)){
-            throw new RuntimeException("failed to save Player $fileName");
+            self::logThrown($e);
+            throw new RuntimeException("player save failed $fileName");
             return FALSE;
         }
         return TRUE;
@@ -101,9 +103,9 @@ class Player extends Qwik {
             $xml = self::readXML(PATH_PLAYER, $fileName);
         } catch (RuntimeException $e){
             self::logThrown($e);
-            $xml = new SimpleXMLElement("<player/>");
-            $id = $this->id;
-            throw new RuntimeException("failed to retrieve Player: " . self::snip($pid));
+            $xml = new SimpleXMLElement("<player ok='false'/>");
+            $sid = self::snip($this->id);
+            throw new RuntimeException("player retrieve failed $sid");
         }
         return $xml;
     }

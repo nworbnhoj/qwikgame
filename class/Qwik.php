@@ -600,12 +600,12 @@ class Qwik {
     static public function readXML($path, $fileName){
         $cwd = getcwd();
         if (!file_exists("$path$fileName")) {
-            throw new RuntimeException("failed to read xml $path$fileName");
+            throw new RuntimeException("file missing $path$fileName");
             return FALSE;
         }
 
         if(!chdir("$path")){
-            throw new RuntimeException("failed to change working directory to $path from cwd $cwd");
+            throw new RuntimeException("cd failed from $cwd to $path");
             return FALSE;
         }
 
@@ -613,10 +613,10 @@ class Qwik {
             $xml = simplexml_load_file($fileName);
         } catch (Exception $e){
             self::logThrown($e);
-            throw new RuntimeException("failed to read xml from $path$fileName from cwd $cwd");
+            throw new RuntimeException("xml read failed at $path$fileName");
         } finally {
             if(!chdir($cwd)){
-                throw new RuntimeException("failed to return working directory to $cwd");
+                throw new RuntimeException("cd failed to $cwd");
                 return FALSE;
             }
         }

@@ -67,7 +67,7 @@ class Player extends Qwik {
         $pid = $this->id();
         $now = new DateTime('now');
         $debut = $now->format('d-m-Y');
-        $record  = "<player id='$pid' debut='$debut' lang='en'>";
+        $record  = "<player id='$pid' debut='$debut' lang='en' ok='true'>";
         $record .= "<rep pos='0' neg='0'/>";
         $record .= "<rely val='1.0'/>";
         $record .= "<notify default='1'/>";
@@ -110,7 +110,12 @@ class Player extends Qwik {
 
 
     public function ok(){
-        return !is_null($this->xml);
+      if(is_null($this->xml)){
+        return false;
+      } elseif (isset($this->xml['ok'])){
+        return (boolean) $this->xml['ok'];
+      }
+      return true;
     }
 
 

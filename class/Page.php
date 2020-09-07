@@ -271,8 +271,12 @@ class Page extends Html {
         // Load up the Player from file
         try {
             $player = new Player($pid);
+            if(!$player->ok()){
+              throw new RuntimeException("player not OK $pid");
+            }
         } catch (RuntimeException $e){
-            self::logMsg("failed to retrieve Player $pid");
+            $msg = $e->getMessage();
+            self::logMsg("failed to retrieve Player $pid\n\n$msg");
             $player = NULL; 
         }
 

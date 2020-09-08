@@ -5,10 +5,11 @@ require_once 'Qwik.php';
 
 class Filter extends Qwik {
 
-    const VALID_ADMIN = array('acceptTranslation', 'rejectTranslation');
-    const VALID_LANG = array('ar', 'bg', 'en','es','fr', 'hi', 'jp', 'ru', 'zh');
-    const VALID_PARITY = array('any','similar','matching', '-2', '-1', '0', '1', '2');
-    const VALID_QWIK = array('accept', 'account', 'activate', 'available', 'cancel', 'deactivate', 'decline', 'delete', 'friend', 'keen', 'login', 'logout', 'msg', 'recover', 'region', 'register', 'translate', 'upload');
+    const VALID_ADMIN = array('acceptTranslation'=>'', 'rejectTranslation'=>'');
+    const VALID_CHECKBOX = array('on'=>'');
+    const VALID_LANG = array('ar'=>'', 'bg'=>'', 'en'=>'', 'es'=>'', 'fr'=>'', 'hi'=>'', 'jp'=>'', 'ru'=>'', 'zh'=>'');
+    const VALID_PARITY = array('any'=>'', 'similar'=>'', 'matching'=>'', '-2'=>'', '-1'=>'', '0'=>'', '1'=>'', '2'=>'');
+    const VALID_QWIK = array('accept'=>'', 'account'=>'', 'activate'=>'', 'available'=>'', 'cancel'=>'', 'deactivate'=>'', 'decline'=>'', 'delete'=>'', 'friend'=>'', 'keen'=>'', 'login'=>'', 'logout'=>'', 'msg'=>'', 'recover'=>'', 'region'=>'', 'register'=>'', 'translate'=>'', 'upload'=>'');
 
 
     const OPT_PARITY  = array('min_range' => -2, 'max_range' => 2);
@@ -19,6 +20,8 @@ class Filter extends Qwik {
     const OPT_STR_NUM = array('min_range' => 0, 'max_range' => 10000);
 
 
+    const ADMIN   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::admin');
+    const CHECKBOX= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::checkbox');
     const COUNTRY = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::country');
     const HONEYPOT= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::honeypot');
     const HOURS   = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_HRS);
@@ -31,25 +34,32 @@ class Filter extends Qwik {
     const PARITY  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::parity');
     const PHONE   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::phone');
     const PID     = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::PID');
-    const QID     = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::QID');
+    const PLACEID = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::placeID');
+    const PUSHTOK = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::pushToken');
+    const PUSHKEY = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::pushKey');
     const QWIK    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::qwik');
     const REP     = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_REP);
     const STR_NUM = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_STR_NUM);
     const TOKEN   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::token');
 
 
+    static function checkbox($val){
+        return isset(self::VALID_CHECKBOX[$val]) ? $val : FALSE;
+    }
+
+
     static function admin($val){
-        return in_array($val, self::VALID_ADMIN) ? $val : FALSE;
+        return isset(self::VALID_ADMIN[$val]) ? $val : FALSE;
     }
 
 
     static function game($val){
-        return array_key_exists($val, self::qwikGames()) ? $val : FALSE;
+        return isset(self::qwikGames()[$val]) ? $val : FALSE;
     }
 
 
     static function country($val){
-        return array_key_exists($val, self::countries()) ? $val : FALSE;
+        return isset(self::countries()[$val]) ? $val : FALSE;
     }
 
 
@@ -59,7 +69,7 @@ class Filter extends Qwik {
 
 
     static function ID($val){
-        return strlen($val) == 6 ? $val : FALSE;
+        return self::preg($val, "[a-zA-Z0-9]", 6, 6);
     }
 
 
@@ -69,22 +79,17 @@ class Filter extends Qwik {
 
 
     static function lang($val){
-        return in_array($val, self::VALID_LANG) ? $val : FALSE;
+        return isset(self::VALID_LANG[$val]) ? $val : FALSE;
     }
 
 
     static function parity($val){
-        return in_array($val, self::VALID_PARITY) ? $val : FALSE;
+        return isset(self::VALID_PARITY[$val]) ? $val : FALSE;
     }
 
 
     static function PID($val){
-        return strlen($val) == 64 ? $val : FALSE;
-    }
-
-
-    static function QID($val){
-        return strlen($val) == 32 ? $val : FALSE;
+        return self::preg($val, "[a-z0-9]", 64, 64);
     }
 
 
@@ -93,13 +98,39 @@ class Filter extends Qwik {
     }
 
 
+    static function placeID($val){
+        return self::preg($val, "[a-zA-Z0-9_-]", 500);
+    }
+
+
+    static function pushKey($val){
+        return self::preg($val, "[a-zA-Z0-9_-+/]", 1024);
+    }
+
+
+    static function pushToken($val){
+        return self::preg($val, "[a-zA-Z0-9_-+]==", 128);
+    }
+
+
     static function qwik($val){
-        return in_array($val, self::VALID_QWIK) ? $val : FALSE;
+        return isset(self::VALID_QWIK[$val]) ? $val : FALSE;
     }
 
 
     static function token($val){
-        return strlen($val) == 10 ? $val : FALSE;
+        return self::preg($val, "[a-zA-Z0-9]", 10, 10);
+    }
+
+
+    static function preg($val, $pat, $max=2048, $min=0){
+        $len = strlen($val);
+        if ($len < $min
+        || $len > $max
+        || !preg_match("#^$pat+$#", $val)) {
+          return FALSE;
+        }
+        return $val;
     }
 
 }

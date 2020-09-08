@@ -6,101 +6,95 @@ require_once 'Filter.php';
 
 class Defend extends Qwik {
 
-  const POT = 'honeypot';
-
-    // An array of maximum string lengths. Used by: clip()
-    const CLIP = array(
-        'admin1'      => 100,
-        'address'     => 200,
-        'description' => 200,
-        'filename'    => 50,
-        'input'       => 200,
-        'html'        => 2000,
-        'key'         => 30,
-        'locality'    => 100,
-        'message'     => 200,
-        'msg'         => 200,
-        'lang'        => 2,
-        'name'        => 100,
-        'nick'        => 20,
-        'note'        => 2000,
-        'phrase'      => 2000,
-        'push-key'    => 88,
-        'push-token'  => 24,
-        'region'      => 100,
-        'reply'       => 3,
-        'route'       => 100,
-        'tz'          => 100,
-        'venue'       => 150
-    );
+  // An array of maximum string lengths. Used by: clip()
+  const CLIP = array(
+    'description' => 200,
+    'filename'    => 50,
+    'html'        => 2000,
+    'key'         => 30,
+    'msg'         => 200,
+    'lang'        => 2,
+    'name'        => 100,
+    'nick'        => 20,
+    'phrase'      => 2000,
+    'push-key'    => 88,
+    'push-token'  => 24,
+    'region'      => 100,
+    'venue'       => 150
+  );
 
 
     
-    const FILTER_ARGS = array(
-        'admin'    => FILTER_DEFAULT,
-        'admin1'   => FILTER_DEFAULT,
-        'address'  => FILTER_DEFAULT,
-        'avoidable'=> FILTER_DEFAULT,
-        'account'  => FILTER_DEFAULT,
-        'beckon'   => FILTER_DEFAULT,
-        'country'  => Filter::COUNTRY,
-        'email'    => FILTER_VALIDATE_EMAIL,
-        'Fri'      => Filter::HOURS,
-        'filename' => FILTER_DEFAULT,
-        'game'     => Filter::GAME,
-        self::POT  => Filter::HONEYPOT,
-        'hour'     => Filter::HOURS,
-        'html'     => FILTER_DEFAULT,
-        'input'    => FILTER_DEFAULT,
-        'id'       => Filter::ID,
-        'key'      => FILTER_DEFAULT,
-        'invite'   => Filter::INVITE,
-        'lang'     => Filter::LANG,
-        'lat'      => Filter::LAT,
-        'lng'      => Filter::LNG,
-        'locality' => FILTER_DEFAULT,
-        'message'  => FILTER_DEFAULT,
-        'Mon'      => Filter::HOURS,
-        'msg'      => FILTER_DEFAULT,
-        'name'     => FILTER_DEFAULT,
-        'nick'     => FILTER_DEFAULT,
-        'note'     => FILTER_DEFAULT,
-        'notify-email' => FILTER_DEFAULT,
-        'notify-push'  => FILTER_DEFAULT,
-        'parity'   => Filter::PARITY,
-        'phone'    => Filter::PHONE,
-        'phrase'   => FILTER_DEFAULT,
-        'pid'      => Filter::PID,
-        'placeid'  => FILTER_DEFAULT,
-        'push-endpoint' => FILTER_VALIDATE_URL,
-        'push-key'      => FILTER_DEFAULT,
-        'push-token'    => FILTER_DEFAULT,
-        'qid'      => Filter::QID,
-        'qwik'     => Filter::QWIK,
-        'reply'    => FILTER_DEFAULT,
-        'route'    => FILTER_DEFAULT,
-        'Sat'      => Filter::HOURS,
-        'skip'     => FILTER_DEFAULT,
-        'smtwtfs'  => Filter::HOURS,
-        'str-num'  => Filter::STR_NUM,
-        'Sun'      => Filter::HOURS,
-        'Thu'      => Filter::HOURS,
-        'time'     => FILTER_DEFAULT,
-        'today'    => Filter::HOURS,
-        'token'    => Filter::TOKEN,
-        'tomorrow' => Filter::HOURS,
-        'Tue'      => Filter::HOURS,
-        'tz'       => FILTER_DEFAULT,
-        'region'   => FILTER_DEFAULT,
-        'rep'      => Filter::REP,
-        'rival'    => FILTER_VALIDATE_EMAIL,
-        'title'    => FILTER_DEFAULT,
-    //        'url'        => FILTER_VALIDATE_URL,
-        'url'      => FILTER_DEFAULT,
-        'venue'    => FILTER_DEFAULT,
-        'vid'      => FILTER_DEFAULT,
-        'Wed'      => Filter::HOURS
-    );
+  const FILTER_ARGS = array(
+    'admin'         => Filter::ADMIN,
+    'beckon'        => Filter::CHECKBOX,
+    'notify-email'  => Filter::CHECKBOX,
+    'notify-push'   => Filter::CHECKBOX,
+    'time'          => Filter::CHECKBOX,
+    'hour'          => Filter::HOURS,
+    'Sun'           => Filter::HOURS,
+    'Mon'           => Filter::HOURS,
+    'Tue'           => Filter::HOURS,       
+    'Wed'           => Filter::HOURS,
+    'Thu'           => Filter::HOURS,
+    'Fri'           => Filter::HOURS,
+    'Sat'           => Filter::HOURS,
+    'smtwtfs'       => Filter::HOURS,
+    'today'         => Filter::HOURS,
+    'tomorrow'      => Filter::HOURS,
+    'game'          => Filter::GAME,
+    'honeypot'      => Filter::HONEYPOT,
+    'id'            => Filter::ID,
+    'invite'        => Filter::INVITE,
+    'lang'          => Filter::LANG, 
+    'account-lang'  => Filter::LANG, 
+    'lat'           => Filter::LAT,
+    'lng'           => Filter::LNG,
+    'parity'        => Filter::PARITY,
+    'pid'           => Filter::PID,
+    'placeid'       => Filter::PLACEID,
+    'push-key'      => Filter::PUSHKEY,
+    'push-token'    => Filter::PUSHTOK,
+    'qwik'          => Filter::QWIK,
+    'token'         => Filter::TOKEN,
+    'rep'           => Filter::REP,        
+           
+    'avoidable'     => FILTER_SANITIZE_SPECIAL_CHARS,
+    'filename'      => FILTER_SANITIZE_SPECIAL_CHARS,
+    'html'          => FILTER_SANITIZE_SPECIAL_CHARS,
+    'msg'           => FILTER_SANITIZE_SPECIAL_CHARS,
+    'name'          => FILTER_SANITIZE_SPECIAL_CHARS,
+    'nick'          => FILTER_SANITIZE_SPECIAL_CHARS,
+    'region'        => FILTER_SANITIZE_SPECIAL_CHARS,
+    'title'         => FILTER_SANITIZE_SPECIAL_CHARS,
+    'venue'         => FILTER_SANITIZE_SPECIAL_CHARS,
+    'vid'           => FILTER_SANITIZE_SPECIAL_CHARS,
+    'account-email' => FILTER_VALIDATE_EMAIL, 
+    'email'         => FILTER_VALIDATE_EMAIL,
+    'rival'         => FILTER_VALIDATE_EMAIL,
+    'account-url'   => FILTER_VALIDATE_URL,
+    'push-endpoint' => FILTER_VALIDATE_URL,
+
+    'account'       => FILTER_DEFAULT,
+    'key'           => FILTER_DEFAULT,
+    'phrase'        => FILTER_DEFAULT
+
+//    'country'       => Filter::COUNTRY,    
+//    'phone'         => Filter::PHONE,
+//    'str-num'       => Filter::STR_NUM,
+//    'admin1'        => FILTER_DEFAULT,
+//    'address'       => FILTER_DEFAULT,
+//    'input'         => FILTER_DEFAULT,
+//    'locality'      => FILTER_DEFAULT,
+//    'message'       => FILTER_DEFAULT,
+//    'note'          => FILTER_DEFAULT,
+//    'reply'         => FILTER_DEFAULT,
+//    'route'         => FILTER_DEFAULT,
+//    'skip'          => FILTER_DEFAULT,
+//    'tz'            => FILTER_DEFAULT,
+//    'account-notify'=> FILTER_DEFAULT, 
+//    'url'           => FILTER_DEFAULT, //  FILTER_VALIDATE_URL,
+  );
 
 
     static function xml($url){
@@ -148,21 +142,6 @@ class Defend extends Qwik {
     }
 
 
-    # SECURITY escape all parameters to prevent malicious code insertion
-    # http://au.php.net/manual/en/function.htmlentities.php
-    static private function reclaw($data){
-        if (is_array($data)){
-            foreach($data as $key => $val){
-                $data[$key] = self::reclaw($val);
-            }
-        } else {
-            $data = html_entity_decode($data, ENT_QUOTES | ENT_HTML5);
-        }
-        return $data;
-    }
-
-
-
     private $get;
     private $post;
     private $rejected = array();
@@ -189,8 +168,8 @@ class Defend extends Qwik {
     private function checkHoneypot(&$req, $honeypot){
       foreach($honeypot as $bot => $human){
         if (!empty($req[$bot])){
-          if(!isset($req[self::POT])){ $req[self::POT] = '';  }   // initialize
-          $req[self::POT] .= "$bot=".$req[$bot]."  ";           // log honeypot
+          if(!isset($req['honeypot'])){ $req['honeypot'] = '';  }   // initialize
+          $req['honeypot'] .= "$bot=".$req[$bot]."  ";           // log honeypot
         }
         
         $req[$bot] = isset($req[$human]) ? $req[$human] : '';  // relocate human data
@@ -232,15 +211,15 @@ class Defend extends Qwik {
     public function logRejected(){
         $rejected = $this->rejected();
         if(!empty($rejected)){
-            $msg = print_r($rejected, TRUE);
-            self::logMsg("Defend rejected: $msg");
+            $reject = print_r($rejected, TRUE);
+            $req =  print_r($this->post() + $this->get(), TRUE);
+            self::logMsg("Defend rejected: $reject\nresidual: $req");
         }
     }
 
 
     private function examine($request){
-        $req = self::declaw($request);
-        $req = $this->clip($req);
+        $req = $this->clip($request);
         $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
         if ($this->size($result) !== $this->size($req)){
             $this->rejected = $this->rejected + $this->rejects($req, $result);
@@ -285,27 +264,6 @@ class Defend extends Qwik {
             }
         }
         return $size;
-    }
-
-
-    /********************************************************************************
-    Return the $data string with all but a small set of safe characters removed
-
-    $data    String    An arbitrary string
-
-    Safe character set:
-        abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789|:@ _-,./#
-
-    ********************************************************************************/
-    private function scrub($data){
-        if (is_array($data)){
-            foreach($data as $key => $val){
-                $data[$key] = $this->clip($this->scrub($val), $key);
-            }
-        } else {
-            $data = preg_replace("/[^(a-zA-Z0-9|:@ \_\-\,\.\/\#]*/", '', $data);
-        }
-        return $data;
     }
 
 

@@ -78,22 +78,6 @@ class Defend extends Qwik {
     'account'       => FILTER_DEFAULT,
     'key'           => FILTER_DEFAULT,
     'phrase'        => FILTER_DEFAULT
-
-//    'country'       => Filter::COUNTRY,    
-//    'phone'         => Filter::PHONE,
-//    'str-num'       => Filter::STR_NUM,
-//    'admin1'        => FILTER_DEFAULT,
-//    'address'       => FILTER_DEFAULT,
-//    'input'         => FILTER_DEFAULT,
-//    'locality'      => FILTER_DEFAULT,
-//    'message'       => FILTER_DEFAULT,
-//    'note'          => FILTER_DEFAULT,
-//    'reply'         => FILTER_DEFAULT,
-//    'route'         => FILTER_DEFAULT,
-//    'skip'          => FILTER_DEFAULT,
-//    'tz'            => FILTER_DEFAULT,
-//    'account-notify'=> FILTER_DEFAULT, 
-//    'url'           => FILTER_DEFAULT, //  FILTER_VALIDATE_URL,
   );
 
 
@@ -106,6 +90,8 @@ class Defend extends Qwik {
             return new SimpleXMLElement($clean);
         } catch (Exception $e){
             $msg = $e->getMessage();
+            $url = self::logSafe($url);
+            $reply = self::logSafe($reply);
             self::logMsg("SimpleXML: $msg\n$url\n$reply");
         }
         return new SimpleXMLElement("<xml></xml>");
@@ -120,6 +106,8 @@ class Defend extends Qwik {
             return json_encode($clean);
         } catch (Exception $e){
             $msg = $e->getMessage();
+            $url = self::logSafe($url);
+            $json = self::logSafe($json);
             self::logMsg("JSON: $msg\n$url\n$json");
         }
         return "{}";
@@ -142,9 +130,31 @@ class Defend extends Qwik {
     }
 
 
+  /****************************************************************************
+   * Sanitizes an untrusted string for entry into a log.
+   * Malicious input written to a log can severly disrupt the log itself.
+   * Log-forgery typically requires numerous newlines or carriage returns.
+   * @param hot an untrusted string or Array[Array[String]]
+   * @return a sanitized string safe to be written to log 
+   ***************************************************************************/
+  static function logSafe($hot){
+    if (is_array($hot)){
+      $cool = array();
+      foreach($hot as $key => $val){
+        $cool[self::logSafe($key)] = self::logSafe($val);
+      }
+    } else {
+      $flags = FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH;
+      $cool = filter_var($hot, FILTER_SANITIZE_STRING, $flags);
+    }
+    return $cool;
+  }
+
+
     private $get;
     private $post;
     private $rejected = array();
+    private $rejectReason = '';
 
 
     /**************************************************************************
@@ -209,24 +219,44 @@ class Defend extends Qwik {
 
 
     public function logRejected(){
-        $rejected = $this->rejected();
-        if(!empty($rejected)){
-            $reject = print_r($rejected, TRUE);
-            $req =  print_r($this->post() + $this->get(), TRUE);
-            self::logMsg("Defend rejected: $reject\nresidual: $req");
-        }
+      $rejected = $this->rejected();
+      if(!empty($rejected)){
+        $reason = self::logSafe($this->rejectReason);
+        $reject = print_r(self::logSafe($rejected), TRUE);
+        self::logMsg("Defend $reason: $reject");
+      }
     }
 
 
     private function examine($request){
+      if($this->validateKeys($request)){
         $req = $this->clip($request);
         $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
         if ($this->size($result) !== $this->size($req)){
             $this->rejected = $this->rejected + $this->rejects($req, $result);
         }
-        return $result;
+      } else {
+        $result = array();
+      }
+      return $result;
     }
-
+    
+    
+  /****************************************************************************
+   * Rejects any input request containing 1 or more invalid keys.
+   * @param $request the input Array to have keys validated
+   * @return true if all $request keys are valid keys 
+   ***************************************************************************/
+  private function validateKeys($request){
+    foreach($request as $key => $value){
+      if(!isset(self::FILTER_ARGS[$key])){    // request includes invalid key
+        $this->rejected = $request;
+        $this->rejectReason = "invalid key [$key]";
+        return false;                         // reject outright
+      }
+    }
+    return true;                              // all valid keys
+  }
 
 
     private function rejects($raw, $safe){
@@ -286,6 +316,8 @@ class Defend extends Qwik {
         } elseif(array_key_exists($key, self::CLIP)){
             $clipped = substr($data, 0, self::CLIP[$key]);
             if ($clipped !== $data){
+                $key = self::logSafe($key);
+                $clipped = self::logSafe($clipped);
                 Qwik::logMsg("Defend clipped [$key] $clipped");
             }
         }

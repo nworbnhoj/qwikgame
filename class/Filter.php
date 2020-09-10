@@ -5,11 +5,54 @@ require_once 'Qwik.php';
 
 class Filter extends Qwik {
 
-    const VALID_ADMIN = array('acceptTranslation'=>'', 'rejectTranslation'=>'');
-    const VALID_CHECKBOX = array('on'=>'');
-    const VALID_LANG = array('ar'=>'', 'bg'=>'', 'en'=>'', 'es'=>'', 'fr'=>'', 'hi'=>'', 'jp'=>'', 'ru'=>'', 'zh'=>'');
-    const VALID_PARITY = array('any'=>'', 'similar'=>'', 'matching'=>'', '-2'=>'', '-1'=>'', '0'=>'', '1'=>'', '2'=>'');
-    const VALID_QWIK = array('accept'=>'', 'account'=>'', 'activate'=>'', 'available'=>'', 'cancel'=>'', 'deactivate'=>'', 'decline'=>'', 'delete'=>'', 'friend'=>'', 'keen'=>'', 'login'=>'', 'logout'=>'', 'msg'=>'', 'recover'=>'', 'region'=>'', 'register'=>'', 'translate'=>'', 'upload'=>'');
+    const VALID_ADMIN = array(
+          'acceptTranslation'=>'',
+          'rejectTranslation'=>''
+    );
+    const VALID_CHECKBOX = array(
+          'on'=>''
+    );
+    const VALID_LANG = array(
+          'ar'=>'',
+          'bg'=>'',
+          'en'=>'',
+          'es'=>'',
+          'fr'=>'',
+          'hi'=>'',
+          'jp'=>'',
+          'ru'=>'',
+          'zh'=>''
+    );
+    const VALID_PARITY = array(
+         'any'=>'',
+          'similar'=>'',
+          'matching'=>'',
+          '-2'=>'',
+          '-1'=>'',
+          '0'=>'',
+          '1'=>'',
+          '2'=>''
+    );
+    const VALID_QWIK = array(
+          'accept'=>'',
+          'account'=>'',
+          'activate'=>'',
+          'available'=>'',
+          'cancel'=>'',
+          'deactivate'=>'',
+          'decline'=>'',
+          'delete'=>'',
+          'friend'=>'',
+          'keen'=>'',
+          'login'=>'',
+          'logout'=>'',
+          'msg'=>'',
+          'recover'=>'',
+          'region'=>'',
+          'register'=>'',
+          'translate'=>'',
+          'upload'=>''
+    );
 
 
     const OPT_PARITY  = array('min_range' => -2, 'max_range' => 2);

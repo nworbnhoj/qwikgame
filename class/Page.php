@@ -481,7 +481,7 @@ class Page extends Html {
       $lng = $venue->lng();
       $num = $venue->playerCount();
       $fn = "clickMapIcon(event)";
-      $venueLink = empty($url) ? $boldName : "<a href='$url' tsarget='_blank'>$boldName</a>";
+      $venueLink = empty($url) ? $boldName : "<a href='$url' target='_blank'>$boldName</a>";
       $mapIcon = "<span class='$icon' data-vid='$vid' data-lat='$lat' data-lng='$lng' data-num='$num' data-game='$game' onclick='$fn'></span>";
       return "$venueLink $mapIcon";
     }

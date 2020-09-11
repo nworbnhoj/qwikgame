@@ -11,7 +11,7 @@ Class Hours {
 
 
     public function __construct($bits=0){
-        $this->bits = $bits;
+        $this->bits = intval($bits);
     }
     
     public function __toString(){

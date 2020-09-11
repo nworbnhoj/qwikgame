@@ -397,7 +397,7 @@ class Page extends Html {
 
 
     function languageOptions($language='en'){
-        $lang = empty($lang) ? 'en' : $lang ;
+        $lang = empty($language) ? 'en' : $language ;
         $options = '';
         foreach(self::$phraseBook->languages() as $key => $val){
             $selected = ($key === $lang) ? 'selected' : '';

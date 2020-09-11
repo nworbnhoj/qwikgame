@@ -225,17 +225,19 @@ Class TranslatePage extends Html {
 
     private function translateTemplates(){
         $stats = $this->stats();
+        $vars = $this->variables;
         $html = "<h2>Translations</h2>\n";
         $html .= "<table>\n";
         foreach($this->langs as $lang => $native){
             $stat = $stats[$lang];
+            $vars['lang'] = $lang;
             $html .= "<tr><td><big><b>$native</b></big></td>\n";
             $html .= "<td>$stat%</td>\n";
             foreach($this->files as $file){
                 $path = PATH_LANG."$lang/$file";
                 $htm = file_get_contents(PATH_HTML."$file");
                 $htm = $this->translate($htm, $lang);   // sentences with differing word order
-                $htm = $this->populate($htm, $this->variables); // select elements
+                $htm = $this->populate($htm, $vars);      // select elements
                 $htm = $this->translate($htm, $lang);     // translate all remaining
                 file_put_contents($path, $htm, LOCK_EX);
                 $html .= "<td><a href='$path'>$file</a></td>\n";

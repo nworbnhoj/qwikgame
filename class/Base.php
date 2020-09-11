@@ -61,7 +61,7 @@ class Base extends Page {
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
         $html = $this->replicate($html, $vars);
         $html = $this->translate($html);
-        return $this->baseHTML.$html;
+        return $html;
     }
 
 

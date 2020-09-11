@@ -142,6 +142,7 @@ class Html extends Qwik {
 
     public function variables(){
         return array(
+            'lang'          => $this->language,
             'homeURL'       => QWIK_URL,
             'termsURL'      => self::TERMS_URL,
             'privacyURL'    => self::PRIVACY_URL,

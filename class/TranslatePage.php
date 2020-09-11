@@ -5,9 +5,9 @@ require_once 'Page.php';
 require_once 'Translation.php';
 
 const HEAD = "
-<!DOCTYPE html PUBLIC '-//W2C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<!DOCTYPE html>
 
-<html xmlns='http://www.w3.org/1999/xhtml'>
+<html lang='en'>
 <head>
     <meta charset='UTF-8'>
     <style>

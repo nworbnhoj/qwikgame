@@ -396,11 +396,11 @@ class Page extends Html {
     }
 
 
-    function languageOptions($language='english'){
-        $game = empty($language) ? 'en' : $language ;
+    function languageOptions($language='en'){
+        $lang = empty($lang) ? 'en' : $lang ;
         $options = '';
         foreach(self::$phraseBook->languages() as $key => $val){
-            $selected = ($key === $language) ? 'selected' : '';
+            $selected = ($key === $lang) ? 'selected' : '';
             $options .= "<option value='$key' $selected>$val</option>\n";
         }
         return $options;

@@ -183,6 +183,7 @@ class Defend extends Qwik {
         }
         
         $req[$bot] = isset($req[$human]) ? $req[$human] : '';  // relocate human data
+        unset($req[$human]);
       }
     }
 

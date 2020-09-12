@@ -304,8 +304,8 @@ class Page extends Html {
 
     private function setupCookie($pid, $token){
         if (!headers_sent()){
-            setcookie("pid", $pid, time() + 3*Player::MONTH, "/");
-            setcookie("token", $token, time() + 3*Player::MONTH, "/");
+            setcookie("pid", $pid, time() + 3*Player::MONTH, "/", HOST, TRUE, TRUE);
+            setcookie("token", $token, time() + 3*Player::MONTH, "/", HOST, TRUE, TRUE);
         }
     }
 
@@ -324,8 +324,8 @@ class Page extends Html {
             unset($this->player);
         }
         if (!headers_sent()){
-            setcookie("pid", "", time() - Player::DAY);
-            setcookie("token", "", time() - Player::DAY);
+            setcookie("pid", "", time() - Player::DAY "/", HOST, TRUE, TRUE);
+            setcookie("token", "", time() - Player::DAY "/", HOST, TRUE, TRUE);
         }
         $this->goHome();
     }

@@ -11,7 +11,6 @@ require_once 'Page.php';
 class Base extends Page {
 
     const BASE_CLASS_FLAG = 'base';
-    var $baseHTML = '';
 
     /**
     * class='base' is used to flag a hidden element to be used as a template
@@ -31,7 +30,6 @@ class Base extends Page {
         $doc->loadHTML($html);                               // better to use LIBXML_HTML_NOIMPLIED here
         $element = empty($id) ? $doc->documentElement->firstChild->firstChild : $doc->getElementById($id);
         if (isset($element)){
-            $this->baseHTML = $doc->saveHTML($element);
             $element->removeAttribute('id');  //remove the id attribute
             $classes = explode(" ", $element->getAttribute('class'));
             if (($key = array_search(Base::BASE_CLASS_FLAG, $classes)) !== false) {

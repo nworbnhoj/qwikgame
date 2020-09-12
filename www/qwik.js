@@ -323,19 +323,29 @@ function setInnerJSON(json, element){
 }
 
 
+function replaceRecords(json, base){
+    var parentNode = base.parentNode;
+    while (parentNode.childNodes.length) {
+      parentNode.removeChild(parentNode.firstChild);  // removes Listeners
+    }
+    parentNode.innerHTML = json.trim();
+    parentNode.insertBefore(base, parentNode.firstChild);
+    initJSON(parentNode);
+}
+
+
 function replicateBase(base){
     var id = base.getAttribute('id');
     if (!id){
         console.log("Failed to replicate base: missing id attribute.");
         return false;
     }
-    var parentNode = base.parentNode;
     var baseHtml = base.outerHTML;
     var params = {html:baseHtml};
     var esc = encodeURIComponent;
     var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
     var path = 'json/'+id+'.listing.php?'+query;
-    qwikJSON(path, setInnerJSON, parentNode);
+    qwikJSON(path, replaceRecords, base);
 }
 
 

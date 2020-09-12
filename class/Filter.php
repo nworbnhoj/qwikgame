@@ -62,45 +62,45 @@ class Filter extends Qwik {
   // white-list of sha256 hashes of html snippets submitted by json for replication
   // Update when <div class='json'> changes OR included translations change
   const HTML_SHA256 = array(
-   '3f10caa428381115e63227801b26efa7715725c59f8c95b73a01631958f8f67c' => 'en cancelled.match.listing',
-   '2792a518ae8a60659bc2db31eee5afc953f914353b8ca1dfd13bf8b9bdb19590' => 'en feedback.match.listing',
-   '54e1a24774ccb7ad5a849afb9ce188b6a6933a2089ae4523ec6aa8b5c8128a13' => 'en confirmed.match.listing',
-   '95c04b6870a02d7c8abb897ff595f0e0d8c0bb6137deb186b90f21a4bb4b9d13' => 'en accepted.match.listing',
-   '17e564077ed1e14c6054f4a66ae1897ceb768b912925ad16f6e0331cef9c7639' => 'en invitation.match.listing',
-   '9074eaa56d507618548565d89a634383fdfff2e14200cac0ca3d0b0df0b5cc93' => 'en keen.match.listing',
+   '12193d631dcd6062aa5ed612d227b41f111fa47ff9b736d3a0d362facddac1a0' => 'en cancelled.match.listing',
+   '7b7bbf074df104c3d9dbb4226277805844663609adabd81d281ddb923a909f1d' => 'en feedback.match.listing',
+   '1f186bdfea0530316fb65c5f14e4fb8bd476404f2b482b6929888c8a02f0cc51' => 'en confirmed.match.listing',
+   '45593caf851800cbdd5ae0f403b7196c4038fecbd0822209aef4050425d2381a' => 'en accepted.match.listing',
+   '2339bf25adb414b5e1bc59362da490731f21f686d05d3d57b99a0569caf2aa5a' => 'en invitation.match.listing',
+   '397dc67250c2cedc7d527a8c5b999103363bc2466566263ec36387c33d9567fc' => 'en keen.match.listing',
    'dfbfe806cf21f0697fbea049e2e24a56b026e3dfb5eb92852e84c1af41be19b7' => 'en history.match.listing',
    '8b4debe466109d2551a53bfeb2ff02cda75425df596f7fc74705d03dea36c33d' => 'en favorite.listing',
    '041594c6847191044f6c2a9e755233761993152788a5df5b0221cd4247f3efa8' => 'en friend.listing',
    '707cbeb51fabf3207c08aba7afb79c46d7d77050bd5c784b2a20ad1684c6d670' => 'en upload.listing',
    
-   'b20c03536f349802db8c8c8ddbd70c67567b617060745b05161076e488f00609' => 'bg cancelled.match.listing',
-   '01b0828e91909ffdf9c912f1af91b6deabff074f70ca0a3a2cb3fc8f61288824' => 'bg feedback.match.listing',
-   'ee056390611597569375dd0d9eb75ecc05af81f648d29c225106be6bae4c25d7' => 'bg confirmed.match.listing',
-   'df89049f0566b5ad826d930c7d02b27f9c992759a1628aa025434c19bfd8cda6' => 'bg accepted.match.listing',
-   '663b902812cec7547b9661f734966184e7663724ccf05346de4293f994e8b6d4' => 'bg invitation.match.listing',
-   'a3d99d6662e035c123539392b7035c288b46f00bc0b801bfb143db3a35f97eaa' => 'bg keen.match.listing',
+   'dfec5572448c9ce067977d074f116848d03e41a931fbf232d53d081185c8d6a8' => 'bg cancelled.match.listing',
+   '53091917efc7f63b3a5a9a7813a2b32dd333a34f5f0c619b07d537add1f3800d' => 'bg feedback.match.listing',
+   'bd901208cfc1c4208f66cdfc35e13480b98f1e0448e8a86403d10fd1e357970d' => 'bg confirmed.match.listing',
+   'a0f3ac729a2b966d39cb2be6afdd1d4c5befdae9cf0ef5723c5a5bdd7380a119' => 'bg accepted.match.listing',
+   '9a72e18e6d620a1156a20a73de6e29b0009c96e76d6b791fc29cab51ae9f610c' => 'bg invitation.match.listing',
+   'a3ee488974e0da90b1a15a8e5a514ad654aaf4c127a0e98d109f5e8d11979e4a' => 'bg keen.match.listing',
    'c191df15129bc0597c71c185f0315136b692e49bce74a13641c4dc663408ec12' => 'bg history.match.listing',
    '8f1875b9fa6907c1e21f14c5221a72d5cad7acb39e666fb183217f264fc83855' => 'bg favorite.listing',
    '34c83baa98909de55fee6cd76bd35b44d56c5235f6388002f9d129db259a0498' => 'bg friend.listing',
    '9cc856785492983edb457c008db5dd493f62efb519427cca199de1ae82c36baa' => 'bg upload.listing',
    
-   'b79ec9a322281f994025303c4bcc9659a8dd898bbc82f8d4b0b6392b952268b5' => 'es cancelled.match.listing',
-   'f89094d8f9ba84829bd034edecd53664628ec0b71084d60649ed4f843eec42fb' => 'es feedback.match.listing',
-   'b47c483ad349135114478fb3ac1d42d2359206a52f2362a0449abd514c1509a2' => 'es confirmed.match.listing',
-   'c1ecb752c5758740a64daf27ee9a5bb882797c627be5ad58d45c5dd8a763ee5e' => 'es accepted.match.listing',
-   '3c57530c604f6e0dc323f9aebef9e47ce16a51c14634195f0bc25ced3b32caa4' => 'es invitation.match.listing',
-   'fdcf3fd577a7fa8a56ab00dff7bbb13f35a8f592ab7864435d813ff1dd616f1b' => 'es keen.match.listing',
+   '149d83ab8de7ba10946c7d37f0649cdc12497f6c6482f97409e5b35a6d64fba6' => 'bg cancelled.match.listing',
+   '0798aced7ff176db6c81090f09ed205312293a448c5a17b9bc4a8f0c8c77e66c' => 'bg feedback.match.listing',
+   '95910a348918ee593ea1868ebd1829faa9ea5d7590982b8a37af01ff14e0a106' => 'bg confirmed.match.listing',
+   '7f6a9e6dd4b2351a3b230a95b90edc180b500222971b190e1a85bc29935c51d6' => 'bg accepted.match.listing',
+   '8a444d8be0ae7bd048a4ee497351dee93842fe40b7475d263291c82cac1fdc1c' => 'bg invitation.match.listing',
+   '2002c9b11068893f008ae7f7734769b94a04cb57ace5d96b58322a293c506598' => 'bg keen.match.listing',
    'ba57326428d6b77086efdb0a875679139e51896dae4a416c429946d4c826d087' => 'es history.match.listing',
    'd080f072fe751b57210a1d136b8d010c87f321248131a28b4f114a9e7778a2ed' => 'es favorite.listing',
    '8294a5fd8e4d2076de711ed9d6c3fa4cbc00454fc4214e5556e233b69cfff629' => 'es friend.listing',
    '2b8bb305d84b53f5cf20a28d16835653a0a1395f58a52fd0da2ed93208416cde' => 'es upload.listing',
    
-   '13aba90b4d3db853597085394b1962ffd7c8d6d75c335b1be6c38efba0fda99c' => 'zh cancelled.match.listing',
+   '223426f729680df4da1b6abea91b3a2cedc5baa902c3e4416124bdcfabb505f4' => 'zh cancelled.match.listing',
    'f89094d8f9ba84829bd034edecd53664628ec0b71084d60649ed4f843eec42fb' => 'zh feedback.match.listing',
    'b47c483ad349135114478fb3ac1d42d2359206a52f2362a0449abd514c1509a2' => 'zh confirmed.match.listing',
-   'dff970ddb234fd472a4d8c4a95a1e812c1879da9fcbad9827688f01a761d89ae' => 'zh accepted.match.listing',
-   '0e3cc8edc88c2912b304de136e7ab257201fc364566a5908bb6d480c1ea34532' => 'zh invitation.match.listing',
-   '35db39bf079816ed55f3ffc55f837e0502f14ca5ff45c8a476ae9076d577fdde' => 'zh keen.match.listing',
+   '54f343cbff85a33b5772090cb53404f7c50f3081a5a530dd9c76a52fb96ab1cb' => 'zh accepted.match.listing',
+   'ba1bc0abab68ee9eecffc41f8118b0a84c82cc197a6e1efc4d6a6f76af2e4878' => 'zh invitation.match.listing',
+   'db7cffb3f6b3eaf63a4be8525fcefe2adb4aacd8a01e608b0c8c172c62bbb0ea' => 'zh keen.match.listing',
    'ba57326428d6b77086efdb0a875679139e51896dae4a416c429946d4c826d087' => 'zh history.match.listing',
    'd080f072fe751b57210a1d136b8d010c87f321248131a28b4f114a9e7778a2ed' => 'zh favorite.listing',
    'acdbe4b2e7762fe40039ad24743ea79ee439e2a8f84f2bae90fda1d05cae02c7' => 'zh friend.listing',
@@ -119,6 +119,7 @@ class Filter extends Qwik {
     const AVOID   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::avoid');
     const CHECKBOX= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::checkbox');
     const COUNTRY = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::country');
+    const EMAIL   = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::email');
     const HONEYPOT= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::honeypot');
     const HOURS   = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_HRS);
     const HTML    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::html');
@@ -156,6 +157,15 @@ class Filter extends Qwik {
     	
     
     static function avoid($val){
+      if (self::strlen($val, 2000)
+      && mb_ereg_match("(([\w\- _&,]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
+        return $val;
+      }
+      return FALSE;
+    }
+    	
+    
+    static function email($val){
       if (self::strlen($val, 2000)
       && mb_ereg_match("(([\w\- _&,]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
         return $val;

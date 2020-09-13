@@ -11,6 +11,32 @@ class Ranking extends Qwik {
 //    const RANK_PARITY = array(128=>12.8, 64=>6.4, 32=>3.2, 16=>1.6, 8=>0.8, 4=>0.4, 2=>0.2, 1=>0.1, -1=>-0.1, -2=>-0.2, -4=>-0.4, -8=>-0.8, -16=>-1.6, -32=>-3.2, -64=>-6.4, -128=>-12.8);
 
     const RANK_PARITY = array(4=>0.8, 3=>0.6, 2=>0.4, 1=>0.2, -1=>-0.2, -2=>-0.4, -3=>0.6, -4=>-0.8);
+    
+    // regex pattern to match any invalid line in a Ranking file
+    const INVALID = "#(?m)^(?!\d{1,4},(?:[a-z0-9]{64})$)#";
+    
+    /**************************************************************************
+     * Validates each line in a ranking.csv
+     * Each line must contain [digit,sha256]
+     * digit must be a number 0-9999
+     * sha256 must be exactly 64 lowercase characters [a-z] and digits [0-9]
+     * example 0,0c49654105084fc4ac339ecb69ce44421f28a67bb129639f8a2b3a4acc5f3c2d
+     * @return Integer the first line # which failed validation of 0 on success
+     *************************************************************************/
+    static function validate($file){
+      $badLineNumber = 0;
+      $text = file_get_contents($file);
+      $matches = array();
+      $fails = preg_match_all(self::INVALID, $text, $matches, PREG_OFFSET_CAPTURE);
+      if ($fails > 0){
+        $firstFail = $matches[0][0];
+        $position = $firstFail[1];                 // position of invalid match
+        $before = substr($text, 0, $position);     // text before invalid match
+        $lineCount = substr_count($before, "\n");
+        $badLineNumber = $lineCount + 1;
+      }
+      return $badLineNumber;
+    }
 
 
     private $xml;
@@ -24,6 +50,7 @@ class Ranking extends Qwik {
             $this->xml = $this->retrieve($rankingID);
         } else {
             $this->xml = new SimpleXMLElement("<upload></upload>");
+            $this->xml->addAttribute('id', self::newID());
             $this->xml->addAttribute('fileName', $rankingID);
             $this->processUpload($game, $path);
             if ($this->valid){
@@ -89,8 +116,13 @@ class Ranking extends Qwik {
     }
 
 
-    public function fileName($value=NULL){
-        return $this->attribute('fileName', $value);
+    public function id($value=NULL){
+        return $this->attribute('id', $value);
+    }
+
+
+    public function filename($value=NULL){
+        return $this->attribute('filename', $value);
     }
 
 
@@ -171,11 +203,6 @@ class Ranking extends Qwik {
             PATH_UPLOAD, 
             $rankingID . self::XML
         );
-    }
-
-
-    private function id(){
-        return $this->xml['id'];
     }
 
 

@@ -1,6 +1,6 @@
 docReady(event => {
   initPage();
-  document.getElementById('qwik-logo').addEventListener(           'click', clearCache,              false);
+  document.getElementById('qwik-logo').addEventListener(           'click', clearAllCaches,          false);
   document.getElementById('notify-email').addEventListener(        'click', clickNotifyEmail,        false);
   document.getElementById('notify-push').addEventListener(         'click', clickNotifyPush,         false);
   document.getElementById('notify-push-label').addEventListener(   'click', clickNotifyPushLabel,    false);
@@ -99,7 +99,7 @@ function submitAccountLogoutForm(){
   clearCache('pages');
   clearCache('json')
   var endpoint = document.getElementById('push-endpoint').value;
-  document.getElementById('logout-endpoint') = endpoint;
+  document.getElementById('logout-endpoint').value = endpoint;
 }
 
 

@@ -324,8 +324,8 @@ class Page extends Html {
             unset($this->player);
         }
         if (!headers_sent()){
-            setcookie("pid", "", time() - Player::DAY "/", HOST, TRUE, TRUE);
-            setcookie("token", "", time() - Player::DAY "/", HOST, TRUE, TRUE);
+            setcookie("pid", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
+            setcookie("token", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
         }
         $this->goHome();
     }

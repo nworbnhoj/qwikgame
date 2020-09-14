@@ -914,7 +914,7 @@ class Player extends Qwik {
     
 
 
-    public function rankingGet($filename)
+    public function rankingGet($filename){
         $ranking = new Ranking($filename);
         if(!isset($ranking)){
             $this->rankingDelete($filename);

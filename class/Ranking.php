@@ -43,15 +43,17 @@ class Ranking extends Qwik {
     public $transcript;
     public $valid;
 
-    public function __construct($rankingID, $game=NULL, $path=NULL){
+    public function __construct($filename, $game=NULL, $path=NULL){
         parent::__construct();
         $this->valid = true;
         if(is_null($path)){
-            $this->xml = $this->retrieve($rankingID);
+            $this->xml = $this->retrieve($filename);
         } else {
+          $badLineNumber = self::validate();
+          if( $badLineNumber === 0){
             $this->xml = new SimpleXMLElement("<upload></upload>");
             $this->xml->addAttribute('id', self::newID());
-            $this->xml->addAttribute('fileName', $rankingID);
+            $this->xml->addAttribute('fileName', $filename);
             $this->processUpload($game, $path);
             if ($this->valid){
                 $date = date_create();
@@ -59,9 +61,12 @@ class Ranking extends Qwik {
                 $this->xml->addAttribute('path', $path);
                 $this->xml->addAttribute('game', $game);
                 $this->xml->addAttribute('status', 'uploaded');
-                $this->xml->addAttribute('id', self::newID());
                 $this->save();
             }
+          } else {
+            $this->transcript .= "Validation failed on line $badLineNumber.\n";
+            $this->valid = false;
+          }  
         }
     }
 
@@ -139,13 +144,23 @@ class Ranking extends Qwik {
     public function time($value=NULL){
         return $this->attribute('time', $value);
     }
+    
+    
+    public function ranks(){
+      $ranks = array();
+      $anonIDs = $this->xml->xpath("sha256");
+      foreach($anonIDs as $anonID){
+        $anonRank = (int) $anonID['rank'];
+        $ranks[$anonRank] = (string) $anonID;
+      }
+      return $ranks;
+    }
 
 
     private function checkHash($file){
         if($this->valid){
             $facilitatorSHA256 = hash('sha256', 'facilitator@qwikgame.org');
 
-//            $line = SECURITYsanitizeHTML(fgets($file));
             $line = fgets($file);
 
             $testSHA256 = trim(explode(',', $line)[1]);
@@ -167,7 +182,6 @@ class Ranking extends Qwik {
             $lineNo = 0;
             $rankCount = 0;
             while($this->valid && !feof($file)) {
-            //                $line = SECURITYsanitizeHTML(fgets($file));
                $line = fgets($file);
 
                 $lineNo++;
@@ -230,14 +244,7 @@ class Ranking extends Qwik {
 
         $rankingID = $this->id();
         $game = $this->game();
-
-        $ranks = array();
-        $anonIDs = $this->xml->xpath("sha256");
-        foreach($anonIDs as $anonID){
-            $anonRank = (int) $anonID['rank'];
-            $ranks[$anonRank] = (string) $anonID;
-        }
-
+        $ranks = $this->ranks();
         foreach($ranks as $anonRank => $anonID){
             try {
                 $anon = new Player($anonID, TRUE);

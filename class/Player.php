@@ -896,22 +896,28 @@ class Player extends Qwik {
 ////////// UPLOAD //////////////////////////////////////////
 
 
-    public function uploadIDs(){
+    public function uploads(){
         return $this->xml->xpath("upload");
+    }
+    
+    public function upload($id){
+        $upload = $this->xml->xpath("upload[@id='$id']");
+        return (string) $upload[0];
     }
 
 
-    public function uploadAdd($fileName){
+    public function uploadAdd($id, $fileName){
         $up = $this->xml->addChild('upload', htmlspecialchars($fileName));
+        $up->addAttribute('id', $id);
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));
     }
     
 
 
-    public function rankingGet($rankingID){
-        $ranking = new Ranking($rankingID);
+    public function rankingGet($filename)
+        $ranking = new Ranking($filename);
         if(!isset($ranking)){
-            $this->rankingDelete($rankingID);
+            $this->rankingDelete($filename);
             return FALSE;
         }
         return $ranking;
@@ -958,7 +964,7 @@ A set of rankings has a status: [ uploaded | active ]
 Requirements:
 1.    Every line must contain an integer rank and the sha256 hash of an email
     address separated by a comma.
-    18 , d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
+    18,d6ef13d04aee9a11ad718cffe012bf2a134ca1c72e8fd434b768e8411c242fe9
 2.    The first line of the uploaded file must contain the sha256 hash of
     facilitator@qwikgame.org with rank=0. This provides a basic check that
     the sha256 hashes in the file are compatible with those in use at qwik game org.
@@ -979,32 +985,40 @@ Requirements:
         }
 
         if($ok && $_FILES["filename"]["size"] > 200000){
-            $msg .= 'Max file size (100k) exceeded.';
+            $msg .= 'Max file size (200k) exceeded.';
+            $ok = FALSE;
+        }        
+
+        $tmp_name = $_FILES["filename"]["tmp_name"];
+        $invalidLine = Ranking::validate($tmp_name);
+        if($ok && $invalidLine > 0){
+            $msg .= "File contains an invalid line:\n$invalidLine";
             $ok = FALSE;
         }
-
-        $date = date_create();
-        $tmp_name = $_FILES["filename"]["tmp_name"];
-        $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-        $CSV = Ranking::CSV;
-        $path = PATH_UPLOAD."$fileName$CSV";
-        $this->moveUpload($tmp_name, $path);
-
-        $ranking = importRanking($game, $path, $fileName);
-        $ok = $ranking->valid;
-        $msg .= $ranking->transcript;
-
-        $ranking->attribute("title", $title);
-        $ranking->attribute("uploadName", $uploadName);
-
+        
+        
         if ($ok){
-            $existingCount = 0;
-            foreach($ranks as $sha256){
-                if (self::exists($sha256)){
-                    $existingCount++;
-                }
+          $date = date_create();
+          $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
+          $CSV = Ranking::CSV;
+          $path = PATH_UPLOAD."$fileName$CSV";
+          move_uploaded_file($tmp_name, $path);
+
+          $ranking = $this->importRanking($game, $path, $fileName);
+          $ok = $ranking->valid;
+          $msg .= $ranking->transcript;
+
+          $ranking->attribute("title", $title);
+          $ranking->save();
+
+          $existingCount = 0;
+          $ranks = $ranking->ranks();
+          foreach($ranks as $sha256){
+            if (self::exists($sha256)){
+              $existingCount++;
             }
-            $msg .= "$existingCount players have existing qwikgame records.<br>";
+          }
+          $msg .= "$existingCount players have existing qwikgame records.<br>";
         }
 
         if($ok){
@@ -1021,7 +1035,7 @@ Requirements:
         if ($ranking->valid){
             $ranking->attribute("player", $this->id());
             $ranking->attribute('uploadHash', hash_file('sha256', $path));
-            $this->uploadAdd($game, $fileName);
+            $this->uploadAdd($ranking->id(), $fileName);
             return $ranking;
         }
         return NULL;

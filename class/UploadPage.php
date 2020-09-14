@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Page.php';
-require_once'UploadList.php';
+require_once 'UploadList.php';
 
 
 class UploadPage extends Page {
@@ -19,60 +19,49 @@ class UploadPage extends Page {
 	
 	
     public function processRequest(){
-
-        $player = $this->player();
-        $qwik = $this->req('qwik');
-        $game = $this->req('game');
-        $title = $this->req('title');
-        $filename = $this->req('filename');
-
-	if (isset($player) && isset($qwik)){
-            $qwik = $this->req('qwik');
-
-            switch ($qwik) {
-                case 'upload':
-                    if(isset($game) && isset($title)){
-                        $player->rankingUpload($game, $title);
-                    }
-	            break;
-                case "activate":
-                    if(isset($filename)){
-                        $player->rankingActivate($filename);
-                    }
-                    break;
-                case 'deactivate':
-                    if(isset($filename)){
-                        $player->rankingDeactivate($filename);
-                    }
-                    break;
-                case 'delete':
-                    if(isset($filename)){
-                        $player->rankingDelete($filename);
-                    }
-                    break;
+      $player = $this->player();
+      $qwik = $this->req('qwik');
+      if (isset($player) && isset($qwik)){
+        $id = $this->req('id');
+        $filename = $player->upload($id);
+        switch ($qwik) {
+          case 'upload':
+            $game = $this->req('game');
+            $title = $this->req('title');
+            if(isset($game) && isset($title)){
+              $msg = $player->rankingUpload($game, $title);
+              $this->message($msg);
             }
-            $player->save();
+	    break;
+          case "activate":
+            if(isset($filename)){
+              $player->rankingActivate($filename);
+            }
+            break;
+          case 'deactivate':
+            if(isset($filename)){
+              $player->rankingDeactivate($filename);
+            }
+            break;
+          case 'delete':
+            if(isset($filename)){
+              $player->rankingDelete($filename);
+            }
+            break;
+          }
+          $player->save();
         }
     }
     
     
     public function variables(){
-        $variables = parent::variables();
-        $player = $this->player();
-        $game = $this->req('game');
-
-        $variables['please_login']   = $player ? '' : '{prompt_login}';
-        $variables['uploadHidden']   = $player ? '' : 'hidden';
-        $variables['uploadDisabled'] = $player ? '' : 'disabled';
-        $variables['TICK_ICON']      = self::TICK_ICON;
-        $variables['LOGOUT_ICON']    = isset($player) ? self::LOGOUT_ICON : '';
-        $variables['gameOptions']    = $this->gameOptions($game, "\t\t");
-
-        return $variables;
+      $vars = parent::variables();
+      unset($vars['game']);  // quick fix to prevent [game] change in record template
+      $player = $this->player();
+      $vars['TICK_ICON']   = self::TICK_ICON;
+      $vars['gameOptions'] = $this->gameOptions($game, "\t\t");
+      return $vars;
     }
-
-
-
 
 
     public function make($variables=NULL, $html=NULL){

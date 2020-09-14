@@ -26,20 +26,20 @@ class UploadList extends Card {
         if (is_null($player)){ return '';}
   
         $group = '';
-        $uploadIDs = $player->uploadIDs();
-        foreach($uploadIDs as $uploadID) {
-            $ranking = $player->rankingGet($uploadID);
+        $uploads = $player->uploads();
+        foreach($uploads as $upload) {
+            $ranking = $player->rankingGet((string)$upload);
             $status = $ranking->status();
             $uploadVars = array(
                 'status'   => $status,
-                'fileName' => $ranking->fileName(),
+                'id'       => (string) $upload['id'],
                 'crossAct' => $status == 'uploaded' ? 'delete' : 'deactivate',
                 'tickIcon' => $status == 'uploaded' ? self::TICK_ICON : '',
                 'title'    => $ranking->title(),
                 'game'     => $ranking->game(),
                 'time'     => $ranking->time()
             );
-            $vars = $variables + $uploadVars;
+            $vars = $uploadVars + $variables;
             $group .= $this->populate($html, $vars);
         }
         return $group;

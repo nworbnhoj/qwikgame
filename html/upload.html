@@ -43,23 +43,22 @@
 
     <h2 id='upload' name='upload'>{Upload_Rankings}</h2>
 
-    <p>
-        {Upload_a_list...}<br>
-        [please_login]
-    </p>
+    <p>{Upload_a_list...}</p>
 
     <div>
-    <div id='upload' class='base json record [status]' [uploadHidden]>
+    <div id='upload' class='base json record [status]'>
         <form class='record' action='upload.php' method='post'>
-            <input type='hidden' name='filename' value='[fileName]'>
+            <input type='hidden' name='id' value='[id]'>
             <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
             <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]' onclick='return setUndo(event)'></button>
         <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
             <button class='action [tickIcon]' name='qwik' value='activate' ></button>
             <span class='help' hidden>{Once_you_have_uploaded...}</span>
-            <span class='tag {[status]}'>[status]</span>
-            [title]<br>
-            <b>[game]</b> [time]
+            <p class='record'>
+              <span class='tag {[status]}'>[status]</span>
+              [title]<br>
+              <b>[game]</b> [time]
+            </p>
         </form>
     </div>
         [uploadList]
@@ -73,23 +72,22 @@
             <select name="game" class="game">
                 [gameOptions]
             </select>
-            <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank' [uploadDisabled]>
+            <input required    type="file" name="filename" id="fileToUpload" placeholder='prompt_rank'>
             <br>
-            <input required    name='title' type='text' class="brick" placeholder='{prompt_title}' [uploadDisabled]>
-            <input type="submit" value="Upload" name="submit" [uploadDisabled]>
+            <input required    name='title' type='text' class="brick" placeholder='{prompt_title}'>
+            <input type="submit">
         </form>
     </div>
 <br>
 
     <p>{A_comma_delimited...}</p>
-
     <p>{There_is_a_simple...}</p>
 <br><br>
 
 <h2>How does this work?</h2>
 
 <div class="info">
-    <p>{needs_a_unique...}
+    <p>{needs_a_unique...}</p>
     <p>{The_sha256...}</p>
     <p>{uses_match_feedback...}</p>
     <p>{If_a_player_chooses...}</p>

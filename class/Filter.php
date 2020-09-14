@@ -71,7 +71,7 @@ class Filter extends Qwik {
    'dfbfe806cf21f0697fbea049e2e24a56b026e3dfb5eb92852e84c1af41be19b7' => 'en history.match.listing',
    '8b4debe466109d2551a53bfeb2ff02cda75425df596f7fc74705d03dea36c33d' => 'en favorite.listing',
    '041594c6847191044f6c2a9e755233761993152788a5df5b0221cd4247f3efa8' => 'en friend.listing',
-   '707cbeb51fabf3207c08aba7afb79c46d7d77050bd5c784b2a20ad1684c6d670' => 'en upload.listing',
+   '7efff865bcdec963e62978bb95e757ec7301187113ec8f4d1d1ba2f6e86387c5' => 'en upload.listing',
    
    'dfec5572448c9ce067977d074f116848d03e41a931fbf232d53d081185c8d6a8' => 'bg cancelled.match.listing',
    '53091917efc7f63b3a5a9a7813a2b32dd333a34f5f0c619b07d537add1f3800d' => 'bg feedback.match.listing',
@@ -82,7 +82,7 @@ class Filter extends Qwik {
    'c191df15129bc0597c71c185f0315136b692e49bce74a13641c4dc663408ec12' => 'bg history.match.listing',
    '8f1875b9fa6907c1e21f14c5221a72d5cad7acb39e666fb183217f264fc83855' => 'bg favorite.listing',
    '34c83baa98909de55fee6cd76bd35b44d56c5235f6388002f9d129db259a0498' => 'bg friend.listing',
-   '9cc856785492983edb457c008db5dd493f62efb519427cca199de1ae82c36baa' => 'bg upload.listing',
+   '40ee332a534d19cabf1349a8c8c61896dd6366cd82536e6d7927446e1aea8520' => 'bg upload.listing',
    
    '149d83ab8de7ba10946c7d37f0649cdc12497f6c6482f97409e5b35a6d64fba6' => 'bg cancelled.match.listing',
    '0798aced7ff176db6c81090f09ed205312293a448c5a17b9bc4a8f0c8c77e66c' => 'bg feedback.match.listing',
@@ -93,7 +93,7 @@ class Filter extends Qwik {
    'ba57326428d6b77086efdb0a875679139e51896dae4a416c429946d4c826d087' => 'es history.match.listing',
    'd080f072fe751b57210a1d136b8d010c87f321248131a28b4f114a9e7778a2ed' => 'es favorite.listing',
    '8294a5fd8e4d2076de711ed9d6c3fa4cbc00454fc4214e5556e233b69cfff629' => 'es friend.listing',
-   '2b8bb305d84b53f5cf20a28d16835653a0a1395f58a52fd0da2ed93208416cde' => 'es upload.listing',
+   '9ffc6d3819f2840e5c436b794a262d60cb8ca50f6399fbf111ea8d91e25fa958' => 'es upload.listing',
    
    '223426f729680df4da1b6abea91b3a2cedc5baa902c3e4416124bdcfabb505f4' => 'zh cancelled.match.listing',
    'f89094d8f9ba84829bd034edecd53664628ec0b71084d60649ed4f843eec42fb' => 'zh feedback.match.listing',
@@ -123,7 +123,6 @@ class Filter extends Qwik {
     const HONEYPOT= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::honeypot');
     const HOURS   = array('filter'=>FILTER_VALIDATE_INT,   'options'=>Filter::OPT_HRS);
     const HTML    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::html');
-    const FILENAME= array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::filename');
     const GAME    = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::game');
     const ID      = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::ID');
     const INVITE  = array('filter'=>FILTER_CALLBACK,       'options'=>'Filter::invite');
@@ -181,15 +180,6 @@ class Filter extends Qwik {
 
     static function country($val){
         return isset(self::countries()[$val]) ? $val : FALSE;
-    }
-
-
-    static function filename($val){
-      if (self::strlen($val, 30)
-      && preg_match("#^[a-zA-Z0-9_-]+$#", $val)){
-        return $val;
-      }
-      return FALSE;
     }
 
 

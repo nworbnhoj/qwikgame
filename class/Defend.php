@@ -5,25 +5,6 @@ require_once 'Filter.php';
 
 
 class Defend extends Qwik {
-
-  // An array of maximum string lengths. Used by: clip()
-  const CLIP = array(
-    'description' => 200,
-    'filename'    => 50,
-    'html'        => 2000,
-    'key'         => 30,
-    'msg'         => 200,
-    'lang'        => 2,
-    'name'        => 100,
-    'nick'        => 20,
-    'phrase'      => 2000,
-    'push-key'    => 88,
-    'push-token'  => 24,
-    'region'      => 100,
-    'venue'       => 150
-  );
-
-
     
   const FILTER_ARGS = array(
     'admin'         => Filter::ADMIN,
@@ -72,6 +53,7 @@ class Defend extends Qwik {
     'rival'         => FILTER_VALIDATE_EMAIL,
     'account-url'   => FILTER_VALIDATE_URL,
     'push-endpoint' => FILTER_VALIDATE_URL,
+    
     'account'       => FILTER_DEFAULT,
     'key'           => FILTER_DEFAULT,
     'phrase'        => FILTER_DEFAULT
@@ -230,8 +212,7 @@ class Defend extends Qwik {
 
     private function examine($request){
       if($this->validateKeys($request)){
-        $req = $this->clip($request);
-        $result = filter_var_array($req, self::FILTER_ARGS, FALSE);
+        $result = filter_var_array($request, self::FILTER_ARGS, FALSE);
         if ($this->size($result) !== $this->size($req)){
             $this->rejected = $this->rejected + $this->rejects($req, $result);
         }
@@ -294,34 +275,6 @@ class Defend extends Qwik {
             }
         }
         return $size;
-    }
-
-
-    /********************************************************************************
-    Returns $val truncated to a maximum length specified in the global $clip array
-
-    $key    String    the $key of the global $clip array specifying the truncated length
-    $val    String    A string to be truncated according to global $clip array
-    ********************************************************************************/
-    function clip($data, $key=NULL){
-        $clipped = $data;
-        if (is_array($data)){
-            if(is_null($key)){
-                foreach($data as $key => $val){
-                    $clipped[$key] = $this->clip($val, $key);
-                }
-            } elseif(array_key_exists($key, $data)) {
-                $clipped[$key] = $this->clip($data[$key], $key);
-            }
-        } elseif(array_key_exists($key, self::CLIP)){
-            $clipped = substr($data, 0, self::CLIP[$key]);
-            if ($clipped !== $data){
-                $key = self::logSafe($key);
-                $clipped = self::logSafe($clipped);
-                Qwik::logMsg("Defend clipped [$key] $clipped");
-            }
-        }
-        return $clipped;
     }
 }
 

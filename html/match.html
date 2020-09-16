@@ -54,7 +54,6 @@
 <div id='cancelled.match' class="base json record cancelled">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
@@ -72,7 +71,6 @@
 <div id='feedback.match' class="base json record feedback">
     <form class='record' action='match.php#history' method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <input type='hidden' name='rep' value='+1'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='feedback' class='action [TICK_ICON]'></button>
@@ -90,7 +88,6 @@
 <div id='confirmed.match' class="base json record confirmed">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
@@ -112,7 +109,6 @@
 <div id='accepted.match' class="base json record accepted">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
@@ -130,7 +126,6 @@
 <div id='invitation.match' class="base json record invitation">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='submit' name='qwik' value='accept' class='action [TICK_ICON]'></button>
@@ -149,7 +144,6 @@
 <div id='keen.match' class="base json record keen">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
-        <input type='hidden' name='game' value='[game]'>
         <button type='button' class='action help [HELP_ICON]'></button>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
         <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
@@ -336,6 +330,7 @@
 
 
 </html>
+
 
 
 

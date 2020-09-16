@@ -163,7 +163,7 @@ class Ranking extends Qwik {
     }
 
 
-    private function($file){
+    private function checkHash($file){
         if($this->valid){
             $facilitatorSHA256 = hash('sha256', 'facilitator@qwikgame.org');
 

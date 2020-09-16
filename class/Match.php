@@ -314,13 +314,17 @@ class Match extends Qwik {
                     $notify = new Notify($rival);
                     $notify->sendCancel($this);
                 }
-                // break; intentional drop-thru
+                foreach($rivals as $rival){
+                    $rival->matchCancel($mid);
+                }         
+                break;
             case 'keen':
                 foreach($rivals as $rival){
                     $rival->matchCancel($mid);
-                }
+                }                
+                $this->player->deleteData($mid);
                 break;
-            case 'invitation':    // not used - handled by decline()
+            case 'invitation':
                 foreach($rivals as $rival){
                     $rival->matchDecline($mid);
                 }
@@ -329,6 +333,7 @@ class Match extends Qwik {
 
 
     public function decline(){
+        $mid = $this->id();
         $rivals = $this->rivals();
         foreach($rivals as $rival){
             $match = $rival->matchID($mid);

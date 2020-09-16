@@ -681,7 +681,7 @@ class Player extends Qwik {
         $match = $this->matchID($mid);
         if (isset($match)){
             $match->decline();
-            $player->save();
+            $this->save();
         }
     }
 

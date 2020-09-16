@@ -13,7 +13,12 @@ class Ranking extends Qwik {
     const RANK_PARITY = array(4=>0.8, 3=>0.6, 2=>0.4, 1=>0.2, -1=>-0.2, -2=>-0.4, -3=>0.6, -4=>-0.8);
     
     // regex pattern to match any invalid line in a Ranking file
-    const INVALID = "#(?m)^(?!\d{1,4},(?:[a-z0-9]{64})$)#";
+    const INVALID = "#(?m)^(?!\d{1,4},(?:[a-z0-9]{64})$)#";    
+
+
+    static function exists($filename){
+      return file_exists(PATH_UPLOAD.$filename.self::XML);
+    }
     
     /**************************************************************************
      * Validates each line in a ranking.csv
@@ -43,22 +48,22 @@ class Ranking extends Qwik {
     public $transcript;
     public $valid;
 
-    public function __construct($filename, $game=NULL, $path=NULL){
+    public function __construct($filename, $game=NULL){
         parent::__construct();
         $this->valid = true;
-        if(is_null($path)){
+        if(self::exists($filename)){
             $this->xml = $this->retrieve($filename);
         } else {
-          $badLineNumber = self::validate();
-          if( $badLineNumber === 0){
+          $fqfilename = PATH_UPLOAD.$filename.self::CSV;
+          $badLineNumber = self::validate($fqfilename);
+          if( $badLineNumber <= 0){
             $this->xml = new SimpleXMLElement("<upload></upload>");
             $this->xml->addAttribute('id', self::newID());
             $this->xml->addAttribute('fileName', $filename);
-            $this->processUpload($game, $path);
+            $this->processUpload($filename);
             if ($this->valid){
                 $date = date_create();
                 $this->xml->addAttribute('time', $date->format('d-m-Y H:i:s'));
-                $this->xml->addAttribute('path', $path);
                 $this->xml->addAttribute('game', $game);
                 $this->xml->addAttribute('status', 'uploaded');
                 $this->save();
@@ -71,8 +76,8 @@ class Ranking extends Qwik {
     }
 
 
-    private function processUpload($game, $path){
-        $file = $this->openUpload($path);
+    private function processUpload($filename){
+        $file = $this->openUpload($filename);
         $this->checkHash($file);
         $this->parse($file);
         fclose($file);
@@ -93,12 +98,13 @@ class Ranking extends Qwik {
     }
 
 
-    private function openUpload($path){
+    private function openUpload($filename){
         if (!$this->valid){
             return NULL;
         }
         // open the uploaded file
-        $file = fopen($path, "r");
+        $fqfilename = PATH_UPLOAD.$filename.self::CSV;
+        $file = fopen($fqfilename, "r");
         if ($file){
             $this->transcript .= "opened OK<br>";
         } else {
@@ -157,7 +163,7 @@ class Ranking extends Qwik {
     }
 
 
-    private function checkHash($file){
+    private function($file){
         if($this->valid){
             $facilitatorSHA256 = hash('sha256', 'facilitator@qwikgame.org');
 
@@ -212,10 +218,10 @@ class Ranking extends Qwik {
     }
 
 
-    public function retrieve($rankingID){
+    public function retrieve($filename){
         return self::readXML( 
             PATH_UPLOAD, 
-            $rankingID . self::XML
+            $filename . self::XML
         );
     }
 

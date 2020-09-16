@@ -972,7 +972,6 @@ Requirements:
 
 ********************************************************************************/
     function rankingUpload($game, $title){
-        global $tick;
         $ok = TRUE;
         $msg = "<b>Thank you</b><br>";
 
@@ -999,12 +998,10 @@ Requirements:
         
         if ($ok){
           $date = date_create();
-          $fileName = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
-          $CSV = Ranking::CSV;
-          $path = PATH_UPLOAD."$fileName$CSV";
-          move_uploaded_file($tmp_name, $path);
+          $filename = $game . "RankUpload" . $date->format('Y:m:d:H:i:s');
+          move_uploaded_file($tmp_name, PATH_UPLOAD.$filename.self::CSV);
 
-          $ranking = $this->importRanking($game, $path, $fileName);
+          $ranking = $this->importRanking($filename, $game);
           $ok = $ranking->valid;
           $msg .= $ranking->transcript;
 
@@ -1022,7 +1019,7 @@ Requirements:
         }
 
         if($ok){
-            $msg .= "<br>Click $tick to activate these rankings";
+            $msg .= "<br>You can now activate these rankings";
         } else {
             $msg .= "<br>Please try again.<br>";
         }
@@ -1030,12 +1027,13 @@ Requirements:
     }
 
 
-    public function importRanking($game, $path, $fileName){
-        $ranking = new Ranking($fileName, $game, $path);
+    public function importRanking($filename, $game){
+        $ranking = new Ranking($filename, $game);
         if ($ranking->valid){
-            $ranking->attribute("player", $this->id());
-            $ranking->attribute('uploadHash', hash_file('sha256', $path));
-            $this->uploadAdd($ranking->id(), $fileName);
+            $ranking->attribute("player", $this->id());    
+            $fqfilename = PATH_UPLOAD.$filename.self::CSV;
+            $ranking->attribute('uploadHash', hash_file('sha256', $fqfilename));
+            $this->uploadAdd($ranking->id(), $filename);
             return $ranking;
         }
         return NULL;

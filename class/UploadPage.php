@@ -56,10 +56,10 @@ class UploadPage extends Page {
     
     public function variables(){
       $vars = parent::variables();
-      unset($vars['game']);  // quick fix to prevent [game] change in record template
       $player = $this->player();
       $vars['TICK_ICON']   = self::TICK_ICON;
-      $vars['gameOptions'] = $this->gameOptions($game, "\t\t");
+      $vars['gameOptions'] = $this->gameOptions($vars['game'], "\t\t");
+      unset($vars['game']);  // quick fix to prevent [game] change in record template
       return $vars;
     }
 

@@ -126,6 +126,7 @@ class Defend extends Qwik {
     } else {
       $flags = FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH;
       $cool = filter_var($hot, FILTER_SANITIZE_STRING, $flags);
+      $cool = substr($cool, 0, 1000);
     }
     return $cool;
   }
@@ -212,8 +213,8 @@ class Defend extends Qwik {
     private function examine($request){
       if($this->validateKeys($request)){
         $result = filter_var_array($request, self::FILTER_ARGS, FALSE);
-        if ($this->size($result) !== $this->size($req)){
-            $this->rejected = $this->rejected + $this->rejects($req, $result);
+        if ($this->size($result) !== $this->size($request)){
+            $this->rejected = $this->rejected + $this->rejects($request, $result);
         }
       } else {
         $result = array();

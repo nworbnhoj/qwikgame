@@ -53,7 +53,8 @@ class Filter extends Qwik {
           'region'=>'',
           'register'=>'',
           'translate'=>'',
-          'upload'=>''
+          'upload'=>'',
+          'quit'=>''
     );
     
     

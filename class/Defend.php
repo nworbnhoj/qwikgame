@@ -54,7 +54,6 @@ class Defend extends Qwik {
     'url'           => FILTER_VALIDATE_URL,
     'push-endpoint' => FILTER_VALIDATE_URL,
     
-    'account'       => FILTER_DEFAULT,
     'key'           => FILTER_DEFAULT,
     'phrase'        => FILTER_DEFAULT
   );

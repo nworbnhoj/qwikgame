@@ -36,6 +36,11 @@ class AccountPage extends Page {
                     $notify->push($request['push-endpoint'], Notify::MSG_NONE);
                 }
                 break;
+            case 'quit':
+                $player->emailQuit();
+                $player->quit();
+                $this->logout();   
+                break;
             default:
                 $result =  NULL;
         }
@@ -110,16 +115,6 @@ function qwikAccount($player, $request){
         isset($request['push-token']) ? $request['push-token'] : NULL,
         isset($request['push-key']) ? $request['push-key'] : NULL
     );
-
-
-    if(isset($request['account']) && ($request['account'] === 'quit')) {
-        $player->emailQuit();
-        $player->quit();
-        $this->logout();
-
-        header("Location: ".QWIK_URL, TRUE, 307);
-        exit;
-    }
 }
 
 

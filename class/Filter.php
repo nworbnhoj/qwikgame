@@ -253,7 +253,7 @@ class Filter extends Qwik {
 
     static function pushKey($val){
       if (self::strlen($val, 1024)
-      && preg_match("#^[a-zA-Z0-9_-+]+$#", $val)){
+      && preg_match("#^[a-zA-Z0-9_+-]+$#", $val)){
         return $val;
       }
       return FALSE;
@@ -262,7 +262,7 @@ class Filter extends Qwik {
 
     static function pushToken($val){
       if (self::strlen($val, 128)
-      && preg_match("#^[a-zA-Z0-9_-+]+==$#", $val)){
+      && preg_match("#^[a-zA-Z0-9_+-]+==$#", $val)){
         return $val;
       }
       return FALSE;

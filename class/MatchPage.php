@@ -72,9 +72,6 @@ class MatchPage extends Page {
         $req = $this->req();
         $result = null;
         switch ($qwik) {
-            case "available":
-                $result = $this->qwikAvailable($player, $this->venue);
-                break;
             case "keen":
                 $result = $this->qwikKeen($player, $req, $this->venue);
                 break;
@@ -188,34 +185,6 @@ class MatchPage extends Page {
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
 
 
-
-    function qwikAvailable($player, $venue){
-        if($this->req('game')
-        & $this->req('parity')
-        & $this->req('vid')){
-            $newID = $player->availableAdd(
-                $this->req('game'),
-                $this->req('vid'),
-                $this->req('parity'),
-                $venue->tz(),
-                $this->req('smtwtfs') ? $this->req('smtwtfs') : FALSE,
-                $this->req()
-            );
-            if(is_null($venue)){
-                $pid = $player->id();
-                $vid = $this->req('vid');
-                $this->logMsg("Unable to add player to venue:\tpid=$pid\t vid=$vid");
-            } else {
-                $venue->addPlayer($player->id());
-                $venue->save(TRUE);
-            }
-            return $newID;
-        }
-        return NULL;
-    }
-
-
-
 function qwikKeen($player, $req, $venue){
     if(empty($req)
     || empty($venue)
@@ -225,6 +194,7 @@ function qwikKeen($player, $req, $venue){
         return;
     }
 
+    $mid = null;
     $game = $req['game'];
 
     $rids = array();
@@ -247,10 +217,12 @@ function qwikKeen($player, $req, $venue){
         $date = $venue->dateTime($day);
         $hours = new Hours((int) $req[$day]);
         if (!$hours->none()){
-             $player->matchKeen($game, $venue, $date, $hours, $rids);
+           $match = $player->matchKeen($game, $venue, $date, $hours, $rids);
+           $mid = $match->id();
         }
     }
     $player->save();
+    return $mid;  // caution - return the last mid
 }
 
 
@@ -263,9 +235,12 @@ function qwikAccept($player, $request){
             self::logMsg("unable to locate match: $matchID");
             return;
         }
-        $match->accept(new Hours($request['hour']));
+        $mid = $match->accept(new Hours($request['hour']));
         $player->save();
+    } else {
+      $mid = null;
     }
+    return $mid;
 }
 
 
@@ -273,8 +248,12 @@ function qwikAccept($player, $request){
 function qwikDecline($player, $request){
     $playerID = $player->id();
     if(isset($request['id'])){
-        $player->matchDecline($request['id']);
+      $match = $player->matchDecline($request['id']);
+      $mid = $match->id();
+    } else {
+      $mid = null;
     }
+    return $mid;
 }
 
 
@@ -282,6 +261,7 @@ function qwikCancel($player, $req){
     if(isset($req['id'])){
         $player->matchCancel($req['id']);
     }
+    return $req['id'];
 }
 
 
@@ -301,11 +281,13 @@ function qwikFeedback($player, $request){
     } else {
         self::logMsg("malformed feedback");
     }
+    return $request['id'];
 }
 
 
 function qwikDelete($player, $request){
     $player->deleteData($request['id']);
+    return $request['id'];
 }
 
 

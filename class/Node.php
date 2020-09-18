@@ -10,7 +10,7 @@ class Node {
     private $orb;
 
     public function __construct($id, $parity=NULL, $rely=NULL, $date=NULL){
-        $this->rid = (string)$id;
+        $this->id = (string)$id;
         $this->parity = floatval($parity);
         $this->rely = $this->rely(floatval($rely), $date);
         $this->date = DateTime::createFromFormat('d-m-Y', $date);

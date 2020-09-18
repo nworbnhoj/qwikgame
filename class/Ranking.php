@@ -59,7 +59,7 @@ class Ranking extends Qwik {
           if( $badLineNumber <= 0){
             $this->xml = new SimpleXMLElement("<upload></upload>");
             $this->xml->addAttribute('id', self::newID());
-            $this->xml->addAttribute('fileName', $filename);
+            $this->xml->addAttribute('filename', $filename);
             $this->processUpload($filename);
             if ($this->valid){
                 $date = date_create();

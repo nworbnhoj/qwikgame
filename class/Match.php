@@ -250,7 +250,8 @@ class Match extends Qwik {
             return FALSE;
         }
 
-        $rivalMatch = $rival->matchID($this->id());
+        $mid = $this->id();
+        $rivalMatch = $rival->matchID($mid);
         if (!$rivalMatch){
             return FALSE;
         }
@@ -258,8 +259,8 @@ class Match extends Qwik {
         $rivalStatus = $rivalMatch->status();
         switch ($rivalStatus) {
             case 'keen':
-                $newMid = self::newID();
-                $this->id($newMid); //make independent from keenMatch
+                $mid = self::newID();
+                $this->id($mid); //make independent from keenMatch
                 $this->status('accepted');
                 $this->hours($acceptHour);
                 $ytirap = -1 * $this->rivalParity();
@@ -274,6 +275,7 @@ class Match extends Qwik {
             default:
         }
         $rival->save();
+        return $mid;
     }
 
 

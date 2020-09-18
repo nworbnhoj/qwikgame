@@ -11,13 +11,14 @@ require_once 'class/FriendPage.php';
 require_once 'class/FavoritePage.php';
 require_once 'class/AccountPage.php';
 
+require_once 'features/bootstrap/Get.php';
+
 
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 
-require 'phpunit.phar';
 use PHPUnit\Framework\TestCase as Assert;
 
 
@@ -36,7 +37,7 @@ class FeatureContext implements Context
     private $parity;
     private $pid;
     private $player;
-    private $rankingFileName;
+    private $FileName;
     private $req = [];     // a post or get request
     private $time;
     private $token;
@@ -254,7 +255,7 @@ class FeatureContext implements Context
         $_GET = array(
                 'pid'=>$rid,
                 'token'=>$rival->token(),
-                'qwik'=>'friends',
+                'qwik'=>'friend',
                 'game'=>$game, 
                 'rival'=>$this->email,
                 'parity'=>$this->parityPhrase[$rivalParity]
@@ -372,7 +373,7 @@ class FeatureContext implements Context
     {
         foreach (range('A', 'Z') as $char) {
             $name = "player.$char";
-            $email = "$name@qwikgame.org";
+            $email = strtolower("$name@qwikgame.org");
             $id = Player::anonID($email);
             Player::removePlayer($id);
             $player = new Player($id, TRUE);
@@ -406,40 +407,28 @@ class FeatureContext implements Context
 
         $playerA = new Player($pidA);
         $playerB = new Player($pidB);
+        $tokA = $playerA->token();
+        $tokB = $playerB->token();
 
 //        $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
         $matches = $playerA->matchQuery("match[rival='$pidB']");
 
         if (count($matches) == 1) {
-            $matchA = new Match($playerA, $matches[0]);
+          $match = new Match($playerA, $matches[0]);
+          $mid = $match->id();
         } else {    // set up a dummy match between A & B, ready for feedback
-            $vid = "Qwikgame Venue|Milawa|VIC|AU";
-            $venue = new Venue($vid);
-            $date = date_add(
-                $venue->dateTime("today"),
-                date_interval_create_from_date_string("$day days")
-            );
-            $hours = new Hours(1);
+          $vid = "Qwikgame Venue|Milawa|VIC|AU";
+          $hour = '1024';
+          $invite = array($playerB->email());
+          $kid = Get::matchPageKeen($pidA, $tokA, 'squash', $vid, '0', $hour, $invite);
+          $mid = Get::matchPageAccept($pidB, $tokB, $kid, $hour);
+          Get::matchPageAccept($pidA, $tokA, $mid, $hour);
 
-            $keenMatch = $playerA->matchKeen('squash', $venue, $date, $hours);
-            $matchB = $playerB->matchAdd($keenMatch, 0, $hours);
-            $matchA = $playerA->matchAdd($matchB, 0, $hours);
-            $matchA->status('confirmed');
-            $matchB->status('confirmed');
-            $keenMatch->cancel();
-            $keenMatch->remove();
+//            $keenMatchA->cancel();
+            
         }
-
-        $_GET = array(
-                'pid'=>$playerA->id(),
-                'token'=>$playerA->token(),
-                'qwik'=>'feedback',
-                'id'=>$matchA->id(),
-                'rep'=>'0',
-                'parity'=>$this->paritySymbol[$parity]
-            );
-        $page = new MatchPage();
-        $page->processRequest();
+        $ps = $this->paritySymbol[$parity];
+        Get::matchPageFeedback($pidA, $tokA, $mid, $ps);
     }
 
 
@@ -457,15 +446,6 @@ class FeatureContext implements Context
         $parityEstimate = $playerA->parity($playerB, 'squash');
         $parityStr = Page::parityStr($parityEstimate);
         $msg = "$parityEstimate = $parityStr";
-
-//$nickA = $playerA['nick'];
-//$nickB = $playerB['nick'];
-//$relyA=$playerA->rely['val'];
-//$relyB=$playerB->rely['val'];
-//$rely = $playerA->rely;
-//print_r("$nickA rely=$relyA\n");
-//print_r("$nickB rely=$relyB\n");
-//print_r("$parity\t$parityEstimate\t$parityStr\n");
 
         switch ($parity) {
             case '<<':
@@ -491,14 +471,12 @@ class FeatureContext implements Context
     /**
      * @Given a :game ranking file :fileName from :plyr
      */
-    public function aRankingFile($game, $fileName, $plyr)
+    public function aRankingFile($game, $filename, $plyr)
     {
         $pid = $this->rivals[$plyr];
-        $CSV = Ranking::CSV;
-        $path =  PATH_UPLOAD."$fileName$CSV"; 
         $this->player = new Player($pid);
-        $ranking = $this->player->importRanking($game, $path, $fileName);
-        $this->rankingFileName = "$fileName";
+        $ranking = $this->player->importRanking($filename, $game);
+        $this->rankingFileName = $ranking->filename();
     }
 
 
@@ -509,8 +487,8 @@ class FeatureContext implements Context
     public function theRankingIsActivated()
     {
         $fileName = $this->rankingFileName;
+        $ranking = new Ranking($fileName);
         $player = $this->player;
-        $ranking = $player->uploadAdd($fileName);
         $player->rankingActivate($fileName);
     }
 

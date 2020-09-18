@@ -1207,21 +1207,16 @@ Requirements:
                             array_keys($rivalOrbCrumbs)
                         );
 
-//echo "playerIsolated=$playerIsolated<br>\n";
-//echo "rivalIsolated=$rivalIsolated<br>\n";
+//echo "Isolated\t$playerIsolated\t$rivalIsolated\n";
+//echo "Orb Size\t$playerOrbSize\t$rivalOrbSize\n";
 //$cmc = count($orbIntersect);
-//echo "commonMemberCount=$cmc<br>\n";
-//echo "playerOrbSize=$playerOrbSize<br>\n";
-//echo "rivalOrbSize=$rivalOrbSize<br><br>\n\n";
+//echo "commonMemberCount = $cmc\n\n";
     }
 
 //echo "playerOrbCrumbs = ";
 //print_r($playerOrbCrumbs);
-//echo "<br><br>";
-
 //echo "rivalOrbCrumbs = ";
 //print_r($rivalOrbCrumbs);
-//echo "<br><br>";
 
 
 //echo "orbIntersect Crumbs=";

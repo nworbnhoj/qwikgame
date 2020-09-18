@@ -44,6 +44,7 @@ class Filter extends Qwik {
           'deactivate'=>'',
           'decline'=>'',
           'delete'=>'',
+          'feedback'=>'',
           'friend'=>'',
           'keen'=>'',
           'login'=>'',

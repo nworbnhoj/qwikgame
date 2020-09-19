@@ -480,7 +480,6 @@ class FeatureContext implements Context
     }
 
 
-
     /**
      * @When the ranking is Activated
      */
@@ -491,6 +490,58 @@ class FeatureContext implements Context
         $player = $this->player;
         $player->rankingActivate($fileName);
     }
+
+
+    /**
+     * @When the ranking is Deactivated
+     */
+    public function theRankingIsDeactivated()
+    {
+        $fileName = $this->rankingFileName;
+        $ranking = new Ranking($fileName);
+        $player = $this->player;
+        $player->rankingDeactivate($fileName);
+    }
+
+
+    /**
+     * @Then the ranking is active
+     */
+    public function theRankingIsActive()
+    {
+      $fileName = $this->rankingFileName;
+      $ranking = new Ranking($fileName);        
+      $rid = $ranking->id();
+      $ranks = $ranking->ranks();
+      foreach($ranks as $rank => $pid){
+        $player = new Player($pid);
+        if (isset($player) && $player->ok()){
+            $r = $player->matchQuery("rank[@id='$rid']");
+            Assert::assertTrue(count($r) > 0, "Rank id=$rid not found in Player id=$pid");
+            //Assert::assertEquals(count($r), 1, "Multiple rank id=$rid found in Player id=$pid");
+        }
+      }
+    }
+
+
+    /**
+     * @Then the ranking is not active
+     */
+    public function theRankingIsInactive()
+    {
+      $fileName = $this->rankingFileName;
+      $ranking = new Ranking($fileName);        
+      $rid = $ranking->id();
+      $ranks = $ranking->ranks();
+      foreach($ranks as $rank => $pid){
+        $player = new Player($pid);
+        if (isset($player) && $player->ok()){
+            $r = $player->matchQuery("rank[@id='$rid']");
+            Assert::assertEquals(count($r), 0, "Rank id=$rid found in Player id=$pid");
+        }
+      }
+    }
+
 
 
 

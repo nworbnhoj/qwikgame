@@ -4,6 +4,17 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	Players need to be able to upload existing player rankings
 	
 	Scenario: Upload a file with rankings
+	
+	
+	  
+	  
+	Scenario: Activate a set of rankings
+	  Given a community of Players
+	  And a squash ranking file "behatRankingSequentialA-Z" from A
+	  When the ranking is activated
+	  Then the ranking is active
+	  When the ranking is deactivated
+	  Then the ranking is inactive
 	  
 	
 	Scenario: Activate a set of rankings
@@ -60,7 +71,4 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	  Then Z=W on day 2
 	  Then Z=X on day 2
 	  Then Z=Y on day 2
-	  
-	  
-	Scenario: Deactivate a set of rankings
 	

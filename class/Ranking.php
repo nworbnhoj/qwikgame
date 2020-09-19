@@ -294,6 +294,7 @@ class Ranking extends Qwik {
                 && $anon->ok()){
                     $anon->removeRanks($rankingID);
                 }
+                $anon->save();
             } catch (RuntimeException $e){
                 self::logThown($e);
                 self::logMsg("failed to extract Player $anonID from Ranking $rankingID");

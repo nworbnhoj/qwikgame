@@ -19,6 +19,8 @@ class Player extends Qwik {
       <notify default='1'/>
     </player>";
     
+    const CSV = ".csv";
+    
     
     /*******************************************************************************
     Returns the sha256 hash of the $email address provided
@@ -323,16 +325,11 @@ class Player extends Qwik {
     }
 
 
-    public function rankAdd($id, $game, $rid, $parity){
+    public function rankAdd($id, $game){
+        $this->removeRanks($id);
         $rank = $this->xml->addChild('rank', '');
         $rank->addAttribute('id', $id);
         $rank->addAttribute('game', $game);
-        $rank->addAttribute('rival', $rid);
-        $rank->addAttribute('parity', $parity);
-        $rank->addAttribute('rely', '3.0');
-        $datetime = date_create();
-        $date = $datetime->format('d-m-Y');
-        $rank->addAttribute('date', $date);
     }
 
         
@@ -1010,7 +1007,7 @@ Requirements:
 
           $existingCount = 0;
           $ranks = $ranking->ranks();
-          foreach($ranks as $sha256){
+          foreach($ranks as $sha256 => $rank){
             if (self::exists($sha256)){
               $existingCount++;
             }
@@ -1211,46 +1208,57 @@ Requirements:
 //echo "Orb Size\t$playerOrbSize\t$rivalOrbSize\n";
 //$cmc = count($orbIntersect);
 //echo "commonMemberCount = $cmc\n\n";
+
     }
 
-//echo "playerOrbCrumbs = ";
-//print_r($playerOrbCrumbs);
-//echo "rivalOrbCrumbs = ";
-//print_r($rivalOrbCrumbs);
-
-
-//echo "orbIntersect Crumbs=";
-//print_r($orbIntersect);
-//echo "<br><br>\n";
-
-//echo "<br><br><br>playerOrb=";
-//print_r($playerOrb);
-//echo "<br><br><br>\n";
-
-//echo "<br><br><br>rivalOrb=";
-//print_r($rivalOrb);
-//echo "<br><br><br>\n";
-
+//echo "playerOrbCrumbs = ".print_r($playerOrbCrumbs,true);
+//echo "rivalOrbCrumbs = ".print_r($rivalOrbCrumbs,true);
+//echo "orbIntersect Crumbs=".print_r($orbIntersect,true)."\n";
+//echo "\n\n playerOrb=".print_r($playerOrb,true)."\n\n";
+//echo "\n\n rivalOrb=".print_r($rivalOrb,true)."\n\n\n";
 
     // prune both orbs back to retain just the paths to the intersection points
     $playerOrb = $playerOrb->prune($orbIntersect);
     $rivalOrb = $rivalOrb->prune($orbIntersect);
 
 //print_r($orbIntersect);
-//echo "<br><br><br>playerOrb=";
-//print_r($playerOrb);
-//echo "<br><br><br>\n";
+//echo "\n\nplayerOrb=".print_r($playerOrb,true)."\n\n\n";
 
-//echo "<br><br><br>rivalOrb=";
-//print_r($rivalOrb);
-//echo "<br><br><br>\n";
+//echo "\n\nrivalOrb=".print_r($rivalOrb,true)."\n\n\n";
+
+  // convert any common rank nodes into parity nodes
+  $playerRNs = $playerOrb->rankNodes();   // array[rankingID=>array(pid=>Node)]
+  $rivalRNs = $rivalOrb->rankNodes();     // array[rankingID=>array(pid=>Node)]
+  $rankingIDs = array_intersect(array_keys($playerRNs), array_keys($rivalRNs));
+  
+// echo "\n\n playerRNs = ".print_r($playerRNs, true)."\n\n";
+// echo "\n\n rivalRNs = ".print_r($rivalRNs, true)."\n\n";  
+  
+  
+  foreach($rankingIDs as $rid){           // process each Ranking seperately
+    $ranking = new Ranking($rid);
+    $date = $ranking->time();
+    $ranks = $ranking->ranks();
+    $playerRanks = array_intersect_key($ranks, $playerRNs[$rid]);
+    $rivalRanks = array_intersect_key($ranks, $rivalRNs[$rid]);
+    foreach($rivalRanks as $pid => $rank){         // resolve Player rank Nodes
+      $closePid = $this->closestRank($rank, $playerRanks);
+      $closeRank = $playerRanks[$closePid];
+      $rivalRNs[$rid][$pid]->resolveRank($rank, $closePid, $closeRank, $ranking);
+    }
+    foreach($playerRanks as $pid => $rank){         // resolve Rival rank Nodes
+      $closePid = $this->closestRank($rank, $rivalRanks);
+      $closeRank = $rivalRanks[$closePid];
+      $playerRNs[$rid][$pid]->resolveRank($rank, $closePid, $closeRank, $ranking);
+    }
+  }
+   
 
    $invRivalOrb = $rivalOrb->inv($rivalID);
    $spliceOrb = $playerOrb->splice($playerID, $invRivalOrb);
 
-//echo "<br><br><br>splicedOrb=";
-//print_r($spliceOrb);
-//echo "<br><br><br>\n";
+//echo "\n\nsplicedOrb=".print_r($spliceOrb)."\n\n\n";
+
     $parity = $spliceOrb->parity($rivalID);
 
 //    self::logMsg("parity ".self::snip($playerID)." ".self::snip($rivalID)." $parity". $playerOrb->chart());
@@ -1259,6 +1267,18 @@ Requirements:
 
 }
 
+
+  function closestRank($aimRank, $arr) {
+    $closeRank = null;
+    $closePid = null;
+    foreach ($arr as $pid => $rank) {
+      if ($closeRank === null || abs($aimRank - $closeRank) > abs($rank - $aimRank)) {
+        $closest = $rank;
+        $closePid = $pid; 
+      }
+    }
+    return $closePid;
+  }
 
 
 // signed square of a number
@@ -1290,8 +1310,7 @@ Requirements:
     ********************************************************************************/
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
       $orb = new Orb($game);
-      $path = "rank[@game='$game'] | reckon[@game='$game'] | outcome[@game='$game']";
-      $parities = $this->xml->xpath($path);
+      $parities = $this->xml->xpath("reckon[@game='$game'] | outcome[@game='$game']");
       foreach($parities as $par){
         $key = isset($par['rival']) ? 'rival' : (isset($par['region']) ? 'region' : '');
         if(empty($key)){
@@ -1307,9 +1326,16 @@ Requirements:
           $include = ! in_array($id, $filter);
         }
         if($include){
-          $orb->addNode($id, $par['parity'], $par['rely'], $par['date']);
+          $orb->addNode(Node::par($id, $par['parity'], $par['rely'], $par['date']));
         }
+      }      
+      
+      $ranks = $this->xml->xpath("rank[@game='$game']");
+      foreach($ranks as $rank){
+        $orb->addNode(Node::rank((string):w
+        $rank['id'], $this->id()));
       }
+      
       return $orb;
     }
 

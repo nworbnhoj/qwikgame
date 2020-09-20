@@ -5,7 +5,7 @@ Feature: Match
 
 	Scenario: I am keen to play Squash at Milawa
 	  Given a community of Players
-	  And a Squash ranking file "behatRankingSequentialA-Z" from A
+	  And a squash ranking file "behatRankingSequentialA-Z" from A
 	  And the ranking is Activated
 	  And my email "player.M@qwikgame.org" is registered with qwikgame
 	  When I am keen to play Squash at "Qwikgame Venue|Milawa|VIC|AU"

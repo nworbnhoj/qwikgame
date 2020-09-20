@@ -8,16 +8,13 @@ class Ranking extends Qwik {
 
     const CSV = '.csv';
     const XML = '.xml';
-//    const RANK_PARITY = array(128=>12.8, 64=>6.4, 32=>3.2, 16=>1.6, 8=>0.8, 4=>0.4, 2=>0.2, 1=>0.1, -1=>-0.1, -2=>-0.2, -4=>-0.4, -8=>-0.8, -16=>-1.6, -32=>-3.2, -64=>-6.4, -128=>-12.8);
-
-    const RANK_PARITY = array(4=>0.8, 3=>0.6, 2=>0.4, 1=>0.2, -1=>-0.2, -2=>-0.4, -3=>0.6, -4=>-0.8);
     
     // regex pattern to match any invalid line in a Ranking file
     const INVALID = "#(?m)^(?!\d{1,4},(?:[a-z0-9]{64})$)#";    
 
 
-    static function exists($filename){
-      return file_exists(PATH_UPLOAD.$filename.self::XML);
+    static function exists($id){
+      return file_exists(PATH_UPLOAD.$id.self::XML);
     }
     
     /**************************************************************************
@@ -48,19 +45,18 @@ class Ranking extends Qwik {
     public $transcript;
     public $valid;
 
-    public function __construct($filename, $game=NULL){
+    public function __construct($id, $game=NULL){
         parent::__construct();
         $this->valid = true;
-        if(self::exists($filename)){
-            $this->xml = $this->retrieve($filename);
+        if(self::exists($id)){
+            $this->xml = $this->retrieve($id);
         } else {
-          $fqfilename = PATH_UPLOAD.$filename.self::CSV;
-          $badLineNumber = self::validate($fqfilename);
+          $filename = PATH_UPLOAD.$id.self::CSV;
+          $badLineNumber = self::validate($filename);
           if( $badLineNumber <= 0){
             $this->xml = new SimpleXMLElement("<upload></upload>");
-            $this->xml->addAttribute('id', self::newID());
-            $this->xml->addAttribute('filename', $filename);
-            $this->processUpload($filename);
+            $this->xml->addAttribute('id', $id);
+            $this->processUpload($id);
             if ($this->valid){
                 $date = date_create();
                 $this->xml->addAttribute('time', $date->format('d-m-Y H:i:s'));
@@ -76,8 +72,8 @@ class Ranking extends Qwik {
     }
 
 
-    private function processUpload($filename){
-        $file = $this->openUpload($filename);
+    private function processUpload($id){
+        $file = $this->openUpload($id);
         $this->checkHash($file);
         $this->parse($file);
         fclose($file);
@@ -98,13 +94,13 @@ class Ranking extends Qwik {
     }
 
 
-    private function openUpload($filename){
+    private function openUpload($id){
         if (!$this->valid){
             return NULL;
         }
         // open the uploaded file
-        $fqfilename = PATH_UPLOAD.$filename.self::CSV;
-        $file = fopen($fqfilename, "r");
+        $filename = PATH_UPLOAD.$id.self::CSV;
+        $file = fopen($filename, "r");
         if ($file){
             $this->transcript .= "opened OK<br>";
         } else {
@@ -132,11 +128,6 @@ class Ranking extends Qwik {
     }
 
 
-    public function filename($value=NULL){
-        return $this->attribute('filename', $value);
-    }
-
-
     public function title($value=NULL){
         return $this->attribute('title', $value);
     }
@@ -150,6 +141,22 @@ class Ranking extends Qwik {
     public function time($value=NULL){
         return $this->attribute('time', $value);
     }
+
+
+    public function parity($rankA, $rankB){
+      $diff = $rankA - $rankB;
+      if($diff > 25){
+        return -2;
+      } else if($diff > 10){
+        return -1;
+      } else if($diff > -10){
+        return 0;
+      } else if($diff > -25){
+        return +1;
+      } else {
+        return +2;
+      }
+    }
     
     
     public function ranks(){
@@ -157,7 +164,7 @@ class Ranking extends Qwik {
       $anonIDs = $this->xml->xpath("sha256");
       foreach($anonIDs as $anonID){
         $anonRank = (int) $anonID['rank'];
-        $ranks[$anonRank] = (string) $anonID;
+        $ranks[(string) $anonID] = $anonRank;
       }
       return $ranks;
     }
@@ -213,15 +220,15 @@ class Ranking extends Qwik {
         return self::writeXML(
             $this->xml, 
             PATH_UPLOAD, 
-            $this->fileName() . self::XML
+            $this->id().self::XML
         );
     }
 
 
-    public function retrieve($filename){
+    public function retrieve($id){
         return self::readXML( 
             PATH_UPLOAD, 
-            $filename . self::XML
+            $id . self::XML
         );
     }
 
@@ -246,23 +253,14 @@ class Ranking extends Qwik {
     * @throws RuntimeException if there are problem activating the Ranking.
     */
     public function insert(){
-        $rankParity = self::RANK_PARITY;
 
         $rankingID = $this->id();
         $game = $this->game();
         $ranks = $this->ranks();
-        foreach($ranks as $anonRank => $anonID){
+        foreach($ranks as $anonID => $anonRank){
             try {
                 $anon = new Player($anonID, TRUE);
-                foreach($rankParity as $rnk => $parity){
-                    $rnk = (int)$rnk;
-                    $parity = (float)$parity;
-                    $rivalRank = $anonRank + $rnk;
-                    if (isset($ranks[$rivalRank])){
-                        $rid = $ranks[$rivalRank];
-                        $anon->rankAdd($rankingID, $game, $rid, $parity);
-                    }
-                }
+                $anon->rankAdd($rankingID, $game);
                 $anon->save();
             } catch (RuntimeException $e){
                 self::logThown($e);

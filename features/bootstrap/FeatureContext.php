@@ -37,7 +37,7 @@ class FeatureContext implements Context
     private $parity;
     private $pid;
     private $player;
-    private $FileName;
+    private $rankingID;
     private $req = [];     // a post or get request
     private $time;
     private $token;
@@ -375,7 +375,7 @@ class FeatureContext implements Context
             $name = "player.$char";
             $email = strtolower("$name@qwikgame.org");
             $id = Player::anonID($email);
-            Player::removePlayer($id);
+            Assert::assertTrue(Player::removePlayer($id));
             $player = new Player($id, TRUE);
             $player->nick($name);
             $player->email($email);
@@ -469,14 +469,14 @@ class FeatureContext implements Context
     
     
     /**
-     * @Given a :game ranking file :fileName from :plyr
+     * @Given a :game ranking file :rid from :plyr
      */
-    public function aRankingFile($game, $filename, $plyr)
+    public function aRankingFile($game, $rid, $plyr)
     {
         $pid = $this->rivals[$plyr];
         $this->player = new Player($pid);
-        $ranking = $this->player->importRanking($filename, $game);
-        $this->rankingFileName = $ranking->filename();
+        $ranking = $this->player->importRanking($rid, $game);
+        $this->rankingID = $ranking->id();
     }
 
 
@@ -485,10 +485,10 @@ class FeatureContext implements Context
      */
     public function theRankingIsActivated()
     {
-        $fileName = $this->rankingFileName;
-        $ranking = new Ranking($fileName);
+        $rid = $this->rankingID;
+        $ranking = new Ranking($rid);
         $player = $this->player;
-        $player->rankingActivate($fileName);
+        $player->rankingActivate($rid);
     }
 
 
@@ -497,10 +497,10 @@ class FeatureContext implements Context
      */
     public function theRankingIsDeactivated()
     {
-        $fileName = $this->rankingFileName;
-        $ranking = new Ranking($fileName);
+        $rid = $this->rankingID;
+        $ranking = new Ranking($rid);
         $player = $this->player;
-        $player->rankingDeactivate($fileName);
+        $player->rankingDeactivate($rid);
     }
 
 
@@ -509,31 +509,31 @@ class FeatureContext implements Context
      */
     public function theRankingIsActive()
     {
-      $fileName = $this->rankingFileName;
-      $ranking = new Ranking($fileName);        
+      $rid = $this->rankingID;
+      $ranking = new Ranking($rid);        
       $rid = $ranking->id();
       $ranks = $ranking->ranks();
-      foreach($ranks as $rank => $pid){
+      foreach($ranks as $pid => $rank){
         $player = new Player($pid);
         if (isset($player) && $player->ok()){
             $r = $player->matchQuery("rank[@id='$rid']");
             Assert::assertTrue(count($r) > 0, "Rank id=$rid not found in Player id=$pid");
-            //Assert::assertEquals(count($r), 1, "Multiple rank id=$rid found in Player id=$pid");
+            Assert::assertEquals(count($r), 1, "Multiple rank id=$rid found in Player id=$pid");
         }
       }
     }
 
 
     /**
-     * @Then the ranking is not active
+     * @Then the ranking is inactive
      */
     public function theRankingIsInactive()
     {
-      $fileName = $this->rankingFileName;
-      $ranking = new Ranking($fileName);        
+      $rid = $this->rankingID;
+      $ranking = new Ranking($rid);        
       $rid = $ranking->id();
       $ranks = $ranking->ranks();
-      foreach($ranks as $rank => $pid){
+      foreach($ranks as $pid => $rank){
         $player = new Player($pid);
         if (isset($player) && $player->ok()){
             $r = $player->matchQuery("rank[@id='$rid']");

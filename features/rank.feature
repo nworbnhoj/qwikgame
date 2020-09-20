@@ -31,7 +31,7 @@ Feature: I want to import a pre-existing player ranking into qwikgame
 	  Then A=I on day 1
 	  Then A=J on day 1
 	  Then A=K on day 1
-	  Then A=L on day 1
+	  Then A>L on day 1
 	  Then A>M on day 1
 	  Then A>N on day 1
 	  Then A>O on day 1

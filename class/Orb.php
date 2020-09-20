@@ -49,8 +49,9 @@ class Orb extends Qwik {
     }
 
 
-    public function addNode($rid, $parity, $rely, $date){
-        $this->nodes[] = new Node($rid, $parity, $rely, $date);
+    public function addNode($node){
+        $this->nodes[] = $node;
+        return $node;
     }
 
 
@@ -135,9 +136,7 @@ passing to function spliceOrb() to be inserted into the corresponding rival orb.
             if (!array_key_exists($rid, $inv)){
                 $inv[$rid] = array();
             }
-            $nodeParity = $node->parity();
-            $invParity = ! is_null($nodeParity) ? -1 * $nodeParity : NULL;
-            $inv[$rid][] = new Node($pid, $invParity, $node->rely());
+            $inv[$rid][] = Node::inverse($pid, $node);
 
             // recursion
             $orb = $node->orb();
@@ -270,6 +269,35 @@ Rival and by negating Parity.
             ? $this->depth($crumbs[$id], $crumbs) + 1
             : 0 ;
     }
+    
+    
+    
+  /********************************************************************************
+   *
+   *
+   ***************************************************************************/
+  public function rankNodes(){
+    $rankNodes = array();
+    foreach($this->nodes as $node){
+      $rid = $node->rid();
+      if(isset($rid) && Ranking::exists($rid)){
+        $pid = $node->rankedPid();
+        if(!isset($rankNodes[$rid])){ $rankNodes[$rid] = array(); }
+        $rankNodes[$rid][$pid] = $node;
+      } elseif(isset($subOrb)
+      && !$subOrb->bare()){
+        $subRN = $subOrb->rankNodes();  //recursion
+        foreach($subRN as $rid){
+          if(isset(rankNodes[$rid])){
+            $rankNodes[$rid] = $rankNodes[$rid] + $subRN[$rid];
+          } else {
+            $rankNides[$rid] = $subRN[$rid];
+          }
+        }
+      }
+    }
+    return $rankNodes;
+  }
 
 
 

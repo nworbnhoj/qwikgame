@@ -25,6 +25,7 @@ class MatchPage extends Page {
         $this->game = $this->req('game');
 
         $vid = $this->req('vid');
+        $placeId = $this->req('placeid');
         if(isset($vid)){
             if (Venue::exists($vid)){
                 try {
@@ -34,8 +35,7 @@ class MatchPage extends Page {
                     self::logThrown($e);
                     unset($vid);
                 }
-            } else {
-                $placeId = $vid;	// perhaps the $vid is actually a google placeId
+            } elseif (isset($placeId)) {
                 $details = Locate::getDetails($placeId);  
                 if($details){  // the $vid provided is actually a valid google placeId
                     $vid = Venue::venueID(

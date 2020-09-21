@@ -282,7 +282,7 @@ function showInfowindowPlace(place){
   const LINK = FRAG.getElementById("poi-link");
   LINK.setAttribute("placeid", place.place_id);
   LINK.setAttribute("venuename", place.name);
-  
+  LINK.setAttribute("vid", vid(place.address_components, place.name));
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
     position: place.geometry.location,
@@ -292,10 +292,27 @@ function showInfowindowPlace(place){
 }
 
 
+function vid(address_components, name){
+  var vid = [name,'locality','admin1','XX'];
+  for (i = 0; i < address_components.length; i++) {
+    address_component = address_components[i];
+    types = address_component.types;
+    if(types.includes('locality')){
+      vid[1] = address_component.short_name;
+    } else if(types.includes('administrative_area_level_1')){
+      vid[2] = address_component.short_name;
+    } else if(types.includes('country')){
+      vid[3] = address_component.short_name;
+    }
+  }
+  return vid.join('|');
+}
+
+
 function showInfowindowPlaceId(placeId){
   const MAP = qwikMap;   
   const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
-  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry']};
+  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
       showInfowindowPlace(place);
@@ -310,14 +327,16 @@ function clickCreateVenue(event){
   event.preventDefault();
   let placeId = event.target.getAttribute("placeid");
   let name = event.target.getAttribute("venuename");
+  let vid = event.target.getAttribute("vid");
     
   // add a new option to venueSelect and select it
   let venueSelect = document.getElementById('venue-select');
   let option = document.createElement('option');
-  option.value = placeId;
+  option.value = vid;
   option.text = name;
   venueSelect.add(option);
-  venueSelect.value = placeId;
+  venueSelect.value = vid;
+  document.getElementById('placeid').value = placeId;
 
   showMap(false);
 }

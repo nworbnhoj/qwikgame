@@ -294,15 +294,17 @@ function showInfowindowPlace(place){
 
 function vid(address_components, name){
   var vid = [name,'locality','admin1','XX'];
-  for (i = 0; i < address_components.length; i++) {
-    address_component = address_components[i];
-    types = address_component.types;
-    if(types.includes('locality')){
-      vid[1] = address_component.short_name;
-    } else if(types.includes('administrative_area_level_1')){
-      vid[2] = address_component.short_name;
-    } else if(types.includes('country')){
-      vid[3] = address_component.short_name;
+  if (Array.isArray(address_components)){
+    for (i = 0; i < address_components.length; i++) {
+      address_component = address_components[i];
+      types = address_component.types;
+      if(types.includes('locality')){
+        vid[1] = address_component.short_name;
+      } else if(types.includes('administrative_area_level_1')){
+        vid[2] = address_component.short_name;
+      } else if(types.includes('country')){
+        vid[3] = address_component.short_name;
+      }
     }
   }
   return vid.join('|');

@@ -1332,8 +1332,7 @@ Requirements:
       
       $ranks = $this->xml->xpath("rank[@game='$game']");
       foreach($ranks as $rank){
-        $orb->addNode(Node::rank((string):w
-        $rank['id'], $this->id()));
+        $orb->addNode(Node::rank((string) $rank['id'], $this->id()));
       }
       
       return $orb;

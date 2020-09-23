@@ -35,7 +35,7 @@ class Locate extends Qwik {
             }
         } catch (RuntimeException $e){
             $msg = $e->getMessage();
-            self::logMsg("Google geocoding: $msg\n$url?$query\n$reply");
+            self::logMsg("Google geocoding: $msg\n$url?$query\n$result");
         }
         return $result;
     }

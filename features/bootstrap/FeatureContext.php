@@ -417,7 +417,7 @@ class FeatureContext implements Context
           $match = new Match($playerA, $matches[0]);
           $mid = $match->id();
         } else {    // set up a dummy match between A & B, ready for feedback
-          $vid = "Qwikgame Venue|Milawa|VIC|AU";
+          $vid = "Qwikgame Venue|South Pole|AU|AQ";
           $hour = '1024';
           $invite = array($playerB->email());
           $kid = Get::matchPageKeen($pidA, $tokA, 'squash', $vid, '0', $hour, $invite);

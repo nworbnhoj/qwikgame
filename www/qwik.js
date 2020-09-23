@@ -107,11 +107,6 @@ function refreshDatalists(){
 }
 
 
-function clickBack(){
-    window.history.back();
-}
-
-
 function clickButtonHelp(){
     toggle(nextSibling(this, 'span.help'));
 }
@@ -159,53 +154,6 @@ function clickMapIcon(){
     if (selectGame){
         var game = selectGame.value;
         this.setAttribute('href', "venues.php?game="+game);
-    }
-}
-
-
-function keydownCountry(){
-    this.value = this.value.toLocaleUpperCase('en-US');
-}
-
-
-function keydownGuess(){
-    var addr = [
-        document.getElementById('venue-name').value,
-        document.getElementById('venue-locality').value,
-        document.getElementById('venue-admin1').value,
-        document.getElementById('venue-country').value
-    ];
-    var params = {input: addr.join(', ')};
-    var esc = encodeURIComponent;
-    var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    var path = 'json/address-autocomplete.php?'+query;
-    var div = document.getElementById('venue-guess');
-    qwikJSON(path, guessLocation, div);
-}
-
-
-function guessLocation(json, div){
-    var html = '<hr>';
-    if (json.status == 'OK'){
-        var predictions = json.predictions;
-        for (i = 0; i < predictions.length; i++) {
-            var prediction = predictions[i];
-            var text = prediction.description;
-            var value = "value='" + prediction.place_id + "'";
-            html += "<button type='submit' class='venue guess' name='placeid' "+value+">"+text+"</button>";
-        }
-        html += "<br><img src='img/powered-by-google.png'>";
-        div.innerHTML = html;
-
-        // attach an event to each button
-        addListeners(div.children, 'click', notRequired);
-    }
-}
-
-
-function notRequired(){
-    for (var input of document.querySelectorAll('input.guess')) {
-        input.removeAttribute('required');
     }
 }
 

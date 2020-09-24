@@ -48,11 +48,11 @@
     <h4>{public}</h4>
     {You_have_a...}<br>
     [thumbs]<br>
-    <form id='account-nick-form' name='account-nick' action='account.php'>
+    <form id='account-nick-form' name='account-nick' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='account'>
         <input id='account-nick' name="nick" type="text" class="brick" value="[playerNick]" placeholder='{nickname}' size='20'>
     </form>
-    <form id='account-url-form' name='account-url' action='account.php'>
+    <form id='account-url-form' name='account-url' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='account'>
         <input id='account-url' name='url' type='url' class="brick" value="[playerURL]"  placeholder='http://your.page.com'>
     </form>
@@ -62,14 +62,14 @@
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{You_will_receive_validation...}</span>
     <h4>{private}</h4>
-    <form id='account-lang-form' name='account-lang' action='account.php'>
+    <form id='account-lang-form' name='account-lang' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='account'>
         <span id='lang-icon' class='[LANG_ICON]'></span>
         <select id='select-language' name='lang'>
             [languageOptions]
         </select>
     </form>
-    <form id='account-notify-form' name='account-notify' action='account.php'>
+    <form id='account-notify-form' name='account-notify' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='account'>
         <fieldset class='brick'>
             <legend>{notifications}</legend>
@@ -84,7 +84,7 @@
         </fieldset>
     </form>
     <hr>
-    <form id='account-email-form' name='account-email' action='account.php'>
+    <form id='account-email-form' name='account-email' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='account'>
         <input name="email" type="email" class="brick" value="[playerEmail]" required>
         <input type="submit" id='account-email-submit' class="account" value="{Submit}">
@@ -92,7 +92,7 @@
 </div>
 
 <div class="commit account">
-    <form id='account-logout-form' action='account.php'>
+    <form id='account-logout-form' action='account.php' method='post'>
         <input type="hidden" name="qwik" value='logout'>
         <input type='hidden' id='logout-endpoint' name='push-endpoint'>
         <h4>{logout}</h4>
@@ -106,7 +106,7 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Your_anonymous_match...}</span>
-    <form id='account-quit-form' onsubmit='return checkQuit()'>
+    <form id='account-quit-form' onsubmit='return checkQuit()' method='post'>
         <input type="hidden" name="qwik" value='quit'>
         <h4>{Quit_qwikgame.org}</h4>
         <p>{This_will_immediately...}</p>

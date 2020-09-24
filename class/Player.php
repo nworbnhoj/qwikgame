@@ -740,7 +740,7 @@ class Player extends Qwik {
             "email"   => $email,
             "qwik"    => 'register',
             "game"    => $req['game'],
-            "venue"   => $req['venue'],
+            "venue"   => $req['vid'],
             "parity"  => 'similar',
             "smtwtfs" => '16777215'
         );
@@ -791,7 +791,7 @@ class Player extends Qwik {
             "paragraphs" => $paras,
             "to"         => $email,
             "gameName"   => self::gameName($req['game']),
-            "venue"      => $req['venue'],
+            "venue"      => $req['vid'],
             "authLink"   => $authLink
         );
         $email = new Email($vars, $this->lang());

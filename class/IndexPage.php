@@ -53,7 +53,7 @@ class IndexPage extends Page {
 
 
     function qwikAvailable($email){
-        $venue = $this->req('venue');
+        $venue = $this->req('vid');
         $game = $this->req('game');
         if (!isset($venue) 
         || !isset($game) 
@@ -110,7 +110,7 @@ class IndexPage extends Page {
 
 
     public function variables(){
-        $venue = $this->req('venue');
+        $vid = $this->req('vid');
         $game = $this->req('game');
         $language = $this->language();
         
@@ -118,7 +118,7 @@ class IndexPage extends Page {
 
         $vars['playerCount']    = $this->countFiles(PATH_PLAYER);
         $vars['venueCount']     = $this->countFiles(PATH_VENUE);
-        $vars['venue']          = isset($venue) ? $venue : '';
+        $vars['vid']            = isset($vid) ? $vid : '';
         $vars['gameOptions']    = $this->gameOptions($game, "\t\t");
         $vars['language']       = $language;
         $vars['languageOptions'] = $this->languageOptions($language);

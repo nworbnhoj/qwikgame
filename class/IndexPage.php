@@ -18,9 +18,9 @@ class IndexPage extends Page {
       parent::__construct(NULL, $templateName, self::HONEYPOT);
     }
 
-    public function serve(){
+    public function serve($history=NULL){
         if ($this->player() == NULL){
-            parent::serve();
+            parent::serve($history);
         } else {
             $req = $this->req();
             unset($req['pid']);

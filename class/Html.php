@@ -73,7 +73,6 @@ class Html extends Qwik {
         }
     }
 
-
     const ERROR_TEMPLATE  = 'error';
 
     const PDF_URL    = QWIK_URL.PATH_PDF;
@@ -114,7 +113,7 @@ class Html extends Qwik {
     }
 
 
-    public function serve(){
+    public function serve($history = NULL){
         $html = "<html><head></head><body></body></html>";
         try{
             $html = $this->make();
@@ -122,8 +121,23 @@ class Html extends Qwik {
             Qwik::logThrown($t);
             $html = $this->errorHTML();
         } finally {
+            $this->preWriteHistory($history);
             echo($html);
         }
+    }
+
+
+    /**************************************************************************
+     * Sets the most recent history in the Browser.
+     * This can prevent Back and Reload from resubmitting form data
+     * https://stackoverflow.com/a/47247434/4632019
+     *************************************************************************/
+    public function preWriteHistory($history = NULL){
+      if(empty($history)){ return ; }
+      $replaceState = "history.replaceState('', '', '$history');";
+      $onload = "window.onload = function() { $replaceState }";
+      $script = "<script>$onload</script>";
+      echo($script);
     }
 
 

@@ -141,13 +141,17 @@ class Page extends Html {
     }
 
 
-    public function serve(){
+    public function serve($history = NULL){
         try {
+            if(empty($history)
+            && !empty($this->req('qwik'))){
+              $history = basename($_SERVER["SCRIPT_FILENAME"]);
+            }
             $this->processRequest();
         } catch (Throwable $t){
             Qwik::logThrown($t);
         } finally {
-            parent::serve();            
+            parent::serve($history);            
         }
     }
 

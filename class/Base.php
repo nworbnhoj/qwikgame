@@ -44,7 +44,7 @@ class Base extends Page {
     }
 
 
-    public function serve(){
+    public function serve($history=NULL){
         return NULL;
     }
 

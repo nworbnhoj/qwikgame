@@ -53,18 +53,19 @@ class IndexPage extends Page {
 
 
     function qwikAvailable($email){
-        $venue = $this->req('vid');
-        $game = $this->req('game');
-        if (!isset($venue) 
-        || !isset($game) 
-        || !isset($email)){
+        if (!isset($email)){
             return FALSE;
         }
         try {
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
-                $anon->emailWelcome($email, $this->req());
+                $req = array();
+                if(isset($this->req('game')) && isset($this->req('vid'))){
+                  $req['game'] = $this->req('game');
+                  $req['venue'] = $this->req('vid');
+                }
+                $anon->emailWelcome($email, $req);
                 $this->message("{Check_email}");
                 $result = TRUE;
             }

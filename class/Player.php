@@ -490,6 +490,7 @@ class Player extends Qwik {
     * @throws RuntimeException if the Friend cannot be created
     */
     public function friend($game, $rivalEmail, $parity){
+        $id = self::newID();
         $rid = Player::anonID($rivalEmail);
 
         $existing = $this->xml->xpath("reckon[rival='$rid' and @game='$game']");
@@ -504,7 +505,7 @@ class Player extends Qwik {
         $reckon->addAttribute('game', $game);
         $date = date_create();
         $reckon->addAttribute('date', $date->format("d-m-Y"));
-        $reckon->addAttribute('id', self::newID());
+        $reckon->addAttribute('id', $id);
         $reckon->addAttribute('rely', $this->rely()); //default value
         try {
             $rival =  new Player($rid, true);
@@ -513,6 +514,7 @@ class Player extends Qwik {
             self::logThown($e);
             throw new RuntimeException("failed to retrieve Player $rid");
         }
+        return $id;
     }
 
 
@@ -740,9 +742,7 @@ class Player extends Qwik {
             "email"   => $email,
             "qwik"    => 'register',
             "game"    => $req['game'],
-            "venue"   => $req['vid'],
-            "parity"  => 'similar',
-            "smtwtfs" => '16777215'
+            "venue"   => $req['vid']
         );
         $authLink = $this->authLink(self::MONTH, 'favorite.php', $param);
         $paras = array(

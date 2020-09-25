@@ -75,9 +75,11 @@ class FavoritePage extends Page {
         switch ($qwik) {
             case "register":
                 $this->qwikRegister($player, $req);
+                $req('parity') = 'any';
+                $req('smtwtfs') = 16777215;
                 // intentional flow thru to available
             case "available":
-                $result = $this->qwikAvailable($player, $this->venue);
+                $result = $this->qwikAvailable($player, $this->venue, $req);
                 break;
             case 'region':
                 $result = $this->qwikRegion($player, $req);
@@ -166,21 +168,20 @@ class FavoritePage extends Page {
     }
 
 
-    function qwikAvailable($player, $venue){
-        if($this->req('game')
-        & $this->req('parity')
-        & $this->req('vid')){
+    function qwikAvailable($player, $venue, $req){
+        if(isset($req['game'])
+        && isset($req['vid'])){
             $newID = $player->availableAdd(
-                $this->req('game'),
-                $this->req('vid'),
-                $this->req('parity'),
+                $req['game'],
+                $req['vid'],
+                isset($req['parity']) ? $req['parity'] : 'any',
                 $venue->tz(),
-                $this->req('smtwtfs') ? $this->req('smtwtfs') : FALSE,
-                $this->req()
+                isset($req['smtwtfs']) ? $req['smtwtfs'] : FALSE,
+                $req
             );
             if(is_null($venue)){
                 $pid = $player->id();
-                $vid = $this->req('vid');
+                $vid = $req['vid'];
                 $this->logMsg("Unable to add player to venue:\tpid=$pid\t vid=$vid");
             } else {
                 $venue->addPlayer($player->id());

@@ -14,7 +14,7 @@ Feature: I like to play my game at my local venue
 	  And I will be available to play my favorite game
 	
 	Scenario: Add a favorite and delete
-	  Given my email "player.A@qwikgame.org" is registered with qwikgame
+	  Given my email "player.a@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
 	  When I like to play Squash at "Qwikgame Venue|South Pole|AU|AQ"
 	  And I like to play on Saturday at 3pm
@@ -24,7 +24,7 @@ Feature: I like to play my game at my local venue
 	  Then I will not be available to play
 	  
 	Scenario: Add a favorite with multiple times
-	  Given my email "player.B@qwikgame.org" is registered with qwikgame
+	  Given my email "player.b@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
 	  When I like to play Squash at "Qwikgame Venue|South Pole|AU|AQ"
 	  And I like to play on Saturday at 3pm
@@ -34,7 +34,7 @@ Feature: I like to play my game at my local venue
 	  And I will not be available otherwise
 	  
 	Scenario: Add a favorite with matched ability
-	  Given my email "player.C@qwikgame.org" is registered with qwikgame
+	  Given my email "player.c@qwikgame.org" is registered with qwikgame
 	  And I am not available to play
 	  When I like to play Squash at "Qwikgame Venue|South Pole|AU|AQ"
 	  And I like to play on Friday at 6pm

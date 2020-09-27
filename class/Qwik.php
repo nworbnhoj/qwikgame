@@ -584,6 +584,10 @@ class Qwik {
             throw new RuntimeException("failed to save xml to $path$fileName from cwd $cwd");
             return FALSE;
         }
+        if(!chmod($fileName, 0664)){
+            throw new RuntimeException("failed to chmod 0664 $path$fileName");
+            return FALSE;
+        }
         if(!chdir($cwd)){
             throw new RuntimeException("failed to return working directory to $cwd");
             return FALSE;

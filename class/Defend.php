@@ -46,7 +46,6 @@ class Defend extends Qwik {
     'title'         => Filter::NAME,
     'token'         => Filter::TOKEN,
     'rep'           => Filter::REP,
-    'venue'         => Filter::VID,
     'vid'           => Filter::VID,
     'account-email' => FILTER_VALIDATE_EMAIL,
     'email'         => FILTER_VALIDATE_EMAIL,
@@ -58,7 +57,33 @@ class Defend extends Qwik {
     'phrase'        => FILTER_DEFAULT
   );
   
+
+  const GET_KEYS = array('html', 'pid', 'game', 'country_iso', 'lang', 'register', 'vid', 'token', 'qwik', 'email','lat', 'lng', 'avoidable', 'region');
   
+  
+  const QWIK_KEYS = array(
+    'accept'    => array('qwik', 'id', 'hour'),
+    'account'   => array('qwik', 'nick', 'url', 'email', 'lang', 'notify-email', 'push-endpoint', 'notify-push', 'push-token', 'push-key'),
+    'activate'  => array('qwik', 'id'),
+    'available' => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'parity', 'smtwtfs', 'lat', 'lng', 'placeid', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri' ),
+    'cancel'    => array('qwik', 'id'),
+    'deactivate'=> array('qwik', 'id'),
+    'decline'   => array('qwik', 'id'),
+    'delete'    => array('qwik', 'id'),
+    'feedback'  => array('qwik', 'id', 'rep', 'parity'),
+    'friend'    => array('qwik', 'game', 'rival', 'parity'),
+    'keen'      => array('qwik', 'vid', 'game', 'today', 'tomorrow', 'beckon', 'invite', 'lat', 'lng', 'placeid'),
+    'login'     => array('qwik', 'pid', 'token'),
+    'logout'    => array('qwik', 'push-endpoint'),
+    'msg'       => array('qwik', 'msg'),
+    'recover'   => array('qwik', 'email'),
+    'region'    => array('qwik', 'game', 'parity', 'region'),
+    'register'  => array('qwik', 'email'),
+    'translate' => array('qwik', 'key', 'phrase'),
+    'upload'    => array('qwik', 'id', 'game', 'title'),
+    'quit'      => array('qwik')
+  );
+    
 
 
     static function xml($url){
@@ -170,18 +195,28 @@ class Defend extends Qwik {
 
 
     public function get(){
-        if (is_null($this->get)){
-            $this->get = $this->examine($_GET);
+      if (is_null($this->get)){
+        if ($this->validateKeys($_GET, self::GET_KEYS)){
+          $this->get = $this->examine($_GET);
+        } else {
+          $this->get = array();
         }
-        return $this->get;
+      }
+      return $this->get;
     }
 
 
     public function post(){
-        if (is_null($this->post)){
-            $this->post = $this->examine($_POST);
+      if (is_null($this->post)){
+        if (isset($_POST['qwik'])
+        && isset(self::QWIK_KEYS[$_POST['qwik']])
+        && $this->validateKeys($_POST, self::QWIK_KEYS[$_POST['qwik']])){
+          $this->post = $this->examine($_POST);
+        } else {
+          $this->post = array();
         }
-        return $this->post;
+      }
+      return $this->post;
     }
 
 
@@ -211,13 +246,9 @@ class Defend extends Qwik {
 
 
     private function examine($request){
-      if($this->validateKeys($request)){
-        $result = filter_var_array($request, self::FILTER_ARGS, FALSE);
-        if ($this->size($result) !== $this->size($request)){
-            $this->rejected = $this->rejected + $this->rejects($request, $result);
-        }
-      } else {
-        $result = array();
+      $result = filter_var_array($request, self::FILTER_ARGS, FALSE);
+      if ($this->size($result) !== $this->size($request)){
+        $this->rejected = $this->rejected + $this->rejects($request, $result);
       }
       return $result;
     }
@@ -228,9 +259,9 @@ class Defend extends Qwik {
    * @param $request the input Array to have keys validated
    * @return true if all $request keys are valid keys 
    ***************************************************************************/
-  private function validateKeys($request){
+  private function validateKeys($request, $allowed){
     foreach($request as $key => $value){
-      if(!isset(self::FILTER_ARGS[$key])){    // request includes invalid key
+      if(!in_array($key, $allowed)){    // request includes invalid key
         $this->rejected = $request;
         $this->rejectReason = "invalid key [$key]";
         return false;                         // reject outright

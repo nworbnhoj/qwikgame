@@ -61,9 +61,9 @@ class IndexPage extends Page {
             $anon = new Player($pid, TRUE);
             if(isset($anon)){
                 $req = array();
-                if(isset($this->req('game')) && isset($this->req('vid'))){
+                if($this->req('game') && $this->req('vid')){
                   $req['game'] = $this->req('game');
-                  $req['venue'] = $this->req('vid');
+                  $req['vid'] = $this->req('vid');
                 }
                 $anon->emailWelcome($email, $req);
                 $this->message("{Check_email}");

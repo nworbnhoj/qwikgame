@@ -75,8 +75,8 @@ class FavoritePage extends Page {
         switch ($qwik) {
             case "register":
                 $this->qwikRegister($player, $req);
-                $req('parity') = 'any';
-                $req('smtwtfs') = 16777215;
+                $req['parity'] = 'any';
+                $req['smtwtfs'] = 16777215;
                 // intentional flow thru to available
             case "available":
                 $result = $this->qwikAvailable($player, $this->venue, $req);

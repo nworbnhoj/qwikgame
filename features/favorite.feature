@@ -6,10 +6,9 @@ Feature: I like to play my game at my local venue
 	Scenario: Register at qwikgame
 	  Given "new.player@qwikgame.org" is not registered with qwikgame
 	  When I like to play Squash at "Qwikgame Venue|South Pole|AU|AQ"
-	  And I do not specify a time
 	  And I provide my email "new.player@qwikgame.org"
-	  And I submit this favorite
-	  And I click on the link in the confirmation email
+	  And I register this favorite
+	  And I click on the link in the welcome email
 	  Then my email "new.player@qwikgame.org" will be registered with qwikgame
 	  And I will be available to play my favorite game
 	

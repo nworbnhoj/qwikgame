@@ -30,13 +30,13 @@ class Email extends Html {
     $language   string  the 2 character language symbol (default: en = english)
     *******************************************************************************/
 
-    public function __construct($variables=array(), $language='en', $templateName=self::EMAIL_TEMPLATE){
+    public function __construct($vars=array(), $language='en', $templateName=self::EMAIL_TEMPLATE){
         parent::__construct(Html::readTemplate($templateName, $language), $language, $templateName);
-        $this->to = $variables['to'];
-        $subject = $variables['subject'];
-        $this->subject = $this->make($variables, $subject);
+        $this->to = $vars['to'];
+        $subject = $vars['subject'];
+        $this->subject = $this->make($vars, $subject);
         $body = $this->template();
-        $this->body = $this->make($variables, $body);
+        $this->body = $this->make($vars, $body);
     }
 
 
@@ -45,6 +45,11 @@ class Email extends Html {
         $str .= "subject:\t".$this->subject."\n";
         $str .= $this->body;
         return $str;
+    }
+    
+    
+    public function body(){
+      return $this->body;
     }
 
 
@@ -75,7 +80,7 @@ class Email extends Html {
     public function repPara($html, $paragraphs){
         $group = '';
         foreach($paragraphs as $para){
-            $vars = array('para'=>$para);
+            $vars = array('para'=>htmlspecialchars($para, ENT_HTML5, 'UTF-8'));
             $group .= $this->populate($html, $vars);
         }
         return $group;

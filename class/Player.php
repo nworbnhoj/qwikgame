@@ -713,7 +713,8 @@ class Player extends Qwik {
     
     public function authLink($shelfLife, $target='match.php', $param=NULL){
         $authURL = $this->authURL($shelfLife, $target, $param);
-        return "<a href='$authURL'>{login}</a>";
+        $authURL = htmlspecialchars($authURL, ENT_HTML5, 'UTF-8');
+        return "<a id='login' href='$authURL'>{login}`</a>";
     }
 
 
@@ -742,7 +743,7 @@ class Player extends Qwik {
             "email"   => $email,
             "qwik"    => 'register',
             "game"    => $req['game'],
-            "venue"   => $req['vid']
+            "vid"     => $req['vid']
         );
         $authLink = $this->authLink(self::MONTH, 'favorite.php', $param);
         $paras = array(
@@ -759,6 +760,7 @@ class Player extends Qwik {
         $email->send();
 
         self::logEmail('welcome', $this->id());
+        return $email;
     }
 
 

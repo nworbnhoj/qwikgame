@@ -105,8 +105,9 @@ function qwikFriend($player, $request){
     if(isset($request['game'])
     && isset($request['rival'])
     && isset($request['parity'])){
-        $player->friend($request['game'], $request['rival'], $request['parity']);
+        return $player->friend($request['game'], $request['rival'], $request['parity']);
     }
+    return NULL;
 }
 
 

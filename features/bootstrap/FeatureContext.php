@@ -6,11 +6,13 @@ require_once 'class/Player.php';
 require_once 'class/Ranking.php';
 require_once 'class/Hours.php';
 require_once 'class/Page.php';
+require_once 'class/Email.php';
 require_once 'class/MatchPage.php';
 require_once 'class/FriendPage.php';
 require_once 'class/FavoritePage.php';
 require_once 'class/AccountPage.php';
 
+require_once 'features/bootstrap/Post.php';
 require_once 'features/bootstrap/Get.php';
 
 
@@ -31,12 +33,12 @@ class FeatureContext implements Context
     private $Hrs6amto8pm =  2097088;
     private $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
     private $authURL;
+    private $emailWelcome;
     private $email;
     private $game;
     private $id;
     private $parity;
     private $pid;
-    private $player;
     private $rankingID;
     private $req = [];     // a post or get request
     private $time;
@@ -79,21 +81,19 @@ class FeatureContext implements Context
 
         $this->pid = Player::anonID($address);
         Player::removePlayer($this->pid);
-        $this->player = new Player($this->pid, TRUE);
-        $this->player->email($address);
-        $token = $this->player->token();
-        $this->player->save(); 
-
-        $this->req['pid'] = $this->player->id();
-        $this->req['token'] = $token;
+        $player = new Player($this->pid, TRUE);
+        $player->email($address);
+        $token = $player->token();
+        $player->save();
     }
     
      /**
      * @Given I am not available to play
      */
     public function iAmNotAvailableToPlay()
-    {    
-        $available = $this->player->available();
+    {       
+        $player = new Player($this->pid);
+        $available = $player->available();
         foreach($available as $avail){
             removeElement($available);
         }
@@ -169,8 +169,22 @@ class FeatureContext implements Context
         $this->pid = Player::anonID($address);
         $this->req['email'] = $address;
     }
-    
-    
+ 
+
+    /**
+     * @When I Register this favorite
+     */
+    public function iRegisterThisFavourite()
+    {
+        $this->req['qwik'] = 'available';
+        $req = $this->req;
+        $email = $req['email'];
+        $req['name'] = $email;  // side-step honeypot
+        unset($req['email']);
+        $this->id = Post::indexPage($req);
+        $player = new Player($this->pid);
+        $this->emailWelcome = $player->emailWelcome($email, $req);
+    }
     
 
     /**
@@ -178,12 +192,9 @@ class FeatureContext implements Context
      */
     public function iSubmitThisFavourite()
     {
+        $player = new Player($this->pid);
         $this->req['qwik'] = 'available';
-        $_GET = $this->req;
-        $page = new FavoritePage();
-        $this->id = $page->processRequest();
-        $this->player = new Player($this->pid, TRUE);
-        $this->authURL = $this->player->authURL(2*Player::DAY, 'favorite.php', $this->req);
+        $this->id = Post::favoritePage($this->pid, $this->req);
     }
 
 
@@ -192,38 +203,36 @@ class FeatureContext implements Context
      */
     public function iDeleteThisFavourite()
     {
-        $this->req['qwik'] = 'delete';
-        $this->req['id'] = $this->id;
-        $_GET = $this->req;
-        $page = new FavoritePage();
-        $this->id = $page->processRequest();
-        $this->player = new Player($this->pid, FALSE);
+        $req = array();
+        $req['qwik'] = 'delete';
+        $req['id'] = $this->id;
+        $this->id = Post::favoritePage($this->pid, $req);
     }
 
 
     /**
-     * @When I click on the link in the confirmation email
+     * @When I click on the link in the welcome email
      */
-    public function iClickOnTheLinkInTheConfirmationEmail()
+    public function iClickOnTheLinkInTheWelcomeEmail()
     {
-        Assert::assertNotNull($this->authURL);
-        
-        $query = parse_url($this->authURL, PHP_URL_QUERY);
+        Assert::assertNotNull($this->emailWelcome);
+        $body = $this->emailWelcome->body();
+        $dom = DOMDocument::loadHTML($body);
+        $link = $dom->getElementById('login');
+        Assert::assertNotNull($link);
+        $href = $link->getAttribute('href');
+        Assert::assertNotNull($href);   
+        $query = parse_url($href, PHP_URL_QUERY);
         Assert::assertNotNull($query);
-
         parse_str($query, $req);
         Assert::assertNotNull($req);
 
-        $_GET = $req;
-        $page = new MatchPage();
-        $player = $page->player();
+        $this->id = Get::favoritePage($req);
 
         Assert::assertTrue(
-            isset($player),
-            "The player could not be logged in."
+            isset($this->id),
+            "The player registration failed."
         );
-
-        $page->processRequest();
     }
     
 
@@ -250,26 +259,25 @@ class FeatureContext implements Context
     private function iWillBeAvailableToPlay($game, $venue, $rivalParity='any', $test='ALL')
     {
         $rid = Player::anonID("rival@qwikgame.org");
-        $rival = new Player($rid, TRUE);  //dummy rival
+        new Player($rid, TRUE);  //dummy rival
         // Set this player as a friend of the rival, with suitable parity
-        $_GET = array(
-                'pid'=>$rid,
-                'token'=>$rival->token(),
+        $req = array(
                 'qwik'=>'friend',
                 'game'=>$game, 
                 'rival'=>$this->email,
                 'parity'=>$this->parityPhrase[$rivalParity]
-            ); 
-        $page = new MatchPage();
-        $page->processRequest();
+            );
+        Post::friendPage($rid, $req);
 
-        $parity = $this->player->parity($rival, $game);
+        $player = new Player($this->pid);
+        $rival = new Player($rid);
+        $parity = $player->parity($rival, $game);
         foreach ($this->days as $day) {
             if (isset($this->req[$day])){
                 $date  = $venue->dateTime($day);
                 $hours = new Hours($this->req[$day]);
 
-                $availableHours = $this->player->availableHours($venue->id(), $game, $day, $parity);
+                $availableHours = $player->availableHours($venue->id(), $game, $day, $parity);
 //$vid = $venue->id();
 //print_r("$game at $vid\n");
 //printf("hours %1$25b = %1$2d\navail %2$25b = %2$2d\n\n", $hours->bits(), $availableHours->bits());
@@ -407,8 +415,6 @@ class FeatureContext implements Context
 
         $playerA = new Player($pidA);
         $playerB = new Player($pidB);
-        $tokA = $playerA->token();
-        $tokB = $playerB->token();
 
 //        $matches = $playerA->matchQuery("match[@status='confirmed' and rival='$pidB']");
         $matches = $playerA->matchQuery("match[rival='$pidB']");
@@ -420,15 +426,15 @@ class FeatureContext implements Context
           $vid = "Qwikgame Venue|South Pole|AU|AQ";
           $hour = '1024';
           $invite = array($playerB->email());
-          $kid = Get::matchPageKeen($pidA, $tokA, 'squash', $vid, '0', $hour, $invite);
-          $mid = Get::matchPageAccept($pidB, $tokB, $kid, $hour);
-          Get::matchPageAccept($pidA, $tokA, $mid, $hour);
+          $kid = Post::matchPageKeen($pidA, 'squash', $vid, '0', $hour, $invite);
+          $mid = Post::matchPageAccept($pidB, $kid, $hour);
+          Post::matchPageAccept($pidA, $mid, $hour);
 
 //            $keenMatchA->cancel();
             
         }
         $ps = $this->paritySymbol[$parity];
-        Get::matchPageFeedback($pidA, $tokA, $mid, $ps);
+        Post::matchPageFeedback($pidA, $mid, $ps);
     }
 
 
@@ -473,9 +479,9 @@ class FeatureContext implements Context
      */
     public function aRankingFile($game, $rid, $plyr)
     {
-        $pid = $this->rivals[$plyr];
-        $this->player = new Player($pid);
-        $ranking = $this->player->importRanking($rid, $game);
+        $this->pid = $this->rivals[$plyr];
+        $player = new Player($this->pid);
+        $ranking = $player->importRanking($rid, $game);
         $this->rankingID = $ranking->id();
     }
 
@@ -487,7 +493,7 @@ class FeatureContext implements Context
     {
         $rid = $this->rankingID;
         $ranking = new Ranking($rid);
-        $player = $this->player;
+        $player = new Player($this->pid);
         $player->rankingActivate($rid);
     }
 
@@ -499,7 +505,7 @@ class FeatureContext implements Context
     {
         $rid = $this->rankingID;
         $ranking = new Ranking($rid);
-        $player = $this->player;
+        $player = new Player($this->pid);
         $player->rankingDeactivate($rid);
     }
 
@@ -570,10 +576,7 @@ class FeatureContext implements Context
         $this->req['rival'] = $email;
         $this->req['parity'] = $options[$parity];
         $this->req['game'] = $game;
-        $_GET = $this->req;
-        $page = new FriendPage();
-        $this->id = $page->processRequest();
-        $this->player = new Player($this->pid, FALSE);
+        $this->id = Post::friendPage($this->pid, $this->req);
     }
 
     /**
@@ -584,7 +587,8 @@ class FeatureContext implements Context
         $rid = Player::anonID($email);
         $rival = new Player($rid, FALSE);
         $checkParity = $this->parityPhrase[$parityPhrase];
-        $calcParity = $this->player->parity($rival, $game);
+        $player = new Player($this->pid);
+        $calcParity = $player->parity($rival, $game);
 
         Assert::assertEquals($checkParity, $calcParity);
     }

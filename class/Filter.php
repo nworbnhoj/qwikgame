@@ -71,7 +71,7 @@ class Filter extends Qwik {
    '2339bf25adb414b5e1bc59362da490731f21f686d05d3d57b99a0569caf2aa5a' => 'en invitation.match.listing',
    '397dc67250c2cedc7d527a8c5b999103363bc2466566263ec36387c33d9567fc' => 'en keen.match.listing',
    'dfbfe806cf21f0697fbea049e2e24a56b026e3dfb5eb92852e84c1af41be19b7' => 'en history.match.listing',
-   '8b4debe466109d2551a53bfeb2ff02cda75425df596f7fc74705d03dea36c33d' => 'en favorite.listing',
+   '5642145bedf0b02e24b9b14a5b6134076f8c93ef549a9ae455b36fb6263c96c1' => 'en favorite.listing',
    '041594c6847191044f6c2a9e755233761993152788a5df5b0221cd4247f3efa8' => 'en friend.listing',
    '7efff865bcdec963e62978bb95e757ec7301187113ec8f4d1d1ba2f6e86387c5' => 'en upload.listing',
    
@@ -82,18 +82,18 @@ class Filter extends Qwik {
    '9a72e18e6d620a1156a20a73de6e29b0009c96e76d6b791fc29cab51ae9f610c' => 'bg invitation.match.listing',
    'a3ee488974e0da90b1a15a8e5a514ad654aaf4c127a0e98d109f5e8d11979e4a' => 'bg keen.match.listing',
    'c191df15129bc0597c71c185f0315136b692e49bce74a13641c4dc663408ec12' => 'bg history.match.listing',
-   '8f1875b9fa6907c1e21f14c5221a72d5cad7acb39e666fb183217f264fc83855' => 'bg favorite.listing',
+   '5642145bedf0b02e24b9b14a5b6134076f8c93ef549a9ae455b36fb6263c96c1' => 'bg favorite.listing',
    '34c83baa98909de55fee6cd76bd35b44d56c5235f6388002f9d129db259a0498' => 'bg friend.listing',
    '40ee332a534d19cabf1349a8c8c61896dd6366cd82536e6d7927446e1aea8520' => 'bg upload.listing',
    
-   '149d83ab8de7ba10946c7d37f0649cdc12497f6c6482f97409e5b35a6d64fba6' => 'bg cancelled.match.listing',
-   '0798aced7ff176db6c81090f09ed205312293a448c5a17b9bc4a8f0c8c77e66c' => 'bg feedback.match.listing',
-   '95910a348918ee593ea1868ebd1829faa9ea5d7590982b8a37af01ff14e0a106' => 'bg confirmed.match.listing',
-   '7f6a9e6dd4b2351a3b230a95b90edc180b500222971b190e1a85bc29935c51d6' => 'bg accepted.match.listing',
-   '8a444d8be0ae7bd048a4ee497351dee93842fe40b7475d263291c82cac1fdc1c' => 'bg invitation.match.listing',
-   '2002c9b11068893f008ae7f7734769b94a04cb57ace5d96b58322a293c506598' => 'bg keen.match.listing',
+   '149d83ab8de7ba10946c7d37f0649cdc12497f6c6482f97409e5b35a6d64fba6' => 'es cancelled.match.listing',
+   '0798aced7ff176db6c81090f09ed205312293a448c5a17b9bc4a8f0c8c77e66c' => 'es feedback.match.listing',
+   '95910a348918ee593ea1868ebd1829faa9ea5d7590982b8a37af01ff14e0a106' => 'es confirmed.match.listing',
+   '7f6a9e6dd4b2351a3b230a95b90edc180b500222971b190e1a85bc29935c51d6' => 'es accepted.match.listing',
+   '8a444d8be0ae7bd048a4ee497351dee93842fe40b7475d263291c82cac1fdc1c' => 'es invitation.match.listing',
+   '2002c9b11068893f008ae7f7734769b94a04cb57ace5d96b58322a293c506598' => 'es keen.match.listing',
    'ba57326428d6b77086efdb0a875679139e51896dae4a416c429946d4c826d087' => 'es history.match.listing',
-   'd080f072fe751b57210a1d136b8d010c87f321248131a28b4f114a9e7778a2ed' => 'es favorite.listing',
+   'af953e4d2071550dd1b29fb903588b58dec96b2463d0cb44b1785783264c3057' => 'es favorite.listing',
    '8294a5fd8e4d2076de711ed9d6c3fa4cbc00454fc4214e5556e233b69cfff629' => 'es friend.listing',
    '9ffc6d3819f2840e5c436b794a262d60cb8ca50f6399fbf111ea8d91e25fa958' => 'es upload.listing',
    
@@ -255,7 +255,7 @@ class Filter extends Qwik {
 
     static function pushKey($val){
       if (self::strlen($val, 1024)
-      && preg_match("#^[a-zA-Z0-9_+-]+$#", $val)){
+      && preg_match("#^[a-zA-Z0-9:\/=._+-]+$#", $val)){
         return $val;
       }
       return FALSE;
@@ -264,7 +264,7 @@ class Filter extends Qwik {
 
     static function pushToken($val){
       if (self::strlen($val, 128)
-      && preg_match("#^[a-zA-Z0-9_+-]+==$#", $val)){
+      && preg_match("#^[a-zA-Z0-9\/_+-]+==$#", $val)){
         return $val;
       }
       return FALSE;

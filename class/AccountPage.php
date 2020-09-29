@@ -29,18 +29,6 @@ class AccountPage extends Page {
             case 'account':
                 $result = $this->qwikAccount($player, $req);
                 break;
-            case 'logout':
-                $result = $this->logout();
-                if (isset($request['push-endpoint'])){
-                    $notify = new Notify($player);
-                    $notify->push($request['push-endpoint'], Notify::MSG_NONE);
-                }
-                break;
-            case 'quit':
-                $player->emailQuit();
-                $player->quit();
-                $this->logout();   
-                break;
             default:
                 $result =  NULL;
         }

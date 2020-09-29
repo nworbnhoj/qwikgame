@@ -92,7 +92,7 @@
 </div>
 
 <div class="commit account">
-    <form id='account-logout-form' action='account.php' method='post'>
+    <form id='account-logout-form' action='index.php' method='post'>
         <input type="hidden" name="qwik" value='logout'>
         <input type='hidden' id='logout-endpoint' name='push-endpoint'>
         <h4>{logout}</h4>
@@ -106,7 +106,7 @@
 <div class="commit account">
     <button type='button' class='action help [HELP_ICON]'></button>
     <span class='help' hidden>{Your_anonymous_match...}</span>
-    <form id='account-quit-form' onsubmit='return checkQuit()' method='post'>
+    <form id='account-quit-form' onsubmit='return checkQuit()' action='index.php' method='post'>
         <input type="hidden" name="qwik" value='quit'>
         <h4>{Quit_qwikgame.org}</h4>
         <p>{This_will_immediately...}</p>

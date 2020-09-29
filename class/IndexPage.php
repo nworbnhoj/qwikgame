@@ -17,21 +17,7 @@ class IndexPage extends Page {
     public function __construct($templateName='index'){
       parent::__construct(NULL, $templateName, self::HONEYPOT);
     }
-
-    public function serve($history=NULL){
-        if ($this->player() == NULL){
-            parent::serve($history);
-        } else {
-            $req = $this->req();
-            unset($req['pid']);
-            unset($req['token']);
-            $query = http_build_query($req);
-            header("Location: ".QWIK_URL."match.php?$query", TRUE, 307);
-            exit;
-        }
-    }
-
-
+    
 
     public function processRequest(){
         $result = null;
@@ -44,9 +30,24 @@ class IndexPage extends Page {
             case "recover":
                 $result = $this->qwikRecover($email);
                 break;
+            case 'quit':
+                $player = $this->player();
+                if(isset($player)){
+                  $player->emailQuit();
+                  $player->quit();
+                }
+                // no break - intentional drop thru to logout
             case 'logout':
+                $player = $this->player();
+                if (isset($player)
+                && isset($request['push-endpoint'])){
+                    $notify = new Notify($player);
+                    $notify->push($request['push-endpoint'], Notify::MSG_NONE);
+                }
                 $result = $this->logout();
                 break;
+            default:
+                $result = NULL;
         }
         return $result;
     }

@@ -319,29 +319,24 @@ class Page extends Html {
     $_COOKIE
     ********************************************************************************/
     public function logout(){
-        if (isset($_SESSION) && isset($_SESSION['pid'])){
-            $pid = $_SESSION['pid'];
-            $id = self::snip($pid);
-            self::logMsg("logout $id");
-            unset($_SESSION['pid']);
+        if (isset($_COOKIE) && isset($_COOKIE['pid'])){
+            $pid = $_COOKIE['pid'];
             unset($_COOKIE['pid']);
-            unset($this->player);
         }
+        if (isset($_SESSION) && isset($_SESSION['pid'])){
+            $pid = $_SESSION['pid'];            
+            unset($_SESSION['pid']);
+        }
+        if (isset($this->player)){
+            $pid = $this->player->id();
+            $this->player = NULL;            
+        }
+        $id = self::snip($pid);
+        self::logMsg("logout $id");        
+        
         if (!headers_sent()){
             setcookie("pid", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
             setcookie("token", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
-        }
-        $this->goHome();
-    }
-
-
-    public function goHome(){
-        if (headers_sent()){
-            echo("Redirect failed.<br>");
-            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
-        } else {
-            header("location: ".QWIK_URL, TRUE, 307);
-            exit;
         }
     }
 

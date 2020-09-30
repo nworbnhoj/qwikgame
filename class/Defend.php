@@ -75,7 +75,7 @@ class Defend extends Qwik {
     'keen'      => array('qwik', 'vid', 'game', 'today', 'tomorrow', 'beckon', 'invite', 'lat', 'lng', 'placeid'),
     'login'     => array('qwik', 'pid', 'token'),
     'logout'    => array('qwik', 'push-endpoint'),
-    'msg'       => array('qwik', 'msg'),
+    'msg'       => array('qwik', 'msg', 'id'),
     'recover'   => array('qwik', 'email'),
     'region'    => array('qwik', 'game', 'parity', 'region'),
     'register'  => array('qwik', 'email'),

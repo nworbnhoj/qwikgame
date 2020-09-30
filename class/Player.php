@@ -688,13 +688,16 @@ class Player extends Qwik {
     function matchMsg($mid, $msg){
         $match = $this->matchID($mid);
         if (isset($match)){
+            $match->chat($msg, Match::CHAT_ME);
             $rival = $match->rival();
             if($rival->ok()){
                 $rivalMatch = $rival->matchID($mid);
                 if (isset($rivalMatch)){
+                    $rivalMatch->chat($msg, Match::CHAT_YU);
                     $notify = new Notify($rival);
                     $notify->sendMsg($msg, $rivalMatch);
                 }
+                $rival->save();
             }
         }
     }

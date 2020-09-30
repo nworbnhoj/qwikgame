@@ -96,9 +96,13 @@
             <span class='tag confirmed'>{confirmed}</span>
             {Confirmed_Game_at...}
         </p>
-        <div>
-            <input type='text' name='msg' placeholder='{prompt_msg}'>
-            <button type='submit' name='qwik' value='msg' class='[SEND_ICON]'></button>
+    </form>
+    <form class='chat' action='match.php#matches' method='post'>
+        <input type='hidden' name='id' value='[id]'>
+        <div class='chat-log'>[chatter]</div>
+        <div class='chat-box'>
+            <input class='chat-input' type='text' name='msg' placeholder='{prompt_msg}'>
+            <button class='chat-submit [SEND_ICON]' type='submit' name='qwik' value='msg'></button>
         </div>
     </form>
 </div>

@@ -253,6 +253,17 @@ div.checklist  { margin:auto;
 div.map-mark-info-head  {}
 div.map-mark-info-body  {}
 
+div.chat-log {
+  border: solid 1px DarkGray;
+  margin: 0px auto 0px auto;
+  padding: 0px;
+  overflow:auto;
+}
+
+div.chat-box {
+    display: flex;
+}
+
 /************** <span> *********************/
 
 
@@ -386,6 +397,24 @@ p.message {
     border: solid 1px DarkOrange;
 }
 
+p.chat {
+  margin: 0.1em;
+  padding: 0 0.5em 0 0.5em;
+  display: inline-block;
+  border: solid 1px DarkGray;
+  background-color: lightGray;
+  border-radius: 0.5em;
+}
+
+p.chat-me {
+  float:left;
+  clear:right;
+}
+
+p.chat-yu {
+  float:right;
+  clear:left;
+}
 
 
 /************** <ul> *********************/
@@ -640,6 +669,12 @@ input.word {
     margin-right: 0;
 }
 
+input.chat-input {
+  display: inline-block;
+  margin: 0px;
+  flex: 2;
+}
+
 
 /************** <button> *********************/
 button {
@@ -697,7 +732,9 @@ button.action:hover { color:DarkOrange; }
 
 button.revert { }
 
-
+button.chat-submit {
+  padding: 0px;
+}
     
 /*************** <textarea> **********************/
 
@@ -715,6 +752,12 @@ hr { border-color: DarkGrey }
 
 form {}
 
+form.chat {
+  display:inline-block;
+  max-width : 90%;
+  margin: 0 0 0.5em 0;
+  padding: 0px;
+}
 
 /********************** sup sub **********************/
 
@@ -891,4 +934,4 @@ progress.size {
             margin: 0.5em 5% 0.5em 5%;
         }
     }
-}  
+}

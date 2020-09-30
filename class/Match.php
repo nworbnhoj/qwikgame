@@ -9,6 +9,10 @@ require_once 'Notify.php';
 
 class Match extends Qwik {
 
+    const CHAT_TEMPLATE = "<p class='chat [class]'>[chat]</p>";
+    const CHAT_ME = 'chat-me';
+    const CHAT_YU = 'chat-yu';
+
     private $player;
     private $xml;
     private $rivalElements;    // temp variable for performance
@@ -360,7 +364,20 @@ class Match extends Qwik {
     }
 
 
-
+    public function chat($msg=NULL, $class = ''){
+      $chatElements = $this->xml->xpath("chat");
+      $chatter = isset($chatElements[0]) ? (string) $chatElements[0] : '' ;
+      if(!empty($msg)){
+        if(isset($chatElements[0])){
+          $this->removeElement($chatElements[0]);
+        }
+        $chat = htmlspecialchars($msg, ENT_HTML5, 'UTF-8');
+        $chat = str_replace('[chat]', $chat, self::CHAT_TEMPLATE);
+        $chat = str_replace('[class]', $class, $chat);
+        $this->xml->addChild('chat', $chatter.$chat);
+      }
+      return $chatter;
+    }
 
 
     public function conclude(){
@@ -417,7 +434,8 @@ class Match extends Qwik {
             'hour'      => self::hr($hours->first()),
             'id'        => $mid,
             'parity'    => Page::parityStr($rivalParity),
-            'rivalRep'  => $rivalRep
+            'rivalRep'  => $rivalRep,
+            'chatter'   => $this->chat()
         );
 
         $rival = $this->rival();

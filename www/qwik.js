@@ -273,12 +273,14 @@ function setInnerJSON(json, element){
 
 function replaceRecords(json, base){
     var parentNode = base.parentNode;
-    while (parentNode.childNodes.length) {
-      parentNode.removeChild(parentNode.firstChild);  // removes Listeners
+    if(!parentNode.contains(document.activeElement)){
+      while (parentNode.childNodes.length) {
+        parentNode.removeChild(parentNode.firstChild);  // removes Listeners
+      }
+      parentNode.innerHTML = json.trim();
+      parentNode.insertBefore(base, parentNode.firstChild);
+      initJSON(parentNode);
     }
-    parentNode.innerHTML = json.trim();
-    parentNode.insertBefore(base, parentNode.firstChild);
-    initJSON(parentNode);
 }
 
 

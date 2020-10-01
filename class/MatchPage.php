@@ -93,9 +93,6 @@ class MatchPage extends Page {
             case 'msg':
                 $result = $this->qwikMsg($player, $req);
                 break;
-            case 'logout':
-                $result = $this->logout();
-                break;
             default:
                 $result =  NULL;
         }

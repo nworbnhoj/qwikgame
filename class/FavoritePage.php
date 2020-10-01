@@ -87,9 +87,6 @@ class FavoritePage extends Page {
             case 'delete':
                 $result = $this->qwikDelete($player, $req);
                 break;
-            case 'logout':
-                $result = $this->logout();
-                break;
             default:
                 $result =  NULL;
         }

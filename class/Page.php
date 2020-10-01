@@ -289,7 +289,7 @@ class Page extends Html {
         if($openSession){                   // AUTH: existing session
         } elseif($player->isValidToken($token)){     // AUTH: token
             $this->setupSession($pid, $player->lang());
-            $this->setupCookie($pid, $token);
+            $this->setupCookie($player);
         } else {
             $sid = self::snip($pid);
             self::logMsg("token invalid $sid $token");
@@ -306,11 +306,14 @@ class Page extends Html {
     }
 
 
-    private function setupCookie($pid, $token){
-        if (!headers_sent()){
-            setcookie("pid", $pid, time() + 3*Player::MONTH, "/", HOST, TRUE, TRUE);
-            setcookie("token", $token, time() + 3*Player::MONTH, "/", HOST, TRUE, TRUE);
-        }
+    private function setupCookie($player){
+      if (!headers_sent()){
+        $pid = $player->id();
+        $term = 3*self::MONTH;
+        $token = $player->token($term);
+        setcookie("pid", $pid, time() + $term, "/", HOST, TRUE, TRUE);
+        setcookie("token", $token, time() + $term, "/", HOST, TRUE, TRUE);
+      }
     }
 
 
@@ -322,6 +325,7 @@ class Page extends Html {
         if (isset($_COOKIE) && isset($_COOKIE['pid'])){
             $pid = $_COOKIE['pid'];
             unset($_COOKIE['pid']);
+            unset($_COOKIE['token']);
         }
         if (isset($_SESSION) && isset($_SESSION['pid'])){
             $pid = $_SESSION['pid'];            

@@ -338,6 +338,17 @@ class Page extends Html {
             setcookie("pid", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
             setcookie("token", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
         }
+        $this->goHome();
+    }
+
+
+    public function goHome(){
+        if (headers_sent()){
+            echo("Redirect failed.<br>");
+            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
+        } else {
+            header("location: ".QWIK_URL);
+        }
     }
 
 

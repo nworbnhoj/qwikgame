@@ -717,7 +717,7 @@ class Player extends Qwik {
     public function authLink($shelfLife, $target='match.php', $param=NULL){
         $authURL = $this->authURL($shelfLife, $target, $param);
         $authURL = htmlspecialchars($authURL, ENT_HTML5, 'UTF-8');
-        return "<a id='login' href='$authURL'>{login}`</a>";
+        return "<a id='login' href='$authURL'>{login}</a>";
     }
 
 

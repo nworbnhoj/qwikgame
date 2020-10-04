@@ -352,7 +352,7 @@ class Page extends Html {
             echo("Redirect failed.<br>");
             echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
         } else {
-            header("location: ".QWIK_URL);
+            header("Location: ".QWIK_URL, TRUE, 307);
         }
     }
 

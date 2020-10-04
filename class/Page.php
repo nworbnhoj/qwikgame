@@ -301,6 +301,7 @@ class Page extends Html {
 
 
     private function setupSession($pid, $lang){
+        session_regenerate_id();
         $_SESSION['pid'] = $pid;
         $_SESSION['lang'] = $lang;
     }

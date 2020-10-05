@@ -353,6 +353,7 @@ class Page extends Html {
             echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
         } else {
             header("Location: ".QWIK_URL, TRUE, 307);
+            exit;
         }
     }
 

@@ -116,7 +116,6 @@ class Page extends Html {
     private $player;
     private $language;
     private $query;
-    private $req;
     private $alert = "";
     private $msg = "";
 
@@ -129,12 +128,8 @@ class Page extends Html {
     public function __construct($template, $templateName=NULL, $honeypot=array()){
 
         $this->query = new Defend($honeypot);
-        $this->req = $this->query->request();
-
-//        $this->logReq($this->req);
-        $this->player = $this->login($this->req);
-
-        $language = $this->selectLanguage($this->req, $this->player);
+        $this->player = $this->login($this->query);
+        $language = $this->selectLanguage($this->query->param('lang'), $this->player);
 
         $template = empty($template) ? Html::readTemplate($templateName, $language) : $template;
         
@@ -145,7 +140,7 @@ class Page extends Html {
     public function serve($history = NULL){
         try {
             if(empty($history)
-            && !empty($this->req('qwik'))){
+            && $this->qwik()){
               $history = basename($_SERVER["SCRIPT_FILENAME"]);
             }
             $this->processRequest();
@@ -166,7 +161,7 @@ class Page extends Html {
         $vars = parent::variables();
         $vars['thumb-up'] = "<span class='" . self::THUMB_UP_ICON . "'></span>";
         $vars['thumb-dn'] = "<span class='" . self::THUMB_DN_ICON . "'></span>";
-        $game = (string) $this->req('game');
+        $game = (string) $this->query->param('game');
         $vars['game']  = empty($game) ? '[game]' : self::gameName($game);
         
         if ($this->player != NULL){
@@ -188,20 +183,12 @@ class Page extends Html {
 
 
     public function req($key=NULL, $value=NULL){
-        if(is_null($key)){
-            return $this->req;
-        } elseif (is_null($value) && isset($this->req[$key])){
-            return $this->req[$key];
-        } else {
-            $this->req[$key] = $value;
-        }
-        return NULL;
+      return $this->query->param($key, $value);
     }
 
 
-
     public function qwik(){
-        return $this->req('qwik');
+      return $this->query->param('qwik');
     }
 
 
@@ -256,31 +243,31 @@ class Page extends Html {
      * $req    ArrayMap    url parameters from post&get
      * @return Player The authenticated Player object or NULL otherwise
      *************************************************************************/
-    private function login($req){
-        $openSession = false;
+    private function login($query){
         if (session_status() == PHP_SESSION_NONE
         && !headers_sent()) {
             session_start();
         }
 
+        $openSession = false;
         // Locate identification (pid) and authentication (token) if they exist
-        if (isset($req['token'])
-        && isset($req['pid'])){            // check in the request
-            $pid = $req['pid'];
-            $token = $req['token'];
-            $this->query->unset('token');   // rely on open session from here
+        if ($query->param('token')
+        && $query->param('pid')){           // check in the request
+          $pid = $query->param('pid');
+          $token = $query->param('token');
+          $query->unset('token');   // rely on open session from here
         } elseif (isset($_SESSION['pid'])){ // check in the $_SESSION variable
-            $pid = $_SESSION['pid'];
-            $openSession = true;
+          $pid = $_SESSION['pid'];
+          $openSession = true;
         } elseif (isset($_COOKIE['pid'])){  // check in a $_COOKIE
-            $pid = $_COOKIE['pid'];
-            $token = $_COOKIE['token'];
-        } elseif (isset($req['email'])){    // check for an email in the request
-            $email = $req['email'];
-            $pid = Player::anonID($email);  // and derive the pid from the email
-            $token = isset($req['token']) ? $req['token'] : NULL;
+          $pid = $_COOKIE['pid'];
+          $token = $_COOKIE['token'];
+        } elseif ($query->param('email')){    // check for an email in the request
+          $email = $query->param('email');
+          $pid = Player::anonID($email);  // and derive the pid from the email
+          $token = $query->param('token');
         } else {                            // anonymous session: no player identifier
-            return;                         // RETURN login fail
+           return;                         // RETURN login fail
         }
 
         // Load up the Player from file
@@ -376,22 +363,17 @@ class Page extends Html {
     $player    XML            player data
     ********************************************************************************/
 
-    public function selectLanguage($req, $player){
+    public function selectLanguage($lang, $player){
         $languages = parent::$phraseBook->languages();
 
-        if(isset($req['lang'])                            // REQUESTED language
-        && array_key_exists($req['lang'], $languages)){
-            $lang = $req['lang'];
-            if (isset($player)){
-                $player->lang($lang);
-                $player->save();
-            }
-        } elseif (isset($_SESSION['lang'])                // SESSION language
-        && array_key_exists($_SESSION['lang'], $languages)){
+        if(isset($lang)                            // REQUESTED language
+        && isset($player)){
+          $player->lang($lang);
+          $player->save();
+        } elseif (isset($_SESSION['lang'])){
             $lang = $_SESSION['lang'];
-        } elseif ($player                                 // USER language
-        && (NULL !== $player->lang())
-        && array_key_exists($player->lang(), $languages)){
+        } elseif (isset($player)                         // USER language
+        && (NULL !== $player->lang())){
             $lang = (string) $player->lang();
         } elseif (false){                                // geolocate language
             // todo code

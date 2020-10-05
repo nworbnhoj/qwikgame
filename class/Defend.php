@@ -159,6 +159,7 @@ class Defend extends Qwik {
 
     private $get;
     private $post;
+    private $query;
     private $rejected = array();
     private $rejectReason = '';
 
@@ -171,6 +172,7 @@ class Defend extends Qwik {
       parent::__construct();
       $this->checkHoneypot($_GET, $honeypot);
       $this->checkHoneypot($_POST, $honeypot);
+      $this->query();
     }
     
     
@@ -221,10 +223,24 @@ class Defend extends Qwik {
     }
 
 
-    public function request(){
-       $request = $this->post() + $this->get();
-       $this->logRejected();
-       return $request;
+    private function query(){
+      if(!isset($this->query)){
+        $this->query = $this->post() + $this->get();
+        $this->logRejected();
+      }
+      return $this->query;
+    }
+    
+    
+    public function param($key=NULL, $value=NULL){
+      if(is_null($key)){
+        return $this->query;
+      } elseif (is_null($value) && isset($this->query[$key])){
+        return $this->query[$key];
+      } else {
+        $this->query[$key] = $value;
+      }
+      return NULL;    
     }
     
     
@@ -238,7 +254,7 @@ class Defend extends Qwik {
 
     public function rejected(){
         if (is_null($this->get) && is_null($this->post)){
-            $this->request();
+            $this->query();
         }
         return $this->rejected;
     }

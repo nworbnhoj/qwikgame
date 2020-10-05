@@ -115,6 +115,7 @@ class Page extends Html {
 
     private $player;
     private $language;
+    private $query;
     private $req;
     private $alert = "";
     private $msg = "";
@@ -127,8 +128,8 @@ class Page extends Html {
     *******************************************************************************/
     public function __construct($template, $templateName=NULL, $honeypot=array()){
 
-        $defend = new Defend($honeypot);
-        $this->req = $defend->request();
+        $this->query = new Defend($honeypot);
+        $this->req = $this->query->request();
 
 //        $this->logReq($this->req);
         $this->player = $this->login($this->req);
@@ -242,11 +243,19 @@ class Page extends Html {
 
 
 
-    /********************************************************************************
-    Return the XML data for the current logged in player (if any)
-
-    $req    ArrayMap    url parameters from post&get
-    ********************************************************************************/
+    /**************************************************************************
+     * Attempts to identify and authenticate a Player.
+     * The Player identification (pid) can be obtained (in priority order)
+     * from the:
+     * 1. query[pid] overrides an existing open PHP Session 
+     * 2. session[pid] an already authenticated Player ID
+     * 3. cookie[pid] the long term storage of an authenticated Player ID
+     * 4. query-email a new Player registration.
+     * Next, Authentication is completed if the supplied token is valid
+     * Finally the session[pid], cookie[pid] and cookie[token] are setup
+     * $req    ArrayMap    url parameters from post&get
+     * @return Player The authenticated Player object or NULL otherwise
+     *************************************************************************/
     private function login($req){
         $openSession = false;
         if (session_status() == PHP_SESSION_NONE
@@ -255,9 +264,11 @@ class Page extends Html {
         }
 
         // Locate identification (pid) and authentication (token) if they exist
-        if (isset($req['pid'])){            // check in the request
+        if (isset($req['token'])
+        && isset($req['pid'])){            // check in the request
             $pid = $req['pid'];
             $token = $req['token'];
+            $this->query->unset('token');   // rely on open session from here
         } elseif (isset($_SESSION['pid'])){ // check in the $_SESSION variable
             $pid = $_SESSION['pid'];
             $openSession = true;

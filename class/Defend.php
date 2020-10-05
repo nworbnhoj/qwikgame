@@ -226,6 +226,14 @@ class Defend extends Qwik {
        $this->logRejected();
        return $request;
     }
+    
+    
+    public function unset($key){
+      unset($_GET[$key]);
+      unset($_POST[$key]);
+      unset($this->get[$key]);
+      unset($this->post[$key]);
+    }
 
 
     public function rejected(){

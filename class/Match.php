@@ -234,7 +234,7 @@ class Match extends Qwik {
                     if(!is_null($rivalMatch)){
                         $this->addRival($rid, 
                                         $parity,
-                                        $rival->rep(),
+                                        $rival->repWord(),
                                         $rival->nick()
                         );
                     }

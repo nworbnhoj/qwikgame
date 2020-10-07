@@ -182,7 +182,7 @@ class Player extends Qwik {
 
 
     function rep(){
-        return $this->xml['rep'][0];
+        return $this->xml->xpath("rep")[0];
     }
 
 
@@ -1059,30 +1059,28 @@ Requirements:
 
         if($repTot <= 0){
             return '{good}';
-        } elseif($repTot < 5){
-            if($repPos > $repNeg){
+        } else {
+            $pct = $repPos/$repTot;
+            if      ($repTot>=50 && $pct>=0.98){   // 1:50
+                $word = '{supurb}';
+            } elseif($repTot>=20 && $pct>=0.95){   // 1:20
+                $word = '{excellent}';
+            } elseif($repTot>=10 && $pct>=0.90){   // 1:10
+                $word = '{great}';
+            } elseif($repTot>=5  && $pct>=0.80){   // 1:5
+                $word = '{good}';
+            } elseif($repTot>=5  && $pct>=0.66){   // 1:3
+                $word = '{mixed}';
+            } elseif($repTot>=5  && $pct>=0.50){   // 1:2
+                $word = '{poor}';
+            } elseif($repTot>=5  && $pct< 0.50){
+                $word = '{dreadful}';
+            } elseif($repPos > $repNeg){
                 $word = '{good}';
             } elseif($repPos < $repNeg){
                 $word = '{poor}';
             } else {
                 $word = '{mixed}';
-            }
-        } else {
-            $pct = $repPos/$repTot;
-            if($pct >= 0.98){            // 1:50
-                $word = '{supurb}';
-            } elseif($pct > 0.95){        // 1:20
-                $word = '{excellent}';
-           } elseif($pct >= 0.90){     // 1:10
-                $word = '{great}';
-            } elseif($pct >= 0.80){        // 1:5
-                $word = '{good}';
-            } elseif ($pct >= 0.66){    // 1:3
-            $word = '{mixed}';
-            } elseif ($pct >= 0.50){    // 1:2
-                $word = '{poor}';
-            } else {
-                $word = '{dreadful}';
             }
         }
         return $word;

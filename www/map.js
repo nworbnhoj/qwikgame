@@ -159,7 +159,7 @@ function searchChangeHandler(places){
   SEARCH_MARKERS.length = 0;
   
   // For each place, get the icon, name and location.
-  const BOUNDS = gBounds();
+  const BOUNDS = new google.maps.LatLngBounds(null, null);
   places.forEach(place => {
     if (!place.geometry) { return; }
     
@@ -379,13 +379,15 @@ function clickMapIcon(event){
  * @return String of regions (locality|admin1|country)
  *****************************************************************************/
 function getAvoidable(lat, lng){
+  if(!lat || !lng){ return ''; }
   const AVOID = new Set();
   const LATLNG = gLatLng(lat, lng);
   for(const [KEY, MARK] of QWIK_MARKS){
     let length = KEY.split("|").length;
     if (length < 4){                                           // Region Marker
-      const BOUNDS = markBounds(MARK);
-      if(BOUNDS.contains(LATLNG)){
+      const BOUNDS = MARK.bounds;
+      if(BOUNDS!==null
+      && BOUNDS.contains(LATLNG)){
         AVOID.add(KEY);
       }
     }
@@ -590,6 +592,7 @@ function preFetch(avoidable, game){
   const AREA = degArea(BOUNDS);
   const INNER = expand(BOUNDS, CENTER, 0.5);
   const OUTER = expand(BOUNDS, CENTER, 2.0);
+  if(!INNER || !OUTER){ return; }
   for (let [key, mark] of QWIK_MARKS){
     let isMeta = key.split('|').length < 4;
     if(isMeta && mark){
@@ -708,8 +711,8 @@ function addMark(key, mark, game){
     console.log("Warning: addMark() called without required parameters "+key+" "+mark);
     return;
   }
-  if (isNaN(mark.lat) || isNaN(mark.lng)){
-    console.log("Warning: Received mark without lat-lng ".key);
+  if (!isNumeric(mark.lat) || !isNumeric(mark.lng)){
+    console.log("Warning: Received mark without lat-lng "+key);
     return;
   } 
   
@@ -826,12 +829,15 @@ function addRegionMark(key, lat, lng, game){
 
 
 function focusOnMark(key, game){
-  const MAP = qwikMap;
   const MARK = QWIK_MARKS.get(key);
-  MARK.marker.setVisible(true);
-  MAP.setCenter(gLatLng(MARK.lat, MARK.lng));
-  MAP.setZoom(15);
-  showMarks(game);
+  const CENTER = MARK.center;
+  if(CENTER){
+    MARK.marker.setVisible(true);
+    const MAP = qwikMap;
+    MAP.setCenter(CENTER);
+    MAP.setZoom(15);
+    showMarks(game);
+  }
 }
 
 
@@ -844,11 +850,13 @@ function focusOnMark(key, game){
 
 
 function gLatLng(lat, lng){
+  if(!isNumeric(lat) || !isNumeric(lng)){ return null; }
   return new google.maps.LatLng(Number(lat), Number(lng));
 }
 
 
-function gBounds(sw=null, ne=null){
+function gBounds(sw, ne){
+  if (!sw || !ne){ return null; }
   return new google.maps.LatLngBounds(sw, ne);
 }
 
@@ -861,6 +869,7 @@ function markBounds(mark){
 
 
 function expand(bounds, center, factor=2.0){
+  if(!bounds || !center){ return null; }
   let ne = bounds.getNorthEast();
   let sw = bounds.getSouthWest();
   let lat = degDiff(ne.lat(), sw.lat()) / 2;
@@ -886,6 +895,7 @@ function degDiff(degA, degB, short=true){
 
 
 function degDistance(llA, llB){
+  if(!llA || !llB){ return 0; }
   let width = degDiff(llA.lng(), llB.lng());	
   let height = degDiff(llA.lat(), llB.lat());
   return Math.sqrt(width**2 + height**2);
@@ -893,6 +903,7 @@ function degDistance(llA, llB){
 
 
 function degArea(bounds){
+  if(!bounds){ return 0; }
   let ne = bounds.getNorthEast();
   let sw = bounds.getSouthWest();
   let width = degDiff(ne.lng(), sw.lng());	

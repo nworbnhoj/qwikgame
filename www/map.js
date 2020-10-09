@@ -142,7 +142,7 @@ function mapIdleHandler(){
   const CENTER = MAP.getCenter();
   const LAT = Number((CENTER.lat()).toFixed(3));
   const LNG = Number((CENTER.lng()).toFixed(3));
-  const AVOIDABLE = getAvoidable();
+  const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
   showMarks(GAME);
 //  preFetch(AVOIDABLE, GAME);
@@ -373,21 +373,27 @@ function clickMapIcon(event){
 
 /******************************************************************************
  * A String of regions (locality|admin1|country) for which Marks have already
- * been obtained. 
+ * been obtained - and that include the lat-lng coords. 
  * @param marks Object 
  * @param suffix String 
  * @return String of regions (locality|admin1|country)
  *****************************************************************************/
-function getAvoidable(){
+function getAvoidable(lat, lng){
   const AVOID = new Set();
-  for (let [key, mark] of QWIK_MARKS){
-    let i = key.indexOf("|");
-    if (i>0){
-      AVOID.add(key.slice(i+1));
+  const LATLNG = gLatLng(lat, lng);
+  for(const [KEY, MARK] of QWIK_MARKS){
+    let length = KEY.split("|").length;
+    if (length < 4){                                           // Region Marker
+      const BOUNDS = markBounds(MARK);
+      if(BOUNDS.contains(LATLNG)){
+        AVOID.add(KEY);
+      }
     }
   }
   return Array.from(AVOID).join(":");
 }
+
+
 
 
 /******************************************************************************

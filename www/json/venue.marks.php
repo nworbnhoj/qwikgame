@@ -32,7 +32,7 @@ if(isset($get[GAME])){
   $game = $get[GAME];
 } else {
   echo json_encode(array(STATUS=>'error', MSG=>'missing game parameter'));
-  Qwik::logMsg("Missing [game] parameter in json call to venue.markers.php");
+  Qwik::logMsg("Missing [game] parameter in json call to venue.marks.php");
   return;
 }
 
@@ -42,15 +42,27 @@ if (isset($get[REGION])){
   $country  = $region[0];
   $admin1   = isset($region[1]) ? $region[1] : null ;
   $locality = isset($region[2]) ? $region[2] : null ;
+  if (!isset($country) && !isset($admin1) && !isset($locality)){
+    $errMsg = "region missing country|admin1|locality";
+  }
 } elseif (isset($get[LAT]) && isset($get[LNG])){
   // get the region from lat-lng coordinates
   $region = Locate::getAddress($get[LAT], $get[LNG]);
   $locality = isset($region[LOCALITY]) ? $region[LOCALITY] : NULL ;
   $admin1   = isset($region[ADMIN1])   ? $region[ADMIN1]   : NULL ;
   $country  = isset($region[COUNTRY])  ? $region[COUNTRY]  : NULL ;
+  if (!isset($country) && !isset($admin1) && !isset($locality)){
+    $lat = $get[LAT];
+    $lng = $get[LNG];
+    $errMsg = "failed to obtain country|admin1|locality for $lat $lng";
+  }
 } else {
-  echo json_encode(array(STATUS=>'error', MSG=>'missing region or lat-lng parameters'));
-  Qwik::logMsg("Missing [region] or [lat][lng] parameters in json call to venue.markers.php");
+  $errMsg = 'missing region or lat-lng parameters';
+}
+
+if(isset($errMsg)){
+  Qwik::logMsg("Failed to generate markers in json call to venue.markers.php");
+  echo json_encode(array(STATUS=>'error', MSG=>$errMsg));
   return;
 }
 

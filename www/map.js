@@ -497,6 +497,7 @@ function showMarks(game){
     SORTED.delete(KEY);
     
     const MARK = QWIK_MARKS.get(KEY);
+    if(!MARK) { continue; }
     const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);

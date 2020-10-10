@@ -236,13 +236,16 @@ class Locate extends Qwik {
   static function getAddress($lat, $lng){
     $address = [];
     $xml = self::revgeocode($lat, $lng);
-    foreach($xml->address_component as $component){
-      foreach($component->type as $type){
-        $name = (string) $component->short_name;
-        switch ((string) $type){
-          case 'country':                     $address['country']  = $name; break ;
-          case 'administrative_area_level_1': $address['admin1']   = $name; break ;
-          case 'locality':                    $address['locality'] = $name; break ;
+    $components = $xml->address_component;
+    if(isset($components)){
+      foreach($components as $component){
+        foreach($component->type as $type){
+          $name = (string) $component->short_name;
+          switch ((string) $type){
+            case 'country':                     $address['country']  = $name; break ;
+            case 'administrative_area_level_1': $address['admin1']   = $name; break ;
+            case 'locality':                    $address['locality'] = $name; break ;
+          }
         }
       }
     }

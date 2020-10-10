@@ -304,8 +304,8 @@ class Filter extends Qwik {
     
     
     static function region($val){
-      if (self::strlen($val, 100, 6)
-      && mb_ereg_match("([\w\- _&,]+[|]){0,2}[A-Z]{2}$", $val)){
+      if (self::strlen($val, 100, 2)
+      && mb_ereg_match("^([\w\- _&,]+[|]){0,2}[A-Z]{2}$", $val)){
         return htmlspecialchars($val, self::HSC_FLAGS, "UTF-8");
       }
       return FALSE;

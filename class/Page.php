@@ -348,7 +348,7 @@ class Page extends Html {
     public function goHome(){
         if (headers_sent()){
             echo("Redirect failed.<br>");
-            echo("Please click on this link: <a href='".QWIK_URL."'>this link</a>");
+            echo("Please click on <a href='".QWIK_URL."'>this link</a>");
         } else {
             header("Location: ".QWIK_URL, TRUE, 307);
             exit;

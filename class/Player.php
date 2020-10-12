@@ -1062,7 +1062,7 @@ Requirements:
         } else {
             $pct = $repPos/$repTot;
             if      ($repTot>=50 && $pct>=0.98){   // 1:50
-                $word = '{supurb}';
+                $word = '{superb}';
             } elseif($repTot>=20 && $pct>=0.95){   // 1:20
                 $word = '{excellent}';
             } elseif($repTot>=10 && $pct>=0.90){   // 1:10

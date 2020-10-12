@@ -159,7 +159,7 @@ class Filter extends Qwik {
     
     static function avoid($val){
       if (self::strlen($val, 2000)
-      && mb_ereg_match("(([\w\- _&,]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
+      && mb_ereg_match("(([\w\- _&,.]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
         return $val;
       }
       return FALSE;
@@ -168,7 +168,7 @@ class Filter extends Qwik {
     
     static function email($val){
       if (self::strlen($val, 2000)
-      && mb_ereg_match("(([\w\- _&,]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
+      && mb_ereg_match("(([\w\- _&,.]+[|]){0,3}[A-Z]{2}:?)+$", $val)){
         return $val;
       }
       return FALSE;
@@ -287,7 +287,7 @@ class Filter extends Qwik {
 
     static function venuename($val){
       if (self::strlen($val, 100)
-      && mb_ereg_match("[\w\- _&,]+$", $val)){
+      && mb_ereg_match("[\w\- _&,.]+$", $val)){
         return htmlspecialchars($val, self::HSC_FLAGS, "UTF-8");
       }
       return FALSE;
@@ -296,7 +296,7 @@ class Filter extends Qwik {
     
     static function vid($val){
       if (self::strlen($val, 150, 8)
-      && mb_ereg_match("([\w\- _&,]+[|]){3}[A-Z]{2}$", $val)){
+      && mb_ereg_match("([\w\- _&,.]+[|]){3}[A-Z]{2}$", $val)){
         return htmlspecialchars($val, self::HSC_FLAGS, "UTF-8");
       }
       return FALSE;
@@ -305,7 +305,7 @@ class Filter extends Qwik {
     
     static function region($val){
       if (self::strlen($val, 100, 2)
-      && mb_ereg_match("^([\w\- _&,]+[|]){0,2}[A-Z]{2}$", $val)){
+      && mb_ereg_match("^([\w\- _&,.]+[|]){0,2}[A-Z]{2}$", $val)){
         return htmlspecialchars($val, self::HSC_FLAGS, "UTF-8");
       }
       return FALSE;

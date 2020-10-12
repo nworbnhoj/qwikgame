@@ -73,7 +73,7 @@ class Venue extends Qwik {
             $this->xml = $this->retrieve();
         } else {
             $this->xml = $this->newXML();
-            if ($forge){
+            if ($this->ok() && $forge){
                 $this->save();
                 self::logMsg("new Venue: $id");
             }           

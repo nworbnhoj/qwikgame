@@ -61,7 +61,8 @@ if (isset($get[REGION])){
 }
 
 if(isset($errMsg)){
-  Qwik::logMsg("Failed to generate markers in json call to venue.markers.php");
+  $g = print_r($get,true);
+  Qwik::logMsg("Failed to generate markers in json call to venue.markers.php $g");
   echo json_encode(array(STATUS=>'error', MSG=>$errMsg));
   return;
 }

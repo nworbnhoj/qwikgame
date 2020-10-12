@@ -42,12 +42,13 @@ class FavoritePage extends Page {
                     $vid = Venue::venueID(
                         $details['name'],
                         $details['locality'],
-                        $details['admin1_code'],
+                        empty($details['admin1_code']) ? $details['admin1'] : $details['admin1_code'],
                         $details['country_iso']
                     );
                     try {
                         $this->venue = new Venue($vid, TRUE);
                         if($this->venue->ok()){
+                            $this->req('vid', $vid);
                             $this->venue->updateAtt('placeid', $placeId);
                             $this->venue->furnish($details);
                         } else {
@@ -170,27 +171,18 @@ class FavoritePage extends Page {
 
 
     function qwikAvailable($player, $venue, $req){
-        if(isset($req['game'])
-        && isset($req['vid'])){
-            $newID = $player->availableAdd(
-                $req['game'],
-                $req['vid'],
-                isset($req['parity']) ? $req['parity'] : 'any',
-                $venue->tz(),
-                isset($req['smtwtfs']) ? $req['smtwtfs'] : FALSE,
-                $req
-            );
-            if(is_null($venue)){
-                $pid = $player->id();
-                $vid = $req['vid'];
-                $this->logMsg("Unable to add player to venue:\tpid=$pid\t vid=$vid");
-            } else {
-                $venue->addPlayer($player->id());
-                $venue->save(TRUE);
-            }
-            return $newID;
-        }
-        return NULL;
+      if(!isset($venue) || !isset($req['game'])){ return NULL; }
+      $newID = $player->availableAdd(
+        $req['game'],
+        $venue->id(),
+        isset($req['parity']) ? $req['parity'] : 'any',
+        $venue->tz(),
+        isset($req['smtwtfs']) ? $req['smtwtfs'] : FALSE,
+        $req
+      );
+      $venue->addPlayer($player->id());
+      $venue->save(TRUE);
+      return $newID;
     }
 
 

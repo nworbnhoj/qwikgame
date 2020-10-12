@@ -240,11 +240,19 @@ class Locate extends Qwik {
     if(isset($components)){
       foreach($components as $component){
         foreach($component->type as $type){
-          $name = (string) $component->short_name;
           switch ((string) $type){
-            case 'country':                     $address['country']  = $name; break ;
-            case 'administrative_area_level_1': $address['admin1']   = $name; break ;
-            case 'locality':                    $address['locality'] = $name; break ;
+            case 'country':
+              $address['country']  = (string) $component->short_name;
+              break ;
+            case 'administrative_area_level_1':
+              $name = (string) $component->short_name;
+              $name = empty($name) ? (string) $component->long_name : $name ;
+              $name = empty($name) ? ' ' : $name ;
+              $address['admin1']   = $name;
+              break ;
+            case 'locality':
+              $address['locality'] = (string) $component->short_name;
+              break ;
           }
         }
       }

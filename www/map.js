@@ -667,7 +667,7 @@ function fetchMarks(game, lat, lng, region, avoidable){
   qwikJSON(PATH, receiveMarks);
   // report to console
   const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
-  console.log("fetching marks for "+LOC);
+  console.log("fetching marks for "+LOC+" # "+avoidable);
     
   if(region !== null
     && !QWIK_REGION.has(region)){

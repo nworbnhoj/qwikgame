@@ -322,6 +322,7 @@ class Venue extends Qwik {
 
 
     static public function venueID($name, $locality, $state, $country){
+        $state =  empty($state) ? $country : $state ;
         return "$name|$locality|$state|$country";
     }
 

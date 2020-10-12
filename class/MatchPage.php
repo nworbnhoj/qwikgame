@@ -41,12 +41,13 @@ class MatchPage extends Page {
                     $vid = Venue::venueID(
                         $details['name'],
                         $details['locality'],
-                        $details['admin1_code'],
+                        empty($details['admin1_code']) ? $details['admin1'] : $details['admin1_code'],
                         $details['country_iso']
                     );
                     try {
                         $this->venue = new Venue($vid, TRUE);
                         if($this->venue->ok()){
+                            $this->req('vid', $vid);
                             $this->venue->updateAtt('placeid', $placeId);
                             $this->venue->furnish($details);
                         } else {

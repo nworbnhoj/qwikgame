@@ -58,7 +58,7 @@ function venuesMap() {
         clickHandler(event)
     });    
     MAP.addListener('bounds_changed', () => {
-        fetchVisible();
+        fetchObservable();
     });    
     MAP.addListener('zoom_changed', () => {
         INFOWINDOW.close();
@@ -404,7 +404,7 @@ function getAvoidable(lat, lng){
  * @global QWIK_MARKS Map(marker-keys : Marks)
  * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
  *****************************************************************************/
-function fetchVisible(){
+function fetchObservable(){
   const MAP = qwikMap;
   const GAME = game();
   if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
@@ -424,8 +424,8 @@ function fetchVisible(){
  * @global QWIK_REGION Map(marker-keys : Set(sub-marker-keys))
  * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
  *****************************************************************************/
-function visibleRegion(){
-  const VISIBLE = new Map();
+function observableRegion(){
+  const OBSERVABLE = new Map();
   const REGION = QWIK_REGION;
   const MAP = qwikMap;
   const BOUNDS = MAP.getBounds();
@@ -435,12 +435,12 @@ function visibleRegion(){
       const MARK = QWIK_MARKS.get(KEY);
       
       if(BOUNDS.contains(MARK.center)){
-        if(!VISIBLE.has(SUPER_KEY)){ VISIBLE.set(SUPER_KEY, new Set()); }
-        VISIBLE.get(SUPER_KEY).add(KEY);
+        if(!OBSERVABLE.has(SUPER_KEY)){ OBSERVABLE.set(SUPER_KEY, new Set()); }
+        OBSERVABLE.get(SUPER_KEY).add(KEY);
       }
     }
   }
-  return VISIBLE;
+  return OBSERVABLE;
 }
 
 
@@ -456,9 +456,9 @@ function visibleRegion(){
  * Map(key:mark) and QWIK_REGION Map(key:Set(sub-key)). 
  
  * Key steps in the process include:
- * - a call to visibleRegion() returns the visible portion of the QWIK_REGION
- *   data structure. Each cluster Marker key is mapped to a Set of sub-Marker
- *   keys.
+ * - a call to observableRegion() returns the observable portion of the
+ *   QWIK_REGION data structure. Each cluster Marker key is mapped to a Set of
+ *   sub-Marker keys.
  * - These cluster Markers are sorted by size (the number of sub-Markers).
  *   This list is processed from largest to smallest to show or hide the
  *   each Marker.
@@ -485,8 +485,8 @@ function showMarks(game){
   const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
   
   // create a Set of Region Keys, sorted by the number of sub-Regions within  
-  const VISIBLE = visibleRegion();                  // a Map of visible regions 
-  const KEYS = Array.from(VISIBLE.keys());
+  const OBSERVABLE = observableRegion();         // a Map of observable regions
+  const KEYS = Array.from(OBSERVABLE.keys());
   KEYS.sort(function(a,b){
     return QWIK_REGION.get(b).size - QWIK_REGION.get(a).size
   });
@@ -502,10 +502,10 @@ function showMarks(game){
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, SORTED);
-      showSubMarkers(VISIBLE.get(KEY), game);
-    } else if(VISIBLE.get(KEY).size === 1){      // is there only 1 subMarker?
+      showSubMarkers(OBSERVABLE.get(KEY), game);
+    } else if(OBSERVABLE.get(KEY).size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
-      showSubMarkers(VISIBLE.get(KEY), game);
+      showSubMarkers(OBSERVABLE.get(KEY), game);
     } else {         // otherwise show this Marker and hide super & sub Markers
       MARK.marker.setVisible(true);
       hideSuperMarkers(KEY, SORTED);

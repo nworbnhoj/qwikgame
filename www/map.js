@@ -382,12 +382,12 @@ function getAvoidable(lat, lng){
   if(!lat || !lng){ return ''; }
   const AVOID = new Set();
   const LATLNG = gLatLng(lat, lng);
-  for(const [KEY, MARK] of QWIK_MARKS){
-    let length = KEY.split("|").length;
-    if (length < 4){                                           // Region Marker
-      const BOUNDS = MARK.bounds;
-      if(BOUNDS!==null
-      && BOUNDS.contains(LATLNG)){
+  for(const [KEY, SUB_KEYS] of QWIK_REGION){
+    if(SUB_KEYS.size > 0){
+      const MARK = QWIK_MARKS.get(KEY);
+      if (MARK
+      && MARK.bounds
+      && MARK.bounds.contains(LATLNG)){
         AVOID.add(KEY);
       }
     }

@@ -144,7 +144,7 @@ function mapIdleHandler(){
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
-  showMarks(GAME);
+  const VISIBLE = showMarks(GAME);
 //  preFetch(AVOIDABLE, GAME);
 }
 
@@ -474,9 +474,10 @@ function observableRegion(){
  *
  * @global QWIK_MARKS a Map of marker-keys to Marker-data
  * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
- * @return null
+ * @return Array[key] Keys of visible markers
  *****************************************************************************/
 function showMarks(game){
+  let visibleMarks = [];
   const MAP = qwikMap;
   // Use the diagonal distance across the Map as a proxy of Map area
   const MAP_BOUNDS = MAP.getBounds();
@@ -498,20 +499,25 @@ function showMarks(game){
     
     const MARK = QWIK_MARKS.get(KEY);
     if(!MARK) { continue; }
+    const OBSERVE = OBSERVABLE.get(KEY);
     const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, SORTED);
-      showSubMarkers(OBSERVABLE.get(KEY), game);
-    } else if(OBSERVABLE.get(KEY).size === 1){    // is there only 1 subMarker?
+      showSubMarkers(OBSERVE, game);
+      visibleMarks.concat([...OBSERVE]);
+    } else if(OBSERVE.size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
-      showSubMarkers(OBSERVABLE.get(KEY), game);
+      showSubMarkers(OBSERVE, game);
+      visibleMarks.concat([...OBSERVE]);
     } else {         // otherwise show this Marker and hide super & sub Markers
       MARK.marker.setVisible(true);
       hideSuperMarkers(KEY, SORTED);
       hideSubMarkers(KEY, SORTED);
+      visibleMarks.push(KEY);
     }
   }
+  return visibleMarks;
 }
 
 
@@ -696,7 +702,9 @@ function receiveMarks(json){
       const MAP = qwikMap;
       const NEW_MARKS = new Map(Object.entries(json.marks));
       for(let [key, mark] of NEW_MARKS){
-        addMark(key, mark, json.game);
+        if(!QWIK_MARKS.has(key)){
+          addMark(key, mark, json.game);
+        }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
       break;
@@ -715,10 +723,6 @@ function addMark(key, mark, game){
   if (!isNumeric(mark.lat) || !isNumeric(mark.lng)){
     console.log("Warning: Received mark without lat-lng "+key);
     return;
-  } 
-  
-  if(QWIK_MARKS.has(key)){
-    disposeMark(key);    
   }
   
   QWIK_MARKS.set(key, mark);

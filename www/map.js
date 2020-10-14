@@ -145,6 +145,7 @@ function mapIdleHandler(){
   const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
   const VISIBLE = showMarks(GAME);
+  fetchSubKeys(VISIBLE, GAME);                  // prepare for possible zoom-in
 //  preFetch(AVOIDABLE, GAME);
 }
 
@@ -369,6 +370,21 @@ function clickMapIcon(event){
 }
 
 
+/******************************************************************************
+ * Fetches Marks for keys missing from the QWIK_REGION keySet.
+ * @global QWIK_MARKS Map(marker-keys : Marks)
+ * @keys
+ * @game
+ * @return null
+ *****************************************************************************/
+function fetchSubKeys(keys, game){
+  for(const KEY of keys){
+    if(!QWIK_REGION.has(KEY)
+    && KEY.split('|').length < 4){
+      fetchMarks(game, null, null, KEY, superKey(KEY));
+    }
+  }
+}
 
 
 /******************************************************************************
@@ -723,7 +739,8 @@ function addMark(key, mark, game){
   if (!isNumeric(mark.lat) || !isNumeric(mark.lng)){
     console.log("Warning: Received mark without lat-lng "+key);
     return;
-  }
+  }  
+  if(QWIK_MARKS.has(key)){ return; }
   
   QWIK_MARKS.set(key, mark);
   endowMark(key, mark);
@@ -731,10 +748,6 @@ function addMark(key, mark, game){
   if(SUPER_KEY.length > 0){
     if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
     QWIK_REGION.get(SUPER_KEY).add(key);
-  }
-  const BOUNDS = MAP.getBounds();
-  if(BOUNDS.contains(mark.center)){   // if visible fetch subMarks ASAP
-    fetchMarks(game, null, null, key, SUPER_KEY);
   }
   return mark;
 }

@@ -680,6 +680,7 @@ function fetchMarks(game, lat, lng, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }
   if(region !== null && region.split("|").length > 3){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
+  lng = lng>180 ? (lng+180)%360 - 180: (lng<-180 ? (lng-180)%-360 + 180 : lng);
   const PARAMS = region === null ? 
                  {game:game, lat:lat, lng:lng, avoidable:avoidable} :
                  {game:game, region:region, avoidable:avoidable} ;              

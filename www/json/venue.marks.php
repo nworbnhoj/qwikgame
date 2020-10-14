@@ -44,6 +44,7 @@ if (isset($get[REGION])){
   $locality = isset($region[2]) ? $region[2] : null ;
   if (!isset($country) && !isset($admin1) && !isset($locality)){
     $errMsg = "region missing country|admin1|locality";
+    self::logMsg($errMsg.print_r($get,true));
   }
 } elseif (isset($get[LAT]) && isset($get[LNG])){
   // get the region from lat-lng coordinates
@@ -58,11 +59,10 @@ if (isset($get[REGION])){
   }
 } else {
   $errMsg = 'missing region or lat-lng parameters';
+  self::logMsg($errMsg.print_r($get,true));
 }
 
 if(isset($errMsg)){
-  $g = print_r($get,true);
-  Qwik::logMsg("Failed to generate markers in json call to venue.markers.php $g");
   echo json_encode(array(STATUS=>'error', MSG=>$errMsg));
   return;
 }

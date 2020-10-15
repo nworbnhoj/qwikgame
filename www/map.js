@@ -59,7 +59,6 @@ function venuesMap() {
         clickHandler(event)
     });    
     MAP.addListener('bounds_changed', () => {
-//        fetchObservable();
         updateMapRegion();
         showMarks();
     });    
@@ -147,9 +146,6 @@ function mapIdleHandler(){
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
-  const VISIBLE = showMarks();
-  fetchSubKeys(VISIBLE, GAME);                  // prepare for possible zoom-in
-//  preFetch(AVOIDABLE, GAME);
 }
 
 
@@ -499,17 +495,15 @@ function showMarks(){
     const KEY = KEYS.shift();
     const MARK = QWIK_MARKS.get(KEY);
     if(!MARK) { continue; }
-    const OBSERVE = OBSERVABLE.get(KEY);
+    const SUB_KEYS = OBSERVABLE.get(KEY);
     const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, KEYS);
-      showSubMarkers(OBSERVE, GAME);
-      visibleMarks.concat([...OBSERVE]);
-    } else if(OBSERVE.size === 1){    // is there only 1 subMarker?
+      visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
+    } else if(SUB_KEYS.size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
-      showSubMarkers(OBSERVE, GAME);
-      visibleMarks.concat([...OBSERVE]);
+      visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers
       MARK.marker.setVisible(true);
       hideSuperMarkers(KEY, KEYS);
@@ -530,22 +524,25 @@ function showMarks(){
  * @param marks
  * @param game
  * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
- * @return null
+ * @return Array[key] Visible Markers
  *****************************************************************************/
-function showSubMarkers(KEYS, game){
-  for(const KEY of KEYS){
-    if(!QWIK_REGION.has(KEY)){   // ignore Regions Marks already in QWIK_REGION
-      if (KEY.split("|").length === 4){                         // Venue Marker
-        const MARK = QWIK_MARKS.get(KEY);
-        const MARKER = MARK.marker;
-        if(typeof MARKER !== "undefined"){
-          MARKER.setVisible(true);
-        }
-      } else {                                                 // Region Marker
+function showSubMarkers(keys, game, bounds){
+  const VISIBLE = [];
+  for(const KEY of keys){
+    const MARK = QWIK_MARKS.get(KEY);
+    if(MARK
+    && MARK.marker
+    && MARK.center
+    && bounds.contains(MARK.center)){
+      MARK.marker.setVisible(true);
+      if (KEY.split("|").length < 4
+      && !QWIK_REGION.has(KEY)){
         fetchMarks(game, null, null, KEY, superKey(KEY));
       }
+      VISIBLE.push(KEY);
     }
   }
+  return VISIBLE;
 }
   
   
@@ -707,16 +704,18 @@ function receiveMarks(json){
     case 'OK':
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
       if(typeof json.marks === 'undefined' || json.marks === null){ return; }
-      if(json.game !== game()){ return; }
+      const GAME = game();
+      if(json.game !== GAME){ return; }
       const MAP = qwikMap;
       const NEW_MARKS = new Map(Object.entries(json.marks));
       for(let [key, mark] of NEW_MARKS){
         if(!QWIK_MARKS.has(key)){
-          addMark(key, mark, json.game);
+          addMark(key, mark, GAME);
         }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
-      showMarks();
+      const VISIBLE = showMarks();
+      fetchSubKeys(VISIBLE, GAME);              // prepare for possible zoom-in
       break;
     default:
   }
@@ -738,12 +737,20 @@ function addMark(key, mark, game){
   
   QWIK_MARKS.set(key, mark);
   endowMark(key, mark);
-  const SUPER_KEY = superKey(key);
-  if(SUPER_KEY.length > 0){
-    if(!QWIK_REGION.has(SUPER_KEY)){ QWIK_REGION.set(SUPER_KEY, new Set()); }
-    QWIK_REGION.get(SUPER_KEY).add(key);
-  }
+  addToRegion(key, QWIK_REGION);
+  addToRegion(key, MAP_REGION);
   return mark;
+}
+
+
+function addToRegion(key, region=QWIK_REGION){
+  const SUPER_KEY = superKey(key);
+  if (SUPER_KEY.length > 0){
+    if(!region.has(SUPER_KEY)){ 
+      region.set(SUPER_KEY, new Set());
+    }
+    region.get(SUPER_KEY).add(key);
+  }
 }
 
 

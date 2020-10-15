@@ -591,59 +591,6 @@ function superKeys(key){
 }
 
 
-const META_HUGE      = 1/3;
-const META_SMALL     = 1/300;
-const META_TINY      = 1/400;
-const META_MICRO     = 1/500;
-const META_MINISCULE = 1/600;
-
-function preFetch(avoidable, game){
-  const MAP = qwikMap;
-  const CENTER = MAP.getCenter();
-  const BOUNDS = MAP.getBounds();
-  const AREA = degArea(BOUNDS);
-  const INNER = expand(BOUNDS, CENTER, 0.5);
-  const OUTER = expand(BOUNDS, CENTER, 2.0);
-  if(!INNER || !OUTER){ return; }
-  for (let [key, mark] of QWIK_MARKS){
-    let isMeta = key.split('|').length < 4;
-    if(isMeta && mark){
-      let preZoom = INNER.contains(mark.center);
-      let prePan  = OUTER.contains(MAP.center) && !BOUNDS.contains(MAP.center);
-      let smallMeta = mark.area > META_SMALL * AREA;
-      let tinyMeta  = mark.area > META_TINY * AREA;
-      if((tinyMeta && preZoom)                  // pre-fetch marks for zoom-in
-      || (smallMeta && prePan)){                // pre-fetch marks for pan
-        fetchMarks(game, null, null, key, avoidable);
-      }
-    }
-  }
-}
-
-  
-function metaMarksComparator(marks){
-  return function(a,b){
-    let ordA = a.split('|').length;
-    let ordB = b.split('|').length;
-    if (ordA === ordB){
-      return marks.get(a).num - marks.get(b).num;    
-    } else {
-      return ordA - ordB;
-    }
-  }
-}
-
-
-function markNumComparator(marks){
-  return function(a,b){
-    let numA = marks.get(a).num;
-    let numB = marks.get(b).num;
-    return ordA - ordB;
-  }
-}
-
-
-
 /******************************************************************************
 *************************** JSON FUNCTIONS ************************************
 ******************************************************************************/
@@ -887,37 +834,9 @@ function markBounds(mark){
 }
 
 
-function expand(bounds, center, factor=2.0){
-  if(!bounds || !center){ return null; }
-  let ne = bounds.getNorthEast();
-  let sw = bounds.getSouthWest();
-  let lat = degDiff(ne.lat(), sw.lat()) / 2;
-  let lng = degDiff(ne.lng(), sw.lng()) / 2;
-  let n = degSum(center.lat(),  lat * factor);
-  let e = degSum(center.lng(),  lng * factor);
-  let w = degSum(center.lng(), -lng * factor);
-  let s = degSum(center.lat(), -lat * factor);
-  return gBounds(gLatLng(s, w), gLatLng(n, e));
-}
-
-
-function degSum(degA, degB){
-  let sum = degA+degB;
-  return sum>180 ? sum-360 : (sum<-180 ? sum+360 : sum);
-}
-
-
 function degDiff(degA, degB, short=true){
   let diff = Math.abs(degA-degB);
   return short ? diff : 360-diff;
-}
-
-
-function degDistance(llA, llB){
-  if(!llA || !llB){ return 0; }
-  let width = degDiff(llA.lng(), llB.lng());	
-  let height = degDiff(llA.lat(), llB.lat());
-  return Math.sqrt(width**2 + height**2);
 }
 
 
@@ -929,29 +848,6 @@ function degArea(bounds){
   let height = degDiff(ne.lat(), sw.lat());
   return width * height;
 }
-
-
-function distanceComparator(center, marks){
-  return function(a,b){
-    let aMark = marks.get(a);
-    let bMark = marks.get(b);
-    let aCoords = gLatLng(aMark.lat, aMark.lng);
-    let bCoords = gLatLng(bMark.lat, bMark.lng);
-    let aDist = degDistance(center, aCoords);
-    let bDist = degDistance(center, bCoords);
-    return aDist - bDist  // closest first
-  }
-}
-
-
-function sizeComparator(marks){
-  return function(a,b){
-    let aMark = marks.get(a);
-    let bMark = marks.get(b);
-    return bMark.num - aMark.num;  // largest first 
-  }
-}
-
 
  
 /**

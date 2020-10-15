@@ -10,6 +10,7 @@
  *****************************************************************************/
 const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
+const MAP_REGION = new Map();               // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
 const VENUE_ICON = "https://www.qwikgame.org/img/qwik.pin.21x35.png";
 const REGION_ICON = "https://www.qwikgame.org/img/qwik.cluster.24x24.png";
@@ -58,7 +59,9 @@ function venuesMap() {
         clickHandler(event)
     });    
     MAP.addListener('bounds_changed', () => {
-        fetchObservable();
+//        fetchObservable();
+        updateMapRegion();
+        showMarks();
     });    
     MAP.addListener('zoom_changed', () => {
         INFOWINDOW.close();
@@ -144,7 +147,7 @@ function mapIdleHandler(){
   const LNG = Number((CENTER.lng()).toFixed(3));
   const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
-  const VISIBLE = showMarks(GAME);
+  const VISIBLE = showMarks();
   fetchSubKeys(VISIBLE, GAME);                  // prepare for possible zoom-in
 //  preFetch(AVOIDABLE, GAME);
 }
@@ -412,51 +415,41 @@ function getAvoidable(lat, lng){
 }
 
 
-
-
 /******************************************************************************
- * Surveys all QWIK_MARKS and fetches missing sub-Marks from inside the Map
- * viewport.
- * @global QWIK_MARKS Map(marker-keys : Marks)
- * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
- *****************************************************************************/
-function fetchObservable(){
-  const MAP = qwikMap;
-  const GAME = game();
-  if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
-  const BOUNDS = MAP.getBounds();
-  for(const [KEY, MARK] of QWIK_MARKS){
-    if(!QWIK_REGION.has(KEY)
-    && BOUNDS.contains(MARK.center)){
-      fetchMarks(GAME, null, null, KEY, superKey(KEY));
-    }
-  }
-}
-
-
-/******************************************************************************
- * A Map of marker-keys to Set(sub-marker-keys) for Markers inside the Map
- * viewport. This is the visible portion of the QWIK_REGION global.
+ * Updates and returns MAP_REGION - the observable portion of the QWIK_REGION.
  * @global QWIK_REGION Map(marker-keys : Set(sub-marker-keys))
- * @return String Map(marker-keys : Set(sub-marker-keys)) for visible Marks
+ * @return String Map(marker-keys : Set(sub-marker-keys)) for observable Marks
  *****************************************************************************/
-function observableRegion(){
+function updateMapRegion(){
   const OBSERVABLE = new Map();
-  const REGION = QWIK_REGION;
   const MAP = qwikMap;
   const BOUNDS = MAP.getBounds();
-  for (const [SUPER_KEY, SUB_KEYS] of REGION){
+  // survey all QWIK_REGIONs for those within MAP BOUNDS
+  for (const [SUPER_KEY, SUB_KEYS] of QWIK_REGION){
     for (const KEY of SUB_KEYS){
       if(!QWIK_MARKS.has(KEY)){ continue; }
       const MARK = QWIK_MARKS.get(KEY);
-      
       if(BOUNDS.contains(MARK.center)){
         if(!OBSERVABLE.has(SUPER_KEY)){ OBSERVABLE.set(SUPER_KEY, new Set()); }
         OBSERVABLE.get(SUPER_KEY).add(KEY);
       }
     }
   }
-  return OBSERVABLE;
+  
+  // SORT REGIONS from largest to smallest
+  const KEYS = Array.from(OBSERVABLE.keys());
+  KEYS.sort(function(a,b){
+    return OBSERVABLE.get(b).size - OBSERVABLE.get(a).size
+  });
+  
+  // clear MAP_REGION and replace with sorted OBSERVABLE (Map retains insertion order)
+  MAP_REGION.clear();
+  for(i=0; i<KEYS.length; i++){
+    const KEY = KEYS[i];
+    MAP_REGION.set(KEY, OBSERVABLE.get(KEY));
+  }
+  
+  return MAP_REGION;
 }
 
 
@@ -472,27 +465,25 @@ function observableRegion(){
  * Map(key:mark) and QWIK_REGION Map(key:Set(sub-key)). 
  
  * Key steps in the process include:
- * - a call to observableRegion() returns the observable portion of the
- *   QWIK_REGION data structure. Each cluster Marker key is mapped to a Set of
- *   sub-Marker keys.
- * - These cluster Markers are sorted by size (the number of sub-Markers).
- *   This list is processed from largest to smallest to show or hide the
- *   each Marker.
- * - The largest cluster Marker is set to be visible. Each of it's
+ * - Get global MAP_REGION, the observable subset of the global QWIK_REGION.
+ *   Each region Marker key is mapped to a Set of sub-Marker keys - and the 
+ *   Map keys are sorted by size of the subMarker Set.
+ * - The largest region Marker is set to be visible. Each of it's
  *   super-Markers and subMarkers are set to be hidden, and removed from the 
  *   sorted list. This step is then repeated with the next largest Marker
  *   (in the reduced list).
  * - An exception to the prior step is made when the physical area
- *   represented by the cluster Marker is larger that of the Map view-port.
- *   In this case the cluster Marker is hidden and removed from the sorted
+ *   represented by the region Marker is larger that of the Map view-port.
+ *   In this case the region Marker is hidden and removed from the sorted
  *   list - while the subMarkers remain in the sorted list (to be processed
  *   in turn)
  *
  * @global QWIK_MARKS a Map of marker-keys to Marker-data
- * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
+ * @global MAP_REGION a Map of marker-keys to a Set of sub-marker-keys
  * @return Array[key] Keys of visible markers
  *****************************************************************************/
-function showMarks(game){
+function showMarks(){
+  const GAME = game();
   let visibleMarks = [];
   const MAP = qwikMap;
   // Use the diagonal distance across the Map as a proxy of Map area
@@ -502,34 +493,27 @@ function showMarks(game){
   const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
   
   // create a Set of Region Keys, sorted by the number of sub-Regions within  
-  const OBSERVABLE = observableRegion();         // a Map of observable regions
-  const KEYS = Array.from(OBSERVABLE.keys());
-  KEYS.sort(function(a,b){
-    return QWIK_REGION.get(b).size - QWIK_REGION.get(a).size
-  });
-  const SORTED = new Set(KEYS);
-  
-  while (SORTED.size > 0) {
-    const KEY = SORTED.keys().next().value;
-    SORTED.delete(KEY);
-    
+  const OBSERVABLE = MAP_REGION;                 // a Map of observable regions
+  const KEYS = Array.from(OBSERVABLE.keys());    // sorted keys
+  while (KEYS.length > 0) {
+    const KEY = KEYS.shift();
     const MARK = QWIK_MARKS.get(KEY);
     if(!MARK) { continue; }
     const OBSERVE = OBSERVABLE.get(KEY);
     const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
     if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
-      hideSuperMarkers(KEY, SORTED);
-      showSubMarkers(OBSERVE, game);
+      hideSuperMarkers(KEY, KEYS);
+      showSubMarkers(OBSERVE, GAME);
       visibleMarks.concat([...OBSERVE]);
     } else if(OBSERVE.size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
-      showSubMarkers(OBSERVE, game);
+      showSubMarkers(OBSERVE, GAME);
       visibleMarks.concat([...OBSERVE]);
     } else {         // otherwise show this Marker and hide super & sub Markers
       MARK.marker.setVisible(true);
-      hideSuperMarkers(KEY, SORTED);
-      hideSubMarkers(KEY, SORTED);
+      hideSuperMarkers(KEY, KEYS);
+      hideSubMarkers(KEY, KEYS);
       visibleMarks.push(KEY);
     }
   }
@@ -565,10 +549,10 @@ function showSubMarkers(KEYS, game){
 }
   
   
-// hide all superMarkers of key and remove each key from keySet
-function hideSuperMarkers(key, keySet){
+// hide all superMarkers of key and remove each key from keys
+function hideSuperMarkers(key, keys){
   for(const K of superKeys(key)){
-    keySet.delete(K);
+    removeVal(keys, key);
     const MARK = QWIK_MARKS.get(K);
     if (MARK){
       MARK.marker.setVisible(false);
@@ -577,16 +561,24 @@ function hideSuperMarkers(key, keySet){
 }
 
 
-// hide all subMarkers of key and remove each key from keySet
-function hideSubMarkers(key, keySet){
+// hide all subMarkers of key and remove each key from keys
+function hideSubMarkers(key, keys){
   if(!QWIK_REGION.has(key)){ return; }
   for (const K of QWIK_REGION.get(key)){
-    keySet.delete(K);
+    removeVal(keys, K);
     const MARK = QWIK_MARKS.get(K);
     if (MARK){
       MARK.marker.setVisible(false);
     }
-    hideSubMarkers(K, keySet);
+    hideSubMarkers(K, keys);
+  }
+}
+
+
+function removeVal(array, val){
+  let i = array.indexOf(val);
+  if(i > -1){
+    array.splice(i,1);
   }
 }
   
@@ -724,6 +716,7 @@ function receiveMarks(json){
         }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
+      showMarks();
       break;
     default:
   }

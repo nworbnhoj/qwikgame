@@ -548,12 +548,14 @@ function showSubMarkers(keys, game, bounds){
   
 // hide all superMarkers of key and remove each key from keys
 function hideSuperMarkers(key, keys){
-  for(const K of superKeys(key)){
+  key = superKey(key);
+  while (key.length > 0){
     removeVal(keys, key);
-    const MARK = QWIK_MARKS.get(K);
+    const MARK = QWIK_MARKS.get(key);
     if (MARK){
       MARK.marker.setVisible(false);
     }
+    key = superKey(key);
   }    
 }
 
@@ -577,17 +579,6 @@ function removeVal(array, val){
   if(i > -1){
     array.splice(i,1);
   }
-}
-  
-
-function superKeys(key){
-  const KEYS = [];
-  let k = key.split("|");
-  while (k.length > 0){
-    k.shift();
-    KEYS.push(k.join("|"));
-  }
-  return KEYS;
 }
 
 
@@ -750,18 +741,6 @@ function endowMark(key, mark){
     }); 
   }
   return mark;
-}
-
-
-
-
-/******************************************************************************
- * Creates a Marker 
- * @param map google.maps.Map to receive the Marker
- * @param position LatLng coordinates for Marker placement on map
- * @return google.maps.Marker Object
- *****************************************************************************/
-function markMarker(position){
 }
 
 

@@ -379,8 +379,7 @@ function clickMapIcon(event){
  *****************************************************************************/
 function fetchSubKeys(keys, game){
   for(const KEY of keys){
-    if(!QWIK_REGION.has(KEY)
-    && KEY.split('|').length < 4){
+    if(!QWIK_REGION.has(KEY) && isRegion(KEY)){
       fetchMarks(game, null, null, KEY, superKey(KEY));
     }
   }
@@ -429,9 +428,8 @@ function updateMapRegion(){
       if(BOUNDS.contains(MARK.center)){
         if(!OBSERVABLE.has(SUPER_KEY)){ OBSERVABLE.set(SUPER_KEY, new Set()); }
         OBSERVABLE.get(SUPER_KEY).add(KEY);
-        if(!OBSERVABLE.has(KEY)      // include unFetched regions in OBSERVABLE
-        && KEY.split("|").length < 4){
-          OBSERVABLE.set(KEY, new Set());
+        if(!OBSERVABLE.has(KEY) && isRegion(KEY)){
+          OBSERVABLE.set(KEY, new Set()); // include un-fetched regions in OBSERVABLE
         }
       }
     }
@@ -541,8 +539,7 @@ function showSubMarkers(keys, game, bounds){
     && MARK.center
     && bounds.contains(MARK.center)){
       MARK.marker.setVisible(true);
-      if (KEY.split("|").length < 4
-      && !QWIK_REGION.has(KEY)){
+      if (!QWIK_REGION.has(KEY) && isRegion(KEY)){
         fetchMarks(game, null, null, KEY, superKey(KEY));
       }
       VISIBLE.push(KEY);
@@ -617,8 +614,7 @@ function removeVal(val, array){
  *****************************************************************************/
 function fetchMarks(game, lat, lng, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }
-  if(region !== null && region.split("|").length > 3){ return; }
-  if(region !== null && avoidable.includes(region)){ return; }
+  if(isRegion(region) && avoidable.includes(region)){ return; }
   lng = lng>180 ? (lng+180)%360 - 180: (lng<-180 ? (lng-180)%-360 + 180 : lng);
   const PARAMS = region === null ? 
                  {game:game, lat:lat, lng:lng, avoidable:avoidable} :
@@ -713,6 +709,16 @@ function disposeMark(key){
 function superKey(key){
   let i = key.indexOf("|");
   return (i>0) ? key.slice(i+1) : '';
+}
+
+
+function isRegion(key){
+  return typeof key === 'string' && key.split("|").length < 4;
+}
+
+
+function isVenue(key){
+  return  typeof key === 'string' && key.split("|").length === 4;
 }
 
 

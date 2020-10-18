@@ -60,6 +60,7 @@ function venuesMap() {
     });    
     MAP.addListener('bounds_changed', () => {
         updateMapRegion();
+        fetchSubKeys(Array.from(MAP_REGION.keys()), game());
         showMarks();
     });    
     MAP.addListener('zoom_changed', () => {
@@ -428,6 +429,10 @@ function updateMapRegion(){
       if(BOUNDS.contains(MARK.center)){
         if(!OBSERVABLE.has(SUPER_KEY)){ OBSERVABLE.set(SUPER_KEY, new Set()); }
         OBSERVABLE.get(SUPER_KEY).add(KEY);
+        if(!OBSERVABLE.has(KEY)      // include unFetched regions in OBSERVABLE
+        && KEY.split("|").length < 4){
+          OBSERVABLE.set(KEY, new Set());
+        }
       }
     }
   }
@@ -453,7 +458,7 @@ function updateMapRegion(){
  * Shows Markers on the Map representing qwikgame Venues and Venue clusters.
  * The basic idea is to preferentially show the cluster markers that represent
  * the largest number of sub-Markers (and to hide the sub-Markers). And, when
- * the Map is zoomed in to an area represented by a cluster Marker, the cluster
+ * the Map is zoomed in to an area represented by a region-Marker, the region-
  * Marker is hidden (and the sub-Markers shown) at some suitable point.
  *
  * JSON requests are made to the server to obtain Marker data for the current
@@ -489,7 +494,7 @@ function showMarks(){
   const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
   
   // create a Set of Region Keys, sorted by the number of sub-Regions within  
-  const OBSERVABLE = MAP_REGION;                 // a Map of observable regions
+  const OBSERVABLE = MAP_REGION;          // a sorted Map of observable regions
   const KEYS = Array.from(OBSERVABLE.keys());    // sorted keys
   while (KEYS.length > 0) {
     const KEY = KEYS.shift();
@@ -527,6 +532,7 @@ function showMarks(){
  * @return Array[key] Visible Markers
  *****************************************************************************/
 function showSubMarkers(keys, game, bounds){
+  if(!keys) { return; }
   const VISIBLE = [];
   for(const KEY of keys){
     const MARK = QWIK_MARKS.get(KEY);
@@ -544,19 +550,23 @@ function showSubMarkers(keys, game, bounds){
   }
   return VISIBLE;
 }
-  
-  
-// hide all superMarkers of key and remove each key from keys
-function hideSuperMarkers(key, keys){
-  key = superKey(key);
-  while (key.length > 0){
-    removeVal(keys, key);
-    const MARK = QWIK_MARKS.get(key);
-    if (MARK){
-      MARK.marker.setVisible(false);
-    }
+
+
+/******************************************************************************
+ * Hides all superMarkers of key.
+ * Removes key from observableKeys and hides the Marker
+ * @param key for which superKeys are to be hidden
+ * @param observableKeys list yet to be processed by showKeys()
+ *****************************************************************************/
+function hideSuperMarkers(key, observableKeys){
+  do {
     key = superKey(key);
-  }    
+    if(removeVal(key, observableKeys)){     // if this super-key was observable
+      if (QWIK_MARKS.has(key)){             // hide the super-Marker
+        QWIK_MARKS.get(key).marker.setVisible(false);
+      }
+    }
+  } while (key.length > 0);
 }
 
 
@@ -564,7 +574,7 @@ function hideSuperMarkers(key, keys){
 function hideSubMarkers(key, keys){
   if(!QWIK_REGION.has(key)){ return; }
   for (const K of QWIK_REGION.get(key)){
-    removeVal(keys, K);
+    removeVal(K, keys);
     const MARK = QWIK_MARKS.get(K);
     if (MARK){
       MARK.marker.setVisible(false);
@@ -574,11 +584,13 @@ function hideSubMarkers(key, keys){
 }
 
 
-function removeVal(array, val){
+function removeVal(val, array){
   let i = array.indexOf(val);
   if(i > -1){
     array.splice(i,1);
+    return true;
   }
+  return false;
 }
 
 
@@ -683,12 +695,10 @@ function addMark(key, mark, game){
 
 function addToRegion(key, region=QWIK_REGION){
   const SUPER_KEY = superKey(key);
-  if (SUPER_KEY.length > 0){
-    if(!region.has(SUPER_KEY)){ 
-      region.set(SUPER_KEY, new Set());
-    }
-    region.get(SUPER_KEY).add(key);
+  if(!region.has(SUPER_KEY)){ 
+    region.set(SUPER_KEY, new Set());
   }
+  region.get(SUPER_KEY).add(key);
 }
 
 
@@ -759,7 +769,7 @@ function addVenueMark(key, lat, lng, num, game){
 
 function addRegionMark(key, lat, lng, game){
   const SUPER_KEY = superKey(key);
-  if (SUPER_KEY.length > 0 && !QWIK_REGION.has(SUPER_KEY)){
+  if (!QWIK_REGION.has(SUPER_KEY)){
     addRegionMark(SUPER_KEY, lat, lng, game);
   }
   const NAME = key.split("|")[0];

@@ -79,7 +79,16 @@ class FavoritePage extends Page {
         $result = null;
         switch ($qwik) {
             case "register":
-                $this->qwikRegister($player, $req);
+                if(!isset($req['email'])){
+                    $logReq = print_r($req, true);
+                    self::logMsg("failed to register player: $logReq");
+                    break;
+                }
+                $player->email($req['email']);
+                if(!isset($req['game'])
+                || !isset($req['vid'])){
+                    break;
+                }
                 $req['parity'] = 'any';
                 $req['smtwtfs'] = 16777215;
                 // intentional flow thru to available
@@ -158,16 +167,6 @@ class FavoritePage extends Page {
 
 
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
-
-
-    function qwikRegister($player, $req){
-        if(isset($req['email'])){
-            $player->email($req['email']);
-        } else {
-            $pid = Player::anonID($email);
-            self::logMsg("failed to register player: " . self::snip($pid));
-        }
-    }
 
 
     function qwikAvailable($player, $venue, $req){

@@ -310,8 +310,8 @@ class Page extends Html {
         $pid = $player->id();
         $term = 3*self::MONTH;
         $token = $player->token($term);
-        setcookie("pid", $pid, time() + $term, "/", HOST, TRUE, TRUE);
-        setcookie("token", $token, time() + $term, "/", HOST, TRUE, TRUE);
+        setcookie('pid', $pid, time() + $term, '/', HOST, TRUE, TRUE);
+        setcookie('token', $token, time() + $term, '/', HOST, TRUE, TRUE);
       }
     }
 
@@ -321,6 +321,7 @@ class Page extends Html {
     $_COOKIE
     ********************************************************************************/
     public function logout(){
+        $pid = "NULL";
         if (isset($_COOKIE) && isset($_COOKIE['pid'])){
             $pid = $_COOKIE['pid'];
             unset($_COOKIE['pid']);
@@ -338,8 +339,8 @@ class Page extends Html {
         self::logMsg("logout $id");        
         
         if (!headers_sent()){
-            setcookie("pid", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
-            setcookie("token", "", time() - Player::DAY, "/", HOST, TRUE, TRUE);
+            setcookie('pid', '', time() - Player::DAY, '/', HOST, TRUE, TRUE);
+            setcookie('token', '', time() - Player::DAY, '/', HOST, TRUE, TRUE);
         }
         $this->goHome();
     }

@@ -14,7 +14,8 @@ class AdminPage extends Page {
         parent::__construct(NULL, $templateName);
 
         $player = $this->player();
-        if (empty($player->admin())){
+        if (is_null($player)
+        || empty($player->admin())){
             $this->logout();
             return;
         }

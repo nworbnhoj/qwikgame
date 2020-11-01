@@ -111,7 +111,7 @@ class Locate extends Qwik {
           $details['placeid'] = $placeid;
 
           $details['name'] = isset($result['name']) ? (string) $result['name'] : '';
-          $details['formatted'] = isset($results['formatted_address']) ? (string) $results['formatted_address'] : '';
+          $details['address'] = isset($results['formatted_address']) ? (string) $results['formatted_address'] : '';
 
           if (isset($result['geometry']['location'])){
             $location = $result['geometry']['location'];
@@ -137,7 +137,7 @@ class Locate extends Qwik {
                     $details['admin1_code'] = (string) $addr['short_name'];
                     break;
                   case 'street_number':
-                    $details['street_number'] = (string) $addr['long_name'];
+                    $details['str-num'] = (string) $addr['long_name'];
                     break;
                   case 'route':
                     $details['route'] = (string) $addr['long_name'];

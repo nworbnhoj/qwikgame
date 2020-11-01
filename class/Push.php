@@ -96,7 +96,12 @@ class Push extends Qwik {
 
 
     public function send(){
-        $webPush = new WebPush(self::$vapid);
+        try {
+            $webPush = new WebPush(self::$vapid);
+        } catch (Exception $e){
+            self::logThrown($e);
+            return FALSE;
+        }
 
         foreach ($this->subscriptions as $subscription){
             $webPush->sendNotification($subscription, $this->payload);

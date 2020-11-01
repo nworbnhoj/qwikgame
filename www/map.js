@@ -613,9 +613,9 @@ function removeVal(val, array){
  * @return 
  *****************************************************************************/
 function fetchMarks(game, lat, lng, region, avoidable){
-  if(game === null || typeof game === 'undefined'){ return; }
-  if(!isRegion(region)){ return; }
-  if(avoidable.includes(region)){ return; }
+  if(game === null || typeof game === 'undefined'){ return; }  
+  if(region !== null && !isRegion(region)){ return; }
+  if(region !== null && avoidable.includes(region)){ return; }
   lng = lng>180 ? (lng+180)%360 - 180: (lng<-180 ? (lng-180)%-360 + 180 : lng);
   const PARAMS = region === null ? 
                  {game:game, lat:lat, lng:lng, avoidable:avoidable} :

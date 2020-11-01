@@ -26,10 +26,10 @@ class Locate extends Qwik {
         $param['key'] = $key;
         try{
             $query = http_build_query($param);
-            $xml = Defend::xml("$url?$query");
-            $status = (string) $xml->status[0];
+            $json = json_decode(Defend::json("$url?$query"), TRUE);
+            $status = isset($json['status']) ? $json['status'] : "json reply mising status";
             if($status === 'OK' || $status === 'ZERO_RESULTS'){
-                $result = $xml;
+                $result = $json;
             } else {
                 throw new RuntimeException($status);
             }
@@ -45,18 +45,18 @@ class Locate extends Qwik {
         return self::geo(
             array('input'=>$text, 'components'=>"country:$country"),
             self::$geoplace->key('private'),
-            self::$geoplace->url("xml")
+            self::$geoplace->url("json")
         );
     }
 
 
     static function geodetails($placeid){
         $geo = self::geo(
-            array('placeid'=>$placeid),
+            array('place_id'=>$placeid),
             self::$geodetails->key('private'),
-            self::$geodetails->url("xml")
+            self::$geodetails->url("json")
         );
-        return isset($geo) ? $geo->result : NULL;
+        return isset($geo['result']) ? $geo['result'] : NULL;
     }
 
 
@@ -65,18 +65,18 @@ class Locate extends Qwik {
         return self::geo(
             array('location'=>$location, 'timestamp'=>time()),
             self::$geotimezone->key('private'),
-            self::$geotimezone->url("xml")
+            self::$geotimezone->url("json")
         );
     }
 
 
     static function geocode($address, $country){
         $geo = self::geo(
-            array('components'=>"$address|$country"),
+            array('address'=>"$address", 'components'=>"country:$country"),
             self::$geocode->key('private'),
-            self::$geocode->url("xml")
+            self::$geocode->url("json")
         );
-        return isset($geo) ? $geo->result : NULL;
+        return isset($geo['result']) ? $geo['result'] : NULL;
     }
 
 
@@ -85,21 +85,19 @@ class Locate extends Qwik {
       $geo = self::geo(
         array('latlng'=>"$lat,$lng", 'result_type'=>$type),
         self::$geocode->key('private'),
-        self::$geocode->url("xml")
+        self::$geocode->url("json")
       );
-      return isset($geo) ? $geo->result : NULL;
+      return isset($geo['results']) ? $geo['results'] : NULL;
     }
 
 
 
     static function getPlace($description, $country){
         $placeid = NULL;
-        $xml = self::geoplace($description, $country);
-        if(isset($xml)){
-            $prediction = $xml->prediction[0];
-            if(isset($prediction)){
-                $placeid = (string) $prediction->place_id;
-            }
+        $geoplace = self::geoplace($description, $country);
+        if(isset($geoplace['predictions'][0])){
+            $place = $geoplace['predictions'][0];
+            $placeid = (string) $place['place_id'];
         }
         return $placeid;
     }
@@ -109,50 +107,61 @@ class Locate extends Qwik {
         $details = NULL;
         $result = self::geodetails($placeid);
         if(isset($result)){
-            $details = array();
-            $details['placeid'] = $placeid;
+          $details = array();
+          $details['placeid'] = $placeid;
 
-            $details['name'] = (string) $result->name[0];
-            $details['formatted'] = (string) $result->formatted_address;
+          $details['name'] = isset($result['name']) ? (string) $result['name'] : '';
+          $details['formatted'] = isset($results['formatted_address']) ? (string) $results['formatted_address'] : '';
 
-            $location = $result->xpath("//geometry/location")[0];
-            $lat = (string) $location->lat;
-            $lng = (string) $location->lng;
+          if (isset($result['geometry']['location'])){
+            $location = $result['geometry']['location'];
+            $lat = (string) $location['lat'];
+            $lng = (string) $location['lng'];
             $details['lat'] = $lat;
             $details['lng'] = $lng;
             $details['tz'] = self::getTimezone($lat, $lng);
+          }
 
-            $addr = $result->xpath("address_component[type='country']");
-            $details['country'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
-            $details['country_iso'] = isset($addr[0]) ? (string) $addr[0]->short_name : "";
+          if (isset($result['address_components'])){
+            $address_components = $result['address_components'];
+            foreach($address_components as $addr){
+              $types = isset($addr['types']) ? $addr['types'] : array() ;
+              foreach($types as $type){
+                switch ((string) $type){
+                  case 'country':
+                    $details['country'] = (string) $addr['long_name'];
+                    $details['country_iso'] = (string) $addr['short_name'];
+                    break;
+                  case 'administrative_area_level_1':
+                    $details['admin1'] = (string) $addr['long_name'];
+                    $details['admin1_code'] = (string) $addr['short_name'];
+                    break;
+                  case 'street_number':
+                    $details['street_number'] = (string) $addr['long_name'];
+                    break;
+                  case 'route':
+                    $details['route'] = (string) $addr['long_name'];
+                    break;
+                  case 'locality':
+                    $details['locality'] = (string) $addr['long_name'];
+                    break;
+                  default:
+                }
+              }
+            }
+          }
 
-            $addr = $result->xpath("address_component[type='administrative_area_level_1']");
-            $details['admin1'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
-            $details['admin1_code'] = isset($addr[0]) ? (string) $addr[0]->short_name : "";
-
-            $addr = $result->xpath("address_component[type='street_number']");
-            $details['street_number'] = isset($addr[0]) ?  (string) $addr[0]->long_name : "";
-
-            $addr = $result->xpath("address_component[type='route']");
-            $details['route'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
-
-            $addr = $result->xpath("address_component[type='locality']");
-            $details['locality'] = isset($addr[0]) ? (string) $addr[0]->long_name : "";
-
-            $details['phone'] = (string) $result->phone[0];
-            $details['url'] = (string) $result->website[0];
+          $details['phone'] = isset($result['phone']) ? (string) $result['phone'] : '';
+          $details['phone'] = isset($result['international_phone_number']) ? (string) $result['international_phone_number'] : '';
+          $details['url'] = isset($result['website']) ? (string) $result['website'] : '';
         }
         return $details;
     }
 
 
     static function getTimezone($lat, $lng){
-        $tz = '';
-        $xml = self::geotime($lat, $lng);
-        if(isset($xml)){
-            $tz = (string) $xml->time_zone_id;
-        }
-        return $tz;
+        $geotime = self::geotime($lat, $lng);
+        return isset($geotime['timeZoneId']) ? (string) $geotime['timeZoneId'] : '';
     }
 
 
@@ -170,14 +179,10 @@ class Locate extends Qwik {
         $tz = NULL;
         $placeid = self::getPlace("$location, $admin1", $country);
         if(isset($placeid)){
-            $detals = self::geodetails($placeid);
-            if(isset($details)){
-                $loc = $details->xpath("//geometry/location")[0];
-                if(isset($loc)){
-                    $lat = (string) $loc->lat;
-                    $lng = (string) $loc->lng;
-                    $tz = self::getTimezone($lat, $lng);
-                }
+            $details = self::geodetails($placeid);
+            if(isset($details['geometry']['location'])){
+                $loc = $details['geometry']['location'];
+                $tz = self::getTimezone($loc['lat'], $loc['lng']);
             }
         }
         return $tz;
@@ -235,23 +240,24 @@ class Locate extends Qwik {
 
   static function getAddress($lat, $lng){
     $address = [];
-    $xml = self::revgeocode($lat, $lng);
-    $components = $xml->address_component;
-    if(isset($components)){
+    $revgeocode = self::revgeocode($lat, $lng);
+    if(isset($revgeocode[0]['address_components'])){
+      $components = $revgeocode[0]['address_components'];
       foreach($components as $component){
-        foreach($component->type as $type){
+        $types = isset($component['types']) ? $component['types'] : array();
+        foreach($types as $type){
           switch ((string) $type){
             case 'country':
-              $address['country']  = (string) $component->short_name;
+              $address['country']  = (string) $component['short_name'];
               break ;
             case 'administrative_area_level_1':
-              $name = (string) $component->short_name;
-              $name = empty($name) ? (string) $component->long_name : $name ;
+              $name = (string) $component['short_name'];
+              $name = empty($name) ? (string) $component['long_name'] : $name ;
               $name = empty($name) ? ' ' : $name ;
               $address['admin1']   = $name;
               break ;
             case 'locality':
-              $address['locality'] = (string) $component->short_name;
+              $address['locality'] = (string) $component['short_name'];
               break ;
           }
         }
@@ -277,8 +283,8 @@ class Locate extends Qwik {
     $placeid = self::getPlace($input, $country);
     if(isset($placeid)){
       $details = self::geodetails($placeid);
-      if(isset($details)){
-        $geometry = $details->geometry;
+      if (isset($details['geometry'])){
+        $geometry = $details['geometry'];
       }
     }
     return $geometry;

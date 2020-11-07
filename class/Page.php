@@ -147,13 +147,95 @@ class Page extends Html {
         } catch (Throwable $t){
             Qwik::logThrown($t);
         } finally {
-            parent::serve($history);            
+            parent::serve($history);
         }
     }
 
 
+
+    /**************************************************************************
+     * Completes processing before serving the page
+     * Implements a generic delay/undo function. A query including a delay
+     * parameter is captured for delayed resubmission unless a qwik=undo
+     * request is received in the interim.
+     *************************************************************************/
     public function processRequest(){
+      $result = NULL;
+      if ($this->delayed($this->req('delay'))){                // delay request
+        http_response_code(204);                               // no content
+        exit;      
+      }
+
+      $player = $this->player();
+      switch ($this->req('qwik')) {
+        case 'undo':                                    // undo delayed request
+          if(isset($player)){
+            $result = $this->qwikUndo($player->id(), $this->req('id'));
+          }
+          break;
+        default:
+      }      
+      return $result;
+    }
+    
+    
+    /**************************************************************************
+     * Captures the current request (target, query, session, get & post) for
+     * resubmission after a delay.
+     * Resubmission may be completed by cron job resubmit.php
+     * @param  $delay The minimum delay in seconds before resubmission.
+     * @return        An id for the delayed request
+     *************************************************************************/
+    private function delayed($delay = null){
+      if(!is_numeric($delay)
+      || !isset($_SERVER["PHP_SELF"])){
+        return FALSE;
+      }
+      
+      $get  = $this->query->get();
+      unset($get['delay']);                             // prevent endless loop
+      $post = $this->query->post();
+      unset($post['delay']);                            // prevent endless loop
+      $task = array(                                    // capture task details
+        'due'     => time() + (int)$delay,
+        'target'  => $_SERVER["PHP_SELF"],
+        'get'     => $get,
+        'post'    => $post,
+        'session' => $_SESSION
+      );        
+      $json = json_encode($task);
+      $id = $this->req('id');
+      $id = empty($id) ? hrtime() : $id;
+      $this->writeFile($json, PATH_DELAYED, $id);      // save for resubmission
+
+      return $id;
+    }
+
+
+    /**************************************************************************
+     * Cancels a previously delayed request awaiting resubmission.
+     * Resubmission may be completed by cron job resubmit.php
+     * @param  $pid The unique player-id
+     * @param  $id  The unique request-id
+     * @return      The request-id on success (or null otherwise)
+     *************************************************************************/
+    function qwikUndo($pid, $id){
+      if(!isset($pid)
+      || !isset($id)
+      || !is_file(PATH_DELAYED.$id)){
         return NULL;
+      }
+      
+      $json = file_get_contents(PATH_DELAYED.$id);             // retrieve task
+      if($json){
+        $task = json_decode($json, TRUE);
+        $session = $task['session'];
+        if(isset($session['pid'])                         // check player match
+        && $pid === $session['pid']){
+         unlink(PATH_DELAYED.$id);                       // remove delayed task
+        }
+        return $id;
+      }
     }
 
 

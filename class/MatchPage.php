@@ -72,10 +72,12 @@ class MatchPage extends Page {
 
 
     public function processRequest(){
+        $result = parent::processRequest();
+        if(!is_null($result)){ return $result; }   // request handled by parent
+        
         $player = $this->player();
         $qwik = $this->req('qwik');
         $req = $this->req();
-        $result = null;
         switch ($qwik) {
             case "keen":
                 $result = $this->qwikKeen($player, $req, $this->venue);
@@ -260,10 +262,12 @@ function qwikDecline($player, $request){
 
 
 function qwikCancel($player, $req){
-    if(isset($req['id'])){
-        $player->matchCancel($req['id']);
-    }
-    return $req['id'];
+  $id = $req['id'];
+  if($id){
+    $player->matchCancel($id);
+    return $id;
+  }
+  return NULL;
 }
 
 
@@ -299,7 +303,6 @@ function qwikMsg($player, $req){
         $player->matchMsg($req['id'], $req['msg']);
     }
 }
-
 
 
 

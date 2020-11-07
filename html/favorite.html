@@ -50,8 +50,9 @@
 <div>
 <div id="favorite" class="base json record available">
     <form class='record' method='post'>
-        <button class='action [CROSS_ICON]' name='qwik' value='delete' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <input type='hidden' name='delay' value='10'>
+        <button class='action [CROSS_ICON]' name='qwik' value='delete' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <input type='hidden' name='id' value='[id]'>
         <p class='record'>
             {Available_game_with...}<br>

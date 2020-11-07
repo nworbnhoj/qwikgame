@@ -47,6 +47,7 @@ class Defend extends Qwik {
     'token'         => Filter::TOKEN,
     'rep'           => Filter::REP,
     'vid'           => Filter::VID,
+    'delay'         => FILTER_VALIDATE_INT,
     'account-email' => FILTER_VALIDATE_EMAIL,
     'email'         => FILTER_VALIDATE_EMAIL,
     'rival'         => FILTER_VALIDATE_EMAIL,
@@ -66,7 +67,7 @@ class Defend extends Qwik {
     'account'   => array('qwik', 'nick', 'url', 'email', 'lang', 'notify-email', 'push-endpoint', 'notify-push', 'push-token', 'push-key'),
     'activate'  => array('qwik', 'id'),
     'available' => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'parity', 'smtwtfs', 'lat', 'lng', 'placeid', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'time'),
-    'cancel'    => array('qwik', 'id', 'hour'),
+    'cancel'    => array('qwik', 'id', 'hour', 'delay'),
     'deactivate'=> array('qwik', 'id'),
     'decline'   => array('qwik', 'id'),
     'delete'    => array('qwik', 'id'),
@@ -80,6 +81,7 @@ class Defend extends Qwik {
     'region'    => array('qwik', 'game', 'parity', 'region'),
     'register'  => array('qwik', 'email'),
     'translate' => array('qwik', 'key', 'phrase'),
+    'undo'      => array('qwik', 'id'),
     'upload'    => array('qwik', 'id', 'game', 'title'),
     'quit'      => array('qwik')
   );

@@ -73,6 +73,9 @@ class FavoritePage extends Page {
 
 
     public function processRequest(){
+        $result = parent::processRequest();
+        if(!is_null($result)){ return $result; }   // request handled by parent
+        
         $player = $this->player();
         $qwik = $this->req('qwik');
         $req = $this->req();

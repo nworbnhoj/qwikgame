@@ -158,46 +158,31 @@ function clickMapIcon(){
 }
 
 
+function showUndo(event){
+  const FORM = event.target.form;
+  const UNDO_BUTTON = FORM.querySelector("button.undo");
+  const OTHER_BUTTONS = FORM.querySelectorAll('button:not(.undo)');
+  setButtons([UNDO_BUTTON], OTHER_BUTTONS);           // show undo, hide others
+  const RECORD_P = FORM.querySelector("p.record");
+  if(RECORD_P){
+    RECORD_P.style.textDecoration='line-through';     //     strike record text
+  }
+  const PARENT = FORM.parentElement;
+  const DELAY_INPUT = FORM.querySelector("input[name='delay']");
+  const DELAY = DELAY_INPUT ? parseInt(DELAY_INPUT.value) * 1000 : 0; 
+  setTimeout(()=>{ PARENT.parentElement.remove(PARENT); }, DELAY);     // 10sec
+}
+
+
 function clickUndo(event){
   const UNDO_BUTTON = event.target;
   const FORM = UNDO_BUTTON.form;
+  const DELAY = FORM.querySelector("input[name='delay']");
   const RECORD_P = FORM.querySelector("p.record");
+  const PARENT = FORM.parentElement;
   UNDO_BUTTON.style.display='none';                       //   hide undo button
-  RECORD_P.style.textDecoration='none';                   //      unstrike text
-}
-
-
-function setUndo(event){
-  const CLICKED = event.target;
-  const FORM = CLICKED.form;  
-  const UNDO_BUTTON = FORM.querySelector("button.undo");
-  if (!UNDO_BUTTON){
-    return true;                                      // submit form if no-undo
-  }
-  
-  const OTHER_BUTTONS = FORM.querySelectorAll('button:not(.undo)');
-  if (CLICKED.style.display === 'none'){               //  clicked by reClick()
-    if (UNDO_BUTTON.style.display === 'none'){         // undo has been clicked
-      setButtons(OTHER_BUTTONS, [UNDO_BUTTON]);
-      return false;                                    //   prevent form submit
-    } else {
-      return true;                                     //  complete form submit
-    }
-  }
-  
-  // delay the form submission and setup the undu button
-  setButtons([UNDO_BUTTON], OTHER_BUTTONS);
-  const RECORD_P = FORM.querySelector("p.record");
-  if(RECORD_P){
-    RECORD_P.style.textDecoration='line-through';      //    strike record text
-  }
-  setTimeout(reClick, 5000, CLICKED);                  //     re-click in 5 sec
-  return false;                                        //   prevent this submit
-}
-
-
-function reClick(element){
-  element.click();
+  RECORD_P.style.textDecoration='none';                   //     unstrike text
+  FORM.removeChild(DELAY);                                //  do not delay undo
 }
 
 

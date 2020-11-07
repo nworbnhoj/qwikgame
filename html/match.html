@@ -54,9 +54,10 @@
 <div id='cancelled.match' class="base json record cancelled">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' name='qwik' value='delete' class='action [CROSS_ICON]' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Unfortunately_cancelled...}</span>
         <p class='record'>
             <span class='tag cancelled'><s>{cancelled}</s></span>
@@ -88,9 +89,10 @@
 <div id='confirmed.match' class="base json record confirmed">
     <form class='record' action='match.php#matches' method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Your_game_confirmed...}</span>
         <p class='record'>
             <span class='tag confirmed'>{confirmed}</span>
@@ -113,9 +115,10 @@
 <div id='accepted.match' class="base json record accepted">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Wait_for_confirmation...}</span>
         <p class='record'>
             <span class='tag accepted'>{accepted}</span>
@@ -130,10 +133,11 @@
 <div id='invitation.match' class="base json record invitation">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='showUndo(event)'></button>
         <button type='submit' name='qwik' value='accept' class='action [TICK_ICON]'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Select_a_time...}</span>
         <p class='record'>
             <span class='tag invitation'>{invitation}</span>
@@ -148,9 +152,10 @@
 <div id='keen.match' class="base json record keen">
     <form class='record' action='match.php#matches'  method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <span class='help'>{Available_rivals_have...}</span>
         <p class='record'>
             <span class='tag keen'>{keen}</span>
@@ -272,9 +277,10 @@
 <div id='history.match' class="base json record history">
     <form class='record' action='match.php#history'  method='post'>
         <input type='hidden' name='id' value='[id]'>
+        <input type='hidden' name='delay' value='10'>
         <button type='button' class='action help [HELP_ICON]'></button>
-        <button type='submit' class='action [CROSS_ICON]' name='qwik' value='delete' onclick='return setUndo(event)'></button>
-        <button type='button' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
+        <button type='submit' class='action [CROSS_ICON]' name='qwik' value='delete' onclick='showUndo(event)'></button>
+        <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
         <input type='hidden' name='qwik' value='delete'>
         <span class='help'>{You_can_disown...}</span>
         <p class='record'>{History_game_at...}</p>

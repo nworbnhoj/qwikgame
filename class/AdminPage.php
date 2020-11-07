@@ -27,6 +27,9 @@ class AdminPage extends Page {
 
 
     public function processRequest(){
+        $result = parent::processRequest();
+        if(!is_null($result)){ return $result; }   // request handled by parent
+        
         $player = $this->player();
         $admin = $this->req('admin');
         $req = $this->req();

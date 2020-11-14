@@ -3,6 +3,7 @@
 require_once 'Page.php';
 require_once 'Translation.php';
 require_once 'PendingList.php';
+require_once 'ShaList.php';
 
 class AdminPage extends Page {
 
@@ -61,14 +62,8 @@ class AdminPage extends Page {
         $vars['TICK_ICON']     = self::TICK_ICON;
 
 
-        // phpinfo
-        ob_start();
-        phpinfo();
-        $phpinfo = ob_get_contents();
-        ob_end_clean();
-        $matches = array(); 
-        preg_match("/(?:<body>)([\s\S]*)(?:<\/body>)/", $phpinfo, $matches);
-        $vars['phpinfo'] = $matches[0];
+
+        $vars['phpinfo'] = $this->phpInfo();
         return $vars;
     }
 
@@ -78,7 +73,11 @@ class AdminPage extends Page {
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
         $pendingList = new PendingList($html, 'pending');
-        $vars['pendingList'] = $pendingList->make();
+        $vars['pendingList'] = $pendingList->make();        
+
+        $shaList = new ShaList($html, 'sha');
+        $vars['shaList'] = $shaList->make();        
+        
         return parent::make($vars); 
     }
 
@@ -124,6 +123,22 @@ class AdminPage extends Page {
             return false;
         }
         return true;
+    }
+    
+    
+    private function htmlSHA256(){
+    
+    }
+    
+    
+    private function phpInfo(){
+        ob_start();
+        phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_end_clean();
+        $matches = array(); 
+        preg_match("/(?:<body>)([\s\S]*)(?:<\/body>)/", $phpinfo, $matches);
+        return $matches[0];    
     }
 
 }

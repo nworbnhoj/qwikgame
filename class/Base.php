@@ -17,6 +17,8 @@ class Base extends Page {
     * for elements in a Base. The class='base' must be removed from the 
     * element so that it becodes visible (and is not used as a basis for  json listing
     */
+    
+    private $hash;
 
     /*******************************************************************************
     Class Base is constructed with a html template.
@@ -30,6 +32,7 @@ class Base extends Page {
         $doc->loadHTML($html);                               // better to use LIBXML_HTML_NOIMPLIED here
         $element = empty($id) ? $doc->documentElement->firstChild->firstChild : $doc->getElementById($id);
         if (isset($element)){
+            $this->hash($doc->saveHTML($element));
             $element->removeAttribute('id');  //remove the id attribute
             $classes = explode(" ", $element->getAttribute('class'));
             if (($key = array_search(Base::BASE_CLASS_FLAG, $classes)) !== false) {
@@ -41,6 +44,24 @@ class Base extends Page {
             self::logMsg("failed to extract a suitable base: id=$id");
         }
         parent::__construct($baseHTML);
+    }
+    
+    
+    
+    /**************************************************************************
+     * Computes, stores and returns the sha-256 hash of the base html
+     *  
+     * Includes an important kludge because:
+     * - php doc->saveHTML() always outputs 'selected'    regardless of the input html
+     * - js  node.outerHTML  always outputs 'selected=""' regardless of the input html
+     * - the hash of these 2 must be identical for use in Filter::html()
+     *************************************************************************/
+    public function hash($html=NULL){
+      if(!is_null($html)){
+        $kludge = str_replace('selected>', 'selected="">', $html);
+        $this->hash = hash('sha256', $kludge);
+      }
+      return $this->hash;
     }
 
 

@@ -167,10 +167,9 @@ function showUndo(event){
   if(RECORD_P){
     RECORD_P.style.textDecoration='line-through';     //     strike record text
   }
-  const PARENT = FORM.parentElement;
   const DELAY_INPUT = FORM.querySelector("input[name='delay']");
   const DELAY = DELAY_INPUT ? parseInt(DELAY_INPUT.value) * 1000 : 0; 
-  setTimeout(()=>{ PARENT.parentElement.remove(PARENT); }, DELAY);     // 10sec
+  setTimeout(()=>{ FORM.parentElement.remove(FORM); }, DELAY);     // 10sec
 }
 
 

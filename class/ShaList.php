@@ -62,7 +62,7 @@ class ShaList extends Base {
     $doc = new DOMDocument('1.0', 'UTF-8');
     $doc->loadHTML($template);
     $xpath = new DOMXpath($doc);
-    $elements = $xpath->query("//div[contains(@class, 'base')]");
+    $elements = $xpath->query("//div[contains(@class, 'base') and contains(@class, 'json')]");
     foreach($elements as $element){
       $id = $element->attributes->getNamedItem('id')->textContent;
       $ids[] = $id;

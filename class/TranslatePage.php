@@ -120,6 +120,7 @@ Class TranslatePage extends Html {
         $vars['MALE_ICON']     = Page::MALE_ICON;
         $vars['MATCH_ICON']    = Page::MATCH_ICON;
         $vars['RELOAD_ICON']   = Page::RELOAD_ICON;
+        $vars['SEND_ICON']     = Page::SEND_ICON;
         $vars['THUMB_DN_ICON'] = Page::THUMB_DN_ICON;
         $vars['THUMB_UP_ICON'] = Page::THUMB_UP_ICON;
         $vars['TICK_ICON']     = Page::TICK_ICON;

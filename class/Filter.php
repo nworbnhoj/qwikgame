@@ -32,8 +32,8 @@ class Filter extends Qwik {
           '-2'=>'',
           '-1'=>'',
           '0'=>'',
-          '1'=>'',
-          '2'=>''
+          '+1'=>'',
+          '+2'=>''
     );
     const VALID_QWIK = array(
           'accept'=>'',

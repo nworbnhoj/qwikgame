@@ -85,7 +85,9 @@ function refreshData(){
 
 function refreshRecords(){
   for (var base of document.querySelectorAll('div.base.json')) {
-    replicateBase(base);
+    if(!activeUndo(base)){
+      replicateBase(base);
+    }
   }
 }
 
@@ -158,18 +160,23 @@ function clickMapIcon(){
 }
 
 
-function showUndo(event){
+function showUndo(event, delay=10, tag=''){
   const FORM = event.target.form;
   const UNDO_BUTTON = FORM.querySelector("button.undo");
   const OTHER_BUTTONS = FORM.querySelectorAll('button:not(.undo)');
+  const TAG_SPAN = FORM.querySelector("span.tag");
   setButtons([UNDO_BUTTON], OTHER_BUTTONS);           // show undo, hide others
-  const RECORD_P = FORM.querySelector("p.record");
-  if(RECORD_P){
-    RECORD_P.style.textDecoration='line-through';     //     strike record text
+  TAG_SPAN.innerHTML = tag;                           // replace tag
+  FORM.appendChild(delayInput(delay));                // add hidden delay input
+  setTimeout(()=>{ endUndo(UNDO_BUTTON); }, delay*1000);   // 10sec
+}
+
+
+function endUndo(button){
+  button.style.display='none';
+  if(button.form.contains(document.activeElement)){
+    document.activeElement.blur();
   }
-  const DELAY_INPUT = FORM.querySelector("input[name='delay']");
-  const DELAY = DELAY_INPUT ? parseInt(DELAY_INPUT.value) * 1000 : 0; 
-  setTimeout(()=>{ FORM.parentElement.remove(FORM); }, DELAY);     // 10sec
 }
 
 
@@ -177,10 +184,10 @@ function clickUndo(event){
   const UNDO_BUTTON = event.target;
   const FORM = UNDO_BUTTON.form;
   const DELAY = FORM.querySelector("input[name='delay']");
-  const RECORD_P = FORM.querySelector("p.record");
   const PARENT = FORM.parentElement;
-  UNDO_BUTTON.style.display='none';                       //   hide undo button
-  RECORD_P.style.textDecoration='none';                   //     unstrike text
+  const TAG_SPAN = FORM.querySelector("span.tag");
+  UNDO_BUTTON.innerHTML = '<<<';                          // replace undo text
+  TAG_SPAN.innerHTML = "...";                             // replace tag text
   FORM.removeChild(DELAY);                                //  do not delay undo
 }
 
@@ -193,6 +200,26 @@ function setButtons(show, hide){
   for (let button of hide) {
     button.style.display = 'none';
   }
+}
+
+
+function delayInput(delay){
+  const INPUT = document.createElement('input');
+  INPUT.setAttribute('hidden', '');
+  INPUT.setAttribute('name', 'delay');
+  INPUT.setAttribute('value', delay);
+  return INPUT;
+}
+
+
+function activeUndo(base){
+  const PARENT = base.parentElement;
+  for(let undo_button of PARENT.querySelectorAll("button.undo")){
+    if (undo_button.style.display !== 'none'){
+      return true;
+    }
+  }
+  return false;
 }
 
 
@@ -256,6 +283,8 @@ function setInnerJSON(json, element){
 
 
 function replaceRecords(json, base){
+    if(window.activeUndo(base)){ return; }
+    
     var parentNode = base.parentNode;
     if(!parentNode.contains(document.activeElement)){
       while (parentNode.childNodes.length) {

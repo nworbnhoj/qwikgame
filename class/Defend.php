@@ -63,7 +63,7 @@ class Defend extends Qwik {
   
   
   const QWIK_KEYS = array(
-    'accept'    => array('qwik', 'id', 'hour'),
+    'accept'    => array('qwik', 'id', 'hour', 'delay'),
     'account'   => array('qwik', 'nick', 'url', 'email', 'lang', 'notify-email', 'push-endpoint', 'notify-push', 'push-token', 'push-key'),
     'activate'  => array('qwik', 'id'),
     'available' => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'parity', 'smtwtfs', 'lat', 'lng', 'placeid', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'time'),
@@ -81,7 +81,7 @@ class Defend extends Qwik {
     'region'    => array('qwik', 'game', 'parity', 'region'),
     'register'  => array('qwik', 'email'),
     'translate' => array('qwik', 'key', 'phrase'),
-    'undo'      => array('qwik', 'id'),
+    'undo'      => array('qwik', 'id', 'hour'),
     'upload'    => array('qwik', 'id', 'game', 'title'),
     'quit'      => array('qwik')
   );

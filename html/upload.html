@@ -49,9 +49,8 @@
     <div id='upload' class='base record [status]'>
         <form class='record' action='upload.php' method='post'>
             <input type='hidden' name='id' value='[id]'>
-            <input type='hidden' name='delay' value='10'>
             <button type='button' class='action help [INFO_ICON]' id='help-reckon'></button>
-            <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]' onclick='return showUndo(event)'></button>
+            <button class='action [CROSS_ICON]' name='qwik' value='[crossAct]' onclick="showUndo(event, 10, '')"></button>
         <button type='submit' name='qwik' value='undo' class='action undo' style="display:none;" onclick='clickUndo(event)'>{undo}</button>
             <button class='action [tickIcon]' name='qwik' value='activate' ></button>
             <span class='help' hidden>{Once_you_have_uploaded...}</span>

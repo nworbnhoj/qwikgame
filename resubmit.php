@@ -18,6 +18,7 @@ require_once PATH_CLASS.'UploadPage.php';
 $end = time() + 55;                                        // end in 55 seconds
 
 while( time() < $end ){
+  $wake = time() + 10;	
   $delayed = Qwik::fileList(PATH_DELAYED);             // list of delayed tasks
   foreach($delayed as $id){
     if(!is_file(PATH_DELAYED.$id)){ continue; }
@@ -25,12 +26,14 @@ while( time() < $end ){
     $json = file_get_contents(PATH_DELAYED.$id);
     $task = json_decode($json, TRUE);
     $due = (int)$task['due'];
-    if ( time() >= $due ){                  // task is overdue for resubmission
+    $time = time();
+    if ( $time >= $due ){                   // task is overdue for resubmission
       resubmit($task, $id);
+    } elseif( $due < $wake ){                     // task due before next check
+      $wake = $due;                               //   bring forward next check
     }
-    
-    sleep(10);                                         // check again in 10 sec
   }
+  time_sleep_until($wake);                           // check again in < 10 sec
 }
 
 

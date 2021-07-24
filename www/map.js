@@ -145,8 +145,8 @@ function mapIdleHandler(){
   if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
   if(updateMapCenterIdle(MAP.getCenter())){
     const CENTER = mapCenterIdle;
-    const AVOIDABLE = getAvoidable(CENTER);
-    fetchMarks(GAME, CENTER, null, AVOIDABLE);
+    const REGIONS = getRegions(CENTER);
+    fetchMarks(GAME, CENTER, null, REGIONS);
   }
 }
 
@@ -398,26 +398,26 @@ function fetchSubKeys(keys, game){
 
 
 /******************************************************************************
- * A String of regions (locality|admin1|country) for which Marks have already
- * been obtained - and that include the lat-lng coords. 
+ * A String of regions that include the lat-lng coords for which Marks have
+ * already been obtained.  
  * @param marks Object 
  * @param suffix String 
  * @return String of regions (locality|admin1|country)
  *****************************************************************************/
-function getAvoidable(latlng){
+function getRegions(latlng){
   if(!lat || !lng){ return ''; }
-  const AVOID = new Set();
+  const REGIONS = new Set();
   for(const [KEY, SUB_KEYS] of QWIK_REGION){
     if(SUB_KEYS.size > 0){
       const MARK = QWIK_MARKS.get(KEY);
       if (MARK
       && MARK.bounds
       && MARK.bounds.contains(latlng)){
-        AVOID.add(KEY);
+        REGIONS.add(KEY);
       }
     }
   }
-  return Array.from(AVOID).join(":");
+  return Array.from(REGIONS).join(":");
 }
 
 
@@ -619,24 +619,24 @@ function removeVal(val, array){
  * @param lat       Float latitude
  * @param lng       Float longitude
  * @param region    String [[locality|]admin1|]country
- * @param avoidable String
+ * @param regions   String
  * @return 
  *****************************************************************************/
-function fetchMarks(game, center, region, avoidable){
+function fetchMarks(game, center, region, regions){
   if(game === null || typeof game === 'undefined'){ return; }  
   if(region !== null && !isRegion(region)){ return; }
-  if(region !== null && avoidable.includes(region)){ return; }
+  if(region !== null && regions.includes(region)){ return; }
   if(region === null && center === null){ return; }
   const PARAMS = region === null ? 
-                 {game:game, lat:center.lat(), lng:center.lng(), avoidable:avoidable} :
-                 {game:game, region:region, avoidable:avoidable} ;              
+                 {game:game, lat:center.lat(), lng:center.lng(), avoidable:regions} :
+                 {game:game, region:region, avoidable:regions} ;              
   const ESC = encodeURIComponent;
   const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
   const PATH = 'json/venue.marks.php?'+QUERY;
   qwikJSON(PATH, receiveMarks);
   // report to console
   const LOC = region ? region : center;
-  console.log("fetching marks for "+LOC+" # "+avoidable);
+  console.log("fetching marks for "+LOC+" # "+regions);
     
   if(region !== null
     && !QWIK_REGION.has(region)){

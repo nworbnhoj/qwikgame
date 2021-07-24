@@ -25,6 +25,7 @@ const MAP_OPTIONS = {
 
 var qwikMap;
 var qwikInfowindow;
+var mapCenterIdle = null;
     
 
 function venuesMap() {
@@ -51,7 +52,7 @@ function venuesMap() {
     SEARCHBOX.addListener("places_changed", () => {
         searchChangeHandler(SEARCHBOX.getPlaces());
     });
-    
+
     MAP.addListener('idle', () => {
         mapIdleHandler()
     });
@@ -133,7 +134,7 @@ function game(){
     return GAME;
   }
   catch (error) {
-    return null;
+    return;
   }
 }
 
@@ -143,10 +144,21 @@ function mapIdleHandler(){
   const GAME = game();
   if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
   const CENTER = MAP.getCenter();
-  const LAT = Number((CENTER.lat()).toFixed(3));
-  const LNG = Number((CENTER.lng()).toFixed(3));
+  if(!updateMapCenterIdle(CENTER)){ return; }
+  const LAT = mapCenterIdle.lat();
+  const LNG = mapCenterIdle.lng();
   const AVOIDABLE = getAvoidable(LAT, LNG);
   fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
+}
+
+
+function updateMapCenterIdle(center){
+  const CENTER = gLatLng(center.lat(), center.lng(), 3); // round to approx 100m at equator 
+  if (!CENTER.equals(mapCenterIdle)){
+    mapCenterIdle = CENTER;
+    return true;
+  }
+  return false;
 }
 
 
@@ -810,10 +822,17 @@ function focusOnMark(key, game){
 ********************* GEO HELPER FUNCTIONS ************************************
 ******************************************************************************/
 
+const round = (number, precision) => {
+  const factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+}
 
-function gLatLng(lat, lng){
+
+function gLatLng(lat, lng, precision = 5){ // approx 1m at equator
   if(!isNumeric(lat) || !isNumeric(lng)){ return null; }
-  return new google.maps.LatLng(Number(lat), Number(lng));
+  const LAT = round(Number(lat), precision);
+  const LNG = round(Number(lng), precision);
+  return new google.maps.LatLng(LAT, LNG);
 }
 
 

@@ -143,12 +143,11 @@ function mapIdleHandler(){
   const MAP = qwikMap;
   const GAME = game();
   if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
-  const CENTER = MAP.getCenter();
-  if(!updateMapCenterIdle(CENTER)){ return; }
-  const LAT = mapCenterIdle.lat();
-  const LNG = mapCenterIdle.lng();
-  const AVOIDABLE = getAvoidable(LAT, LNG);
-  fetchMarks(GAME, LAT, LNG, null, AVOIDABLE);
+  if(updateMapCenterIdle(MAP.getCenter())){
+    const CENTER = mapCenterIdle;
+    const AVOIDABLE = getAvoidable(CENTER);
+    fetchMarks(GAME, CENTER, null, AVOIDABLE);
+  }
 }
 
 
@@ -369,7 +368,7 @@ function clickMapIcon(event){
   const ELEMENT = event.target;
   const KEY = ELEMENT.dataset.vid;   
   const GAME = ELEMENT.dataset.game;
-  fetchMarks(GAME, null, null, superKey(KEY), '');
+  fetchMarks(GAME, null, superKey(KEY), '');
   showMapBelowForm(ELEMENT);
   addVenueMark(
     KEY,
@@ -392,7 +391,7 @@ function clickMapIcon(event){
 function fetchSubKeys(keys, game){
   for(const KEY of keys){
     if(!QWIK_REGION.has(KEY) && isRegion(KEY)){
-      fetchMarks(game, null, null, KEY, superKey(KEY));
+      fetchMarks(game, null, KEY, superKey(KEY));
     }
   }
 }
@@ -405,16 +404,15 @@ function fetchSubKeys(keys, game){
  * @param suffix String 
  * @return String of regions (locality|admin1|country)
  *****************************************************************************/
-function getAvoidable(lat, lng){
+function getAvoidable(latlng){
   if(!lat || !lng){ return ''; }
   const AVOID = new Set();
-  const LATLNG = gLatLng(lat, lng);
   for(const [KEY, SUB_KEYS] of QWIK_REGION){
     if(SUB_KEYS.size > 0){
       const MARK = QWIK_MARKS.get(KEY);
       if (MARK
       && MARK.bounds
-      && MARK.bounds.contains(LATLNG)){
+      && MARK.bounds.contains(latlng)){
         AVOID.add(KEY);
       }
     }
@@ -552,7 +550,7 @@ function showSubMarkers(keys, game, bounds){
     && bounds.contains(MARK.center)){
       MARK.marker.setVisible(true);
       if (!QWIK_REGION.has(KEY) && isRegion(KEY)){
-        fetchMarks(game, null, null, KEY, superKey(KEY));
+        fetchMarks(game, null, KEY, superKey(KEY));
       }
       VISIBLE.push(KEY);
     }
@@ -624,20 +622,20 @@ function removeVal(val, array){
  * @param avoidable String
  * @return 
  *****************************************************************************/
-function fetchMarks(game, lat, lng, region, avoidable){
+function fetchMarks(game, center, region, avoidable){
   if(game === null || typeof game === 'undefined'){ return; }  
   if(region !== null && !isRegion(region)){ return; }
   if(region !== null && avoidable.includes(region)){ return; }
-  lng = lng>180 ? (lng+180)%360 - 180: (lng<-180 ? (lng-180)%-360 + 180 : lng);
+  if(region === null && center === null){ return; }
   const PARAMS = region === null ? 
-                 {game:game, lat:lat, lng:lng, avoidable:avoidable} :
+                 {game:game, lat:center.lat(), lng:center.lng(), avoidable:avoidable} :
                  {game:game, region:region, avoidable:avoidable} ;              
   const ESC = encodeURIComponent;
   const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
   const PATH = 'json/venue.marks.php?'+QUERY;
   qwikJSON(PATH, receiveMarks);
   // report to console
-  const LOC = region ? region : "lat:"+lat.toFixed(2)+" lng:"+lng.toFixed(2);
+  const LOC = region ? region : center;
   console.log("fetching marks for "+LOC+" # "+avoidable);
     
   if(region !== null
@@ -774,7 +772,7 @@ function endowMark(key, mark){
 
 
 function addVenueMark(key, lat, lng, num, game){
-  fetchMarks(game, null, null, key, '');
+  fetchMarks(game, null, key, '');
   const SUPER_KEY = superKey(key);
   if (!QWIK_REGION.has(SUPER_KEY)){
     addRegionMark(SUPER_KEY, lat, lng, game);

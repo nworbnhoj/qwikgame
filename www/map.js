@@ -146,7 +146,11 @@ function mapIdleHandler(){
   if(updateMapCenterIdle(MAP.getCenter())){
     const CENTER = mapCenterIdle;
     const REGIONS = getRegions(CENTER);
-    fetchMarks(GAME, CENTER, null, REGIONS);
+    const LOCALE_KNOWN = REGIONS.some(region => { return region.split("|").length > 2});
+    // note that a LatLng can belong to multiple regions because LatLngBounds overlap
+    if(!LOCALE_KNOWN){
+      fetchMarks(GAME, CENTER, null, REGIONS.join(":"));
+    }
   }
 }
 
@@ -417,7 +421,7 @@ function getRegions(latlng){
       }
     }
   }
-  return Array.from(REGIONS).join(":");
+  return Array.from(REGIONS);
 }
 
 

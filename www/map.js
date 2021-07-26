@@ -146,10 +146,15 @@ function mapIdleHandler(){
   if(updateMapCenterIdle(MAP.getCenter())){
     const CENTER = mapCenterIdle;
     const REGIONS = getRegions(CENTER);
-    const LOCALE_KNOWN = REGIONS.some(region => { return region.split("|").length > 2});
-    // note that a LatLng can belong to multiple regions because LatLngBounds overlap
-    if(!LOCALE_KNOWN){
+    if (REGIONS.length == 0){
       fetchMarks(GAME, CENTER, null, REGIONS.join(":"));
+    } else {
+      REGIONS.sort((a,b) => b.split("|").length - a.split("|").length);
+      REGION = REGIONS[0];
+      if (REGION.split("|").length < 3){
+        const SUB_REGIONS = Array.from(QWIK_REGION.get(REGION));
+        fetchSubKeys(SUB_REGIONS, game());
+      }
     }
   }
 }
@@ -402,24 +407,20 @@ function fetchSubKeys(keys, game){
 
 
 /******************************************************************************
- * A String of regions that include the lat-lng coords for which Marks have
- * already been obtained.  
- * @param marks Object 
- * @param suffix String 
- * @return String of regions (locality|admin1|country)
+ * An Array of known regions that include the lat-lng coords.
+ * @param LatLng coordinates used to filter regions 
+ * @return Array of regions (locality|admin1|country)
  *****************************************************************************/
 function getRegions(latlng){
   if(!lat || !lng){ return ''; }
   const REGIONS = new Set();
   for(const [KEY, SUB_KEYS] of QWIK_REGION){
-    if(SUB_KEYS.size > 0){
       const MARK = QWIK_MARKS.get(KEY);
       if (MARK
       && MARK.bounds
       && MARK.bounds.contains(latlng)){
         REGIONS.add(KEY);
       }
-    }
   }
   return Array.from(REGIONS);
 }
@@ -661,6 +662,7 @@ function receiveMarks(json){
   const COUNTRY = json.country !== null ? json.country : '';
   const ADMIN1 = json.admin1 !== null ? json.admin1+'|' : '';
   const LOCALITY = json.locality !== null ? json.locality+'|' : '';
+  const REGION = LOCALITY+ADMIN1+COUNTRY;
   switch (json.status){
     case 'OK':
       if(typeof json.game === 'undefined' || json.game === null){ return ; }
@@ -670,13 +672,21 @@ function receiveMarks(json){
       const MAP = qwikMap;
       const NEW_MARKS = new Map(Object.entries(json.marks));
       for(let [key, mark] of NEW_MARKS){
+        addToRegion(key, QWIK_REGION);
+        addToRegion(key, MAP_REGION);
         if(!QWIK_MARKS.has(key)){
           addMark(key, mark, GAME);
         }
       }
-      console.log("received "+NEW_MARKS.size+" marks for "+LOCALITY+ADMIN1+COUNTRY);
+      console.log("received "+NEW_MARKS.size+" marks for "+REGION);
       const VISIBLE = showMarks();
       fetchSubKeys(VISIBLE, GAME);              // prepare for possible zoom-in
+      break;
+    case 'NO_RESULTS':
+      alert("no results: "+REGION);
+      alert(QWIK_REGION.get(REGION));
+      QWIK_REGION.set(REGION, new Set());
+      MAP_REGION.set(REGION, new Set());
       break;
     default:
   }
@@ -690,16 +700,14 @@ function addMark(key, mark, game){
     console.log("Warning: addMark() called without required parameters "+key+" "+mark);
     return;
   }
+  if (!mark){ return; }
+  if(QWIK_MARKS.has(key)){ return; }
   if (!isNumeric(mark.lat) || !isNumeric(mark.lng)){
     console.log("Warning: Received mark without lat-lng "+key);
     return;
   }  
-  if(QWIK_MARKS.has(key)){ return; }
-  
   QWIK_MARKS.set(key, mark);
   endowMark(key, mark);
-  addToRegion(key, QWIK_REGION);
-  addToRegion(key, MAP_REGION);
   return mark;
 }
 
@@ -722,6 +730,7 @@ function disposeMark(key){
 
 
 function superKey(key){
+  if (typeof key === 'undefined'){ return ''; }
   let i = key.indexOf("|");
   return (i>0) ? key.slice(i+1) : '';
 }

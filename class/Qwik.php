@@ -601,23 +601,23 @@ class Qwik {
         $cwd = getcwd();
         if (!file_exists("$path$fileName")) {
             throw new RuntimeException("file missing $path$fileName");
-            return FALSE;
         }
 
         if(!chdir("$path")){
             throw new RuntimeException("cd failed from $cwd to $path");
-            return FALSE;
         }
 
         try{
             $xml = simplexml_load_file($fileName);
+            if (!$xml) {
+                throw new RuntimeException("simplexml_load_file() returned false");
+            }
         } catch (Exception $e){
             self::logThrown($e);
             throw new RuntimeException("xml read failed at $path$fileName");
         } finally {
             if(!chdir($cwd)){
                 throw new RuntimeException("cd failed to $cwd");
-                return FALSE;
             }
         }
         return $xml;

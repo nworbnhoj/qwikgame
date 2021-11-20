@@ -16,7 +16,7 @@ class Player extends Qwik {
     <player lang='en' ok='true'>
       <rep pos='0' neg='0'/>
       <rely val='1.0'/>
-      <notify default='1'/>
+      <notify/>
     </player>";
     
     const CSV = ".csv";
@@ -205,6 +205,8 @@ class Player extends Qwik {
             $newEmail = strtolower($newEmail);
             if(empty($xmlEmail)){
                 $this->xml->addChild('email', htmlspecialchars($newEmail));
+                $notify = new Notify($this);
+                $notify->email($newEmail, Notify::MSG_ALL);
             } else {
                 $oldEmail = $xmlEmail[0];
                 if (strcmp($oldEmail, $newEmail) != 0) {
@@ -729,7 +731,6 @@ class Player extends Qwik {
             $xml = $xmlArray[0];
         } else {
             $xml = $this->xml->addChild('notify', '');
-            $xml->addAttribute('default', '1');
         }
 
         if (isset($xmlArray[1])){  // integrity check

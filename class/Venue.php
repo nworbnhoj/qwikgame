@@ -445,8 +445,8 @@ class Venue extends Qwik {
     const FURNISH = array('phone', 'url','tz','lat','lng','address','str-num','route');
 
     public function furnish($details){
-      foreach(FURNISH as $key){
-        if(isset($getails[$key]){
+      foreach(self::FURNISH as $key){
+        if(isset($details[$key])){
           $this->updateAtt($key, $details[$key]);
         }
       }

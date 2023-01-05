@@ -37,6 +37,9 @@ class IndexPage extends Page {
             case "available":
                 $result = $this->qwikAvailable($email);
                 break;
+            case "manager":
+                $result = $this->qwikManager($email);
+                break;
             case "recover":
                 $result = $this->qwikRecover($email);
                 break;
@@ -67,6 +70,31 @@ class IndexPage extends Page {
         } catch (RuntimeException $e){
             self::logThrown($e);
             self::logMsg("Failed to create new Player $pid from IndexPage");
+        }
+        return FALSE;
+    }
+
+
+    function qwikManager($email){
+        if (!isset($email)){
+            return FALSE;
+        }
+        try {
+            $mid = Manager::anonID($email);
+            $anon = new Manager($mid, TRUE);
+            if(isset($anon)){
+                $req = array();
+                if($this->req('game') && $this->req('vid')){
+                  $req['game'] = $this->req('game');
+                  $req['vid'] = $this->req('vid');
+                }
+                $anon->emailWelcome($email, $req);
+                $this->message("{Check_email}");
+                $result = TRUE;
+            }
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            self::logMsg("Failed to create new Manager $mid from IndexPage");
         }
         return FALSE;
     }

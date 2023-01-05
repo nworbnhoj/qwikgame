@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang='[lang]'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qwik {booking}</title>
+    <link href='https://fonts.googleapis.com/css?family=Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="qwik.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="qwik.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+<div class='center'>
+
+    <div id='menu' class='menu'>
+        <a id='account-icon'  class='[ACCOUNT_ICON]'      href='account.php'></a>
+        <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
+    </div>
+
+    <div id='header'>
+        <a href='booking.php'><img id='qwik-logo' src='img/qwik.icon.svg'></a>
+    </div>
+
+    <p class="alert" [alert-hidden]>[alert]</p>
+    <p class='message' [msg-hidden]>[message]</p>
+
+    <h2 id='bookings' name='bookings'>{Bookings}</h2>
+
+<p>
+    This is a placeholder page to display court bookings for Venue Managers.
+</p>
+
+
+<div id='footer'>
+    {license}
+</div>
+
+
+</div>
+</body>
+
+
+</html>
+
+
+

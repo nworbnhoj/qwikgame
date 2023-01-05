@@ -6,6 +6,8 @@ docReady(event => {
     document.getElementById('venue-select').addEventListener('click', clickShowMapOption);
     document.getElementById('venue-select').addEventListener('change', clickShowMapOption);
     document.getElementById('venue-select').addEventListener('focus', mapShortcut);
+    document.getElementById('manager-toggle').addEventListener('click', clickManagerToggle, false);
+    document.getElementById('player-toggle').addEventListener('click', clickPlayerToggle,   false);
 });
 
 
@@ -31,6 +33,30 @@ function clickLoginToggle(){
     } else {
         registerForm.style.display = 'none';
         loginForm.style.display = 'block';
+    }
+    document.getElementById('name').focus();
+}
+
+
+function clickManagerToggle(){
+    var playerForm = document.getElementById('player-form');
+    if(window.getComputedStyle(playerForm).display !== 'none') {
+        playerForm.style.display = 'none';
+        document.getElementById('manager-toggle').style.display = 'none';
+        document.getElementById('manager-form').style.display = 'block';
+        document.getElementById('player-toggle').style.display = 'block';
+    }
+    document.getElementById('name').focus();
+}
+
+
+function clickPlayerToggle(){
+    var managerForm = document.getElementById('manager-form');
+    if(window.getComputedStyle(managerForm).display !== 'none') {
+        managerForm.style.display = 'none';
+        document.getElementById('player-toggle').style.display = 'none';
+        document.getElementById('player-form').style.display = 'block';
+        document.getElementById('manager-toggle').style.display = 'block';
     }
     document.getElementById('name').focus();
 }

@@ -19,6 +19,7 @@ define( "PATH_MARK",    UP.'mark/'    );
 define( "PATH_PLAYER",  UP.'player/'  );
 define( "PATH_SERVICE", UP            );
 define( "PATH_UPLOAD",  UP.'uploads/' );
+define( "PATH_USER",    UP.'player/'  );
 define( "PATH_VENUE",   UP.'venue/'   );
 define( "PATH_VENUES",  UP.'venues/'  );
 define( "PATH_VENDOR",  UP.'vendor/'  );

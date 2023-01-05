@@ -49,24 +49,48 @@
 
 
 <div id='register-form' class="commit account">
-    <button type='button' class='action help [HELP_ICON]'></button>
-    <span class='help' hidden>{When_a_rival...}</span>
-    <form action="index.php" method="post" autocomplete="off">
-        <input type="hidden" name="qwik" value="available">
-        <input type='hidden' id='lat' name='lat' value='[lat]'>
-        <input type='hidden' id='lng' name='lng' value='[lng]'>
-        <div>
-          <h2 class='inform'>{What_is_your...}</h2>
-          {Let_me_know...}
-        </div>
-        <div id="input-div">
-          <input id='email' name="email" type="email" autocomplete="new-password" >
-          <input id='name' name="name" type="text" autocomplete="off" placeholder="{prompt_address}">
-        </div>
-        <div>
-          <input type="submit" class="available word" value="{Submit}">
-        </div>
-    </form>
+    <div id='player-form' class="commit account">
+        <button type='button' class='action help [HELP_ICON]'></button>
+        <span class='help' hidden>{When_a_rival...}</span>
+        <form action="index.php" method="post" autocomplete="off">
+            <input type="hidden" name="qwik" value="available">
+            <input type='hidden' id='lat' name='lat' value='[lat]'>
+            <input type='hidden' id='lng' name='lng' value='[lng]'>
+            <div>
+              <h2 class='inform'>{What_is_your...}</h2>
+              {Let_me_know...}
+            </div>
+            <div id="input-div">
+              <input id='email' name="email" type="email" autocomplete="new-password" >
+              <input id='name' name="name" type="text" autocomplete="off" placeholder="{prompt_address}">
+            </div>
+            <div>
+              <input type="submit" class="available word" value="{Submit}">
+            </div>
+        </form>
+    </div>
+    <div><a id='manager-toggle' class='center'>{Or_as_manager}</a></div>
+    <div id='manager-form' class="commit account" hidden>
+        <button type='button' class='action help [HELP_ICON]'></button>
+        <span class='help' hidden>{Registering_as_a_manager...}</span>
+        <form action="index.php" method="post" autocomplete="off">
+            <input type="hidden" name="qwik" value="manager">
+            <input type='hidden' id='lat' name='lat' value='[lat]'>
+            <input type='hidden' id='lng' name='lng' value='[lng]'>
+            <div>
+              <h2 class='inform'>{Which_venue_do...}</h2>
+              {Let_me_know...}
+            </div>
+            <div id="input-div">
+              <input id='email' name="email" type="email" autocomplete="new-password" >
+              <input id='name' name="name" type="text" autocomplete="off" placeholder="{prompt_address}">
+            </div>
+            <div>
+              <input type="submit" class="available word" value="{Submit}">
+            </div>
+        </form>
+    </div>
+    <div hidden><a id='player-toggle' class='center'>{Or_as_player}</a></div>
 </div>
 
 

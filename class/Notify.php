@@ -17,24 +17,24 @@ class Notify extends Qwik {
     const MSG_CANCEL  = 0b0000000000001000;
     const MSG_ALL     = 0b1111111111111111;
 
-    private $player;
+    private $user;
     private $xml;
 
-    public function __construct($player){
+    public function __construct($user){
         parent::__construct();
-        $this->player = $player;
-        $this->xml = $player->notifyXML();
+        $this->user = $user;
+        $this->xml = $user->notifyXML();
     }
 
 
 
     private function pid(){
-        return (string) $this->player->id();
+        return (string) $this->user->id();
     }
 
 
     private function language(){
-        return $this->player->lang();
+        return $this->user->lang();
     }
 
 
@@ -122,7 +122,7 @@ class Notify extends Qwik {
         foreach ($deadEnds as $endpoint){
             $this->push($endpoint, self::MSG_NONE);
         }
-        $this->player->save();
+        $this->user->save();
     }
 
 
@@ -131,7 +131,7 @@ class Notify extends Qwik {
 
 
     public function sendInvite($match, $email){
-        $email = $this->is_open($email, self::MSG_INVITE) ? $email : $this->player->email();
+        $email = $this->is_open($email, self::MSG_INVITE) ? $email : $this->user->email();
         if ($this->is_open($email, self::MSG_INVITE)){
             $this->emailInvite($match, $email);
         }
@@ -140,7 +140,7 @@ class Notify extends Qwik {
 
 
     public function sendConfirm($mid){
-        $email = $this->player->email(); 
+        $email = $this->user->email(); 
         if ($this->is_open($email, self::MSG_CONFIRM)){
             $this->emailConfirm($mid, $email);
         }
@@ -149,7 +149,7 @@ class Notify extends Qwik {
 
 
     public function sendMsg($msg, $match){
-        $email = $this->player->email();
+        $email = $this->user->email();
         if ($this->is_open($email, self::MSG_MSG)){
             $this->emailMsg($msg, $match, $email);
         }
@@ -158,7 +158,7 @@ class Notify extends Qwik {
 
 
     public function sendCancel($match){
-        $email = $this->player->email();
+        $email = $this->user->email();
         if ($this->is_open($email, self::MSG_CANCEL)){
             $this->emailCancel($match, $email);
         }
@@ -170,11 +170,11 @@ class Notify extends Qwik {
 
 
     private function emailInvite($match, $email=NULL){
-        $email = is_null($email) ? $this->player->email() : $email ;
+        $email = is_null($email) ? $this->user->email() : $email ;
         $day = $match->mday();
         $game = $match->game();
         $venueName = $match->venueName();
-        $authLink = $this->player->authLink(self::WEEK, 'match.php', array("email"=>$email));
+        $authLink = $this->user->authLink(self::WEEK, 'match.php', array("email"=>$email));
         $paras = array(
             "{You are invited}",
             "{Please accept}"
@@ -194,7 +194,7 @@ class Notify extends Qwik {
 
 
     private function emailConfirm($mid, $address){
-        $match = $this->player->matchID($mid);
+        $match = $this->user->matchID($mid);
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
@@ -211,7 +211,7 @@ class Notify extends Qwik {
             "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => $venueName,
-            "authLink"   => $this->player->authLink(self::DAY)
+            "authLink"   => $this->user->authLink(self::DAY)
         );
         $email = new Email($vars, $this->language());
         $email->send();
@@ -235,7 +235,7 @@ class Notify extends Qwik {
             "gameName"   => self::gameName($game),
             "time"       => $time,
             "venueName"  => Venue::svid($match->venue()),
-            "authLink"   => $this->player->authLink(self::DAY)
+            "authLink"   => $this->user->authLink(self::DAY)
         );
         $email = new Email($vars, $this->language());
         $email->send();
@@ -287,7 +287,7 @@ class Notify extends Qwik {
 
 
     private function pushInvite($match, $subscriptions){
-        $lang = $this->player->lang();
+        $lang = $this->user->lang();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "day"       => $match->mday(),
@@ -306,8 +306,8 @@ class Notify extends Qwik {
 
 
     private function pushConfirm($mid, $subscriptions){
-        $lang = $this->player->lang();
-        $match = $this->player->matchID($mid);
+        $lang = $this->user->lang();
+        $match = $this->user->matchID($mid);
         $rivalName = $match->rival()->nick();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
@@ -328,7 +328,7 @@ class Notify extends Qwik {
 
 
     private function pushMsg($message, $match, $subscriptions){
-        $lang = $this->player->lang();
+        $lang = $this->user->lang();
         $rivalName = $match->rival()->nick();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
@@ -350,7 +350,7 @@ class Notify extends Qwik {
 
 
     private function pushCancel($match, $subscriptions){
-        $lang = $this->player->lang();
+        $lang = $this->user->lang();
         $vars = array(
             "gameName"  => self::gameName($match->game()),
             "time"      => date_format($match->dateTime(), "ga D"),

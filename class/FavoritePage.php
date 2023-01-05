@@ -72,6 +72,11 @@ class FavoritePage extends Page {
     }
 
 
+    protected function loadUser($uid){
+        return new Player($uid);
+    }
+
+
     public function processRequest(){
         $result = parent::processRequest();
         if(!is_null($result)){ return $result; }   // request handled by parent
@@ -230,7 +235,38 @@ class FavoritePage extends Page {
         return $hourRows;
     }
 
+/////////////////////////////////////////////////////////////////////////////////////
 
+
+    public function regions(){
+        $player = $this->player();
+        $available = $player->available();
+        $countries = array();
+        $admin1s = array();
+        $localities = array();
+        foreach($available as $avail){
+            $venueID = $avail->venue;
+            $reg = explode('|', $venueID);
+            if(count($reg) === 4){
+              array_shift($reg);  // discard venue name
+              $localities[implode("|",$reg)] = array_shift($reg);
+              $admin1s[implode("|",$reg)] = array_shift($reg);
+              $countries[implode("|",$reg)] = array_shift($reg);
+            } else {
+                self::logMsg("warning: unable to extract region '$venueID'");
+            }
+        }
+
+        asort($countries);
+        asort($admin1s);
+        asort($localities);
+
+        return array_merge($localities, $admin1s, $countries);
+    }
+
+
+
+    
 }
 
 ?>

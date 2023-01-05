@@ -14,9 +14,9 @@ class AdminPage extends Page {
     public function __construct($templateName='admin'){
         parent::__construct(NULL, $templateName);
 
-        $player = $this->player();
-        if (is_null($player)
-        || empty($player->admin())){
+        $user = $this->user();
+        if (is_null($user)
+        || empty($user->admin())){
             $this->logout();
             return;
         }
@@ -27,11 +27,16 @@ class AdminPage extends Page {
     }
 
 
+    protected function loadUser($uid){
+        return parent::loadUser($uid);
+    }
+
+
     public function processRequest(){
         $result = parent::processRequest();
         if(!is_null($result)){ return $result; }   // request handled by parent
         
-        $player = $this->player();
+        $user = $this->user();
         $admin = $this->req('admin');
         $req = $this->req();
         $result = null;
@@ -53,10 +58,10 @@ class AdminPage extends Page {
     public function variables(){
         $vars = parent::variables();
 
-        $player = $this->player();
-        $playerNick = $player->nick();
-        $playerEmail = $player->email();
-        $playerName = empty($playerNick) ? $playerEmail : $playerNick;
+        $user = $this->user();
+        $userNick = $user->nick();
+        $userEmail = $user->email();
+        $userName = empty($userNick) ? $userEmail : $userNick;
 
         $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
         $vars['TICK_ICON']     = self::TICK_ICON;

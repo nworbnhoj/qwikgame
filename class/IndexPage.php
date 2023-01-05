@@ -20,12 +20,22 @@ class IndexPage extends Page {
     
     
     public function serve($history=NULL){
-      $player = $this->player();
+        $player = $this->player();
       if(isset($player)){
         header("Location: ".QWIK_URL."match.php", TRUE, 307);
         exit;
       }
+        $manager = $this->manager();
+      if(isset($manager)){
+        header("Location: ".QWIK_URL."booking.php", TRUE, 307);
+        exit;
+      }
       parent::serve($history);
+    }
+
+
+    protected function loadUser($uid){
+        return parent::loadUser($uid);
     }
     
 
@@ -105,14 +115,14 @@ class IndexPage extends Page {
             return FALSE;
         }
         try{
-            $pid = Player::anonID($email);
-            if(PLAYER::exists($pid)){
-                $player = new Player($pid);
-                if($player->ok()){
-                    $id = self::snip($pid);
+            $uid = User::anonID($email);
+            if(User::exists($uid)){
+                $user = new User($uid);
+                if($user->ok()){
+                    $id = self::snip($uid);
                     self::logMsg("login: recover account $id");
                     // todo rate limit
-                    $player->emailLogin($email);
+                    $user->emailLogin($email);
                     $this->message("{Check_email}");
                     return TRUE;
                 }

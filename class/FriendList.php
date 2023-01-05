@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Card.php';
+require_once 'Match.php';
 
 /*******************************************************************************
     Class FriendList replicates a html snippet for each qwik record.
@@ -26,7 +27,7 @@ class FriendList extends Card {
         if (is_null($player)){ return '';}
 
         $group="";
-        $playerVars = $this->playerVariables($player);
+        $playerVars = $player->playerVariables();
         $reckoning = $player->reckon("rival");
         foreach($reckoning as $reckon){
             $email = (string) $reckon['email'];
@@ -44,7 +45,7 @@ class FriendList extends Card {
                 'id'        => $reckon['id'][0],
                 'email'     => $nick,
                 'gameName'  => self::gameName($game),
-                'parity'    => self::parityStr($parity)
+                'parity'    => Match::parityStr($parity)
             );
             $vars = $variables + $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);

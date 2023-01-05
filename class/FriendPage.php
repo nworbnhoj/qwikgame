@@ -28,6 +28,11 @@ class FriendPage extends Page {
     }
 
 
+    protected function loadUser($uid){
+        return new Player($uid);
+    }
+
+
     public function processRequest(){
         $result = parent::processRequest();
         if(!is_null($result)){ return $result; }   // request handled by parent

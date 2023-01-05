@@ -59,20 +59,7 @@ class Options extends Page {
         $html = $this->replicate($html);
         $html = parent::make($variables, $html);
         return $html;
-    }
-    
-    
-    public function favoriteVenues($game){
-      $player = $this->player();
-      return isset($player) ? $player->favoriteVenues($game) : array();
-    }
-    
-    
-    public function matchVenues($game){
-      $player = $this->player();
-      return isset($player) ? $player->matchVenues($game) : array();
-    }
-    
+    }    
 
 }
 

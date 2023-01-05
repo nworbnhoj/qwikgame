@@ -26,7 +26,7 @@ class FavoriteList extends Card {
         if (is_null($player)){ return '';}
 
         $group = ''; 
-        $playerVars = $this->playerVariables($player);
+        $playerVars = $player->playerVariables();
         $available = $player->available();
         foreach($available as $avail){
             $game = (string) $avail['game'];

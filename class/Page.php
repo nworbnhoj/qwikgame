@@ -113,7 +113,7 @@ class Page extends Html {
     }
 
 
-    private $player;
+    private $user;
     private $language;
     private $query;
     private $alert = "";
@@ -128,8 +128,8 @@ class Page extends Html {
     public function __construct($template, $templateName=NULL, $honeypot=array()){
 
         $this->query = new Defend($honeypot);
-        $this->player = $this->login($this->query);
-        $language = $this->selectLanguage($this->query->param('lang'), $this->player);
+        $this->user = $this->login($this->query);
+        $language = $this->selectLanguage($this->query->param('lang'), $this->user);
 
         $template = empty($template) ? Html::readTemplate($templateName, $language) : $template;
         
@@ -166,11 +166,11 @@ class Page extends Html {
         exit;      
       }
 
-      $player = $this->player();
+      $user = $this->user();
       switch ($this->req('qwik')) {
         case 'undo':                                    // undo delayed request
-          if(isset($player)){
-            $result = $this->qwikUndo($player->id(), $this->req('id'));
+          if(isset($user)){
+            $result = $this->qwikUndo($user->id(), $this->req('id'));
           }
           break;
         default:
@@ -215,7 +215,7 @@ class Page extends Html {
     /**************************************************************************
      * Cancels a previously delayed request awaiting resubmission.
      * Resubmission may be completed by cron job resubmit.php
-     * @param  $pid The unique player-id
+     * @param  $pid The unique user-id
      * @param  $id  The unique request-id
      * @return      The request-id on success (or null otherwise)
      *************************************************************************/
@@ -230,7 +230,7 @@ class Page extends Html {
       if($json){
         $task = json_decode($json, TRUE);
         $session = $task['session'];
-        if(isset($session['pid'])                         // check player match
+        if(isset($session['pid'])                         // check user match
         && $pid === $session['pid']){
          unlink(PATH_DELAYED.$id);                       // remove delayed task
         }
@@ -246,8 +246,8 @@ class Page extends Html {
         $game = (string) $this->query->param('game');
         $vars['game']  = empty($game) ? '[game]' : self::gameName($game);
         
-        if ($this->player != NULL){
-            $vars['pid']         = $this->player->id();
+        if ($this->user != NULL){
+            $vars['pid']         = $this->user->id();
         }
 
         $vars['alert-hidden'] = empty($this->alert) ? 'hidden' : '';
@@ -259,8 +259,18 @@ class Page extends Html {
     }
 
 
+    public function user(){
+        return $this->user;
+    }
+
+
     public function player(){
-        return $this->player;
+        return get_class($this->user) == "Player" ? $this->user : NULL ;
+    }
+
+
+    public function manager(){
+        return get_class($this->user) == "Manager" ? $this->user : NULL ;
     }
 
 
@@ -348,16 +358,16 @@ class Page extends Html {
           $email = $query->param('email');
           $pid = Player::anonID($email);  // and derive the pid from the email
           $token = $query->param('token');
-        } else {                            // anonymous session: no player identifier
+        } else {                            // anonymous session: no user identifier
            return;                         // RETURN login fail
         }
 
         // Load up the Player from file
         try {
-            $player = new Player($pid);
-            if(!$player->ok()){
+            $user = $this->loadUser($pid);
+            if(!$user->ok()){
               $sid = self::snip($pid);
-              self::logMsg("player not OK $sid");
+              self::logMsg("user not OK $sid");
               return;                       // RETURN login fail
             }
         } catch (RuntimeException $e){
@@ -367,16 +377,21 @@ class Page extends Html {
 
         // return the Player iff authentication is possible
         if($openSession){                   // AUTH: existing session
-        } elseif($player->isValidToken($token)){     // AUTH: token
-            $this->setupSession($pid, $player->lang());
-            $this->setupCookie($player);
+        } elseif($user->isValidToken($token)){     // AUTH: token
+            $this->setupSession($pid, $user->lang());
+            $this->setupCookie($user);
         } else {
             $sid = self::snip($pid);
             self::logMsg("token invalid $sid $token");
             return;                         // RETURN authentication failure
         }
 
-        return $player;
+        return $user;
+    }
+
+
+    protected function loadUser($uid){
+        return new User($uid);
     }
 
 
@@ -387,11 +402,11 @@ class Page extends Html {
     }
 
 
-    private function setupCookie($player){
+    private function setupCookie($user){
       if (!headers_sent()){
-        $pid = $player->id();
+        $pid = $user->id();
         $term = 3*self::MONTH;
-        $token = $player->token($term);
+        $token = $user->token($term);
         setcookie('pid', $pid, time() + $term, '/', HOST, TRUE, TRUE);
         setcookie('token', $token, time() + $term, '/', HOST, TRUE, TRUE);
       }
@@ -399,7 +414,7 @@ class Page extends Html {
 
 
     /********************************************************************************
-    Logout the current player by deleting both the $_SESSION and the longer term
+    Logout the current user by deleting both the $_SESSION and the longer term
     $_COOKIE
     ********************************************************************************/
     public function logout(){
@@ -413,9 +428,9 @@ class Page extends Html {
             $pid = $_SESSION['pid'];            
             unset($_SESSION['pid']);
         }
-        if (isset($this->player)){
-            $pid = $this->player->id();
-            $this->player = NULL;            
+        if (isset($this->user)){
+            $pid = $this->user->id();
+            $this->user = NULL;            
         }
         $id = self::snip($pid);
         self::logMsg("logout $id");        
@@ -440,24 +455,24 @@ class Page extends Html {
 
 
     /********************************************************************************
-    Return the current player language or default
+    Return the current user language or default
 
     $req    ArrayMap    url parameters from post&get
-    $player    XML            player data
+    $user    XML            user data
     ********************************************************************************/
 
-    public function selectLanguage($lang, $player){
+    public function selectLanguage($lang, $user){
         $languages = parent::$phraseBook->languages();
 
         if(isset($lang)                            // REQUESTED language
-        && isset($player)){
-          $player->lang($lang);
-          $player->save();
+        && isset($user)){
+          $user->lang($lang);
+          $user->save();
         } elseif (isset($_SESSION['lang'])){
             $lang = $_SESSION['lang'];
-        } elseif (isset($player)                         // USER language
-        && (NULL !== $player->lang())){
-            $lang = (string) $player->lang();
+        } elseif (isset($user)                         // USER language
+        && (NULL !== $user->lang())){
+            $lang = (string) $user->lang();
         } elseif (false){                                // geolocate language
             // todo code
         } else {                                        // default english
@@ -466,14 +481,6 @@ class Page extends Html {
 
         $_SESSION['lang'] = $lang;
         return $lang;
-    }
-
-
-    function playerVariables($player){
-        return array(
-            'target'    => 'match.php',
-            'reputation'=> $this->repStr(isset($player) ? $player->repWord() : '')
-        );
     }
 
 
@@ -496,57 +503,6 @@ class Page extends Html {
             $options .= "<option value='$key' $selected>$val</option>\n";
         }
         return $options;
-    }
-    
-    
-    public function regions(){
-        $player = $this->player();
-        $available = $player->available();
-        $countries = array();
-        $admin1s = array();
-        $localities = array();
-        foreach($available as $avail){
-            $venueID = $avail->venue;
-            $reg = explode('|', $venueID);
-            if(count($reg) === 4){
-              array_shift($reg);  // discard venue name
-              $localities[implode("|",$reg)] = array_shift($reg);
-              $admin1s[implode("|",$reg)] = array_shift($reg);
-              $countries[implode("|",$reg)] = array_shift($reg);
-            } else {
-                self::logMsg("warning: unable to extract region '$venueID'");
-            }
-        }
-
-        asort($countries);
-        asort($admin1s);
-        asort($localities);
-
-        return array_merge($localities, $admin1s, $countries);
-    }
-
-
-    function repStr($word){
-        return empty($word) ? 'AAAAAA' : " with a $word reputation";
-    }
-
-
-    static public function parityStr($parity){
-        if(is_numeric($parity)){
-            $pf = floatval($parity);
-            if($pf <= -2){
-                return "{much_weaker}";
-            } elseif($pf <= -1){
-                return "{weaker}";
-            } elseif($pf < 1){
-                return "{well_matched}";
-            } elseif($pf < 2){
-                return "{stronger}";
-            } else {
-                return "{much_stronger}";
-            }
-        }
-        return '{unknown parity}';
     }
 
 

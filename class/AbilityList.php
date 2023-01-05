@@ -27,7 +27,7 @@ class AbilityList extends Card {
 
         $group = '';
         $abilities = array('{very_strong}', '{strong}', '{competent}', '{weak}', '{very_weak}');
-        $playerVars = $this->playerVariables($player);
+        $playerVars = $player->playerVariables();
         $reckoning = $player->reckon("region");
         foreach($reckoning as $reckon){
             $game = (string) $reckon['game'];

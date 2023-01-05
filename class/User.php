@@ -41,7 +41,7 @@ class User extends Qwik {
 
 
     private $id;
-    private $xml;
+    protected $xml;
 
 
     /**
@@ -70,12 +70,12 @@ class User extends Qwik {
 
 
     public function default_xml(){
-        return DEFAULT_USER_XML;
+        return self::DEFAULT_USER_XML;
     }
 
 
     private function newXML(){
-        $xml = new SimpleXMLElement(self::default_xml());
+        $xml = new SimpleXMLElement($this->default_xml());
         $xml->addAttribute('id', $this->id());
         $now = new DateTime('now');
         $xml->addAttribute('debut', $now->format('d-m-Y'));

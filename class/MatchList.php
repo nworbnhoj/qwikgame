@@ -30,7 +30,7 @@ class MatchList extends Card {
 
         $status = $this->status;
         $group = '';
-        $playerVars = $this->playerVariables($player);
+        $playerVars = $player->playerVariables();
         foreach($player->matchStatus($status) as $matchXML) {
             $match = new Match($player, $matchXML);
             $game = $match->game();

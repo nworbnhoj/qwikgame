@@ -433,7 +433,7 @@ class Match extends Qwik {
             'hrs'       => $hours->bits(),
             'hour'      => self::hr($hours->first()),
             'id'        => $mid,
-            'parity'    => Page::parityStr($rivalParity),
+            'parity'    => parityStr($rivalParity),
             'rivalRep'  => $rivalRep,
             'chatter'   => $this->chat()
         );
@@ -463,7 +463,7 @@ class Match extends Qwik {
                 $outcome = $this->player->outcome($mid);
                 if (isset($outcome)) {
                     $outcomeParity = (string) $outcome['parity'];
-                    $vars['parity'] = Page::parityStr($outcomeParity);
+                    $vars['parity'] = parityStr($outcomeParity);
                     $vars['thumb'] = $outcome['rep'] == 1 ? Page::THUMB_UP_ICON : Page::THUMB_DN_ICON;
                 }
                 break;
@@ -524,6 +524,26 @@ class Match extends Qwik {
             $html .= "</select>\n";
         }
         return $html;
+    }
+
+
+
+    static public function parityStr($parity){
+        if(is_numeric($parity)){
+            $pf = floatval($parity);
+            if($pf <= -2){
+                return "{much_weaker}";
+            } elseif($pf <= -1){
+                return "{weaker}";
+            } elseif($pf < 1){
+                return "{well_matched}";
+            } elseif($pf < 2){
+                return "{stronger}";
+            } else {
+                return "{much_stronger}";
+            }
+        }
+        return '{unknown parity}';
     }
 
 

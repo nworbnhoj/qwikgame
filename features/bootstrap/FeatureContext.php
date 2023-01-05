@@ -450,7 +450,7 @@ class FeatureContext implements Context
         $playerB = new Player($pidB);
 
         $parityEstimate = $playerA->parity($playerB, 'squash');
-        $parityStr = Page::parityStr($parityEstimate);
+        $parityStr = Match::parityStr($parityEstimate);
         $msg = "$parityEstimate = $parityStr";
 
         switch ($parity) {

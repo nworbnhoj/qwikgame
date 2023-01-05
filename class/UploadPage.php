@@ -16,6 +16,11 @@ class UploadPage extends Page {
             return;
         }
     }
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
+    }
 	
 	
     public function processRequest(){

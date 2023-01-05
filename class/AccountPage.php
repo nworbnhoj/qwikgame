@@ -11,31 +11,36 @@ class AccountPage extends Page {
     public function __construct($templateName='account'){
         parent::__construct(NULL, $templateName);
 
-        $player = $this->player();
-        if (is_null($player)
-        || !$player->ok()){
+        $user = $this->user();
+        if (is_null($user)
+        || !$user->ok()){
             $this->logout();
             return;
         }
     }
 
 
+    protected function loadUser($uid){
+        return parent::loadUser($uid);
+    }
+
+
     public function processRequest(){
-        $player = $this->player();
+        $user = $this->user();
         $qwik = $this->req('qwik');
         $req = $this->req();
         $result = null;
         switch ($qwik) {
             case 'account':
-                $result = $this->qwikAccount($player, $req);
+                $result = $this->qwikAccount($user, $req);
                 break;
             case 'quit':
-                $player->emailQuit();
-                $player->quit();
+                $user->emailQuit();
+                $user->quit();
                 // no break - intentional drop thru to logout
             case 'logout':
                 if (isset($request['push-endpoint'])){
-                    $notify = new Notify($player);
+                    $notify = new Notify($user);
                     $notify->push($request['push-endpoint'], Notify::MSG_NONE);
                 }
                 $result = $this->logout();
@@ -44,7 +49,7 @@ class AccountPage extends Page {
                 $result =  NULL;
         }
 
-        $player->save();
+        $user->save();
         return $result;
     }
 
@@ -55,23 +60,23 @@ class AccountPage extends Page {
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
 
-        $player = $this->player();
-        if (!is_null($player)){
-            $playerNick = $player->nick();
-            $playerEmail = $player->email();
-            $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-            $notify = new Notify($player);
+        $user = $this->player();
+        if (!is_null($user)){
+            $userNick = $user->nick();
+            $userEmail = $user->email();
+            $userName = empty($userNick) ? $userEmail : $userNick;
+            $notify = new Notify($user);
 
-            $vars['reputation']    = $player->repWord();
+            $vars['reputation']    = get_class($this->user) == "Player" ? $user->repWord() : '';
             $vars['reputationLink']= self::LINK_REP;
-            $vars['thumbs']        = $player->repThumbs();
-            $vars['playerNick']    = $playerNick;
-            $vars['playerURL']     = $player->url();
-            $vars['playerEmail']   = $playerEmail;
+            $vars['thumbs']        = get_class($this->user) == "Player" ? $user->repThumbs() : '';
+            $vars['playerNick']    = $userNick;
+            $vars['playerURL']     = $user->url();
+            $vars['playerEmail']   = $userEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
-            $vars['notify-email-checked']  = $notify->is_open($playerEmail) ? 'checked' : '';
+            $vars['notify-email-checked']  = $notify->is_open($userEmail) ? 'checked' : '';
             $vars['push-endpoint-sack']   = $notify->pushSack();
-            $vars['languageOptions'] = $this->languageOptions($player->lang());
+            $vars['languageOptions'] = $this->languageOptions($user->lang());
         }
         return $vars;
     }
@@ -82,30 +87,30 @@ class AccountPage extends Page {
 
 
 
-function qwikAccount($player, $request){
+function qwikAccount($user, $request){
     if(isset($request['nick'])){
-        $player->nick($request['nick']);
+        $user->nick($request['nick']);
     }
 
     if(isset($request['url'])){
-        $player->url($request['url']);
+        $user->url($request['url']);
     }
 
     if(isset($request['email'])){
         $email = $request['email'];
-        if ($email != $player->email()){
-            $player->email($email);
+        if ($email != $user->email()){
+            $user->email($email);
         }
     }
 
     if(isset($request['lang'])){
-        $player->lang($request['lang']);
+        $user->lang($request['lang']);
     }
 
  
-    $notify = new Notify($player);
+    $notify = new Notify($user);
     $notify->email(
-        $player->email(), 
+        $user->email(), 
         isset($request['notify-email']) ? Notify::MSG_ALL : Notify::MSG_NONE
     );
     $notify->push(

@@ -146,6 +146,11 @@ Class TranslatePage extends Html {
         
         $this->variables = $vars;
     }
+
+
+    protected function loadUser($uid){
+        return parent::loadUser($uid);
+    }
     
 
     public function processRequest(){

@@ -22,7 +22,7 @@ class Manager extends User {
 
 
     public function default_xml(){
-        return DEFAULT_MANAGER_XML;
+        return self::DEFAULT_MANAGER_XML;
     }
 
 
@@ -38,6 +38,15 @@ class Manager extends User {
 
     public function emailWelcome($email, $req, $target='booking.php'){
         return parent::emailWelcome($email, $req, $target);
+    }
+
+    
+    public function matchID($id){
+        $xml = $this->xml->xpath("match[@id='$id']");
+        if (is_array($xml) && isset($xml[0])){
+            return new Match($this, $xml[0]);
+        }
+        return NULL;
     }
 
 }

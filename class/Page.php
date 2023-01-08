@@ -113,6 +113,49 @@ class Page extends Html {
     }
 
 
+    static public function weekSpan($xml){
+        $html = "";
+        $hrs = $xml->xpath("hrs");
+        foreach($hrs as $hr){
+            $hours = new Hours($hr);
+            $html .= self::daySpan($hours->roster(), $hr['day']);
+        }
+        return $html;
+    }
+
+
+
+
+    static public function hourRows($days){
+        $hourRows = '';
+        $tabs = "\t\t\t\t";
+        foreach($days as $day => $bits){
+            $bit = 1;
+            $hours = new Hours($bits);
+            $hourRows .= "$tabs<tr>\n";
+            $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
+            $hourRows .= "$tabs\t<th class='tr-toggle'>{$day}</th>\n";
+            for($hr24=0; $hr24<=23; $hr24++){
+                if (($hr24 < 6) | ($hr24 > 20)){
+                    $hidden = 'hidden';
+                } else {
+                    $hidden = '';
+                }
+                $on = $hours->get($hr) ? 1 : 0;
+                if ($hr24 <= 12){
+                    $hr12 = $hr24;
+                } else {
+                    $hr12 = $hr24-12;
+                }
+                $hourRows .= "$tabs\t<td class='toggle' on='$on' bit='$bit' $hidden>$hr12</td>\n";
+                $bit = $bit * 2;
+            }
+            $hourRows .= "$tabs</tr>\n";
+        }
+        return $hourRows;
+    }
+
+
     private $user;
     private $language;
     private $query;

@@ -26,6 +26,12 @@ class Manager extends User {
     }
 
 
+    public function venue(){
+        $vid = (string) $this->xml['venue'];
+        return new Venue($vid);
+    }
+
+
     public function authURL($shelfLife, $target='booking.php', $param=NULL){
         return parent::authURL($shelfLife, $target, $param);
     }

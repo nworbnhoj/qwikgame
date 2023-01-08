@@ -34,7 +34,7 @@ class FavoriteList extends Card {
                 'id'        => (string) $avail['id'],
                 'gameName'  => self::gameName($game),
                 'parity'    => (string) $avail['parity'],
-                'weekSpan'  => $this->weekSpan($avail),
+                'weekSpan'  => self::weekSpan($avail),
                 'venueLink' => $this->venueLink($avail->venue, $game),
                 'game'      => $game
             );
@@ -42,17 +42,6 @@ class FavoriteList extends Card {
             $group .= $this->populate($html, $vars);
         }
         return $group;
-    }
-
-
-    private function weekSpan($xml){
-        $html = "";
-        $hrs = $xml->xpath("hrs");
-        foreach($hrs as $hr){
-            $hours = new Hours($hr);
-            $html .= self::daySpan($hours->roster(), $hr['day']);
-        }
-        return $html;
     }
 
 }

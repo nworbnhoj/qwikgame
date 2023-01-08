@@ -104,6 +104,7 @@ blockquote, q {
 .account     { border-color:DarkOrange; }
 .upload      { border-color:ForestGreen; }
 .uploaded    { border-color:grey; }
+.facility    { border-color:DarkGreen; }
 .active      { border-color:ForestGreen; }
 
 

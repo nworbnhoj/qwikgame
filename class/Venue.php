@@ -291,6 +291,11 @@ class Venue extends Qwik {
     }
 
 
+    public function facility(){
+        return $this->xml->xpath("facility");
+    }
+
+
     public function games(){
         $games = array();
         $elements = $this->xml->xpath("//game");
@@ -544,6 +549,27 @@ class Venue extends Qwik {
         }
         $vid = $this->id();
         self::deleteFile("venue/$game/$vid.xml");
+    }
+
+
+    public function facilitySet($game, $days){
+        $element = $this->facility($game);
+        if (!isset($element)){
+            $newID = self::newID();
+            $element = $this->xml->addChild('facility', '');
+            $element->addAttribute('id', $newID);
+            $element->addAttribute('game', $game);
+        }
+        foreach($days as $day => $hrs){
+            $e = $element->xpath("hrs[day='$day']");
+            if(isset($e)){
+                $e = htmlspecialchars($hrs);
+            } else {
+                $e = $element->addChild('hrs', htmlspecialchars($hrs));
+                $e->addAttribute('day', $day);
+            }
+        }
+        return $element['id'];
     }
 
 }

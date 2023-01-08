@@ -9,6 +9,10 @@ require_once 'Locate.php';
 
 class MatchPage extends Page {
 
+    protected static function loadUser($uid){
+        return new Player($uid);
+    }
+
     private $game;
     private $venue;
 
@@ -68,11 +72,6 @@ class MatchPage extends Page {
                 self::logMsg("Added ".$this->game." to $vid");
             }
         }
-    }
-
-
-    protected function loadUser($uid){
-        return new Player($uid);
     }
 
 

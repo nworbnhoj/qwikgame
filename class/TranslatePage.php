@@ -69,6 +69,10 @@ const PARITY5_SELECT = "
     ";
 
 const BUTTON_THUMB = "<button type='button' class='" . Page::THUMB_UP_ICON . "'></button>";
+
+protected static function loadUser($uid){
+    return parent::loadUser($uid);
+}
     
 
 
@@ -145,11 +149,6 @@ Class TranslatePage extends Html {
         $vars['thumbButton']   = BUTTON_THUMB;
         
         $this->variables = $vars;
-    }
-
-
-    protected function loadUser($uid){
-        return parent::loadUser($uid);
     }
     
 

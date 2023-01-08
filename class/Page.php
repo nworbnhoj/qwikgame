@@ -71,6 +71,11 @@ class Page extends Html {
     static $icons;
 
 
+    protected static function loadUser($uid){        
+        return new User($uid);
+    }
+
+
     static public function daySpan($hours, $day='', $clock24hr=FALSE){
         if (count($hours) == 0){
             return "";
@@ -407,7 +412,7 @@ class Page extends Html {
 
         // Load up the Player from file
         try {
-            $user = $this->loadUser($pid);
+            $user = self::loadUser($pid);
             if(!$user->ok()){
               $sid = self::snip($pid);
               self::logMsg("user not OK $sid");
@@ -430,11 +435,6 @@ class Page extends Html {
         }
 
         return $user;
-    }
-
-
-    protected function loadUser($uid){
-        return new User($uid);
     }
 
 

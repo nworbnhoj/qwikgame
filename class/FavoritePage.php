@@ -10,6 +10,10 @@ require_once 'Locate.php';
 
 class FavoritePage extends Page {
 
+    protected static function loadUser($uid){
+        return new Player($uid);
+    }
+
     private $game;
     private $venue;
 
@@ -69,11 +73,6 @@ class FavoritePage extends Page {
                 self::logMsg("Added ".$this->game." to $vid");
             }
         }
-    }
-
-
-    protected function loadUser($uid){
-        return new Player($uid);
     }
 
 

@@ -13,6 +13,10 @@ class IndexPage extends Page {
    ****************************************************************************/
   const HONEYPOT = array('email'=>'name');
 
+    protected static function loadUser($uid){
+        return parent::loadUser($uid);
+    }
+
 
     public function __construct($templateName='index'){
       parent::__construct(NULL, $templateName, self::HONEYPOT);
@@ -31,11 +35,6 @@ class IndexPage extends Page {
         exit;
       }
       parent::serve($history);
-    }
-
-
-    protected function loadUser($uid){
-        return parent::loadUser($uid);
     }
     
 

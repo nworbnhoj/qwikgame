@@ -222,9 +222,11 @@ function qwikKeen($player, $req, $venue){
 
     $days = array('today','tomorrow');
     foreach($days as $day){
-        $date = $venue->dateTime($day);
+        $datetime = $venue->dateTime($day);
         $hours = new Hours((int) $req[$day]);
+        //$hours &= $venue->facilityHours($game, $datetime);
         if (!$hours->none()){
+           $date = $datetime->format('d-m-Y');
            $match = $player->matchKeen($game, $venue, $date, $hours, $rids);
            $mid = $match->id();
         }

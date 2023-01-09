@@ -234,7 +234,7 @@ class Notify extends Qwik {
             "message"    => $message,
             "gameName"   => self::gameName($game),
             "time"       => $time,
-            "venueName"  => Venue::svid($match->venue()),
+            "venueName"  => Venue::svid($match->vid()),
             "authLink"   => $this->user->authLink(self::DAY)
         );
         $email = new Email($vars, $this->language());

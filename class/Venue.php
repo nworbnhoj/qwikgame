@@ -291,8 +291,8 @@ class Venue extends Qwik {
     }
 
 
-    public function facility(){
-        return $this->xml->xpath("facility");
+    public function facility($game){
+        return $this->xml->xpath("facility[game='$game'");
     }
 
 
@@ -570,6 +570,24 @@ class Venue extends Qwik {
             }
         }
         return $element['id'];
+    }
+
+
+    public function facilityHours($game, $datetime){
+        $available = 0;
+        $element = $this->facility($game);
+        if(isset($element)) {
+            $dayYmd = $dateTime->format('Y-m-d');
+            $available = $element->xpath("hrs[day='$dayYmd']");
+            if(!isset($available)){
+                $dayD = $dateTime->format('D');
+                $available = $element->xpath("hrs[day='$dayD']");
+                if(!isset($available)){
+                    $available = 0;
+                }
+            }
+        }
+        return $available;
     }
 
 }

@@ -26,7 +26,7 @@ class Match extends Qwik {
             $this->xml->addAttribute('id', $id);
             $this->xml->addAttribute('status', $status);
             $this->xml->addAttribute('game', $game);
-            $this->xml->addAttribute('date', $date->format('d-m-Y'));
+            $this->xml->addAttribute('date', $date);
             $this->xml->addAttribute('hrs', $hours->bits());
             $v = $this->xml->addChild('venue', htmlspecialchars($venue->id()));
             $v->addAttribute('tz', $venue->tz());
@@ -215,7 +215,8 @@ class Match extends Qwik {
 
 
     public function venue(){
-        return (string) $this->xml->venue;
+        $vid = $this->vid();
+        return = new Venue($vid, FALSE);
     }
 
 
@@ -420,7 +421,11 @@ class Match extends Qwik {
         $status = $this->status();
         $game = $this->game();
         $rivalParity = $this->rivalParity();
-        $hours = $this->hours();
+        $venue = $this->venue();
+        // re-check venueHours immediately before display to Player
+        $datetime = $this->dateTime();
+        $venueHours = isset($venue) ? $venue->facilityHours($game, $datetime) : 0 ;
+        $hours = $this->hours() & $venueHours;
         $repWord = $this->rivalRep();
         $rivalRep = strlen($repWord)==0 ? '{unknown}' : $repWord;
         $vars = array(

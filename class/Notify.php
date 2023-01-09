@@ -148,6 +148,14 @@ class Notify extends Qwik {
     }
 
 
+    public function sendBook($mid){
+        $email = $this->user->email(); 
+        if ($this->is_open($email, self::MSG_CONFIRM)){
+            $this->emailBook($mid, $email);
+        }
+    }
+
+
     public function sendMsg($msg, $match){
         $email = $this->user->email();
         if ($this->is_open($email, self::MSG_MSG)){
@@ -212,6 +220,31 @@ class Notify extends Qwik {
             "time"       => $time,
             "venueName"  => $venueName,
             "authLink"   => $this->user->authLink(self::DAY)
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
+    }
+
+
+    private function emailBook($mid, $address){
+        $match = $this->user->matchID($mid);
+        $datetime = $match->dateTime();
+        $time = date_format($datetime, "ga D");
+        $game = $match->game();
+        $paras = array(
+            "{Please_book_a...}",
+            "{Need to unbook}"
+        );
+        $authLink = $this->user->authLink(self::WEEK, 'book.php', array("mid"=>$mid));
+        $vars = array(
+            "subject"    => "{EmailConfirmSubject}",
+            "paragraphs" => $paras,
+            "to"         => $address,
+            "gameName"   => self::gameName($game),
+            "time"       => $time,
+            "playerName" => $match->playerName(),
+            "rivalName"  => $match->rivalName(),
+            "authLink"   => $authLink,
         );
         $email = new Email($vars, $this->language());
         $email->send();

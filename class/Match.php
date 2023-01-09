@@ -79,6 +79,11 @@ class Match extends Qwik {
     }
 
 
+    public function playerName(){
+        return $this->player()->nick();
+    }
+
+
     public function id($id=NULL){
         if(!is_null($id)){
             $this->xml['id'] = $id;
@@ -173,7 +178,6 @@ class Match extends Qwik {
         }
         return NULL;
     }
-
 
 
     public function rivalName($index=0){
@@ -289,6 +293,14 @@ class Match extends Qwik {
         $this->time($date, $hour);
         $notify = new Notify($this->player);
         $notify->sendConfirm($this->id());
+        $venue = $this->venue();
+        if (isset(venue)){
+            $manager = $venue->manager();
+            if(isset($manager)){
+                $notify = new Notify($manager);
+                $notify->sendBook($this->id());
+            }
+        }
     }
 
 

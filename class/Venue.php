@@ -226,6 +226,12 @@ class Venue extends Qwik {
     }
 
 
+    public function manager(){
+        $mid = (string) $this->xml->xpath('manager');
+        return isset($mid) ? new Manager($mid) : NULL;
+    }
+
+
     public function name(){
         return $this->xml['name'];
     }
@@ -456,6 +462,11 @@ class Venue extends Qwik {
         }
       }
       $this->save(TRUE);
+    }
+
+
+    public function setManager($mid){
+        $this->updateAtt('manager', $mid);
     }
 
 

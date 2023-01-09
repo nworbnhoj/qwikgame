@@ -272,8 +272,10 @@
 <phrase key="You are invited"><words lang="en">You have been invited to play &lt;b&gt;[gameName] [day]&lt;/b&gt; at [venueName].</words></phrase>
 <phrase key="Please accept"><words lang="en">Please [authLink] and &lt;b&gt;accept&lt;/b&gt; if you would like to play.</words></phrase>
 <phrase key="EmailConfirmSubject"><words lang="en">Confirmed: [gameName] [time] at [venueName]</words></phrase>
+<phrase key="Please book a"><words lang="en">Please book a &lt;b&gt;[gameName]&lt;/b&gt; facility at &lt;b&gt;[time]&lt;/b&gt; for [playerName] and [rivalName] and click this [authLink] to confirm.</words></phrase>
 <phrase key="Game is set"><words lang="en">Your game of &lt;b&gt;[gameName]&lt;/b&gt; is set for &lt;b&gt;[time] at [venueName]&lt;/b&gt;.</words></phrase>
 <phrase key="Need to cancel"><words lang="en">If you need to cancel for some reason, please [authLink] as soon as possible to let your rival know.</words></phrase>
+<phrase key="Need to unbook"><words lang="en">If you need to cancel the booking for some reason, please [authLink] as soon as possible to let the players know.</words></phrase>
 <phrase key="Have great game"><words lang="en">&lt;b&gt;Good Luck! and have a great game.&lt;/b&gt;</words></phrase>
 <phrase key="EmailChangeSubject"><words lang="en">Confirm email change for qwikgame.org</words><words lang="es"/></phrase>
 <phrase key="Click to change"><words lang="en">Please click this link to change your qwikgame email address to [email]: [authLink]</words><words lang="es"/></phrase>

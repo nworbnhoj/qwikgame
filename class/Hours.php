@@ -4,8 +4,9 @@ Class Hours {
 
     // Encapsulates a bitfield representing the 24hrs in a day
 
-    const HRS_24 = 33554431;
-    const HRS_6AM_to_8PM = 16777215;
+    const HRS_24 = 16777215;
+    const HRS_6AM_to_8PM = 2097088;
+    const HRS_9AM_to_5PM = 261632;
 
     private $bits;
 

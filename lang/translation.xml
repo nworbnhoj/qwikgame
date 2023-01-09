@@ -271,6 +271,9 @@
 <phrase key="EmailInviteSubject"><words lang="en">Invitation: [gameName] at [venueName]</words><words lang="es">invitaci&#xF3;n: [gameName] a [venueName]</words><words lang="zh">&#x8BF7;&#x5E16;: [gameName] &#x5728; [venueName]</words><words lang="fr">Invitation: [gameName] &#xE0; [venueName]</words><words lang="jp">&#x62DB;&#x5F85;: [gameName] &#x301C;&#x3067; [venueName]</words></phrase>
 <phrase key="You are invited"><words lang="en">You have been invited to play &lt;b&gt;[gameName] [day]&lt;/b&gt; at [venueName].</words></phrase>
 <phrase key="Please accept"><words lang="en">Please [authLink] and &lt;b&gt;accept&lt;/b&gt; if you would like to play.</words></phrase>
+<phrase key="EmailCueSubject"><words lang="en">Please check availability [gameName] [day]</words></phrase>
+<phrase key="Keen for a match"><words lang="en">A [gameName] player is keen for a qwikgame of &lt;b&gt;[gameName]&lt;/b&gt; &lt;b&gt;[day]&lt;/b&gt;.</words></phrase>
+<phrase key="Please check availability"><words lang="en">Please check that your &lt;b&gt;[gameName]&lt;/b&gt; facility is available at [available] and [authLink] to update if need be.</words></phrase>
 <phrase key="EmailConfirmSubject"><words lang="en">Confirmed: [gameName] [time] at [venueName]</words></phrase>
 <phrase key="Please book a"><words lang="en">Please book a &lt;b&gt;[gameName]&lt;/b&gt; facility at &lt;b&gt;[time]&lt;/b&gt; for [playerName] and [rivalName] and click this [authLink] to confirm.</words></phrase>
 <phrase key="Game is set"><words lang="en">Your game of &lt;b&gt;[gameName]&lt;/b&gt; is set for &lt;b&gt;[time] at [venueName]&lt;/b&gt;.</words></phrase>

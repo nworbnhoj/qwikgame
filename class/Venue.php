@@ -601,6 +601,34 @@ class Venue extends Qwik {
         return $available;
     }
 
+
+    /**
+    * @throws RuntimeException if the Match cannot be added
+    */
+    public function matchAdd($player, $mid, $game, $date, $hours){
+        try {
+            $this->addPlayer($player->id());
+
+            $xml = $this->xml->addChild('match', '');
+            $xml->addAttribute('id', $mid);
+            $xml->addAttribute('status', 'tentative');
+            $xml->addAttribute('game', $game);
+            $xml->addAttribute('date', $date);
+            $xml->addAttribute('hrs', $hours->bits());
+            $this->save();
+
+            $manager = $this->manager();
+            if(isset($manager)){
+                $notify = new Notify($manager);
+                $notify->sendCue(new Match($manager,  $xml));
+            }
+        } catch (RuntimeException $e){
+            self::logThrown($e);
+            $id = $this->id();
+            throw new RuntimeException("failed to add match $mid to Venue $id);
+        }
+    }
+
 }
 ?>
 

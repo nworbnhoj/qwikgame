@@ -15,6 +15,7 @@ class Notify extends Qwik {
     const MSG_CONFIRM = 0b0000000000000010;
     const MSG_MSG     = 0b0000000000000100;
     const MSG_CANCEL  = 0b0000000000001000;
+    const MSG_CUE     = 0b0000000000010000;
     const MSG_ALL     = 0b1111111111111111;
 
     private $user;
@@ -139,6 +140,14 @@ class Notify extends Qwik {
     }
 
 
+    public function sendCue($match){
+        $email = $this->user->email();
+        if ($this->is_open($email, self::MSG_CUE)){
+            $this->emailCue($match, $email);
+        }
+    }
+
+
     public function sendConfirm($mid){
         $email = $this->user->email(); 
         if ($this->is_open($email, self::MSG_CONFIRM)){
@@ -195,6 +204,27 @@ class Notify extends Qwik {
             "day"        => $day,
             "venueName"  => $venueName,
             "authLink"   => $authLink
+        );
+        $email = new Email($vars, $this->language());
+        $email->send();
+    }
+
+
+    private function emailCue($match, $email){
+        $paras = array(
+            "{Keen for a match}"
+            "{Please check availability}"
+        );
+        $day = $match->dateTime()->format('D');
+        $hrs = $match->hours()->bits();
+        $vars = array(
+            "subject"    => "{EmailCueSubject}",
+            "paragraphs" => $paras,
+            "to"         => $email,
+            "gameName"   => self::gameName($match->game()),
+            "day"        => $match->mday(),
+            "available"  => Page::daySpan($hrs, $day),
+            "authLink"   => $this->user->authLink(self::WEEK, 'facility.php')
         );
         $email = new Email($vars, $this->language());
         $email->send();

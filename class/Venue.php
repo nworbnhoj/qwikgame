@@ -229,6 +229,11 @@ class Venue extends Qwik {
     public function manager(){
         $mid = (string) $this->xml->xpath('manager');
         return isset($mid) ? new Manager($mid) : NULL;
+    }    
+
+
+    public function matchStatus($status){
+        return $this->xml->xpath("match[@status='$status']");
     }
 
 
@@ -602,14 +607,27 @@ class Venue extends Qwik {
     }
 
 
+    public function match($id){
+        $xml_array = $this->xml->xpath("match[@id='$id']");
+        if (is_array($xml_array) && isset($xml_array[0])){
+            $xml = $xml_array[0];
+            $pid = $xml['pid'];
+            $player = new Player($xml, FALSE);
+            return new Match($player, $xml);
+        }
+        return NULL;
+    }
+
+
     /**
     * @throws RuntimeException if the Match cannot be added
     */
-    public function matchAdd($player, $mid, $game, $date, $hours){
+    public function matchAdd($pid, $mid, $game, $date, $hours){
         try {
-            $this->addPlayer($player->id());
+            $this->addPlayer($pid);
 
             $xml = $this->xml->addChild('match', '');
+            $xml->addAttribute('pid', $pid);
             $xml->addAttribute('id', $mid);
             $xml->addAttribute('status', 'tentative');
             $xml->addAttribute('game', $game);
@@ -625,10 +643,23 @@ class Venue extends Qwik {
         } catch (RuntimeException $e){
             self::logThrown($e);
             $id = $this->id();
-            throw new RuntimeException("failed to add match $mid to Venue $id);
+            throw new RuntimeException("failed to add match $mid to Venue $id");
+        }
+    }
+
+
+    //scans and processes past matches
+    public function concludeMatches(){
+        $matchXMLs = $this->xml->xpath('match');
+        foreach($matchXMLs as $xml){
+            $match = new Match($this, $xml);
+            $match->conclude();
+            if($match->status() == 'feedback'){
+                self::removeElement($xml);
+            }
         }
     }
 
 }
-?>
 
+?>

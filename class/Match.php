@@ -12,6 +12,7 @@ class Match extends Qwik {
     const CHAT_TEMPLATE = "<p class='chat [class]'>[chat]</p>";
     const CHAT_ME = 'chat-me';
     const CHAT_YU = 'chat-yu';
+    const CHAT_QG = 'chat-qg';
 
     private $player;
     private $xml;
@@ -220,7 +221,7 @@ class Match extends Qwik {
 
     public function venue(){
         $vid = $this->vid();
-        return = new Venue($vid, FALSE);
+        return new Venue($vid, FALSE);
     }
 
 
@@ -294,11 +295,13 @@ class Match extends Qwik {
         $notify = new Notify($this->player);
         $notify->sendConfirm($this->id());
         $venue = $this->venue();
-        if (isset(venue)){
+        if (isset($venue)){
             $manager = $venue->manager();
             if(isset($manager)){
                 $notify = new Notify($manager);
                 $notify->sendBook($this->id());
+            } else {
+                $this->chat("{Book_facility...}", Match::CHAT_QG);
             }
         }
     }
@@ -414,6 +417,7 @@ class Match extends Qwik {
             case 'keen':
             case 'invitation':
             case 'accepted':
+            case 'tentative':
                 if ($now > self::tzDateTime("$dateStr $hour:00:00", $tz)){
                     self::removeElement($this->xml);
                 }

@@ -40,6 +40,8 @@ class Filter extends Qwik {
           'account'=>'',
           'activate'=>'',
           'available'=>'',
+          'book' =>'',
+          'call' =>'',
           'cancel'=>'',
           'deactivate'=>'',
           'decline'=>'',

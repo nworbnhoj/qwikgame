@@ -212,7 +212,7 @@ class Notify extends Qwik {
 
     private function emailCue($match, $email){
         $paras = array(
-            "{Keen for a match}"
+            "{Keen for a match}",
             "{Please check availability}"
         );
         $day = $match->dateTime()->format('D');
@@ -261,14 +261,15 @@ class Notify extends Qwik {
         $datetime = $match->dateTime();
         $time = date_format($datetime, "ga D");
         $game = $match->game();
-        $paras = array(
+        $paragraphs = array(
             "{Please_book_a...}",
             "{Need to unbook}"
         );
-        $authLink = $this->user->authLink(self::WEEK, 'book.php', array("mid"=>$mid));
+        $parameters = array("id"=>$id, 'qwik'=>'book');
+        $authLink = $this->user->authLink(self::WEEK, 'book.php', $parameters);
         $vars = array(
             "subject"    => "{EmailConfirmSubject}",
-            "paragraphs" => $paras,
+            "paragraphs" => $paragraphs,
             "to"         => $address,
             "gameName"   => self::gameName($game),
             "time"       => $time,

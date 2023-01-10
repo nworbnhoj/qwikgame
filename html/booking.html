@@ -24,8 +24,9 @@
 <div class='center'>
 
     <div id='menu' class='menu'>
-        <a id='account-icon'  class='[ACCOUNT_ICON]'      href='account.php'></a>
-        <a id='info-icon'     class='[INFO_ICON]'         href='info.php'></a>
+        <a id='facility-icon'  class='[FACILITY_ICON]'  href='facility.php'></a>
+        <a id='account-icon'   class='[ACCOUNT_ICON]'   href='account.php'></a>
+        <a id='info-icon'      class='[INFO_ICON]'      href='info.php'></a>
     </div>
 
     <div id='header'>
@@ -37,9 +38,52 @@
 
     <h2 id='bookings' name='bookings'>{Bookings}</h2>
 
-<p>
-    This is a placeholder page to display court bookings for Venue Managers.
-</p>
+
+<div>
+<div id='cancelled.match' class='base json record cancelled'>
+    <button type='button' class='action help [HELP_ICON]'></button>
+    <span class='help'>{Booking_cancelled...}</span>
+    <p class='record'>
+        <span class='tag cancelled'><s>{cancelled}</s></span>
+        {Cancelled_Game_at...}
+    </p>
+</div>
+    [cancelledMatches]
+</div>
+
+
+<div>
+<div id='confirmed.match' class='base json record confirmed'>
+    <form class='record' action='booking.php#matches' method='post'>
+        <input type='hidden' name='id' value='[id]'>
+        <button type='button' class='action help [HELP_ICON]'></button>
+        <span class='help'>{Please_book...}</span>
+        <button type='submit' name='qwik' value='call' class='action [CROSS_ICON]' onclick="showAlert(event, '{call_alert}')"></button>
+        <button type='submit' name='qwik' value='book' class='action [TICK_ICON]'></button>
+        <p class='record'>
+            <span class='tag confirmed'>{confirmed}</span>
+            {Confirmed_Match...}
+        </p>
+    </form>
+</div>
+    [confirmedMatches]
+</div>
+
+
+<div>
+<div id='tentative.match' class='base json record tentative'>
+    <form class='record' action='booking.php#matches' method='post'>
+        <input type='hidden' name='id' value='[id]'>
+        <button type='button' class='action help [HELP_ICON]'></button>
+        <span class='help'>{Players are seeking}</span>
+        <p class='record'>
+            <span class='tag tentative'>{tentative}</span>
+            {Tentative_Match...}
+        </p>
+    </form>
+</div>
+    [tentativeMatches]
+</div>
 
 
 <div id='footer'>

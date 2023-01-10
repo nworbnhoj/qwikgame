@@ -372,7 +372,7 @@ class Player extends User {
 
     public function matchKeen($game, $venue, $date, $hours, $rids=array()) {
         $match = new Match($this,  $this->xml->addChild('match', ''), 'keen', $game, $venue, $date, $hours);
-        $venue->matchAdd($this, $match->id(), $game, $date, $hours);
+        $venue->matchAdd($this->id(), $match->id(), $game, $date, $hours);
         $match->invite($rids);
         return $match;
     }

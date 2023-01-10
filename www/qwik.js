@@ -192,6 +192,11 @@ function clickUndo(event){
 }
 
 
+function showAlert(event, msg){
+    alert(msg);
+}
+
+
 function setButtons(show, hide){
   const DISPLAY = show ? 'inline-block' : 'none';
   for (let button of show) {

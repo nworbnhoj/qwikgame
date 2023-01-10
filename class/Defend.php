@@ -67,6 +67,7 @@ class Defend extends Qwik {
     'account'   => array('qwik', 'nick', 'url', 'email', 'lang', 'notify-email', 'push-endpoint', 'notify-push', 'push-token', 'push-key'),
     'activate'  => array('qwik', 'id'),
     'available' => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'parity', 'smtwtfs', 'lat', 'lng', 'placeid', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'time'),
+    'book'      => array('qwik', 'id', 'book', 'call'),
     'cancel'    => array('qwik', 'id', 'hour', 'delay'),
     'deactivate'=> array('qwik', 'id'),
     'decline'   => array('qwik', 'id'),

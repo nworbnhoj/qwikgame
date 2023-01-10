@@ -85,7 +85,7 @@ function qwikFacility($req, $venue){
     if(!isset($venue) || !isset($req['game'])){ return NULL; }
     $days = array();
     $ddd = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
-    foreach($ddd as $d);
+    foreach($ddd as $d){
         if (isset($req[$d])) {
             $days[$d] = $req[$d];
         }

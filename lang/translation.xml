@@ -135,6 +135,12 @@
 <phrase key="Sat"><words lang="en">Sat</words></phrase>
 <phrase key="Sun"><words lang="en">Sun</words></phrase>
 <phrase key="default_availability..."><words lang="en">Default availablity:</words></phrase>
+<phrase key="Booking_cancelled..."><words lang="en">Unfortunately this match has been cancelled and the facility booking is no longer required</words></phrase>
+<phrase key="Please_book..."><words lang="en">Please book a [gameName] facility for this Match. Click the tick to confirm the booking. If there is a problem then click the cross to contact the Players."</words></phrase>
+<phrase key="Players are currently seeking"><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt;: [Player1] vs. [Player2]</words></phrase>
+<phrase key="Players are seeking..."><words lang="en">Players are currently seeking to play Games at this Venue."</words></phrase>
+<phrase key="Tentative_Match..."><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; by [playerName].</words></phrase>
+<phrase key="Book_facility..."><words lang="en">Please contact Venue to book facility.</words></phrase>
 <phrase key="I_am_keen_to..."><words lang="en">I am &lt;b&gt;keen&lt;/b&gt; to play [selectGame] at [selectVenue]</words><words lang="es">Estoy dispuesto a jugar al [selectGame] en [selectVenue]</words><words lang="bg">&amp;lt;b&amp;gt;&#x418;&#x441;&#x43A;&#x430;&#x43C; &#x434;&#x430; &#x438;&#x433;&#x440;&#x430;&#x44F;&amp;lt;/b&amp;gt; [selectGame] &#x432; [selectVenue]</words></phrase>
 <phrase key="select_from_map"><words lang="en">select from map</words></phrase>
 <phrase key="at"><words lang="en">at</words><words lang="es">a</words><words lang="zh">&#x5728;</words><words lang="fr">&#xE0;</words><words lang="ru">&#x432;</words><words lang="hi">&#x92A;&#x930;</words><words lang="ar">&#x641;&#x64A;</words><words lang="jp">&#x301C;&#x3067;</words><words lang="bg">&#x432;/&#x432;&#x44A;&#x432;/&#x43F;&#x440;&#x438;</words></phrase>
@@ -338,4 +344,5 @@
 <phrase key="forum"><words lang="en">forum</words></phrase>
 <phrase key="undo"><words lang="en">undo</words></phrase>
 <phrase key="rival"><words lang="en">rival</words><words lang="bg">съперник</words></phrase>
+<phrase key="call_alert"><words lang="en">The Players have been asked to contact the Venue.</words></phrase>
 </translation>

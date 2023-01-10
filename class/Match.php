@@ -335,7 +335,17 @@ class Match extends Qwik {
                 }
                 foreach($rivals as $rival){
                     $rival->matchCancel($mid);
-                }         
+                }
+                $venueMatch = $venue-match($mid);
+                if(isset($venueMatch)){
+                    $venueMatch->status('cancelled');
+                    $manager = $venue->manager();
+                    if(isset($manager)){
+                        $notify = new Notify($manager);
+                        $notify->sendCancel($venueMatch);
+                    }
+                    $venue->save();
+                }
                 break;
             case 'keen':
                 foreach($rivals as $rival){
@@ -489,10 +499,6 @@ class Match extends Qwik {
         $vars['rivalLink'] = $rivalLink;
         return $vars;
     }
-
-
-
-
 
 
 

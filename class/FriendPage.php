@@ -14,10 +14,6 @@ class FriendPage extends Page {
             <option value='-2'>{much_weaker}</option>
         </select>";
 
-    protected static function loadUser($uid){
-        return new Player($uid);
-    }
-
     private $game;
 
     public function __construct($templateName='friend'){
@@ -29,6 +25,11 @@ class FriendPage extends Page {
             $this->logout();
             return;
         }
+    }
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
     }
 
 

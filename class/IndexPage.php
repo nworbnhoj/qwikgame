@@ -13,28 +13,29 @@ class IndexPage extends Page {
    ****************************************************************************/
   const HONEYPOT = array('email'=>'name');
 
-    protected static function loadUser($uid){
-        return parent::loadUser($uid);
-    }
-
 
     public function __construct($templateName='index'){
       parent::__construct(NULL, $templateName, self::HONEYPOT);
+    }
+
+
+    protected function loadUser($uid){
+        return parent::loadUser($uid);
     }
     
     
     public function serve($history=NULL){
         $player = $this->player();
-      if(isset($player)){
-        header("Location: ".QWIK_URL."match.php", TRUE, 307);
-        exit;
-      }
+        if(isset($player)){
+            header("Location: ".QWIK_URL."match.php", TRUE, 307);
+            exit;
+        }
         $manager = $this->manager();
-      if(isset($manager)){
-        header("Location: ".QWIK_URL."booking.php", TRUE, 307);
-        exit;
-      }
-      parent::serve($history);
+        if(isset($manager)){
+            header("Location: ".QWIK_URL."booking.php", TRUE, 307);
+            exit;
+        }
+        parent::serve($history);
     }
     
 

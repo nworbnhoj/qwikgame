@@ -6,10 +6,6 @@ require_once 'UploadList.php';
 
 class UploadPage extends Page {
 
-    protected static function loadUser($uid){
-        return new Player($uid);
-    }
-
     public function __construct($templateName='upload'){
         parent::__construct(NULL, $templateName);
 
@@ -58,6 +54,11 @@ class UploadPage extends Page {
           }
           $player->save();
         }
+    }
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
     }
     
     

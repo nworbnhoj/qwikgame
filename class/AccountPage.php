@@ -8,10 +8,6 @@ class AccountPage extends Page {
 
     const LINK_REP = "<a href='info.php#reputation'>{Reputation}</a>";
 
-    protected static function loadUser($uid){
-        return parent::loadUser($uid);
-    }
-
     public function __construct($templateName='account'){
         parent::__construct(NULL, $templateName);
 
@@ -21,6 +17,10 @@ class AccountPage extends Page {
             $this->logout();
             return;
         }
+    }
+
+    protected function loadUser($uid){
+        return new User($uid, FALSE);
     }
 
 

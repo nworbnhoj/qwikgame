@@ -6,10 +6,6 @@ require_once 'FacilityMatchList.php';
 
 class BookingPage extends Page {
 
-    protected static function loadUser($uid){
-        return new Manager($uid);
-    }
-
     private $venue;
 
     public function __construct($templateName='booking'){
@@ -34,6 +30,11 @@ class BookingPage extends Page {
                 }
             }
         }
+    }
+
+
+    protected function loadUser($uid){
+        return new Manager($uid);
     }
 
 

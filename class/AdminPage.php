@@ -7,10 +7,6 @@ require_once 'ShaList.php';
 
 class AdminPage extends Page {
 
-    protected static function loadUser($uid){
-        return parent::loadUser($uid);
-    }
-
     private $translation;
     private $pending;
     private $variables;
@@ -28,6 +24,11 @@ class AdminPage extends Page {
         $this->translation = new Translation(self::$translationFileName);
         $this->pending = new Translation('pending.xml');
         $this->variables = parent::variables();
+    }
+
+
+    protected function loadUser($uid){
+        return new User($uid, FALSE);
     }
 
 

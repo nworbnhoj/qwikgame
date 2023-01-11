@@ -8,10 +8,6 @@ require_once 'Locate.php';
 
 class FacilityPage extends Page {
 
-    protected static function loadUser($uid){
-        return new Manager($uid);
-    }
-
     private $venue;
 
     public function __construct($templateName='match'){
@@ -38,6 +34,11 @@ class FacilityPage extends Page {
             return;            
         }
     }    
+
+
+    protected function loadUser($uid){
+        return new Manager($uid);
+    }
 
 
     public function processRequest(){

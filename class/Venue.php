@@ -581,12 +581,10 @@ class Venue extends Qwik {
         foreach($days as $day => $hrs){
             $xml_array = $element->xpath("hrs[@day='$day']");
             if(isset($xml_array[0])){
-                $e = $xml_array[0];
-                $e = htmlspecialchars($hrs);
-            } else {
-                $e = $element->addChild('hrs', htmlspecialchars($hrs));
-                $e->addAttribute('day', $day);
+                Qwik::removeElement($xml_array[0]);
             }
+            $e = $element->addChild('hrs', htmlspecialchars($hrs));
+            $e->addAttribute('day', $day);
         }
         return $element['id'];
     }
@@ -596,17 +594,17 @@ class Venue extends Qwik {
         $available = 0;
         $element = $this->facility($game);
         if(isset($element)) {
-            $dayYmd = $dateTime->format('Y-m-d');
-            $available = $element->xpath("hrs[day='$dayYmd']");
-            if(!isset($available)){
-                $dayD = $dateTime->format('D');
-                $available = $element->xpath("hrs[day='$dayD']");
-                if(!isset($available)){
-                    $available = 0;
-                }
+            $dayYmd = $datetime->format('Y-m-d');
+            $xml_array = $element->xpath("hrs[@day='$dayYmd']");            
+            if(isset($xml_array[0])){
+                $available = $xml_array[0];
+            } else {
+                $dayD = $datetime->format('D');
+                $xml_array = $element->xpath("hrs[@day='$dayD']");          
+                $available = isset($xml_array[0]) ? $xml_array[0] : 0 ;
             }
         }
-        return $available;
+        return new Hours($available);
     }
 
 
@@ -615,7 +613,7 @@ class Venue extends Qwik {
         if (is_array($xml_array) && isset($xml_array[0])){
             $xml = $xml_array[0];
             $pid = $xml['pid'];
-            $player = new Player($xml, FALSE);
+            $player = new Player($pid, FALSE);
             return new Match($player, $xml);
         }
         return NULL;

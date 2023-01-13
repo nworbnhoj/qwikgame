@@ -53,11 +53,7 @@ class Manager extends User {
 
     
     public function matchID($id){
-        $xml = $this->xml->xpath("match[@id='$id']");
-        if (is_array($xml) && isset($xml[0])){
-            return new Match($this, $xml[0]);
-        }
-        return NULL;
+        return $this->venue()->match($id);
     }
 
 }

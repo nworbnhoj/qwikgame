@@ -80,6 +80,11 @@ class Match extends Qwik {
     }
 
 
+    public function player(){
+        return new Player($this->pid());
+    }
+
+
     public function playerName(){
         return $this->player()->nick();
     }
@@ -451,7 +456,7 @@ class Match extends Qwik {
         // re-check venueHours immediately before display to Player
         $datetime = $this->dateTime();
         $venueHours = isset($venue) ? $venue->facilityHours($game, $datetime) : 0 ;
-        $hours = $this->hours() & $venueHours;
+        $hours = $this->hours().append($venueHours);
         $repWord = $this->rivalRep();
         $rivalRep = strlen($repWord)==0 ? '{unknown}' : $repWord;
         $vars = array(

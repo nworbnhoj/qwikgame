@@ -3,7 +3,6 @@ Feature: I need to manage the facilities at my venue
 	As a manager
 	Managers need to be able to register the facilities at their venue
 	
-	Scenario: Register at qwikgame
 	Scenario: Register as Venue Manager at qwikgame
 	  Given "new.manager@qwikgame.org" is not registered with qwikgame
 	  When I need to manage the "Squash" facility at "Qwikgame Venue|South Pole|AU|AQ"
@@ -12,4 +11,13 @@ Feature: I need to manage the facilities at my venue
 	  And I click on the link in the welcome email
 	  Then my email "new.manager@qwikgame.org" will be registered with qwikgame
 	  And I am the Manager at "Qwikgame Venue|South Pole|AU|AQ"
-	
+
+	Scenario: Add a new Facility at qwikgame
+	  Given "new.manager@qwikgame.org" is logged in
+	  And I am the Manager at "Qwikgame Venue|South Pole|AU|AQ"
+	  And I enter "Tue" at "13" hours
+	  And I enter "Tue" at "14" hours
+	  And I enter "Tue" at "15" hours
+	  And I add a "chess" facility at these hours
+	  Then "chess" "is" available "Tue" at "14"
+	  And "chess" "is not" available "Tue" at "19"

@@ -64,8 +64,10 @@ class FacilityPage extends Page {
                     self::logMsg("failed to register manager: $logReq");
                     break;
                 }
+                $vid = $this->venue->id();
                 $manager = $this->manager;
-                $manager->email($req['email']);
+                $manager->email($req['email']);       
+                $manager->setVenue($vid);
                 $manager->save();
                 if(!isset($req['game'])
                 || !isset($req['vid'])){
@@ -85,6 +87,7 @@ class FacilityPage extends Page {
                 $result =  NULL;
         }
 
+        $this->venue->save(TRUE);
         return $result;
     }
 
@@ -130,7 +133,6 @@ class FacilityPage extends Page {
             $days[$tom->format('Y-m-d')] = $req['tomorrow'];
         }
         $newID = $venue->facilitySet($req['game'], $days);
-        $venue->save(TRUE);
         return $newID;
     }
 

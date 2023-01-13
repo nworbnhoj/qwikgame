@@ -77,6 +77,15 @@ class Post {
   }
 
 
+  static function facilityPage($pid, $post){
+    $_GET = array();
+    $_SESSION['pid'] = $pid;
+    $_POST=$post;
+    $page = new FacilityPage();
+    return $page->processRequest();
+  }
+
+
 
 
   public function __construct(){ }

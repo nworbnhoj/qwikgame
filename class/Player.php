@@ -416,6 +416,9 @@ class Player extends User {
             $match->hours($inviteHours);
             $match->addRival($rid, $parity, $rival->repWord(), $rival->nick());
             $this->save();
+            $pid = $this->id();
+            $venue = new Venue($match->vid());
+            $venue->matchAdd($pid, $match->id(), $match->game(), $match->date(), $match->hours());
             $notify = new Notify($this);
             $notify->sendInvite($match, $email);
             return $match;

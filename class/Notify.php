@@ -216,14 +216,14 @@ class Notify extends Qwik {
             "{Please check availability}"
         );
         $day = $match->dateTime()->format('D');
-        $hrs = $match->hours()->bits();
+        $roster = $match->hours()->roster();
         $vars = array(
             "subject"    => "{EmailCueSubject}",
             "paragraphs" => $paras,
             "to"         => $email,
             "gameName"   => self::gameName($match->game()),
             "day"        => $match->mday(),
-            "available"  => Page::daySpan($hrs, $day),
+            "available"  => Page::daySpan($roster, $day),
             "authLink"   => $this->user->authLink(self::WEEK, 'facility.php')
         );
         $email = new Email($vars, $this->language());
@@ -265,7 +265,7 @@ class Notify extends Qwik {
             "{Please_book_a...}",
             "{Need to unbook}"
         );
-        $parameters = array("id"=>$id, 'qwik'=>'book');
+        $parameters = array("id"=>$mid, 'qwik'=>'book');
         $authLink = $this->user->authLink(self::WEEK, 'book.php', $parameters);
         $vars = array(
             "subject"    => "{EmailConfirmSubject}",

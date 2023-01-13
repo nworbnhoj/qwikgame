@@ -45,7 +45,7 @@ class FeatureContext implements Context
     private $token;
     private $venue;
     private $vid;
-    private $log;
+    public $log;
 
     /**
      * Initializes context.
@@ -57,6 +57,7 @@ class FeatureContext implements Context
     public function __construct()
     {
         $this->log = new Logging();
+        $this->log->lfile("behat.log");
     }    
     
 
@@ -399,7 +400,7 @@ class FeatureContext implements Context
 
 
     private $paritySymbol = array('<<'=>-2, '<'=>-1, '='=>0, '>'=>1, '>>'=>2);
-    private $parityPhrase = array('much_weaker'=>-2, 'weaker'=>-1, 'well_matched'=>0, 'stronger'=>1, 'much_stronger'=>2, 'any'=>2);
+    private $parityPhrase = array('much_weaker'=>-2, 'weaker'=>-1, 'well_matched'=>0, 'stronger'=>'+1', 'much_stronger'=>'+2', 'any'=>'+2');
 
 
     /**
@@ -630,12 +631,86 @@ class FeatureContext implements Context
 
 
     /**
-     * @Then I am the Manager at :vid
+     * @Given :email am the Manager at :vid
      */
     public function iAmTheManagerAt($vid)
     {        
+        $uid = $this->uid;;
+        $manager = new Manager($uid);
+        Assert::assertNotNull($manager, "Manager missing");
         $venue = new Venue($vid);
-        Assert::assertNotNull(new Manager($this->uid), "Manager missing");
-        Assert::assertEquals($this->uid, $venue->manager()->id(), "Manager mismatch");
+        Assert::assertNotNull($venue, "Venue missing");
+        Assert::assertEquals($uid, $venue->manager()->id(), "Manager mismatch");
+        $this->manager = $manager;
+        $this->venue = $venue;
     }
+
+
+    /**
+     * @Given :email is logged in
+     */
+    public function isLoggedIn($email)
+    {     
+        $this->email = $email;
+        $this->uid = User::anonID($email);
+    }
+
+
+
+    /**
+     * @When I enter :day at :hr hours
+     */
+    public function iEnterAtHours($day, $hr)
+    {
+        if (!isset($this->req[$day])){
+            $this->req[$day] = 0;
+        }
+        $hours = new Hours($this->req[$day]);
+        $hours->set($hr);
+        $this->req[$day] =  $hours->bits();
+    }
+
+
+    /**
+     * @Given I add a :game facility at these hours
+     */
+    public function iAddAFacilityAtTheseHours($game)
+    {
+        $this->req['qwik'] = 'facility';
+        $this->req['game'] = $game;
+        $this->req['vid'] = $this->venue->id();
+        $suid = Player::subID($this->uid);
+        $json_req = json_encode($this->req);
+        $this->log->lwrite("Post::facilityPage( $suid  $json_req )");        
+        $this->id = Post::facilityPage($this->uid, $this->req);
+    }
+
+
+    /**
+     * @Then :game :is available :day at :hour
+     */
+    public function isAvailableAt($game, $is, $day, $hour)
+    {
+        $venue = $this->venue;
+        $datetime = $venue->dateTime();
+        $datetime->modify("next $day");
+        $venueHours = $venue->facilityHours($game, $datetime);
+        $testHours = new Hours();
+        $testHours->set($hour);
+        $bits = $testHours->bits() & $venueHours->bits();
+        switch ($is){
+            case 'is':
+                Assert::assertTrue($bits != 0, "facility IS available when it should be") ;
+                break;
+            case 'is not':
+                Assert::assertTrue($bits == 0, "facility IS NOT available when it should NOT be") ;
+                break;
+            default:
+                Assert::assertTrue(FALSE, "invalid switch [$is]");
+        }
+
+    }
+
+
+
 }

@@ -37,17 +37,17 @@ class Manager extends User {
     }
 
 
-    public function authURL($shelfLife, $target='booking.php', $param=NULL){
+    public function authURL($shelfLife, $target='facility.php', $param=NULL){
         return parent::authURL($shelfLife, $target, $param);
     }
 
     
-    public function authLink($shelfLife, $target='booking.php', $param=NULL){
+    public function authLink($shelfLife, $target='facility.php', $param=NULL){
         return parent::authLink($shelfLife, $target, $param);
     }
 
 
-    public function emailWelcome($email, $req, $target='booking.php'){
+    public function emailWelcome($email, $req, $target='facility.php'){
         return parent::emailWelcome($email, $req, $target);
     }
 

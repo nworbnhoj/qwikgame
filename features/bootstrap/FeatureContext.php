@@ -79,9 +79,9 @@ class FeatureContext implements Context
     {
         $this->email = $address;
 
-        $this->pid = Player::anonID($address);
-        Player::removePlayer($this->pid);
-        $player = new Player($this->pid, TRUE);
+        $this->uid = Player::anonID($address);
+        Player::removePlayer($this->uid);
+        $player = new Player($this->uid, TRUE);
         $player->email($address);
         $token = $player->token();
         $player->save();
@@ -92,7 +92,7 @@ class FeatureContext implements Context
      */
     public function iAmNotAvailableToPlay()
     {       
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $available = $player->available();
         foreach($available as $avail){
             removeElement($available);
@@ -166,7 +166,7 @@ class FeatureContext implements Context
     public function iProvideMyEmailAddress($address)
     {
         $this->email = $address;
-        $this->pid = Player::anonID($address);
+        $this->uid = Player::anonID($address);
         $this->req['email'] = $address;
     }
  
@@ -182,7 +182,7 @@ class FeatureContext implements Context
         $req['name'] = $email;  // side-step honeypot
         unset($req['email']);
         $this->id = Post::indexPage($req);
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $this->emailWelcome = $player->emailWelcome($email, $req);
     }
     
@@ -192,9 +192,9 @@ class FeatureContext implements Context
      */
     public function iSubmitThisFavourite()
     {
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $this->req['qwik'] = 'available';
-        $this->id = Post::favoritePage($this->pid, $this->req);
+        $this->id = Post::favoritePage($this->uid, $this->req);
     }
 
 
@@ -206,7 +206,7 @@ class FeatureContext implements Context
         $req = array();
         $req['qwik'] = 'delete';
         $req['id'] = $this->id;
-        $this->id = Post::favoritePage($this->pid, $req);
+        $this->id = Post::favoritePage($this->uid, $req);
     }
 
 
@@ -215,23 +215,28 @@ class FeatureContext implements Context
      */
     public function iClickOnTheLinkInTheWelcomeEmail()
     {
-        Assert::assertNotNull($this->emailWelcome);
+        Assert::assertNotNull($this->emailWelcome, "null emailWelcome");
         $body = $this->emailWelcome->body();
         $dom = DOMDocument::loadHTML($body);
         $link = $dom->getElementById('login');
-        Assert::assertNotNull($link);
+        Assert::assertNotNull($link, "null link");
         $href = $link->getAttribute('href');
-        Assert::assertNotNull($href);   
+        Assert::assertNotNull($href, "null href");   
         $query = parse_url($href, PHP_URL_QUERY);
-        Assert::assertNotNull($query);
+        Assert::assertNotNull($query, "null query");
         parse_str($query, $req);
-        Assert::assertNotNull($req);
+        Assert::assertNotNull($req, "null req");
 
-        $this->id = Get::favoritePage($req);
+        if(strpos($href, 'favorite.php')){
+            $this->id = Get::favoritePage($req);
+        }
+        if(strpos($href, 'facility.php')){
+            $this->id =  Get::facilityPage($req);
+        }
 
         Assert::assertTrue(
             isset($this->id),
-            "The player registration failed."
+            "The registration failed with: href:\n   $href"
         );
     }
     
@@ -242,7 +247,7 @@ class FeatureContext implements Context
     public function myEmailWillBeRegisteredWithQwikgame($address)
     {
         Assert::assertEquals($this->email, $address);
-        Assert::assertNotNull(new Player($this->pid));
+        Assert::assertNotNull(new User($this->uid));
     }
     
     
@@ -269,7 +274,7 @@ class FeatureContext implements Context
             );
         Post::friendPage($rid, $req);
 
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $rival = new Player($rid);
         $parity = $player->parity($rival, $game);
         foreach ($this->days as $day) {
@@ -479,8 +484,8 @@ class FeatureContext implements Context
      */
     public function aRankingFile($game, $rid, $plyr)
     {
-        $this->pid = $this->rivals[$plyr];
-        $player = new Player($this->pid);
+        $this->uid = $this->rivals[$plyr];
+        $player = new Player($this->uid);
         $ranking = $player->importRanking($rid, $game);
         $this->rankingID = $ranking->id();
     }
@@ -493,7 +498,7 @@ class FeatureContext implements Context
     {
         $rid = $this->rankingID;
         $ranking = new Ranking($rid);
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $player->rankingActivate($rid);
     }
 
@@ -505,7 +510,7 @@ class FeatureContext implements Context
     {
         $rid = $this->rankingID;
         $ranking = new Ranking($rid);
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $player->rankingDeactivate($rid);
     }
 
@@ -576,7 +581,7 @@ class FeatureContext implements Context
         $this->req['rival'] = $email;
         $this->req['parity'] = $options[$parity];
         $this->req['game'] = $game;
-        $this->id = Post::friendPage($this->pid, $this->req);
+        $this->id = Post::friendPage($this->uid, $this->req);
     }
 
     /**
@@ -587,12 +592,50 @@ class FeatureContext implements Context
         $rid = Player::anonID($email);
         $rival = new Player($rid, FALSE);
         $checkParity = $this->parityPhrase[$parityPhrase];
-        $player = new Player($this->pid);
+        $player = new Player($this->uid);
         $calcParity = $player->parity($rival, $game);
 
         Assert::assertEquals($checkParity, $calcParity);
     }
 
 
-    
+    /**
+     * @When I need to manage the :game facility at :vid
+     */
+    public function iNeedToManageTheFacilityAt($game, $vid)
+    {
+        $this->game = $this->gameKey($game);
+        $this->vid = $vid;
+        $this->venue = new Venue($this->vid);
+
+        $this->req['game'] = $this->game;
+        $this->req['vid'] = $this->vid;
+    }
+
+
+    /**
+     * @When I register as Manager
+     */
+    public function iRegisterAsManager()
+    {        
+        $this->req['qwik'] = 'facility';
+        $req = $this->req;
+        $email = $req['email'];
+        $req['name'] = $email;  // side-step honeypot
+        unset($req['email']);
+        $this->id = Post::indexPage($req);
+        $manager = new Manager($this->uid);
+        $this->emailWelcome = $manager->emailWelcome($email, $req);
+    }
+
+
+    /**
+     * @Then I am the Manager at :vid
+     */
+    public function iAmTheManagerAt($vid)
+    {        
+        $venue = new Venue($vid);
+        Assert::assertNotNull(new Manager($this->uid), "Manager missing");
+        Assert::assertEquals($this->uid, $venue->manager()->id(), "Manager mismatch");
+    }
 }

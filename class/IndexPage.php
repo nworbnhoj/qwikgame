@@ -47,8 +47,8 @@ class IndexPage extends Page {
             case "available":
                 $result = $this->qwikAvailable($email);
                 break;
-            case "manager":
-                $result = $this->qwikManager($email);
+            case "facility":
+                $result = $this->qwikFacility($email);
                 break;
             case "recover":
                 $result = $this->qwikRecover($email);
@@ -85,7 +85,7 @@ class IndexPage extends Page {
     }
 
 
-    function qwikManager($email){
+    function qwikFacility($email){
         if (!isset($email)){
             return FALSE;
         }

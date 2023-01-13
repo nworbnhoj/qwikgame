@@ -2,6 +2,7 @@
 
 require_once 'class/MatchPage.php';
 require_once 'class/FavoritePage.php';
+require_once 'class/FacilityPage.php';
 
 
 class Get {
@@ -24,6 +25,14 @@ class Get {
     $_POST = array();
     $_GET = $get;
     $page = new FavoritePage();
+    return $page->processRequest();
+  }
+
+
+  static function facilityPage($get){
+    $_POST = array();
+    $_GET = $get;
+    $page = new FacilityPage();
     return $page->processRequest();
   }
 

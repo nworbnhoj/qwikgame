@@ -118,32 +118,6 @@ function qwikAccount($user, $request){
         isset($request['push-token']) ? $request['push-token'] : NULL,
         isset($request['push-key']) ? $request['push-key'] : NULL
     );
-
-
-    $game = $request['game'];
-    $vid = $request['vid'];
-    $venue = new Venue($vid, FALSE);
-    if (isset($venue) && isset($game)){
-        $hours = Hours::HRS_9AM_to_5PM;
-        switch(get_class($this->user)){
-            case "Player":
-                $user->availableAdd($game, $vid, 'any', $venue->tz(), $hours, $req);
-                $venue->addPlayer($user->id());
-                break;
-            case "Manager":
-                $user->setVenue($vid);
-                $days = array();
-                $ddd = array('Mon', 'Tue','Wed', 'Thu', 'Fri');
-                foreach($ddd as $d){
-                    $days[$d] = $hours;
-                }
-                $venue->facilitySet($game, $days);
-                $venue->setManager($user->id());
-                break;
-            default:
-        }
-        $venue->save(TRUE);
-    }
 }
 
 

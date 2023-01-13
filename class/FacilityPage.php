@@ -9,6 +9,7 @@ require_once 'Locate.php';
 class FacilityPage extends Page {
 
     private $venue;
+    private $manager;
 
     public function __construct($templateName='match'){
         parent::__construct(NULL, $templateName);
@@ -19,20 +20,28 @@ class FacilityPage extends Page {
             $this->logout();
             return;
         }
-        $this->venue = $manager->venue();
+        $this->manager = $manager;
+
+        $vid = $this->req('vid');
+        if(isset($vid)){
+            $this->venue = new Venue($vid);
+        }
 
         //sanity check
-        $vid = $this->req('vid');
-        if(isset($vid) && $vid != $this->venue->id()){
-            self::alert("{Oops}");
-            $msg = "FacilityPage vid mismatch:";
-            $msg .= " mid=".$manager->id();
-            $msg .= " m.vid="$this->venue->id();
-            $msg .= " r.vid=".$vid;
-            self::log()->lwrite($msg);
-            $this->logout();
-            return;            
-        }
+        // $venue = $this->venue;
+        // if(isset($venue)){
+        //     $venueManager = $venue->manager();
+        //     if (isset($venueManager) && $venueManager->id() != $manager->id()){
+        //         self::alert("{Oops}");
+        //         $msg = "FacilityPage vid mismatch:";
+        //         $msg .= " mid=".$manager->id();
+        //         $msg .= " m.vid=".$this->venue->id();
+        //         $msg .= " r.vid=".$vid;
+        //         self::logMsg($msg);
+        //         // $this->logout();
+        //         // return;
+        //     }       
+        // }
     }    
 
 
@@ -45,9 +54,30 @@ class FacilityPage extends Page {
         $result = parent::processRequest();
         if(!is_null($result)){ return $result; }   // request handled by parent
         
+
         $qwik = $this->req('qwik');
         $req = $this->req();
         switch ($qwik) {
+            case "register":
+                if(!isset($req['email'])){
+                    $logReq = print_r($req, true);
+                    self::logMsg("failed to register manager: $logReq");
+                    break;
+                }
+                $manager = $this->manager;
+                $manager->email($req['email']);
+                $manager->save();
+                if(!isset($req['game'])
+                || !isset($req['vid'])){
+                    break;
+                }
+                $ddd = array('Mon', 'Tue','Wed', 'Thu', 'Fri');
+                foreach($ddd as $d){
+                    $req[$d] = Hours::HRS_9AM_to_5PM;
+                }                
+                $this->venue->setManager($manager->id());
+
+                // intentional flow thru to facility
             case "facility":
                 $result = $this->qwikFacility($req, $this->venue);
                 break;
@@ -82,26 +112,28 @@ class FacilityPage extends Page {
 ///// QWIK SWITCH ///////////////////////////////////////////////////////////
 
 
-function qwikFacility($req, $venue){
-    if(!isset($venue) || !isset($req['game'])){ return NULL; }
-    $days = array();
-    $ddd = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
-    foreach($ddd as $d){
-        if (isset($req[$d])) {
-            $days[$d] = $req[$d];
+    function qwikFacility($req, $venue){
+        if(!isset($venue) || !isset($req['game'])){ return NULL; }
+        $days = array();
+        $ddd = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
+        foreach($ddd as $d){
+            if (isset($req[$d])) {
+                $days[$d] = $req[$d];
+            }
         }
+        $now = $venue->dateTime('now');
+        if (isset($req['today'])) {
+            $days[$now->format('Y-m-d')] = $req['today'];
+        }
+        if (isset($req['tomorrow'])) {
+            $tom = $now::add(new DateInterval("P1D"));
+            $days[$tom->format('Y-m-d')] = $req['tomorrow'];
+        }
+        $newID = $venue->facilitySet($req['game'], $days);
+        $venue->save(TRUE);
+        return $newID;
     }
-    $now = $this->dateTime('now');
-    if (isset($req['today'])) {
-        $days[$now->format('Y-m-d')] = $req['today'];
-    }
-    if (isset($req['tomorrow'])) {
-        $tom = $now::add(new DateInterval("P1D"));
-        $days[$tom->format('Y-m-d')] = $req['tomorrow'];
-    }
-    $newID = $venue->facilitySet($req['game'], $days);
-    $venue->save(TRUE);
-    return $newID;
+
 }
 
 

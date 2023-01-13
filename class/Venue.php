@@ -2,6 +2,7 @@
 
 
 require_once 'Qwik.php';
+require_once 'Manager.php';
 
 class Venue extends Qwik {
 
@@ -227,8 +228,8 @@ class Venue extends Qwik {
 
 
     public function manager(){
-        $mid = (string) $this->xml->xpath('manager');
-        return isset($mid) ? new Manager($mid) : NULL;
+        $mid = (string) $this->xml['manager'];
+        return User::exists($mid) ? new Manager($mid) : NULL;
     }    
 
 
@@ -303,7 +304,8 @@ class Venue extends Qwik {
 
 
     public function facility($game){
-        return $this->xml->xpath("facility[game='$game'");
+        $xml_array = $this->xml->xpath("//facility[@game='$game']");
+        return isset($xml_array[0]) ? $xml_array[0] : NULL;
     }
 
 
@@ -577,8 +579,9 @@ class Venue extends Qwik {
             $element->addAttribute('game', $game);
         }
         foreach($days as $day => $hrs){
-            $e = $element->xpath("hrs[day='$day']");
-            if(isset($e)){
+            $xml_array = $element->xpath("hrs[@day='$day']");
+            if(isset($xml_array[0])){
+                $e = $xml_array[0];
                 $e = htmlspecialchars($hrs);
             } else {
                 $e = $element->addChild('hrs', htmlspecialchars($hrs));
@@ -633,7 +636,7 @@ class Venue extends Qwik {
             $xml->addAttribute('game', $game);
             $xml->addAttribute('date', $date);
             $xml->addAttribute('hrs', $hours->bits());
-            $this->save();
+            $this->save(TRUE);
 
             $manager = $this->manager();
             if(isset($manager)){

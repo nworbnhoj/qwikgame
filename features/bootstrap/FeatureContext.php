@@ -11,6 +11,7 @@ require_once 'class/MatchPage.php';
 require_once 'class/FriendPage.php';
 require_once 'class/FavoritePage.php';
 require_once 'class/AccountPage.php';
+require_once 'class/FacilityMatchList.php';
 
 require_once 'features/bootstrap/Post.php';
 require_once 'features/bootstrap/Get.php';
@@ -218,8 +219,9 @@ class FeatureContext implements Context
     {
         Assert::assertNotNull($this->emailWelcome, "null emailWelcome");
         $body = $this->emailWelcome->body();
-        $dom = DOMDocument::loadHTML($body);
-        $link = $dom->getElementById('login');
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->loadHTML($body);
+        $link = $doc->getElementById('login');
         Assert::assertNotNull($link, "null link");
         $href = $link->getAttribute('href');
         Assert::assertNotNull($href, "null href");   
@@ -631,28 +633,28 @@ class FeatureContext implements Context
 
 
     /**
-     * @Given :email am the Manager at :vid
-     */
-    public function iAmTheManagerAt($vid)
-    {        
-        $uid = $this->uid;;
-        $manager = new Manager($uid);
-        Assert::assertNotNull($manager, "Manager missing");
-        $venue = new Venue($vid);
-        Assert::assertNotNull($venue, "Venue missing");
-        Assert::assertEquals($uid, $venue->manager()->id(), "Manager mismatch");
-        $this->manager = $manager;
-        $this->venue = $venue;
-    }
-
-
-    /**
      * @Given :email is logged in
      */
     public function isLoggedIn($email)
     {     
         $this->email = $email;
         $this->uid = User::anonID($email);
+    }
+
+
+    /**
+     * @Given :email am the Manager at :vid
+     */
+    public function iAmTheManagerAt($vid)
+    {        
+        $this->vid = $vid;
+        $uid = $this->uid;
+        $manager = new Manager($uid);
+        Assert::assertNotNull($manager, "Manager missing");
+        $venue = new Venue($vid);
+        Assert::assertNotNull($venue, "Venue missing");
+        Assert::assertEquals($uid, $venue->manager()->id(), "Manager mismatch");
+        $this->manager = $manager;
     }
 
 
@@ -678,10 +680,7 @@ class FeatureContext implements Context
     {
         $this->req['qwik'] = 'facility';
         $this->req['game'] = $game;
-        $this->req['vid'] = $this->venue->id();
-        $suid = Player::subID($this->uid);
-        $json_req = json_encode($this->req);
-        $this->log->lwrite("Post::facilityPage( $suid  $json_req )");        
+        $this->req['vid'] = $this->vid;
         $this->id = Post::facilityPage($this->uid, $this->req);
     }
 
@@ -691,7 +690,7 @@ class FeatureContext implements Context
      */
     public function isAvailableAt($game, $is, $day, $hour)
     {
-        $venue = $this->venue;
+        $venue = new Venue($this->vid);
         $datetime = $venue->dateTime();   
         $next = in_array($day, $this->days) ? "next " : "";
         $datetime->modify("$next $day");
@@ -710,6 +709,122 @@ class FeatureContext implements Context
                 Assert::assertTrue(FALSE, "invalid switch [$is]");
         }
 
+    }
+
+
+    /**
+     * @Given /([A-Z]) is keen to play ([a-z]+) with ([A-Z])/
+     */
+    public function playerIsKeenToPlayGameWithRival($p, $game, $r)
+    {
+        $pidA = $this->rivals[$p];
+        $pidB = $this->rivals[$r];
+
+        $playerA = new Player($pidA);
+        $playerB = new Player($pidB);
+
+        $this->game = $game;
+        $this->mid = Post::matchPageKeen(
+            $pidA, 
+            $game, 
+            $this->vid,
+            '0',
+            1024,
+            array($playerB->email())
+        );
+        $venue = new Venue($this->vid);
+        $match = $venue->match($this->mid);
+        Assert::assertNotNull($match, "Match exists at Venue $this->mid");
+    }
+
+   
+    /**
+     * @Then the :status Match is listed
+     */
+    public function aStatusMatchIsListed($status)
+    {
+        $mid = $this->mid;
+        $html = Post::bookingPage($this->uid, array());
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->loadHTML($html);
+        $xml = simplexml_import_dom($dom);
+        $xml_array = $xml->xpath("//div[contains(@class, '$status')]/form/input[@value='$mid']");
+        Assert::assertTrue(!empty($xml_array), "<input value='$mid'> missing");
+    }
+
+
+    /**
+     * @When /([A-Z]) accepts a Match with ([A-Z])/
+     */
+    public function aAcceptsAMatchWithB($p, $r)
+    {
+        $pidA = $this->rivals[$p];
+        $pidB = $this->rivals[$r];
+        $hour = 1024;
+        
+        // PlayerB accepts PlayerA Match
+        $mid = Post::matchPageAccept($pidB, $this->mid, $hour);
+        $venue = new Venue($this->vid);
+        $match = $venue->match($mid);
+        Assert::assertNotNull($match, "Accepted Match missing from Venue $mid");
+
+        //PlayerA accepts PlayerB Match
+        $mid = Post::matchPageAccept($pidA, $mid, $hour);
+        $venue = new Venue($this->vid);
+        $match = $venue->match($mid);
+        Assert::assertNotNull($match, "Confirmed Match missing from Venue $mid");
+
+        $this->mid = $mid;
+    }
+
+
+    /**
+     * @When I click booked in the Confirmed email
+     */
+    public function iClickBookedInTheConfirmedEmail()
+    {        
+        $notify = new Notify($this->manager);
+        $email = $notify->sendBook($this->mid);
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->loadHTML($email->body());
+        $link = $doc->getElementById('login');
+        Assert::assertNotNull($link, "null link");
+        $href = $link->getAttribute('href');
+        Assert::assertNotNull($href, "null href");
+        Assert::assertTrue(is_numeric((strpos($href, 'book.php'))), "link to book.php");        
+        $query = parse_url($href, PHP_URL_QUERY);
+        Assert::assertNotNull($query, "null query");
+        $req = array();
+        parse_str($query, $req);
+        Assert::assertNotNull($req, "null req");
+        $this->req = $req;
+    }
+
+
+    /**
+     * @Then the Players see confirmation
+     */
+    public function thePlayersSeeConfirmation()
+    {
+        $json_req = json_encode($this->req);
+        $this->log->lwrite("Get::bookingPage(( $json_req )");
+        Assert::assertTrue(Get::bookingPage($this->req), "sent booked message");
+    }
+
+
+    /**
+     * @When /([A-Z]) cancels the Match/
+     */
+    public function playerCancelsTheMatch($p)
+    {        
+        $pidA = $this->rivals[$p];
+        
+        $mid = Post::matchPageCancel($pidA, $this->mid);
+        $venue = new Venue($this->vid);
+        $match = $venue->match($mid);
+        Assert::assertNotNull($match, "Match exists at Venue $mid");
+
+        $this->mid = $mid;
     }
 
 

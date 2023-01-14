@@ -7,6 +7,7 @@ require_once 'FacilityMatchList.php';
 class BookingPage extends Page {
 
     private $venue;
+    private $manager;
 
     public function __construct($templateName='booking'){
         parent::__construct(NULL, $templateName);
@@ -14,21 +15,17 @@ class BookingPage extends Page {
         $manager = $this->manager();
         if (is_null($manager)
         || !$manager->ok()){
+            self::logMsg("FacilityPage missing manager ".json_encode($this->req()));
             $this->logout();
             return;
         }
+        $this->manager = $manager;
 
-        $vid = $this->req('vid');
-        if(isset($vid)){
-            if (Venue::exists($vid)){
-                try {
-                    $this->venue = new Venue($vid);
-                } catch (RuntimeException $e){
-                    self::alert("{Oops}");
-                    self::logThrown($e);
-                    unset($vid);
-                }
-            }
+        $this->venue = $manager->venue();
+        if (is_null($this->venue)) {
+            self::logMsg("BookingPage missing venue ".json_encode($this->req()));
+            $this->logout();
+            return;
         }
     }
 
@@ -57,7 +54,7 @@ class BookingPage extends Page {
         }
 
         $this->venue->concludeMatches();
-        $this->venue->save();
+        $this->venue->save(TRUE);
         return $result;
     }
 
@@ -90,7 +87,7 @@ class BookingPage extends Page {
 
         $cancelledList = new FacilityMatchList($html, 'cancelled', 'cancelled.match');
         $vars['cancelledMatches'] = $cancelledList->make();
-    
+
         return parent::make($vars); 
     }
 
@@ -102,25 +99,29 @@ class BookingPage extends Page {
     function qwikBook($request){
         $mid = $request['id'];
         if(isset($mid)){
-            $match = $venue->match($mid);
+            $match = $this->venue->match($mid);
             if (isset($match)){
                 $player = $match->player();
                 $player->matchMsg($mid, "Facility booking confirmed");
+                return TRUE;
             }
         }
+        return FALSE;
     }
 
 
     function qwikCall($request){
         $mid = $request['id'];
         if(isset($mid)){
-            $match = $venue->match($mid);
+            $match = $this->venue->match($mid);
             if (isset($match)){
                 $player = $match->player();
                 $player->matchMsg($mid, "Facility booking problem. Please contact Venue");
                 self::message("{call_alert}");
+                return TRUE;
             }
         }
+        return FALSE;
     }
 
 

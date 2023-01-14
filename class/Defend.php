@@ -59,7 +59,7 @@ class Defend extends Qwik {
   );
   
 
-  const GET_KEYS = array('html', 'pid', 'game', 'country_iso', 'lang', 'register', 'vid', 'token', 'qwik', 'email','lat', 'lng', 'avoidable', 'region');
+  const GET_KEYS = array('html', 'pid', 'game', 'country_iso', 'lang', 'register', 'vid', 'token', 'qwik', 'email','lat', 'lng', 'avoidable', 'region', 'id');
   
   
   const QWIK_KEYS = array(

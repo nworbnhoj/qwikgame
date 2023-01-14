@@ -21,21 +21,28 @@ class FacilityMatchList extends Card {
         parent::__construct($html, $id);
  
         $this->status = $status;
+    }   
+
+
+    protected function loadUser($uid){
+        return new Manager($uid);
     }
 
 
     public function replicate($html, $variables){
-        $manager = $this->mnager();
-        if (is_null($manager)){ return '';}
+        $manager = $this->manager();
+        if (is_null($manager)){
+            self::logMsg("FacilityMatchList missing Manager");
+            return '';
+        }
         $venue = $manager->venue();
-
         $status = $this->status;
         $group = '';
         foreach($venue->matchStatus($status) as $matchXML) {
-            $pid = matchXML['pid'];
+            $pid = $matchXML['pid'];
             $player = new Player($pid);
             $match = new Match($player, $matchXML);
-            $matchVars = $match->variables();
+            $matchVars = $match->vars($venue);
             $vars = $variables + $matchVars;
             $group .= $this->populate($html, $vars);
         }

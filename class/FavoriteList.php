@@ -18,6 +18,11 @@ class FavoriteList extends Card {
     *******************************************************************************/
     public function __construct($html, $id=NULL){
         parent::__construct($html, $id);
+    }   
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
     }
 
 

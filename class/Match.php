@@ -301,13 +301,8 @@ class Match extends Qwik {
         $notify->sendConfirm($this->id());
         $venue = $this->venue();
         if (isset($venue)){
-            $manager = $venue->manager();
-            if(isset($manager)){
-                $notify = new Notify($manager);
-                $notify->sendBook($this->id());
-            } else {
-                $this->chat("{Book_facility...}", Match::CHAT_QG);
-            }
+            $mid = $this->id();
+            $venue->matchConfirm($mid);
         }
     }
 
@@ -317,8 +312,6 @@ class Match extends Qwik {
         self::removeElement($rivalElement[0]);
         $this->rivalElements = NULL; // reset
     }
-
-
 
 
     public function cancel(){
@@ -344,15 +337,9 @@ class Match extends Qwik {
                 foreach($rivals as $rival){
                     $rival->matchCancel($mid);
                 }
-                $venueMatch = $venue-match($mid);
-                if(isset($venueMatch)){
-                    $venueMatch->status('cancelled');
-                    $manager = $venue->manager();
-                    if(isset($manager)){
-                        $notify = new Notify($manager);
-                        $notify->sendCancel($venueMatch);
-                    }
-                    $venue->save();
+                $venue = $this->venue();
+                if (isset($venue)){
+                    $venue->matchCancel($mid);
                 }
                 break;
             case 'keen':
@@ -447,38 +434,40 @@ class Match extends Qwik {
     }
 
 
-    public function variables(){
-        $mid = $this->id();
-        $status = $this->status();
+    public function vars($venue){
         $game = $this->game();
-        $rivalParity = $this->rivalParity();
-        $venue = $this->venue();
-        // re-check venueHours immediately before display to Player
         $datetime = $this->dateTime();
         $venueHours = isset($venue) ? $venue->facilityHours($game, $datetime) : 0 ;
-        $hours = $this->hours().append($venueHours);
-        $repWord = $this->rivalRep();
-        $rivalRep = strlen($repWord)==0 ? '{unknown}' : $repWord;
-        $vars = array(
-            'vid'       => $this->vid(),
-            'venueName' => $this->venueName(),
-            'status'    => $status,
-            'game'      => $game,
-            'gameName'  => self::gameName($game),
-            'day'       => $this->mday(),
-            'hrs'       => $hours->bits(),
-            'hour'      => self::hr($hours->first()),
-            'id'        => $mid,
-            'parity'    => parityStr($rivalParity),
-            'rivalRep'  => $rivalRep,
-            'chatter'   => $this->chat()
-        );
+        $hours = $this->hours();
+        $hours->append($venueHours);
+        $vars = array();
+        $vars['id'] = $this->id();
+        $vars['status'] = $this->status();
+        $vars['game'] = $game;
+        $vars['gameName'] = self::gameName($game);
+        $vars['vid'] = $venue->id();
+        $vars['venueName'] = $venue->name();
+        $vars['hrs'] = $hours->bits();
+        $vars['hour'] = self::hr($hours->first());
+        return $vars;
+    }
 
+
+    public function variables(){
+        $venue = $this->venue();
+        $vars = $this->vars($venue);    
+        $repWord = $this->rivalRep();
+
+        $vars['day'] = $this->mday();
+        $vars['parity'] = parityStr($this->rivalParity());
+        $vars['rivalRep'] = strlen($repWord)==0 ? '{unknown}' : $repWord;
+        $vars['chatter'] = $this->chat();
+
+        $hours = $this->hours();
         $rival = $this->rival();
         $rivalLink = isset($rival) ? $rival->htmlLink() : NULL;
         $rivalLink = empty($rivalLink) ? $this->rivalName() : $rivalLink;
-
-        switch ($status){
+        switch ($this->status()){
             case 'keen':
                 $vars['hour'] = Page::daySpan($hours->roster());
                 $vars['rivalCount'] = $this->rivalCount();
@@ -496,7 +485,7 @@ class Match extends Qwik {
                 break;
             case 'history':
                 $rivalLink = empty($rivalLink) ? '{my_rival}' : $rivalLink;
-                $outcome = $this->player->outcome($mid);
+                $outcome = $this->player->outcome($this->id());
                 if (isset($outcome)) {
                     $outcomeParity = (string) $outcome['parity'];
                     $vars['parity'] = parityStr($outcomeParity);

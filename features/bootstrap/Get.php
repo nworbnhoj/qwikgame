@@ -37,6 +37,14 @@ class Get {
   }
 
 
+  static function bookingPage($get){
+    $_POST = array();
+    $_GET = $get;
+    $page = new BookingPage();
+    return $page->processRequest();
+  }
+
+
   public function __construct(){ }
 
 }

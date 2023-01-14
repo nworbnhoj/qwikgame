@@ -5,6 +5,7 @@ require_once 'class/IndexPage.php';
 require_once 'class/MatchPage.php';
 require_once 'class/FavoritePage.php';
 require_once 'class/FriendPage.php';
+require_once 'class/BookingPage.php';
 
 
 class Post {
@@ -38,6 +39,14 @@ class Post {
       'id'     => $mid,
       'parity' => $parity,
       'rep'    => $rep
+    ));
+  }
+
+
+  static function matchPageCancel($pid, $mid){
+    return self::matchPage($pid, array(
+      'qwik'   => 'cancel',
+      'id'     => $mid,
     ));
   }
     
@@ -85,6 +94,16 @@ class Post {
     return $page->processRequest();
   }
 
+
+  static function bookingPage($pid, $post){
+    $_GET = array();
+    $_SESSION['pid'] = $pid;
+    $_POST=$post;
+    $page = new BookingPage();
+    // $result = $page->processRequest();
+    // return isset($result) ? $result : $page->make();
+    return $page->make();
+  }
 
 
 

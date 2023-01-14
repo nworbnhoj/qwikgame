@@ -238,20 +238,14 @@ function qwikKeen($player, $req, $venue){
 
 
 
-function qwikAccept($player, $request){
-    if(isset($request['id']) & isset($request['hour'])){
-        $matchID = $request['id'];
-        $match = $player->matchID($matchID);
-        if (!isset($match)){
-            self::logMsg("unable to locate match: $matchID");
-            return;
-        }
-        $mid = $match->accept(new Hours($request['hour']));
-        $player->save();
+function qwikAccept($player, $req){
+    $mid = $req['id'];
+    $hour = $req['hour'];
+    if(isset($mid) && isset($hour)){
+        return $player->matchAccept($mid, $hour);
     } else {
-      $mid = null;
+        return NULL;
     }
-    return $mid;
 }
 
 

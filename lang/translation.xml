@@ -139,6 +139,8 @@
 <phrase key="Please_book..."><words lang="en">Please book a [gameName] facility for this Match. Click the tick to confirm the booking. If there is a problem then click the cross to contact the Players."</words></phrase>
 <phrase key="Players are currently seeking"><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt;: [Player1] vs. [Player2]</words></phrase>
 <phrase key="Players are seeking..."><words lang="en">Players are currently seeking to play Games at this Venue."</words></phrase>
+<phrase key="Cancelled_Match..."><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; by [playerName].</words></phrase>
+<phrase key="Confirmed_Match..."><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; by [playerName].</words></phrase>
 <phrase key="Tentative_Match..."><words lang="en">&lt;b&gt;[gameName]&lt;/b&gt; at [hour] &lt;b&gt;[day]&lt;/b&gt; by [playerName].</words></phrase>
 <phrase key="Book_facility..."><words lang="en">Please contact Venue to book facility.</words></phrase>
 <phrase key="I_am_keen_to..."><words lang="en">I am &lt;b&gt;keen&lt;/b&gt; to play [selectGame] at [selectVenue]</words><words lang="es">Estoy dispuesto a jugar al [selectGame] en [selectVenue]</words><words lang="bg">&amp;lt;b&amp;gt;&#x418;&#x441;&#x43A;&#x430;&#x43C; &#x434;&#x430; &#x438;&#x433;&#x440;&#x430;&#x44F;&amp;lt;/b&amp;gt; [selectGame] &#x432; [selectVenue]</words></phrase>

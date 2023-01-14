@@ -104,7 +104,7 @@ class Notify extends Qwik {
     public function is_open($address, $msg=self::MSG_ALL){
         $xml = $this->email($address);
         $xml = isset($xml) ? $xml : $this->push($address);
-        return isset($xml) ? $msg && ((int)$xml) : FALSE ;
+        return isset($xml) ? $msg & ((int)$xml) : FALSE ;
     }
 
 
@@ -160,7 +160,7 @@ class Notify extends Qwik {
     public function sendBook($mid){
         $email = $this->user->email(); 
         if ($this->is_open($email, self::MSG_CONFIRM)){
-            $this->emailBook($mid, $email);
+            return $this->emailBook($mid, $email);
         }
     }
 
@@ -279,6 +279,7 @@ class Notify extends Qwik {
         );
         $email = new Email($vars, $this->language());
         $email->send();
+        return $email;
     }
 
 

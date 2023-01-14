@@ -161,6 +161,10 @@ class Player extends User {
         $match = $this->matchID($id);
         if (isset($match)){
             $match->cancel();
+            $this->save();           
+            $venue = new Venue($match->vid());
+            $venue->matchCancel($id);
+            $venue->save(TRUE);
         }
     }
 
@@ -428,6 +432,19 @@ class Player extends User {
             throw new RuntimeException("failed to add match for Player $id with Rival $rid");
         }
         return NULL;
+    }
+
+
+    function matchAccept($mid, $hour){
+        $match = $this->matchID($mid);
+        if (isset($match)){
+            $mid = $match->accept(new Hours($hour));
+            $this->save();
+        } else {
+            self::logMsg("unable to locate match: $mid   $this->id()");
+            $mid = NULL;         
+        }
+        return $mid;
     }
 
 

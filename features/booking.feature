@@ -32,3 +32,16 @@ Feature: I need to manage the facilities at my venue
 	  Then "chess" "is" available "today" at "10"
 	  Then "chess" "is" available "tomorrow" at "11"
 	  And "chess" "is not" available "tomorrow" at "9"
+
+	Scenario: Check Matches at qwikgame Facility
+	  Given "new.manager@qwikgame.org" is logged in
+	  And I am the Manager at "Qwikgame Venue|South Pole|AU|AQ"
+	  And a community of Players
+	  And A is keen to play squash with B
+	  Then the tentative Match is listed
+	  When A accepts a Match with B
+	  Then the confirmed Match is listed
+	  When I click booked in the Confirmed email
+	  Then the Players see confirmation
+      When A cancels the Match
+      Then the cancelled Match is listed

@@ -21,6 +21,11 @@ class MatchList extends Card {
         parent::__construct($html, $id);
  
         $this->status = $status;
+    }   
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
     }
 
 

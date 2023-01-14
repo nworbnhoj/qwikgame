@@ -23,6 +23,11 @@ class PendingList extends Card {
         parent::__construct($html, $id);
 
         $this->pending = new Translation('pending.xml');
+    }   
+
+
+    protected function loadUser($uid){
+        return new Player($uid);
     }
 
 

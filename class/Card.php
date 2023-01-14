@@ -16,7 +16,7 @@ class Card extends Base {
     public function __construct($html, $id){
         parent::__construct($html, $id);
 
-        $user = $this->player();
+        $user = $this->user();
         if (is_null($user)
         || !$user->ok()){
             $this->logout();

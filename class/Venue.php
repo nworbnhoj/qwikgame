@@ -234,12 +234,12 @@ class Venue extends Qwik {
 
 
     public function matchStatus($status){
-        return $this->xml->xpath("match[@status='$status']");
+        return $this->xml->xpath("//match[@status='$status']");
     }
 
 
     public function name(){
-        return $this->xml['name'];
+        return (string) $this->xml['name'];
     }
 
 
@@ -441,7 +441,6 @@ class Venue extends Qwik {
         if (empty($key)){
             return false;
         }
-
         $datetime = $this->dateTime('now');
         $date = $datetime->format('d-m-y H:i');
         $oldVal = $this->xml[$key];
@@ -609,7 +608,7 @@ class Venue extends Qwik {
 
 
     public function match($id){
-        $xml_array = $this->xml->xpath("match[@id='$id']");
+        $xml_array = $this->xml->xpath("//match[@id='$id']");
         if (is_array($xml_array) && isset($xml_array[0])){
             $xml = $xml_array[0];
             $pid = $xml['pid'];
@@ -646,6 +645,32 @@ class Venue extends Qwik {
             $id = $this->id();
             throw new RuntimeException("failed to add match $mid to Venue $id");
         }
+    }
+
+
+    public function matchConfirm($mid){     
+        $match = $this->match($mid);
+        $match->status('confirmed');
+        $manager = $this->manager();
+        if(isset($manager)){
+            $notify = new Notify($manager); 
+            $notify->sendBook($mid);
+        } else {
+            $this->chat("{Book_facility...}", Match::CHAT_QG);
+        }
+        $this->save(TRUE);
+    }
+
+
+    public function matchCancel($mid){
+        $match = $this->match($mid);
+        $match->status('cancelled');
+        $manager = $this->manager();
+        if(isset($manager)){
+            $notify = new Notify($manager);
+            $notify->sendCancel($match);
+        }
+        $this->save(TRUE);
     }
 
 

@@ -41,12 +41,15 @@
 
 <div>
 <div id='cancelled.match' class='base json record cancelled'>
-    <button type='button' class='action help [HELP_ICON]'></button>
-    <span class='help'>{Booking_cancelled...}</span>
-    <p class='record'>
-        <span class='tag cancelled'><s>{cancelled}</s></span>
-        {Cancelled_Game_at...}
-    </p>
+    <form class='record' action='booking.php#matches' method='post'>
+        <input type='hidden' name='id' value='[id]'>
+        <button type='button' class='action help [HELP_ICON]'></button>
+        <span class='help'>{Booking_cancelled...}</span>
+        <p class='record'>
+            <span class='tag cancelled'><s>{cancelled}</s></span>
+            {Cancelled_Match...}
+        </p>
+    </form>
 </div>
     [cancelledMatches]
 </div>

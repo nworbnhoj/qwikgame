@@ -17,14 +17,17 @@ class FacilityPage extends Page {
         $manager = $this->manager();
         if (is_null($manager)
         || !$manager->ok()){
+            self::logMsg("FacilityPage missing manager ".json_encode($this->req()));
             $this->logout();
             return;
         }
         $this->manager = $manager;
 
-        $vid = $this->req('vid');
-        if(isset($vid)){
-            $this->venue = new Venue($vid);
+        $this->venue = $manager->venue();
+        if (is_null($this->venue)) {
+            self::logMsg("FacilityPage missing venue ".json_encode($this->req()));
+            $this->logout();
+            return;
         }
 
         //sanity check
@@ -64,7 +67,7 @@ class FacilityPage extends Page {
                     self::logMsg("failed to register manager: $logReq");
                     break;
                 }
-                $vid = $this->venue->id();
+                $vid = $req['vid'];
                 $manager = $this->manager;
                 $manager->email($req['email']);       
                 $manager->setVenue($vid);
@@ -76,7 +79,8 @@ class FacilityPage extends Page {
                 $ddd = array('Mon', 'Tue','Wed', 'Thu', 'Fri');
                 foreach($ddd as $d){
                     $req[$d] = Hours::HRS_9AM_to_5PM;
-                }                
+                }
+                $this->venue = new Venue($vid);
                 $this->venue->setManager($manager->id());
 
                 // intentional flow thru to facility

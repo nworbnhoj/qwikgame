@@ -129,7 +129,7 @@ class FacilityPage extends Page {
             $days[$now->format('Y-m-d')] = $req['today'];
         }
         if (isset($req['tomorrow'])) {
-            $tom = $now::add(new DateInterval("P1D"));
+            $tom = $now->add(new DateInterval("P1D"));
             $days[$tom->format('Y-m-d')] = $req['tomorrow'];
         }
         $newID = $venue->facilitySet($req['game'], $days);

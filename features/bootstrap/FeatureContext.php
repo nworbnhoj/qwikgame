@@ -692,8 +692,9 @@ class FeatureContext implements Context
     public function isAvailableAt($game, $is, $day, $hour)
     {
         $venue = $this->venue;
-        $datetime = $venue->dateTime();
-        $datetime->modify("next $day");
+        $datetime = $venue->dateTime();   
+        $next = in_array($day, $this->days) ? "next " : "";
+        $datetime->modify("$next $day");
         $venueHours = $venue->facilityHours($game, $datetime);
         $testHours = new Hours();
         $testHours->set($hour);

@@ -21,3 +21,14 @@ Feature: I need to manage the facilities at my venue
 	  And I add a "chess" facility at these hours
 	  Then "chess" "is" available "Tue" at "14"
 	  And "chess" "is not" available "Tue" at "19"
+
+	Scenario: Adjust a Facility availability
+	  Given "new.manager@qwikgame.org" is logged in
+	  And I am the Manager at "Qwikgame Venue|South Pole|AU|AQ"
+	  And I enter "today" at "9" hours
+	  And I enter "today" at "10" hours
+	  And I enter "tomorrow" at "11" hours
+	  And I add a "chess" facility at these hours
+	  Then "chess" "is" available "today" at "10"
+	  Then "chess" "is" available "tomorrow" at "11"
+	  And "chess" "is not" available "tomorrow" at "9"

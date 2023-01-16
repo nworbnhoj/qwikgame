@@ -7,6 +7,7 @@ require_once 'class/Ranking.php';
 require_once 'class/Hours.php';
 require_once 'class/Page.php';
 require_once 'class/Email.php';
+require_once 'class/Natch.php';
 require_once 'class/MatchPage.php';
 require_once 'class/FriendPage.php';
 require_once 'class/FavoritePage.php';
@@ -428,7 +429,7 @@ class FeatureContext implements Context
         $matches = $playerA->matchQuery("match[rival='$pidB']");
 
         if (count($matches) == 1) {
-          $match = new Match($playerA, $matches[0]);
+          $match = new Natch($playerA, $matches[0]);
           $mid = $match->id();
         } else {    // set up a dummy match between A & B, ready for feedback
           $vid = "Qwikgame Venue|South Pole|AU|AQ";
@@ -458,7 +459,7 @@ class FeatureContext implements Context
         $playerB = new Player($pidB);
 
         $parityEstimate = $playerA->parity($playerB, 'squash');
-        $parityStr = Match::parityStr($parityEstimate);
+        $parityStr = Natch::parityStr($parityEstimate);
         $msg = "$parityEstimate = $parityStr";
 
         switch ($parity) {

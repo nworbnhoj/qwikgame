@@ -3,7 +3,7 @@
 require_once 'User.php';
 require_once 'Hours.php';
 require_once 'Orb.php';
-require_once 'Match.php';
+require_once 'Natch.php';
 require_once 'Ranking.php';
 
 
@@ -72,7 +72,7 @@ class Player extends User {
     public function matchID($id){
         $xml = $this->xml->xpath("match[@id='$id']");
         if (is_array($xml) && isset($xml[0])){
-            return new Match($this, $xml[0]);
+            return new Natch($this, $xml[0]);
         }
         return NULL;
     }
@@ -183,7 +183,7 @@ class Player extends User {
     //echo "<br>CONCLUDEMATCHES<br>";
         $matchXMLs = $this->xml->xpath('match');
         foreach($matchXMLs as $xml){
-            $match = new Match($this, $xml);
+            $match = new Natch($this, $xml);
             $match->conclude();
         }
     }
@@ -212,7 +212,7 @@ class Player extends User {
             self::removeElement($xml);
         }
         foreach($this->xml->xpath("match[@status!='history']") as $xml){
-            $match = new Match($this, $xml);
+            $match = new Natch($this, $xml);
             $match->cancel();
         }
         foreach($this->xml->xpath("available") as $xml){
@@ -375,7 +375,7 @@ class Player extends User {
 
 
     public function matchKeen($game, $venue, $date, $hours, $rids=array()) {
-        $match = new Match($this,  $this->xml->addChild('match', ''), 'keen', $game, $venue, $date, $hours);
+        $match = new Natch($this,  $this->xml->addChild('match', ''), 'keen', $game, $venue, $date, $hours);
         $venue->matchAdd($this->id(), $match->id(), $game, $date, $hours);
         $match->invite($rids);
         return $match;
@@ -414,7 +414,7 @@ class Player extends User {
         try {
             $rid = $rivalMatch->pid();
             $rival = new Player($rid);
-            $match = new Match($this,  $this->xml->addChild('match', ''));
+            $match = new Natch($this,  $this->xml->addChild('match', ''));
             $match->copy($rivalMatch);
             $match->status('invitation');
             $match->hours($inviteHours);
@@ -460,12 +460,12 @@ class Player extends User {
     function matchMsg($mid, $msg){
         $match = $this->matchID($mid);
         if (isset($match)){
-            $match->chat($msg, Match::CHAT_ME);
+            $match->chat($msg, Natch::CHAT_ME);
             $rival = $match->rival();
             if($rival->ok()){
                 $rivalMatch = $rival->matchID($mid);
                 if (isset($rivalMatch)){
-                    $rivalMatch->chat($msg, Match::CHAT_YU);
+                    $rivalMatch->chat($msg, Natch::CHAT_YU);
                     $notify = new Notify($rival);
                     $notify->sendMsg($msg, $rivalMatch);
                 }

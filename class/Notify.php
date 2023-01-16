@@ -2,7 +2,6 @@
 
 require_once 'Qwik.php';
 require_once 'Player.php';
-require_once 'Match.php';
 require_once 'Email.php';
 require_once 'Html.php';
 require_once 'Push.php';

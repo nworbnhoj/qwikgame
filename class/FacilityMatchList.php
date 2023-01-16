@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Card.php';
+require_once 'Natch.php';
 
 /*******************************************************************************
     Class FacilityMatchList replicates a html snippet for each qwik record.
@@ -41,7 +42,7 @@ class FacilityMatchList extends Card {
         foreach($venue->matchStatus($status) as $matchXML) {
             $pid = $matchXML['pid'];
             $player = new Player($pid);
-            $match = new Match($player, $matchXML);
+            $match = new Natch($player, $matchXML);
             $matchVars = $match->vars($venue);
             $vars = $variables + $matchVars;
             $group .= $this->populate($html, $vars);

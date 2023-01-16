@@ -3,6 +3,7 @@
 
 require_once 'Qwik.php';
 require_once 'Manager.php';
+require_once 'Natch.php';
 
 class Venue extends Qwik {
 
@@ -613,7 +614,7 @@ class Venue extends Qwik {
             $xml = $xml_array[0];
             $pid = $xml['pid'];
             $player = new Player($pid, FALSE);
-            return new Match($player, $xml);
+            return new Natch($player, $xml);
         }
         return NULL;
     }
@@ -638,7 +639,7 @@ class Venue extends Qwik {
             $manager = $this->manager();
             if(isset($manager)){
                 $notify = new Notify($manager);
-                $notify->sendCue(new Match($manager,  $xml));
+                $notify->sendCue(new Natch($manager,  $xml));
             }
         } catch (RuntimeException $e){
             self::logThrown($e);
@@ -656,7 +657,7 @@ class Venue extends Qwik {
             $notify = new Notify($manager); 
             $notify->sendBook($mid);
         } else {
-            $this->chat("{Book_facility...}", Match::CHAT_QG);
+            $this->chat("{Book_facility...}", Natch::CHAT_QG);
         }
         $this->save(TRUE);
     }
@@ -678,7 +679,7 @@ class Venue extends Qwik {
     public function concludeMatches(){
         $matchXMLs = $this->xml->xpath('match');
         foreach($matchXMLs as $xml){
-            $match = new Match($this, $xml);
+            $match = new Natch($this, $xml);
             $match->conclude();
             if($match->status() == 'feedback'){
                 self::removeElement($xml);

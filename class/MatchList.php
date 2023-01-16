@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Card.php';
+require_once 'Natch.php';
 
 /*******************************************************************************
     Class MatchList replicates a html snippet for each qwik record.
@@ -37,7 +38,7 @@ class MatchList extends Card {
         $group = '';
         $playerVars = $player->playerVariables();
         foreach($player->matchStatus($status) as $matchXML) {
-            $match = new Match($player, $matchXML);
+            $match = new Natch($player, $matchXML);
             $game = $match->game();
             $matchVars = $match->variables();
             $vars = $variables + $playerVars + $matchVars;

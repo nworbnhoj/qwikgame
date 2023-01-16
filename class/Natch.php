@@ -7,7 +7,7 @@ require_once 'Venue.php';
 require_once 'Notify.php';
 
 
-class Match extends Qwik {
+class Natch extends Qwik {
 
     const CHAT_TEMPLATE = "<p class='chat [class]'>[chat]</p>";
     const CHAT_ME = 'chat-me';

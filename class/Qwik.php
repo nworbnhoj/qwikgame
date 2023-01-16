@@ -706,7 +706,7 @@ class Qwik {
     $str    String    time & date
     $tz        String    time-zone
     ********************************************************************************/
-    static public function tzDateTime($str='now', $tz){
+    static public function tzDateTime($tz, $str='now'){
         if(empty($tz)){
             return new DateTime($str);
         }
@@ -716,8 +716,8 @@ class Qwik {
 
 
     static public function day($tz, $dateStr){
-        $date = self::tzDateTime($dateStr, $tz);
-        $today = self::tzDateTime('today', $tz);
+        $date = self::tzDateTime($tz, $dateStr);
+        $today = self::tzDateTime($tz, 'today');
         $interval = $today->diff($date);
         switch ($interval->days) {
             case 0: return 'today'; break;

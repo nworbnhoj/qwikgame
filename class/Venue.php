@@ -511,7 +511,7 @@ class Venue extends Qwik {
     ********************************************************************************/
     public function dateTime($str='now'){
     //echo "<br>VENUEDATETIME $str</br>" . $venue['tz'];
-        return self::tzDateTime($str, $this->tz());
+        return self::tzDateTime($this->tz(), $str);
     }
 
 

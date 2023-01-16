@@ -400,7 +400,7 @@ class Natch extends Qwik {
 
     public function conclude(){
         $tz = $this->tz();
-        $now = self::tzDateTime('now', $tz);
+        $now = self::tzDateTime($tz, 'now');
         $dateStr = $this->date();
         $hour = $this->hours()->last();
         switch ($this->status()){
@@ -410,7 +410,7 @@ class Natch extends Qwik {
             case 'invitation':
             case 'accepted':
             case 'tentative':
-                if ($now > self::tzDateTime("$dateStr $hour:00:00", $tz)){
+                if ($now > self::tzDateTime($tz, "$dateStr $hour:00:00")){
                     self::removeElement($this->xml);
                 }
                 break;

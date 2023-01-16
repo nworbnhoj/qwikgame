@@ -655,7 +655,7 @@ class Qwik {
     
     
     static public function lockXML($xml, $token){
-        $nekot = hash('sha256', $token);
+        //$nekot = hash('sha256', $token);
         if (isset($token)){
             if (isset($xml['lock'])){
                 $xml['lock'] = $token;
@@ -667,7 +667,7 @@ class Qwik {
 
 
     static public function unlockXML($xml, $token){
-        $nekot = hash('sha256', $token);
+        //$nekot = hash('sha256', $token);
         $locked = $xml->xpath("//*[@lock='$token']");
         foreach($locked as $open){
             removeAtt($open, 'lock');

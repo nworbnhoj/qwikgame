@@ -358,6 +358,7 @@ class Filter extends Qwik {
      * However the html is validated as an protection against xss
      *************************************************************************/
     static function html($val){
+      $val = isset($val) ? $val : '';
       $hash = hash('sha256', $val);
       if(isset(self::HTML_SHA256[$hash])){
         return $val;

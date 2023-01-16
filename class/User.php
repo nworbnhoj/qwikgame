@@ -29,6 +29,7 @@ class User extends Qwik {
 
     *******************************************************************************/
     static function anonID($email){
+        $email = isset($email) ? $email : ''; 
         return hash('sha256', $email);
     }
 

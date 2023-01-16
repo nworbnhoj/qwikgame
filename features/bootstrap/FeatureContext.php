@@ -39,6 +39,8 @@ class FeatureContext implements Context
     private $email;
     private $game;
     private $id;
+    private $manager;
+    private $mid;
     private $parity;
     private $pid;
     private $rankingID;
@@ -46,6 +48,7 @@ class FeatureContext implements Context
     private $time;
     private $token;
     private $venue;
+    private $uid;
     private $vid;
     public $log;
 

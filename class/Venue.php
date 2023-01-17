@@ -656,14 +656,15 @@ class Venue extends Qwik {
     public function matchConfirm($mid){     
         $match = $this->match($mid);
         $match->status('confirmed');
+        $this->save(TRUE);
+
         $manager = $this->manager();
         if(isset($manager)){
             $notify = new Notify($manager); 
             $notify->sendBook($mid);
-        } else {
-            $this->chat("{Book_facility...}", Natch::CHAT_QG);
+            return TRUE;
         }
-        $this->save(TRUE);
+        return FALSE;
     }
 
 

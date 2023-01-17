@@ -308,7 +308,10 @@ class Natch extends Qwik {
         $venue = $this->venue();
         if (isset($venue)){
             $mid = $this->id();
-            $venue->matchConfirm($mid);
+            $confirmed = $venue->matchConfirm($mid);
+            if (!$confirmed){
+                $this->chat("{Book_facility...}", Natch::CHAT_QG);
+            }
         }
     }
 

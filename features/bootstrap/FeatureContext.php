@@ -107,7 +107,7 @@ class FeatureContext implements Context
 
 
     /**
-     * @When I like to play :game at :venue
+     * @When I like to play :game at :vid
      */
     public function iLikeToPlaySquashAtQwikgame($game, $vid)
     {
@@ -564,7 +564,7 @@ class FeatureContext implements Context
 
 
     /**
-     * @When I am keen to play :game at :venue
+     * @When I am keen to play :game at :vid
      */
     public function iAmKeenToPlaySquashAtQwikgame($game, $vid)
     {
@@ -594,11 +594,11 @@ class FeatureContext implements Context
     /**
      * @Then :email is a :parity :game player
      */
-    public function isAPlayer($email, $parityPhrase, $game)
+    public function isAPlayer($email, $parity, $game)
     {
         $rid = Player::anonID($email);
         $rival = new Player($rid, FALSE);
-        $checkParity = $this->parityPhrase[$parityPhrase];
+        $checkParity = $this->parityPhrase[$parity];
         $player = new Player($this->uid);
         $calcParity = $player->parity($rival, $game);
 

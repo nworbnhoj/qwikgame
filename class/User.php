@@ -48,19 +48,19 @@ class User extends Qwik {
     /**
     * @throws RuntimeException if construction fails.
     */
-    public function __construct($pid, $forge=FALSE){
+    public function __construct($uid, $forge=FALSE){
         parent::__construct();
-        $this->id = $pid;
-        if (!self::exists($pid) && $forge) {
-            $this->xml = $this->newXML($pid);
+        $this->id = $uid;
+        if (!self::exists($uid) && $forge) {
+            $this->xml = $this->newXML($uid);
             $this->save();
-            self::logMsg("user new $pid");
+            self::logMsg("user new $uid");
         }
-        if (self::exists($pid)){
+        if (self::exists($uid)){
             $this->xml = $this->retrieve($this->fileName());
         } else {
-            $sid = self::snip($pid);
-            throw new RuntimeException("user missing $sid");
+            $suid = self::snip($uid);
+            throw new RuntimeException("user missing $suid");
         }
     }
     
@@ -327,8 +327,8 @@ class User extends Qwik {
         }
 
         if (isset($xmlArray[1])){  // integrity check
-            $pid = self::snip($this->id());
-            self::logMsg("user $pid has duplicate <notify> elements");
+            $uid = self::snip($this->id());
+            self::logMsg("user $uid has duplicate <notify> elements");
         }
 
         return $xml;

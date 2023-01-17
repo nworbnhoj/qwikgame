@@ -381,9 +381,9 @@ class Qwik {
     }
     
     
-    static public function logEmail($type, $pid, $game='', $vid='', $time=''){
-        $p = substr($pid, 0, 4);
-        $msg = "email $type pid=$p $game $vid $time";
+    static public function logEmail($type, $uid, $game='', $vid='', $time=''){
+        $u = substr($uid, 0, 4);
+        $msg = "email $type uid=$u $game $vid $time";
         self::log()->lwrite($msg);
         self::log()->lclose();
     }
@@ -553,15 +553,15 @@ class Qwik {
     }
 
 
-    static public function pids($game){
-        $pids = array();
+    static public function uids($game){
+        $uids = array();
         $fileList = self::fileList(PATH_PLAYER);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
-                $pids[] = str_replace('.xml', '', $file);
+                $uids[] = str_replace('.xml', '', $file);
             }
        }
-        return $pids;
+        return $uids;
     }
     
     

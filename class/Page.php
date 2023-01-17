@@ -258,12 +258,12 @@ class Page extends Html {
     /**************************************************************************
      * Cancels a previously delayed request awaiting resubmission.
      * Resubmission may be completed by cron job resubmit.php
-     * @param  $pid The unique user-id
+     * @param  $uid The unique user-id
      * @param  $id  The unique request-id
      * @return      The request-id on success (or null otherwise)
      *************************************************************************/
-    function qwikUndo($pid, $id){
-      if(!isset($pid)
+    function qwikUndo($uid, $id){
+      if(!isset($uid)
       || !isset($id)
       || !is_file(PATH_DELAYED.$id)){
         return NULL;
@@ -274,7 +274,7 @@ class Page extends Html {
         $task = json_decode($json, TRUE);
         $session = $task['session'];
         if(isset($session['pid'])                         // check user match
-        && $pid === $session['pid']){
+        && $uid === $session['pid']){
          unlink(PATH_DELAYED.$id);                       // remove delayed task
         }
         return $id;
@@ -394,18 +394,18 @@ class Page extends Html {
         // Locate identification (pid) and authentication (token) if they exist
         if ($query->param('token')
         && $query->param('pid')){           // check in the request
-          $pid = $query->param('pid');
+          $uid = $query->param('pid');
           $token = $query->param('token');
           $query->unset('token');   // rely on open session from here
         } elseif (isset($_SESSION['pid'])){ // check in the $_SESSION variable
-          $pid = $_SESSION['pid'];
+          $uid = $_SESSION['pid'];
           $openSession = true;
         } elseif (isset($_COOKIE['pid'])){  // check in a $_COOKIE
-          $pid = $_COOKIE['pid'];
+          $uid = $_COOKIE['pid'];
           $token = $_COOKIE['token'];
         } elseif ($query->param('email')){    // check for an email in the request
           $email = $query->param('email');
-          $pid = Player::anonID($email);  // and derive the pid from the email
+          $uid = Player::anonID($email);  // and derive the pid from the email
           $token = $query->param('token');
         } else {                            // anonymous session: no user identifier
            return;                         // RETURN login fail
@@ -413,9 +413,9 @@ class Page extends Html {
 
         // Load up the Player from file
         try {
-            $user = $this::loadUser($pid);
+            $user = $this::loadUser($uid);
             if(!$user->ok()){
-              $sid = self::snip($pid);
+              $sid = self::snip($uid);
               self::logMsg("user not OK $sid");
               return;                       // RETURN login fail
             }
@@ -427,10 +427,10 @@ class Page extends Html {
         // return the Player iff authentication is possible
         if($openSession){                   // AUTH: existing session
         } elseif($user->isValidToken($token)){     // AUTH: token
-            $this->setupSession($pid, $user->lang());
+            $this->setupSession($uid, $user->lang());
             $this->setupCookie($user);
         } else {
-            $sid = self::snip($pid);
+            $sid = self::snip($uid);
             self::logMsg("token invalid $sid $token");
             return;                         // RETURN authentication failure
         }
@@ -444,19 +444,19 @@ class Page extends Html {
     }
 
 
-    private function setupSession($pid, $lang){
+    private function setupSession($uid, $lang){
         session_regenerate_id();
-        $_SESSION['pid'] = $pid;
+        $_SESSION['pid'] = $uid;
         $_SESSION['lang'] = $lang;
     }
 
 
     private function setupCookie($user){
       if (!headers_sent()){
-        $pid = $user->id();
+        $uid = $user->id();
         $term = 3*self::MONTH;
         $token = $user->token($term);
-        setcookie('pid', $pid, time() + $term, '/', HOST, TRUE, TRUE);
+        setcookie('pid', $uid, time() + $term, '/', HOST, TRUE, TRUE);
         setcookie('token', $token, time() + $term, '/', HOST, TRUE, TRUE);
       }
     }
@@ -467,21 +467,21 @@ class Page extends Html {
     $_COOKIE
     ********************************************************************************/
     public function logout(){
-        $pid = "NULL";
+        $uid = "NULL";
         if (isset($_COOKIE) && isset($_COOKIE['pid'])){
-            $pid = $_COOKIE['pid'];
+            $uid = $_COOKIE['pid'];
             unset($_COOKIE['pid']);
             unset($_COOKIE['token']);
         }
         if (isset($_SESSION) && isset($_SESSION['pid'])){
-            $pid = $_SESSION['pid'];            
+            $uid = $_SESSION['pid'];            
             unset($_SESSION['pid']);
         }
         if (isset($this->user)){
-            $pid = $this->user->id();
+            $uid = $this->user->id();
             $this->user = NULL;            
         }
-        $id = self::snip($pid);
+        $id = self::snip($uid);
         self::logMsg("logout $id");        
         
         if (!headers_sent()){

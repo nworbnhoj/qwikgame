@@ -27,7 +27,11 @@ class Manager extends User {
 
 
     public function setVenue($mid){
-        $this->xml->addAttribute('vid', $mid);
+        if (isset($mid)){
+            $this->xml->addAttribute('vid', $mid);
+            return TRUE;
+        }
+        return FALSE;
     }
 
 

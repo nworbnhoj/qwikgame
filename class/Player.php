@@ -96,10 +96,12 @@ class Player extends User {
 
 
     public function rankAdd($id, $game){
-        $this->removeRanks($id);
-        $rank = $this->xml->addChild('rank', '');
-        $rank->addAttribute('id', $id);
-        $rank->addAttribute('game', $game);
+        if (isset($id, $game)){
+            $this->removeRanks($id);
+            $rank = $this->xml->addChild('rank', '');
+            $rank->addAttribute('id', $id);
+            $rank->addAttribute('game', $game);
+        }
     }
 
         
@@ -246,12 +248,19 @@ class Player extends User {
     * @throws RuntimeException if the Friend cannot be created
     */
     public function friend($game, $rivalEmail, $parity){
-        $id = self::newID();
         $rid = Player::anonID($rivalEmail);
+        if (!isset($game, $rivalEmail, $parity, $rid)){
+            self::logMsg("Player friend() missing parameters");
+            return NULL;
+        }
+
+        $id = self::newID();
 
         $existing = $this->xml->xpath("reckon[rival='$rid' and @game='$game']");
-        if (isset($existing[0])){ // replace a prior reckon for the same rival & game.
-            self::removeElement($existing[0]);
+        if (!empty($existing)){ // replace a prior reckon for the same rival & game.
+            foreach($existing as $e){
+                self::removeElement($e);
+            }
         }
 
         $reckon = $this->xml->addChild('reckon', '');
@@ -275,6 +284,10 @@ class Player extends User {
 
 
     public function region($game, $parity, $region){
+        if (!isset($game, $parity, $region)){
+            self::logMsg("Player region() missing parameters");
+            return NULL;
+        }
         $reckon = $this->xml->addChild('reckon', '');
         $reckon->addAttribute('parity', $parity);
         $reckon->addAttribute('region', $region);
@@ -290,6 +303,10 @@ class Player extends User {
 ////////// AVAILABLE //////////////////////////////////////
 
     public function availableAdd($game, $vid, $parity, $tz, $all7days, $req){
+        if (!isset($game, $vid, $parity, $tz, $all7days, $req)){
+            self::logMsg("Player availableAdd() missing parameters");
+            return NULL;
+        }
         $newID = self::newID();
         $element = $this->xml->addChild('available', '');
         $element->addAttribute('id', $newID);
@@ -518,6 +535,10 @@ class Player extends User {
     * @throws RuntimeException if the Match Rival cannot be returned
     */
     public function outcomeAdd($mid, $parity, $rep){
+        if (!isset($mid, $parity, $rep)){
+            self::logMsg("Player outcomeAdd() missing parameters");
+            return NULL;
+        }
         $match = $this->matchID($mid);
         if (!isset($match)){
             $id = $this->id();
@@ -576,6 +597,10 @@ class Player extends User {
 
 
     public function uploadAdd($id, $fileName){
+        if (!isset($id, $fileName)){
+            self::logMsg("Player uploadAdd() missing parameters");
+            return NULL;
+        }        
         $up = $this->xml->addChild('upload', htmlspecialchars($fileName));
         $up->addAttribute('id', $id);
 //      $up->addAttribute('date', date_format(date_create(), 'Y-m-d'));

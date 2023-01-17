@@ -125,7 +125,8 @@ class User extends Qwik {
         return false;
       }
       if(!isset($this->xml['ok'])){
-        $this->xml->addAttribute('ok', (isset($value) ? $value : 'true'));
+        $ok = isset($value) ? $value : 'true';
+        $this->xml->addAttribute('ok', $ok);
         $this->save();
       } elseif (isset($value)){
         $this->xml['ok'] = $value;

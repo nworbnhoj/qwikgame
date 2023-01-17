@@ -55,9 +55,15 @@ class Natch extends Qwik {
 
     public function addRival($rid, $parity=NULL, $rep=NULL, $name=NULL){
         $rival = $this->xml->addChild('rival', htmlspecialchars($rid));
-        $rival->addAttribute('parity', $parity);
-        $rival->addAttribute('rep', $rep);
-        $rival->addAttribute('name', $name);
+        if (isset($parity)){
+            $rival->addAttribute('parity', $parity);
+        }
+        if (isset($rep)){
+            $rival->addAttribute('rep', $rep);
+        }
+        if (isset($name)){
+            $rival->addAttribute('name', $name);
+        }
         $this->rivalElements = NULL; //reset
     }
 

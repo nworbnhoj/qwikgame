@@ -50,7 +50,7 @@ class Ranking extends Qwik {
         $this->valid = true;
         if(self::exists($id)){
             $this->xml = $this->retrieve($id);
-        } else {
+        } else if (isset($game)) {
           $filename = PATH_UPLOAD.$id.self::CSV;
           $badLineNumber = self::validate($filename);
           if( $badLineNumber <= 0){
@@ -68,6 +68,8 @@ class Ranking extends Qwik {
             $this->transcript .= "Validation failed on line $badLineNumber.\n";
             $this->valid = false;
           }  
+        } else {
+            self::logMsg("Ranking construct() missing game $id");
         }
     }
 

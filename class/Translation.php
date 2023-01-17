@@ -80,8 +80,12 @@ class Translation extends PhraseBook {
         $xml = new SimpleXMLElement("<translation></translation>");
     
         foreach($this->languages as $key => $native){
-            $element = $xml->addChild('language');
-            $element->addAttribute($key, $native);        
+            if (isset($native)){
+                $element = $xml->addChild('language');
+                $element->addAttribute($key, $native); 
+            } else {
+                self::logMsg("sTranslation export() missing native $key");
+            }    
         }
 
         foreach($this->phrases as $key => $phrase){            

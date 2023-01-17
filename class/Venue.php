@@ -445,8 +445,8 @@ class Venue extends Qwik {
         $datetime = $this->dateTime('now');
         $date = $datetime->format('d-m-y H:i');
         $oldVal = $this->xml[$key];
-        if (isset($oldVal) && $oldVal != $value){
-            if ( strlen(trim($oldVal)) > 0){
+        if ($oldVal != $value){
+            if (isset($oldVal) && strlen(trim($oldVal)) > 0){
                 $edit = $this->xml->addChild('edit', '');
                 $edit->addAttribute('date', $date);
                 $edit->addAttribute('id', self::newID());
@@ -572,7 +572,7 @@ class Venue extends Qwik {
 
     public function facilitySet($game, $days){
         $element = $this->facility($game);
-        if (!isset($element)){
+        if (!isset($element) && isset($game)){
             $newID = self::newID();
             $element = $this->xml->addChild('facility', '');
             $element->addAttribute('id', $newID);
@@ -624,6 +624,10 @@ class Venue extends Qwik {
     * @throws RuntimeException if the Match cannot be added
     */
     public function matchAdd($pid, $mid, $game, $date, $hours){
+        if (!isset($pid, $mid, $game, $date, $hours)){
+            self::logMsg("Venue matchAdd() missing parameters");
+            return NULL;
+        }
         try {
             $this->addPlayer($pid);
 

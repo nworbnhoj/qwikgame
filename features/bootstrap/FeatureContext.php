@@ -654,10 +654,15 @@ class FeatureContext implements Context
         $this->vid = $vid;
         $uid = $this->uid;
         $manager = new Manager($uid);
-        Assert::assertNotNull($manager, "Manager missing");
+        Assert::assertNotNull($manager, "I am not a Manager");
+        $myVenue = $manager->venue();
+        Assert::assertNotNull($myVenue, "Manager missing venue");
         $venue = new Venue($vid);
         Assert::assertNotNull($venue, "Venue missing");
-        Assert::assertEquals($uid, $venue->manager()->id(), "Manager mismatch");
+        $venueManager = $venue->manager();
+        Assert::assertNotNull($venueManager, "Venue missing Manager");
+        $mid = $venueManager->id();
+        Assert::assertEquals($uid, $mid, "I am not Manager of Venue");
         $this->manager = $manager;
     }
 

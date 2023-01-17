@@ -445,7 +445,7 @@ class Venue extends Qwik {
         $datetime = $this->dateTime('now');
         $date = $datetime->format('d-m-y H:i');
         $oldVal = $this->xml[$key];
-        if ($oldVal != $value){
+        if (isset($oldVal) && $oldVal != $value){
             if ( strlen(trim($oldVal)) > 0){
                 $edit = $this->xml->addChild('edit', '');
                 $edit->addAttribute('date', $date);

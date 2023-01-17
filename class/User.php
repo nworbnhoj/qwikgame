@@ -260,6 +260,7 @@ class User extends Qwik {
     - if the system is compromised then the user held token remain secure.
     *******************************************************************************/
     function nekot($token){
+        $token = isset($token) ? $token : ''; 
         return hash('sha256', $token);
     }
 

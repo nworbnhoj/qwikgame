@@ -175,8 +175,8 @@ class Ranking extends Qwik {
             $facilitatorSHA256 = hash('sha256', 'facilitator@qwikgame.org');
 
             $line = fgets($file);
-
-            $testSHA256 = trim(explode(',', $line)[1]);
+            $lines = explode(',', $line);
+            $testSHA256 = isset($lines[1]) ? trim($lines[1]) : '' ;
 
             if((strlen($testSHA256) != 64)
             || (strcmp($facilitatorSHA256, $testSHA256) != 0)){
@@ -200,8 +200,10 @@ class Ranking extends Qwik {
                 $lineNo++;
                 $tupple = explode(',', $line);
                 if (count($tupple) == 2){
-                    $rank = (int) trim($tupple[0]);
-                    $sha256 = trim($tupple[1]);
+                    $r = $tupple[0];
+                    $s = $tupple[1];
+                    $rank = isset($r) ? (int) trim($r) : -1 ;
+                    $sha256 = isset($s) ? trim($s) : '' ;
                     if ($rank > 0 && $rank < 10000 && strlen($sha256) == 64){
                         $child = $this->xml->addChild('sha256', htmlspecialchars($sha256));
                         $child->addAttribute('rank', $rank);

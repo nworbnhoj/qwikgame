@@ -132,8 +132,10 @@ class Defend extends Qwik {
             foreach($cat as $key => $val){
                 $kitten[self::declaw($key)] = self::declaw($val);
             }
-        } else {
+        } else if(isset($cat)) {
             $kitten = htmlspecialchars(trim($cat), ENT_QUOTES | ENT_HTML5, "UTF-8");
+        } else {
+          $kitten = '';
         }
         return $kitten;
     }

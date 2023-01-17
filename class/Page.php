@@ -556,7 +556,7 @@ class Page extends Html {
 
 
     private function trim_value(&$value){
-        $value = trim($value);
+        $value = isset($value) ? trim($value) : '' ;
     }
 
 

@@ -79,13 +79,13 @@ class BookingPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $tentativeList = new FacilityMatchList($html, 'tentative', 'tentative.match');
+        $tentativeList = new FacilityMatchList($html, 'tentative', 'tentative.book.match');
         $vars['tentativeMatches'] = $tentativeList->make();
 
-        $confirmedList = new FacilityMatchList($html, 'confirmed', 'confirmed.match');
+        $confirmedList = new FacilityMatchList($html, 'confirmed', 'confirmed.book.match');
         $vars['confirmedMatches'] = $confirmedList->make();
 
-        $cancelledList = new FacilityMatchList($html, 'cancelled', 'cancelled.match');
+        $cancelledList = new FacilityMatchList($html, 'cancelled', 'cancelled.book.match');
         $vars['cancelledMatches'] = $cancelledList->make();
 
         return parent::make($vars); 

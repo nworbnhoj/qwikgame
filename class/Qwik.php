@@ -340,7 +340,7 @@ class Qwik {
     *****************************************************************/
     
     // see: https://www.php.net/manual/en/class.errorexception.php
-    static public function exception_error_handler($number, $string, $file, $line, $context)
+    static public function exception_error_handler($number, $string, $file, $line, $context=NULL)
     {
         // Determine if this error is one of the enabled ones in php config (php.ini, .htaccess, etc)
         $error_is_enabled = (bool)($number & ini_get('error_reporting') );

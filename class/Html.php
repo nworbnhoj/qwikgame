@@ -2,7 +2,6 @@
 
 require_once 'Qwik.php';
 require_once 'PhraseBook.php';
-require_once 'Venue.php';
 
 /*******************************************************************************
     Class Html completes a html document by populating a html template with

@@ -38,30 +38,6 @@ function clickLoginToggle(){
 }
 
 
-function clickManagerToggle(){
-    var playerForm = document.getElementById('player-form');
-    if(window.getComputedStyle(playerForm).display !== 'none') {
-        playerForm.style.display = 'none';
-        document.getElementById('manager-toggle').style.display = 'none';
-        document.getElementById('manager-form').style.display = 'block';
-        document.getElementById('player-toggle').style.display = 'block';
-    }
-    document.getElementById('name').focus();
-}
-
-
-function clickPlayerToggle(){
-    var managerForm = document.getElementById('manager-form');
-    if(window.getComputedStyle(managerForm).display !== 'none') {
-        managerForm.style.display = 'none';
-        document.getElementById('player-toggle').style.display = 'none';
-        document.getElementById('player-form').style.display = 'block';
-        document.getElementById('manager-toggle').style.display = 'block';
-    }
-    document.getElementById('name').focus();
-}
-
-
 function clickButtonLanguage(){
     toggle(this);
     var select = document.getElementById('lang-select');

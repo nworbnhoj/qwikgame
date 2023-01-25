@@ -2,16 +2,15 @@
 
 require_once 'Page.php';
 require_once 'Venue.php';
-require_once 'MatchList.php';
+require_once 'FacilityList.php';
 require_once 'Locate.php';
 
 
 class FacilityPage extends Page {
 
     private $venue;
-    private $manager;
 
-    public function __construct($templateName='match'){
+    public function __construct($templateName='facility'){
         parent::__construct(NULL, $templateName);
 
         $manager = $this->manager();
@@ -21,7 +20,6 @@ class FacilityPage extends Page {
             $this->logout();
             return;
         }
-        $this->manager = $manager;
 
         $this->venue = $manager->venue();
         if (is_null($this->venue)) {
@@ -62,25 +60,27 @@ class FacilityPage extends Page {
         $req = $this->req();
         switch ($qwik) {
             case "register":
-                if(!isset($req['email'])){
+                $email = $req['email'];
+                if(!isset($email)){
                     $logReq = print_r($req, true);
                     self::logMsg("failed to register manager: $logReq");
                     break;
                 }
                 $vid = $req['vid'];
-                $manager = $this->manager;
-                $manager->email($req['email']);       
+                $manager = $this->manager();
+                $manager->email($email);       
                 $manager->setVenue($vid);
                 $manager->save();
                 if(!isset($req['game'])
                 || !isset($req['vid'])){
+                    self::logMsg("missing parameters: game vid");
                     break;
                 }
                 $ddd = array('Mon', 'Tue','Wed', 'Thu', 'Fri');
                 foreach($ddd as $d){
                     $req[$d] = Hours::HRS_9AM_to_5PM;
                 }
-                $this->venue = new Venue($vid);
+                $this->venue = new Venue($vid, TRUE);
                 $this->venue->setManager($manager->id());
 
                 // intentional flow thru to facility

@@ -17,7 +17,8 @@ class Manager extends User {
     */
     public function __construct($mid, $forge=FALSE){
         parent::__construct($mid, $forge);
-        self::logMsg("manager new $mid");
+        $sid = self::snip($mid);
+        self::logMsg("manager $sid");
     }
 
 

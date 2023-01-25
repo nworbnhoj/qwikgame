@@ -339,9 +339,13 @@ class User extends Qwik {
         $param = array(
             "email"   => $email,
             "qwik"    => 'register',
-            "game"    => $req['game'],
-            "vid"     => $req['vid']
         );
+        $game = $req['game'];
+        $vid = $req['vid'];
+        if (isset($game, $vid)) {
+            $param['game'] = $game;
+            $param['vid'] = $vid;
+        }
         $authLink = $this->authLink(self::MONTH, $target, $param);
         $paras = array(
             "{Please activate}",

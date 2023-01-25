@@ -81,7 +81,9 @@ Class TranslatePage extends Html {
     private $files = array(
         'admin.html',
         'account.html',
+        'booking.html',
         'email.html',
+        'facility.html',
         'favorite.html',
         'friend.html',
         'index.html',

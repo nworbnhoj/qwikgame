@@ -72,7 +72,7 @@ class Defend extends Qwik {
     'deactivate'=> array('qwik', 'id'),
     'decline'   => array('qwik', 'id'),
     'delete'    => array('qwik', 'id', 'delay'),
-    'facility'  => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'today', 'tomorrow'),
+    'facility'  => array('qwik', 'pid', 'token', 'email', 'vid', 'game', 'lat', 'lng', 'placeid', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'today', 'tomorrow'),
     'feedback'  => array('qwik', 'id', 'rep', 'parity'),
     'friend'    => array('qwik', 'game', 'rival', 'parity'),
     'keen'      => array('qwik', 'vid', 'game', 'today', 'tomorrow', 'beckon', 'invite', 'lat', 'lng', 'placeid'),

@@ -275,12 +275,8 @@ class User extends Qwik {
     }
 
 
-    // https://stackoverflow.com/questions/262351/remove-a-child-with-a-specific-attribute-in-simplexml-for-php/16062633#16062633
     public function deleteData($id){
-        $rubbish = $this->xml->xpath("//*[@id='$id']");
-        foreach($rubbish as $junk){
-            self::removeElement($junk);
-        }
+        return self::removeId($this->xml, $id);
     }
 
 

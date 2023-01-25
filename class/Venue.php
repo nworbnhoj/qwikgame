@@ -321,6 +321,11 @@ class Venue extends Qwik {
     }
 
 
+    public function deleteData($id){
+        return self::removeId($this->xml, $id);
+    }
+
+
     /**
     * Updates the Venue ID when there is a change to the Venue Name, Locality, 
     * Admin1 or Country.

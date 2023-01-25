@@ -692,6 +692,19 @@ class Qwik {
     }
 
 
+    // https://stackoverflow.com/questions/262351/remove-a-child-with-a-specific-attribute-in-simplexml-for-php/16062633#16062633
+    static public function removeId($xml, $id){
+        $rubbish = $xml->xpath("//*[@id='$id']");
+        if (is_null($rubbish) || !$rubbish){
+            return FALSE;
+        }
+        foreach($rubbish as $junk){
+            self::removeElement($junk);
+        }
+        return TRUE;
+    }
+
+
 
 
     /*****************************************************************

@@ -304,9 +304,13 @@ class Venue extends Qwik {
     }
 
 
-    public function facility($game){
-        $xml_array = $this->xml->xpath("//facility[@game='$game']");
-        return isset($xml_array[0]) ? $xml_array[0] : NULL;
+    public function facility($game=NULL){
+        if (is_null($game)){
+            return $this->xml->xpath("//facility");
+        } else {
+            $xml_array = $this->xml->xpath("//facility[@game='$game']");
+            return isset($xml_array[0]) ? $xml_array[0] : NULL;
+        }
     }
 
 

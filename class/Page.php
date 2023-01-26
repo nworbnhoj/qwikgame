@@ -17,10 +17,12 @@ class Page extends Html {
 
     const ACCOUNT_ICON   = 'fa fa-cog icon';
     const BACK_ICON      = 'fa fa-chevron-circle-left icon';
+    const BOOKING_ICON   = 'fa fa-book icon';
     const COMMENT_ICON   = 'fa fa-comment-o comment';
     const CROSS_ICON     = 'fa fa-times-circle cross';
     const EMAIL_ICON     = 'fa fa-envelope-o icon';
     const FACEBOOK_ICON  = 'fa fa-facebook icon';
+    const FACILITY_ICON  = 'fa fa-clock-o icon';
     const FAVORITE_ICON  = 'fa fa-heart icon';
     const FEMALE_ICON    = 'fa fa-female person';
     const FRIEND_ICON    = 'fa fa-user icon';
@@ -66,6 +68,8 @@ class Page extends Html {
     const EMAIL_URL    = "mailto:?subject=".QWIK_URL."&body=".QWIK_URL."%20makes%20it%20easy%20to%20{tagline}&target=_blank";
     const EMAIL_IMG    = "<img src='img/email.png' alt='email' class='socialmedia'>";
     const EMAIL_LNK    = "<a href='".self::EMAIL_URL."'>".self::EMAIL_IMG."</a>";
+
+    const WEEKDAYS = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
 
 
     static $icons;
@@ -117,8 +121,11 @@ class Page extends Html {
         $html = "";
         $hrs = $xml->xpath("hrs");
         foreach($hrs as $hr){
-            $hours = new Hours($hr);
-            $html .= self::daySpan($hours->roster(), $hr['day']);
+            $day = (string) $hr['day'];
+            if (in_array($day, self::WEEKDAYS)) {
+                $hours = new Hours($hr);
+                $html .= self::daySpan($hours->roster(), $day);
+            }
         }
         return $html;
     }
@@ -131,9 +138,9 @@ class Page extends Html {
         $tabs = "\t\t\t\t";
         foreach($days as $day => $bits){
             $bit = 1;
+            $hrs = 0;
             $hours = new Hours($bits);
             $hourRows .= "$tabs<tr>\n";
-            $hourRows .= "$tabs\t<input name='$day' type='hidden' value='0'>\n";
             $hourRows .= "$tabs\t<th class='tr-toggle'>{$day}</th>\n";
             for($hr24=0; $hr24<=23; $hr24++){
                 if (($hr24 < 6) | ($hr24 > 20)){
@@ -141,7 +148,10 @@ class Page extends Html {
                 } else {
                     $hidden = '';
                 }
-                $on = $hours->get($hr) ? 1 : 0;
+                $on = $hours->get($hr24) ? 1 : 0;
+                if ($on == 1) {
+                    $hrs += $bit;
+                }
                 if ($hr24 <= 12){
                     $hr12 = $hr24;
                 } else {
@@ -150,6 +160,7 @@ class Page extends Html {
                 $hourRows .= "$tabs\t<td class='toggle' on='$on' bit='$bit' $hidden>$hr12</td>\n";
                 $bit = $bit * 2;
             }
+            $hourRows .= "$tabs\t<input name='$day' type='hidden' value='$hrs'>\n";
             $hourRows .= "$tabs</tr>\n";
         }
         return $hourRows;

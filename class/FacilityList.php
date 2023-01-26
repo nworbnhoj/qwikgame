@@ -35,45 +35,49 @@ class FacilityList extends Card {
         $tod = $venue->dateTime('now');
         $todYmd = $tod->format('Y-m-d');
         $todD = $tod->format('D');
-        $tom = $tod::add(new DateInterval("P1D"));
+        $tom = $tod->add(new DateInterval("P1D"));
         $tomYmd = $tom->format('Y-m-d');
         $tomD = $tom->format('D');
 
-        $group = ''; 
-
+        $group = '';
         $facilities = $venue->facility();
         foreach($facilities as $facility){
             $game = (string) $facility['game'];
-            
-            $today = $facility->xpath("hrs[day='$todYmd']");
-            if (!isset($today)){
-               $today = $facility->xpath("hrs[day='$todD']");
-               if (!isset($today)){
-                   $today = 0;
+            // I think that this is correct .....
+            //     $today = $facility->xpath("//hrs[@day='$todYmd']");
+            // but is seems to return what I would expect from .....
+            //     $today = $facilities->xpath("//hrs[@day='$todYmd']");
+            // And the folowing works perfectly - but I have no idea why ?????
+            $today = $facility->xpath("//facility[@game='$game']/hrs[@day='$todYmd']");
+            if (empty($today)){
+               $today = $facility->xpath("//facility[@game='$game']/hrs[@day='$todD']");
+               if (empty($today)){
+                   $today = array(0);
                }
             }
 
-            $tomorrow = $facility->xpath("hrs[day='$tomYmd']");
-            if (!isset($tomorrow)){
-               $tomorrow = $facility->xpath("hrs[day='$tomD']");
-               if (!isset($tomorrow)){
-                   $tomorrow = 0;
+            $tomorrow = $facility->xpath("//facility[@game='$game']/hrs[@day='$tomYmd']");
+            if (empty($tomorrow)){
+               $tomorrow = $facility->xpath("//facility[@game='$game']/hrs[@day='$tomD']");
+               if (empty($tomorrow)){
+                   $tomorrow = array(0);
                }
             }
 
             $days = array(
-                'today'    => $today,
-                'tomorrow' => $tomorrow,
+                'today'    => (int) $today[0],
+                'tomorrow' => (int) $tomorrow[0],
             );
 
             $facilityVars = array(
                 'id'        => (string) $facility['id'],
+                'vid'       => $venue->id(),
                 'game'      => $game,
                 'gameName'  => self::gameName($game),
                 'hourRows'  => self::hourRows($days),
                 'weekSpan'  => self::weekSpan($facility)
             );
-            $vars = $variables + $facilityVars;
+            $vars = $facilityVars + $variables;
             $group .= $this->populate($html, $vars);
         }
         return $group;

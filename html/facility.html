@@ -45,20 +45,16 @@
     <form class='record' action='facility.php' method='post'>
         <input type="hidden" name="qwik" value="facility">
         <input type='hidden' id='vid' name='vid' value='[vid]'>
+        <input type='hidden' name='game' value='[game]'>
         <input type='hidden' name='id' value='[id]'>
         <button type='submit' name='qwik' value='cancel' class='action [CROSS_ICON]' onclick="showUndo(event, 10, '{cancelled}')"></button>
         <button type='submit' name='qwik' value='undo' class='action undo' style='display:none;' onclick='clickUndo(event)'>{undo}</button>
-        <div id='available-hours' class='record'>
+        <div id='available-hours'>
             <span class='tag game'>[gameName]</span>
             <table class='time wide'>
-                <tr>
-                    <th colspan=3>{am}</th>
-                    <th colspan=9>{today_or_tomorrow}</th>
-                    <th colspan=3>{pm}</th>
-                </tr>
                 [hourRows]
             </table>
-            <p><b>{default_availability..}</b>[weekSpan]</p>            
+            <div>[weekSpan]</div>            
             <input type='submit' class='facility' value='{Submit}'>
         </div>
     </form>

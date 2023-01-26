@@ -253,7 +253,7 @@ function toggle(element){
 // toggle cells in hour selection tables between orange and grey
 function clickTdToggle(){
     var td = this;
-    var input = td.parentNode.firstElementChild;
+    var input = td.parentNode.lastElementChild;
     var value = parseInt(input.getAttribute('value'));
     var bit = parseInt(td.getAttribute('bit'));
     if (td.getAttribute('on') == 1){

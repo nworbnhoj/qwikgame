@@ -108,10 +108,12 @@ Class TranslatePage extends Html {
 
         $vars = parent::variables();
         $vars['ACCOUNT_ICON']  = Page::ACCOUNT_ICON;
+        $vars['BOOKING_ICON']  = Page::BOOKING_ICON;
         $vars['CROSS_ICON']    = Page::CROSS_ICON;
         $vars['COMMENT_ICON']  = Page::COMMENT_ICON;
         $vars['EMAIL_ICON']    = Page::EMAIL_ICON;
         $vars['FACEBOOK_ICON'] = Page::FACEBOOK_ICON;
+        $vars['FACILITY_ICON'] = Page::FACILITY_ICON;
         $vars['FAVORITE_ICON'] = Page::FAVORITE_ICON;
         $vars['FRIEND_ICON']   = Page::FRIEND_ICON;
         $vars['FEMALE_ICON']   = Page::FEMALE_ICON;

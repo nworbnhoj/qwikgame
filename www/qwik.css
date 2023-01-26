@@ -494,6 +494,14 @@ table.time td {
     min-width:6%;
 }
 
+table.time td[on='0'] {
+    background-color:LightGrey;    
+}
+
+table.time td[on='1'] {
+    background-color:DarkOrange;    
+}
+
 table.time td.past {
     background-color:transparent;
     border:none 0px transparent;

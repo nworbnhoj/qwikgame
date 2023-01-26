@@ -58,6 +58,7 @@ class FacilityPage extends Page {
 
         $qwik = $this->req('qwik');
         $req = $this->req();
+        $forge = FALSE;
         switch ($qwik) {
             case "register":
                 $email = $req['email'];
@@ -82,16 +83,19 @@ class FacilityPage extends Page {
                 }
                 $this->venue = new Venue($vid, TRUE);
                 $this->venue->setManager($manager->id());
-
+                $forge = TRUE;
                 // intentional flow thru to facility
             case "facility":
                 $result = $this->qwikFacility($req, $this->venue);
+                break;
+            case 'delete':
+                $result = $this->qwikDelete($this->venue, $req);
                 break;
             default:
                 $result =  NULL;
         }
 
-        $this->venue->save(TRUE);
+        $this->venue->save($forge);
         return $result;
     }
 
@@ -99,7 +103,17 @@ class FacilityPage extends Page {
     public function variables(){
         $vars = parent::variables();
         $vars['vid'] = $this->venue->id();
-        $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");
+        $vars['gameOptions']   = $this->gameOptions(NULL, "\t\t");
+        $days = array(
+            'Mon'=>'0',
+            'Tue'=>'0',
+            'Wed'=>'0',
+            'Thu'=>'0',
+            'Fri'=>'0',
+            'Sat'=>'0',
+            'Sun'=>'0'
+        );
+        $vars['hourRows'] = self::hourRows($days); 
         return $vars;
     }
 
@@ -108,7 +122,7 @@ class FacilityPage extends Page {
         $html = is_null($html) ? $this->template() : $html;
         $vars = is_array($variables) ? array_merge($this->variables(), $variables) : $this->variables();
 
-        $facilityList = new FacilityList($html);
+        $facilityList = new FacilityList($html, 'availability');
         $vars['availability'] = $facilityList->make();
 	
         return parent::make($vars); 
@@ -120,7 +134,15 @@ class FacilityPage extends Page {
 
 
     function qwikFacility($req, $venue){
-        if(!isset($venue) || !isset($req['game'])){ return NULL; }
+        $game = $req['game'];
+        if(!(isset($venue) && isset($game))) {
+            return NULL;
+        }
+
+        if(isset($req['id'])){
+            $venue->deleteData($req['id']);
+        }
+
         $days = array();
         $ddd = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
         foreach($ddd as $d){
@@ -136,8 +158,13 @@ class FacilityPage extends Page {
             $tom = $now->add(new DateInterval("P1D"));
             $days[$tom->format('Y-m-d')] = $req['tomorrow'];
         }
-        $newID = $venue->facilitySet($req['game'], $days);
+        $newID = $venue->facilitySet($game, $days);
         return $newID;
+    }
+
+
+    function qwikDelete($venue, $request){
+        return $venue->deleteData($request['id']);
     }
 
 }

@@ -468,7 +468,7 @@ class Natch extends Qwik {
         $repWord = $this->rivalRep();
 
         $vars['day'] = $this->mday();
-        $vars['parity'] = parityStr($this->rivalParity());
+        $vars['parity'] = $this->parityStr($this->rivalParity());
         $vars['rivalRep'] = strlen($repWord)==0 ? '{unknown}' : $repWord;
         $vars['chatter'] = $this->chat();
 
@@ -497,7 +497,7 @@ class Natch extends Qwik {
                 $outcome = $this->player->outcome($this->id());
                 if (isset($outcome)) {
                     $outcomeParity = (string) $outcome['parity'];
-                    $vars['parity'] = parityStr($outcomeParity);
+                    $vars['parity'] = $this->parityStr($outcomeParity);
                     $vars['thumb'] = $outcome['rep'] == 1 ? Page::THUMB_UP_ICON : Page::THUMB_DN_ICON;
                 }
                 break;

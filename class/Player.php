@@ -23,7 +23,8 @@ class Player extends User {
     */
     public function __construct($pid, $forge=FALSE){
         parent::__construct($pid, $forge);
-        self::logMsg("player new $pid");
+        $sid = self::snip($pid);
+        self::logMsg("player $sid");
     }
 
 
@@ -33,7 +34,12 @@ class Player extends User {
     
     
     public function rely($disparity=NULL){    // note disparity range [0,4]
-        $rely = floatval($this->xml->rely['val']);
+        $xml = $this->xml->rely;
+        if(!isset($xml)){
+            $xml = $this->xml->addChild('rely', '');
+            $xml->addAttribute('val', 1.0);
+        }
+        $rely = floatval($xml['val']);
         if (!is_null($disparity)){
             $rely = $this->expMovingAvg($rely, 4-$disparity, 3);
             $this->xml->rely['val'] = $rely;
@@ -43,7 +49,13 @@ class Player extends User {
 
 
     function rep(){
-        return $this->xml->xpath("rep")[0];
+        $xml = $this->xml->rep;
+        if(!isset($xml)){
+            $xml = $this->xml->addChild('rep', '');
+            $xml->addAttribute('pos', 0);
+            $xml->addAttribute('neg', 0);
+        }
+        return $xml;
     }
 
 
@@ -802,7 +814,7 @@ Requirements:
     function playerVariables(){
         return array(
             'target'    => 'match.php',
-            'reputation'=> repWord(),
+            'reputation'=> $this->repWord(),
         );
     }
 

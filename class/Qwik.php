@@ -29,7 +29,7 @@ class Qwik {
         'backgammon'  => '{Backgammon}',
         'badminton'   => '{Badminton}',
         'boules'      => '{Boules}',
-        'billards'    => '{Billiards}',
+        'billiards'   => '{Billiards}',
         'checkers'    => '{Checkers}',
         'chess'       => '{Chess}',
         'cycle'       => '{Cycle}',

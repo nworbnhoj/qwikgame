@@ -87,14 +87,16 @@ class FavoritePage extends Page {
         $result = null;
         switch ($qwik) {
             case "register":
-                if(!isset($req['email'])){
+                $email = $req['email'];
+                if(!isset($email)){
                     $logReq = print_r($req, true);
                     self::logMsg("failed to register player: $logReq");
                     break;
                 }
-                $player->email($req['email']);
+                $player->email($email);
                 if(!isset($req['game'])
                 || !isset($req['vid'])){
+                    self::logMsg("missing parameters: game vid");
                     break;
                 }
                 $req['parity'] = 'any';

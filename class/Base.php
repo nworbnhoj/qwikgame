@@ -85,7 +85,7 @@ class Base extends Page {
 
 
     public function replicate($html, $variables){
-        return $this->populate($html, $vars);
+        return $this->populate($html, $variables);
     }
 
 }

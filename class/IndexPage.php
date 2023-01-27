@@ -60,23 +60,14 @@ class IndexPage extends Page {
     }
 
 
-    function qwikAvailable($email){
+    private function qwikAvailable($email){
         if (!isset($email)){
             return FALSE;
         }
         try {
             $pid = Player::anonID($email);
             $anon = new Player($pid, TRUE);
-            if(isset($anon)){
-                $req = array();
-                if($this->req('game') && $this->req('vid')){
-                  $req['game'] = $this->req('game');
-                  $req['vid'] = $this->req('vid');
-                }
-                $anon->emailWelcome($email, $req);
-                $this->message("{Check_email}");
-                $result = TRUE;
-            }
+            return $this->welcome($anon, $email);
         } catch (RuntimeException $e){
             self::logThrown($e);
             self::logMsg("Failed to create new Player $pid from IndexPage");
@@ -85,28 +76,37 @@ class IndexPage extends Page {
     }
 
 
-    function qwikFacility($email){
+    private function qwikFacility($email){
         if (!isset($email)){
             return FALSE;
         }
         try {
             $mid = Manager::anonID($email);
             $anon = new Manager($mid, TRUE);
-            if(isset($anon)){
-                $req = array();
-                if($this->req('game') && $this->req('vid')){
-                  $req['game'] = $this->req('game');
-                  $req['vid'] = $this->req('vid');
-                }
-                $anon->emailWelcome($email, $req);
-                $this->message("{Check_email}");
-                $result = TRUE;
-            }
+            return $this->welcome($anon, $email);
         } catch (RuntimeException $e){
             self::logThrown($e);
             self::logMsg("Failed to create new Manager $mid from IndexPage");
         }
         return FALSE;
+    }
+
+
+    private function welcome($anon, $email){
+        self::logMsg("welcome ".get_class($anon));
+        if(!isset($anon)){
+            return FALSE;
+        }
+        $req = array();
+        $game = $this->req('game');
+        $vid = $this->req('vid');
+        if (isset($game, $vid)){
+            $req['game'] = $game;
+            $req['vid'] = $vid;
+        }
+        $anon->emailWelcome($email, $req);
+        $this->message("{Check_email}");
+        return TRUE;
     }
 
 

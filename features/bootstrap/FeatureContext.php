@@ -631,7 +631,7 @@ class FeatureContext implements Context
         $req['name'] = $email;  // side-step honeypot
         unset($req['email']);
         $this->id = Post::indexPage($req);
-        $manager = new Manager($this->uid);
+        $manager = new Manager($this->uid, TRUE);
         $this->emailWelcome = $manager->emailWelcome($email, $req);
     }
 

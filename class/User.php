@@ -42,7 +42,7 @@ class User extends Qwik {
 
 
     private $id;
-    protected $xml;
+    private $xml;
 
 
     /**
@@ -70,13 +70,8 @@ class User extends Qwik {
     }
 
 
-    public function default_xml(){
-        return self::DEFAULT_USER_XML;
-    }
-
-
     private function newXML(){
-        $xml = new SimpleXMLElement($this->default_xml());
+        $xml = new SimpleXMLElement(self::DEFAULT_USER_XML);
         $xml->addAttribute('id', $this->id());
         $now = new DateTime('now');
         $xml->addAttribute('debut', $now->format('d-m-Y'));
@@ -136,6 +131,22 @@ class User extends Qwik {
     }
 
 
+    protected function playerXml(){     
+        if (!isset($this->xml->player)){
+            $this->xml->addChild('player', '');
+        }
+        return $this->xml->player;
+    }
+
+
+    protected function managerXml(){
+        if (!isset($this->xml->manager)){
+            $this->xml->addChild('manager', '');
+        }
+        return $this->xml->manager;
+    }
+
+
     public function id(){
         return $this->id;
     }
@@ -151,6 +162,18 @@ class User extends Qwik {
             $this->xml['lang'] = $lang;
         }
         return (string) $this->xml['lang'];
+    }
+    
+
+    public function url($url=NULL){
+        if (!is_null($url)){
+            if (isset($this->xml['url'])){
+                $this->xml['url'] = $url;
+            } else {
+                $this->xml->addAttribute('url', $url);
+            }
+        }
+        return (string) $this->xml['url'];
     }
 
 

@@ -59,16 +59,16 @@ class AccountPage extends Page {
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
 
-        $user = $this->player();
+        $user = $this->user();
         if (!is_null($user)){
             $userNick = $user->nick();
             $userEmail = $user->email();
             $userName = empty($userNick) ? $userEmail : $userNick;
             $notify = new Notify($user);
 
-            $vars['reputation']    = get_class($this->user) == "Player" ? $user->repWord() : '';
+            $vars['reputation']    = get_class($user) == "Player" ? $user->repWord() : '';
             $vars['reputationLink']= self::LINK_REP;
-            $vars['thumbs']        = get_class($this->user) == "Player" ? $user->repThumbs() : '';
+            $vars['thumbs']        = get_class($user) == "Player" ? $user->repThumbs() : '';
             $vars['playerNick']    = $userNick;
             $vars['playerURL']     = $user->url();
             $vars['playerEmail']   = $userEmail;

@@ -4,26 +4,19 @@ require_once 'User.php';
 
 
 class Manager extends User {
-
-    const DEFAULT_MANAGER_XML = 
-   "<?xml version='1.0' encoding='UTF-8'?>
-    <manager lang='en' ok='true'>
-      <notify/>
-    </manager>";
         
+
+    private $xml;
+
 
     /**
     * @throws RuntimeException if construction fails.
     */
     public function __construct($mid, $forge=FALSE){
         parent::__construct($mid, $forge);
+        $this->xml = parent::managerXml();
         $sid = self::snip($mid);
         self::logMsg("manager $sid");
-    }
-
-
-    public function default_xml(){
-        return self::DEFAULT_MANAGER_XML;
     }
 
 
@@ -38,7 +31,7 @@ class Manager extends User {
 
     public function venue(){
         $vid = (string) $this->xml['vid'];
-        return new Venue($vid);
+        return empty($vid) ? NULL : new Venue($vid) ;
     }
 
 

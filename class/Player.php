@@ -9,13 +9,8 @@ require_once 'Ranking.php';
 
 class Player extends User {
 
-    const DEFAULT_PLAYER_XML = 
-   "<?xml version='1.0' encoding='UTF-8'?>
-    <player lang='en' ok='true'>
-      <rep pos='0' neg='0'/>
-      <rely val='1.0'/>
-      <notify/>
-    </player>";
+
+    private $xml;
     
 
     /**
@@ -23,23 +18,19 @@ class Player extends User {
     */
     public function __construct($pid, $forge=FALSE){
         parent::__construct($pid, $forge);
+        $this->xml = parent::playerXml();
         $sid = self::snip($pid);
         self::logMsg("player $sid");
-    }
-
-
-    public function default_xml(){
-        return self::DEFAULT_PLAYER_XML;
     }
     
     
     public function rely($disparity=NULL){    // note disparity range [0,4]
         $xml = $this->xml->rely;
-        if(!isset($xml)){
+        if(empty($xml)){
             $xml = $this->xml->addChild('rely', '');
-            $xml->addAttribute('val', 1.0);
+            $xml->addAttribute('val', '1.0');
         }
-        $rely = floatval($xml['val']);
+        $rely = (float) $xml['val'];
         if (!is_null($disparity)){
             $rely = $this->expMovingAvg($rely, 4-$disparity, 3);
             $this->xml->rely['val'] = $rely;
@@ -48,9 +39,9 @@ class Player extends User {
     }
 
 
-    function rep(){
+    private function rep(){
         $xml = $this->xml->rep;
-        if(!isset($xml)){
+        if(empty($xml)){
             $xml = $this->xml->addChild('rep', '');
             $xml->addAttribute('pos', 0);
             $xml->addAttribute('neg', 0);
@@ -59,15 +50,26 @@ class Player extends User {
     }
 
 
-    public function url($url=NULL){
-        if (!is_null($url)){
-            if (isset($this->xml['url'])){
-                $this->xml['url'] = $url;
-            } else {
-                $this->xml->addAttribute('url', $url);
-            }
+    private function repPos($value = NULL){
+        $rep = $this->rep();
+        if (isset($value)){
+            $rep['pos'] = $value;
         }
-        return (string) $this->xml['url'];
+        return intval($rep['pos']);
+    }
+ 
+    private function repNeg($value = NULL){
+        $rep = $this->rep();
+        if (isset($value)){
+            $rep['neg'] = $value;
+        }
+        return intval($rep['neg']);
+    }
+
+
+    private function repTot(){
+        $rep = $this->rep();
+        return $rep['pos'] + $rep['neg'];
     }
 
 
@@ -180,15 +182,6 @@ class Player extends User {
             $venue->matchCancel($id);
             $venue->save(TRUE);
         }
-    }
-
-
-    public function isValidToken($token){
-        $nekot = $this->nekot($token);
-        if($this->ok()){
-            return count($this->xml->xpath("/player/nekot[text()='$nekot']"))>0;
-        }
-        return FALSE;
     }
 
 
@@ -566,7 +559,7 @@ class Player extends User {
         $outcome->addAttribute('date', $date->format("d-m-Y"));
         $outcome->addAttribute('parity', $parity);
         $outcome->addAttribute('rep', $rep);
-        $outcome->addAttribute('rely', $this->xml->rely['val']); //default value
+        $outcome->addAttribute('rely', $this->rely());  
         $outcome->addAttribute('id', $mid);
 
         try {
@@ -582,13 +575,14 @@ class Player extends User {
 
     // update the reputation records for a player
     public function updateRep($feedback){
-        $rep = NULL !== $this->rep() ? $this->rep() : $this->xml->addChild('rep', '');
         switch ($feedback){
             case '+1':
-                $rep['pos'] = $rep['pos'] + 1;
+                $rep = $this->repPos();
+                $this->repPos($rep + 1);
                 break;
             case '-1':
-                $rep['neg'] = $rep['neg'] + 1;
+                $rep = $this->repNeg();
+                $this->repNeg($rep + 1);
                 break;
         }
     }
@@ -755,11 +749,9 @@ Requirements:
 
 
     public function repWord(){
-
-        $rep = $this->rep();
-        $repPos = intval($rep['pos']);
-        $repNeg = intval($rep['neg']);
-        $repTot = $repPos + $repNeg;
+        $repPos = $this->repPos();
+        $repNeg = $this->repTot();
+        $repTot = $this->repTot();
 
         if($repTot <= 0){
             return '{good}';
@@ -792,19 +784,18 @@ Requirements:
 
 
     public function repFraction(){
-        $rep = $this->rep();
-        $repPos = intval($rep['pos']);
-        $repNeg = intval($rep['neg']);
-        $repTot = $repPos + $repNeg;
+        $repPos = $this->repPos();
+        $repNeg = $this->repTot();
+        $repTot = $this->repTot();
         $thumb = "<span class='fa fa-thumbs-o-up green'></span>";
         return "$repPos $thumb / $repTot";
     }
 
 
     function repThumbs(){
-        $rep = $this->rep();
-        $repPos = intval($rep['pos']);
-        $repNeg = intval($rep['neg']);
+        $repPos = $this->repPos();
+        $repNeg = $this->repTot();
+        $repTot = $this->repTot();
         $thumbUp = "<span class='fa fa-thumbs-o-up green'></span>";
         $thumbDown = "<span class='fa fa-thumbs-o-down red'></span>";
         return str_repeat($thumbDown, $repNeg) . str_repeat($thumbUp, $repPos);
@@ -1020,7 +1011,7 @@ Requirements:
     ********************************************************************************/
     public function orb($game, $filter=FALSE, $positiveFilter=FALSE){
       $orb = new Orb($game);
-      $parities = $this->xml->xpath("reckon[@game='$game'] | outcome[@game='$game']");
+      $parities = $this->xml->xpath("//reckon[@game='$game'] | //outcome[@game='$game']");
       foreach($parities as $par){
         $key = isset($par['rival']) ? 'rival' : (isset($par['region']) ? 'region' : '');
         if(empty($key)){

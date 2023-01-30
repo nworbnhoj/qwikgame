@@ -13,17 +13,24 @@ class FacilityPage extends Page {
     public function __construct($templateName='facility'){
         parent::__construct(NULL, $templateName);
 
+        $req = $this->req();
+
         $manager = $this->manager();
         if (is_null($manager)
         || !$manager->ok()){
-            self::logMsg("FacilityPage missing manager ".json_encode($this->req()));
+            self::logMsg("FacilityPage missing manager ".json_encode($req));
             $this->logout();
             return;
         }
 
         $this->venue = $manager->venue();
         if (is_null($this->venue)) {
-            self::logMsg("FacilityPage missing venue ".json_encode($this->req()));
+            $qwik = $req['qwik'];
+            $vid = $req['vid'];
+            if(isset($qwik, $vid) && strcmp($qwik, 'register') == 0){
+                return;
+            }
+            self::logMsg("FacilityPage missing venue ".json_encode($req));
             $this->logout();
             return;
         }
@@ -58,7 +65,6 @@ class FacilityPage extends Page {
 
         $qwik = $this->req('qwik');
         $req = $this->req();
-        $forge = FALSE;
         switch ($qwik) {
             case "register":
                 $email = $req['email'];
@@ -83,7 +89,6 @@ class FacilityPage extends Page {
                 }
                 $this->venue = new Venue($vid, TRUE);
                 $this->venue->setManager($manager->id());
-                $forge = TRUE;
                 // intentional flow thru to facility
             case "facility":
                 $result = $this->qwikFacility($req, $this->venue);
@@ -95,7 +100,7 @@ class FacilityPage extends Page {
                 $result =  NULL;
         }
 
-        $this->venue->save($forge);
+        $this->venue->save(TRUE);
         return $result;
     }
 

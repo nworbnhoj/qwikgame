@@ -44,7 +44,7 @@ class FriendList extends Card {
             if(empty($nick)){
                $nick = empty($email) ? Qwik::snip($rid) : $email;
             }
-            $parity = intval($reckon['parity']);
+            $parity = Natch::parityVal($reckon);
             $game = (string) $reckon['game'];
             $reckonVars = array(
                 'id'        => $reckon['id'][0],

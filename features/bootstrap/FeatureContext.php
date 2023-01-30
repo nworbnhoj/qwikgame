@@ -31,6 +31,8 @@ use PHPUnit\Framework\TestCase as Assert;
  */
 class FeatureContext implements Context
 {
+    const PARITY_SYMBOL = array('<<'=>'-2', '<'=>'-1', '='=>'0', '>'=>'+1', '>>'=>'+2');
+    const PARITY_PHRASE = array('much_weaker'=>'-2', 'weaker'=>'-1', 'well_matched'=>'0', 'stronger'=>'+1', 'much_stronger'=>'+2', 'any'=>'+2');
     
     private $Hrs6amto8pm =  2097088;
     private $days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
@@ -277,7 +279,7 @@ class FeatureContext implements Context
                 'qwik'=>'friend',
                 'game'=>$game, 
                 'rival'=>$this->email,
-                'parity'=>$this->parityPhrase[$rivalParity]
+                'parity'=>self::PARITY_PHRASE[$rivalParity]
             );
         Post::friendPage($rid, $req);
 
@@ -405,10 +407,6 @@ class FeatureContext implements Context
     }
 
 
-    private $paritySymbol = array('<<'=>-2, '<'=>-1, '='=>0, '>'=>1, '>>'=>2);
-    private $parityPhrase = array('much_weaker'=>-2, 'weaker'=>-1, 'well_matched'=>0, 'stronger'=>'+1', 'much_stronger'=>'+2', 'any'=>'+2');
-
-
     /**
      * @When /([A-Z]) reports ([A-Z])(<<|<|=|>|>>)([A-Z]) from match on day ([0-9]+)/
      */
@@ -445,7 +443,7 @@ class FeatureContext implements Context
 //            $keenMatchA->cancel();
             
         }
-        $ps = $this->paritySymbol[$parity];
+        $ps = self::PARITY_SYMBOL[$parity];
         Post::matchPageFeedback($pidA, $mid, $ps);
     }
 
@@ -583,10 +581,9 @@ class FeatureContext implements Context
      */
     public function iAddAsAPlayer($email, $parity, $game)
     {
-        $options = array('much_stronger'=>'2', 'stronger'=>'1', 'well_matched'=>'0', 'weaker'=>'-1', 'much_weaker'=>'-2');
         $this->req['qwik'] = 'friend';
         $this->req['rival'] = $email;
-        $this->req['parity'] = $options[$parity];
+        $this->req['parity'] = self::PARITY_PHRASE[$parity];
         $this->req['game'] = $game;
         $this->id = Post::friendPage($this->uid, $this->req);
     }
@@ -598,11 +595,11 @@ class FeatureContext implements Context
     {
         $rid = Player::anonID($email);
         $rival = new Player($rid, FALSE);
-        $checkParity = $this->parityPhrase[$parity];
+        $checkParity = self::PARITY_PHRASE[$parity];
         $player = new Player($this->uid);
         $calcParity = $player->parity($rival, $game);
 
-        Assert::assertEquals($checkParity, $calcParity);
+        Assert::assertEquals((int) $checkParity, $calcParity);
     }
 
 
@@ -709,10 +706,10 @@ class FeatureContext implements Context
         $bits = $testHours->bits() & $venueHours->bits();
         switch ($is){
             case 'is':
-                Assert::assertTrue($bits != 0, "facility IS available when it should be") ;
+                Assert::assertTrue($bits != 0, "facility IS NOT available when it should be") ;
                 break;
             case 'is not':
-                Assert::assertTrue($bits == 0, "facility IS NOT available when it should NOT be") ;
+                Assert::assertTrue($bits == 0, "facility IS available when it should NOT be") ;
                 break;
             default:
                 Assert::assertTrue(FALSE, "invalid switch [$is]");

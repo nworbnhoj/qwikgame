@@ -18,6 +18,8 @@ class MatchPage extends Page {
         $player = $this->player();
         if (is_null($player)
         || !$player->ok()){
+            $req = $this->req();
+            self::logMsg("MatchPage missing player ".json_encode($req));
             $this->logout();
             return;
         }
@@ -333,7 +335,7 @@ function qwikMsg($player, $req){
     ********************************************************************************/
 
     function updateCongCert($player, $matchID, $rival){
-       $pOutcome = $player->outcome($matchID);
+        $pOutcome = $player->outcome($matchID);
         $rOutcome = $rival->outcome($matchID);
         if (NULL !== $pOutcome && NULL !== $rOutcome){
 
@@ -345,8 +347,10 @@ function qwikMsg($player, $req){
             $rRely = $rival->rely();
             $totalRely = $pRely + $rRely;
 
-            $player->rely($disparity * $pRely / $totalRely);
-            $rival->rely($disparity * $rRely / $totalRely);
+            if ($totalRely > 0){
+                $player->rely($disparity * $pRely / $totalRely);
+                $rival->rely($disparity * $rRely / $totalRely);
+            }
 
             $congruence = 4 - $disparity;             // range [0,4]
             $player->outcome($matchID, ($pRely * $congruence) / 4);

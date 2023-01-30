@@ -9,6 +9,33 @@ require_once 'Notify.php';
 
 class Natch extends Qwik {
 
+
+    static public function parityVal($element){
+        if(isset($element)){
+            $parityStr = (string) $element['parity'];
+            if(is_numeric($parityStr)){
+                return floatval($parityStr);
+            }
+        }
+        return NULL;
+    }
+
+
+    static public function parityStr($parity){
+        if($parity <= -2){
+            return "{much_weaker}";
+        } elseif($parity <= -1){
+            return "{weaker}";
+        } elseif($parity < 1){
+            return "{well_matched}";
+        } elseif($parity < 2){
+            return "{stronger}";
+        } else {
+            return "{much_stronger}";
+        }
+    }
+
+
     const CHAT_TEMPLATE = "<p class='chat [class]'>[chat]</p>";
     const CHAT_ME = 'chat-me';
     const CHAT_YU = 'chat-yu';
@@ -181,14 +208,7 @@ class Natch extends Qwik {
 
 
     public function rivalParity($index=0){
-        $element = $this->rivalElement($index);
-        if(isset($element)){
-            $parityStr = (string) $element['parity'];
-            if(is_numeric($parityStr)){
-                return floatval($parityStr);
-            }
-        }
-        return NULL;
+        return self::parityVal($this->rivalElement($index));
     }
 
 
@@ -496,7 +516,7 @@ class Natch extends Qwik {
                 $rivalLink = empty($rivalLink) ? '{my_rival}' : $rivalLink;
                 $outcome = $this->player->outcome($this->id());
                 if (isset($outcome)) {
-                    $outcomeParity = (string) $outcome['parity'];
+                    $outcomeParity = self::parityVal($outcome);
                     $vars['parity'] = $this->parityStr($outcomeParity);
                     $vars['thumb'] = $outcome['rep'] == 1 ? Page::THUMB_UP_ICON : Page::THUMB_DN_ICON;
                 }
@@ -554,26 +574,6 @@ class Natch extends Qwik {
             $html .= "</select>\n";
         }
         return $html;
-    }
-
-
-
-    static public function parityStr($parity){
-        if(is_numeric($parity)){
-            $pf = floatval($parity);
-            if($pf <= -2){
-                return "{much_weaker}";
-            } elseif($pf <= -1){
-                return "{weaker}";
-            } elseif($pf < 1){
-                return "{well_matched}";
-            } elseif($pf < 2){
-                return "{stronger}";
-            } else {
-                return "{much_stronger}";
-            }
-        }
-        return '{unknown parity}';
     }
 
 

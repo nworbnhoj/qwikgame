@@ -308,15 +308,29 @@ class Page extends Html {
         $vars['alert']        = $this->alert;
         $vars['msg-hidden']   = empty($this->msg) ? 'hidden' : '';
         $vars['message']      = $this->msg;
-        
+        $vars['menu']         = $this->menu();
         return $vars;
+    }
+
+
+    protected function menu(){
+        $html = '';
+        $user = $this->user;
+        if (isset($user)){
+            $playerIcons = $user->isPlayer() ? Player::PLAYER_ICONS : array();
+            $managerIcons = $user->isManager() ? Manager::MANAGER_ICONS : array();
+            $icons = $playerIcons + $managerIcons + User::USER_ICONS;
+            foreach($icons as $key => $icon ){
+                $html .= "        <a id='$key-icon' class='$icon' href='$key.php'></a>\n";
+            }
+        }
+        return $html;
     }
 
 
     public function user(){
         return $this->user;
     }
-
 
     public function player(){
         if (isset($this->user) && get_class($this->user) == "Player"){

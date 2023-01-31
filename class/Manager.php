@@ -4,7 +4,11 @@ require_once 'User.php';
 
 
 class Manager extends User {
-        
+
+    const MANAGER_ICONS = array(
+        'booking'  => Page::BOOKING_ICON,
+        'facility' => Page::FACILITY_ICON,
+    );        
 
     private $xml;
 

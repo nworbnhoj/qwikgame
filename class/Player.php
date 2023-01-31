@@ -9,6 +9,11 @@ require_once 'Ranking.php';
 
 class Player extends User {
 
+    const PLAYER_ICONS = array(
+        'match'    => Page::MATCH_ICON,
+        'favorite' => Page::FAVORITE_ICON,
+        'friend'   => Page::FRIEND_ICON,
+    );
 
     private $xml;
     

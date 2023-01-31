@@ -15,6 +15,11 @@ class User extends Qwik {
     <user lang='en' ok='true'>
       <notify/>
     </user>";
+
+    const USER_ICONS = array(
+        'account'  => Page::ACCOUNT_ICON,
+        'info'     => Page::INFO_ICON,
+    );
     
     /*******************************************************************************
     Returns the sha256 hash of the $email address provided
@@ -128,6 +133,16 @@ class User extends Qwik {
         $this->save();
       }
       return ((string) $this->xml['ok']) === 'true';
+    }
+
+
+    public function isPlayer(){
+        return isset($this->xml->player);
+    }
+
+
+    public function isManager(){
+        return isset($this->xml->manager);
     }
 
 

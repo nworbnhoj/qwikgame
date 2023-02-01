@@ -24,6 +24,11 @@ class Options extends Page {
     }
 
 
+    protected function loadUser($uid){
+        return new Player($uid);
+    }
+
+
     public function values($values=NULL){
         if(isset($values) && is_array($values)){
             $this->values = $values;

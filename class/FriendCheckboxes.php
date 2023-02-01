@@ -14,6 +14,11 @@ class FriendCheckboxes extends Card {
     }
 
 
+    protected function loadUser($uid){
+        return new Player($uid);
+    }
+
+
     public function replicate($html, $variables){
         $player = $this->player();
         if (is_null($player)){ return '';}

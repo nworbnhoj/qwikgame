@@ -5,6 +5,7 @@ require_once 'Venue.php';
 require_once 'MatchList.php';
 require_once 'FriendCheckboxes.php';
 require_once 'Locate.php';
+require_once 'Options.php';
 
 
 class MatchPage extends Page {

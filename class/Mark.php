@@ -221,19 +221,41 @@ class Mark extends Qwik {
       }    
     } else {
       $geometry = Locate::getGeometry($country, $admin1, $locality);
-      if(!isset($geometry->location)){ return; }
+      if(!isset($geometry)){ 
+          Qwik::logMsg("Warning: Mark->regionMark() geometry missing");
+          return;
+      }
+      $coords = $geometry['location'];
+      if(!isset($coords)){ 
+          Qwik::logMsg("Warning: Mark->regionMark() geometry missing coords");
+          return;
+      }
+      $viewport = $geometry['viewport'];
+      if(!isset($viewport)){
+          Qwik::logMsg("Warning: Mark->regionMark() geometry missing viewport");
+          return;
+      }
+      $northeast = $viewport['northeast'];
+      if(!isset($northeast)){
+          Qwik::logMsg("Warning: Mark->regionMark() geometry missing viewport northeast");
+          return;
+      }
+      $southwest= $viewport['southwest'];
+      if(!isset($southwest)){
+          Qwik::logMsg("Warning: Mark->regionMark() geometry missing viewport southwest");
+          return;
+      }
 
-      $coords = $geometry->location;
       $name = isset($locality) ? $locality : (isset($admin1) ? $admin1 : $country);
       $mark = array(
-        self::LAT => (string) $coords->lat,
-        self::LNG => (string) $coords->lng,
-        self::NUM => $count,
-        self::NAME => $name,
-        self::NORTH => (float)$geometry->viewport->northeast->lat,
-        self::EAST => (float)$geometry->viewport->northeast->lng,
-        self::WEST => (float)$geometry->viewport->southwest->lng,
-        self::SOUTH => (float)$geometry->viewport->southwest->lat
+        self::LAT   => (string) $coords['lat'],
+        self::LNG   => (string) $coords['lng'],
+        self::NUM   => $count,
+        self::NAME  => $name,
+        self::NORTH => (float) $northeast['lat'],
+        self::EAST  => (float) $northeast['lng'],
+        self::WEST  => (float) $southwest['lng'],
+        self::SOUTH => (float) $southwest['lat'],
       );
       $this->save($key, $mark);
     }

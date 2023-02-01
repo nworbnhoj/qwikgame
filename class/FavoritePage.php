@@ -106,7 +106,7 @@ class FavoritePage extends Page {
                 $result = $this->qwikAvailable($player, $this->venue, $req);
                 break;
             case 'region':
-                $result = $this->qwikRegion($player, $req);
+                $result = $this->qwikReckon($player, $req);
                 break;
             case 'delete':
                 $result = $this->qwikDelete($player, $req);
@@ -151,7 +151,7 @@ class FavoritePage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-            $regionOptions = new Options($this->regions(), Options::VALUE_TEMPLATE);
+            $regionOptions = new Options($player->regions(), Options::VALUE_TEMPLATE);
 
             $vars['regionOptions'] = $regionOptions->make();
             $vars['reputation']    = $player->repWord();
@@ -205,11 +205,11 @@ class FavoritePage extends Page {
     }
 
 
-    function qwikRegion($player, $request){
+    function qwikReckon($player, $request){
         if(isset($request['game'])
             && isset($request['parity'])
             && isset($request['region'])){
-                $player->region($request['game'], $request['parity'], $request['region']);
+                $player->reckonAdd($request['game'], $request['parity'], $request['region']);
         }
     }
 
@@ -220,35 +220,6 @@ class FavoritePage extends Page {
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-
-
-    public function regions(){
-        $player = $this->player();
-        $available = $player->available();
-        $countries = array();
-        $admin1s = array();
-        $localities = array();
-        foreach($available as $avail){
-            $venueID = $avail->venue;
-            $reg = explode('|', $venueID);
-            if(count($reg) === 4){
-              array_shift($reg);  // discard venue name
-              $localities[implode("|",$reg)] = array_shift($reg);
-              $admin1s[implode("|",$reg)] = array_shift($reg);
-              $countries[implode("|",$reg)] = array_shift($reg);
-            } else {
-                self::logMsg("warning: unable to extract region '$venueID'");
-            }
-        }
-
-        asort($countries);
-        asort($admin1s);
-        asort($localities);
-
-        return array_merge($localities, $admin1s, $countries);
-    }
-
-
 
     
 }

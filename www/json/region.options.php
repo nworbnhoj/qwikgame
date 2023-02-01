@@ -5,6 +5,9 @@ require_once 'up.php';
 require_once PATH_CLASS.'Qwik.php';
 require_once PATH_CLASS.'Options.php';
 
+$defend = new Defend();
+$get = $defend->get();
+
 $options = new Options(NULL, Options::KEYVALUE_TEMPLATE);
 $options->values($options->regions());
 $opts = $options->make();
@@ -17,8 +20,5 @@ if(!$json){
 }
  
 echo $json;
-
-
-
 ?>
 

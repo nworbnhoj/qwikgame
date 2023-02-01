@@ -293,7 +293,7 @@ class Player extends User {
     }
 
 
-    public function region($game, $parity, $region){
+    public function reckonAdd($game, $parity, $region){
         if (!isset($game, $parity, $region)){
             self::logMsg("Player region() missing parameters");
             return NULL;
@@ -591,6 +591,34 @@ class Player extends User {
                 break;
         }
     }
+
+
+    public function regions(){
+        $available = $this->available();
+        $countries = array();
+        $admin1s = array();
+        $localities = array();
+        foreach($available as $avail){
+            $venueID = $avail->venue;
+            $reg = explode('|', $venueID);
+            if(count($reg) === 4){
+              array_shift($reg);  // discard venue name
+              $localities[implode("|",$reg)] = array_shift($reg);
+              $admin1s[implode("|",$reg)] = array_shift($reg);
+              $countries[implode("|",$reg)] = array_shift($reg);
+            } else {
+                self::logMsg("warning: unable to extract region '$venueID'");
+            }
+        }
+
+        asort($countries);
+        asort($admin1s);
+        asort($localities);
+
+        return array_merge($localities, $admin1s, $countries);
+    }
+
+
 
 
 

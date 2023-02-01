@@ -137,11 +137,13 @@ class MatchPage extends Page {
             $playerNick = $player->nick();
             $playerEmail = $player->email();
             $playerName = empty($playerNick) ? $playerEmail : $playerNick;
-	    $reckons = $player->reckon("email");
+	        $reckons = $player->reckon("email");
             $historyCount = count($player->matchQuery("match[@status='history']"));
+            $regionOptions = new Options($player->regions(), Options::VALUE_TEMPLATE);
 
             $vars['checkboxFriendsDisplay'] = empty($reckons) ? 'none' : 'block';
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
+            $vars['regionOptions'] = $regionOptions->make();
             $vars['reputation']    = $player->repWord();
             $vars['thumbs']        = $player->repThumbs();
             $vars['playerNick']    = $playerNick;

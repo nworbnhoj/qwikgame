@@ -72,6 +72,12 @@ class Options extends Page {
       $player = $this->player();
       return isset($player) ? $player->matchVenues($game) : array();
     }
+    
+    
+    public function regions(){
+      $player = $this->player();
+      return isset($player) ? $player->regions() : array();
+    }
 
 }
 

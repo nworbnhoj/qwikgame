@@ -348,7 +348,7 @@ function showInfowindowPlaceId(placeId){
 
 function clickCreateVenue(event){
   event.preventDefault();
-  let placeId = event.target.getAttribute("placeid");
+  let placeid = event.target.getAttribute("placeid");
   let name = event.target.getAttribute("venuename");
   let vid = event.target.getAttribute("vid");
     
@@ -359,8 +359,10 @@ function clickCreateVenue(event){
   option.text = name;
   venueSelect.add(option);
   venueSelect.value = vid;
-  document.getElementById('placeid').value = placeId;
 
+  let placeidInput = document.getElementById('placeid');
+  placeidInput.value = placeid;
+ 
   showMap(false);
 }
 
@@ -683,8 +685,9 @@ function receiveMarks(json){
       fetchSubKeys(VISIBLE, GAME);              // prepare for possible zoom-in
       break;
     case 'NO_RESULTS':
-      alert("no results: "+REGION);
-      alert(QWIK_REGION.get(REGION));
+      // TODO initiate google search for Game Name in this area
+      // alert("no results: "+REGION);
+      // alert(QWIK_REGION.get(REGION));
       QWIK_REGION.set(REGION, new Set());
       MAP_REGION.set(REGION, new Set());
       break;

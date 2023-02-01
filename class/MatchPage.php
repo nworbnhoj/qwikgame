@@ -27,7 +27,7 @@ class MatchPage extends Page {
         $this->game = $this->req('game');
 
         $vid = $this->req('vid');
-        $placeId = $this->req('placeid');
+        $placeid = $this->req('placeid');
         if(isset($vid)){
             if (Venue::exists($vid)){
                 try {
@@ -37,8 +37,8 @@ class MatchPage extends Page {
                     self::logThrown($e);
                     unset($vid);
                 }
-            } elseif (isset($placeId)) {
-                $details = Locate::getDetails($placeId);  
+            } elseif (isset($placeid)) {
+                $details = Locate::getDetails($placeid);  
                 if($details){  // the $vid provided is actually a valid google placeId
                     $vid = Venue::venueID(
                         $details['name'],
@@ -50,7 +50,7 @@ class MatchPage extends Page {
                         $this->venue = new Venue($vid, TRUE);
                         if($this->venue->ok()){
                             $this->req('vid', $vid);
-                            $this->venue->updateAtt('placeid', $placeId);
+                            $this->venue->updateAtt('placeid', $placeid);
                             $this->venue->furnish($details);
                         } else {
                           self::alert("Sorry - failed to create new Venue");

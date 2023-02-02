@@ -69,7 +69,7 @@ class Page extends Html {
     const EMAIL_IMG    = "<img src='img/email.png' alt='email' class='socialmedia'>";
     const EMAIL_LNK    = "<a href='".self::EMAIL_URL."'>".self::EMAIL_IMG."</a>";
 
-    const WEEKDAYS = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
+    const WEEKDAYS = array('Mon'=>'0','Tue'=>'0','Wed'=>'0','Thu'=>'0','Fri'=>'0','Sat'=>'0','Sun'=>'0');
 
 
     static $icons;
@@ -122,7 +122,7 @@ class Page extends Html {
         $hrs = $xml->xpath("hrs");
         foreach($hrs as $hr){
             $day = (string) $hr['day'];
-            if (in_array($day, self::WEEKDAYS)) {
+            if (array_key_exists($day, self::WEEKDAYS)) {
                 $hours = new Hours($hr);
                 $html .= self::daySpan($hours->roster(), $day);
             }

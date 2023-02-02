@@ -122,18 +122,7 @@ class FavoritePage extends Page {
 
     public function variables(){
         $vars = parent::variables();
-
-        $days = array(
-            'Mon'=>'0',
-            'Tue'=>'0',
-            'Wed'=>'0',
-            'Thu'=>'0',
-            'Fri'=>'0',
-            'Sat'=>'0',
-            'Sun'=>'0'
-        );
-
-        $vars['hourRows']      = self::hourRows($days);
+        $vars['hourRows']      = self::hourRows(Page::WEEKDAYS);
         $vars['MAP_ICON']      = self::MAP_ICON;
         $vars['SEND_ICON']     = self::SEND_ICON;
 

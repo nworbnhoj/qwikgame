@@ -109,16 +109,7 @@ class FacilityPage extends Page {
         $vars = parent::variables();
         $vars['vid'] = $this->venue->id();
         $vars['gameOptions']   = $this->gameOptions(NULL, "\t\t");
-        $days = array(
-            'Mon'=>'0',
-            'Tue'=>'0',
-            'Wed'=>'0',
-            'Thu'=>'0',
-            'Fri'=>'0',
-            'Sat'=>'0',
-            'Sun'=>'0'
-        );
-        $vars['hourRows'] = self::hourRows($days); 
+        $vars['hourRows'] = self::hourRows(Page::WEEKDAYS);
         return $vars;
     }
 

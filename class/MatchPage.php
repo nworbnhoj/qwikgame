@@ -152,7 +152,8 @@ class MatchPage extends Page {
             $vars['playerEmail']   = $playerEmail;
             $vars['LOGOUT_ICON']   = self::LOGOUT_ICON;
         }
-
+        
+        $vars['hourRows'] = self::hourRows(Page::WEEKDAYS);
         $vars['gameOptions']   = $this->gameOptions($this->game, "\t\t");
         
         $loc = Locate::geolocate(array('latitude', 'longitude'));

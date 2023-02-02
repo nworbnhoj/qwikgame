@@ -70,7 +70,7 @@ class Page extends Html {
     const EMAIL_LNK    = "<a href='".self::EMAIL_URL."'>".self::EMAIL_IMG."</a>";
 
     const WEEKDAYS = array('Mon'=>'0','Tue'=>'0','Wed'=>'0','Thu'=>'0','Fri'=>'0','Sat'=>'0','Sun'=>'0');
-    const TWODAYS = array('Today'=>'0','Tomorrow'=>'0');
+    const TWODAYS = array('today'=>'0','tomorrow'=>'0');
 
 
     static $icons;

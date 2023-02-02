@@ -18,7 +18,7 @@ winReady(event => {
 function initPage(){
     var currentTime = new Date();
     var hour = currentTime.getHours();
-    for (var elem of document.getElementById('hrs_trunc').children) {
+    for (var elem of document.getElementById('today').children) {
         if (elem.nodeName == 'TD'){
             var hr = parseInt(elem.getAttribute('hr'), 10);
             if (hr <= hour){

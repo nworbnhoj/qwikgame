@@ -141,7 +141,7 @@ class Page extends Html {
             $bit = 1;
             $hrs = 0;
             $hours = new Hours($bits);
-            $hourRows .= "$tabs<tr>\n";
+            $hourRows .= "$tabs<tr id='$day'>\n";
             $hourRows .= "$tabs\t<th class='tr-toggle'>{$day}</th>\n";
             for($hr24=0; $hr24<=23; $hr24++){
                 if (($hr24 < 6) | ($hr24 > 20)){
@@ -158,7 +158,7 @@ class Page extends Html {
                 } else {
                     $hr12 = $hr24-12;
                 }
-                $hourRows .= "$tabs\t<td class='toggle' on='$on' bit='$bit' $hidden>$hr12</td>\n";
+                $hourRows .= "$tabs\t<td class='toggle' on='$on' bit='$bit' hr='$hr24' $hidden>$hr12</td>\n";
                 $bit = $bit * 2;
             }
             $hourRows .= "$tabs\t<input name='$day' type='hidden' value='$hrs'>\n";

@@ -6,8 +6,6 @@ docReady(event => {
     document.getElementById('venue-select').addEventListener('click', clickShowMapOption);
     document.getElementById('venue-select').addEventListener('change', clickShowMapOption);
     document.getElementById('venue-select').addEventListener('focus', mapShortcut);
-    document.getElementById('manager-toggle').addEventListener('click', clickManagerToggle, false);
-    document.getElementById('player-toggle').addEventListener('click', clickPlayerToggle,   false);
 });
 
 

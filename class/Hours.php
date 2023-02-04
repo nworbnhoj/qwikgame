@@ -28,6 +28,15 @@ Class Hours {
     public function set($hour){
         $this->bits = $this->bits | (2 ** $hour);
     }
+
+
+    public function set_span($first, $last){
+        $first = max($first, 0);
+        $last = min($last, 23);
+        for ($hour = $first; $hour <= $last; $hour++){
+            $this->set($hour);
+        }
+    }
     
     
     public function get($hour){

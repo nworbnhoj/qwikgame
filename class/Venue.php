@@ -469,15 +469,17 @@ class Venue extends Qwik {
     }
 
 
-    const FURNISH = array('phone', 'url','tz','lat','lng','address','str-num','route');
+    const FURNISH = array('phone', 'url','tz','lat','lng','address','str-num','route','open0','open1','open2','open3','open4','open5','open6');
 
     public function furnish($details){
+      $changed = false;
       foreach(self::FURNISH as $key){
         if(isset($details[$key])){
-          $this->updateAtt($key, $details[$key]);
+          $changed = $this->updateAtt($key, $details[$key]) || $changed;
         }
       }
       $this->save(TRUE);
+      return $changed;
     }
 
 

@@ -151,6 +151,31 @@ class Locate extends Qwik {
             }
           }
 
+
+          if (isset($result['opening_hours'])) {
+            $opening_hours = $result['opening_hours'];
+            if(isset($opening_hours['periods'])) {
+              $periods = $opening_hours['periods'];
+              foreach($periods as $period){
+                $open = $period['open'];
+                if (!isset($open)) { continue; }
+                $day = (int) $open['day'];
+                $open_time = (string) $open['time'];
+                if (!isset($day, $open_time)){ continue; }
+                $first = intval(substr($open_time, 0, 2));
+                $last = 23;
+                if (isset($period['close'])){
+                  $close = $period['close'];
+                  $close_time = (string) $close['time'];
+                  $last = intval(substr($close_time, 0, 2));
+                }
+                $hours = new Hours();
+                $hours->set_span($first, $last);
+                $details["open$day"] = $hours->bits();
+              }
+            }
+          }
+
           $details['phone'] = isset($result['phone']) ? (string) $result['phone'] : '';
           $details['phone'] = isset($result['international_phone_number']) ? (string) $result['international_phone_number'] : '';
           $details['url'] = isset($result['website']) ? (string) $result['website'] : '';

@@ -23,8 +23,8 @@ chmod    g+r   path.php               ; echo -n "."
 chmod    g+r   resubmit.php           ; echo -n "."
 chmod    g+r   services.xml           ; echo -n "."
 
-touch /var/log/beta.qwikgame.org.log
-chown www-admin:www /var/log/beta.qwikgame.org.log
-chmod 660 /var/log/beta.qwikgame.org.log
+touch /var/log/qwikgame.org/beta.log
+chown www-admin:www /var/log/qwikgame.org/beta.log
+chmod 660 /var/log/qwikgame.org/beta.log
 
 echo "."

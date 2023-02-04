@@ -1,0 +1,178 @@
+Build notes install qwikgame server on Digital Ocean
+
+#######################################################
+# Using Digital Ocean as a host ....
+# - Create new project (qwikgame webserver - production webserver - website or blog)
+# - New Droplet (Ubuntu 22.04LTS BasicDroplet RegularCPU SSHkey:www.qwikgame.org backups)
+# - Upload public ssh key (www.qwikgame.org_rsa.pub)
+#
+######################################################
+
+
+#######################################################
+# Initial Server Setup with Ubuntu 22.04
+# https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04
+#
+# ssh root@your_server_ip
+# adduser ubuntu
+# usermod -aG sudo ubuntu
+# ufw app list
+# ufw allow OpenSSH
+# ufw enable
+# rsync --archive --chown=ubuntu:ubuntu ~/.ssh /home/ubuntu
+# exit
+#
+#######################################################
+
+
+#######################################################
+# How To Install Nginx on Ubuntu 22.04
+# https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-22-04
+# Step 3 & 4
+# 
+# ssh ubuntu@your_server_ip
+# apt update
+# apt upgrade
+# apt install nginx
+# ufw app list
+# ufw allow 'Nginx Full'
+# ufw status
+# systemctl status nginx
+#
+# mkdir -p /var/www/qwikgame.org/www
+# cp ~/test.html /var/www/qwikgame.org/www/index.html
+# chown -R www-data:www-data /var/www/qwikgame.org/www
+#
+# mkdir -p /var/www/qwikgame.org/beta
+# cp ~/test.html /var/www/qwikgame.org/beta/index.html
+# chown -R www-data:www-data /var/www/qwikgame.org/beta
+#
+# cp ~/test.server.block /etc/nginx/sites-available/qwikgame.org
+# ln -s /etc/nginx/sites-available/qwikgame.org /etc/nginx/sites-enabled/qwikgame.org
+# nano /etc/nginx/nginx.conf
+#    uncomment server_names_hash_bucket_size
+# nginx -t
+# systemctl restart nginx
+#
+# rm -r /var/www/html
+#
+#######################################################
+
+
+#######################################################
+# How To Install Linux, Nginx, MySQL, PHP (LEMP stack) on Ubuntu 22.04
+# https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-22-04
+# Step 3 & 4
+#
+# apt install php8.1-fpm
+#
+# cp info.php /var/www/qwikgame.org/beta/info.php
+#    http://beta.qwikgame.org/info.php
+# rm /var/www/qwikgame.org/beta/info.php
+#
+#######################################################
+
+
+#######################################################
+# How To Secure Nginx with Let's Encrypt on Ubuntu 22.04
+# https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-22-04
+#
+# snap install core; sudo snap refresh core
+# snap install --classic certbot
+# ln -s /snap/bin/certbot /usr/bin/certbot
+#
+# certbot --nginx -d qwikgame.org -d www.qwikgame.org -d beta.qwikgame.org 
+# systemctl status snap.certbot.renew.service
+# certbot renew --dry-run
+#
+#######################################################
+
+
+#######################################################
+# How To Install and Configure Postfix as a Send-Only SMTP Server on Ubuntu 22.04
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-22-04
+# 
+# hostname qwikgame.org
+# apt update
+# apt install mailutils
+#    Internet Site
+#    qwikgame.org
+# nano /etc/postfix/main.cf
+#     inet_interfaces = loopback-only
+# sudo systemctl restart postfix
+# echo "This is the body of the email" | mail -s "This is the subject line" name@example.com
+# nano /etc/aliases
+#    root: name@example.com 
+# newaliases
+# echo "This is the body of the email" | mail -s "This is the subject line" root
+# nano /etc/postfix/main.cf
+#     smtpd_tls_cert_file=/etc/letsencrypt/live/your_domain/fullchain.pem
+#     smtpd_tls_key_file=/etc/letsencrypt/live/your_domain/privkey.pem
+# systemctl restart postfix
+# echo "This is the body of the email" | mail -s "This is the subject line" root
+# 
+# How To use an SPF Record to Prevent Spoofing & Improve E-mail Reliability
+# https://www.digitalocean.com/community/tutorials/how-to-use-an-spf-record-to-prevent-spoofing-improve-e-mail-reliability
+# 
+# add a DNS record
+#     TXT @ "v=spf1 a -all"
+# 
+#######################################################
+
+
+
+#######################################################
+# 
+# apt install php8.1-curl php8.1-mbstring php8.1-xml
+# apt install composer
+#
+# sudo timedatectl set-timezone Australia/Melbourne
+# nano /etc/php/8.1/fpm/php.ini 
+#     date.timezone = Australia/Melbourne
+#
+# 
+# adduser www-admin
+# rsync --archive --chown=www-admin:www-admin ~/.ssh /home/www-admin
+# usermod -a -G sudo www-admin
+# 
+# groupadd www
+# usermod -a -G www www-data
+# usermod -a -G www www-admin
+# 
+# 
+#######################################################
+
+
+
+#######################################################
+# login as www-admin
+#  
+# cd /var/www/qwikgame.org
+# git clone https://github.com/nworbnhoj/qwikgame.git beta
+# chown -R www-admin:www beta
+# chmod 700 beta/host/premissions.sh 
+# cd beta
+# host/permisions.sh
+#
+# composer update
+# 
+# nano path.php
+#     define( "SUBDOMAIN",   'beta' );
+# 
+# php translate.php >> junk.txt
+# nano player/5e24...xml
+#     admin='true'
+# https://beta.qwikgame.org/admin.php
+#     copy ShaList into class/Filter.php 
+# 
+# Signin to Google Cloud Console
+# https://console.cloud.google.com/apis/dashboard?project=qwikgame-148708
+#     Authorise API key requestes from server IP address
+#     Copy API keys into services.xml
+
+# cron -e
+#     */1 * * * * cd /usr/share/nginx/qwikgame.org/www/; php -q resubmit.php
+#
+# 
+#######################################################
+

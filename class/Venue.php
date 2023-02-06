@@ -139,7 +139,7 @@ class Venue extends Qwik {
     */
     private function saveGames($PATH, $fileName){
     	$result = TRUE;
-        $games = $this->xml->xpath('game');
+        $games = $this->games();
         foreach($games as $game){
             if(!file_exists("$PATH$game/$fileName")){
             	if (!$this->linkGame($PATH, $game, $fileName)){
@@ -160,7 +160,7 @@ class Venue extends Qwik {
     private function linkGame($path, $game, $fileName){
         $cwd = getcwd();
         if(!file_exists("$path$game")){
-        	if (!mkdir("$path$game", 0755, true)){
+        	if (!mkdir("$path$game", 0770, true)){
         		throw new RuntimeException("failed to create $path$game");
         		return FALSE;
         	}
@@ -316,8 +316,7 @@ class Venue extends Qwik {
 
     public function games(){
         $games = array();
-        $elements = $this->xml->xpath("//game");
-
+        $elements = $this->xml->xpath("/venue/facility/@game");
         foreach($elements as $element){
             $games[] = (string) $element;
         }
@@ -326,6 +325,12 @@ class Venue extends Qwik {
 
 
     public function deleteData($id){
+        $element = $xml->xpath("//*[@id='$id']");
+        if(strcmp($element->getName(), 'facility') == 0){
+            $game = $element['game'];
+            $vid = $this->id();
+            self::deleteFile("venue/$game/$vid.xml");
+        }
         return self::removeId($this->xml, $id);
     }
 
@@ -356,7 +361,7 @@ class Venue extends Qwik {
 
 
     /**
-    * Renames this Venue to $newID, and aso renames all references in Player files.
+    * Renames this Venue to $newID, and also renames all references in Player files.
     * The general approach is to:
     * 1. change the Venue->id and save as newID.xml file
     * 2. replace the oldID.xml file with a symlink to the newID.xml file
@@ -433,7 +438,7 @@ class Venue extends Qwik {
         }
 
         // remove the game symlinks to the oldID
-        $games = $this->xml->xpath('game');
+        $games = $this->xml->games();
         foreach($games as $game){
             try {
                 self::deleteFile(PATH_VENUE."$game/$oldName");
@@ -492,15 +497,6 @@ class Venue extends Qwik {
         if (count($this->xml->xpath("/venue[player='$pid']")) == 0){
             $this->xml->addChild('player', htmlspecialchars("$pid"));
         }
-    }
-
-
-    public function addGame($game){
-        if(count($this->xml->xpath("/venue[game='$game']")) == 0){
-            $this->xml->addChild('game', htmlspecialchars($game));
-            return true;
-        }
-        return false;
     }
 
 
@@ -567,18 +563,6 @@ class Venue extends Qwik {
         $set .= "</fieldset>\n";
         return $set;
     }
-    
-    
-    
-    function venueRemoveGame($game){
-        $elements = $this->xml->xpath("/venue[game='$game']");
-
-        foreach($elements as $element){
-            self::removeElement($element);
-        }
-        $vid = $this->id();
-        self::deleteFile("venue/$game/$vid.xml");
-    }
 
 
     public function openHours(){
@@ -595,20 +579,23 @@ class Venue extends Qwik {
 
 
     public function facilitySet($game, $days){
+        if(!isset($game) || empty($days)) { return; }
         $element = $this->facility($game);
-        if (!isset($element) && isset($game)){
+        if (!isset($element)){
             $newID = self::newID();
             $element = $this->xml->addChild('facility', '');
             $element->addAttribute('id', $newID);
-            $element->addAttribute('game', $game);
+            $element->addAttribute('game', htmlspecialchars($game));
         }
         foreach($days as $day => $hrs){
             $xml_array = $element->xpath("hrs[@day='$day']");
             if(isset($xml_array[0])){
                 Qwik::removeElement($xml_array[0]);
             }
-            $e = $element->addChild('hrs', htmlspecialchars($hrs));
-            $e->addAttribute('day', $day);
+            if (isset($hrs)){
+                $e = $element->addChild('hrs', htmlspecialchars($hrs));
+                $e->addAttribute('day', $day);
+            }
         }
         return $element['id'];
     }

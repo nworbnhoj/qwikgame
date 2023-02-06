@@ -66,9 +66,23 @@ class MatchPage extends Page {
         }
 
         if (isset($this->venue)){
-            if($this->venue->addGame($this->game)){
-                $this->venue->save(TRUE);
-                self::logMsg("Added ".$this->game." to $vid");
+            $venue = $this->venue;
+            $game = $this->game;
+            $games = $venue->games();
+            if(!in_array($game, $games)){
+                $open = $venue->openHours();
+                if(empty($open)){
+                    $open['Sun'] = Hours::HRS_24;
+                    $open['Mon'] = Hours::HRS_24;
+                    $open['Tue'] = Hours::HRS_24;
+                    $open['Wed'] = Hours::HRS_24;
+                    $open['Thu'] = Hours::HRS_24;
+                    $open['Fri'] = Hours::HRS_24;
+                    $open['Sat'] = Hours::HRS_24;
+                }
+                $venue->facilitySet($game, $open);
+                $venue->save(TRUE);
+                self::logMsg("Added ".$game." to $vid");
             }
         }
     }

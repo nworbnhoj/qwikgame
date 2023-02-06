@@ -581,6 +581,19 @@ class Venue extends Qwik {
     }
 
 
+    public function openHours(){
+        $days = array();
+        if (isset($this->xml['open0'])) { $days['Sun'] = $this->xml['open0']; }
+        if (isset($this->xml['open1'])) { $days['Mon'] = $this->xml['open1']; }
+        if (isset($this->xml['open2'])) { $days['Tue'] = $this->xml['open2']; }
+        if (isset($this->xml['open3'])) { $days['Wed'] = $this->xml['open3']; }
+        if (isset($this->xml['open4'])) { $days['Thu'] = $this->xml['open4']; }
+        if (isset($this->xml['open5'])) { $days['Fri'] = $this->xml['open5']; }
+        if (isset($this->xml['open6'])) { $days['Sat'] = $this->xml['open6']; }
+        return $days;
+    }
+
+
     public function facilitySet($game, $days){
         $element = $this->facility($game);
         if (!isset($element) && isset($game)){

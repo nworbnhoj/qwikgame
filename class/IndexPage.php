@@ -150,7 +150,7 @@ class IndexPage extends Page {
         
         $vars = parent::variables();
 
-        $vars['playerCount']    = $this->countFiles(PATH_PLAYER);
+        $vars['playerCount']    = $this->countFiles(PATH_USER);
         $vars['venueCount']     = $this->countFiles(PATH_VENUE);
         $vars['vid']            = isset($vid) ? $vid : '';
         $vars['gameOptions']    = $this->gameOptions($game, "\t\t");

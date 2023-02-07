@@ -555,7 +555,7 @@ class Qwik {
 
     static public function uids($game){
         $uids = array();
-        $fileList = self::fileList(PATH_PLAYER);
+        $fileList = self::fileList(PATH_USER);
         foreach($fileList as $file){
             if (substr_count($file, '.xml') > 0){
                 $uids[] = str_replace('.xml', '', $file);

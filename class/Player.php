@@ -1088,17 +1088,9 @@ Requirements:
     }
 
 
-
     public function delete(){
-        self::removePlayer($this->id());
+        User::remove($this->id());
     }
-
-
-    static public function removePlayer($id){
-        $fileName = "$id.xml";
-        return self::deleteFile(PATH_PLAYER."$fileName");
-    }
-
 
 }
 

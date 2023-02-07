@@ -76,7 +76,7 @@ class FeatureContext implements Context
     public function emailIsNotRegisteredWithQwikgame($address)
     {
         $pid = Player::anonID($address);
-        Player::removePlayer($pid);
+        User::remove($pid);
     }
 
 
@@ -88,7 +88,7 @@ class FeatureContext implements Context
         $this->email = $address;
 
         $this->uid = Player::anonID($address);
-        Player::removePlayer($this->uid);
+        User::remove($this->uid);
         $player = new Player($this->uid, TRUE);
         $player->email($address);
         $token = $player->token();
@@ -397,7 +397,7 @@ class FeatureContext implements Context
             $name = "player.$char";
             $email = strtolower("$name@qwikgame.org");
             $id = Player::anonID($email);
-            Assert::assertTrue(Player::removePlayer($id));
+            Assert::assertTrue(User::remove($id));
             $player = new Player($id, TRUE);
             $player->nick($name);
             $player->email($email);

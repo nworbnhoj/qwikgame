@@ -46,6 +46,12 @@ class User extends Qwik {
     }
 
 
+    static public function remove($id){
+        $fileName = "$id.xml";
+        return self::deleteFile(PATH_USER."$fileName");
+    }
+
+
     private $id;
     private $xml;
 

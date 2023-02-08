@@ -1,10 +1,10 @@
 <?php
 
 /******************************************************************************
- * Resubmits delayed requests that have been captured as tasks in PATH_DELAYED  
+ * Resubmits delayed requests that have been captured as tasks in PATH_DELAYED
  *
  * Intended to be run frequently as a cron job
- *     * * * * * cd /usr/share/nginx/qwikgame.org/www/; php -q resubmit.php
+ *     1 * * * * cd /usr/share/nginx/qwikgame.org/www/; php -q cron/resubmit.php
  *****************************************************************************/
 
 require_once 'up.php';
@@ -24,8 +24,17 @@ while( time() < $end ){
     if(!is_file(PATH_DELAYED.$id)){ continue; }
     
     $json = file_get_contents(PATH_DELAYED.$id);
+    if(empty($json)){ continue; }
+
     $task = json_decode($json, TRUE);
+    if(is_null($json)){ continue; }
+
     $due = (int)$task['due'];
+    if(!isset($due)){
+        Qwik::logMsg("delayed task missing 'due': $id");
+        continue;
+    }
+
     $time = time();
     if ( $time >= $due ){                   // task is overdue for resubmission
       resubmit($task, $id);

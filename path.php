@@ -22,7 +22,6 @@ define( "PATH_USER",    UP.'user/'    );
 define( "PATH_VENUE",   UP.'venue/'   );
 define( "PATH_VENUES",  UP.'venues/'  );
 define( "PATH_VENDOR",  UP.'vendor/'  );
-define( "PATH_LOG",     '/var/log/'.HOST.'.log');
- 
+define( "PATH_LOG",     '/var/log/'.DOMAIN.'/'.SUBDOMAIN.'.log');
 
 ?>

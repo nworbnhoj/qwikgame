@@ -1,6 +1,6 @@
 docReady(event => {
   initPage();
-  document.getElementById('qwik-logo').addEventListener(           'click', clearAllCaches,          false);
+  //document.getElementById('qwik-logo').addEventListener(           'click', clearAllCaches,          false);
   document.getElementById('notify-email').addEventListener(        'click', clickNotifyEmail,        false);
   document.getElementById('notify-push').addEventListener(         'click', clickNotifyPush,         false);
   document.getElementById('notify-push-label').addEventListener(   'click', clickNotifyPushLabel,    false);

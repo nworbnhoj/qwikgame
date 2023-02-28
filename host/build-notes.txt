@@ -170,8 +170,9 @@ Build notes install qwikgame server on Digital Ocean
 #     Authorise API key requestes from server IP address
 #     Copy API keys into services.xml
 
-# cron -e
-#     */1 * * * * cd /usr/share/nginx/qwikgame.org/www/; php -q resubmit.php
+# nano /etc/cron.d/qwikgame
+#     */1 * * * * www-data cd /var/www/qwikgame.org/www/; php -q cron/resubmit.php
+#     *   * * * 1 www-data cd /var/www/qwikgame.org/www/; php -q cron/venue_details_update.php
 #
 # 
 #######################################################

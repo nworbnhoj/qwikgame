@@ -44,7 +44,7 @@ while( time() < $end ){
   }
   time_sleep_until($wake);                           // check again in < 10 sec
 }
-
+ 
 
 /******************************************************************************
  * Resubmits a delayed task for processing
@@ -55,11 +55,13 @@ function resubmit($task, $id){
   if (!isset($task['target'], $task['post'], $task['get'], $task['session'])){
     return FALSE; 
   }
-  
+
+  session_start();
   $target   = $task['target'];
   $_POST    = $task['post'];
   $_GET     = $task['get'];
   $_SESSION = $task['session'];
+  $page = null;
   switch ($target){
     case '/match.php':     $page = new MatchPage();     break;
     case '/favorite.php':  $page = new FavoritePage();  break;
@@ -69,11 +71,10 @@ function resubmit($task, $id){
     default:
       $json = json_encode($task);
       Qwik::logMsg("failed to resubmit $id $due\n$json");
-      $page = null;
   }
   
   if (isset($page)){
-    $ignore = $page->serve();                      // complete the task
+    $ignore = $page->processRequest();             // complete the task
     unlink(PATH_DELAYED.$id);                      // remove the completed task
     return TRUE;
   }

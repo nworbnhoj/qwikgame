@@ -150,17 +150,18 @@ Build notes install qwikgame server on Digital Ocean
 # cd /var/www/qwikgame.org
 # git clone https://github.com/nworbnhoj/qwikgame.git beta
 # chown -R www-admin:www beta
-# chmod 700 beta/host/premissions.sh 
-# cd beta
-# host/permisions.sh
 #
 # composer update
+#
+# cd beta
+# chmod 700 host/premissions.sh
+# host/permisions.sh
 # 
 # nano path.php
 #     define( "SUBDOMAIN",   'beta' );
 # 
-# php translate.php >> junk.txt
-# nano player/5e24...xml
+# php translate.php >> /dev/null
+# nano user/5e24...xml
 #     admin='true'
 # https://beta.qwikgame.org/admin.php
 #     copy ShaList into class/Filter.php 
@@ -169,7 +170,7 @@ Build notes install qwikgame server on Digital Ocean
 # https://console.cloud.google.com/apis/dashboard?project=qwikgame-148708
 #     Authorise API key requestes from server IP address
 #     Copy API keys into services.xml
-
+#
 # nano /etc/cron.d/qwikgame
 #     */1 * * * * www-data cd /var/www/qwikgame.org/www/; php -q cron/resubmit.php
 #     *   * * * 1 www-data cd /var/www/qwikgame.org/www/; php -q cron/venue_details_update.php

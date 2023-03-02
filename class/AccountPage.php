@@ -66,7 +66,7 @@ class AccountPage extends Page {
             $userName = empty($userNick) ? $userEmail : $userNick;
             $notify = new Notify($user);
 
-            $vars['reputation']    = get_class($user) == "Player" ? $user->repWord() : '';
+            $vars['reputation']    = get_class($user) == "Player" ? $user->repWord() : '{good}';
             $vars['reputationLink']= self::LINK_REP;
             $vars['thumbs']        = get_class($user) == "Player" ? $user->repThumbs() : '';
             $vars['playerNick']    = $userNick;

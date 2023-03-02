@@ -136,10 +136,6 @@ class FacilityPage extends Page {
             return NULL;
         }
 
-        if(isset($req['id'])){
-            $venue->deleteData($req['id']);
-        }
-
         $days = array();
         $ddd = array('Sun', 'Mon', 'Tue','Wed', 'Thu', 'Fri', 'Sat');
         foreach($ddd as $d){

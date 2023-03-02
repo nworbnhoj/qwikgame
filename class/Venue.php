@@ -681,6 +681,11 @@ class Venue extends Qwik {
 
     public function matchCancel($mid){
         $match = $this->match($mid);
+        if(!isset($match)){
+            $vid = $this->id();
+            self::logMsg("Missing match: $mid $vid");
+            return;
+        }
         $match->status('cancelled');
         $manager = $this->manager();
         if(isset($manager)){

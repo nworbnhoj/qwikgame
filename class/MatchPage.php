@@ -156,7 +156,7 @@ class MatchPage extends Page {
             $historyCount = count($player->matchQuery("match[@status='history']"));
             $regionOptions = new Options($player->regions(), Options::VALUE_TEMPLATE);
 
-            $vars['checkboxFriendsDisplay'] = $hasFriends ? 'none' : 'block';
+            $vars['checkboxFriendsDisplay'] = $hasFriends ? 'block' : 'none';
             $vars['historyHidden'] = $historyCount == 0 ? 'hidden' : '';
             $vars['regionOptions'] = $regionOptions->make();
             $vars['reputation']    = $player->repWord();

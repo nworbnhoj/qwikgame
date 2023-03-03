@@ -125,13 +125,13 @@ class Player extends User {
 
         
     public function hasFriends(){ 
-        return !empty($this->xml->xpath("reckon['@rival']"));
+        return $this->xml->xpath("count(//reckon[@email])") > 0;
     }
 
 
     public function reckonAbilities(){
         $reckons = array();
-        $elements = $this->xml->xpath("reckon['@region']");
+        $elements = $this->xml->xpath("reckon[@region]");
         foreach($elements as $element){
             $id = (string) $element['id'];
             $reckons[$id] = array(
@@ -140,20 +140,21 @@ class Player extends User {
                 'parity' => (int) $element['parity'],
             );
         }
-        return reckons;
+        return $reckons;
     }
 
 
     public function reckonFriends(){
         $reckons = array();
-        $elements = $this->xml->xpath("reckon['@rival']");
+        $elements = $this->xml->xpath("reckon[@email]");
         foreach($elements as $element){
-            $rid    = (string) $reckon['rival'];
+            $rid    = (string) $element['rival'];
             $game   = (string) $element['game'];
             $email  = (string) $element['email'];
             $parity = floatval($element['parity']);
-            
-            $rid = User->exists($rid) ? $rid : $this->friend($game, $email, $parity);
+            if (!User::exists($rid)){
+                $this->friend($game, $email, $parity);
+            }
             $rival = new Player($rid);
             $nick = $rival->nick();
             if(empty($nick)){
@@ -167,7 +168,7 @@ class Player extends User {
                 'nick'   => $nick,
             );
         }
-        return reckons;
+        return $reckons;
     }
     
        

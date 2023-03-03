@@ -222,14 +222,17 @@ class Page extends Html {
       }
 
       $user = $this->user();
-      switch ($this->req('qwik')) {
-        case 'undo':                                    // undo delayed request
-          if(isset($user)){
-            $result = $this->qwikUndo($user->id(), $this->req('id'));
-          }
-          break;
-        default:
-      }      
+      if(isset($user)){
+        switch ($this->req('qwik')) {
+            case 'undo':                     // undo delayed request
+                $result = $this->qwikUndo($user->id(), $this->req('id'));
+                break;
+            case 'register':
+                $result = $this->qwikRegister($this->req('email'));
+                break;
+            default:
+          }  
+      }    
       return $result;
     }
     
@@ -291,6 +294,16 @@ class Page extends Html {
         }
         return $id;
       }
+    }
+
+
+    function qwikRegister($email){
+        $user = $this->user();
+        if(isset($user)
+        && isset($email)
+        && empty($user->email())){
+            $user->email($email);
+        }
     }
 
 

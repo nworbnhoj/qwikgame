@@ -129,6 +129,21 @@ class Player extends User {
     }
 
 
+    public function reckonAbilities(){
+        $reckons = array();
+        $elements = $this->xml->xpath("reckon['@region']");
+        foreach($elements as $element){
+            $id = (string) $element['id'];
+            $reckons[$id] = array(
+                'game'   => (string) $element['game'],
+                'region' => (string) $element['region'],
+                'parity' => (int) $element['parity'],
+            );
+        }
+        return reckons;
+    }
+
+
     public function friends(){
         $emails = array();
         $reckoning = $this->xml->xpath("reckon[@email]");

@@ -124,8 +124,8 @@ class Player extends User {
     }
 
         
-    public function reckon($id){ 
-        return $this->xml->xpath("reckon[@$id]");
+    public function hasFriends(){ 
+        return !empty($this->xml->xpath("reckon['@rival']"));
     }
 
 

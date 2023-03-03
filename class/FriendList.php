@@ -33,24 +33,13 @@ class FriendList extends Card {
 
         $group="";
         $playerVars = $player->playerVariables();
-        $reckoning = $player->reckon("rival");
-        foreach($reckoning as $reckon){
-            $email = (string) $reckon['email'];
-            $rid = (string) $reckon['rival'];
-            $rival = new Player($rid);
-            if (isset($rival) && $rival->ok()){
-                $nick = $rival->nick();
-            }
-            if(empty($nick)){
-               $nick = empty($email) ? Qwik::snip($rid) : $email;
-            }
-            $parity = Natch::parityVal($reckon);
-            $game = (string) $reckon['game'];
+        $friends = $player->reckonFriends();
+        foreach($friends as $id => $friend){
             $reckonVars = array(
-                'id'        => $reckon['id'][0],
-                'email'     => $nick,
-                'gameName'  => self::gameName($game),
-                'parity'    => Natch::parityStr($parity)
+                'id'        => $id,
+                'email'     => $friend['nick'],
+                'gameName'  => self::gameName($friend['game']),
+                'parity'    => Natch::parityStr($friend['parity']),
             );
             $vars = $variables + $playerVars + $reckonVars;
             $group .= $this->populate($html, $vars);

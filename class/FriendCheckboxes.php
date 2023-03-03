@@ -24,10 +24,10 @@ class FriendCheckboxes extends Card {
         if (is_null($player)){ return '';}
 
         $checkboxes = '';
-        $values = $player->friends();
-        foreach($values as $key => $val){
-            $box = str_replace('[key]', $key, $html);
-            $box = str_replace('[val]', $val, $box);
+        $friends = $player->reckonFriends();
+        foreach($friends as $friend){
+            $box = str_replace('[key]', $friend['email'], $html);
+            $box = str_replace('[val]', $friend['nick'], $box);
             $checkboxes .= "$box\n";
         }
         return $checkboxes;

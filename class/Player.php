@@ -144,23 +144,30 @@ class Player extends User {
     }
 
 
-    public function friends(){
-        $emails = array();
-        $reckoning = $this->xml->xpath("reckon[@email]");
-        foreach($reckoning as $reckon){
-            $email = (string) $reckon['email'];
-            $nick = $email; //default
-            $anonID = Player::anonID($email);
-            if (Player::exists($anonID)){
-                $friend = new Player($anonID);
-                if ($friend->ok()){
-                    $nic = $friend->nick();
-                    $nick = empty($nic) ? $email : $nic ;
-                }
-            }             
-            $emails[$email] = $nick;
+    public function reckonFriends(){
+        $reckons = array();
+        $elements = $this->xml->xpath("reckon['@rival']");
+        foreach($elements as $element){
+            $rid    = (string) $reckon['rival'];
+            $game   = (string) $element['game'];
+            $email  = (string) $element['email'];
+            $parity = floatval($element['parity']);
+            
+            $rid = User->exists($rid) ? $rid : $this->friend($game, $email, $parity);
+            $rival = new Player($rid);
+            $nick = $rival->nick();
+            if(empty($nick)){
+               $nick = empty($email) ? Qwik::snip($rid) : $email;
+            } 
+            $id = (string) $element['id'];
+            $reckons[$id] = array(
+                'game'   => $game,
+                'email'  => $email,
+                'parity' => $parity,
+                'nick'   => $nick,
+            );
         }
-        return $emails;
+        return reckons;
     }
     
        

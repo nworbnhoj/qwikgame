@@ -236,7 +236,10 @@ function qwikKeen($player, $req, $venue){
     $emails = isset($req['invite']) ? $req['invite'] : NULL;
     if (is_array($emails)){    // add friendly Rivals $rid=>$email
         foreach($emails as $email){
-            $rids[Player::anonID($email)] = $email;
+            $id = Player::anonID($email);
+            if(isset($id)){
+                $rids[$id] = $email;
+            }
         }
     }
     unset($rids[$player->id()]);         // exclude self;

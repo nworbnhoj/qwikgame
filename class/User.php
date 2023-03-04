@@ -34,8 +34,11 @@ class User extends Qwik {
 
     *******************************************************************************/
     static function anonID($email){
-        $email = isset($email) ? $email : ''; 
-        return hash('sha256', $email);
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+            return hash('sha256', $email);
+        }
+        self::logMsg("ignored not well formed email: $email");
+        return NULL;
     }
 
 
@@ -246,10 +249,14 @@ class User extends Qwik {
 
 
     private function changeEmail($newEmail){
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            self::logMsg("aborted change email (not well formed) $newEmail");
+            return FALSE;
+        }
         $newID = User::anonID($newEmail);
         $oldID = $this->id();
         if (User::exists($newID)){
-            self::logMsg("aborted change UserID from $oldID to $newID.");
+            self::logMsg("aborted change email (already exists) $oldID");
             return FALSE;
         }
 

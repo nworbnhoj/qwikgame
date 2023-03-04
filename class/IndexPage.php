@@ -66,8 +66,14 @@ class IndexPage extends Page {
         }
         try {
             $pid = Player::anonID($email);
-            $anon = new Player($pid, TRUE);
-            return $this->welcome($anon, $email);
+            if (isset($pid)){
+                $anon = new Player($pid, TRUE);
+                return $this->welcome($anon, $email);
+            } else {
+                self::logMsg("failed to load User from email: $email");       
+                $this->message("{Not_well_formed_email}");
+                return FALSE;
+            }
         } catch (RuntimeException $e){
             self::logThrown($e);
             self::logMsg("Failed to create new Player $pid from IndexPage");
@@ -82,8 +88,14 @@ class IndexPage extends Page {
         }
         try {
             $mid = Manager::anonID($email);
-            $anon = new Manager($mid, TRUE);
-            return $this->welcome($anon, $email);
+            if (isset($pid)){
+                $anon = new Manager($mid, TRUE);
+                return $this->welcome($anon, $email);
+            } else {
+                self::logMsg("failed to load User from email: $email");          
+                $this->message("{Not_well_formed_email}");
+                return FALSE;
+            }
         } catch (RuntimeException $e){
             self::logThrown($e);
             self::logMsg("Failed to create new Manager $mid from IndexPage");
@@ -116,7 +128,8 @@ class IndexPage extends Page {
         }
         try{
             $uid = User::anonID($email);
-            if(User::exists($uid)){
+            if(isset($uid)
+            && User::exists($uid)) {
                 $user = new User($uid);
                 if($user->ok()){
                     $id = self::snip($uid);

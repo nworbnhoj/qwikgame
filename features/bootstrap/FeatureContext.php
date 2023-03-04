@@ -76,6 +76,7 @@ class FeatureContext implements Context
     public function emailIsNotRegisteredWithQwikgame($address)
     {
         $pid = Player::anonID($address);
+        Assert::assertNotNull($pid);
         User::remove($pid);
     }
 
@@ -88,6 +89,7 @@ class FeatureContext implements Context
         $this->email = $address;
 
         $this->uid = Player::anonID($address);
+        Assert::assertNotNull($this->uid);
         User::remove($this->uid);
         $player = new Player($this->uid, TRUE);
         $player->email($address);
@@ -175,6 +177,7 @@ class FeatureContext implements Context
     {
         $this->email = $address;
         $this->uid = Player::anonID($address);
+        Assert::assertNotNull($this->uid);
         $this->req['email'] = $address;
     }
  
@@ -273,6 +276,7 @@ class FeatureContext implements Context
     private function iWillBeAvailableToPlay($game, $venue, $rivalParity='any', $test='ALL')
     {
         $rid = Player::anonID("rival@qwikgame.org");
+        Assert::assertNotNull($rid);
         new Player($rid, TRUE);  //dummy rival
         // Set this player as a friend of the rival, with suitable parity
         $req = array(
@@ -397,6 +401,7 @@ class FeatureContext implements Context
             $name = "player.$char";
             $email = strtolower("$name@qwikgame.org");
             $id = Player::anonID($email);
+            Assert::assertNotNull($id);
             Assert::assertTrue(User::remove($id));
             $player = new Player($id, TRUE);
             $player->nick($name);
@@ -594,6 +599,7 @@ class FeatureContext implements Context
     public function isAPlayer($email, $parity, $game)
     {
         $rid = Player::anonID($email);
+        Assert::assertNotNull($rid);
         $rival = new Player($rid, FALSE);
         $checkParity = self::PARITY_PHRASE[$parity];
         $player = new Player($this->uid);
@@ -640,6 +646,7 @@ class FeatureContext implements Context
     {     
         $this->email = $email;
         $this->uid = User::anonID($email);
+        Assert::assertNotNull($this->uid);
     }
 
 

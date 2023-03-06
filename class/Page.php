@@ -215,25 +215,30 @@ class Page extends Html {
      * request is received in the interim.
      *************************************************************************/
     public function processRequest(){
-      $result = NULL;
-      if ($this->delayed($this->req('delay'))){                // delay request
-        http_response_code(204);                               // no content
-        exit;      
-      }
+        $result = NULL;
+        $user = $this->user();
+        if(isset($user)){
+            $uid = $user->id();
+            $sid = self::snip($uid);
+            $request = json_encode($this->req());
+            self::logMsg("$sid $request");
 
-      $user = $this->user();
-      if(isset($user)){
-        switch ($this->req('qwik')) {
-            case 'undo':                     // undo delayed request
-                $result = $this->qwikUndo($user->id(), $this->req('id'));
-                break;
-            case 'register':
-                $result = $this->qwikRegister($this->req('email'));
-                break;
-            default:
-          }  
-      }    
-      return $result;
+            if ($this->delayed($this->req('delay'))){                // delay request
+                http_response_code(204);                               // no content
+                exit;      
+            }
+
+            switch ($this->req('qwik')) {
+                case 'undo':                     // undo delayed request
+                    $result = $this->qwikUndo($uid, $this->req('id'));
+                    break;
+                case 'register':
+                    $result = $this->qwikRegister($this->req('email'));
+                    break;
+                default:
+            }  
+        }    
+        return $result;
     }
     
     

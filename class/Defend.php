@@ -241,12 +241,10 @@ class Defend extends Qwik {
     public function param($key=NULL, $value=NULL){
       if(is_null($key)){
         return $this->query;
-      } elseif (is_null($value) && isset($this->query[$key])){
-        return $this->query[$key];
-      } else {
+      } elseif (isset($value)) {
         $this->query[$key] = $value;
       }
-      return NULL;    
+      return isset($this->query[$key]) ? $this->query[$key] : NULL ;
     }
     
     

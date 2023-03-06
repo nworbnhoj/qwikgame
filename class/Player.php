@@ -24,8 +24,6 @@ class Player extends User {
     public function __construct($pid, $forge=FALSE){
         parent::__construct($pid, $forge);
         $this->xml = parent::playerXml();
-        $sid = self::snip($pid);
-        self::logMsg("player $sid");
     }
     
     

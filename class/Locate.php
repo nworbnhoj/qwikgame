@@ -307,7 +307,8 @@ class Locate extends Qwik {
     } elseif (isset(Qwik::countries()[$country])) {
       $input = Qwik::countries()[$country];
     } else {
-      return;
+        self::logMsg("Locate::getGeometry($country, $admin1, $locality) insufficient parameters");
+        return;
     } 
     $placeid = self::getPlace($input, $country);
     if(isset($placeid)){

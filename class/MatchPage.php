@@ -51,7 +51,7 @@ class MatchPage extends Page {
                         $this->venue = new Venue($vid, TRUE);
                         if($this->venue->ok()){
                             $this->req('vid', $vid);
-                            $this->venue->updateAtt('placeid', $placeid);
+                            $this->venue->placeid($placeid);
                             $this->venue->furnish($details);
                         } else {
                           self::alert("Sorry - failed to create new Venue");

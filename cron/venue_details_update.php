@@ -32,8 +32,17 @@ foreach($venue_files as $file){
   $venue = new Venue($vid);
   $placeid = $venue->placeid();
   if(empty($placeid)){
-    Qwik::logMsg("Venue missing placeid: $vid");
-    continue;
+    $field = explode('|', $vid);
+    $description = "$field[0], $field[1], $field[2]";
+    $country = $field[3];
+    $placeid = Locate::getPlace($description, $country);
+    if(empty($placeid)){
+      Qwik::logMsg("Venue missing placeid: $vid");
+      continue;
+    } else {
+      $venue->placeid($placeid);  
+      Qwik::logMsg("Venue found placeid: $vid");
+    }
   }
 
   $details = Locate::getDetails($placeid);

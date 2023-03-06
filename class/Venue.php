@@ -269,7 +269,10 @@ class Venue extends Qwik {
     }
 
 
-    public function placeid(){
+    public function placeid($placeid = NULL){
+        if(isset($placeid)){
+            $this->updateAtt('placeid', $placeid);
+        }
         return isset($this->xml['placeid']) ? (string) $this->xml['placeid'] : '';
     }
 

@@ -111,10 +111,16 @@ class IndexPage extends Page {
         }
         $req = array();
         $game = $this->req('game');
-        $vid = $this->req('vid');
-        if (isset($game, $vid)){
-            $req['game'] = $game;
-            $req['vid'] = $vid;
+        if (isset($game)){
+            $vid = $this->req('vid');
+            $placeid = $this->req('placeid');
+            if (isset($vid)){
+                $req['game'] = $game;
+                $req['vid'] = $vid;
+            } elseif(isset($placeid)) {
+                $req['game'] = $game;
+                $req['placeid'] = $placeid;
+            }
         }
         $anon->emailWelcome($email, $req);
         $this->message("{Check_email}");

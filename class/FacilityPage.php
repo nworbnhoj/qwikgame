@@ -78,9 +78,8 @@ class FacilityPage extends Page {
                 $manager->email($email);       
                 $manager->setVenue($vid);
                 $manager->save();
-                if(!isset($req['game'])
-                || !isset($req['vid'])){
-                    self::logMsg("missing parameters: game vid");
+                if(!isset($req['game'], $this->venue)) {
+                    self::logMsg("missing registration parameters: game venue");
                     break;
                 }
                 $ddd = array('Mon', 'Tue','Wed', 'Thu', 'Fri');

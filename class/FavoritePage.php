@@ -108,9 +108,8 @@ class FavoritePage extends Page {
                     break;
                 }
                 $player->email($email);
-                if(!isset($req['game'])
-                || !isset($req['vid'])){
-                    self::logMsg("missing parameters: game vid");
+                if(!isset($req['game'], $this->venue)) {
+                    self::logMsg("missing registration parameters: game venue");
                     break;
                 }
                 $req['parity'] = 'any';

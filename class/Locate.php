@@ -11,6 +11,7 @@ class Locate extends Qwik {
     static $geodetails;    
     static $geotimezone;    
     static $geocode;
+    static $geoplugin_context;
 
     // https://stackoverflow.com/questions/693691/how-to-initialize-static-variables
     static function initStatic(){
@@ -18,6 +19,7 @@ class Locate extends Qwik {
         self::$geodetails = new Service("geodetails");
         self::$geotimezone = new Service("geotimezone");
         self::$geocode = new Service("geocode");
+        self::$geoplugin_context = stream_context_create(["http"=>["timeout"=>1]]);
     }
 
 
@@ -220,7 +222,7 @@ class Locate extends Qwik {
           if(isset($_SERVER['REMOTE_ADDR'])){
             $remoteAdd = $_SERVER['REMOTE_ADDR'];
             $url = "http://www.geoplugin.net/php.gp?ip=$remoteAdd";
-            $geo = unserialize(file_get_contents($url));
+            $geo = unserialize(file_get_contents($url), false, self::$geoplugin_context);
             if(!isset($geo)){ return NULL; }   // geoplugin.net is offline
           }
         }

@@ -311,3 +311,68 @@ body {
 /************** # **************************/
 
 /************** media **********************/
+
+@media only screen and (max-width: 600px) {
+    .hide0 {display: block;}
+    .hide600 {display: none;}
+    .hide768 {display: none;}
+    .hide992 {display: none;}
+    .hide1200 {display: none;}
+    .wide0 {width: auto;}
+    .wide600 {width: 100%;}
+    .wide768 {width: 100%;}
+    .wide992 {width: 100%;}
+    .wide1200 {width: 100%;}
+}
+
+@media only screen and (min-width: 600px) {
+    .hide0 {display: block;}
+    .hide600 {display: block;}
+    .hide768 {display: none;}
+    .hide992 {display: none;}
+    .hide1200 {display: none;}
+    .wide0 {width: auto;}
+    .wide600 {width: auto;}
+    .wide768 {width: 100%;}
+    .wide992 {width: 100%;}
+    .wide1200 {width: 100%;}
+}
+
+@media only screen and (min-width: 768px) {
+    .hide0 {display: block;}
+    .hide600 {display: block;}
+    .hide768 {display: block;}
+    .hide992 {display: none;}
+    .hide1200 {display: none;}
+    .wide0 {width: auto;}
+    .wide600 {width: auto;}
+    .wide768 {width: auto;}
+    .wide992 {width: 100%;}
+    .wide1200 {width: 100%;}
+}
+
+@media only screen and (min-width: 992px) {
+    .hide0 {display: block;}
+    .hide600 {display: block;}
+    .hide768 {display: block;}
+    .hide992 {display: block;}
+    .hide1200 {display: none;}
+    .wide0 {width: auto;}
+    .wide600 {width: auto;}
+    .wide768 {width: auto;}
+    .wide992 {width: auto;}
+    .wide1200 {width: 100%;}
+}
+
+@media only screen and (min-width: 1200px) {
+    .hide0 {display: block;}
+    .hide600 {display: block;}
+    .hide768 {display: block;}
+    .hide992 {display: block;}
+    .hide1200 {display: block;}
+    .wide0 {width: auto;}
+    .wide600 {width: auto;}
+    .wide768 {width: auto;}
+    .wide992 {width: auto;}
+    .widehide1200 {width: auto;}
+}

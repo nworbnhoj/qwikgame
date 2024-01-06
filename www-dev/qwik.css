@@ -52,9 +52,217 @@ blockquote, q {
 
 /************** . **************************/
 
+.button_accept {
+    padding: 1em;
+}
+.button_decline {
+    padding: 1em;
+}
+.button_cta {
+    align-items: center;
+    background-color:orange;
+    border: 1px solid black;
+    border-radius: 0.3em;
+    display:flex;
+    flex-direction: row;
+    flex: auto;
+    justify-content: space-evenly;
+    margin:0.3em;
+    padding: 0.3em;
+    text-align: center;
+}
+.button_toggle {
+    flex: auto;
+    font-weight: bold;
+    padding: 1em;
+}
+.cta_text {
+    color: white;
+}
+.chat_post {
+    align-items: center;
+    background-color:#ffbbbb;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1em;
+}
+.content {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.detail {
+    background-color:#ff5555;
+    flex-grow: 6;
+    padding: 1em;
+}
+.detail_chat {
+    background-color:#ff9999;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between; 
+    padding: 1em;
+}
+.detail_form {
+    align-items: center;
+    background-color:#ff9999;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between; 
+    padding: 1em;
+}
+.detail_head {
+    align-items: flex-start;
+    background-color:#ff7777;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    font-size: larger;
+    justify-items: center; 
+    padding: 1em;
+}
+.detail_head_title {
+    flex: auto;
+    padding: 1em;
+}
+.form_action {
+    background-color:#ffbbbb;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: center; 
+    padding: 1em;
+}
+.group {
+    background-color:#7777ff;
+    flex: auto;
+    padding: 1em;
+}
+.group_head {
+    align-items: center;
+    background-color:#bbbbff;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: space-between; 
+    padding: 1em;
+}
+.group_head_sort {
+    flex: auto;
+    padding: 1em;
+}
+.icon {
+    border: 1px solid black;
+    flex: none;
+    margin: 0.2em;
+    padding: 0.2em;
+}
+.icon_bar {
+    background-color:green;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.item_block {    
+    align-items: flex-start;
+    background-color: white;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.3em;
+
+}
+.item_bold {
+    font-weight: bold;
+    padding: 0.3em;
+}
+.item_text {
+    padding: 0.3em;
+}
+.list_bar {
+    background-color:#5555ff;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+}
+.list_item {
+    align-items: center;
+    background-color:#ddddff;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: flex-start; 
+    padding: 1em;
+}
+.space_icon {
+    flex-grow: 3;
+    padding: 1em;
+}
+.radio {
+    align-items: center;
+    background-color:#ffdddd;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+}
+.radio_block {
+    background-color:#ffeeee;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 12em;
+    padding: 1em;
+}
+.radio_button {    
+    border: 1px solid black;
+    border-radius: 0.3em;
+    margin: 0.1em;
+    padding: 0.1em;
+}
+.radio_date {
+    background-color:#ffdddd;
+    padding: 0.3em;
+    text-align: center;
+}
+.radio_pick {
+    background-color: orange;
+}
+.radio_title {
+    background-color:#ffdddd;
+    padding: 0.3em;
+    text-align: center;
+}
+.select_sort {
+    height: 2em;
+}
+.selected {
+    border: 0.2em solid orange;
+}
+
 /************** <html> *********************/
 
 /************** <body> *********************/
+
+body {    
+    display:flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    align-items: center;
+}
 
 /************** <header> *******************/
 

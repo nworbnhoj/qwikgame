@@ -52,6 +52,13 @@ blockquote, q {
 
 /************** . **************************/
 
+.bar_item {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    padding: 0.3em;
+}
 .button_accept {
     padding: 1em;
 }
@@ -219,7 +226,7 @@ blockquote, q {
     background-color:green;
     display:flex;
     flex-direction: row;
-    gap:0.3em;
+    gap:1em;
     justify-content: space-between;
     width: 100%;
 }
@@ -261,10 +268,6 @@ blockquote, q {
     flex: auto;
     flex-direction: row;
     justify-content: center;
-    padding: 1em;
-}
-.space_icon {
-    flex-grow: 3;
     padding: 1em;
 }
 .list_item {

@@ -281,7 +281,11 @@ blockquote, q {
     flex-direction: row;
     gap:0.3em;
     justify-content: flex-start;
-    padding: 1.0em;
+    padding: 0.3em;
+}
+.logo {
+    height: 3em;
+    padding: 0.1em;
 }
 .na {
    visibility: hidden;

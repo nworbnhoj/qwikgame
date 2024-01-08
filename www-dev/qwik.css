@@ -274,6 +274,15 @@ blockquote, q {
     justify-content: space-between;
     padding: 1em;
 }
+.list_bar_head {
+    background-color:inherit;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    height: 3em;
+    justify-content: space-between;
+    padding: 1em;
+}
 .list_button {
     align-items: center;
     background-color:inherit;

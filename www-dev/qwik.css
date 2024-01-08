@@ -467,10 +467,10 @@ h4 {
 
 h5 { 
     color:orange;
-    text-align:left;
+    text-align:center;
     font-size:1.2em;
     font-weight:bold;
-    margin:0.3em;
+    margin:1.0em;
 }
 
 h6 { 

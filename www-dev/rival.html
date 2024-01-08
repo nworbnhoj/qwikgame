@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">    
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rival</title>
     <link rel="stylesheet" type="text/css" href="qwik.css">
@@ -16,7 +16,7 @@
     <div class="flex_space hide768"></div>
     <div class="bar_item" onclick="window.location.href='invite.html'">
         <div class="icon">invite<br>icon</div>
-        <div class="hide768">Home</div>   
+        <div class="hide768">Home</div>
     </div>
     <div class="bar_item" onclick="window.location.href='match.html'">
         <div class="icon">match<br>icon</div>
@@ -36,6 +36,96 @@
         <div class="hide768">Helen</div>
     </div>
 </div>
+
+
+<div class="content wide768">
+    <div class="list_bar">
+        <div class="group">
+            <div class="group_head">
+                <div class="button_toggle">
+                    Your Rivals &#9650;
+                </div>
+                <select class="select_sort">
+                    <option>date</option>
+                    <option>game</option>
+                    <option>venue</option>
+                </select>
+            </div>
+            <div class="list_item selected">
+                <div class="icon">rival<br>icon</div>
+                <div class="item_block">
+                    <div class="item_bold">Pesho</div>
+                    <div class="item_text">Tennis, Vasil Levski, Aug 4, 17h</div>
+                </div>
+            </div>
+            <div class="list_item">
+                <div class="icon">rival<br>icon</div>
+                <div class="item_block">
+                    <div class="item_bold">Maya</div>
+                    <div class="item_text">Tennis, Vasil Levski, Aug 5, 19h</div>
+                </div>
+            </div>
+        </div>
+        <div class="group">
+            <div class="group_head">
+                <div class="button_toggle">
+                    History &#9651;
+                </div>
+                <select class="select_sort">
+                    <option>date</option>
+                    <option>game</option>
+                    <option>venue</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="detail hide768">
+        <div class="detail_head">
+            <div class="icon">rival<br>icon</div>
+            <div class="item_block">
+                <div class="item_bold">Pesho: Tennis, Vasil Levski, Aug 4, 17h</div>
+            </div>
+            <div class="icon">more<br>icon</div>
+            <div class="icon">back<br>icon</div>
+            <div class="icon">fwd<br>icon</div>
+        </div>
+        <hr>
+        <div class="detail_form">
+            <div class="rival_rep">
+                <div class="rival_mug">
+                    <div class="icon">rival<br>icon</div>
+                    <h3>Pesho</h3>
+                </div>
+                <div class="rival_rate">
+                    <h2>REPUTATION</h2>
+                    <p>Rate your Rival's behaviour</p>
+                    <div class="rival_toggle">
+                        <div class="button">Bad</div>
+                        <div class="button">Good</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rival_skill">
+                <h2>SKILL LEVEL</h2>
+                <p>Rate your Rival's game skill level compared to yours</p>
+                <div class="slide_text">
+                    <div class="invisible">Very weak</div>
+                    <div class="invisible">Weak</div>
+                    <div class="">Similar</div>
+                    <div class="invisible">Strong</div>
+                    <div class="invisible">Very Strong</div>
+                </div>
+                <input class="input_strength" type="range" min="-2" max="2" value="0">
+            </div>
+
+            <div class="form_action">
+                <div class="button_cta">SUBMIT</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>

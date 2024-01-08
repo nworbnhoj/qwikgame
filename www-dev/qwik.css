@@ -327,6 +327,45 @@ blockquote, q {
     padding: 0.3em;
     text-align: center;
 }
+.rival_mug {
+    align-items: center;
+    background-color:#ffbbbb;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: space-evenly;
+    padding: 1em;    
+}
+.rival_rate {
+    align-items: center;
+    background-color:#ffbbbb;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: space-evenly;
+    padding: 1em;    
+}
+.rival_rep {
+    align-items: center;
+    background-color:#ffbbbb;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 1em;    
+}
+.rival_toggle {
+    align-items: center;
+    background-color:#ffdddd;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: space-around;
+    padding: 1em;    
+}
 .select_sort {
     height: 2em;
 }
@@ -363,6 +402,32 @@ body {
 /************** <span> *********************/
 
 /************** <h> ************************/
+
+
+h1 { 
+    color:black;
+    text-align:left;
+    font-size:1.4em;
+    font-weight:bold;
+    margin:0.3em;
+}
+
+h2 { 
+    color:red;
+    text-align:left;
+    font-size:1.2em;
+    font-weight:bold;
+    margin:0.3em;
+}
+
+
+h3 { 
+    color:black;
+    text-align:left;
+    font-size:1.2em;
+    font-weight:normal;
+    margin:0.3em;
+}
 
 /************** <small> ********************/
 

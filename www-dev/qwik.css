@@ -27,7 +27,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
     line-height: 1;
     color: black;
-    background: white;
+    background: inherit;
 }
 ol, ul {
     list-style: none;
@@ -54,8 +54,10 @@ blockquote, q {
 
 .bar_item {
     align-items: center;
+    color:black;
     display: flex;
     flex-direction: row;
+    gap: 0.3em;
     text-align: center;
     padding: 0.3em;
 }
@@ -72,7 +74,8 @@ blockquote, q {
     border-radius: 0.3em;
     display:flex;
     flex-direction: row;
-    flex: auto;
+    flex: 0 0 auto;
+    height: 3em;
     justify-content: space-evenly;
     margin:0.3em;
     padding: 0.3em;
@@ -81,14 +84,14 @@ blockquote, q {
 .button_toggle {
     flex: auto;
     font-weight: bold;
-    padding: 1em;
+    padding: 0.3em;
 }
 .cta_text {
-    color: white;
+    color: inherit;
 }
 .chat_post {
     align-items: center;
-    background-color:#ffbbbb;
+    background-color:inherit;
     display:flex;
     flex-direction: row;
     gap: 1em;
@@ -132,12 +135,15 @@ blockquote, q {
     grid-row: 3 / 3;
 }
 .detail {
-    background-color:#ff5555;
-    flex-grow: 6;
+    background-color:inherit;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    gap: 1em;
     padding: 1em;
 }
 .detail_chat {
-    background-color:#ff9999;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -146,7 +152,7 @@ blockquote, q {
 }
 .detail_form {
     align-items: center;
-    background-color:#ff9999;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -155,7 +161,9 @@ blockquote, q {
 }
 .detail_head {
     align-items: center;
-    background-color:#ff7777;
+    background-color:inherit;
+    border-style: solid;
+    border-width: 0 0 0.1em 0;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -170,7 +178,7 @@ blockquote, q {
 }
 .detail_schedule {
     align-items: center;
-    background-color:#ff7777;
+    background-color:inherit;
     display: grid;
     gap: 1em;
     grid-template-columns: 3fr repeat(16, 1fr);
@@ -185,7 +193,7 @@ blockquote, q {
     flex-grow: 3;
 }
 .form_action {
-    background-color:#ffbbbb;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -193,18 +201,18 @@ blockquote, q {
     padding: 1em;
 }
 .group {
-    background-color:#7777ff;
+    background-color:inherit;
     flex: auto;
     padding: 1em;
 }
 .group_head {
     align-items: center;
-    background-color:#bbbbff;
+    background-color:lightgrey;
     display:flex;
     flex: auto;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0em;
 }
 .group_head_sort {
     flex: auto;
@@ -212,7 +220,7 @@ blockquote, q {
 }
 .hrs {
     align-items: center;
-    background-color: #ffbbbb;
+    background-color: inherit;
     border: 1px solid black;
     border-radius: 0.3em;
     display:flex;
@@ -225,11 +233,13 @@ blockquote, q {
     padding: 0.2em;
 }
 .icon_bar {
-    background-color:green;
+    background-color:inherit;
+    border-style: solid;
+    border-width: 0 0 0.1em 0;
     display:flex;
     flex-direction: row;
     gap:1em;
-    height: 3em;
+    height: 4em;
     justify-content: space-between;
     width: 100%;
 }
@@ -241,7 +251,7 @@ blockquote, q {
 }
 .item_block {
     align-items: flex-start;
-    background-color: white;
+    background-color: inherit;
     display:flex;
     flex-direction: column;
     justify-content: space-between;
@@ -256,7 +266,9 @@ blockquote, q {
     padding: 0.3em;
 }
 .list_bar {
-    background-color:#5555ff;
+    background-color:inherit;
+    border: 0.1em solid black;
+    border-width: 0 0.1em 0 0;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -265,17 +277,19 @@ blockquote, q {
 }
 .list_button {
     align-items: center;
-    background-color:#ddddff;
-    border: 2px dashed black;
+    background-color:inherit;
+    border: 0.1em dashed grey;
     display:flex;
     flex: auto;
     flex-direction: row;
     justify-content: center;
-    padding: 1em;
+    padding: 0.3em;
 }
 .list_item {
     align-items: center;
-    background-color:#ddddff;
+    background-color:inherit;
+    border: 0.1em solid lightgrey;
+    border-width: 0 0 0.1em 0;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -298,7 +312,7 @@ blockquote, q {
 }
 .radio {
     align-items: center;
-    background-color:#ffdddd;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -306,7 +320,7 @@ blockquote, q {
     padding: 1em;
 }
 .radio_block {
-    background-color:#ffeeee;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -322,7 +336,7 @@ blockquote, q {
     padding: 0.1em;
 }
 .radio_date {
-    background-color:#ffdddd;
+    background-color:inherit;
     padding: 0.3em;
     text-align: center;
 }
@@ -330,13 +344,13 @@ blockquote, q {
     background-color: orange;
 }
 .radio_title {
-    background-color:#ffdddd;
+    background-color:inherit;
     padding: 0.3em;
     text-align: center;
 }
 .rival_mug {
     align-items: center;
-    background-color:#ffbbbb;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -346,7 +360,7 @@ blockquote, q {
 }
 .rival_rate {
     align-items: center;
-    background-color:#ffbbbb;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -356,7 +370,7 @@ blockquote, q {
 }
 .rival_rep {
     align-items: center;
-    background-color:#ffbbbb;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -365,7 +379,7 @@ blockquote, q {
 }
 .rival_toggle {
     align-items: center;
-    background-color:#ffdddd;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -380,7 +394,7 @@ blockquote, q {
     border: 0.2em solid orange;
 }
 .slide_text {
-    background-color:#ffeeee;
+    background-color:inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -420,7 +434,7 @@ h1 {
 }
 
 h2 { 
-    color:red;
+    color:orange;
     text-align:left;
     font-size:1.2em;
     font-weight:bold;

@@ -49,11 +49,11 @@ blockquote, q {
     quotes: "" "";
 }
 
-
 /************** . **************************/
 
 .bar_item {
     align-items: center;
+    background-color:inherit;
     color:black;
     display: flex;
     flex-direction: row;
@@ -62,9 +62,12 @@ blockquote, q {
     padding: 0.3em;
 }
 .button_accept {
+    background-color:inherit;
+    border: inherit;
     padding: 1em;
 }
 .button_decline {
+    border: inherit;
     padding: 1em;
 }
 .button_cta {
@@ -82,16 +85,21 @@ blockquote, q {
     text-align: center;
 }
 .button_toggle {
+    background-color:inherit;
+    border: inherit;
     flex: auto;
     font-weight: bold;
     padding: 0.3em;
 }
 .cta_text {
+    background-color:inherit;
+    border: inherit;
     color: inherit;
 }
 .chat_post {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex-direction: row;
     gap: 1em;
@@ -99,43 +107,62 @@ blockquote, q {
     padding: 1em;
 }
 .content {
+    background-color:inherit;
+    border:inherit;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
 }
 .day {
+    background-color:inherit;
+    border: inherit;
     flex-grow: 4;
 }
 .day_fri {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 5 / 5;
 }
 .day_mon {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 1 / 1;
 }
 .day_sat {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 6 / 6;
 }
 .day_sun {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 7 / 7;
 }
 .day_thu {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 4 / 4;
 }
 .day_tue {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 2 / 2;
 }
 .day_wed {
+    background-color:inherit;
+    border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 3 / 3;
 }
 .detail {
     background-color:inherit;
+    border:inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -144,6 +171,7 @@ blockquote, q {
 }
 .detail_chat {
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -153,6 +181,7 @@ blockquote, q {
 .detail_form {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -172,12 +201,15 @@ blockquote, q {
     padding: 1em;
 }
 .detail_head_title {
+    background-color:inherit;
+    border: inherit;
     flex: auto;
     padding: 1em;
 }
 .detail_schedule {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display: grid;
     gap: 1em;
     grid-template-columns: 3fr repeat(16, 1fr);
@@ -186,13 +218,17 @@ blockquote, q {
     padding: 1em;
 }
 .disabled {
+    background-color:inherit;
+    border: inherit;
    color: grey;
 }
 .flex_space {
+    background-color:inherit;
     flex-grow: 3;
 }
 .form_action {
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -207,6 +243,7 @@ blockquote, q {
 .group_head {
     align-items: center;
     background-color:lightgrey;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -214,6 +251,8 @@ blockquote, q {
     padding: 0em;
 }
 .group_head_sort {
+    background-color:inherit;
+    border: inherit;
     flex: auto;
     padding: 1em;
 }
@@ -226,6 +265,7 @@ blockquote, q {
     justify-content: center;
 }
 .icon {
+    background-color:inherit;
     border: 1px solid black;
     flex: none;
     margin: 0.2em;
@@ -258,10 +298,13 @@ blockquote, q {
 
 }
 .item_bold {
+    background-color:inherit;
+    border: inherit;
     font-weight: bold;
     padding: 0.3em;
 }
 .item_text {
+    background-color:inherit;
     padding: 0.3em;
 }
 .list_bar {
@@ -321,6 +364,7 @@ blockquote, q {
 .radio {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -329,6 +373,7 @@ blockquote, q {
 }
 .radio_block {
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -338,6 +383,7 @@ blockquote, q {
     padding: 1em;
 }
 .radio_button {
+    background-color:inherit;
     border: 1px solid black;
     border-radius: 0.3em;
     margin: 0.1em;
@@ -345,20 +391,24 @@ blockquote, q {
 }
 .radio_date {
     background-color:inherit;
+    border: inherit;
     padding: 0.3em;
     text-align: center;
 }
 .radio_pick {
     background-color: orange;
+    border: inherit;
 }
 .radio_title {
     background-color:inherit;
+    border: inherit;
     padding: 0.3em;
     text-align: center;
 }
 .rival_mug {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -369,6 +419,7 @@ blockquote, q {
 .rival_rate {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: column;
@@ -379,6 +430,7 @@ blockquote, q {
 .rival_rep {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -388,6 +440,7 @@ blockquote, q {
 .rival_toggle {
     align-items: center;
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;
@@ -396,13 +449,17 @@ blockquote, q {
     padding: 1em;    
 }
 .select_sort {
+    background-color:inherit;
+    border: inherit;
     height: 2em;
 }
 .selected {
+    background-color:inherit;
     border: 0.2em solid orange;
 }
 .slide_text {
     background-color:inherit;
+    border: inherit;
     display:flex;
     flex: auto;
     flex-direction: row;

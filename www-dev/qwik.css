@@ -91,6 +91,7 @@ blockquote, q {
     background-color:#ffbbbb;
     display:flex;
     flex-direction: row;
+    gap: 1em;
     justify-content: flex-start;
     padding: 1em;
 }
@@ -153,11 +154,12 @@ blockquote, q {
     padding: 1em;
 }
 .detail_head {
-    align-items: flex-start;
+    align-items: center;
     background-color:#ff7777;
     display:flex;
     flex: auto;
     flex-direction: row;
+    gap: 1em;
     font-size: larger;
     justify-items: center;
     padding: 1em;
@@ -227,6 +229,7 @@ blockquote, q {
     display:flex;
     flex-direction: row;
     gap:1em;
+    height: 3em;
     justify-content: space-between;
     width: 100%;
 }

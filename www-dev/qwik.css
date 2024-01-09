@@ -69,7 +69,7 @@ blockquote, q {
     flex-direction: row;
     flex: 0 0 auto;
     justify-content: space-evenly;
-    margin:0.3em;
+    margin:1em;
     padding: 0.3em;
     text-align: center;
 }
@@ -321,7 +321,6 @@ blockquote, q {
     flex: auto;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1em;
 }
 .list_bar_head {
     background-color:inherit;
@@ -454,8 +453,8 @@ blockquote, q {
 }
 .select_sort {
     background-color:inherit;
-    border: inherit;
-    height: 2em;
+    border: 0px solid black;
+    font-size: larger;
 }
 .selected {
     background-color:inherit;

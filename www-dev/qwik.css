@@ -277,6 +277,7 @@ blockquote, q {
     padding: 0.2em;
 }
 .icon_bar {
+    align-items: center;
     background-color:inherit;
     border-style: solid;
     border-width: 0 0 0.1em 0;
@@ -458,7 +459,8 @@ blockquote, q {
 }
 .selected {
     background-color:inherit;
-    border: 0.2em solid orange;
+    border: 0 solid black;
+    color: orange;
 }
 .slide_text {
     background-color:inherit;

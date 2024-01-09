@@ -422,6 +422,17 @@ blockquote, q {
     justify-content: space-evenly;
     padding: 1em;    
 }
+.rival_skill {
+    align-items: center;
+    background-color:inherit;
+    border: inherit;
+    display:flex;
+    flex: auto;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: space-evenly;
+    padding: 1em;    
+}
 .rival_toggle {
     background-color:inherit;
     border: inherit;
@@ -500,7 +511,7 @@ h2 {
 h3 { 
     color:black;
     text-align:left;
-    font-size:1.5em;
+    font-size:1.3em;
     font-weight:bold;
     margin:0.3em;
 }
@@ -508,7 +519,7 @@ h3 {
 h4 { 
     color:black;
     text-align:left;
-    font-size:1.2em;
+    font-size:1.1em;
     font-weight:bold;
     margin:0.3em;
 }

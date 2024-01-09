@@ -213,17 +213,6 @@ blockquote, q {
     flex: auto;
     padding: 1em;
 }
-.detail_schedule {
-    align-items: center;
-    background-color:inherit;
-    border: inherit;
-    display: grid;
-    gap: 1em;
-    grid-template-columns: 3fr repeat(16, 1fr);
-    grid-template-rows: repeat(7, auto);
-    justify-items: stretch;
-    padding: 1em;
-}
 .disabled {
     background-color:inherit;
     border: inherit;
@@ -269,6 +258,16 @@ blockquote, q {
     border: 1px solid black;
     border-radius: 0.3em;
     display:flex;
+    justify-content: center;
+}
+.hrs.apm {
+    align-items: center;
+    background-color: #eeeeee;
+    border: 0px solid black;
+    color: white;
+    display:flex;
+    flex: auto;
+    font-size: xx-large;
     justify-content: center;
 }
 .icon {
@@ -429,6 +428,15 @@ blockquote, q {
     display:grid;
     grid-template-columns: 1fr 1fr;
     gap: 1em;
+    padding: 1em;
+}
+.schedule {
+    align-items: center;
+    display: grid;
+    gap: 0.1em;
+    grid-template-columns: 3fr repeat(16, 1fr);
+    grid-template-rows: repeat(7, auto);
+    justify-items: stretch;
     padding: 1em;
 }
 .select_sort {

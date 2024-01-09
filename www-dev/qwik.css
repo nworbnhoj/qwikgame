@@ -100,7 +100,6 @@ blockquote, q {
 }
 .cta_text {
     background-color:inherit;
-    border: inherit;
     color: inherit;
 }
 .chat_post {
@@ -325,11 +324,13 @@ blockquote, q {
 }
 .list_bar_head {
     background-color:inherit;
+    border: 0.1em solid black;
+    border-width: 0 0 0.1em 0;
     display:flex;
-    flex: auto;
+    flex: 0 0 auto;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.5em;
 }
 .list_item {
     align-items: center;

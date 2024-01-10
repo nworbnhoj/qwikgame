@@ -77,6 +77,19 @@ blockquote, q {
     background-color:orange;
     height: 3em;
 }
+.button.cta_fixed {
+    background-color:orange;
+    border-radius: 2em;
+    border-width: 0px;
+    bottom: 3em;
+    color: white;
+    height: 4em;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    right: 2em;
+    width: 4em;
+}
 .button.list {
     background-color:inherit;
     border: 0.1em dashed grey;
@@ -585,7 +598,12 @@ h6 {
 /************** media **********************/
 
 @media only screen and (max-width: 600px) {
-    .hide0 {display: block;}
+    .show0 {display: none;}
+    .show600 {display: flex;}
+    .show768 {display: flex;}
+    .show992 {display: flex;}
+    .show1200 {display: flex;}
+    .hide0 {display: flex;}
     .hide600 {display: none;}
     .hide768 {display: none;}
     .hide992 {display: none;}
@@ -598,8 +616,13 @@ h6 {
 }
 
 @media only screen and (min-width: 600px) {
-    .hide0 {display: block;}
-    .hide600 {display: block;}
+    .show0 {display: none;}
+    .show600 {display: none;}
+    .show768 {display: flex;}
+    .show992 {display: flex;}
+    .show1200 {display: flex;}
+    .hide0 {display: flex;}
+    .hide600 {display: flex;}
     .hide768 {display: none;}
     .hide992 {display: none;}
     .hide1200 {display: none;}
@@ -611,9 +634,14 @@ h6 {
 }
 
 @media only screen and (min-width: 768px) {
-    .hide0 {display: block;}
-    .hide600 {display: block;}
-    .hide768 {display: block;}
+    .show0 {display: none;}
+    .show600 {display: none;}
+    .show768 {display: none;}
+    .show992 {display: flex;}
+    .show1200 {display: flex;}
+    .hide0 {display: flex;}
+    .hide600 {display: flex;}
+    .hide768 {display: flex;}
     .hide992 {display: none;}
     .hide1200 {display: none;}
     .wide0 {width: auto;}
@@ -624,10 +652,15 @@ h6 {
 }
 
 @media only screen and (min-width: 992px) {
-    .hide0 {display: block;}
-    .hide600 {display: block;}
-    .hide768 {display: block;}
-    .hide992 {display: block;}
+    .show0 {display: none;}
+    .show600 {display: none;}
+    .show768 {display: none;}
+    .show992 {display: none;}
+    .show1200 {display: flex;}
+    .hide0 {display: flex;}
+    .hide600 {display: flex;}
+    .hide768 {display: flex;}
+    .hide992 {display: flex;}
     .hide1200 {display: none;}
     .wide0 {width: auto;}
     .wide600 {width: auto;}
@@ -637,11 +670,16 @@ h6 {
 }
 
 @media only screen and (min-width: 1200px) {
-    .hide0 {display: block;}
-    .hide600 {display: block;}
-    .hide768 {display: block;}
-    .hide992 {display: block;}
-    .hide1200 {display: block;}
+    .show0 {display: none;}
+    .show600 {display: none;}
+    .show768 {display: none;}
+    .show992 {display: none;}
+    .show1200 {display: none;}
+    .hide0 {display: flex;}
+    .hide600 {display: flex;}
+    .hide768 {display: flex;}
+    .hide992 {display: flex;}
+    .hide1200 {display: flex;}
     .wide0 {width: auto;}
     .wide600 {width: auto;}
     .wide768 {width: auto;}

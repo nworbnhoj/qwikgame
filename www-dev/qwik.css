@@ -74,11 +74,11 @@ blockquote, q {
     text-align: center;
 }
 .button.cta {
-    background-color:orange;
+    background-color:#dfa622;
     height: 3em;
 }
 .button.cta_fixed {
-    background-color:orange;
+    background-color:#dfa622;
     border-radius: 2em;
     border-width: 0px;
     bottom: 3em;
@@ -106,10 +106,10 @@ blockquote, q {
 }
 .button.radio.disabled {
     background-color:lightgrey;
-    border: 0px solid orange;
+    border: 0px solid #dfa622;
 }
 .button.radio.selected {
-    border: 3px solid orange;
+    border: 3px solid #dfa622;
 }
 .cta_text {
     background-color:inherit;
@@ -395,7 +395,7 @@ blockquote, q {
     text-align: center;
 }
 .radio_pick {
-    background-color: orange;
+    background-color: #dfa622;
     border: inherit;
 }
 .radio_title {
@@ -472,7 +472,7 @@ blockquote, q {
 .selected {
     background-color:inherit;
     border: 0 solid black;
-    color: orange;
+    color: #dfa622;
 }
 .slide_text {
     background-color:inherit;
@@ -540,7 +540,7 @@ h4 {
 }
 
 h5 { 
-    color:orange;
+    color:#dfa622;
     text-align:center;
     font-size:1.2em;
     font-weight:bold;

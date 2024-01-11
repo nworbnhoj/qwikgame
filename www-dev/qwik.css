@@ -686,3 +686,26 @@ h6 {
     .wide992 {width: auto;}
     .widehide1200 {width: auto;}
 }
+
+/* feedback animations for testing */
+.button:active {  
+    animation-name: feedback;
+    animation-duration: 2s;
+}
+.schedule > *:active {
+    animation-name: feedback;
+    animation-duration: 2s;    
+}
+.list_item > *:active {
+    animation-name: feedback;
+    animation-duration: 2s;
+}
+ i:active {
+    animation-name: feedback;
+    animation-duration: 2s;
+}
+
+@keyframes feedback {
+  from {background-color: green;}
+  to {background-color: white;}
+}

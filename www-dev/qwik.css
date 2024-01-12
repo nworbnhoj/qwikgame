@@ -61,56 +61,6 @@ blockquote, q {
     text-align: center;
     padding: 0.3em;
 }
-.button {
-    align-items: center;
-    border: 1px solid black;
-    border-radius: 0.3em;
-    display:flex;
-    flex-direction: row;
-    flex: 0 0 auto;
-    justify-content: space-evenly;
-    margin:1em;
-    padding: 0.3em;
-    text-align: center;
-}
-.button.cta {
-    background-color:#dfa622;
-    height: 3em;
-}
-.button.cta_fixed {
-    background-color:#dfa622;
-    border-radius: 2em;
-    border-width: 0px;
-    bottom: 3em;
-    color: white;
-    height: 4em;
-    margin: 0px;
-    padding: 0px;
-    position: fixed;
-    right: 2em;
-    width: 4em;
-}
-.button.list {
-    background-color:inherit;
-    border: 0.1em dashed grey;
-    flex: auto;
-    height: 3em;
-    justify-content: center;
-}
-.button.radio {
-    background-color:inherit;
-    border: 1px solid black;
-    font-size: larger;
-    margin: 0.1em;
-    padding: 0.3em;
-}
-.button.radio.disabled {
-    background-color:lightgrey;
-    border: 0px solid #dfa622;
-}
-.button.radio.selected {
-    border: 3px solid #dfa622;
-}
 .cta_text {
     background-color:inherit;
     color: inherit;
@@ -580,6 +530,57 @@ h6 {
 /************** <input> ********************/
 
 /************** <button> *******************/
+button {
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 0.3em;
+    display:flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    justify-content: space-evenly;
+    margin:1em;
+    padding: 0.3em;
+    text-align: center;
+}
+button.cta {
+    background-color:#dfa622;
+    height: 3em;
+}
+button.cta_fixed {
+    background-color:#dfa622;
+    border-radius: 2em;
+    border-width: 0px;
+    bottom: 3em;
+    color: white;
+    height: 4em;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    right: 2em;
+    width: 4em;
+}
+button.list {
+    background-color:inherit;
+    border: 0.1em dashed grey;
+    flex: auto;
+    height: 3em;
+    justify-content: center;
+    width: 80%;
+}
+button.radio {
+    background-color:inherit;
+    border: 1px solid black;
+    font-size: larger;
+    margin: 0.1em;
+    padding: 0.3em;
+}
+button.radio.disabled {
+    background-color:lightgrey;
+    border: 0px solid #dfa622;
+}
+button.radio.selected {
+    border: 3px solid #dfa622;
+}
     
 /************** <textarea> *****************/
     
@@ -688,7 +689,7 @@ h6 {
 }
 
 /* feedback animations for testing */
-.button:active {  
+button:active {  
     animation-name: feedback;
     animation-duration: 2s;
 }

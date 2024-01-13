@@ -65,16 +65,6 @@ blockquote, q {
     background-color:inherit;
     color: inherit;
 }
-.chat_post {
-    align-items: center;
-    background-color:inherit;
-    border: inherit;
-    display:flex;
-    flex-direction: row;
-    gap: 1em;
-    justify-content: flex-start;
-    padding: 1em;
-}
 .content {
     background-color:inherit;
     border:inherit;
@@ -295,18 +285,6 @@ blockquote, q {
     flex-direction: row;
     justify-content: space-between;
     padding: 0.5em;
-}
-.list_item {
-    align-items: center;
-    background-color:inherit;
-    border: 0.1em solid lightgrey;
-    border-width: 0 0 0.1em 0;
-    display:flex;
-    flex: auto;
-    flex-direction: row;
-    gap:0.3em;
-    justify-content: flex-start;
-    padding: 0.3em;
 }
 .logo {
     height: 3em;
@@ -577,6 +555,27 @@ button.list_act {
     justify-content: center;
     width: 80%;
 }
+
+button.list_item {
+    align-items: center;
+    background-color:inherit;
+    border: 0.1em solid lightgrey;
+    border-width: 0 0 0.1em 0;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    gap:1em;
+    justify-content: flex-start;
+    margin: 0em;
+    padding: 0.3em;
+}
+button.list_item:last-child {
+    border-width: 0;
+}
+button.list_item.selected {
+    background-color:inherit;
+    color: #dfa622;
+}
 button.radio {
     background-color:inherit;
     border: 1px solid black;
@@ -700,10 +699,6 @@ button.radio.selected {
 
 /* feedback animations for testing */
 button:active {  
-    animation-name: feedback;
-    animation-duration: 2s;
-}
-.list_item > *:active {
     animation-name: feedback;
     animation-duration: 2s;
 }

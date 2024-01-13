@@ -185,7 +185,10 @@ blockquote, q {
 }
 .group {
     background-color:inherit;
-    flex: auto;
+    flex-direction: column;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
     padding: 1em;
 }
 .group_head {
@@ -193,8 +196,9 @@ blockquote, q {
     background-color:lightgrey;
     border: inherit;
     display:flex;
-    flex: auto;
+    flex: 0 0 auto;
     flex-direction: row;
+    height: 2em;
     justify-content: space-between;
     padding: 0em;
 }
@@ -259,7 +263,6 @@ blockquote, q {
 }
 .item_bold {
     background-color:inherit;
-    border: inherit;
     font-weight: bold;
     padding: 0.3em;
 }
@@ -274,7 +277,7 @@ blockquote, q {
     display:flex;
     flex: auto;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 .list_bar_head {
     background-color:inherit;
@@ -548,12 +551,16 @@ button.hr {
     width: 2em;
 }
 button.list_act {
+    align-items: center;
     background-color:inherit;
     border: 0.1em dashed grey;
+    display:flex;
     flex: auto;
-    height: 3em;
+    flex-direction: row;
+    gap:1em;
     justify-content: center;
-    width: 80%;
+    margin: 0em;
+    padding: 0.3em;
 }
 
 button.list_item {

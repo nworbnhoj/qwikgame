@@ -54,20 +54,22 @@
                     Your Rivals &#9650;
                 </h2>
             </div>
-            <button class="list_item selected">
+            <label class="toggle">
+                <input type="radio" checked="checked" name="rival">
                 <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Pesho</div>
                     <div class="item_text">Tennis, Vasil Levski, Aug 4, 17h</div>
                 </div>
-            </button>
-            <button class="list_item">
+            </label>
+            <label class="toggle">
+                <input type="radio" name="rival">
                 <i class="fa-solid fa-hat-wizard fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Maya</div>
                     <div class="item_text">Tennis, Vasil Levski, Aug 5, 19h</div>
                 </div>
-            </button>
+            </label>
         </div>
         <div class="group">
             <div class="group_head">
@@ -96,9 +98,13 @@
                 <div class="rival_rate">
                     <h5>REPUTATION</h5>
                     <h6>Rate your Rival's behaviour</h6>
-                    <div class="rival_toggle">
-                        <button class="radio">Bad</button>
-                        <button class="radio selected">Good</button>
+                    <div class="radio_block rival_toggle">
+                        <label class="toggle button">Bad
+                            <input type="radio" name="rate">
+                        </label>
+                        <label class="toggle button">Good
+                            <input type="radio" checked="checked" name="rate">
+                        </label>
                     </div>
                 </div>
             </div>

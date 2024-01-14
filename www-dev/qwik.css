@@ -252,6 +252,9 @@ blockquote, q {
 .invisible {
     visibility: hidden;
 }
+.invite-toggle {
+    grid-template-columns: repeat(6, 1fr);
+}
 .item_block {
     align-items: flex-start;
     background-color: inherit;
@@ -316,7 +319,6 @@ blockquote, q {
     background-color:inherit;
     border: inherit;
     display:grid;
-    grid-template-columns: repeat(6, 1fr);
     gap: 1em;
     padding: 1em;
 }
@@ -380,12 +382,8 @@ blockquote, q {
     padding: 1em;    
 }
 .rival_toggle {
-    background-color:inherit;
-    border: inherit;
-    display:grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1em;
-    padding: 1em;
+    flex-direction: row;
 }
 .schedule {
     align-items: center;
@@ -415,6 +413,54 @@ blockquote, q {
     justify-content: space-around;
     width: 100%;
     padding: 1em;
+}
+.toggle {
+    align-items: center;
+    background-color:inherit;
+    border: 0.1em solid lightgrey;
+    border-width: 0 0 0.1em 0;
+    cursor: pointer;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    gap:1em;
+    justify-content: flex-start;
+    margin: 0em;
+    padding: 0.3em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.toggle:has(input):hover {
+  background-color: #eeeeee;
+}
+.toggle.button {
+    background-color:inherit;
+    border: 1px solid black;
+    border-radius: 0.3em;
+    font-size: larger;
+    height: 2em;
+    margin: 0.1em;
+    padding: 0.3em;
+}
+.toggle.button.disabled {
+    border: 0px solid black;
+    background-color: #eeeeee;
+}
+.toggle.button:has( input:checked) {
+    border: 3px solid #dfa622;
+    color: #dfa622;
+}
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.toggle:has( input:checked) {
+    color: #dfa622;
 }
 
 /************** <html> *********************/
@@ -562,7 +608,6 @@ button.list_act {
     margin: 0em;
     padding: 0.3em;
 }
-
 button.list_item {
     align-items: center;
     background-color:inherit;

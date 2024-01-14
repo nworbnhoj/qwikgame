@@ -61,20 +61,22 @@
                     Sent &#9650;
                 </h2>
             </div>
-            <button class="list_item">
+            <label class="toggle">
+                <input type="radio" name="invite">
                 <i class="fa-solid fa-paper-plane fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Tennis, Dema Sport, Aug 4, 17h-20h</div>
                     <div class="item_text">date, hh:mm</div>
                 </div>
-            </button>
-            <button class="list_item">
+            </label>
+            <label class="toggle">
+                <input type="radio" name="invite">
                 <i class="fa-solid fa-paper-plane fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Tennis, Vasil Levski, Aug 4, 17h-20h</div>
                     <div class="item_text">date, hh:mm</div>
                 </div>
-            </button>
+            </label>
         </div>
         <div class="group">
             <div class="group_head">
@@ -82,13 +84,14 @@
                     Received &#9650;
                 </h2>
             </div>
-            <button class="list_item selected">
+            <label class="toggle">
+                <input type="radio" checked="checked" name="invite">
                 <i class="fa-solid fa-inbox fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Squash, Vasil Levski, Aug 5, 13-21h</div>
                     <div class="item_text">date, hh:mm</div>
                 </div>
-            </button>
+            </label>
         </div>
         <div class="group">
             <div class="group_head">
@@ -142,16 +145,34 @@
             <div class="radio">
                 <h6>Pick Time To Play</h6>
                 <div class="radio_date">Aug 5, 2023</div>
-                <div class="radio_block">
-                    <button class="radio">13h</button>
-                    <button class="radio selected">14h</button>
-                    <button class="radio disabled">15h</button>
-                    <button class="radio">16h</button>
-                    <button class="radio">17h</button>
-                    <button class="radio">18h</button>
-                    <button class="radio">19h</button>
-                    <button class="radio">20h</button>
-                    <button class="radio">21h</button>
+                <div class="radio_block invite-toggle">
+                    <label class="toggle button">13h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">14h
+                        <input type="radio" checked="checked" name="hour">
+                    </label>
+                    <label class="toggle button disabled">15h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">16h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">17h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">18h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">19h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">20h
+                        <input type="radio" name="hour">
+                    </label>
+                    <label class="toggle button">21h
+                        <input type="radio" name="hour">
+                    </label>
                 </div>
             </div>
         </div>

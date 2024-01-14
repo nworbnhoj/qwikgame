@@ -123,7 +123,7 @@ blockquote, q {
     background-color:inherit;
     border:inherit;
     display:flex;
-    flex: auto;
+    flex: 0 1 68.75%;
     flex-direction: column;
     gap: 1em;
     padding: 1em;
@@ -281,7 +281,7 @@ blockquote, q {
     border: 0.1em solid black;
     border-width: 0 0.1em 0 0;
     display:flex;
-    flex: auto;
+    flex: 0 1 31.25%;
     flex-direction: column;
     justify-content: flex-start;
 }
@@ -663,6 +663,16 @@ button.radio.selected {
 /************** media **********************/
 
 @media only screen and (max-width: 600px) {
+    .left0 {flex: 1 1 100%}
+    .left600 {flex: 1 1 100%}
+    .left768 {flex: 1 1 100%}
+    .left992 {flex: 1 1 100%}
+    .left1200 {flex: 1 1 31.25%}    
+    .right0 {display: none;}
+    .right600 {display: none;}
+    .right768 {display: none;}
+    .right992 {display: none;}
+    .right1200 {display: flex ;flex: 1 1 68.75%;}
     .show0 {display: none;}
     .show600 {display: flex;}
     .show768 {display: flex;}
@@ -681,6 +691,16 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 600px) {
+    .left0 {flex: 1 1 100%}
+    .left600 {flex: 1 1 100%}
+    .left768 {flex: 1 1 100%}
+    .left992 {flex: 1 1 31.25%}
+    .left1200 {flex: 1 1 31.25%}    
+    .right0 {display: none;}
+    .right600 {display: none;}
+    .right768 {display: none;}
+    .right992 {display: flex ;flex: 1 1 68.75%;}
+    .right1200 {display: flex ;flex: 1 1 68.75%;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: flex;}
@@ -699,6 +719,16 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 768px) {
+    .left0 {flex: 1 1 100%}
+    .left600 {flex: 1 1 100%}
+    .left768 {flex: 1 1 31.25%}
+    .left992 {flex: 1 1 31.25%}
+    .left1200 {flex: 1 1 31.25%}
+    .right0 {display: none;}
+    .right600 {display: none;}
+    .right768 {display: flex ;flex: 1 1 68.75%;}
+    .right992 {display: flex ;flex: 1 1 68.75%;}
+    .right1200 {display: flex ;flex: 1 1 68.75%;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}
@@ -717,6 +747,16 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 992px) {
+    .left0 {flex: 1 1 100%}
+    .left600 {flex: 1 1 31.25%}
+    .left768 {flex: 1 1 31.25%}
+    .left992 {flex: 1 1 31.25%}
+    .left1200 {flex: 1 1 31.25%}    
+    .right0 {display: none;}
+    .right600 {display: flex ;flex: 1 1 68.75%;}
+    .right768 {display: flex ;flex: 1 1 68.75%;}
+    .right992 {display: flex ;flex: 1 1 68.75%;}
+    .right1200 {display: flex ;flex: 1 1 68.75%;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}
@@ -735,6 +775,16 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 1200px) {
+    .left0 {flex: 1 1 31.25%}
+    .left600 {flex: 1 1 31.25%}
+    .left768 {flex: 1 1 31.25%}
+    .left992 {flex: 1 1 31.25%}
+    .left1200 {flex: 1 1 31.25%}    
+    .right0 {display: flex ;flex: 1 1 68.75%;}
+    .right600 {display: flex ;flex: 1 1 68.75%;}
+    .right768 {display: flex ;flex: 1 1 68.75%;}
+    .right992 {display: flex ;flex: 1 1 68.75%;}
+    .right1200 {display: flex ;flex: 1 1 68.75%;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}

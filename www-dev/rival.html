@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rival</title>
     <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src='qwik.js'></script>
     <script src="https://kit.fontawesome.com/ddb61c7fcf.js" crossorigin="anonymous"></script>
 </head>
 
@@ -55,7 +56,7 @@
                 </h2>
             </div>
             <label class="toggle">
-                <input type="radio" checked="checked" name="rival">
+                <input type="radio" checked="checked" name="list" data-id="A">
                 <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Pesho</div>
@@ -63,7 +64,7 @@
                 </div>
             </label>
             <label class="toggle">
-                <input type="radio" name="rival">
+                <input type="radio" name="list" data-id="B">
                 <i class="fa-solid fa-hat-wizard fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Maya</div>
@@ -80,51 +81,56 @@
         </div>
     </div>
     <div class="detail hide768">
-        <div class="detail_head">
-            <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
-            <div class="item_block">
-                <h3>Pesho: Tennis, Vasil Levski, Aug 4, 17h</h3>
-            </div>
-            <i class="fa-solid fa-ellipsis-vertical fa-2xl push_right"></i>
-            <i class="fa-solid fa-chevron-left fa-2xl"></i>
-            <i class="fa-solid fa-chevron-right fa-2xl"></i>
-        </div>
-        <div class="detail_form">
-            <div class="rival_rep">
-                <div class="rival_mug">
-                    <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
-                    <h3>Pesho</h3>
+        <div id="A">
+            <div class="detail_head">
+                <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
+                <div class="item_block">
+                    <h3>Pesho: Tennis, Vasil Levski, Aug 4, 17h</h3>
                 </div>
-                <div class="rival_rate">
-                    <h5>REPUTATION</h5>
-                    <h6>Rate your Rival's behaviour</h6>
-                    <div class="radio_block rival_toggle">
-                        <label class="toggle button">Bad
-                            <input type="radio" name="rate">
-                        </label>
-                        <label class="toggle button">Good
-                            <input type="radio" checked="checked" name="rate">
-                        </label>
+                <i class="fa-solid fa-ellipsis-vertical fa-2xl push_right"></i>
+                <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                <i class="fa-solid fa-chevron-right fa-2xl"></i>
+            </div>
+            <div class="detail_form">
+                <div class="rival_rep">
+                    <div class="rival_mug">
+                        <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
+                        <h3>Pesho</h3>
+                    </div>
+                    <div class="rival_rate">
+                        <h5>REPUTATION</h5>
+                        <h6>Rate your Rival's behaviour</h6>
+                        <div class="radio_block rival_toggle">
+                            <label class="toggle button">Bad
+                                <input type="radio" name="rate">
+                            </label>
+                            <label class="toggle button">Good
+                                <input type="radio" checked="checked" name="rate">
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="rival_skill">
-                <h5>SKILL LEVEL</h5>
-                <h6>Rate your Rival's game skill level compared to yours</h6>
-                <div class="slide_text">
-                    <div class="invisible">Very weak</div>
-                    <div class="invisible">Weak</div>
-                    <div class="">Similar</div>
-                    <div class="invisible">Strong</div>
-                    <div class="invisible">Very Strong</div>
+                <div class="rival_skill">
+                    <h5>SKILL LEVEL</h5>
+                    <h6>Rate your Rival's game skill level compared to yours</h6>
+                    <div class="slide_text">
+                        <div class="invisible">Very weak</div>
+                        <div class="invisible">Weak</div>
+                        <div class="">Similar</div>
+                        <div class="invisible">Strong</div>
+                        <div class="invisible">Very Strong</div>
+                    </div>
+                    <input class="input_strength" type="range" min="-2" max="2" value="0">
                 </div>
-                <input class="input_strength" type="range" min="-2" max="2" value="0">
-            </div>
 
-            <div class="form_action">
-                <div class="button_cta">SUBMIT</div>
+                <div class="form_action">
+                    <div class="button_cta">SUBMIT</div>
+                </div>
             </div>
+        </div>
+        <div id="B" class="hidden">
+            <h1>B: try another selection</h1>
         </div>
     </div>
 </div>

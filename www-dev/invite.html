@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>invite</title>
     <link rel="stylesheet" type="text/css" href="qwik.css">
+    <script src='qwik.js'></script>
     <script src="https://kit.fontawesome.com/ddb61c7fcf.js" crossorigin="anonymous"></script>
 </head>
 
@@ -62,7 +63,7 @@
                 </h2>
             </div>
             <label class="toggle">
-                <input type="radio" name="invite">
+                <input type="radio" name="list" data-id="A">
                 <i class="fa-solid fa-paper-plane fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Tennis, Dema Sport, Aug 4, 17h-20h</div>
@@ -70,7 +71,7 @@
                 </div>
             </label>
             <label class="toggle">
-                <input type="radio" name="invite">
+                <input type="radio" name="list" data-id="B">
                 <i class="fa-solid fa-paper-plane fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Tennis, Vasil Levski, Aug 4, 17h-20h</div>
@@ -85,7 +86,7 @@
                 </h2>
             </div>
             <label class="toggle">
-                <input type="radio" checked="checked" name="invite">
+                <input type="radio" checked="checked" name="list" data-id="C">
                 <i class="fa-solid fa-inbox fa-2xl"></i>
                 <div class="item_block">
                     <div class="item_bold">Squash, Vasil Levski, Aug 5, 13-21h</div>
@@ -102,77 +103,85 @@
         </div>
     </div>
     <div class="detail hide768">
-        <div class="detail_head">
-            <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
-            <div class="item_block">
-                <h3>Squash, Vasil Levski, Aug 5, 13-21h</h3>
-                <h4>Received Invitation; hh:mm</h4>
-            </div>
-            <i class="fa-solid fa-ellipsis-vertical fa-2xl push_right"></i>
-            <i class="fa-solid fa-chevron-left fa-2xl"></i>
-            <i class="fa-solid fa-chevron-right fa-2xl"></i>
+        <div id="A" class="hidden">
+            <h1>A: try another selection</h1>
         </div>
-        <div class="detail_chat">
-            <button class="list_item">
+        <div id="B" class="hidden">
+            <h1>B: try another selection</h1>
+        </div>
+        <div id="C">
+            <div class="detail_head">
                 <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
                 <div class="item_block">
-                    <p class="item_text">Pesho sent invitation</p>
+                    <h3>Squash, Vasil Levski, Aug 5, 13-21h</h3>
+                    <h4>Received Invitation; hh:mm</h4>
                 </div>
                 <i class="fa-solid fa-ellipsis-vertical fa-2xl push_right"></i>
-                <i class="fa-solid fa-user fa-2xl"></i>
-            </button>
-            <button class="list_item">
-                <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
-                <div class="item_block">
-                    <p class="item_bold">Pesho</p>
-                    <p class="item_text">Squash at Vasil Levski, Aug 5, 13-21h</p>
-                </div>
-            </button>
-            <button class="list_item">
-                <i class="fa-brands fa-redhat fa-2xl"></i>
-                <div class="item_block">
-                    <p class="item_bold">Venue Manager</p>
-                    <p class="item_text">Removed 15h from available hours</p>
-                </div>
-            </button>
-            <div class="detail_chat_post"></div>
-        </div>
-        <div class="detail_form">
-            <div class="form_action">
-                <button>DECLINE</button>
-                <button class="cta">ACCEPT</button>
+                <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                <i class="fa-solid fa-chevron-right fa-2xl"></i>
             </div>
-            <div class="radio">
-                <h6>Pick Time To Play</h6>
-                <div class="radio_date">Aug 5, 2023</div>
-                <div class="radio_block invite-toggle">
-                    <label class="toggle button">13h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">14h
-                        <input type="radio" checked="checked" name="hour">
-                    </label>
-                    <label class="toggle button disabled">15h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">16h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">17h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">18h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">19h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">20h
-                        <input type="radio" name="hour">
-                    </label>
-                    <label class="toggle button">21h
-                        <input type="radio" name="hour">
-                    </label>
+            <div class="detail_chat">
+                <button class="list_item">
+                    <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
+                    <div class="item_block">
+                        <p class="item_text">Pesho sent invitation</p>
+                    </div>
+                    <i class="fa-solid fa-ellipsis-vertical fa-2xl push_right"></i>
+                    <i class="fa-solid fa-user fa-2xl"></i>
+                </button>
+                <button class="list_item">
+                    <i class="fa-solid fa-hat-cowboy fa-2xl"></i>
+                    <div class="item_block">
+                        <p class="item_bold">Pesho</p>
+                        <p class="item_text">Squash at Vasil Levski, Aug 5, 13-21h</p>
+                    </div>
+                </button>
+                <button class="list_item">
+                    <i class="fa-brands fa-redhat fa-2xl"></i>
+                    <div class="item_block">
+                        <p class="item_bold">Venue Manager</p>
+                        <p class="item_text">Removed 15h from available hours</p>
+                    </div>
+                </button>
+                <div class="detail_chat_post"></div>
+            </div>
+            <div class="detail_form">
+                <div class="form_action">
+                    <button>DECLINE</button>
+                    <button class="cta">ACCEPT</button>
+                </div>
+                <div class="radio">
+                    <h6>Pick Time To Play</h6>
+                    <div class="radio_date">Aug 5, 2023</div>
+                    <div class="radio_block invite-toggle">
+                        <label class="toggle button">13h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">14h
+                            <input type="radio" checked="checked" name="hour">
+                        </label>
+                        <label class="toggle button disabled">15h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">16h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">17h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">18h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">19h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">20h
+                            <input type="radio" name="hour">
+                        </label>
+                        <label class="toggle button">21h
+                            <input type="radio" name="hour">
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

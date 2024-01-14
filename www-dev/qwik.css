@@ -227,6 +227,9 @@ blockquote, q {
     font-size: xx-large;
     justify-content: center;
 }
+.hidden {
+    display: none;
+}
 .icon {
     background-color:inherit;
     border: 1px solid black;

@@ -712,7 +712,7 @@ button.radio.selected {
     .hide992 {display: none;}
     .hide1200 {display: none;}
     .wide0 {width: auto;}
-    .wide600 {width: auto;}
+    .wide600 {width: 600px;}
     .wide768 {width: 100%;}
     .wide992 {width: 100%;}
     .wide1200 {width: 100%;}
@@ -740,8 +740,8 @@ button.radio.selected {
     .hide992 {display: none;}
     .hide1200 {display: none;}
     .wide0 {width: auto;}
-    .wide600 {width: auto;}
-    .wide768 {width: auto;}
+    .wide600 {width: 600px;}
+    .wide768 {width: 768px;}
     .wide992 {width: 100%;}
     .wide1200 {width: 100%;}
 }
@@ -768,9 +768,9 @@ button.radio.selected {
     .hide992 {display: flex;}
     .hide1200 {display: none;}
     .wide0 {width: auto;}
-    .wide600 {width: auto;}
-    .wide768 {width: auto;}
-    .wide992 {width: auto;}
+    .wide600 {width: 600px;}
+    .wide768 {width: 768px;}
+    .wide992 {width: 992px;}
     .wide1200 {width: 100%;}
 }
 
@@ -796,10 +796,10 @@ button.radio.selected {
     .hide992 {display: flex;}
     .hide1200 {display: flex;}
     .wide0 {width: auto;}
-    .wide600 {width: auto;}
-    .wide768 {width: auto;}
-    .wide992 {width: auto;}
-    .widehide1200 {width: auto;}
+    .wide600 {width: 600px;}
+    .wide768 {width: 768px;}
+    .wide992 {width: 992px;}
+    .wide1200 {width: 1200px;}
 }
 
 /* feedback animations for testing */

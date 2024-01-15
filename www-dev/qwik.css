@@ -56,7 +56,7 @@ blockquote, q {
     border:inherit;
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: stretch;
 }
 #detail {
     background-color:inherit;
@@ -587,7 +587,7 @@ button.cta {
 }
 button.cta_fixed {
     background-color:#dfa622;
-    border-radius: 2em;
+    border-radius: 50%;
     border-width: 0px;
     bottom: 3em;
     color: white;
@@ -672,7 +672,7 @@ button.radio.selected {
 
 @media only screen and (max-width: 600px) {
     #content {width: 100%;}
-    #detail {display: none;}
+    #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
     .show0 {display: none;}
     .show600 {display: flex;}
@@ -688,7 +688,7 @@ button.radio.selected {
 
 @media only screen and (min-width: 600px) {
     #content {width: 100%;}
-    #detail {display: none;}
+    #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
     .show0 {display: none;}
     .show600 {display: none;}

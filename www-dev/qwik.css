@@ -49,6 +49,11 @@ blockquote, q {
     quotes: "" "";
 }
 
+@font-face {
+  font-family: 'NotoSans-Regular';
+  src: url(NotoSans-Regular.ttf);
+}
+
 /************** # **************************/
 
 #content {
@@ -476,11 +481,7 @@ blockquote, q {
 body {
     display:flex;
     flex-direction: column;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
+    font-family: NotoSans-Regular;
     align-items: center;
 }
 

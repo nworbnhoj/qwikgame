@@ -215,7 +215,7 @@ blockquote, q {
     flex: 0 0 auto;
     flex-direction: row;
     height: 2em;
-    justify-content: space-between;
+    justify-content: stretch;
     padding: 0em;
 }
 .group_head_sort {
@@ -223,6 +223,32 @@ blockquote, q {
     border: inherit;
     flex: auto;
     padding: 1em;
+}
+.head_back {
+    flex: 0 0 auto;
+    order: 40;
+}
+.head_fwd {
+    flex: 0 0 auto;
+    order: 50;
+}
+.head_icon {
+    flex: 0 0 auto;
+    order: 10;
+}
+.head_more {
+    flex: 0 0 auto;
+    order: 30;
+}
+.head_txt {
+    align-items: flex-start;
+    background-color: inherit;
+    display:flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: space-between;
+    order: 20;
+    padding: 0.3em;
 }
 .hrs {
     align-items: center;
@@ -673,6 +699,7 @@ button.radio.selected {
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
+    .head_back { order: 5;}
     .show0 {display: none;}
     .show600 {display: flex;}
     .show768 {display: flex;}
@@ -690,6 +717,7 @@ button.radio.selected {
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
+    .head_back { order: 5;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: flex;}
@@ -707,6 +735,7 @@ button.radio.selected {
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
+    .head_back { order: 50;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}
@@ -727,6 +756,7 @@ button.radio.selected {
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
+    .head_back { order: 50;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}
@@ -747,6 +777,7 @@ button.radio.selected {
     #content {width: 1200px;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
+    .head_back { order: 50;}
     .show0 {display: none;}
     .show600 {display: none;}
     .show768 {display: none;}

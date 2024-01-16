@@ -669,6 +669,7 @@ button.radio.selected {
 /************** media **********************/
 
 @media only screen and (max-width: 600px) {
+    body {font-size: 12px;}
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
@@ -685,6 +686,7 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 600px) {
+    body {font-size: 12px;}
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
@@ -701,6 +703,7 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 768px) {
+    body {font-size: 16px;}
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
@@ -720,6 +723,7 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 992px) {
+    body {font-size: 16px;}
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
@@ -739,6 +743,7 @@ button.radio.selected {
 }
 
 @media only screen and (min-width: 1200px) {
+    body {font-size: 16px;}
     #content {width: 1200px;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}

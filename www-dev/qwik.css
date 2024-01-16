@@ -157,13 +157,14 @@ blockquote, q {
 }
 .detail_form {
     align-items: center;
+    align-content: center;
     background-color:inherit;
     border: inherit;
     display:grid;
     flex: auto;
     flex-direction: column;
-    justify-content: center;
-    padding: 1em;
+    justify-content: stretch;
+    padding: 0;
 }
 .detail_head {
     align-items: center;
@@ -297,9 +298,6 @@ blockquote, q {
     justify-content: space-between;
     width: 100%;
 }
-.input_strength {
-    width: 80%;
-}
 .invisible {
     visibility: hidden;
 }
@@ -431,6 +429,7 @@ blockquote, q {
     grid-template-columns: repeat(17, 1fr);
     grid-template-rows: repeat(7, auto);
     justify-items: stretch;
+    margin: 1.0em;
     padding: 1em;
 }
 .select_sort {
@@ -449,7 +448,8 @@ blockquote, q {
     display:flex;
     flex: auto;
     flex-direction: row;
-    justify-content: space-around;
+    font-size: larger;
+    justify-content: space-between;
     width: 100%;
     padding: 1em;
 }
@@ -554,7 +554,7 @@ h5 {
     text-align:left;
     font-size:1.2em;
     font-weight:bold;
-    margin:1.0em;
+    margin:2.0em 1em 1em 1em;
 }
 
 h6 { 
@@ -571,6 +571,7 @@ h6 {
 
 p {
     background-color:inherit;
+    margin: 1.0em;
     padding: 0.3em;
 }
 
@@ -593,6 +594,10 @@ p {
 /************** <option> *******************/
 
 /************** <input> ********************/
+
+input.strength {
+    margin: 0 1em 0 1em;
+}
 
 /************** <button> *******************/
 button {

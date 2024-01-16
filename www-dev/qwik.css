@@ -470,9 +470,6 @@ blockquote, q {
   height: 0;
   width: 0;
 }
-.toggle:has( input:checked) {
-    color: #dfa622;
-}
 
 /************** <html> *********************/
 
@@ -717,6 +714,9 @@ button.radio.selected {
     .hide768 {display: flex;}
     .hide992 {display: none;}
     .hide1200 {display: none;}
+    .toggle:has( input:checked) {
+        color: #dfa622;
+    }
 }
 
 @media only screen and (min-width: 992px) {
@@ -733,6 +733,9 @@ button.radio.selected {
     .hide768 {display: flex;}
     .hide992 {display: flex;}
     .hide1200 {display: none;}
+    .toggle:has( input:checked) {
+        color: #dfa622;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -749,6 +752,9 @@ button.radio.selected {
     .hide768 {display: flex;}
     .hide992 {display: flex;}
     .hide1200 {display: flex;}
+    .toggle:has( input:checked) {
+        color: #dfa622;
+    }
 }
 
 /* feedback animations for testing */

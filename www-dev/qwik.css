@@ -70,7 +70,6 @@ blockquote, q {
     flex: 0 1 68.75%;
     flex-direction: column;
     gap: 1em;
-    padding: 1em;
 }
 #list_bar {
     background-color:inherit;
@@ -158,10 +157,10 @@ blockquote, q {
     align-items: center;
     background-color:inherit;
     border: inherit;
-    display:flex;
+    display:grid;
     flex: auto;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1em;
 }
 .detail_head {
@@ -195,7 +194,7 @@ blockquote, q {
     background-color:inherit;
     border: inherit;
     display:flex;
-    flex: auto;
+    flex: 1 1 100%;
     flex-direction: row;
     justify-content: center;
     padding: 1em;
@@ -234,6 +233,10 @@ blockquote, q {
     height: 2em;
     justify-content: center;
 }
+.hour_toggle {
+    grid-template-columns: repeat(auto-fill, minmax(3em, 1fr));
+    width: 100%;
+}
 .hrs.apm {
     align-items: center;
     background-color: #eeeeee;
@@ -271,9 +274,6 @@ blockquote, q {
 }
 .invisible {
     visibility: hidden;
-}
-.invite-toggle {
-    grid-template-columns: repeat(6, 1fr);
 }
 .item_block {
     align-items: flex-start;

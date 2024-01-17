@@ -425,11 +425,6 @@ blockquote, q {
     margin: 1.0em;
     padding: 1em;
 }
-.select_sort {
-    background-color:inherit;
-    border: 0px solid black;
-    font-size: larger;
-}
 .selected {
     background-color:inherit;
     border: 0 solid black;
@@ -627,7 +622,14 @@ p.small {
 /************** <legend> *******************/
 
 /************** <select> *******************/
-    
+
+select.sort {
+    background-color:inherit;
+    border: 0px solid black;
+    display: flex;
+    font-size: inherit;
+}
+
 /************** <option> *******************/
 
 /************** <input> ********************/

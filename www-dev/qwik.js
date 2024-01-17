@@ -22,6 +22,15 @@ function showDetail() {
   })
 }
 
+function showChat() {
+    document.querySelectorAll("span.chat_show").forEach(function(span) {
+          span.style.display = (span.style.display === "none") ? "inline" : "none";
+    })
+    document.querySelectorAll("div.chat_block").forEach(function(div) {
+          div.style.display = (div.style.display === "none") ? "flex" : "none";
+    })
+}
+
 window.onload = function() {
   [].forEach.call(document.querySelectorAll('[name=list]'), function(list_radio) {
     list_radio.onclick = showDetail;

@@ -64,6 +64,7 @@ blockquote, q {
     justify-content: stretch;
 }
 #detail {
+    align-items: stretch;
     background-color:inherit;
     border:inherit;
     display:flex;
@@ -145,15 +146,6 @@ blockquote, q {
     border: inherit;
     grid-column: 1 / 1 ;
     grid-row: 3 / 3;
-}
-.detail_chat {
-    background-color:inherit;
-    border: inherit;
-    display:flex;
-    flex: auto;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1em;
 }
 .detail_form {
     align-items: center;
@@ -521,7 +513,22 @@ body {
 
 /************** <header> *******************/
 
+
+/************** <div> *********************/
+
+div.chat_block {
+    background-color:inherit;
+    border: inherit;
+    display:none;
+    flex: auto;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em;
+}
 /************** <span> *********************/
+
+span.chat_show {
+}
 
 /************** <h> ************************/
 
@@ -620,6 +627,12 @@ button {
     margin:1em;
     padding: 0.3em;
     text-align: center;
+}
+button.chat_show {
+    background-color:inherit;
+    border: 0px solid black;
+    color: blue;
+    text-decoration-line: underline;
 }
 button.cta {
     background-color:#dfa622;

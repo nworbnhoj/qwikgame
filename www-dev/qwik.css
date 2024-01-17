@@ -606,6 +606,12 @@ p {
     padding: 0.3em;
 }
 
+p.small {
+    background-color:inherit;
+    color: #666666 ;
+    font-size: small;
+}
+
 /************** <ul> ***********************/
 
 /************** <li> ***********************/

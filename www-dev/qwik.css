@@ -663,14 +663,14 @@ button.cta_fixed {
     background-color:#dfa622;
     border-radius: 50%;
     border-width: 0px;
-    bottom: 3em;
+    bottom: 4em;
     color: white;
-    height: 4em;
+    height: 6em;
     margin: 0px;
     padding: 0px;
     position: fixed;
     right: 2em;
-    width: 4em;
+    width: 6em;
 }
 button.hr {    
     border: 0px solid red;

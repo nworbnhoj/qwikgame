@@ -14,7 +14,11 @@ function showDetail() {
   }
 
   [].forEach.call(document.querySelectorAll('[name=list]'), function(radio){
-    document.getElementById(radio.dataset.id).className = radio.checked? '' : 'hidden';
+    if (radio.checked) {
+          document.getElementById(radio.dataset.id).classList.remove("hidden");
+      } else {
+          document.getElementById(radio.dataset.id).classList.add("hidden");
+      }
   })
 }
 

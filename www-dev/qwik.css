@@ -184,6 +184,15 @@ blockquote, q {
     flex: auto;
     padding: 1em;
 }
+.detail_n {    
+    align-items: stretch;
+    background-color:inherit;
+    border:inherit;
+    display:flex;
+    flex:  1 1 100%;
+    flex-direction: column;
+    gap: 1em;
+}
 .disabled {
     background-color:inherit;
     border: inherit;

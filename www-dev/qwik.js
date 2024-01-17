@@ -22,6 +22,18 @@ function showDetail() {
   })
 }
 
+function slide(slider) {
+  var words = slider.previousElementSibling.children;
+  for (let i = 0; i < words.length; i++) {
+    var word = words.item(i);
+    if (i == slider.value) {
+      word.classList.remove('invisible');
+    } else {
+      word.classList.add('invisible');
+    }
+  }
+}
+
 function showChat() {
     document.querySelectorAll("span.chat_show").forEach(function(span) {
           span.style.display = (span.style.display === "none") ? "inline" : "none";

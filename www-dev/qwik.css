@@ -147,17 +147,6 @@ blockquote, q {
     grid-column: 1 / 1 ;
     grid-row: 3 / 3;
 }
-.detail_form {
-    align-items: center;
-    align-content: center;
-    background-color:inherit;
-    border: inherit;
-    display:grid;
-    flex: auto;
-    flex-direction: column;
-    justify-content: stretch;
-    padding: 0;
-}
 .detail_head {
     align-items: center;
     background-color:inherit;
@@ -446,6 +435,17 @@ blockquote, q {
     border: 0 solid black;
     color: #dfa622;
 }
+.skill {
+    align-items: center;
+    align-content: center;
+    background-color:inherit;
+    border: inherit;
+    display:grid;
+    flex: auto;
+    flex-direction: column;
+    justify-content: stretch;
+    padding: 0;
+}
 .slide_text {
     background-color:inherit;
     border: inherit;
@@ -593,7 +593,7 @@ h6 {
     text-align:left;
     font-size:1.0em;
     font-weight:bold;
-    margin:0.3em;
+    margin:2.0em 1em 1em 1em;
 }
 
 /************** <small> ********************/

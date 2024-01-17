@@ -282,10 +282,13 @@ blockquote, q {
 }
 .icon {
     background-color:inherit;
-    border: 1px solid black;
-    flex: none;
+    border: 0px solid black;
+    display: flex;
+    flex: auto;
+    height: 3em;
     margin: 0.2em;
     padding: 0.2em;
+    justify-content: center;
 }
 .icon_bar {
     align-items: center;
@@ -525,6 +528,18 @@ div.chat_block {
     justify-content: space-between;
     padding: 1em;
 }
+div.cta {
+    align-content: center;
+    align-items: center;
+    background-color:#dfa622;
+    color:white;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    padding: 1em;
+    margin: 1em;
+}
+
 /************** <span> *********************/
 
 span.chat_show {
@@ -587,7 +602,7 @@ h6 {
 
 p {
     background-color:inherit;
-    margin: 1.0em;
+    margin: 0 0 0 1.0em;
     padding: 0.3em;
 }
 

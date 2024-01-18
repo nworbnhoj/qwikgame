@@ -499,11 +499,23 @@ body {
 div.chat_block {
     background-color:inherit;
     border: inherit;
-    display:none;
     flex: auto;
     flex-direction: column;
     justify-content: space-between;
     padding: 1em;
+}
+div.chat_item {
+    align-items: center;
+    background-color:inherit;
+    border: 0.1em solid lightgrey;
+    border-width: 0 0 0.1em 0;
+    display:flex;
+    flex: auto;
+    flex-direction: row;
+    gap:1em;
+    justify-content: flex-start;
+    margin: 0em;
+    padding: 0.3em;
 }
 div.cta {
     align-content: center;
@@ -658,6 +670,16 @@ button.cta {
     background-color:#dfa622;
     height: 3em;
 }
+button.cta_accept {
+    background-color:#dfa622;
+    border-radius: 50%;
+    border-width: 0px;
+    color: white;
+    height: 2em;
+    margin: 0px;
+    padding: 0px;
+    width: 2em;
+}
 button.cta_fixed {
     background-color:#dfa622;
     border-radius: 50%;
@@ -741,6 +763,11 @@ button.radio.disabled {
 }
 button.radio.selected {
     border: 3px solid #dfa622;
+}
+button.replicated {
+    background-color: #eeeeee;
+    border: 1px solid #bbbbbb;
+    color: #bbbbbb;
 }
     
 /************** <textarea> *****************/

@@ -497,8 +497,7 @@ div.chat_block {
 div.chat_item {
     align-items: center;
     background-color:inherit;
-    border: 0.1em solid lightgrey;
-    border-width: 0 0 0.1em 0;
+    border: 0 solid black;
     display:flex;
     flex: auto;
     flex-direction: row;

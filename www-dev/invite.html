@@ -93,10 +93,30 @@
     </div>
     <div id="detail">
         <div id="A" class="hidden">
-            <h1>A: try another selection</h1>
+            <div class="detail_head">
+                <div class="head_txt">
+                    <h3>A: try another selection</h3>
+                </div>
+                <button class="head_back icon" onclick="previous()">
+                    <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                </button>
+                <button class="head_fwd icon" onclick="next()">
+                    <i class="fa-solid fa-chevron-right fa-2xl"></i>
+                </button>
+            </div>
         </div>
         <div id="B" class="hidden">
-            <h1>B: try another selection</h1>
+            <div class="detail_head">
+                <div class="head_txt">
+                    <h3>B: try another selection</h3>
+                </div>
+                <button class="head_back icon" onclick="previous()">
+                    <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                </button>
+                <button class="head_fwd icon" onclick="next()">
+                    <i class="fa-solid fa-chevron-right fa-2xl"></i>
+                </button>
+            </div>
         </div>
         <div id="C">
             <div class="detail_head">
@@ -108,8 +128,12 @@
                     <h4>Received Invitation; hh:mm</h4>
                 </div>
                 <i class="head_more fa-solid fa-ellipsis-vertical fa-2xl"></i>
-                <i class="head_back fa-solid fa-chevron-left fa-2xl"></i>
-                <i class="head_fwd fa-solid fa-chevron-right fa-2xl"></i>
+                <button class="head_back icon" onclick="previous()">
+                    <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                </button>
+                <button class="head_fwd icon" onclick="next()">
+                    <i class="fa-solid fa-chevron-right fa-2xl"></i>
+                </button>
             </div>
             <div class="chat_block">
                 <button class="list_item">

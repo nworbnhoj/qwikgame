@@ -1,3 +1,27 @@
+function next() {
+  var list = document.querySelectorAll('[name=list]');
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].checked) {
+       list[i].checked = false;
+       list[(i+1 < list.length) ? i+1 : 0].checked = true;
+       break;
+    }
+  }
+  showDetail();
+}
+
+function previous() {
+  var list = document.querySelectorAll('[name=list]');
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].checked) {
+       list[i].checked = false;
+       list[(i-1 < 0) ? list.length-1 : i-1].checked = true;
+       break;
+    }
+  }
+  showDetail();
+}
+
 function showDetail() {
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
   var width_768 = window.matchMedia("only screen and (max-width: 768px)").matches;

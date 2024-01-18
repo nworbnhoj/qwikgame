@@ -83,8 +83,12 @@
                     <h3>Pesho: Tennis, Vasil Levski, Aug 4, 17h</h3>
                 </div>
                 <i class="head_more fa-solid fa-ellipsis-vertical fa-2xl"></i>
-                <i class="head_back fa-solid fa-chevron-left fa-2xl"></i>
-                <i class="head_fwd fa-solid fa-chevron-right fa-2xl"></i>
+                <button class="head_back icon" onclick="previous()">
+                    <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                </button>
+                <button class="head_fwd icon" onclick="next()">
+                    <i class="fa-solid fa-chevron-right fa-2xl"></i>
+                </button>
             </div>
             <div class="detail_form">
                 <div class="rival_rep">
@@ -125,7 +129,17 @@
             </div>
         </div>
         <div id="B" class="hidden">
-            <h1>B: try another selection</h1>
+            <div class="detail_head">
+                <div class="head_txt">
+                    <h3>B: try another selection</h3>
+                </div>
+                <button class="head_back icon" onclick="previous()">
+                    <i class="fa-solid fa-chevron-left fa-2xl"></i>
+                </button>
+                <button class="head_fwd icon" onclick="next()">
+                    <i class="fa-solid fa-chevron-right fa-2xl"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>

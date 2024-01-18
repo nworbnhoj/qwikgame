@@ -156,6 +156,7 @@ blockquote, q {
     flex: auto;
     flex-direction: row;
     gap: 1em;
+    justify-content: space-between;
     justify-items: center;
     padding: 1em;
 }
@@ -254,7 +255,7 @@ blockquote, q {
     background-color:inherit;
     border: 0px solid black;
     display: flex;
-    flex: auto;
+    flex: 0 0 auto;
     height: 3em;
     margin: 0.2em;
     padding: 0.2em;

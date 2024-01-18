@@ -668,24 +668,24 @@ button.chat_show {
 }
 button.cta {
     background-color:#dfa622;
+    border: 0px solid #dfa622;
+    color: white;
+}
+button.keen_desktop {
     height: 3em;
 }
-button.cta_accept {
-    background-color:#dfa622;
+button.accept {
     border-radius: 50%;
     border-width: 0px;
-    color: white;
     height: 2em;
     margin: 0px;
     padding: 0px;
     width: 2em;
 }
-button.cta_fixed {
-    background-color:#dfa622;
+button.keen_mobile {
     border-radius: 50%;
     border-width: 0px;
     bottom: 4em;
-    color: white;
     height: 6em;
     margin: 0px;
     padding: 0px;

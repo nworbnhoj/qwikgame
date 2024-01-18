@@ -251,16 +251,6 @@ blockquote, q {
 .hidden {
     display: none;
 }
-.icon {
-    background-color:inherit;
-    border: 0px solid black;
-    display: flex;
-    flex: 0 0 auto;
-    height: 3em;
-    margin: 0.2em;
-    padding: 0.2em;
-    justify-content: center;
-}
 .icon_bar {
     align-items: center;
     background-color:inherit;
@@ -539,6 +529,16 @@ div.group {
 div.group.hidden {
     display: none;
 }
+div.icon {
+    align-items: center;
+    background-color:inherit;
+    border: 0px solid black;
+    display: flex;
+    flex: 0 0 auto;
+    height: 3em;
+    justify-content: center;
+    width:3em;
+}
 
 /************** <span> *********************/
 
@@ -717,6 +717,17 @@ button.hr {
     padding: 0em;
     z-index: 10;
     width: 2em;
+}
+button.icon {
+    background-color:inherit;
+    border: 0px solid black;
+    display: flex;
+    flex: 0 0 auto;
+    height: 3em;
+    margin: 0.2em;
+    padding: 0.2em;
+    justify-content: center;
+    width:3em;
 }
 button.list_act {
     align-items: center;

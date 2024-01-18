@@ -494,6 +494,14 @@ div.chat_block {
     justify-content: space-between;
     padding: 1em;
 }
+div.chat_bubble {
+    align-items: flex-start;
+    background-color: #eeeeee;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.3em;
+}
 div.chat_item {
     align-items: center;
     background-color:inherit;

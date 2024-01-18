@@ -43,6 +43,11 @@ function showChat() {
     })
 }
 
+function showGroup(button) {
+    button.nextElementSibling.classList.toggle('hidden');
+    button.lastElementChild.classList.toggle('flip');
+}
+
 window.onload = function() {
   [].forEach.call(document.querySelectorAll('[name=list]'), function(list_radio) {
     list_radio.onclick = showDetail;

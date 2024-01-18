@@ -49,12 +49,8 @@
                 <option>sort by venue</option>
             </select>
         </div>
+        <button class="group" onclick="showGroup(this)">Upcomming <span>&#9650;</span></button>
         <div class="group">
-            <div class="group_head">
-                <h2>
-                    Upcomming &#9650;
-                </h2>
-            </div>
             <label class="toggle">
                 <input type="radio" name="list" data-id="A">
                 <i class="fa-solid fa-user-astronaut fa-2xl"></i>
@@ -70,12 +66,9 @@
                 </div>
             </label>
         </div>
-        <div class="group">
-            <div class="group_head">
-                <h2>
-                    History &#9660;
-                </h2>
-            </div>
+        <button class="group" onclick="showGroup(this)">History <span class="flip">&#9650;</span></button>
+        <div class="group hidden">
+            <p>No history yet!</p>
         </div>
     </div>
     <div id="detail">

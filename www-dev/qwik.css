@@ -192,25 +192,6 @@ blockquote, q {
     justify-content: center;
     padding: 1em;
 }
-.group {
-    background-color:inherit;
-    flex-direction: column;
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: flex-start;
-    padding: 1em;
-}
-.group_head {
-    align-items: center;
-    background-color:lightgrey;
-    border: inherit;
-    display:flex;
-    flex: 0 0 auto;
-    flex-direction: row;
-    height: 2em;
-    justify-content: stretch;
-    padding: 0em;
-}
 .group_head_sort {
     background-color:inherit;
     border: inherit;
@@ -534,10 +515,25 @@ div.cta {
     padding: 1em;
     margin: 1em;
 }
+div.group {
+    background-color:inherit;
+    flex-direction: column;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    padding: 0 1em 2em 1em;
+}
+div.group.hidden {
+    display: none;
+}
 
 /************** <span> *********************/
 
 span.chat_show {
+}
+
+span.flip {
+    transform: rotate(180deg);
 }
 
 /************** <h> ************************/
@@ -673,6 +669,22 @@ button.cta_fixed {
     position: fixed;
     right: 2em;
     width: 6em;
+}
+button.group {
+    align-items: center;
+    background-color:inherit;
+    border: 0 solid black;
+    border-radius: 0;
+    display:flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    font-size:1.2em;
+    font-weight:bold;
+    height: 1.5em;
+    justify-content: space-between;
+    margin:2em 1em 1em 1em;
+    padding: 0.3em;
+    text-align:left;
 }
 button.hr {    
     border: 0px solid red;

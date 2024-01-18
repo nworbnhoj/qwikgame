@@ -56,12 +56,8 @@
             <i class="fa-solid fa-paper-plane fa-2xl"></i>
             <div class="cta_text">KEEN TO PLAY</div>
         </button>
+        <button class="group" onclick="showGroup(this)">Sent <span>&#9650;</span></button>
         <div class="group">
-            <div class="group_head">
-                <h2>
-                    Sent &#9650;
-                </h2>
-            </div>
             <label class="toggle">
                 <input type="radio" name="list" data-id="A">
                 <i class="fa-solid fa-paper-plane fa-2xl"></i>
@@ -79,12 +75,8 @@
                 </div>
             </label>
         </div>
+        <button class="group" onclick="showGroup(this)">Received <span>&#9650;</span></button>
         <div class="group">
-            <div class="group_head">
-                <h2>
-                    Received &#9650;
-                </h2>
-            </div>
             <label class="toggle">
                 <input type="radio" checked="checked" name="list" data-id="C">
                 <i class="fa-solid fa-inbox fa-2xl"></i>
@@ -94,12 +86,9 @@
                 </div>
             </label>
         </div>
-        <div class="group">
-            <div class="group_head">
-                <h2>
-                    History &#9660;
-                </h2>
-            </div>
+        <button class="group" onclick="showGroup(this)">History <span class="flip">&#9650;</span></button>
+        <div class="group hidden">
+            <p>No history yet!</p>
         </div>
     </div>
     <div id="detail">

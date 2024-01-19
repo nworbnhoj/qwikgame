@@ -147,33 +147,11 @@ blockquote, q {
     grid-column: 1 / 1 ;
     grid-row: 3 / 3;
 }
-.detail_head {
-    align-items: center;
-    background-color:inherit;
-    border-style: solid;
-    border-width: 0 0 0.1em 0;
-    display:flex;
-    flex: auto;
-    flex-direction: row;
-    gap: 1em;
-    justify-content: space-between;
-    justify-items: center;
-    padding: 1em;
-}
 .detail_head_title {
     background-color:inherit;
     border: inherit;
     flex: auto;
     padding: 1em;
-}
-.detail_n {    
-    align-items: stretch;
-    background-color:inherit;
-    border:inherit;
-    display:flex;
-    flex:  1 1 100%;
-    flex-direction: column;
-    gap: 1em;
 }
 .disabled {
     background-color:inherit;
@@ -273,7 +251,6 @@ blockquote, q {
     flex-direction: column;
     justify-content: space-between;
     padding: 0.3em;
-
 }
 .item_bold {
     background-color:inherit;
@@ -493,6 +470,7 @@ div.chat_block {
     flex-direction: column;
     justify-content: space-between;
     padding: 1em;
+    width: 100%;
 }
 div.chat_bubble {
     align-items: flex-start;
@@ -514,6 +492,9 @@ div.chat_item {
     margin: 0em;
     padding: 0.3em;
 }
+div.chat_item.right {
+    justify-content: flex-end;
+}
 div.cta {
     align-content: center;
     align-items: center;
@@ -525,15 +506,39 @@ div.cta {
     padding: 1em;
     margin: 1em;
 }
+div.detail_head {
+    align-items: center;
+    background-color:inherit;
+    border-style: solid;
+    border-width: 0 0 0.1em 0;
+    display:flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 1em;
+    width:100%;
+}
+div.detail_n {    
+    align-items: center;
+    background-color:inherit;
+    border:inherit;
+    display:flex;
+    flex:  1 1 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1em;
+}
 div.group {
     background-color:inherit;
     flex-direction: column;
     display: flex;
     flex: 0 0 auto;
-    justify-content: flex-start;
+    justify-content: start;
     padding: 0 1em 2em 1em;
 }
-div.group.hidden {
+div.hidden {
     display: none;
 }
 div.icon {
@@ -545,6 +550,9 @@ div.icon {
     height: 3em;
     justify-content: center;
     width:3em;
+}
+div.match_scheduled {
+    width:100%;
 }
 
 /************** <span> *********************/
@@ -784,8 +792,11 @@ button.radio.selected {
 }
 button.replicated {
     background-color: #eeeeee;
-    border: 1px solid #bbbbbb;
-    color: #bbbbbb;
+    border: 0px solid #bbbbbb;
+    border-radius: 50%;
+    color: #dfa622;
+    height: 3em;
+    width: 3em;
 }
     
 /************** <textarea> *****************/
@@ -807,6 +818,7 @@ button.replicated {
 @media only screen and (max-width: 600px) {
     body {font-size: 12px;}
     span.full_day {display: none;}
+    span.replicated {display: none;}
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
@@ -826,6 +838,7 @@ button.replicated {
 @media only screen and (min-width: 600px) {
     body {font-size: 12px;}
     span.full_day {display: none;}
+    span.replicated {display: none;}
     #content {width: 100%;}
     #detail {display: none; flex: 1 1 100%}
     #list_bar {flex: 1 1 100%}
@@ -845,6 +858,7 @@ button.replicated {
 @media only screen and (min-width: 768px) {
     body {font-size: 16px;}
     span.full_day {display: inline-block;}
+    span.replicated {display: inline-block;}
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
@@ -867,6 +881,7 @@ button.replicated {
 @media only screen and (min-width: 992px) {
     body {font-size: 16px;}
     span.full_day {display: inline-block;}
+    span.replicated {display: inline-block;}
     #content {width: 100%;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}
@@ -889,6 +904,7 @@ button.replicated {
 @media only screen and (min-width: 1200px) {
     body {font-size: 16px;}
     span.full_day {display: inline-block;}
+    span.replicated {display: inline-block;}
     #content {width: 1200px;}
     #detail {display: flex ;flex: 1 1 68.75%;}
     #list_bar {flex: 1 1 31.25%}

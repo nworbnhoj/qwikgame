@@ -99,10 +99,6 @@ blockquote, q {
     text-align: center;
     padding: 0.3em;
 }
-.cta_text {
-    background-color:inherit;
-    color: inherit;
-}
 .day {
     background-color:inherit;
     border: inherit;
@@ -511,6 +507,19 @@ div.cta {
     padding: 1em;
     margin: 1em;
 }
+div.cta_block {
+    align-items: center;
+    background-color:inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+div.cta_text {
+    background-color:inherit;
+    color: inherit;
+    margin: 0 0 0 1.5em;
+}
 div.detail_head {
     align-items: center;
     background-color:inherit;
@@ -690,6 +699,9 @@ button.cta {
     background-color:#dfa622;
     border: 0px solid #dfa622;
     color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 button.keen_desktop {
     height: 3em;

@@ -647,6 +647,17 @@ p.small {
 
 /************** <ul> ***********************/
 
+/************** <label> ********************/
+
+label { 
+    color:black;
+    text-align:left;
+    font-size:1.0em;
+}
+label.group {
+    margin: 3em 0 1em 0;
+}
+
 /************** <li> ***********************/
 
 /************** <table> ********************/
@@ -725,7 +736,7 @@ button.keen_mobile {
     right: 2em;
     width: 6em;
 }
-button.group {
+button.show-group {
     align-items: center;
     background-color:inherit;
     border: 0 solid black;

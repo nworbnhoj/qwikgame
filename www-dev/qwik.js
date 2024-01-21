@@ -1,3 +1,8 @@
+function href(event) {
+    let element = event.currentTarget;
+    window.location.href = element.dataset.href;
+}
+
 function next() {
   var list = document.querySelectorAll('[name=list]');
   for (let i = 0; i < list.length; i++) {

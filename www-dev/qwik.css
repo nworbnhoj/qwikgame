@@ -60,8 +60,13 @@ blockquote, q {
     background-color:inherit;
     border:inherit;
     display:flex;
-    flex-direction: row;
     justify-content: stretch;
+}
+.landscape {
+    flex-direction: row;
+}
+.portrait {
+    flex-direction: column;
 }
 #detail {
     align-items: stretch;

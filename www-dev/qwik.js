@@ -72,7 +72,8 @@ function showChat() {
     })
 }
 
-function showGroup(button) {
+function showGroup(event) {
+    let button = event.currentTarget;
     button.nextElementSibling.classList.toggle('hidden');
     button.lastElementChild.classList.toggle('flip');
 }
@@ -80,5 +81,8 @@ function showGroup(button) {
 window.onload = function() {
   [].forEach.call(document.querySelectorAll('[name=list]'), function(list_radio) {
     list_radio.onclick = showDetail;
-  })
+  });
+  document.querySelectorAll('button.show-group').forEach(function(button){
+      button.onclick = showGroup;
+  });
 }

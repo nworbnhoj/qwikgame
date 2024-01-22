@@ -41,15 +41,18 @@
 
 <div id="content" class="landscape">
     <div id="list_bar">
-        <button class="cta keen_desktop hide768">
-            <div class="cta_block">
-                <i class="fa-solid fa-paper-plane fa-xl"></i>
-                <div class="cta_text">KEEN TO PLAY</div>
+        <label class="toggle group">
+            <input type="radio" checked="checked" name="list" data-id="KEEN">
+            <div class="cta keen_desktop hide768">
+                <div class="cta_block">
+                    <i class="fa-solid fa-paper-plane fa-xl"></i>
+                    <div class="cta_text">KEEN TO PLAY</div>
+                </div>
             </div>
-        </button>
-        <button class="cta keen_mobile show768">
-            <i class="fa-solid fa-paper-plane fa-3x"></i>
-        </button>
+            <div class="cta keen_mobile show768">
+                <i class="fa-solid fa-paper-plane fa-3x"></i>
+            </div>
+        </label>
         <div class="list_bar_head">
             <h1>Invitations</h1>
             <select class="sort">
@@ -70,6 +73,7 @@
                     <p class="small">date, hh:mm</p>
                 </div>
             </label>
+            <hr>
             <label class="toggle group">
                 <input type="radio" name="list" data-id="B">
                 <div class="icon">
@@ -80,11 +84,12 @@
                     <p class="small">date, hh:mm</p>
                 </div>
             </label>
+            <hr>
         </div>
         <button class="group show-group">Received <span>&#9650;</span></button>
         <div class="group">
             <label class="toggle group">
-                <input type="radio" checked="checked" name="list" data-id="C">
+                <input type="radio" name="list" data-id="C">
                 <div class="icon">
                     <i class="fa-solid fa-inbox fa-2x"></i>
                 </div>
@@ -93,6 +98,7 @@
                     <p class="small">date, hh:mm</p>
                 </div>
             </label>
+            <hr>
         </div>
         <button class="group show-group">History <span class="flip">&#9650;</span></button>
         <div class="group hidden">
@@ -100,8 +106,199 @@
         </div>
     </div>
     <div id="detail">
+        <div id="KEEN" class="">
+            <div class="detail_head">
+                <div class="icon selected">
+                    <i class="fa-solid fa-paper-plane fa-2xl"></i>
+                </div>
+                <p class="large">Keen To Play? Send Invitation?</p> 
+            </div>
+            <div class="keen_form">
+                <h6>Game</h6>
+                <select class="game" name="game">
+                    <option>Badminton</option>
+                    <option selected>Squash</option>
+                    <option>Tennis</option>
+                </select>
+
+                <h6>Venue</h6>
+                <select class="venue" name="venue">
+                    <option>Dema Sport</option>
+                    <option selected>Milawa Squash Courts</option>
+                    <option>Vasil Levski</option>
+                </select>
+
+                <h6>Schedule</h6>
+                <div class="schedule_keen">
+                    <div class="schedule_head">
+                        <h6>TODAY</h6>
+                        <p class="small">01-JUN-2023</p>
+                    </div>
+                    <div class="schedule_body tricell">
+                        <div></div>
+                        <button class="link show-next-parent-sibling">Pick time</button>
+                        <label class="toggle button all-day">All Day
+                            <input type="checkbox" name="all_tomorrow">
+                        </label>
+                    </div>
+                    <div class="radio_block hour_toggle hidden">
+                        <label class="toggle button">6
+                            <input type="checkbox" name="hour" disabled>
+                        </label>
+                        <label class="toggle button">7
+                            <input type="checkbox" name="hour" disabled>
+                        </label>
+                        <label class="toggle button">8
+                            <input type="checkbox" name="hour" disabled>
+                        </label>
+                        <label class="toggle button">9
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">10
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">11
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">12
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">13
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">14
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">15
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">16
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">17
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">18
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">19
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">20
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                    </div>
+                </div>
+                <div class="schedule_keen">
+                    <div class="schedule_head">
+                        <h6>TOMORROW</h6>
+                        <p class="small">02-JUN-2023</p>
+                    </div>
+                    <div class="schedule_body tricell">
+                        <div></div>
+                        <button class="link show-next-parent-sibling">Pick time</button>
+                        <label class="toggle button all-day">All Day
+                            <input type="checkbox" name="all_tomorrow">
+                        </label>
+                    </div>
+
+                    <div class="radio_block hour_toggle hidden">
+                        <label class="toggle button">6
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">7
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">8
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">9
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">10
+                            <input type="checkbox" name="hour" checked="checked">
+                        </label>
+                        <label class="toggle button">11
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">12
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">13
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">14
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">15
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">16
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">17
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">18
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">19
+                            <input type="checkbox" name="hour">
+                        </label>
+                        <label class="toggle button">20
+                            <input type="checkbox" name="hour">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="invite_friend_head">
+                    <input type="checkbox" class="enable-invite-friend" name="invite-friend">
+                    <label class="checkbox" for="invite_friend">Invite a friend</label>
+                    <button class="icon help push_right">
+                        <i class="fa-solid fa-question"></i>
+                    </button>
+                </div>
+         
+                <fieldset id="invite_friend_body" class="disabled">
+                    <input type="text" name="friend" list="friends" placeholder="Type email address" disabled/>
+                    <h6 class="disabled">Friend's skill level</h6>
+                    <div class="slide_text disabled">
+                        <div class="">Much Weaker</div>
+                        <div class="">Weaker</div>
+                        <div class="">Well Matched</div>
+                        <div class="">Stronger</div>
+                        <div class="">Much Stronger</div>
+                    </div>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)" disabled>
+                </fieldset>
+
+                <fieldset id="rival_skill_body">
+                    <h6>Rival's skill level</h6>
+                    <div class="slide_text disabled">
+                        <div class="">Much Weaker</div>
+                        <div class="">Weaker</div>
+                        <div class="">Well Matched</div>
+                        <div class="">Stronger</div>
+                        <div class="">Much Stronger</div>
+                    </div>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)" disabled>
+                    <div class="rival-skill-learn tricell">
+                        <div></div>            
+                        <button class="link">Learn more</button>
+                        <button>Unlock</button>
+                    </div>
+                </fieldset>
+                <button class="cta keen_desktop">
+                    <div class="cta_block">
+                        <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        <div class="cta_text">INVITE</div>
+                    </div>
+                </button>
+            </div>            
+        </div>
         <div id="A" class="hidden">
-            <div class="detail_head"><span class="head_icon hide768">
+            <div class="detail_head">
+                <span class="head_icon hide768">
                     <i class="fa-solid fa-graduation-cap fa-2x"></i>
                 </span>
                 <div class="head_txt">
@@ -185,7 +382,7 @@
                 </button>
             </div>
         </div>
-        <div id="C">
+        <div id="C" class="hidden">
             <div class="detail_head">
                 <span class="head_icon hide768">
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>

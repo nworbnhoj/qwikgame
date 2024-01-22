@@ -155,9 +155,8 @@ blockquote, q {
     padding: 1em;
 }
 .disabled {
-    background-color:inherit;
-    border: inherit;
-   color: grey;
+    background-color:lightgrey;
+    border: 0px solid #dfa622;
 }
 .flex_space {
     background-color:inherit;
@@ -263,6 +262,7 @@ blockquote, q {
     padding: 0.3em;
 }
 .list_bar_head {
+    align-items: center;
     background-color:inherit;
     border: 0.1em solid black;
     border-width: 0 0 0.1em 0;
@@ -393,11 +393,11 @@ blockquote, q {
 }
 .slide_text {
     background-color:inherit;
-    border: inherit;
+    border: 0 solid black;
     display:flex;
     flex: auto;
     flex-direction: row;
-    font-size: larger;
+    font-size: small;
     justify-content: space-between;
     width: 100%;
     padding: 1em;
@@ -405,11 +405,10 @@ blockquote, q {
 .toggle {
     align-items: center;
     background-color:inherit;
-    border: 0.1em solid lightgrey;
-    border-width: 0 0 0.1em 0;
+    border: 0 solid black;
     cursor: pointer;
     display:flex;
-    flex: auto;
+    flex: 0 0 auto;
     flex-direction: row;
     gap:1em;
     justify-content: flex-start;
@@ -427,12 +426,15 @@ blockquote, q {
     background-color:inherit;
     border: 1px solid black;
     border-radius: 0.3em;
+    display: flex;
+    flex-direction: row;
     font-size: larger;
     height: 2em;
+    justify-content: center;
     margin: 0.1em;
     padding: 0.3em;
 }
-.toggle.button.disabled {
+.toggle.button:has( input:disabled) {
     border: 0px solid black;
     background-color: #eeeeee;
 }
@@ -446,6 +448,12 @@ blockquote, q {
   cursor: pointer;
   height: 0;
   width: 0;
+}
+.tricell {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex-direction: row;
+    gap: 1em;
 }
 
 /************** <html> *********************/
@@ -500,12 +508,27 @@ div.cta {
     align-content: center;
     align-items: center;
     background-color:#dfa622;
-    color:white;
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
+    border-width: 0px;
+    color: white;
+    flex-direction: row;
+    justify-content: center;
     padding: 1em;
     margin: 1em;
+    width:100%;
+}
+div.keen_desktop {
+    height: 3em;
+}
+div.keen_mobile {
+    border-radius: 50%;
+    border-width: 0px;
+    bottom: 4em;
+    height: 6em;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    right: 2em;
+    width: 6em;
 }
 div.cta_block {
     align-items: center;
@@ -529,7 +552,7 @@ div.detail_head {
     flex: 0 0 auto;
     flex-direction: row;
     gap: 1em;
-    justify-content: space-between;
+    justify-content: start;
     justify-items: center;
     padding: 1em;
     width:100%;
@@ -544,13 +567,18 @@ div.detail_n {
     justify-content: flex-start;
     gap: 1em;
 }
+div.disabled {
+    background-color:inherit;
+    border: 0px solid #dfa622;
+    color: #bbbbbb;
+}
 div.group {
     background-color:inherit;
     flex-direction: column;
     display: flex;
     flex: 0 0 auto;
     justify-content: start;
-    padding: 0 1em 2em 1em;
+    padding: 0 1em 1em 1em;
 }
 div.hidden {
     display: none;
@@ -565,8 +593,66 @@ div.icon {
     justify-content: center;
     width:3em;
 }
+div.invite_friend_head {
+    align-items: center;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+div.keen_form {
+    align-items: stretch;
+    background-color:inherit;
+    border: 0 solid black;
+    display:flex;
+    flex-direction: column;
+    justify-content: stretch;
+    padding: 2em;
+    width: 100%;
+}
+div.learn {
+    display:flex;
+    flex-direction: row;
+    justify-content: right;
+    padding: 1em;
+}
 div.match_scheduled {
     width:100%;
+}
+div.options {
+  border: 1px solid #bbbbbb;
+  border-radius: 0.3em;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+}
+div.schedule_body {
+    align-items: center;
+    display: grid;
+}
+div.schedule_head {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+div.schedule_keen {
+    border: 1px solid #cccccc;
+    display: flex;
+    flex-direction: column;
+}
+div.select_head {
+    position:relative;
+}
+div.select_head select{
+  border: 1px solid #bbbbbb;
+  border-radius: 0.3em;
+  width: 100%;
+}
+div.select_over {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 /************** <span> *********************/
@@ -626,7 +712,11 @@ h6 {
     text-align:left;
     font-size:1.0em;
     font-weight:bold;
-    margin:2.0em 1em 1em 1em;
+    margin:1em;
+}
+h6.disabled {
+    background-color: inherit;
+    color: #999999;
 }
 
 /************** <small> ********************/
@@ -635,10 +725,14 @@ h6 {
 
 p {
     background-color:inherit;
-    margin: 0 0 0 1.0em;
+    margin: 0 0 0 0em;
     padding: 0.3em;
 }
-
+p.large {
+    background-color:inherit;
+    color: #666666 ;
+    font-size: large;
+}
 p.small {
     background-color:inherit;
     color: #666666 ;
@@ -655,9 +749,11 @@ label {
     font-size:1.0em;
 }
 label.group {
-    margin: 3em 0 1em 0;
+    margin: 0;
 }
-
+label.checkbox {
+    margin: 0em 0 0 1em;
+}
 /************** <li> ***********************/
 
 /************** <table> ********************/
@@ -668,23 +764,58 @@ label.group {
 
 /************** <fieldset> *****************/
 
+fieldset {
+    border: 1px solid #cccccc;
+    display:flex;
+    flex-direction: column;
+    margin: 1em 0 1em 0;
+    padding: 1em;
+}
+fieldset.disabled {
+    background-color:#eeeeee;
+    border: 0px solid #eeeeee;
+    color: #bbbbbb;
+}
+
 /************** <legend> *******************/
 
 /************** <select> *******************/
 
+select {
+    background-color:inherit;
+    border: 0px solid black;
+    height: 2em;
+}
+select.game {
+    border: 1px solid black;
+    width: 100%;
+}
 select.sort {
     background-color:inherit;
     border: 0px solid black;
     display: flex;
     font-size: inherit;
 }
+select.venue {
+    border: 1px solid black;
+    width: 100%;
 
+}
 /************** <option> *******************/
 
 /************** <input> ********************/
 
 input.strength {
+    height: 2em;
     margin: 0 1em 0 1em;
+}
+input.disabled {
+    background-color: #bbbbbb;
+    color: #999999;
+}
+input#disabled {
+    background-color:lightgrey;
+    border: 0px solid #dfa622;
 }
 
 /************** <button> *******************/
@@ -714,9 +845,6 @@ button.cta {
     flex-direction: row;
     justify-content: center;
 }
-button.keen_desktop {
-    height: 3em;
-}
 button.accept {
     border-radius: 50%;
     border-width: 0px;
@@ -724,17 +852,6 @@ button.accept {
     margin: 0px;
     padding: 0px;
     width: 2em;
-}
-button.keen_mobile {
-    border-radius: 50%;
-    border-width: 0px;
-    bottom: 4em;
-    height: 6em;
-    margin: 0px;
-    padding: 0px;
-    position: fixed;
-    right: 2em;
-    width: 6em;
 }
 button.show-group {
     align-items: center;
@@ -771,6 +888,18 @@ button.icon {
     padding: 0.2em;
     justify-content: center;
     width:3em;
+}
+button.icon.help {
+    border-width: 0.2em;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
+}
+button.link {
+    background-color:inherit;
+    border-width: 0px;
+    color: blue;
+    text-decoration-line: underline;
 }
 button.list_act {
     align-items: center;
@@ -820,7 +949,7 @@ button.radio.selected {
 }
 button.replicated {
     background-color: #eeeeee;
-    border: 0px solid #bbbbbb;
+    border-width: 0px;
     border-radius: 50%;
     color: #dfa622;
     height: 3em;
@@ -830,6 +959,12 @@ button.replicated {
 /************** <textarea> *****************/
     
 /************** <hr> ***********************/
+
+hr {
+    color: #eeeeee;
+    border-width: 1px;
+    width: 100%;
+}
 
 /************** <form> *********************/
 

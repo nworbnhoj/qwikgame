@@ -238,7 +238,7 @@ blockquote, q {
     flex-direction: row;
     gap:1em;
     height: 4em;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
 }
 .invisible {

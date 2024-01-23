@@ -150,4 +150,8 @@ window.onload = function() {
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox){
       checkbox.oninput = enableInviteFriend;
   });
+  if (window.location.hash == "#keen") {
+    showDetail();
+    document.querySelector('div.keen_mobile').classList.add('hidden');
+  };
 }

@@ -54,7 +54,7 @@
             </div>
         </label>
         <div class="list_bar_head">
-            <h1>Invitations</h1>
+            <h4>Invitations</h4>
             <select class="sort">
                 <option>sort by date</option>
                 <option>sort by game</option>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="item_block">
                     <p>Tennis, Dema Sport, Aug 4, 17h-20h</p>
-                    <p class="small">date, hh:mm</p>
+                    <p class="caption">date, hh:mm</p>
                 </div>
             </label>
             <hr>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="item_block">
                     <p>Tennis, Vasil Levski, Aug 4, 17h-20h</p>
-                    <p class="small">date, hh:mm</p>
+                    <p class="caption">date, hh:mm</p>
                 </div>
             </label>
             <hr>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="item_block">
                     <p>Squash, Vasil Levski, Aug 5, 13-21h</p>
-                    <p class="small">date, hh:mm</p>
+                    <p class="caption">date, hh:mm</p>
                 </div>
             </label>
             <hr>
@@ -132,7 +132,7 @@
                 <div class="schedule_keen">
                     <div class="schedule_head">
                         <h6>TODAY</h6>
-                        <p class="small">01-JUN-2023</p>
+                        <p class="caption">01-JUN-2023</p>
                     </div>
                     <div class="schedule_body tricell">
                         <div></div>
@@ -192,7 +192,7 @@
                 <div class="schedule_keen">
                     <div class="schedule_head">
                         <h6>TOMORROW</h6>
-                        <p class="small">02-JUN-2023</p>
+                        <p class="caption">02-JUN-2023</p>
                     </div>
                     <div class="schedule_body tricell">
                         <div></div>
@@ -302,8 +302,8 @@
                     <i class="fa-solid fa-graduation-cap fa-2x"></i>
                 </span>
                 <div class="head_txt">
-                    <h3>Tennis, Dema Sport, Aug 4, 17h-20h</h3>
-                    <h4>Sent Invitation; hh:mm</h4>
+                    <h4>Tennis, Dema Sport, Aug 4, 17h-20h</h4>
+                    <p>Sent Invitation; hh:mm</p>
                 </div>
                 <i class="head_more fa-solid fa-ellipsis-vertical fa-2x"></i>
                 <button class="head_back icon" onclick="previous()">
@@ -372,7 +372,7 @@
         <div id="B" class="hidden">
             <div class="detail_head">
                 <div class="head_txt">
-                    <h3>B: try another selection</h3>
+                    <h4>B: try another selection</h4>
                 </div>
                 <button class="head_back icon" onclick="previous()">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
@@ -388,8 +388,8 @@
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                 </span>
                 <div class="head_txt">
-                    <h3>Squash, Vasil Levski, Aug 5, 13-21h</h3>
-                    <h4>Received Invitation; hh:mm</h4>
+                    <h4>Squash, Vasil Levski, Aug 5, 13-21h</h4>
+                    <p>Received Invitation; hh:mm</p>
                 </div>
                 <i class="head_more fa-solid fa-ellipsis-vertical fa-2x"></i>
                 <button class="head_back icon" onclick="previous()">
@@ -434,8 +434,10 @@
                     <button class="cta">ACCEPT</button>
                 </div>
                 <div class="radio">
-                    <h6>Pick Time To Play</h6>
-                    <div class="radio_date">Aug 5, 2023</div>
+                    <h5>Pick Time To Play</h5>
+                    <div class="radio_date">
+                        <p>Aug 5, 2023</p>
+                    </div>
                     <div class="radio_block hour_toggle">
                         <label class="toggle button">13h
                             <input type="radio" name="hour">

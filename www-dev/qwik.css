@@ -541,6 +541,7 @@ div.cta_block {
 div.cta_text {
     background-color:inherit;
     color: inherit;
+    font-size: 1.13em;
     margin: 0 0 0 1.5em;
 }
 div.detail_head {
@@ -671,7 +672,6 @@ h1 {
     color:black;
     text-align:left;
     font-size:1.4em;
-    font-weight:bold;
     margin:0.3em;
 }
 
@@ -679,7 +679,6 @@ h2 {
     color:black;
     text-align:left;
     font-size:1.2em;
-    font-weight:bold;
     margin:0.3em;
 }
 
@@ -687,23 +686,17 @@ h3 {
     color:black;
     text-align:left;
     font-size:1.3em;
-    font-weight:bold;
     margin:0.3em;
 }
 
 h4 { 
     color:black;
     text-align:left;
-    font-size:1.1em;
-    font-weight:bold;
     margin:0.3em;
 }
 
-h5 { 
-    color:#dfa622;
+h5 {
     text-align:left;
-    font-size:1.2em;
-    font-weight:bold;
     margin:2.0em 1em 1em 1em;
 }
 
@@ -711,7 +704,6 @@ h6 {
     color:black;
     text-align:left;
     font-size:1.0em;
-    font-weight:bold;
     margin:1em;
 }
 h6.disabled {
@@ -727,6 +719,9 @@ p {
     background-color:inherit;
     margin: 0 0 0 0em;
     padding: 0.3em;
+}
+p.caption {
+    font-size: small;
 }
 p.large {
     background-color:inherit;
@@ -858,11 +853,10 @@ button.icon {
     height: 3em;
     padding: 0.2em;
     justify-content: center;
-    width:3em;
+    width: 3em;
 }
 button.icon.help {
     border-width: 0.2em;
-    border-radius: 50%;
     height: 2em;
     width: 2em;
 }
@@ -902,15 +896,16 @@ button.radio.selected {
 }
 button.replicated {
     background-color: #eeeeee;
-    border-radius: 50%;
     color: #dfa622;
     height: 3em;
     width: 3em;
 }
+button.round {
+    border-radius: 50%;
+}
 button.show-group {
     background-color:inherit;
     border-radius: 0;
-    font-size:1.2em;
     height: 1.5em;
     justify-content: space-between;
     margin:2em 1em 1em 1em;
@@ -941,6 +936,10 @@ hr {
 
 @media only screen and (max-width: 600px) {
     body {font-size: 12px;}
+    button { font-size: 1.07em; }
+    h4 {font-size: 1.14em;}
+    h5 {font-size: 1.07em;}
+    p.caption { font-size: 0.94em;}
     span.full_day {display: none;}
     span.replicated {display: none;}
     #content {width: 100%;}
@@ -961,6 +960,10 @@ hr {
 
 @media only screen and (min-width: 600px) {
     body {font-size: 12px;}
+    button { font-size: 1.07em; }
+    h4 {font-size: 1.14em;}
+    h5 {font-size: 1.07em;}
+    p.caption { font-size: 0.94em;}
     span.full_day {display: none;}
     span.replicated {display: none;}
     #content {width: 100%;}
@@ -981,6 +984,10 @@ hr {
 
 @media only screen and (min-width: 768px) {
     body {font-size: 16px;}
+    button { font-size: 1.13em; }
+    h4 {font-size: 1.27em;}
+    h5 {font-size: 1.13em;}
+    p.caption { font-size: 0.89em;}
     span.full_day {display: inline-block;}
     span.replicated {display: inline-block;}
     #content {width: 100%;}
@@ -1004,6 +1011,10 @@ hr {
 
 @media only screen and (min-width: 992px) {
     body {font-size: 16px;}
+    button { font-size: 1.13em; }
+    h4 {font-size: 1.27em;}
+    h5 {font-size: 1.13em;}
+    p.caption { font-size: 0.89em;}
     span.full_day {display: inline-block;}
     span.replicated {display: inline-block;}
     #content {width: 100%;}
@@ -1027,6 +1038,10 @@ hr {
 
 @media only screen and (min-width: 1200px) {
     body {font-size: 16px;}
+    button { font-size: 1.13em; }
+    h4 {font-size: 1.27em;}
+    h5 {font-size: 1.13em;}
+    p.caption { font-size: 0.89em;}
     span.full_day {display: inline-block;}
     span.replicated {display: inline-block;}
     #content {width: 1200px;}

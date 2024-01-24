@@ -144,7 +144,7 @@ button.round { border-radius: 50% }
 button.show-group { background-color: inherit; border-radius: 0; height: 1.5em; justify-content: space-between; margin: 2em 1em 1em 1em; text-align: left }
 hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (max-width:600px) {
-    body { font-size: 12px }
+    body { font-size: 13px }
     button { font-size: 1.07em }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
@@ -167,7 +167,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     .hide1200 { display: none }
 }
 @media only screen and (min-width:600px) {
-    body { font-size: 12px }
+    body { font-size: 13px }
     button { font-size: 1.07em }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }

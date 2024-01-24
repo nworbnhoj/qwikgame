@@ -743,16 +743,28 @@ p.small {
 
 /************** <label> ********************/
 
-label { 
-    color:black;
-    text-align:left;
-    font-size:1.0em;
+label {
+    color: black;
+    display: flex;
+    text-align: left;
+    font-size: 1.0em;
 }
+
 label.group {
     margin: 0;
 }
-label.checkbox {
-    margin: 0em 0 0 1em;
+
+label.option {
+    align-items: center;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: space-between;
+    margin: 0.3em;
+}
+
+label.option.option_act {
+    border: 0.1em dashed grey;
+    justify-content: start;
 }
 /************** <li> ***********************/
 
@@ -865,6 +877,13 @@ button.icon.help {
     height: 2em;
     width: 2em;
 }
+
+button.inline {
+    background-color: inherit;
+    display: inline;
+    padding: 0.1em;
+}
+
 button.link {
     background-color:inherit;
     color: blue;

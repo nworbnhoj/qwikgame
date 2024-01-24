@@ -271,26 +271,82 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="invite_friend_head">
-                    <input type="checkbox" class="enable-invite-friend" name="invite-friend">
-                    <label class="checkbox" for="invite_friend">Invite a friend</label>
-                    <button class="icon help round push_right">
-                        <i class="fa-solid fa-question"></i>
-                    </button>
+                
+                <h6>Friends</h6>
+                <div id="friend_invite" class="select">
+                    <div class="select_head" data-expanded="false">
+                        <select>
+                            <option>Invite friends</option>
+                        </select>
+                        <div class="select_over"></div>
+                    </div>
+                    <div class="options hidden">
+                        <label class="option" for="best-friend@email.com">
+                            <input type="checkbox" id='best-friend@email.com'/>
+                            Best (best-friend@email.com)
+                            <button class="inline push_right">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button class="inline delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </label>
+                        <label class="option" for="boy-friend@email.com">
+                            <input type="checkbox" id='boy-friend@email.com'/>
+                            Boy (boy-friend@email.com)
+                            <button class="inline push_right">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button class="inline delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </label>
+                        <label class="option" for="girl-friend@email.com">
+                            <input type="checkbox" id='girl-friend@email.com'/>
+                            Girl (girl-friend@email.com)
+                            <button class="inline push_right">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button class="inline delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </label>
+                        <label class="option" for="only-friend@email.com">
+                            <input type="checkbox" id='only-friend@email.com'/>
+                            Only (only-friend@email.com)
+                            <button class="inline push_right">
+                                <i class="fa-solid fa-edit"></i>
+                            </button>
+                            <button class="inline delete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </label>
+                        <label id="show_friend_add" class="option option_act">
+                            <button class="inline">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            add a friend
+                        </label>
+                        
+                    </div>
                 </div>
-         
-                <fieldset id="invite_friend_body" class="disabled">
-                    <input type="text" name="friend" list="friends" placeholder="Type email address" disabled/>
-                    <h6 class="disabled">Friend's skill level</h6>
-                    <div class="slide_text disabled">
+
+                <fieldset id="friend_add" class="hidden">
+                    <input type="text" name="friend" list="friends" placeholder="Type email address"/>
+                    <h6 >Friend's skill level</h6>
+                    <div class="slide_text">
                         <div class="">Much Weaker</div>
                         <div class="">Weaker</div>
                         <div class="">Well Matched</div>
                         <div class="">Stronger</div>
                         <div class="">Much Stronger</div>
                     </div>
-                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)" disabled>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
+                    <div class="rival-skill-learn tricell">
+                        <div></div>            
+                        <button class="link">Learn more</button>
+                        <button id="show_friend_invite">Add</button>
+                    </div>
                 </fieldset>
 
                 <fieldset id="rival_skill_body">

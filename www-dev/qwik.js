@@ -24,8 +24,12 @@ function enableInviteFriend(event) {
   enableElement(document.getElementById("rival_skill_body"), !element.checked);
 }
 
+function hideParent(event) {
+  event.currentTarget.parentElement.classList.add('hidden');
+}
+
 function href(event) {
-    let element = event.currentTarget;
+  let element = event.currentTarget;
     window.location.href = element.dataset.href;
 }
 
@@ -51,6 +55,16 @@ function previous() {
     }
   }
   showDetail();
+}
+
+function showFriendAdd(event) {
+  document.getElementById('friend_invite').classList.add('hidden');
+  document.getElementById('friend_add').classList.remove('hidden');
+}
+
+function showFriendInvite(event) {
+  document.getElementById('friend_add').classList.add('hidden');
+  document.getElementById('friend_invite').classList.remove('hidden');
 }
 
 function showDetail() {
@@ -152,6 +166,10 @@ window.onload = function() {
   document.addEventListener('click', hideDropdown);
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
       list_radio.onclick = showDetail;
+  document.getElementById('show_friend_add').onclick = showFriendAdd;
+  document.getElementById('show_friend_invite').onclick = showFriendInvite;
+  document.querySelectorAll('button.delete').forEach(function(button) {
+    button.onclick = hideParent;
   });
   document.querySelectorAll('button.show-group').forEach(function(button){
       button.onclick = showGroup;

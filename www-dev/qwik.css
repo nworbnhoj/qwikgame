@@ -69,6 +69,7 @@ blockquote, q { quotes: "" "" }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
 div.chat_block { background-color: inherit; border: inherit; flex: auto; flex-direction: column; justify-content: space-between; padding: 1em; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
+div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: start; }
 div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
 div.cta { align-content: center; align-items: center; background-color: #dfa622; border-width: 0px; color: white; flex-direction: row; justify-content: center; padding: 1em; margin: 1em; width: 100% }
@@ -119,6 +120,7 @@ select { background-color: inherit; border: 0px solid black; height: 2em }
 select.game { border: 1px solid black; width: 100% }
 select.sort { background-color: inherit; border: 0px solid black; display: flex; font-size: inherit }
 select.venue { border: 1px solid black; width: 100% }
+input[text] {flex: 1 1 auto;}
 input.strength { height: 2em; margin: 0 1em 0 1em }
 input.disabled { background-color: #bbbbbb; color: #999999 }
 input#disabled { background-color: lightgrey; border: 0px solid #dfa622 }

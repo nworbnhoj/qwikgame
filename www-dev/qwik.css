@@ -262,13 +262,14 @@ blockquote, q {
     padding: 0.3em;
 }
 .list_bar_head {
-    align-items: center;
+    align-items: start;
     background-color:inherit;
     border: 0.1em solid black;
     border-width: 0 0 0.1em 0;
     display:flex;
     flex: 0 0 auto;
     flex-direction: row;
+    height:4em;
     justify-content: space-between;
     padding: 0.5em;
 }
@@ -454,6 +455,7 @@ blockquote, q {
     grid-template-columns: 1fr 1fr 1fr;
     flex-direction: row;
     gap: 1em;
+    margin:0.3em;
 }
 
 /************** <html> *********************/
@@ -620,10 +622,13 @@ div.match_scheduled {
     width:100%;
 }
 div.options {
+    background-color: white;
   border: 1px solid #bbbbbb;
   border-radius: 0.3em;
   flex-direction: column;
   justify-content: flex-start;
+  opacity: 1.0;
+  position: relative;
   width: 100%;
 }
 div.schedule_body {
@@ -644,7 +649,7 @@ div.select_head {
     position:relative;
 }
 div.select_head select{
-  border: 1px solid #bbbbbb;
+  border: 1px solid black;
   border-radius: 0.3em;
   width: 100%;
 }

@@ -55,11 +55,32 @@
         </label>
         <div class="list_bar_head">
             <h4>Invitations</h4>
-            <select class="sort">
-                <option>sort by date</option>
-                <option>sort by game</option>
-                <option>sort by venue</option>
-            </select>
+            <div class="select">
+                <div class="select_head" data-expanded="false">
+                  <select>
+                    <option>Group by</option>
+                  </select>
+                  <div class="select_over"></div>
+                </div>
+                <div class="options hidden">
+                    <label class="toggle">
+                        <input type="radio" name="groupby">
+                        date
+                    </label>
+                    <label class="toggle">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                    <label class="toggle">
+                        <input type="radio" name="groupby" checked="checked">
+                        sent
+                    </label>
+                    <label class="toggle">
+                        <input type="radio" name="groupby">
+                        venue
+                    </label>
+                </div>
+            </div>
         </div>
         <button class="show-group">Sent <span>&#9650;</span></button>
         <div class="group">

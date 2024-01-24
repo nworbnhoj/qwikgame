@@ -46,11 +46,28 @@
     <div id="list_bar">
         <div class="list_bar_head">
             <h4>My Games</h4>
-            <select class="sort">
-                <option>sort by date</option>
-                <option>sort by game</option>
-                <option>sort by venue</option>
-            </select>
+            <div class="select">
+                <div class="select_head" data-expanded="false">
+                  <select>
+                    <option>Group by</option>
+                  </select>
+                  <div class="select_over"></div>
+                </div>
+                <div class="options hidden">
+                    <label class="toggle">
+                        <input type="radio" name="groupby" checked="checked">
+                        game
+                    </label>
+                    <label class="toggle">
+                        <input type="radio" name="groupby" checked="checked">
+                        skill
+                    </label>
+                    <label class="toggle">
+                        <input type="radio" name="groupby" checked="checked">
+                        venue
+                    </label>
+                </div>
+            </div>
         </div>
         <button class="cta">
             <i class="fa-solid fa-volleyball fa-2xl"></i>

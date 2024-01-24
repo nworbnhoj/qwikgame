@@ -116,6 +116,18 @@ function showNextParentSibling(event) {
   next_sibling.classList.toggle('hidden');
 }
 
+function showOptions(event) {
+  let select = event.currentTarget;
+  let options = select.nextElementSibling;
+  if (select.dataset.expanded == "false") {
+      options.classList.remove('hidden');
+      select.dataset.expanded = "true";
+  } else {
+      options.classList.add('hidden');
+      select.dataset.expanded = "false";
+  }
+}
+
 function toggleAllDay(event) {
   let button = event.currentTarget;
   var checked = button.firstElementChild.checked;
@@ -128,7 +140,16 @@ function toggleAllDay(event) {
   }
 }
 
+function hideDropdown(event) {
+  document.querySelectorAll('.options').forEach(function(dropdown) {
+      if(!dropdown.parentElement.contains(event.target)) {
+        dropdown.classList.add('hidden');
+      }
+  });
+}
+
 window.onload = function() {
+  document.addEventListener('click', hideDropdown);
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
       list_radio.onclick = showDetail;
   });
@@ -149,6 +170,12 @@ window.onload = function() {
   });
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox){
       checkbox.oninput = enableInviteFriend;
+  });
+  document.querySelectorAll('div.select_head').forEach(function(select){
+      select.onclick = showOptions;
+  });
+  document.querySelectorAll('option').forEach(function(option){
+      option.onclick = showOptions;
   });
   if (window.location.hash == "#keen") {
     showDetail();

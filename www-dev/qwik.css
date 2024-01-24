@@ -82,6 +82,8 @@ div.disabled { background-color: inherit; border: 0px solid #dfa622; color: #bbb
 div.group { background-color: inherit; flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
 div.icon { align-items: center; background-color: inherit; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 3em }
+div.icon_bar { background-color: white; left: 0; opacity: 1.0; position:fixed; top: 0;  }
+div.icon_bar_reserve {height: 4em;}
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
 div.keen_form { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 2em; width: 100% }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }

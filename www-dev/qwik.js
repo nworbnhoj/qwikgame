@@ -195,8 +195,4 @@ window.onload = function() {
   document.querySelectorAll('option').forEach(function(option){
       option.onclick = showOptions;
   });
-  if (window.location.hash == "#keen") {
-    showDetail();
-    document.querySelector('div.keen_mobile').classList.add('hidden');
-  };
 }

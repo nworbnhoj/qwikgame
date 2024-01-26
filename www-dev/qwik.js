@@ -169,8 +169,6 @@ function hideDropdown(event) {
 
 window.onload = function() {
   document.addEventListener('click', hideDropdown);
-  document.getElementById('show_friend_add').onclick = showFriendAdd;
-  document.getElementById('show_friend_invite').onclick = showFriendInvite;
   document.querySelectorAll('.keen_mobile').forEach(function(proxy){
     proxy.onclick = ctaKeen;
   });
@@ -201,4 +199,10 @@ window.onload = function() {
   document.querySelectorAll('option').forEach(function(option){
       option.onclick = showOptions;
   });
+  document.querySelectorAll('.show_friend_add').forEach(function(element) {
+    element.onclick = showFriendAdd;
+  });
+  document.querySelectorAll('.show_friend_invite').forEach(function(element) {
+    element.onclick = showFriendInvite;
+  })
 }

@@ -1,18 +1,23 @@
+function ctaKeen(event) {
+  let fwd_event = new MouseEvent(event.type, event);
+  document.getElementById('cta_keen').dispatchEvent(fwd_event);  
+}
+
 function enableElement(element, enable) {
   if (enable) {
     element.classList.remove('disabled');
-    element.querySelectorAll('input').forEach(function(input){
+    element.querySelectorAll('input').forEach(function(input) {
       input.disabled = false;
     });
-    element.querySelectorAll('.disabled').forEach(function(disabled){
+    element.querySelectorAll('.disabled').forEach(function(disabled) {
       disabled.classList.remove('disabled');
     });
   } else {
     element.classList.add('disabled');
-    element.querySelectorAll('input').forEach(function(input){
+    element.querySelectorAll('input').forEach(function(input) {
       input.disabled = true;
     });
-    element.querySelectorAll('h6, div').forEach(function(enabled){
+    element.querySelectorAll('h6, div').forEach(function(enabled) {
       enabled.classList.add('disabled');
     });
   }
@@ -34,11 +39,11 @@ function href(event) {
 }
 
 function next() {
-  var list = document.querySelectorAll('[name=list]');
+  var list = document.getElementById("list_bar").querySelectorAll('[name=list]');
   for (let i = 0; i < list.length; i++) {
     if (list[i].checked) {
-       list[i].checked = false;
-       list[(i+1 < list.length) ? i+1 : 0].checked = true;
+      list[i].checked = false;
+      list[(i + 1 < list.length) ? i + 1 : 0].checked = true;
        break;
     }
   }
@@ -46,12 +51,12 @@ function next() {
 }
 
 function previous() {
-  var list = document.querySelectorAll('[name=list]');
+  var list = document.getElementById("list_bar").querySelectorAll('[name=list]');
   for (let i = 0; i < list.length; i++) {
     if (list[i].checked) {
-       list[i].checked = false;
-       list[(i-1 < 0) ? list.length-1 : i-1].checked = true;
-       break;
+      list[i].checked = false;
+      list[(i - 1 < 0) ? list.length - 1 : i - 1].checked = true;
+      break;
     }
   }
   showDetail();
@@ -164,10 +169,11 @@ function hideDropdown(event) {
 
 window.onload = function() {
   document.addEventListener('click', hideDropdown);
-  document.querySelectorAll('[name=list]').forEach(function(list_radio) {
-      list_radio.onclick = showDetail;
   document.getElementById('show_friend_add').onclick = showFriendAdd;
   document.getElementById('show_friend_invite').onclick = showFriendInvite;
+  document.querySelectorAll('.keen_mobile').forEach(function(proxy){
+    proxy.onclick = ctaKeen;
+  });
   document.querySelectorAll('button.delete').forEach(function(button) {
     button.onclick = hideParent;
   });

@@ -55,7 +55,7 @@ blockquote, q { quotes: "" "" }
 .rival_rep { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
 .rival_skill { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; padding: 1em }
 .rival_toggle { grid-template-columns: 1fr 1fr; flex-direction: row }
-.schedule { align-items: center; display: grid; gap: 0.1em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; margin: 1.0em; padding: 1em }
+.schedule { align-items: center; display: grid; flex: 1 1 100% ;gap: 1px; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100%;}
 .selected { background-color: inherit; border: 0 solid black; color: #dfa622 }
 .skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: grid; flex: auto; flex-direction: column; justify-content: stretch; padding: 0 }
 .slide_text { background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; font-size: small; justify-content: space-between; width: 100%; padding: 1em }
@@ -78,7 +78,7 @@ div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6e
 div.cta_block { align-items: center; background-color: inherit; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
 div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.detail_head { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; padding: 1em; width: 100% }
-div.detail_n { align-items: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; gap: 1em }
+div.detail_n { align-items: start; background-color: inherit; border: inherit; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start; margin: 1em; }
 div.disabled { background-color: inherit; border: 0px solid #dfa622; color: #bbbbbb }
 div.group { background-color: inherit; flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
@@ -128,7 +128,7 @@ button { align-items: center; border: 0px solid black; border-radius: 0.3em; dis
 button.accept { border-radius: 50%; height: 2em; padding: 0px; width: 2em }
 button.cta { background-color: #dfa622; color: white; justify-content: center; margin: 1em }
 button.decline { margin: 1em }
-button.hr { height: 2em; opacity: 0; padding: 0em; width: 2em; z-index: 10 }
+button.hr { height: 2em; opacity: 0; padding: 0em; z-index: 10; width: 100% }
 button.icon { background-color: inherit; height: 3em; padding: 0.2em; justify-content: center; width: 3em }
 button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
 button.inline { background-color: inherit; display: inline; padding: 0.1em }
@@ -150,6 +150,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
     span.full_day { display: none }
+    span.mid_day { display: none }
     span.replicated { display: none }
     #content { width: 100% }
     #detail { display: none; flex: 1 1 100% }
@@ -173,6 +174,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
     span.full_day { display: none }
+    span.mid_day {  display: inline-block }
     span.replicated { display: none }
     #content { width: 100% }
     #detail { display: none; flex: 1 1 100% }
@@ -196,6 +198,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     span.full_day { display: inline-block }
+    span.mid_day {  display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
@@ -220,6 +223,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     span.full_day { display: inline-block }
+    span.mid_day {  display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
@@ -244,6 +248,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     span.full_day { display: inline-block }
+    span.mid_day {  display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 1200px }
     #detail { display: flex; flex: 1 1 68.75% }

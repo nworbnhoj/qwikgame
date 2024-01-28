@@ -46,7 +46,7 @@ function href(event) {
   window.location.href = element.dataset.href;
 }
 
-function next() {
+function nextDetail(event) {
   var list = document.getElementById("list_bar").querySelectorAll('[name=list]');
   for (let i = 0; i < list.length; i++) {
     if (list[i].checked) {
@@ -58,7 +58,7 @@ function next() {
   showDetail();
 }
 
-function previous() {
+function previousDetail(event) {
   var list = document.getElementById("list_bar").querySelectorAll('[name=list]');
   for (let i = 0; i < list.length; i++) {
     if (list[i].checked) {
@@ -174,6 +174,12 @@ window.onload = function() {
   });
   document.querySelectorAll('button.delete').forEach(function(button) {
     button.onclick = hideParent;
+  });
+  document.querySelectorAll('button.head_fwd').forEach(function(button) {
+    button.onclick = nextDetail;
+  });
+  document.querySelectorAll('button.head_back').forEach(function(button) {
+    button.onclick = previousDetail;
   });
   document.querySelectorAll('button.show-group').forEach(function(button) {
     button.onclick = showGroup;

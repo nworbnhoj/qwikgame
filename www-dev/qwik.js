@@ -70,15 +70,6 @@ function previousDetail(event) {
   showDetail();
 }
 
-function showChat() {
-  document.querySelectorAll("span.chat_show").forEach(function(span) {
-    span.style.display = (span.style.display === "none") ? "inline" : "none";
-  })
-  document.querySelectorAll("div.chat_block").forEach(function(div) {
-    div.style.display = (div.style.display === "none") ? "flex" : "none";
-  })
-}
-
 function showDetail() {
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
   var width_768 = window.matchMedia("only screen and (max-width: 768px)").matches;
@@ -185,7 +176,15 @@ function toggleAllWeek(event) {
       hour.firstElementChild.checked = checked;
     }
   })
+}
 
+function togglePreviousSibling(event) {
+  let toggle = event.currentTarget;
+  toggle.querySelectorAll('.tog').forEach(function(tog){
+      tog.classList.toggle('hidden');
+  });
+  let previous_sibling = toggle.previousElementSibling;
+  previous_sibling.classList.toggle('hidden');
 }
 
 window.onload = function() {
@@ -240,5 +239,8 @@ window.onload = function() {
   })
   document.querySelectorAll('.schedule_edit').forEach(function(div) {
     div.onclick = showGameEdit;
+  })
+  document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle){
+    toggle.onclick = togglePreviousSibling;
   })
 }

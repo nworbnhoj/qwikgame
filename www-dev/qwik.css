@@ -10,8 +10,11 @@ blockquote, q { quotes: "" "" }
 #content { background-color: inherit; border: inherit; display: flex; justify-content: stretch }
 .landscape { flex-direction: row }
 .portrait { flex-direction: column }
-#detail { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em }
-#list_bar { background-color: inherit; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start }
+#detail { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 1em; }
+#list_bar { background-color: inherit; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em; }
+.align_center { align-self: center;}
+.align_end { align-self: flex-end;}
+.align_start { align-self: flex-start;}
 .bar_item { align-items: center; background-color: inherit; color: black; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
 .by_day { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100% }
 .day { background-color: inherit; border: inherit; flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
@@ -38,10 +41,10 @@ blockquote, q { quotes: "" "" }
 .hidden { display: none }
 .icon_bar { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; width: 100% }
 .invisible { visibility: hidden }
-.item_block { align-items: flex-start; background-color: inherit; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
+.item_block { align-items: flex-start; background-color: inherit; display: flex; flex-direction: column; justify-content: space-between;}
 .item_bold { background-color: inherit; font-weight: bold; padding: 0.3em }
 .item_text { background-color: inherit; padding: 0.3em }
-.list_bar_head { align-items: start; background-color: inherit; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; padding: 0.5em }
+.list_bar_head { align-items: start; background-color: inherit; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em;}
 .logo { height: 3em; padding: 0.1em }
 .na { visibility: hidden }
 .push_left { margin-right: auto }
@@ -51,17 +54,14 @@ blockquote, q { quotes: "" "" }
 .radio_date { background-color: inherit; border: inherit; padding: 0.3em; text-align: center }
 .radio_pick { background-color: #dfa622; border: inherit }
 .radio_title { background-color: inherit; border: inherit; padding: 0.3em; text-align: center }
-.rival_mug { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; padding: 1em; width: 50%; }
-.rival_rate { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; padding: 1em }
-.rival_rep { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
-.rival_skill { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; width:100%; }
+
 .rival_toggle { grid-template-columns: 1fr 1fr; flex-direction: row }
 .schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100%; }
 .selected { background-color: inherit; border: 0 solid black; color: #dfa622 }
-.skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch; padding: 1.0em; }
+.skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch;}
 .slide_labels { align-items: start; background-color: inherit; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; width: 100%; }
 .slide_label {text-align: center;}
-.toggle { align-items: center; background-color: inherit; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
+.toggle { align-items: center; background-color: inherit; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 .toggle:has(input):hover { background-color: #eeeeee }
 .toggle.button { background-color: inherit; border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; height: 2em; justify-content: center; margin: 0.1em; padding: 0.3em }
 .toggle.button:has(input:disabled) { border: 0px solid black; background-color: #eeeeee }
@@ -73,14 +73,13 @@ div.bicell { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row;
 div.by_day { border: 0px solid black; display: flex; flex-direction: column; margin: 1em 0 0 0; }
 div.by_days { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em; }
-div.chat_block { background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: space-between; padding: 1em; width: 100% }
+div.chat_block { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100%; }
 div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
-div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; justify-content: center; margin: 3em 0 1em 0; width: 100% }
-div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; justify-content: center; margin: 3em 0 1em 0; width: 100% }
-div.align_end { align-self: flex-end;}
+div.cta { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; justify-content: center; margin: 3em 0 1em 0; }
+div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; justify-content: center; margin: 3em 0 1em 0; }
 div.keen_desktop { height: 3em }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.cta_block { align-items: center; background-color: inherit; color: white; display: flex; flex-direction: row; justify-content: space-between }
@@ -88,11 +87,11 @@ div.ctb_block { align-items: center; background-color: inherit; color: inherit; 
 div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.ctb_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.detail { align-items: stretch; display: flex; flex-direction: column; justify-content: center; }
-div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; }
-div.detail_form { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; }
-div.detail_head { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; padding: 1em; width: 100% }
-div.detail_n { align-items: start; background-color: inherit; border: inherit; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start; margin: 1em; }
-div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; }
+div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100%; }
+div.detail_form { align-items: stretch; display: flex; flex-direction: column; justify-content: start; width: 100%; }
+div.detail_head { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em; }
+div.detail_n { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start;}
+div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; padding: 1em;}
 div.disabled { background-color: inherit; border: 0px solid #dfa622; color: #bbbbbb }
 div.group { background-color: inherit; flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
@@ -100,22 +99,26 @@ div.icon { align-items: center; background-color: inherit; border: 0px solid bla
 div.icon_bar { background-color: white; left: 0; opacity: 1.0; position: fixed; top: 0; }
 div.icon_bar_reserve { height: 4em; }
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
-div.keen_form { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 2em; width: 100% }
+div.keen_form { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
-div.match_scheduled { position: -webkit-sticky; position: sticky; top: 4em; width: 100% }
+div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center;}
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
+div.rival_mug { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; width: 50%; }
+div.rival_rate { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; }
+div.rival_rep { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
+div.rival_skill { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; width:100%; }
 div.schedule_body { align-items: center; display: grid }
 div.schedule_head { align-items: center; display: flex; flex-direction: row }
 div.select_head { position: relative }
-div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
+div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100%; }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 h1 { color: black; text-align: left; font-size: 1.4em; margin: 0.3em }
 h2 { color: black; text-align: left; font-size: 1.2em; margin: 0.3em }
 h3 { color: black; text-align: left; font-size: 1.3em; margin: 0.3em }
-h4 { color: black; text-align: left; margin: 0.3em }
-h5 { text-align: left; margin: 2.0em 1em 1em 0em }
+h4 { color: black; text-align: left; }
+h5 { text-align: left; margin: 2em 1em 1em -1em }
 h6 { color: black; text-align: left; font-size: 1.0em; margin: 1em }
 h6.disabled { background-color: inherit; color: #999999 }
 p { background-color: inherit; margin: 0 0 0 0em; padding: 0.3em }
@@ -123,10 +126,8 @@ p.caption { font-size: small }
 p.large { background-color: inherit; color: #666666; font-size: large }
 p.small { background-color: inherit; color: #666666; font-size: small }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }
-label.group { margin: 0 }
 label.option { align-items: center; flex-direction: row; gap: 1em; justify-content: space-between; margin: 0.3em }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
-label.toggle { margin: 0.5em; }
 fieldset { border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 select { background-color: inherit; border: 0px solid black; height: 2em }
@@ -153,8 +154,8 @@ button.radio { background-color: inherit; border-width: 1px; font-size: larger; 
 button.radio.selected { border: 3px solid #dfa622 }
 button.replicated { background-color: #eeeeee; color: #dfa622; height: 3em; width: 3em }
 button.round { border-radius: 50% }
-button.show-group { background-color: inherit; border-radius: 0; height: 1.5em; justify-content: space-between; margin: 2em 1em 1em 1em; text-align: left }
-hr { color: #eeeeee; border-width: 1px; width: 100% }
+button.show-group { background-color: inherit; border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
+hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }

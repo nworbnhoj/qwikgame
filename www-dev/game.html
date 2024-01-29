@@ -140,30 +140,446 @@
                     <i class="fa-solid fa-chevron-right fa-2xl"></i>
                 </button>
             </div>
-            <h5>LOCATION</h5>
-            <p><a href="">Dema Sport, Sofia, Bulgaria</a></p>
-            <h5>MY AVAILABILITY AT THIS VENUE</h5>
-            <div class="schedule">
-                <div class="hrs apm" style="grid-column: 2 / 8; grid-row: 1 / 8; height:100%">AM</div>
-                <div class="hrs apm" style="grid-column: 8 / 18; grid-row: 1 / 8; height:100%">PM</div>
+            <div class="detail_summary">
+                <h5>LOCATION</h5>
+                <p><a href="">Dema Sport, Sofia, Bulgaria</a></p>
+                <h5>MY AVAILABILITY AT THIS VENUE</h5>
+                <div class="schedule">
+                    <!--
+                    <div class="hrs apm" style="grid-column: 2 / 8; grid-row: 1 / 8; height:100%">AM</div>
+                    <div class="hrs apm" style="grid-column: 8 / 18; grid-row: 1 / 8; height:100%">PM</div>
+                    -->
 
-                <div class="day mon">M<span class="mid_day">ON</span><span class="full_day">DAY</span></div>
-                <div class="day tue disabled">T<span class="mid_day">UE</span><span class="full_day">SDAY</span></div>
-                <div class="day wed disabled">W<span class="mid_day">ED</span><span class="full_day">NESDAY</span></div>
-                <div class="day thu disabled">T<span class="mid_day">HU</span><span class="full_day">RSDAY</span></div>
-                <div class="day fri">F<span class="mid_day">RI</span><span class="full_day">DAY</span></div>
-                <div class="day sat">S<span class="mid_day">AT</span><span class="full_day">URDAY</span></div>
-                <div class="day sun">S<span class="mid_day">UN</span><span class="full_day">DAY</span></div>
+                    <div class="day mon">M<span class="mid_day">ON</span><span class="full_day">DAY</span></div>
+                    <div class="day tue disabled">T<span class="mid_day">UE</span><span class="full_day">SDAY</span></div>
+                    <div class="day wed disabled">W<span class="mid_day">ED</span><span class="full_day">NESDAY</span></div>
+                    <div class="day thu disabled">T<span class="mid_day">HU</span><span class="full_day">RSDAY</span></div>
+                    <div class="day fri">F<span class="mid_day">RI</span><span class="full_day">DAY</span></div>
+                    <div class="day sat">S<span class="mid_day">AT</span><span class="full_day">URDAY</span></div>
+                    <div class="day sun">S<span class="mid_day">UN</span><span class="full_day">DAY</span></div>
 
-                <div class="hrs" style="grid-column: 2/5; grid-row: 1/1;">6-8</div>
-                <div class="hrs" style="grid-column: 14 / 15; grid-row: 1/1;">7</div>
-                <div class="hrs" style="grid-column: 5/8; grid-row: 5/5;">9-11</div>
-                <div class="hrs" style="grid-column: 9/11; grid-row: 5/5;">1-2</div>
-                <div class="hrs" style="grid-column: 2/18; grid-row: 6/6;">All day</div>
-                <div class="hrs" style="grid-column: 2/18; grid-row: 7/7;">All day</div>
+                    <div class="hrs" style="grid-column: 2/5; grid-row: 1/1;">6-8</div>
+                    <div class="hrs" style="grid-column: 14 / 15; grid-row: 1/1;">7</div>
+                    <div class="hrs" style="grid-column: 5/8; grid-row: 5/5;">9-11</div>
+                    <div class="hrs" style="grid-column: 9/11; grid-row: 5/5;">1-2</div>
+                    <div class="hrs" style="grid-column: 2/18; grid-row: 6/6;">All day</div>
+                    <div class="hrs" style="grid-column: 2/18; grid-row: 7/7;">All day</div>
 
+                </div>
+
+                <h5>MY SKILL LEVEL AT THIS VENUE</h5>
+                <p>Average</p>
+                <div class="button ctb schedule_edit">
+                    <div class="ctb_block">
+                        <div class="">EDIT</div>
+                    </div>
+                </div>
             </div>
-            <div class="skill">
+            <div class="detail_form hidden">
+                <h5>LOCATION</h5>
+                <p><a href="">Dema Sport, Sofia, Bulgaria</a></p>
+                <h5>MY AVAILABILITY AT THIS VENUE</h5>
+
+                <div class="by_week bicell">
+                    <button class="link show-next-parent-sibling">Select Days and Time</button>
+                    <label class="toggle button all_week">Anytime
+                        <input type="checkbox" name="all_week">
+                    </label>
+                </div>
+                <div class="by_days hidden">
+                    <div class="by_day">
+                        <p>MONDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_monday">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>TUESDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_tuesday">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>WEDNESDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_wednesday">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>THURDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_thursday">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>FRIDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_friday">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>SATURDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_saturday" checked="checked">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="by_day">
+                        <p>SUNDAY</p>
+                        <div class="bicell">
+                            <button class="link show-next-parent-sibling">Pick time</button>
+                            <label class="toggle button all_day">All Day
+                                <input type="checkbox" name="all_sunday" checked="checked">
+                            </label>
+                        </div>
+                        <div class="radio_block hour_toggle hidden">
+                            <label class="toggle button">6
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">7
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">8
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">9
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">10
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">11
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">12
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">13
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">14
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">15
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">16
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">17
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">18
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">19
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                            <label class="toggle button">20
+                                <input type="checkbox" name="hour" checked="checked">
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <h5>MY SKILL LEVEL AT THIS VENUE</h5>
                 <div class="slide_text">
                     <div class="invisible">Very weak</div>
@@ -172,8 +588,14 @@
                     <div class="invisible">Strong</div>
                     <div class="invisible">Very Strong</div>
                 </div>
-                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
+                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)"/>
+                <div class="button cta schedule_save">
+                    <div class="cta_block">
+                        <div class="cta_text">SAVE</div>
+                    </div>
+                </div>
             </div>
+
         </div>
         <div id="B" class="detail_n hidden">
             <div class="detail_head">

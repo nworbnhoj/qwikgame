@@ -143,6 +143,12 @@ function showOptions(event) {
   }
 }
 
+function showGameEdit(event) {
+  let detail = event.currentTarget.closest('.detail_n');
+  detail.querySelector('.detail_form').classList.remove('hidden');
+  detail.querySelector('.detail_summary').classList.add('hidden');
+}
+
 function slide(slider) {
   var words = slider.previousElementSibling.children;
   for (let i = 0; i < words.length; i++) {
@@ -158,13 +164,28 @@ function slide(slider) {
 function toggleAllDay(event) {
   let button = event.currentTarget;
   var checked = button.firstElementChild.checked;
-  var hours = button.closest('.schedule_keen').querySelector('.radio_block').children;
+  var hours = button.closest('.by_day').querySelector('.radio_block').children;
   for (hour of hours) {
     var checkbox = hour.firstElementChild;
     if (!checkbox.disabled) {
       checkbox.checked = checked;
     }
   }
+}
+
+function toggleAllWeek(event) {
+  let button = event.currentTarget;
+  var checked = button.firstElementChild.checked;
+  let detail = button.closest('.detail_n');
+  detail.querySelectorAll('.all_day').forEach(function(button) {
+    button.firstElementChild.checked = checked;
+  })
+  detail.querySelectorAll('.hour_toggle').forEach(function(radio_block) {
+    for (hour of radio_block.children) {
+      hour.firstElementChild.checked = checked;
+    }
+  })
+
 }
 
 window.onload = function() {
@@ -199,8 +220,11 @@ window.onload = function() {
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
     checkbox.oninput = enableInviteFriend;
   });
-  document.querySelectorAll('label.toggle.button.all-day').forEach(function(button) {
+  document.querySelectorAll('label.toggle.button.all_day').forEach(function(button) {
     button.onclick = toggleAllDay;
+  });
+  document.querySelectorAll('label.toggle.button.all_week').forEach(function(button) {
+    button.onclick = toggleAllWeek;
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;
@@ -213,5 +237,8 @@ window.onload = function() {
   });
   document.querySelectorAll('.show_friend_invite').forEach(function(element) {
     element.onclick = showFriendInvite;
+  })
+  document.querySelectorAll('.schedule_edit').forEach(function(div) {
+    div.onclick = showGameEdit;
   })
 }

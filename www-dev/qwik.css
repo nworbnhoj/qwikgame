@@ -13,7 +13,8 @@ blockquote, q { quotes: "" "" }
 #detail { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em }
 #list_bar { background-color: inherit; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start }
 .bar_item { align-items: center; background-color: inherit; color: black; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
-.day { background-color: inherit; border: inherit; flex: 0 0 auto; flex-grow: 4; white-space: nowrap }
+.by_day { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100% }
+.day { background-color: inherit; border: inherit; flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 .day.fri { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 5 / 5 }
 .day.mon { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 1 / 1 }
 .day.sat { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 6 / 6 }
@@ -55,10 +56,10 @@ blockquote, q { quotes: "" "" }
 .rival_rep { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
 .rival_skill { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; gap: 1em; justify-content: space-evenly; padding: 1em }
 .rival_toggle { grid-template-columns: 1fr 1fr; flex-direction: row }
-.schedule { align-items: center; display: grid; flex: 1 1 100% ;gap: 1px; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100%;}
+.schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100%; }
 .selected { background-color: inherit; border: 0 solid black; color: #dfa622 }
-.skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: grid; flex: auto; flex-direction: column; justify-content: stretch; padding: 0 }
-.slide_text { background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; font-size: small; justify-content: space-between; width: 100%; padding: 1em }
+.skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch; padding: 0; }
+.slide_text { background-color: inherit; border: 0 solid black; display: flex; flex-direction: row; font-size: small; justify-content: space-between; padding: 1em; width: 100%; }
 .toggle { align-items: center; background-color: inherit; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 .toggle:has(input):hover { background-color: #eeeeee }
 .toggle.button { background-color: inherit; border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; height: 2em; justify-content: center; margin: 0.1em; padding: 0.3em }
@@ -67,32 +68,42 @@ blockquote, q { quotes: "" "" }
 .toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 .tricell { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
+div.bicell { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; width: 100% }
+div.by_day { border: 0px solid black; display: flex; flex-direction: column; margin: 1em 0 0 0; }
+div.by_days { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
+div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em; }
 div.chat_block { background-color: inherit; border: inherit; flex: auto; flex-direction: column; justify-content: space-between; padding: 1em; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: start; }
 div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
-div.cta { align-content: center; align-items: center; background-color: #dfa622; border-width: 0px; color: white; flex-direction: row; justify-content: center; padding: 1em; margin: 1em; width: 100% }
+div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; justify-content: center; margin: 3em 0 1em 0; width: 100% }
+div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; justify-content: center; margin: 3em 0 1em 0; width: 100% }
 div.keen_desktop { height: 3em }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
-div.cta_block { align-items: center; background-color: inherit; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
+div.cta_block { align-items: center; background-color: inherit; color: white; display: flex; flex-direction: row; justify-content: space-between }
+div.ctb_block { align-items: center; background-color: inherit; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
 div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
+div.ctb_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
+div.detail { align-items: stretch; display: flex; flex-direction: column; justify-content: center; }
+div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+div.detail_form { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; }
 div.detail_head { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; padding: 1em; width: 100% }
 div.detail_n { align-items: start; background-color: inherit; border: inherit; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start; margin: 1em; }
+div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; }
 div.disabled { background-color: inherit; border: 0px solid #dfa622; color: #bbbbbb }
 div.group { background-color: inherit; flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
 div.icon { align-items: center; background-color: inherit; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 3em }
-div.icon_bar { background-color: white; left: 0; opacity: 1.0; position:fixed; top: 0;  }
-div.icon_bar_reserve {height: 4em;}
+div.icon_bar { background-color: white; left: 0; opacity: 1.0; position: fixed; top: 0; }
+div.icon_bar_reserve { height: 4em; }
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
 div.keen_form { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 2em; width: 100% }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
-div.match_scheduled { position: -webkit-sticky; position: sticky; top:4em ;width: 100% }
+div.match_scheduled { position: -webkit-sticky; position: sticky; top: 4em; width: 100% }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
 div.schedule_body { align-items: center; display: grid }
 div.schedule_head { align-items: center; display: flex; flex-direction: row }
-div.schedule_keen { border: 1px solid #cccccc; display: flex; flex-direction: column }
 div.select_head { position: relative }
 div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
@@ -102,7 +113,7 @@ h1 { color: black; text-align: left; font-size: 1.4em; margin: 0.3em }
 h2 { color: black; text-align: left; font-size: 1.2em; margin: 0.3em }
 h3 { color: black; text-align: left; font-size: 1.3em; margin: 0.3em }
 h4 { color: black; text-align: left; margin: 0.3em }
-h5 { text-align: left; margin: 2.0em 1em 1em 1em }
+h5 { text-align: left; margin: 2.0em 1em 1em 0em }
 h6 { color: black; text-align: left; font-size: 1.0em; margin: 1em }
 h6.disabled { background-color: inherit; color: #999999 }
 p { background-color: inherit; margin: 0 0 0 0em; padding: 0.3em }
@@ -120,8 +131,8 @@ select { background-color: inherit; border: 0px solid black; height: 2em }
 select.game { border: 1px solid black; width: 100% }
 select.sort { background-color: inherit; border: 0px solid black; display: flex; font-size: inherit }
 select.venue { border: 1px solid black; width: 100% }
-input[text] {flex: 1 1 auto;}
-input.strength { height: 2em; margin: 0 1em 0 1em }
+input[text] { flex: 1 1 auto; }
+input.strength { display: flex; flex: 1 1 100%; height: 2em; width: 100% }
 input.disabled { background-color: #bbbbbb; color: #999999 }
 input#disabled { background-color: lightgrey; border: 0px solid #dfa622 }
 button { align-items: center; border: 0px solid black; border-radius: 0.3em; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-evenly; margin: 0; padding: 0.3em; text-align: center }
@@ -145,6 +156,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    div.keen_mobile { display: flex; }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
@@ -155,11 +167,6 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     #detail { display: none; flex: 1 1 100% }
     #list_bar { flex: 1 1 100% }
     .head_back { order: 5 }
-    .show0 { display: none }
-    .show600 { display: flex }
-    .show768 { display: flex }
-    .show992 { display: flex }
-    .show1200 { display: flex }
     .hide0 { display: flex }
     .hide600 { display: none }
     .hide768 { display: none }
@@ -169,6 +176,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (min-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    div.keen_mobile { display: flex; }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
@@ -179,11 +187,6 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     #detail { display: none; flex: 1 1 100% }
     #list_bar { flex: 1 1 100% }
     .head_back { order: 5 }
-    .show0 { display: none }
-    .show600 { display: none }
-    .show768 { display: flex }
-    .show992 { display: flex }
-    .show1200 { display: flex }
     .hide0 { display: flex }
     .hide600 { display: flex }
     .hide768 { display: none }
@@ -193,6 +196,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (min-width:768px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    div.keen_mobile { display: none; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
@@ -203,11 +207,6 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
     .head_back { order: 50 }
-    .show0 { display: none }
-    .show600 { display: none }
-    .show768 { display: none }
-    .show992 { display: flex }
-    .show1200 { display: flex }
     .hide0 { display: flex }
     .hide600 { display: flex }
     .hide768 { display: flex }
@@ -218,6 +217,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (min-width:992px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    div.keen_mobile { display: none; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
@@ -228,11 +228,6 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
     .head_back { order: 50 }
-    .show0 { display: none }
-    .show600 { display: none }
-    .show768 { display: none }
-    .show992 { display: none }
-    .show1200 { display: flex }
     .hide0 { display: flex }
     .hide600 { display: flex }
     .hide768 { display: flex }
@@ -243,6 +238,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
 @media only screen and (min-width:1200px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    div.keen_mobile { display: none; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
@@ -253,11 +249,6 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
     .head_back { order: 50 }
-    .show0 { display: none }
-    .show600 { display: none }
-    .show768 { display: none }
-    .show992 { display: none }
-    .show1200 { display: none }
     .hide0 { display: flex }
     .hide600 { display: flex }
     .hide768 { display: flex }

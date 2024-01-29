@@ -59,7 +59,8 @@ blockquote, q { quotes: "" "" }
 .schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100%; }
 .selected { background-color: inherit; border: 0 solid black; color: #dfa622 }
 .skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch; padding: 1.0em; }
-.slide_text { background-color: inherit; border: 0 solid black; display: flex; flex-direction: row; font-size: small; justify-content: space-between; padding: 1em; width: 100%; }
+.slide_labels { align-items: start; background-color: inherit; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; width: 100%; }
+.slide_label {text-align: center;}
 .toggle { align-items: center; background-color: inherit; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 .toggle:has(input):hover { background-color: #eeeeee }
 .toggle.button { background-color: inherit; border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; height: 2em; justify-content: center; margin: 0.1em; padding: 0.3em }
@@ -157,6 +158,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     body { font-size: 13px }
     button { font-size: 1.07em }
     div.keen_mobile { display: flex; }
+    div.slide_labels { font-size: 0.94em; }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
@@ -178,6 +180,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     body { font-size: 13px }
     button { font-size: 1.07em }
     div.keen_mobile { display: flex; }
+    div.slide_labels { font-size: 0.94em; }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
@@ -199,6 +202,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     body { font-size: 16px }
     button { font-size: 1.13em }
     div.keen_mobile { display: none; }
+    div.slide_labels { font-size: 0.89em; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
@@ -221,6 +225,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     body { font-size: 16px }
     button { font-size: 1.13em }
     div.keen_mobile { display: none; }
+    div.slide_labels { font-size: 0.89em; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
@@ -243,6 +248,7 @@ hr { color: #eeeeee; border-width: 1px; width: 100% }
     body { font-size: 16px }
     button { font-size: 1.13em }
     div.keen_mobile { display: none; }
+    div.slide_labels { font-size: 0.89em; }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }

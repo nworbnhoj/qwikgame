@@ -73,13 +73,14 @@ div.bicell { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row;
 div.by_day { border: 0px solid black; display: flex; flex-direction: column; margin: 1em 0 0 0; }
 div.by_days { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em; }
-div.chat_block { background-color: inherit; border: inherit; flex: auto; flex-direction: column; justify-content: space-between; padding: 1em; width: 100% }
+div.chat_block { background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: space-between; padding: 1em; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100%; }
-div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; padding: 0.3em }
+div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
 div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; justify-content: center; margin: 3em 0 1em 0; width: 100% }
 div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; justify-content: center; margin: 3em 0 1em 0; width: 100% }
+div.align_end { align-self: flex-end;}
 div.keen_desktop { height: 3em }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.cta_block { align-items: center; background-color: inherit; color: white; display: flex; flex-direction: row; justify-content: space-between }

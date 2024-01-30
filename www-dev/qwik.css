@@ -78,13 +78,14 @@ div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: f
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100%; }
 div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
-div.cta { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; justify-content: center; margin: 3em 0 1em 0; }
-div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; justify-content: center; margin: 3em 0 1em 0; }
+div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; display:flex; flex-direction: row; justify-content: center; padding: 1em; }
+div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; cursor: pointer; display:flex; flex-direction: row; justify-content: center; padding: 1em; }
+div.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; }
 div.keen_desktop { height: 3em }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.cta_block { align-items: center; background-color: inherit; color: white; display: flex; flex-direction: row; justify-content: space-between }
 div.ctb_block { align-items: center; background-color: inherit; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
-div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
+div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 1.5em 0 1.5em }
 div.ctb_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.detail { align-items: stretch; display: flex; flex-direction: column; justify-content: center; }
 div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100%; }
@@ -126,6 +127,9 @@ p.caption { font-size: small }
 p.large { background-color: inherit; color: #666666; font-size: large }
 p.small { background-color: inherit; color: #666666; font-size: small }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }
+label.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; }
+label.cta_bezel input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
+label.list_act { background-color: inherit; border: 0.1em dashed grey; gap: 1em; justify-content: center }
 label.option { align-items: center; flex-direction: row; gap: 1em; justify-content: space-between; margin: 0.3em }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
 fieldset { border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
@@ -146,7 +150,6 @@ button.icon { background-color: inherit; height: 3em; padding: 0.2em; justify-co
 button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
 button.inline { background-color: inherit; display: inline; padding: 0.1em }
 button.link { background-color: inherit; color: blue; font-size: 1em; text-decoration-line: underline }
-button.list_act { background-color: inherit; border: 0.1em dashed grey; gap: 1em; justify-content: center }
 button.list_item { background-color: inherit; border: 0.1em solid lightgrey; border-width: 0 0 0.1em 0; gap: 1em; justify-content: flex-start }
 button.list_item:last-child { border-width: 0 }
 button.list_item.selected { background-color: inherit; color: #dfa622 }
@@ -165,6 +168,7 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
+    label.keen_desktop { display: none; }
     span.full_day { display: none }
     span.mid_day { display: none }
     span.replicated { display: none }
@@ -187,6 +191,7 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h5 { font-size: 1.07em }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
+    label.keen_desktop { display: none; }
     span.full_day { display: none }
     span.mid_day { display: inline-block }
     span.replicated { display: none }
@@ -209,6 +214,7 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
+    label.keen_desktop { display: flex; }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
@@ -232,6 +238,7 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
+    label.keen_desktop { display: flex; }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
@@ -255,6 +262,7 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h5 { font-size: 1.13em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
+    label.keen_desktop { display: flex; }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }

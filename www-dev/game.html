@@ -67,10 +67,13 @@
                 </div>
             </div>
         </div>
-        <button class="cta">
-            <i class="fa-solid fa-volleyball fa-2xl"></i>
-            <div class="cta_text">ADD GAME</div>
-        </button>
+        <label class="cta_bezel">
+            <input type="radio" checked="checked" name="list" data-id="GAME">
+            <div class="cta">
+                <i class="fa-solid fa-volleyball fa-2xl"></i>
+                <div class="cta_text">ADD GAME</div>
+            </div>
+        </label>
         <button class="show-group">Tennis <span>&#9650;</span></button>
         <div class="group">
             <label class="toggle group">
@@ -99,12 +102,13 @@
                 </div>
                 <i class="fa-solid fa-check fa-1xl push_right"></i>
             </label>
-            <button class="list_act">
+            <label class="toggle group list_act">
+                <input type="radio" name="list" data-id="TENNIS">
                 <i class="fa-solid fa-circle-plus fa-2xl"></i>
                 <div class="item_block">
                     <p>Add Venue</p>
                 </div>
-            </button>
+            </label>
         </div>
         <button class="show-group">Squash <span>&#9650;</span></button>
         <div class="group">
@@ -116,15 +120,25 @@
                 </div>
                 <i class="fa-solid fa-check fa-21l push_right"></i>
             </label>
-            <button class="list_act">
+            <label class="toggle group list_act">
+                <input type="radio" name="list" data-id="SQUASH">
                 <i class="fa-solid fa-circle-plus fa-2xl"></i>
                 <div class="item_block">
                     <p>Add Venue</p>
                 </div>
-            </button>
+            </label>
         </div>
     </div>
     <div id="detail">
+        <div id="GAME" class="detail_n">
+            <p>Game add form</p>
+        </div>
+        <div id="SQUASH" class="detail_n">
+            <p>Squash add venue form</p>
+        </div>
+        <div id="TENNIS" class="detail_n">
+            <p>Tennis add venue form</p>
+        </div>
         <div id="A" class="detail_n">
             <div class="detail_head">
                 <span class="head_icon hide768">
@@ -595,7 +609,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div id="B" class="detail_n hidden">
             <div class="detail_head">

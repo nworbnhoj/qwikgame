@@ -78,7 +78,7 @@
         <div class="group">
             <label class="toggle group">
                 <input type="radio" checked="checked" name="list" data-id="A">
-                <i class="fa-solid fa-location-dot fa-2xl"></i>
+                <i class="fa-solid fa-location-dot fa-xl"></i>
                 <div class="item_block">
                     <p>Dema Sport, Sofia</p>
                 </div>
@@ -87,7 +87,7 @@
             <hr>
             <label class="toggle group">
                 <input type="radio" name="list" data-id="B">
-                <i class="fa-solid fa-location-dot fa-2xl"></i>
+                <i class="fa-solid fa-location-dot fa-xl"></i>
                 <div class="item_block">
                     <p>Vasil Levski, Sofia</p>
                 </div>
@@ -96,7 +96,7 @@
             <hr>
             <label class="toggle group">
                 <input type="radio" name="list" data-id="C">
-                <i class="fa-solid fa-location-dot fa-2xl"></i>
+                <i class="fa-solid fa-location-dot fa-xl"></i>
                 <div class="item_block">
                     <p>Grebna baza, Sofia</p>
                 </div>
@@ -104,7 +104,7 @@
             </label>
             <label class="toggle group list_act">
                 <input type="radio" name="list" data-id="TENNIS">
-                <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                <i class="fa-solid fa-circle-plus fa-xl"></i>
                 <div class="item_block">
                     <p>Add Venue</p>
                 </div>
@@ -114,7 +114,7 @@
         <div class="group">
             <label class="toggle group">
                 <input type="radio" name="list" data-id="D">
-                <i class="fa-solid fa-location-dot fa-2xl"></i>
+                <i class="fa-solid fa-location-dot fa-xl"></i>
                 <div class="item_block">
                     <p>Squash Center, Sofia</p>
                 </div>
@@ -122,7 +122,7 @@
             </label>
             <label class="toggle group list_act">
                 <input type="radio" name="list" data-id="SQUASH">
-                <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                <i class="fa-solid fa-circle-plus fa-xl"></i>
                 <div class="item_block">
                     <p>Add Venue</p>
                 </div>
@@ -130,13 +130,25 @@
         </div>
     </div>
     <div id="detail">
-        <div id="GAME" class="detail_n">
-            <p>Game add form</p>
+        <div id="GAME" class="detail_n hidden">
+            <div class="detail_form">
+                <h5>Game</h5>
+                <select class="game" name="game">
+                    <option>Badminton</option>
+                    <option selected>Squash</option>
+                    <option>Tennis</option>
+                </select>
+            </div>
+            <div class="cta_bezel">
+                <div class="cta schedule_save">
+                    <div class="cta_text">SAVE</div>
+                </div>
+            </div>
         </div>
-        <div id="SQUASH" class="detail_n">
+        <div id="SQUASH" class="detail_n hidden">
             <p>Squash add venue form</p>
         </div>
-        <div id="TENNIS" class="detail_n">
+        <div id="TENNIS" class="detail_n hidden">
             <p>Tennis add venue form</p>
         </div>
         <div id="A" class="detail_n">
@@ -173,9 +185,9 @@
                     <div class="day sun">S<span class="mid_day">UN</span><span class="full_day">DAY</span></div>
 
                     <div class="hrs" style="grid-column: 2/5; grid-row: 1/1;">6-8</div>
-                    <div class="hrs" style="grid-column: 14 / 15; grid-row: 1/1;">7</div>
+                    <div class="hrs" style="grid-column: 14 / 15; grid-row: 1/1;">19</div>
                     <div class="hrs" style="grid-column: 5/8; grid-row: 5/5;">9-11</div>
-                    <div class="hrs" style="grid-column: 9/11; grid-row: 5/5;">1-2</div>
+                    <div class="hrs" style="grid-column: 9/11; grid-row: 5/5;">13-14</div>
                     <div class="hrs" style="grid-column: 2/18; grid-row: 6/6;">All day</div>
                     <div class="hrs" style="grid-column: 2/18; grid-row: 7/7;">All day</div>
 
@@ -183,17 +195,21 @@
 
                 <h5>MY SKILL LEVEL AT THIS VENUE</h5>
                 <p>Average</p>
-                <div class="button ctb schedule_edit">
-                    <div class="ctb_block">
+                <div class="ctb_bezel">
+                    <div class="button ctb schedule_edit">
                         <div class="">EDIT</div>
                     </div>
                 </div>
             </div>
-            <div class="detail_form hidden">
-                <h5>LOCATION</h5>
-                <p><a href="">Dema Sport, Sofia, Bulgaria</a></p>
+            <div class="detail_form hidden">                
+                <h5>VENUE</h5>
+                <select class="venue" name="venue">
+                    <option>Select from map</option>
+                    <option selected>Dema Sport</option>
+                    <option>Milawa Squash Courts</option>
+                    <option>Vasil Levski</option>
+                </select>
                 <h5>MY AVAILABILITY AT THIS VENUE</h5>
-
                 <div class="by_week bicell">
                     <button class="link show-next-parent-sibling">Select Days and Time</button>
                     <label class="toggle button all_week">Anytime
@@ -603,8 +619,8 @@
                     <div class="invisible">Very Strong</div>
                 </div>
                 <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)"/>
-                <div class="button cta schedule_save">
-                    <div class="cta_block">
+                <div class="cta_bezel">
+                    <div class="cta schedule_save">
                         <div class="cta_text">SAVE</div>
                     </div>
                 </div>

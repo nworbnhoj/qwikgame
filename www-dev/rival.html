@@ -13,32 +13,33 @@
 
 <body>
 
-<div class="icon_bar">
+<div id="icon_bar">
     <img class="logo href" src="qwik.icon.svg" data-href="index.html">
     <div class="flex_space"></div>
-    <div class="bar_item href" data-href="invite.html">
+    <div class="icon_bar_item href" data-href="invite.html">
         <i class="fa-solid fa-house fa-2xl"></i>
         <div class="icon_caption">Invitations</div>
     </div>
-    <div class="bar_item href" data-href="match.html">
+    <div class="icon_bar_item href" data-href="match.html">
         <i class="fa-regular fa-calendar-days fa-2xl"></i>
         <div class="icon_caption">Scheduled Matches</div>
     </div>
-    <div class="bar_item href selected" data-href="rival.html">
+    <div class="icon_bar_item href selected" data-href="rival.html">
         <i class="fa-solid fa-thumbs-up fa-2xl"></i>
         <div class="icon_caption">Rival Rating</div>
     </div>
-    <div class="bar_item href" data-href="game.html">
+    <div class="icon_bar_item href" data-href="game.html">
         <i class="fa-solid fa-volleyball fa-2xl"></i>
         <div class="icon_caption">My Games</div>
     </div>
     <div class="flex_space"></div>
-    <div class="bar_item href" data-href="account.html">
+    <div class="icon_bar_item href" data-href="account.html">
         <i class="fa-solid fa-graduation-cap fa-2xl"></i>
         <div class="icon_caption">Helen</div>
     </div>
 </div>
-<div class="icon_bar_reserve"></div>
+<div id="icon_bar_reserve"></div>
+<hr>
 
 <div id="content" class="landscape">
     <div id="list_bar">
@@ -126,7 +127,7 @@
                 <div class="rival_rate">
                     <h5>REPUTATION</h5>
                     <p>Rate your Rival's behaviour</p>
-                    <div class="radio_block rival_toggle">
+                    <div class="radio_block rival_rate_grid">
                         <label class="toggle button">
                             <input type="radio" checked="checked" name="rate">
                             <i class="fa-solid fa-thumbs-down fa-2xl"></i>
@@ -157,7 +158,6 @@
                     </div>
                     <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 </div>
-
                 <div class="cta_bezel">
                     <div class="cta">
                         <div class="cta_text">SUBMIT</div>

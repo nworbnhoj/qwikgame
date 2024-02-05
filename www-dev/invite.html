@@ -13,32 +13,33 @@
 
 <body>
 
-<div class="icon_bar">
+<div id="icon_bar">
     <img class="logo href" src="qwik.icon.svg" data-href="index.html">
     <div class="flex_space"></div>
-    <div class="bar_item href selected" data-href="invite.html">
+    <div class="icon_bar_item href selected" data-href="invite.html">
         <i class="fa-solid fa-house fa-2xl"></i>
         <div class="icon_caption">Invitations</div>
     </div>
-    <div class="bar_item href" data-href="match.html">
+    <div class="icon_bar_item href" data-href="match.html">
         <i class="fa-regular fa-calendar-days fa-2xl"></i>
         <div class="icon_caption">Scheduled Matches</div>
     </div>
-    <div class="bar_item href" data-href="rival.html">
+    <div class="icon_bar_item href" data-href="rival.html">
         <i class="fa-solid fa-thumbs-up fa-2xl"></i>
         <div class="icon_caption">Rival Rating</div>
     </div>
-    <div class="bar_item href" data-href="game.html">
+    <div class="icon_bar_item href" data-href="game.html">
         <i class="fa-solid fa-volleyball fa-2xl"></i>
         <div class="icon_caption">My Games</div>
     </div>
     <div class="flex_space"></div>
-    <div class="bar_item href" data-href="account.html">
+    <div class="icon_bar_item href" data-href="account.html">
         <i class="fa-solid fa-graduation-cap fa-2xl"></i>
         <div class="icon_caption">Helen</div>
     </div>
 </div>
-<div class="icon_bar_reserve"></div>
+<div id="icon_bar_reserve"></div>
+<hr>
 
 <div id="content" class="landscape">
     <div class="button cta keen_mobile">
@@ -155,14 +156,14 @@
                         <p>TODAY</p>
                         <p class="caption">01-JUN-2023</p>
                     </div>
-                    <div class="schedule_body tricell">
+                    <div class="schedule_body grid_3_col">
                         <div></div>
                         <button class="link show-next-parent-sibling">Pick time</button>
                         <label class="toggle button all_day">All Day
                             <input type="checkbox" name="all_tomorrow">
                         </label>
                     </div>
-                    <div class="radio_block hour_toggle hidden">
+                    <div class="radio_block hour_grid hidden">
                         <label class="toggle button">6
                             <input type="checkbox" name="hour" disabled>
                         </label>
@@ -197,16 +198,16 @@
                             <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">17
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">18
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">19
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">20
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                     </div>
                 </div>
@@ -215,7 +216,7 @@
                         <p>TOMORROW</p>
                         <p class="caption">02-JUN-2023</p>
                     </div>
-                    <div class="schedule_body tricell">
+                    <div class="schedule_body grid_3_col">
                         <div></div>
                         <button class="link show-next-parent-sibling">Pick time</button>
                         <label class="toggle button all_day">All Day
@@ -223,7 +224,7 @@
                         </label>
                     </div>
 
-                    <div class="radio_block hour_toggle hidden">
+                    <div class="radio_block hour_grid hidden">
                         <label class="toggle button">6
                             <input type="checkbox" name="hour">
                         </label>
@@ -231,13 +232,13 @@
                             <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">8
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">9
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">10
-                            <input type="checkbox" name="hour" checked="checked">
+                            <input type="checkbox" name="hour">
                         </label>
                         <label class="toggle button">11
                             <input type="checkbox" name="hour">
@@ -342,7 +343,7 @@
                         <div class="slide_label">Much Stronger</div>
                     </div>
                     <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
-                    <div class="rival-skill-learn tricell">
+                    <div class="rival-skill-learn grid_3_col">
                         <div></div>            
                         <button class="link">Learn more</button>
                         <button class="show_friend_invite">Add</button>
@@ -359,7 +360,7 @@
                         <div class="slide_label">Much Stronger</div>
                     </div>
                     <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)" disabled>
-                    <div class="rival-skill-learn tricell">
+                    <div class="rival-skill-learn grid_3_col">
                         <div></div>            
                         <button class="link">Learn more</button>
                         <button>Unlock</button>
@@ -515,7 +516,7 @@
                     <div class="radio_date">
                         <p>Aug 5, 2023</p>
                     </div>
-                    <div class="radio_block hour_toggle">
+                    <div class="radio_block hour_grid">
                         <label class="toggle button">13h
                             <input type="radio" name="hour">
                         </label>

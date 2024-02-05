@@ -7,164 +7,152 @@ caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
 @font-face { font-family: 'NotoSans-Regular'; src: url(NotoSans-Regular.ttf) }
-#content { background-color: inherit; border: inherit; display: flex; justify-content: stretch }
-.landscape { flex-direction: row }
-.portrait { flex-direction: column }
-#detail { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 1em }
-#list_bar { background-color: inherit; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
-.align_center { align-self: center }
-.align_end { align-self: flex-end }
-.align_start { align-self: flex-start }
-.bar_item { align-items: center; background-color: inherit; color: black; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
-.by_day { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100% }
-.day { background-color: inherit; border: inherit; flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
-.day.fri { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 5 / 5 }
-.day.mon { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 1 / 1 }
-.day.sat { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 6 / 6 }
-.day.sun { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 7 / 7 }
-.day.thu { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 4 / 4 }
-.day.tue { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 2 / 2 }
-.day.wed { background-color: inherit; border: inherit; grid-column: 1 / 1; grid-row: 3 / 3 }
-.detail_head_title { background-color: inherit; border: inherit; flex: auto; padding: 1em }
-.disabled { background-color: lightgrey; border: 0px solid #dfa622 }
-.flex_space { background-color: inherit; flex-grow: 3 }
-.form_action { background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
-.group_head_sort { background-color: inherit; border: inherit; flex: auto; padding: 1em }
+#content { display: flex; justify-content: stretch }
+#detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 1em }
+#icon_bar { align-items: center; background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
+#icon_bar_reserve { height: 4em }
+#list_bar { border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
+.flex_space { flex-grow: 3 }
+.form_action { display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
+.group_head_sort { flex: auto; padding: 1em }
 .head_back { flex: 0 0 auto; order: 40 }
 .head_fwd { flex: 0 0 auto; order: 50 }
 .head_icon { flex: 0 0 auto; order: 10 }
 .head_more { flex: 0 0 auto; order: 30 }
-.head_txt { align-items: flex-start; background-color: inherit; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
-.hrs { align-items: center; background-color: inherit; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
-.hour_toggle { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
+.head_txt { align-items: flex-start; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
+.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
+.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
 .hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
 .hidden { display: none }
-.icon_bar { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; width: 100% }
 .invisible { visibility: hidden }
-.item_block { align-items: flex-start; background-color: inherit; display: flex; flex-direction: column; justify-content: space-between }
-.item_bold { background-color: inherit; font-weight: bold; padding: 0.3em }
-.item_text { background-color: inherit; padding: 0.3em }
-.list_bar_head { align-items: start; background-color: inherit; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-.logo { height: 3em; padding: 0.1em }
+.item_block { align-items: flex-start; display: flex; flex-direction: column; justify-content: space-between }
+.item_bold { font-weight: bold; padding: 0.3em }
+.item_text { padding: 0.3em }
+.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 .na { visibility: hidden }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
-.radio { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
-.radio_block { background-color: inherit; border: inherit; display: grid; gap: 1em; margin: 1em 0 0 0 }
-.radio_date { background-color: inherit; border: inherit; padding: 0.3em; text-align: center }
+.radio { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
+.radio_date { padding: 0.3em; text-align: center }
 .radio_pick { background-color: #dfa622; border: inherit }
-.radio_title { background-color: inherit; border: inherit; padding: 0.3em; text-align: center }
-.rival_toggle { grid-template-columns: 1fr 1fr; flex-direction: row }
+.radio_title { padding: 0.3em; text-align: center }
 .schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
-.selected { background-color: inherit; border: 0 solid black; color: #dfa622 }
-.skill { align-items: center; align-content: center; background-color: inherit; border: inherit; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch }
-.slide_labels { align-items: start; background-color: inherit; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
+.selected { border: 0 solid black; color: #dfa622 }
+.skill { align-items: center; align-content: center; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch }
+.slide_labels { align-items: start; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
 .slide_label { text-align: center }
-.toggle { align-items: center; background-color: inherit; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
+.toggle { align-items: center; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 .toggle:has(input):hover { background-color: #eeeeee }
 .toggle:has(input:checked) { color: #dfa622 }
 .toggle:has(input:not(checked)) { color: inherit }
-.toggle.button { background-color: inherit; border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; justify-content: center; margin: 0.1em; padding: 0.3em }
+.toggle.button { border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; justify-content: center; margin: 0.1em; padding: 0.3em }
+.toggle.button.disabled { border-width: 0px; background-color: #eeeeee }
 .toggle.button:has(input:disabled) { border-width: 0px; background-color: #eeeeee }
 .toggle.button:has(input:checked) { border: 3px solid #dfa622 }
 .toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-.tricell { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
-div.bicell { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; width: 100% }
-div.by_day { border: 0px solid black; display: flex; flex-direction: column; margin: 1em 0 0 0 }
-div.by_days { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
-div.button { align-items: center; background-color: inherit; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
-div.chat_block { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
+button { align-items: center; background-color: inherit; border: 0px solid black; border-radius: 0.3em; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-evenly; margin: 0; padding: 0.3em; text-align: center }
+button.accept { border-radius: 50%; height: 2em; padding: 0px; width: 2em }
+button.cta { background-color: #dfa622; color: white; justify-content: center; margin: 1em }
+button.decline { margin: 1em }
+button.icon { height: 3em; padding: 0.2em; justify-content: center; width: 3em }
+button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
+button.inline { display: inline; padding: 0.1em }
+button.link { color: blue; font-size: 1em; text-decoration-line: underline }
+button.replicated { background-color: #eeeeee; color: #dfa622; height: 3em; width: 3em }
+button.round { border-radius: 50% }
+button.show-group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
+div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
+div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
+div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
+div.chat_block { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
-div.chat_item { align-items: center; background-color: inherit; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div.chat_item { align-items: center; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
 div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; display: flex; flex-direction: row; justify-content: center; padding: 1em }
+div.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; display: flex; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
+div.cta_block { align-items: center; color: white; display: flex; flex-direction: row; justify-content: space-between }
+div.cta_text { color: inherit; font-size: 1.13em; margin: 0 1.5em 0 1.5em }
 div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; cursor: pointer; display: flex; flex-direction: row; justify-content: center; padding: 1em }
-div.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0 }
-div.ctb_bezel { align-items: center; align-self: stretch; background-color: inherit; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0 }
-div.keen_desktop { height: 3em }
-div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
-div.cta_block { align-items: center; background-color: inherit; color: white; display: flex; flex-direction: row; justify-content: space-between }
-div.ctb_block { align-items: center; background-color: inherit; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
-div.cta_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 1.5em 0 1.5em }
-div.ctb_text { background-color: inherit; color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
+div.ctb_bezel { align-items: center; align-self: stretch; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0 }
+div.ctb_block { align-items: center; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
+div.ctb_text { color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
+div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
+div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
+div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
+div.day.sat { grid-column: 1 / 1; grid-row: 6 / 6 }
+div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
+div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
+div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
+div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
 div.detail { align-items: stretch; display: flex; flex-direction: column; justify-content: center }
 div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
 div.detail_form { align-items: stretch; display: flex; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
-div.detail_head { align-items: center; background-color: inherit; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
-div.detail_n { align-items: stretch; background-color: inherit; border: inherit; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_n { align-items: stretch; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
 div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
-div.disabled { background-color: inherit; border: 0px solid #dfa622; color: #bbbbbb }
-div.group { background-color: inherit; flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
+div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
+div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em; width: 100% }
+div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em; width: 100% }
+div.group { flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
-div.icon { align-items: center; background-color: inherit; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
-div.icon_bar { background-color: white; left: 0; opacity: 1.0; position: fixed; top: 0 }
-div.icon_bar_reserve { height: 4em }
+div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
+div.icon_bar_item { align-items: center; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
-div.keen_form { align-items: stretch; background-color: inherit; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
+div.keen_desktop { height: 3em }
+div.keen_form { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
+div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
-div.rival_mug { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
-div.rival_rate { align-items: start; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
-div.rival_rep { align-items: center; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
-div.rival_skill { align-items: start; background-color: inherit; border: inherit; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
+div.rival_mug { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
+div.rival_rate { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
+div.rival_rep { align-items: center; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
+div.rival_skill { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
 div.schedule_body { align-items: center; display: grid }
 div.schedule_head { align-items: center; display: flex; flex-direction: row }
 div.select_head { position: relative }
 div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
-span.chat_show { }
-span.flip { transform: rotate(180deg) }
+fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
+fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 h1 { color: black; text-align: left; font-size: 1.4em; margin: 0.3em }
 h2 { color: black; text-align: left; font-size: 1.2em; margin: 0.3em }
 h3 { color: black; text-align: left; font-size: 1.3em; margin: 0.3em }
 h4 { color: black; text-align: left }
 h5 { text-align: left; margin: 2em 1em 1em -1em }
 h6 { color: black; text-align: left; font-size: 1.0em; margin: 1em }
-h6.disabled { background-color: inherit; color: #999999 }
-p { background-color: inherit; margin: 0 0 0 0em; padding: 0.3em }
-p.caption { font-size: small }
-p.large { background-color: inherit; color: #666666; font-size: large }
-p.small { background-color: inherit; color: #666666; font-size: small }
+h6.disabled { color: #999999 }
+hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
+img.logo { height: 3em; padding: 0.1em }
+input[type=text] { flex: 1 1 auto; font-size: inherit }
+input.strength { display: flex; flex: 1 1 100%; height: 2em; width: 100% }
+input.disabled { background-color: #eeeeee; color: #999999 }
+input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }
 label.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0 }
 label.cta_bezel input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.large { border: 1px solid #eeeeee; padding: 1em }
-label.list_act { background-color: inherit; border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
+label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
 label.option { align-items: center; flex-direction: row; gap: 1em; justify-content: space-between; margin: 0.3em }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
-fieldset { border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
-fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
+p { margin: 0 0 0 0em; padding: 0.3em }
+p.caption { font-size: small }
+p.large { color: #666666; font-size: large }
+p.small { color: #666666; font-size: small }
 select { background-color: inherit; border: 0px solid black; height: 2em }
 select.game { border: 1px solid black; width: 100% }
-select.sort { background-color: inherit; border: 0px solid black; display: flex; font-size: inherit }
+select.sort { border: 0px solid black; display: flex; font-size: inherit }
 select.venue { border: 1px solid black; width: 100% }
-input[type=text] { flex: 1 1 auto; font-size: inherit }
-input.strength { display: flex; flex: 1 1 100%; height: 2em; width: 100% }
-input.disabled { background-color: #bbbbbb; color: #999999 }
-input#disabled { background-color: lightgrey; border: 0px solid #dfa622 }
-button { align-items: center; border: 0px solid black; border-radius: 0.3em; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-evenly; margin: 0; padding: 0.3em; text-align: center }
-button.accept { border-radius: 50%; height: 2em; padding: 0px; width: 2em }
-button.cta { background-color: #dfa622; color: white; justify-content: center; margin: 1em }
-button.decline { margin: 1em }
-button.icon { background-color: inherit; height: 3em; padding: 0.2em; justify-content: center; width: 3em }
-button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
-button.inline { background-color: inherit; display: inline; padding: 0.1em }
-button.link { background-color: inherit; color: blue; font-size: 1em; text-decoration-line: underline }
-button.list_item { background-color: inherit; border: 0.1em solid lightgrey; border-width: 0 0 0.1em 0; gap: 1em; justify-content: flex-start }
-button.list_item:last-child { border-width: 0 }
-button.list_item.selected { background-color: inherit; color: #dfa622 }
-button.radio { background-color: inherit; border-width: 1px; font-size: larger; margin: 0.1em }
-button.radio.selected { border: 3px solid #dfa622 }
-button.replicated { background-color: #eeeeee; color: #dfa622; height: 3em; width: 3em }
-button.round { border-radius: 50% }
-button.show-group { background-color: inherit; border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
-hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
+span.chat_show { }
+span.flip { transform: rotate(180deg) }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    button.head_back { order: 5 }
     div.flex_space { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
@@ -172,22 +160,22 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     img.logo { display: none }
+    label.keen_desktop { display: none }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
-    label.keen_desktop { display: none }
     span.full_day { display: none }
+    span.head_icon { display: none }
     span.mid_day { display: none }
     span.replicated { display: none }
     #content { width: 100% }
     #detail { display: none; flex: 1 1 100% }
     #list_bar { flex: 1 1 100% }
-    .head_back { order: 5 }
-    .head_icon { display: none }
     .toggle:has(input[name="list"]) { color: inherit }
 }
 @media only screen and (min-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    button.head_back { order: 5 }
     div.flex_space { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
@@ -195,22 +183,22 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
     img.logo { display: none }
+    label.keen_desktop { display: none }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
-    label.keen_desktop { display: none }
     span.full_day { display: none }
+    span.head_icon { display: none }
     span.mid_day { display: inline-block }
     span.replicated { display: none }
     #content { width: 100% }
     #detail { display: none; flex: 1 1 100% }
     #list_bar { flex: 1 1 100% }
-    .head_back { order: 5 }
-    .head_icon { display: none }
     .toggle:has(input[name="list"]) { color: inherit }
 }
 @media only screen and (min-width:768px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    button.head_back { order: 50 }
     div.flex_space { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
@@ -218,22 +206,22 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     img.logo { display: block }
+    label.keen_desktop { display: flex }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
-    label.keen_desktop { display: flex }
     span.full_day { display: inline-block }
+    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
-    .head_back { order: 50 }
-    .head_icon { display: block }
     .toggle:has(input[name="list"]:checked) { color: #dfa622 }
 }
 @media only screen and (min-width:992px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    button.head_back { order: 50 }
     div.flex_space { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
@@ -241,22 +229,22 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     img.logo { display: block }
+    label.keen_desktop { display: flex }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
-    label.keen_desktop { display: flex }
     span.full_day { display: inline-block }
+    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
-    .head_back { order: 50 }
-    .head_icon { display: block }
     .toggle:has(input[name="list"]:checked) { color: #dfa622 }
 }
 @media only screen and (min-width:1200px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    button.head_back { order: 50 }
     div.flex_space { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
@@ -264,22 +252,15 @@ hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
     img.logo { display: block }
+    label.keen_desktop { display: flex }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
-    label.keen_desktop { display: flex }
     span.full_day { display: inline-block }
+    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 1200px }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
-    .head_back { order: 50 }
-    .head_icon { display: block }
     .toggle:has(input[name="list"]:checked) { color: #dfa622 }
-}
-button:active { animation-name: feedback; animation-duration: 2s }
-i:active { animation-name: feedback; animation-duration: 2s }
-@keyframes feedback {
-    from { background-color: green; opacity: 1 }
-    to { background-color: white }
 }

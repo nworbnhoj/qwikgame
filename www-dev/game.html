@@ -13,32 +13,33 @@
 
 <body>
 
-<div class="icon_bar">
+<div id="icon_bar">
     <img class="logo href" src="qwik.icon.svg" data-href="index.html">
     <div class="flex_space"></div>
-    <div class="bar_item href" data-href="invite.html">
+    <div class="icon_bar_item href" data-href="invite.html">
         <i class="fa-solid fa-house fa-2xl"></i>
         <div class="icon_caption">Invitations</div>
     </div>
-    <div class="bar_item href" data-href="match.html">
+    <div class="icon_bar_item href" data-href="match.html">
         <i class="fa-regular fa-calendar-days fa-2xl"></i>
         <div class="icon_caption">Scheduled Matches</div>
     </div>
-    <div class="bar_item href" data-href="rival.html">
+    <div class="icon_bar_item href" data-href="rival.html">
         <i class="fa-solid fa-thumbs-up fa-2xl"></i>
         <div class="icon_caption">Rival Rating</div>
     </div>
-    <div class="bar_item href selected" data-href="game.html">
+    <div class="icon_bar_item href selected" data-href="game.html">
         <i class="fa-solid fa-volleyball fa-2xl"></i>
         <div class="icon_caption">My Games</div>
     </div>
     <div class="flex_space"></div>
-    <div class="bar_item href" data-href="account.html">
+    <div class="icon_bar_item href" data-href="account.html">
         <i class="fa-solid fa-graduation-cap fa-2xl"></i>
         <div class="icon_caption">Helen</div>
     </div>
 </div>
-<div class="icon_bar_reserve"></div>
+<div id="icon_bar_reserve"></div>
+<hr>
 
 <div id="content" class="landscape">
     <div id="list_bar">
@@ -196,7 +197,7 @@
                     <option>Vasil Levski</option>
                 </select>
                 <h5>MY AVAILABILITY AT THIS VENUE</h5>
-                <div class="by_week bicell">
+                <div class="by_week grid_2_col">
                     <button class="link show-next-parent-sibling">Select Days and Time</button>
                     <label class="toggle button all_week">Anytime
                         <input type="checkbox" name="all_week">
@@ -205,13 +206,13 @@
                 <div class="by_days hidden">
                     <div class="by_day">
                         <p>MONDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_monday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -261,13 +262,13 @@
                     </div>
                     <div class="by_day">
                         <p>TUESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_tuesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -317,13 +318,13 @@
                     </div>
                     <div class="by_day">
                         <p>WEDNESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_wednesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -373,13 +374,13 @@
                     </div>
                     <div class="by_day">
                         <p>THURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_thursday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -429,13 +430,13 @@
                     </div>
                     <div class="by_day">
                         <p>FRIDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_friday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -485,13 +486,13 @@
                     </div>
                     <div class="by_day">
                         <p>SATURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_saturday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -541,13 +542,13 @@
                     </div>
                     <div class="by_day">
                         <p>SUNDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_sunday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -597,14 +598,14 @@
                     </div>
                 </div>
                 <h5>MY SKILL LEVEL AT THIS VENUE</h5>
-                <div class="slide_text">
-                    <div class="invisible">Very weak</div>
-                    <div class="invisible">Weak</div>
-                    <div class="">Average</div>
-                    <div class="invisible">Strong</div>
-                    <div class="invisible">Very Strong</div>
+                <div class="slide_labels">
+                    <div class="slide_label invisible">Very weak</div>
+                    <div class="slide_label invisible">Weak</div>
+                    <div class="slide_label ">Average</div>
+                    <div class="slide_label invisible">Strong</div>
+                    <div class="slide_label invisible">Very Strong</div>
                 </div>
-                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)"/>
+                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 <div class="cta_bezel">
                     <div class="cta schedule_save">
                         <div class="cta_text">SAVE</div>
@@ -627,7 +628,7 @@
                     <option>Vasil Levski</option>
                 </select>
                 <h5>MY AVAILABILITY AT THIS VENUE</h5>
-                <div class="by_week bicell">
+                <div class="by_week grid_2_col">
                     <button class="link show-next-parent-sibling">Select Days and Time</button>
                     <label class="toggle button all_week">Anytime
                         <input type="checkbox" name="all_week">
@@ -636,13 +637,13 @@
                 <div class="by_days hidden">
                     <div class="by_day">
                         <p>MONDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_monday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -692,13 +693,13 @@
                     </div>
                     <div class="by_day">
                         <p>TUESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_tuesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -748,13 +749,13 @@
                     </div>
                     <div class="by_day">
                         <p>WEDNESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_wednesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -804,13 +805,13 @@
                     </div>
                     <div class="by_day">
                         <p>THURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_thursday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -860,13 +861,13 @@
                     </div>
                     <div class="by_day">
                         <p>FRIDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_friday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -916,13 +917,13 @@
                     </div>
                     <div class="by_day">
                         <p>SATURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_saturday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -972,13 +973,13 @@
                     </div>
                     <div class="by_day">
                         <p>SUNDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_sunday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -1028,14 +1029,14 @@
                     </div>
                 </div>
                 <h5>MY SKILL LEVEL AT THIS VENUE</h5>
-                <div class="slide_text">
-                    <div class="invisible">Very weak</div>
-                    <div class="invisible">Weak</div>
-                    <div class="">Average</div>
-                    <div class="invisible">Strong</div>
-                    <div class="invisible">Very Strong</div>
+                <div class="slide_labels">
+                    <div class="slide_label invisible">Very weak</div>
+                    <div class="slide_label invisible">Weak</div>
+                    <div class="slide_label ">Average</div>
+                    <div class="slide_label invisible">Strong</div>
+                    <div class="slide_label invisible">Very Strong</div>
                 </div>
-                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)"/>
+                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 <div class="cta_bezel">
                     <div class="cta schedule_save">
                         <div class="cta_text">SAVE</div>
@@ -1102,7 +1103,7 @@
                     <option>Vasil Levski</option>
                 </select>
                 <h5>MY AVAILABILITY AT THIS VENUE</h5>
-                <div class="by_week bicell">
+                <div class="by_week grid_2_col">
                     <button class="link show-next-parent-sibling">Select Days and Time</button>
                     <label class="toggle button all_week">Anytime
                         <input type="checkbox" name="all_week">
@@ -1111,13 +1112,13 @@
                 <div class="by_days hidden">
                     <div class="by_day">
                         <p>MONDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_monday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour" checked="checked">
                             </label>
@@ -1167,13 +1168,13 @@
                     </div>
                     <div class="by_day">
                         <p>TUESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_tuesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -1223,13 +1224,13 @@
                     </div>
                     <div class="by_day">
                         <p>WEDNESDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_wednesday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -1279,13 +1280,13 @@
                     </div>
                     <div class="by_day">
                         <p>THURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_thursday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -1335,13 +1336,13 @@
                     </div>
                     <div class="by_day">
                         <p>FRIDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_friday">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour">
                             </label>
@@ -1391,13 +1392,13 @@
                     </div>
                     <div class="by_day">
                         <p>SATURDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_saturday" checked="checked">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour" checked="checked">
                             </label>
@@ -1447,13 +1448,13 @@
                     </div>
                     <div class="by_day">
                         <p>SUNDAY</p>
-                        <div class="bicell">
+                        <div class="grid_2_col">
                             <button class="link show-next-parent-sibling">Pick time</button>
                             <label class="toggle button all_day">All Day
                                 <input type="checkbox" name="all_sunday" checked="checked">
                             </label>
                         </div>
-                        <div class="radio_block hour_toggle hidden">
+                        <div class="radio_block hour_grid hidden">
                             <label class="toggle button">6
                                 <input type="checkbox" name="hour" checked="checked">
                             </label>
@@ -1503,14 +1504,14 @@
                     </div>
                 </div>
                 <h5>MY SKILL LEVEL AT THIS VENUE</h5>
-                <div class="slide_text">
-                    <div class="invisible">Very weak</div>
-                    <div class="invisible">Weak</div>
-                    <div class="">Average</div>
-                    <div class="invisible">Strong</div>
-                    <div class="invisible">Very Strong</div>
+                <div class="slide_labels">
+                    <div class="slide_label invisible">Very weak</div>
+                    <div class="slide_label invisible">Weak</div>
+                    <div class="slide_label ">Average</div>
+                    <div class="slide_label invisible">Strong</div>
+                    <div class="slide_label invisible">Very Strong</div>
                 </div>
-                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)"/>
+                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 <div class="cta_bezel">
                     <div class="cta schedule_save">
                         <div class="cta_text">SAVE</div>

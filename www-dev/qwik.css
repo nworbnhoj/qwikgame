@@ -152,8 +152,8 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
-    button.head_back { order: 5 }
     div.flex_space { display: none }
+    div.head_back { order: 5 }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
     div.slide_labels { font-size: 0.94em }
@@ -175,8 +175,8 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (min-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
-    button.head_back { order: 5 }
     div.flex_space { display: none }
+    div.head_back { order: 5 }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
     div.slide_labels { font-size: 0.94em }
@@ -198,8 +198,8 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (min-width:768px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
-    button.head_back { order: 50 }
     div.flex_space { display: block }
+    div.head_back { order: 50 }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }
@@ -221,8 +221,8 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (min-width:992px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
-    button.head_back { order: 50 }
     div.flex_space { display: block }
+    div.head_back { order: 50 }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }
@@ -244,8 +244,8 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (min-width:1200px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
-    button.head_back { order: 50 }
     div.flex_space { display: block }
+    div.head_back { order: 50 }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }

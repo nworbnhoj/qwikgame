@@ -20,7 +20,6 @@ blockquote, q { quotes: "" "" }
 .hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
 .hidden { display: none }
 .invisible { visibility: hidden }
-.item_block { align-items: flex-start; display: flex; flex-direction: column; justify-content: space-between }
 .item_text { padding: 0.3em }
 .list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 .na { visibility: hidden }
@@ -89,6 +88,7 @@ div.hidden { display: none }
 div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar_item { align-items: center; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
+div.item_block { align-items: flex-start; display: flex; flex-direction: column; justify-content: space-between }
 div.keen_desktop { height: 3em }
 div.keen_form { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }

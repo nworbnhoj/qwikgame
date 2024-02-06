@@ -204,10 +204,10 @@ window.onload = function() {
   document.querySelectorAll('div.show_group').forEach(function(button) {
     button.onclick = showGroup;
   });
-  document.querySelectorAll('button.show-next-parent-sibling').forEach(function(button) {
+  document.querySelectorAll('div.show-next-parent-sibling').forEach(function(button) {
     button.onclick = showNextParentSibling;
   });
-  document.querySelectorAll('button.show-next-sibling').forEach(function(button) {
+  document.querySelectorAll('div.show-next-sibling').forEach(function(button) {
     button.onclick = showNextParentSibling;
   });
   document.querySelectorAll('div.select_head').forEach(function(select) {

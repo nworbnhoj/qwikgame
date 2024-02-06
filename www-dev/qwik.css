@@ -57,7 +57,6 @@ button.decline { margin: 1em }
 button.icon { height: 3em; padding: 0.2em; justify-content: center; width: 3em }
 button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
 button.inline { display: inline; padding: 0.1em }
-button.link { color: blue; font-size: 1em; text-decoration-line: underline }
 div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
@@ -100,6 +99,7 @@ div.keen_desktop { height: 3em }
 div.keen_form { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
+div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line: underline }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
 div.replicated { background-color: #eeeeee; color: #dfa622 }

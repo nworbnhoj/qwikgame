@@ -12,6 +12,9 @@ blockquote, q { quotes: "" "" }
 #icon_bar { align-items: center; background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
 #icon_bar_reserve { height: 4em }
 #list_bar { border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
+.align_center { align-self: center }
+.align_end { align-self: flex-end }
+.align_start { align-self: flex-start }
 .hidden { display: none }
 .invisible { visibility: hidden }
 .push_left { margin-right: auto }

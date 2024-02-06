@@ -52,11 +52,6 @@ blockquote, q { quotes: "" "" }
 .toggle.button:has(input:checked) { border: 3px solid #dfa622 }
 .toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
-button { align-items: center; background-color: inherit; border: 0px solid black; border-radius: 0.3em; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-evenly; margin: 0; padding: 0.3em; text-align: center }
-button.decline { margin: 1em }
-button.icon { height: 3em; padding: 0.2em; justify-content: center; width: 3em }
-button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
-button.inline { display: inline; padding: 0.1em }
 div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
@@ -88,8 +83,8 @@ div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.
 div.detail_n { align-items: stretch; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
 div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
-div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em; width: 100% }
-div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; margin: 0.3em; width: 100% }
+div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
+div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
 div.group { flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.hidden { display: none }
 div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
@@ -149,6 +144,7 @@ select.sort { border: 0px solid black; display: flex; font-size: inherit }
 select.venue { border: 1px solid black; width: 100% }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
+span.icon { font-size: medium; padding: 0.2em }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }

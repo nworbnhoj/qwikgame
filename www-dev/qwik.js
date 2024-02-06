@@ -201,7 +201,7 @@ window.onload = function() {
   document.querySelectorAll('button.head_back').forEach(function(button) {
     button.onclick = previousDetail;
   });
-  document.querySelectorAll('button.show-group').forEach(function(button) {
+  document.querySelectorAll('div.show_group').forEach(function(button) {
     button.onclick = showGroup;
   });
   document.querySelectorAll('button.show-next-parent-sibling').forEach(function(button) {

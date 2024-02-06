@@ -58,7 +58,6 @@ button.icon { height: 3em; padding: 0.2em; justify-content: center; width: 3em }
 button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
 button.inline { display: inline; padding: 0.1em }
 button.link { color: blue; font-size: 1em; text-decoration-line: underline }
-button.show-group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
 div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
@@ -110,6 +109,7 @@ div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.rival_rep { align-items: center; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
 div.rival_skill { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
 div.round { border-radius: 50% }
+div.show_group { border-radius: 0; display: flex; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
 div.size_med { height: 3em; width: 3em; }
 div.size_sml { height: 2em; width: 2em; }
 div.schedule_body { align-items: center; display: grid }

@@ -192,13 +192,13 @@ window.onload = function() {
   document.querySelectorAll('.keen_mobile').forEach(function(proxy) {
     proxy.onclick = ctaKeen;
   });
-  document.querySelectorAll('button.delete').forEach(function(button) {
+  document.querySelectorAll('span.delete').forEach(function(button) {
     button.onclick = hideParent;
   });
-  document.querySelectorAll('button.head_fwd').forEach(function(button) {
+  document.querySelectorAll('div.head_fwd').forEach(function(button) {
     button.onclick = nextDetail;
   });
-  document.querySelectorAll('button.head_back').forEach(function(button) {
+  document.querySelectorAll('div.head_back').forEach(function(button) {
     button.onclick = previousDetail;
   });
   document.querySelectorAll('div.show_group').forEach(function(button) {

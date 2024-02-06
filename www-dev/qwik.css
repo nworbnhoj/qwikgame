@@ -20,7 +20,6 @@ blockquote, q { quotes: "" "" }
 .hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
 .hidden { display: none }
 .invisible { visibility: hidden }
-.item_text { padding: 0.3em }
 .list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 .na { visibility: hidden }
 .push_left { margin-right: auto }
@@ -133,7 +132,7 @@ label.large { border: 1px solid #eeeeee; padding: 1em }
 label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
 label.option { align-items: center; flex-direction: row; gap: 1em; justify-content: space-between; margin: 0.3em }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
-p { margin: 0 0 0 0em; padding: 0.3em }
+p { margin: 0em; padding: 0.3em }
 p.bold { font-weight: bold }
 p.caption { font-size: small }
 p.large { color: #666666; font-size: large }

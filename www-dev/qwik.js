@@ -171,7 +171,7 @@ function toggleAllWeek(event) {
   detail.querySelectorAll('.all_day').forEach(function(button) {
     button.firstElementChild.checked = checked;
   })
-  detail.querySelectorAll('.hour_grid').forEach(function(radio_block) {
+  detail.querySelectorAll('div.hour_grid').forEach(function(radio_block) {
     for (hour of radio_block.children) {
       hour.firstElementChild.checked = checked;
     }

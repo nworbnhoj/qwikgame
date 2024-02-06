@@ -12,16 +12,8 @@ blockquote, q { quotes: "" "" }
 #icon_bar { align-items: center; background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
 #icon_bar_reserve { height: 4em }
 #list_bar { border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
-.flex_space { flex-grow: 3 }
-.form_action { display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
-.group_head_sort { flex: auto; padding: 1em }
-.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
-.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
-.hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
 .hidden { display: none }
 .invisible { visibility: hidden }
-.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-.na { visibility: hidden }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
 .radio { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
@@ -75,6 +67,8 @@ div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.
 div.detail_n { align-items: stretch; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
 div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
+div.flex_space { flex-grow: 3 }
+div.form_action { display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
 div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
 div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
 div.group { flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
@@ -84,6 +78,9 @@ div.head_icon { flex: 0 0 auto; order: 10 }
 div.head_more { flex: 0 0 auto; order: 30 }
 div.head_txt { align-items: flex-start; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
 div.hidden { display: none }
+div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
+div.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
+div.hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar_item { align-items: center; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
 div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
@@ -93,6 +90,7 @@ div.keen_form { align-items: stretch; border: 0 solid black; display: flex; flex
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
 div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line: underline }
+div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
 div.replicated { background-color: #eeeeee; color: #dfa622 }

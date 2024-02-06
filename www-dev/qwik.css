@@ -53,8 +53,6 @@ blockquote, q { quotes: "" "" }
 .toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
 button { align-items: center; background-color: inherit; border: 0px solid black; border-radius: 0.3em; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-evenly; margin: 0; padding: 0.3em; text-align: center }
-button.accept { border-radius: 50%; height: 2em; padding: 0px; width: 2em }
-button.cta { background-color: #dfa622; color: white; justify-content: center; margin: 1em }
 button.decline { margin: 1em }
 button.icon { height: 3em; padding: 0.2em; justify-content: center; width: 3em }
 button.icon.help { border-width: 0.2em; height: 2em; width: 2em }
@@ -112,6 +110,9 @@ div.rival_rate { align-items: start; display: flex; flex: auto; flex-direction: 
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.rival_rep { align-items: center; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
 div.rival_skill { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
+div.round { border-radius: 50% }
+div.size_small { height: 2em; width: 2em; }
+div.size_sml { height: 2em; width: 2em; }
 div.schedule_body { align-items: center; display: grid }
 div.schedule_head { align-items: center; display: flex; flex-direction: row }
 div.select_head { position: relative }

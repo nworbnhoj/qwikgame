@@ -15,11 +15,6 @@ blockquote, q { quotes: "" "" }
 .flex_space { flex-grow: 3 }
 .form_action { display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
 .group_head_sort { flex: auto; padding: 1em }
-.head_back { flex: 0 0 auto; order: 40 }
-.head_fwd { flex: 0 0 auto; order: 50 }
-.head_icon { flex: 0 0 auto; order: 10 }
-.head_more { flex: 0 0 auto; order: 30 }
-.head_txt { align-items: flex-start; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
 .hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
 .hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
 .hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
@@ -86,6 +81,11 @@ div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
 div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
 div.group { flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
+div.head_back { flex: 0 0 auto; order: 40 }
+div.head_fwd { flex: 0 0 auto; order: 50 }
+div.head_icon { flex: 0 0 auto; order: 10 }
+div.head_more { flex: 0 0 auto; order: 30 }
+div.head_txt { align-items: flex-start; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
 div.hidden { display: none }
 div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar_item { align-items: center; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
@@ -150,6 +150,7 @@ span.icon { font-size: medium; padding: 0.2em }
     button { font-size: 1.07em }
     div.flex_space { display: none }
     div.head_back { order: 5 }
+    div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
     div.slide_labels { font-size: 0.94em }
@@ -160,7 +161,6 @@ span.icon { font-size: medium; padding: 0.2em }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
     span.full_day { display: none }
-    span.head_icon { display: none }
     span.mid_day { display: none }
     span.replicated { display: none }
     #content { width: 100% }
@@ -173,6 +173,7 @@ span.icon { font-size: medium; padding: 0.2em }
     button { font-size: 1.07em }
     div.flex_space { display: none }
     div.head_back { order: 5 }
+    div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
     div.slide_labels { font-size: 0.94em }
@@ -183,7 +184,6 @@ span.icon { font-size: medium; padding: 0.2em }
     p.caption { font-size: 0.94em }
     p.name { font-size: 1.07em }
     span.full_day { display: none }
-    span.head_icon { display: none }
     span.mid_day { display: inline-block }
     span.replicated { display: none }
     #content { width: 100% }
@@ -196,6 +196,7 @@ span.icon { font-size: medium; padding: 0.2em }
     button { font-size: 1.13em }
     div.flex_space { display: block }
     div.head_back { order: 50 }
+    div.head_icon { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }
@@ -206,7 +207,6 @@ span.icon { font-size: medium; padding: 0.2em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
     span.full_day { display: inline-block }
-    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
@@ -219,6 +219,7 @@ span.icon { font-size: medium; padding: 0.2em }
     button { font-size: 1.13em }
     div.flex_space { display: block }
     div.head_back { order: 50 }
+    div.head_icon { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }
@@ -229,7 +230,6 @@ span.icon { font-size: medium; padding: 0.2em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
     span.full_day { display: inline-block }
-    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 100% }
@@ -242,6 +242,7 @@ span.icon { font-size: medium; padding: 0.2em }
     button { font-size: 1.13em }
     div.flex_space { display: block }
     div.head_back { order: 50 }
+    div.head_icon { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
     div.slide_labels { font-size: 0.89em }
@@ -252,7 +253,6 @@ span.icon { font-size: medium; padding: 0.2em }
     p.caption { font-size: 0.89em }
     p.name { font-size: 1.13em }
     span.full_day { display: inline-block }
-    span.head_icon { display: block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
     #content { width: 1200px }

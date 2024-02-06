@@ -155,7 +155,7 @@ function slide(slider) {
 function toggleAllDay(event) {
   let button = event.currentTarget;
   var checked = button.firstElementChild.checked;
-  var hours = button.closest('.by_day').querySelector('.radio_block').children;
+  var hours = button.closest('.by_day').querySelector('div.radio_block').children;
   for (hour of hours) {
     var checkbox = hour.firstElementChild;
     if (!checkbox.disabled) {

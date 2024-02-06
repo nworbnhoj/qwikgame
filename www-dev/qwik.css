@@ -19,16 +19,7 @@ blockquote, q { quotes: "" "" }
 .invisible { visibility: hidden }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
-.radio { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
-.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
-.radio_date { padding: 0.3em; text-align: center }
-.radio_pick { background-color: #dfa622; border: inherit }
-.radio_title { padding: 0.3em; text-align: center }
-.schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
-.selected { border: 0 solid black; color: #dfa622 }
-.skill { align-items: center; align-content: center; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: stretch }
-.slide_labels { align-items: start; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
-.slide_label { text-align: center }
+.selected { color: #dfa622 }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
 div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
@@ -87,6 +78,8 @@ div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
+div.radio { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
 div.replicated { background-color: #eeeeee; color: #dfa622 }
 div.rival_mug { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
 div.rival_rate { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
@@ -97,11 +90,14 @@ div.round { border-radius: 50% }
 div.show_group { border-radius: 0; display: flex; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
 div.size_med { height: 3em; width: 3em; }
 div.size_sml { height: 2em; width: 2em; }
+div.schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { align-items: center; display: grid }
 div.schedule_head { align-items: center; display: flex; flex-direction: row }
 div.select_head { position: relative }
 div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
+div.slide_labels { align-items: start; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
+div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 h1 { color: black; text-align: left; font-size: 1.4em; margin: 0.3em }

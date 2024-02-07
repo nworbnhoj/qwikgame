@@ -30,6 +30,7 @@ div.button.med { height: 3em; width: 3em; }
 div.button.round { border-radius: 50% }
 div.button.sml { height: 2em; width: 2em; }
 div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
+div.button.tiny { height: 1em; width: 1em; }
 div.button.wide { width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
@@ -84,7 +85,7 @@ div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
-div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
+div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em ;position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; justify-content: space-between; padding: 1em; width: 100% }
@@ -128,7 +129,7 @@ label.cta_bezel { align-items: center; align-self: stretch; background-color: #d
 label.cta_bezel input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.large { border: 1px solid #eeeeee; padding: 1em }
 label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
-label.option { margin: 0.3em; text-align: center }
+label.option { align-items: stretch; display: flex; gap: 1em; margin: 0.3em; text-align: center }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
 label.toggle { align-items: center; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 label.toggle:has(input):hover { background-color: #eeeeee }
@@ -150,7 +151,6 @@ select.sort { border: 0px solid black; display: flex; font-size: inherit }
 select.venue { border: 1px solid black; width: 100% }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
-span.icon { font-size: medium; padding: 0.2em }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }

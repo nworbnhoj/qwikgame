@@ -23,10 +23,8 @@ blockquote, q { quotes: "" "" }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
 div { display: flex; }
 div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
-div.by_days { align-items: stretch; border: 0 solid black; flex-direction: column; justify-content: stretch; width: 100% }
 div.button { align-items: center; border: 1px solid black; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
 div.button.wide { margin: 0.1em; padding: 0.3em; width: 100% }
-div.chat_block { align-items: stretch; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { align-items: center; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { align-items: center; border: 0 solid black; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
@@ -47,15 +45,13 @@ div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
 div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
 div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
 div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
-div.detail { align-items: stretch; flex-direction: column; justify-content: center }
-div.detail_body { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
-div.detail_form { align-items: stretch; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
+div.detail_body { padding: 1em }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
-div.detail_n { align-items: stretch; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
+div.detail_n { flex: 0 0 auto; gap: 1em; }
+div.detail_rival { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
 div.detail_summary { align-items: start; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.flex_space { flex-grow: 3 }
-div.form_action { flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
 div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
 div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
 div.group { flex-direction: column; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
@@ -70,24 +66,23 @@ div.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; he
 div.hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-items: center; border: 0px solid black; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar_item { align-items: center; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
-div.invite_friend_head { align-items: center; flex-direction: row; justify-content: space-between }
 div.item_block { align-items: flex-start; flex-direction: column; justify-content: space-between }
 div.keen_desktop { height: 3em }
-div.keen_form { align-items: stretch; border: 0 solid black; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.learn { flex-direction: row; justify-content: right; padding: 1em }
 div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line: underline }
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
+div.paver { align-items: center; flex: auto; flex-direction: row; justify-content: center; padding: 1em; }
 div.pillar { align-items: center; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.plank { align-items: center; flex: auto; flex-direction: row; justify-content: space-between; padding: 1em; width: 100% }
 div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
 div.replicated { background-color: #eeeeee; color: #dfa622 }
-div.rival_mug { align-items: center; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
+div.rival_mug { justify-content: space-evenly; padding: 1em; width: 30% }
 div.rival_rate { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
-div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
-div.rival_rep { align-items: center; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
+div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row; max-width: 50% }
 div.rival_skill { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
 div.round { border-radius: 50% }
 div.select { display: block }

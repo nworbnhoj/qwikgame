@@ -19,18 +19,17 @@ body { display: flex; flex-direction: column; font-family: NotoSans-Regular; ali
 div { align-items: center; display: flex; }
 div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 
-div.buton { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
-div.buton i {}
-div.buton p {}
-div.buton.cta { background-color: #dfa622; color: white; padding: 1em }
-div.buton.ctb { border-width: 1px; color: black; padding: 1em }
-div.buton.keen_mobile { bottom: 4em; position: fixed; right: 2em }
-div.buton.lge { height: 6em; width: 6em; }
-div.buton.round { border-radius: 50% }
-div.buton.thin { height: 2em; margin: 0.1em; padding: 0.3em }
-div.buton.wide { width: 100% }
-div.button { border: 1px solid black; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
-div.button.thin { margin: 0.1em; padding: 0.3em }
+div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
+div.button i {}
+div.button p {}
+div.button.cta { background-color: #dfa622; color: white; padding: 1em }
+div.button.ctb { border-width: 1px; color: black; padding: 1em }
+div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
+div.button.lge { height: 6em; width: 6em; }
+div.button.med { height: 3em; width: 3em; }
+div.button.round { border-radius: 50% }
+div.button.sml { height: 2em; width: 2em; }
+div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 div.button.wide { width: 100% }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }

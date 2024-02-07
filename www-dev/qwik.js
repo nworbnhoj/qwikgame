@@ -219,10 +219,10 @@ window.onload = function() {
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
     checkbox.oninput = enableInviteFriend;
   });
-  document.querySelectorAll('label.toggle.button.all_day').forEach(function(button) {
+  document.querySelectorAll('label.toggle.all_day').forEach(function(button) {
     button.onclick = toggleAllDay;
   });
-  document.querySelectorAll('label.toggle.button.all_week').forEach(function(button) {
+  document.querySelectorAll('label.toggle.all_week').forEach(function(button) {
     button.onclick = toggleAllWeek;
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {

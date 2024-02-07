@@ -64,10 +64,10 @@ div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
 div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
-div.head_back { flex: 0 0 auto; order: 40 }
-div.head_fwd { flex: 0 0 auto; order: 50 }
-div.head_icon { flex: 0 0 auto; order: 10 }
-div.head_more { flex: 0 0 auto; order: 30 }
+div.head_back { order: 40 }
+div.head_fwd { order: 50 }
+div.head_icon { order: 10 }
+div.head_more { order: 30 }
 div.head_txt { align-items: flex-start; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }

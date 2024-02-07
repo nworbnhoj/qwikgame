@@ -22,6 +22,10 @@ div.by_day { align-items: start; border: 0px solid black; flex-direction: column
 div.buton { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
 div.buton i {}
 div.buton p {}
+div.buton.cta { background-color: #dfa622; color: white; padding: 1em }
+div.buton.keen_mobile { bottom: 4em; position: fixed; right: 2em }
+div.buton.lge { height: 6em; width: 6em; }
+div.buton.round { border-radius: 50% }
 div.button { border: 1px solid black; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
 div.button.thin { margin: 0.1em; padding: 0.3em }
 div.button.wide { width: 100% }

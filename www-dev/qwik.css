@@ -7,7 +7,7 @@ caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
 @font-face { font-family: 'NotoSans-Regular'; src: url(NotoSans-Regular.ttf) }
-#content { display: flex; justify-content: stretch }
+#content { display: flex; flex-direction: row; justify-content: stretch }
 #detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 1em }
 #icon_bar { align-items: center; background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
 #icon_bar_reserve { height: 4em }
@@ -21,21 +21,23 @@ blockquote, q { quotes: "" "" }
 .push_right { margin-left: auto }
 .selected { color: #dfa622 }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
-div.by_day { align-items: start; border: 0px solid black; display: flex; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
-div.by_days { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; width: 100% }
-div.button { align-items: center; border: 1px solid black; display: flex; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
-div.chat_block { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
-div.chat_bubble { align-items: flex-start; background-color: #eeeeee; display: flex; flex-direction: column; justify-content: space-between; padding: 0.3em }
-div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
-div.chat_item { align-items: center; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div { display: flex; }
+div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
+div.by_days { align-items: stretch; border: 0 solid black; flex-direction: column; justify-content: stretch; width: 100% }
+div.button { align-items: center; border: 1px solid black; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
+div.button.wide { margin: 0.1em; padding: 0.3em; width: 100% }
+div.chat_block { align-items: stretch; flex: auto; flex-direction: column; justify-content: space-between; width: 100% }
+div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
+div.chat_input { align-items: center; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
+div.chat_item { align-items: center; border: 0 solid black; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item.right { justify-content: flex-end }
-div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; display: flex; flex-direction: row; justify-content: center; padding: 1em }
-div.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; display: flex; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
-div.cta_block { align-items: center; color: white; display: flex; flex-direction: row; justify-content: space-between }
+div.cta { align-items: center; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; flex-direction: row; justify-content: center; padding: 1em }
+div.cta_bezel { align-items: center; align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
+div.cta_block { align-items: center; color: white; flex-direction: row; justify-content: space-between }
 div.cta_text { color: inherit; font-size: 1.13em; margin: 0 1.5em 0 1.5em }
-div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; cursor: pointer; display: flex; flex-direction: row; justify-content: center; padding: 1em }
-div.ctb_bezel { align-items: center; align-self: stretch; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0 }
-div.ctb_block { align-items: center; color: inherit; display: flex; flex-direction: row; justify-content: space-between }
+div.ctb { align-items: center; background-color: white; border-width: 1px; color: black; cursor: pointer; flex-direction: row; justify-content: center; padding: 1em }
+div.ctb_bezel { align-items: center; align-self: stretch; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
+div.ctb_block { align-items: center; color: inherit; flex-direction: row; justify-content: space-between }
 div.ctb_text { color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
@@ -45,58 +47,60 @@ div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
 div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
 div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
 div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
-div.detail { align-items: stretch; display: flex; flex-direction: column; justify-content: center }
-div.detail_body { align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
-div.detail_form { align-items: stretch; display: flex; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
-div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
-div.detail_n { align-items: stretch; display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
-div.detail_summary { align-items: start; display: flex; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
+div.detail { align-items: stretch; flex-direction: column; justify-content: center }
+div.detail_body { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
+div.detail_form { align-items: stretch; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_n { align-items: stretch; flex: 0 0 auto; flex-direction: column; gap: 1em; justify-content: flex-start }
+div.detail_summary { align-items: start; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.flex_space { flex-grow: 3 }
-div.form_action { display: flex; flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
-div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
-div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-content: center; margin: 0.3em; width: 100% }
-div.group { flex-direction: column; display: flex; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
+div.form_action { flex: 1 1 100%; flex-direction: row; justify-content: center; padding: 1em }
+div.grid_2_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
+div.grid_3_col { align-items: center; display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
+div.group { flex-direction: column; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
 div.head_back { flex: 0 0 auto; order: 40 }
 div.head_fwd { flex: 0 0 auto; order: 50 }
 div.head_icon { flex: 0 0 auto; order: 10 }
 div.head_more { flex: 0 0 auto; order: 30 }
-div.head_txt { align-items: flex-start; display: flex; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
+div.head_txt { align-items: flex-start; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
-div.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; display: flex; height: 2em; justify-content: center }
-div.hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; display: flex; flex: auto; font-size: xx-large; justify-content: center }
-div.icon { align-items: center; border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
-div.icon_bar_item { align-items: center; display: flex; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
-div.invite_friend_head { align-items: center; display: flex; flex-direction: row; justify-content: space-between }
-div.item_block { align-items: flex-start; display: flex; flex-direction: column; justify-content: space-between }
+div.hrs { align-items: center; border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
+div.hrs.apm { align-items: center; background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
+div.icon { align-items: center; border: 0px solid black; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
+div.icon_bar_item { align-items: center; flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
+div.invite_friend_head { align-items: center; flex-direction: row; justify-content: space-between }
+div.item_block { align-items: flex-start; flex-direction: column; justify-content: space-between }
 div.keen_desktop { height: 3em }
-div.keen_form { align-items: stretch; border: 0 solid black; display: flex; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
+div.keen_form { align-items: stretch; border: 0 solid black; flex-direction: column; justify-content: stretch; padding: 1em; width: 100% }
 div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
-div.learn { display: flex; flex-direction: row; justify-content: right; padding: 1em }
+div.learn { flex-direction: row; justify-content: right; padding: 1em }
 div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line: underline }
-div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; position: relative; width: 100% }
-div.radio { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.pillar { align-items: center; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
 div.replicated { background-color: #eeeeee; color: #dfa622 }
-div.rival_mug { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
-div.rival_rate { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.rival_mug { align-items: center; flex: auto; flex-direction: column; justify-content: space-evenly; padding: 1em; width: 40% }
+div.rival_rate { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
-div.rival_rep { align-items: center; display: flex; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
-div.rival_skill { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
+div.rival_rep { align-items: center; flex: auto; flex-direction: row; justify-content: space-evenly; padding: 1em }
+div.rival_skill { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
 div.round { border-radius: 50% }
-div.show_group { border-radius: 0; display: flex; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
+div.select { display: block }
+div.show_group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
 div.size_med { height: 3em; width: 3em; }
 div.size_sml { height: 2em; width: 2em; }
 div.schedule { align-items: center; display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { align-items: center; display: grid }
-div.schedule_head { align-items: center; display: flex; flex-direction: row }
+div.schedule_head { align-items: center; flex-direction: row }
 div.select_head { position: relative }
 div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
-div.slide_labels { align-items: start; border: 0 solid black; display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
+div.slide_labels { align-items: start; border: 0 solid black; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
 div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
@@ -120,11 +124,11 @@ label.large { border: 1px solid #eeeeee; padding: 1em }
 label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
 label.option { margin: 0.3em; text-align: center }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
-label.toggle { align-items: center; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
+label.toggle { align-items: center; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 label.toggle:has(input):hover { background-color: #eeeeee }
 label.toggle:has(input:checked) { color: #dfa622 }
 label.toggle:has(input:not(checked)) { color: inherit }
-label.toggle.button { border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; justify-content: center; margin: 0.1em; padding: 0.3em }
+label.toggle.button { border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; justify-content: center; margin: 0.1em; padding: 0.3em; width: 100% }
 label.toggle.button.disabled { border-width: 0px; background-color: #eeeeee }
 label.toggle.button:has(input:disabled) { border-width: 0px; background-color: #eeeeee }
 label.toggle.button:has(input:checked) { border: 3px solid #dfa622 }

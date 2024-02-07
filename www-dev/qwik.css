@@ -118,7 +118,7 @@ label.cta_bezel { align-items: center; align-self: stretch; background-color: #d
 label.cta_bezel input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.large { border: 1px solid #eeeeee; padding: 1em }
 label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
-label.option { align-items: center; flex-direction: row; gap: 1em; justify-content: space-between; margin: 0.3em }
+label.option { margin: 0.3em; text-align: center }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
 label.toggle { align-items: center; border: 0 solid black; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: flex-start; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none }
 label.toggle:has(input):hover { background-color: #eeeeee }

@@ -15,13 +15,13 @@ blockquote, q { quotes: "" "" }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
 .selected { color: #dfa622 }
-body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
+body { font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
 div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
-
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
-div.button i {}
-div.button p {}
+div.button i { }
+div.button p { }
+div.button:hover { background-color: #eeeeee }
 div.button.auto { height: auto; width: auto; }
 div.button.cta { background-color: #dfa622; color: white; padding: 1em }
 div.button.ctb { border-width: 1px; color: black; padding: 1em }
@@ -41,12 +41,7 @@ div.chat_item.right { justify-content: flex-end }
 div.content { align-items: stretch; display: flex; flex-direction: row; justify-content: stretch }
 div.cta { background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; flex-direction: row; justify-content: center; padding: 1em }
 div.cta_bezel { align-self: stretch; background-color: #dfa622; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
-div.cta_block { color: white; flex-direction: row; justify-content: space-between }
 div.cta_text { color: inherit; font-size: 1.13em; margin: 0 1.5em 0 1.5em }
-div.ctb { background-color: white; border-width: 1px; color: black; cursor: pointer; flex-direction: row; justify-content: center; padding: 1em }
-div.ctb_bezel { align-self: stretch; border-width: 0px; color: white; cursor: pointer; justify-content: center; margin: 1em 0 1em 0; width: 100% }
-div.ctb_block { color: inherit; flex-direction: row; justify-content: space-between }
-div.ctb_text { color: inherit; font-size: 1.13em; margin: 0 0 0 1.5em }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
 div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
@@ -77,7 +72,7 @@ div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); widt
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { border: 0px solid black; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
-div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
+div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
 div.icon_bar_reserve { height: 4em }
 div.item_block { align-items: flex-start; flex-direction: column; justify-content: space-between }
 div.keen_desktop { height: 3em }
@@ -87,7 +82,7 @@ div.link { color: blue; font-size: 1em; text-align: center; text-decoration-line
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
-div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em ;position: relative; width: 100% }
+div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; justify-content: space-between; padding: 1em; width: 100% }
@@ -101,8 +96,6 @@ div.rival_skill { align-items: start; flex: auto; flex-direction: column; justif
 div.round { border-radius: 50% }
 div.select { display: block }
 div.show_group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
-div.size_med { height: 3em; width: 3em; }
-div.size_sml { height: 2em; width: 2em; }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }
 div.schedule_head { flex-direction: row }
@@ -134,16 +127,9 @@ label.list_act { border: 0.1em dashed grey; gap: 1em; justify-content: center; p
 label.option { align-items: stretch; display: flex; gap: 1em; margin: 0.3em; text-align: center }
 label.option.option_act { border: 0.1em dashed grey; justify-content: start }
 label.toggle { width: 100% }
+label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.toggle:has(input:checked) div.button { border: 3px solid #dfa622 }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
-label.toggle:has(input):hover { background-color: #eeeeee }
-label.toggle:has(input:checked) { color: #dfa622 }
-label.toggle:has(input:not(checked)) { color: inherit }
-label.toggle.button { border: 1px solid black; border-radius: 0.3em; display: flex; flex-direction: row; justify-content: center; margin: 0.1em; padding: 0.3em; width: 100% }
-label.toggle.button.disabled { border-width: 0px; background-color: #eeeeee }
-label.toggle.button:has(input:disabled) { border-width: 0px; background-color: #eeeeee }
-label.toggle.button:has(input:checked) { border: 3px solid #dfa622 }
-label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 p { margin: 0em; padding: 0.3em }
 p.bold { font-weight: bold }
 p.caption { font-size: small }

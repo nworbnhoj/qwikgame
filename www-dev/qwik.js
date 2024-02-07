@@ -192,7 +192,7 @@ window.onload = function() {
   document.querySelectorAll('.keen_mobile').forEach(function(proxy) {
     proxy.onclick = ctaKeen;
   });
-  document.querySelectorAll('span.delete').forEach(function(button) {
+  document.querySelectorAll('div.delete').forEach(function(button) {
     button.onclick = hideParent;
   });
   document.querySelectorAll('div.head_fwd').forEach(function(button) {

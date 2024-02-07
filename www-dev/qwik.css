@@ -18,6 +18,10 @@ blockquote, q { quotes: "" "" }
 body { display: flex; flex-direction: column; font-family: NotoSans-Regular; align-items: center }
 div { align-items: center; display: flex; }
 div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
+
+div.buton { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
+div.buton i {}
+div.buton p {}
 div.button { border: 1px solid black; flex-direction: row; justify-content: center; margin: 1em; padding: 1em }
 div.button.thin { margin: 0.1em; padding: 0.3em }
 div.button.wide { width: 100% }
@@ -65,7 +69,6 @@ div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-co
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { border: 0px solid black; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width:100% }
-div.icon_bar_item { flex-direction: row; gap: 0.3em; text-align: center; padding: 0.3em }
 div.icon_bar_reserve { height: 4em }
 div.item_block { align-items: flex-start; flex-direction: column; justify-content: space-between }
 div.keen_desktop { height: 3em }
@@ -157,6 +160,7 @@ span.icon { font-size: medium; padding: 0.2em }
     label.keen_desktop { display: none }
     label.toggle:has(input[name="list"]) { color: inherit }
     p.caption { font-size: 0.94em }
+    p.fat { display: none }
     p.name { font-size: 1.07em }
     span.full_day { display: none }
     span.mid_day { display: none }
@@ -180,6 +184,7 @@ span.icon { font-size: medium; padding: 0.2em }
     label.keen_desktop { display: none }
     label.toggle:has(input[name="list"]) { color: inherit }
     p.caption { font-size: 0.94em }
+    p.fat { display: none }
     p.name { font-size: 1.07em }
     span.full_day { display: none }
     span.mid_day { display: inline-block }
@@ -203,6 +208,7 @@ span.icon { font-size: medium; padding: 0.2em }
     label.keen_desktop { display: flex }
     label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
     p.caption { font-size: 0.89em }
+    p.fat { display: block }
     p.name { font-size: 1.13em }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }

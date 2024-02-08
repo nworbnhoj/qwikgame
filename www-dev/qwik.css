@@ -27,6 +27,9 @@ div.button.auto { height: auto; width: auto; }
 div.button.cta { background-color: #dfa622; color: white; padding: 1em }
 div.button.ctb { border-width: 1px; color: black; padding: 1em }
 div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
+div.button.item { height: auto; justify-content: stretch; width: 100% }
+div.button.item label div.button { height: 2em; margin-left: auto; width: 2em }
+div.button.item p { width: 100% }
 div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
 div.button.lge { height: 6em; width: 6em; }
 div.button.link { color: blue; text-align: center; text-decoration-line: underline }
@@ -62,7 +65,8 @@ div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
-div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; justify-content: start; padding: 0 1em 1em 1em }
+div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; justify-content: start }
+div.group label { width: 100% }
 div.head_back { order: 40 }
 div.head_fwd { order: 50 }
 div.head_icon { order: 10 }
@@ -126,7 +130,7 @@ label.option { align-items: stretch; display: flex; gap: 1em; margin: 0.3em; tex
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.toggle:has(input:checked) div.button { border: 3px solid #dfa622 }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
-p { margin: 0em; padding: 0.3em }
+p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
 p.caption { font-size: small }
 p.large { color: #666666; font-size: large }

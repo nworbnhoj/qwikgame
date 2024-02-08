@@ -24,8 +24,8 @@ div.button p { }
 div.button:hover { background-color: #eeeeee }
 div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em; width: 100% }
 div.button.auto { height: auto; width: auto; }
-div.button.cta { background-color: #dfa622; color: white; padding: 1em }
-div.button.ctb { border-width: 1px; color: black; padding: 1em }
+div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
+div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
 div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
 div.button.item { height: auto; justify-content: stretch; width: 100% }
 div.button.item label div.button { height: 2em; margin-left: auto; width: 2em }

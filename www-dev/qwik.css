@@ -17,7 +17,6 @@ blockquote, q { quotes: "" "" }
 .selected { color: #dfa622 }
 body { font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
-div.by_day { align-items: start; border: 0px solid black; flex-direction: column; justify-content: start; margin: 1em 0 0 0; width: 100% }
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
 div.button i { }
 div.button p { }
@@ -56,7 +55,7 @@ div.detail_form { padding: 1em }
 div.detail_head { border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; justify-items: center; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 1em; width: 100% }
-div.detail_summary { align-items: start; flex-direction: column; justify-content: start; width: 100%; padding: 1em }
+div.detail_summary { padding: 1em }
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; flex-direction: row; gap: 1em; justify-items: center; margin: 0.3em; width: 100% }
@@ -86,13 +85,12 @@ div.options { align-items: stretch; background-color: white; border: 1px solid #
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; justify-content: space-between; padding: 1em; width: 100% }
+div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
 div.replicated { background-color: #eeeeee; color: #dfa622 }
 div.rival_mug { justify-content: space-evenly; padding: 1em; width: 30% }
-div.rival_rate { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
-div.rival_skill { align-items: start; flex: auto; flex-direction: column; justify-content: start; padding: 1em; width: 100% }
 div.round { border-radius: 50% }
 div.select { display: block }
 div.show_group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }

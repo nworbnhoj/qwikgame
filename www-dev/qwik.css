@@ -214,49 +214,7 @@ span.flip { transform: rotate(180deg) }
     #detail { display: flex; flex: 1 1 68.75% }
     #list_bar { flex: 1 1 31.25% }
 }
-@media only screen and (min-width:992px) {
-    body { font-size: 16px }
-    button { font-size: 1.13em }
-    div.flex_space { display: block }
-    div.head_back { order: 50 }
-    div.head_icon { display: block }
-    div.icon_caption { display: flex }
-    div.keen_mobile { display: none }
-    div.slide_labels { font-size: 0.89em }
-    h4 { font-size: 1.27em }
-    h5 { font-size: 1.13em }
-    img.logo { display: block }
-    label.keen_desktop { display: flex }
-    label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
-    p.caption { font-size: 0.89em }
-    p.name { font-size: 1.13em }
-    span.full_day { display: inline-block }
-    span.mid_day { display: inline-block }
-    span.replicated { display: inline-block }
-    #content { width: 100% }
-    #detail { display: flex; flex: 1 1 68.75% }
-    #list_bar { flex: 1 1 31.25% }
-}
+@media only screen and (min-width:992px) { }
 @media only screen and (min-width:1200px) {
-    body { font-size: 16px }
-    button { font-size: 1.13em }
-    div.flex_space { display: block }
-    div.head_back { order: 50 }
-    div.head_icon { display: block }
-    div.icon_caption { display: flex }
-    div.keen_mobile { display: none }
-    div.slide_labels { font-size: 0.89em }
-    h4 { font-size: 1.27em }
-    h5 { font-size: 1.13em }
-    img.logo { display: block }
-    label.keen_desktop { display: flex }
-    label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
-    p.caption { font-size: 0.89em }
-    p.name { font-size: 1.13em }
-    span.full_day { display: inline-block }
-    span.mid_day { display: inline-block }
-    span.replicated { display: inline-block }
     #content { width: 1200px }
-    #detail { display: flex; flex: 1 1 68.75% }
-    #list_bar { flex: 1 1 31.25% }
 }

@@ -22,7 +22,7 @@ div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-dire
 div.button i { }
 div.button p { }
 div.button:hover { background-color: #eeeeee }
-div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em }
+div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em; width: 100% }
 div.button.auto { height: auto; width: auto; }
 div.button.cta { background-color: #dfa622; color: white; padding: 1em }
 div.button.ctb { border-width: 1px; color: black; padding: 1em }
@@ -127,6 +127,7 @@ label.cta_bezel { align-items: center; align-self: stretch; background-color: #d
 label.cta_bezel input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.large { border: 1px solid #eeeeee; padding: 1em }
 label.option { align-items: stretch; display: flex; gap: 1em; margin: 0.3em; text-align: center }
+label.option div.button { height: 1em }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.toggle:has(input:checked) div.button { border: 3px solid #dfa622 }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }

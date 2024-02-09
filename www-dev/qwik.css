@@ -35,6 +35,7 @@ div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
 div.button.lge { height: 6em; width: 6em; }
 div.button.link { color: blue; text-align: center; text-decoration-line: underline }
 div.button.med { height: 3em; width: 3em; }
+div.button.replicated { background-color: #eeeeee; border-radius: 50%; color: #dfa622; height: 3em; width: 3em; }
 div.button.round { border-radius: 50% }
 div.button.sml { height: 2em; width: 2em; }
 div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
@@ -87,7 +88,6 @@ div.plank { flex: auto; flex-direction: row; justify-content: space-between; pad
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
-div.replicated { background-color: #eeeeee; color: #dfa622 }
 div.rival_mug { justify-content: space-evenly; padding: 1em; width: 30% }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }

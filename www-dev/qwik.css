@@ -69,7 +69,7 @@ div.head_back { order: 40 }
 div.head_fwd { order: 50 }
 div.head_icon { order: 10 }
 div.head_more { order: 30 }
-div.head_txt { align-items: flex-start; flex: 1 1 auto; flex-direction: column; justify-content: space-between; order: 20; padding: 0.3em }
+div.head_txt { order: 20 }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }

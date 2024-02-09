@@ -16,7 +16,7 @@ blockquote, q { quotes: "" "" }
 .push_right { margin-left: auto }
 .selected { color: #dfa622 }
 .wide { width: 100% }
-body { font-family: NotoSans-Regular }
+body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
 div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
@@ -137,11 +137,14 @@ span.flip { transform: rotate(180deg) }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    div.content { width: 100% }
+    div.detail { display: none; flex: 1 1 100% }
     div.flex_space { display: none }
     div.head_back { order: 5 }
     div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
+    div.list_bar { flex: 1 1 100% }
     div.slide_labels { font-size: 0.94em }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
@@ -154,18 +157,18 @@ span.flip { transform: rotate(180deg) }
     span.full_day { display: none }
     span.mid_day { display: none }
     span.replicated { display: none }
-    #content { width: 100% }
-    #detail { display: none; flex: 1 1 100% }
-    #list_bar { flex: 1 1 100% }
 }
 @media only screen and (min-width:600px) {
     body { font-size: 13px }
     button { font-size: 1.07em }
+    div.content { width: 100% }
+    div.detail { display: none; flex: 1 1 100% }
     div.flex_space { display: none }
     div.head_back { order: 5 }
     div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
+    div.list_bar { flex: 1 1 100% }
     div.slide_labels { font-size: 0.94em }
     h4 { font-size: 1.14em }
     h5 { font-size: 1.07em }
@@ -178,18 +181,18 @@ span.flip { transform: rotate(180deg) }
     span.full_day { display: none }
     span.mid_day { display: inline-block }
     span.replicated { display: none }
-    #content { width: 100% }
-    #detail { display: none; flex: 1 1 100% }
-    #list_bar { flex: 1 1 100% }
 }
 @media only screen and (min-width:768px) {
     body { font-size: 16px }
     button { font-size: 1.13em }
+    div.content { width: 100% }
+    div.detail { display: flex; flex: 1 1 68.75% }
     div.flex_space { display: block }
     div.head_back { order: 50 }
     div.head_icon { display: block }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
+    div.list_bar { flex: 1 1 31.25% }
     div.slide_labels { font-size: 0.89em }
     h4 { font-size: 1.27em }
     h5 { font-size: 1.13em }
@@ -202,11 +205,8 @@ span.flip { transform: rotate(180deg) }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
     span.replicated { display: inline-block }
-    #content { width: 100% }
-    #detail { display: flex; flex: 1 1 68.75% }
-    #list_bar { flex: 1 1 31.25% }
 }
 @media only screen and (min-width:992px) { }
 @media only screen and (min-width:1200px) {
-    #content { width: 1200px }
+    div.content { width: 1200px }
 }

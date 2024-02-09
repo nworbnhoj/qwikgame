@@ -1,4 +1,5 @@
 function ctaKeen(event) {
+  event.currentTarget.style.display = "none";
   let fwd_event = new MouseEvent(event.type, event);
   document.getElementById('cta_keen').dispatchEvent(fwd_event);
 }
@@ -38,7 +39,7 @@ function hideDropdown(event) {
 }
 
 function hideParent(event) {
-  event.currentTarget.parentElement.classList.add('hidden');
+  event.currentTarget.parentElement.style.display = "none";
 }
 
 function href(event) {
@@ -71,6 +72,7 @@ function previousDetail(event) {
 }
 
 function showDetail() {
+  // on mobile, hide the list_bar and show the detail
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
   var width_768 = window.matchMedia("only screen and (max-width: 768px)").matches;
   // var width_992 = window.matchMedia("only screen and (max-width: 992px)").matches;
@@ -85,6 +87,7 @@ function showDetail() {
     detail.style.display = "flex";
   }
 
+  // show the selected detail, and hide all the others
   list_bar.querySelectorAll('[name=list]').forEach(function(radio) {
     if (radio.checked) {
       document.getElementById(radio.dataset.id).classList.remove("hidden");

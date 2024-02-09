@@ -18,6 +18,7 @@ blockquote, q { quotes: "" "" }
 .wide { width: 100% }
 body { font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
+div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
 div.button i { }
 div.button p { }
@@ -85,7 +86,6 @@ div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6e
 div.learn { flex-direction: row; justify-content: right; padding: 1em }
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.match_scheduled { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }

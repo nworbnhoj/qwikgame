@@ -120,7 +120,8 @@ label.large { border: 1px solid #eeeeee; padding: 1em }
 label.option { align-items: stretch; display: flex; gap: 1em; margin: 0.3em; text-align: center }
 label.option div.button { height: 1em }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-label.toggle:has(input:checked) div.button { border: 3px solid #dfa622 }
+label.toggle:has(input:checked) div.button.hr { border: 3px solid #dfa622 }
+label.toggle:has(input:checked):has([name="games"]) div.button { color: #dfa622 }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }

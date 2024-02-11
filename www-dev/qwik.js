@@ -170,6 +170,25 @@ function toggle (toggle) {
     toggle_check(toggle);
   }
 
+// validate the html structure of a label.toggle
+function toggle_valid(toggle) {
+  try {
+    if (toggle.nodeType == "label" &&
+      toggle.classList.contains("toggle") &&
+      toggle.classList.firstElementChild.nodeType == "input") {
+      alert("true");
+      return true;
+    }
+  } finally {
+    alert("invalid toggle: " + toggle);
+    console.log("invalid toggle: " + toggle);
+  }
+  try {
+    console.log("invalid toggle" + toggle.outerHTML);
+  } finally {}
+  return false;
+}
+
 // return true if the label.toggle is checked
 function toggle_checked(toggle) {
   return toggle.firstElementChild.checked;

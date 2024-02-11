@@ -155,31 +155,136 @@ function slide(slider) {
   }
 }
 
-function toggleAllDay(event) {
-  let button = event.currentTarget;
-  var checked = button.firstElementChild.checked;
-  var hours = button.closest('.by_day').querySelector('div.radio_block').children;
-  for (hour of hours) {
-    var checkbox = hour.firstElementChild;
-    if (!checkbox.disabled) {
-      checkbox.checked = checked;
+// these toggle function are specific to the pattern
+//  <lable class='toggle'>     
+//    <input type="checkbox">
+//    <div class="button">Click me</div>
+//  </label>
+
+// toggle the check in a label.toggle
+function toggle (toggle) {
+  let input = toggle.firstElementChild;
+  if (toggle_checked(toggle)) {
+    toggle_uncheck(toggle);
+  } else {
+    toggle_check(toggle);
+  }
+
+// return true if the label.toggle is checked
+function toggle_checked (toggle) {
+  return toggle.firstElementChild.checked;
+}
+
+// check the label.toggle
+function toggle_check (toggle) {
+  toggle.firstElementChild.checked = "checked";
+}
+
+// uncheck the label.toggle
+function toggle_uncheck (toggle) {
+  toggle.firstElementChild.checked = null;
+}
+
+
+// return true if the label.toggle is disabled
+function toggle_disabled (toggle) {
+  return toggle.firstElementChild.disabled;
+}
+
+// additional logic for all_day and all_week toggles when an hour is toggled
+function toggleHour(event){
+  try {
+    let hour = event.currentTarget;
+    let all_day = hour.closest(".by_day").querySelector("label.toggle.all_day");
+    if (toggle_checked(hour)) {
+      updateAllDay(all_day);
+    } else {
+      toggle_uncheck(all_day);
+      let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+      toggle_uncheck(all_week);
     }
+  } catch (e) {
+    console.log(e);
   }
 }
 
-function toggleAllWeek(event) {
-  let button = event.currentTarget;
-  var checked = button.firstElementChild.checked;
-  let detail = button.closest('.detail_n');
-  detail.querySelectorAll('.all_day').forEach(function(button) {
-    button.firstElementChild.checked = checked;
-  })
-  detail.querySelectorAll('div.hour_grid').forEach(function(radio_block) {
-    for (hour of radio_block.children) {
-      hour.firstElementChild.checked = checked;
+// additional logic for hour and all_week toggles when an all_day is toggled
+function toggleAllDay(event) {
+  try {
+    let all_day = event.currentTarget;
+    let all_day_checked = toggle_checked(all_day);
+    var hours = all_day.closest('.by_day').querySelector('div.radio_block').children;
+    for (hour of hours) {
+      var checkbox = hour.firstElementChild;
+      if (!checkbox.disabled) {
+        checkbox.checked = all_day_checked;
+      }
     }
-  })
+    let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+    if (all_day_checked) {
+      updateAllWeek(all_week);
+    } else {
+      toggle_uncheck(all_week);
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
+
+// additional logic for hour and all_day toggles when an all_week is toggled
+function toggleAllWeek(event) {
+  try {
+    let button = event.currentTarget;
+    var checked = button.firstElementChild.checked;
+    let detail = button.closest('.detail_n');
+    detail.querySelectorAll('.all_day').forEach(function(button) {
+      button.firstElementChild.checked = checked;
+    })
+    detail.querySelectorAll('div.hour_grid').forEach(function(radio_block) {
+      for (hour of radio_block.children) {
+        hour.firstElementChild.checked = checked;
+      }
+    })
+  } catch (e) {
+    console.log(e);
+  } 
+}
+
+// update an all_day (and all_week) toggle to be consistent with the hour toggles 
+function updateAllDay(all_day) {
+  try {
+    // check all_day if every hour is checked
+    let hrs = all_day.closest('.by_day').querySelector('div.radio_block').children;
+    for (hr of hrs) {
+      if (!toggle_disabled(hr) && !toggle_checked(hr)) {
+        return;
+      }
+    }
+    toggle_check(all_day);
+    let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+    updateAllWeek(all_week);
+  } catch (e) {
+    console.log(e);
+  } 
+}
+
+// update an all_week toggle to be consistent with the all_day toggles
+function updateAllWeek(all_week) {
+  try {
+    // check all_week if every all_day is checked
+    let days = all_week.closest('div.detail_n').querySelectorAll("div.by_day");
+    for (day of days) {
+      all_day = day.querySelector("label.toggle.all_day");
+      if (!toggle_disabled(all_day) && !toggle_checked(all_day)) {
+        return;
+      }
+    }
+    toggle_check(all_week);
+  } catch (e) {
+    console.log(e);
+  } 
+}
+
 
 function togglePreviousSibling(event) {
   let toggle = event.currentTarget;
@@ -222,11 +327,17 @@ window.onload = function() {
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
     checkbox.oninput = enableInviteFriend;
   });
-  document.querySelectorAll('label.toggle.all_day').forEach(function(button) {
-    button.onclick = toggleAllDay;
+  document.querySelectorAll('label.toggle div.button').forEach(function(hr) {
+    hr.onclick = function(event) { event.stopPropagation() };
   });
-  document.querySelectorAll('label.toggle.all_week').forEach(function(button) {
-    button.onclick = toggleAllWeek;
+  document.querySelectorAll('label.toggle.hour').forEach(function(hour) {
+    hour.onclick = toggleHour;
+  });
+  document.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
+    all_day.onclick = toggleAllDay;
+  });
+  document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
+    all_week.onclick = toggleAllWeek;
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;

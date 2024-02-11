@@ -169,6 +169,7 @@ function toggle (toggle) {
   } else {
     toggle_check(toggle);
   }
+}
 
 // validate the html structure of a label.toggle
 function toggle_valid(toggle) {
@@ -371,11 +372,11 @@ window.onload = function() {
   });
   document.querySelectorAll('.show_friend_invite').forEach(function(element) {
     element.onclick = showFriendInvite;
-  })
+  });
   document.querySelectorAll('.schedule_edit').forEach(function(div) {
     div.onclick = showGameEdit;
-  })
+  });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
-  })
+  });
 }

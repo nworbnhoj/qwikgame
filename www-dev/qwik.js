@@ -171,28 +171,28 @@ function toggle (toggle) {
   }
 
 // return true if the label.toggle is checked
-function toggle_checked (toggle) {
+function toggle_checked(toggle) {
   return toggle.firstElementChild.checked;
 }
 
 // check the label.toggle
-function toggle_check (toggle) {
+function toggle_check(toggle) {
   toggle.firstElementChild.checked = "checked";
 }
 
 // uncheck the label.toggle
-function toggle_uncheck (toggle) {
+function toggle_uncheck(toggle) {
   toggle.firstElementChild.checked = null;
 }
 
 
 // return true if the label.toggle is disabled
-function toggle_disabled (toggle) {
+function toggle_disabled(toggle) {
   return toggle.firstElementChild.disabled;
 }
 
 // additional logic for all_day and all_week toggles when an hour is toggled
-function toggleHour(event){
+function toggleHour(event) {
   try {
     let hour = event.currentTarget;
     let all_day = hour.closest(".by_day").querySelector("label.toggle.all_day");
@@ -247,7 +247,7 @@ function toggleAllWeek(event) {
     })
   } catch (e) {
     console.log(e);
-  } 
+  }
 }
 
 // update an all_day (and all_week) toggle to be consistent with the hour toggles 
@@ -265,7 +265,7 @@ function updateAllDay(all_day) {
     updateAllWeek(all_week);
   } catch (e) {
     console.log(e);
-  } 
+  }
 }
 
 // update an all_week toggle to be consistent with the all_day toggles
@@ -282,14 +282,14 @@ function updateAllWeek(all_week) {
     toggle_check(all_week);
   } catch (e) {
     console.log(e);
-  } 
+  }
 }
 
 
 function togglePreviousSibling(event) {
   let toggle = event.currentTarget;
-  toggle.querySelectorAll('.tog').forEach(function(tog){
-      tog.classList.toggle('hidden');
+  toggle.querySelectorAll('.tog').forEach(function(tog) {
+    tog.classList.toggle('hidden');
   });
   let previous_sibling = toggle.previousElementSibling;
   previous_sibling.classList.toggle('hidden');
@@ -328,7 +328,9 @@ window.onload = function() {
     checkbox.oninput = enableInviteFriend;
   });
   document.querySelectorAll('label.toggle div.button').forEach(function(hr) {
-    hr.onclick = function(event) { event.stopPropagation() };
+    hr.onclick = function(event) {
+      event.stopPropagation()
+    };
   });
   document.querySelectorAll('label.toggle.hour').forEach(function(hour) {
     hour.onclick = toggleHour;
@@ -354,7 +356,7 @@ window.onload = function() {
   document.querySelectorAll('.schedule_edit').forEach(function(div) {
     div.onclick = showGameEdit;
   })
-  document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle){
+  document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
   })
 }

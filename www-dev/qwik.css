@@ -43,7 +43,7 @@ div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 div.button.tiny { height: 1em; width: 1em; }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
-div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 1em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.content { align-items: stretch; flex-direction: row; justify-content: stretch }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
@@ -78,8 +78,6 @@ div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; 
 div.icon { border: 0px solid black; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
 div.icon_bar_reserve { height: 4em }
-div.item_block { align-items: flex-start; flex-direction: column; justify-content: space-between }
-div.keen_mobile { border-radius: 50%; border-width: 0px; bottom: 4em; height: 6em; margin: 0px; padding: 0px; position: fixed; right: 2em; width: 6em }
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 0 1 31.25%; flex-direction: column; justify-content: flex-start; padding: 1em }
 div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
@@ -89,7 +87,7 @@ div.plank { flex: auto; flex-direction: row; justify-content: space-between; pad
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 1em 0 0 0 }
-div.rival_mug { justify-content: space-evenly; padding: 1em; width: 30% }
+div.rival_mug { width: 30% }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }
@@ -98,10 +96,10 @@ div.select { display: block }
 div.select_head { position: relative }
 div.select_head select { border: 1px solid black; border-radius: 0.3em; width: 100% }
 div.select_over { position: absolute; left: 0; right: 0; top: 0; bottom: 0 }
-div.show_group { border-radius: 0; height: 1.5em; justify-content: space-between; margin: 1em 1em 0.5em 0; text-align: left }
-div.slide_labels { align-items: start; border: 0 solid black; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em; width: 100% }
+div.show_group { justify-content: space-between; margin: 1em 1em 0.5em 0 }
+div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
-fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 1em }
+fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 h1 { color: black; text-align: left; font-size: 1.4em; margin: 0.3em }
 h2 { color: black; text-align: left; font-size: 1.2em; margin: 0.3em }
@@ -113,7 +111,7 @@ h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { height: 3em; padding: 0.1em }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
-input.strength { display: flex; flex: 1 1 100%; height: 2em; width: 100% }
+input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
 input.disabled { background-color: #eeeeee; color: #999999 }
 input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }

@@ -6,3 +6,36 @@ table { border-collapse: separate; border-spacing: 0 }
 caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
+
+body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
+div { align-items: center; display: flex; }
+div.content { align-items: stretch; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
+div.cta_desktop { display: none }
+div.cta_mobile { bottom: 4em; position: fixed; right: 2em }
+div.detail { align-items: stretch; display: none; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
+div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
+div.icon_bar_reserve { height: 4em }
+div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
+hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
+img.logo { display: none; height: 3em; padding: 0.1em }
+
+@media only screen and (min-width:600px) {
+    body { font-size: 13px }
+    div.content { width: 100% }
+    div.cta_desktop { display: none }
+    div.cta_mobile { display: flex }
+    div.detail { display: none; flex: 1 1 100% }
+    div.list_bar { display: flex; flex: 1 1 100% }
+    img.logo { display: none }
+}
+@media only screen and (min-width:768px) {
+    body { font-size: 16px }
+    div.content { width: 100% }
+    div.cta_desktop { display: flex }
+    div.cta_mobile { display: none }
+    div.detail { display: flex; flex: 1 1 68.75% }
+    div.list_bar {display: flex; flex: 1 1 31.25% }
+    img.logo { display: block }
+}
+@media only screen and (min-width:992px) { }
+@media only screen and (min-width:1200px) { }

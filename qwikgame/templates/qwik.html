@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'qwik.css' %}">
+    <script src="{% static 'qwik.js' %}"></script>
+    <title>{% block title %}QwikGame{% endblock %}</title>
+</head>
+
+<body>
+    <div id="icon_bar" class="icon_bar">
+        <img class="logo href" src="{% static 'qwik_icon.svg' %}" data-href="{% url 'index' %}">
+        {% block icon_bar %}ICON_BAR{% endblock %}        
+    </div>
+    <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
+    <hr>
+    <div id="content" class="content">
+        <div id="cta_mobile" class="cta_mobile">
+            {% block cta_mobile %}CTA_MOBILE{% endblock %}
+        </div>
+        <div id="list_bar" class="list_bar">            
+            <div id="cta_desktop" class="cta_desktop"> 
+                {% block cta_desktop %}CTA_DESKTOP{% endblock %}
+            </div>
+            {% block list_bar %}LIST{% endblock %}
+        </div>
+        <div id="detail" class="detail">
+            {% block detail %}DETAIL{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

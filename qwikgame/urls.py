@@ -17,7 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from qwikgame.views import QwikView
+
 urlpatterns = [
+    # ex: /
+    path("", QwikView.as_view()),
     path('admin/', admin.site.urls),
     path("authenticate/", include("authenticate.urls")),
 ]

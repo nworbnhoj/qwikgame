@@ -50,6 +50,7 @@ class User(PermissionsMixin, AbstractBaseUser):
         unique=True,
     )
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
+    name = models.CharField(max_length=32, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 

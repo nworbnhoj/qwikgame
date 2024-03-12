@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "authenticate.apps.AuthenticateConfig",
+    'game.apps.GameConfig',
     'player.apps.PlayerConfig',
     'venue.apps.VenueConfig',
     'django.contrib.admin',

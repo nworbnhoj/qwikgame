@@ -19,7 +19,6 @@ class Player(models.Model):
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', through='Friend', blank=True)
     games = models.ManyToManyField(Game)
-    icon = models.CharField(max_length=16)
     location_auto = models.BooleanField()
     notify_email = models.BooleanField()
     notify_web = models.BooleanField()
@@ -98,14 +97,6 @@ class Precis(models.Model):
 
     def __str__(self):
         return "{}:{}".format(self.player, self.game)
-
-
-class Social(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    url = models.URLField(max_length=255)
-
-    def __str__(self):
-        return self.url
 
 
 class Strength(models.Model):

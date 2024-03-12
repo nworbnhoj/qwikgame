@@ -5,7 +5,6 @@ from game.models import Game
 
 
 class Manager(models.Model):
-    icon = models.CharField(max_length=16)
     location_auto = models.BooleanField()
     notify_email = models.BooleanField()
     notify_web = models.BooleanField()

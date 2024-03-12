@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "authenticate.apps.AuthenticateConfig",
     'game.apps.GameConfig',
     'match.apps.MatchConfig',
+    'persona.apps.PersonaConfig',
     'player.apps.PlayerConfig',
     'venue.apps.VenueConfig',
     'django.contrib.admin',

@@ -1,3 +1,4 @@
+import hashlib
 from django.db import models
 
 from authenticate.models import User
@@ -19,13 +20,19 @@ class Player(models.Model):
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', through='Friend', blank=True)
     games = models.ManyToManyField(Game)
-    location_auto = models.BooleanField()
-    notify_email = models.BooleanField()
-    notify_web = models.BooleanField()
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    location_auto = models.BooleanField(default=False)
+    notify_email = models.BooleanField(default=True)
+    notify_web = models.BooleanField(default=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        #if hasattr(self, 'user'):
+        if self.user is not None:
+            self.email_hash = hashlib.md5(self.user.email.encode()).hexdigest()
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.user
+        return self.email_hash if self.user is None else self.user.email
 
 
 class Appeal(models.Model):

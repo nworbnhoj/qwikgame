@@ -6,36 +6,251 @@ table { border-collapse: separate; border-spacing: 0 }
 caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
-
+@font-face { font-family: 'NotoSans-Regular'; src: url(NotoSans-Regular.ttf) }
+.align_center { align-self: center }
+.align_end { align-self: flex-end }
+.align_start { align-self: flex-start }
+.color { color: #dfa622 }
+.cta_desktop { display: none; width: 100% }
+.cta_mobile { bottom: 4em; position: fixed; right: 2em }
+.hidden { display: none }
+.invisible { visibility: hidden }
+.push_down { margin-top: 4em; }
+.push_left { margin-right: auto }
+.push_right { margin-left: auto }
+.selected { color: #dfa622 }
+.wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
+div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
+div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
+div.button i { }
+div.button p { }
+div.button:hover { background-color: #eeeeee }
+div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em; width: 100% }
+div.button.auto { height: auto; width: 100%; }
+div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
+div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
+div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
+div.button.info { border: 0.1em solid black; border-radius: 50% }
+div.button.item { align-items: stretch; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-items: center; width: 100% }
+div.button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
+div.button.item div.note { width: 100% }
+div.button.item div.notes { flex: 1 1 0; overflow:hidden; }
+div.button.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
+div.button.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+div.button.item.unread { font-weight: bold }
+div.button.item.unread div.icon { color: #dfa622 }
+div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
+div.button.lge { height: 6em; width: 6em; }
+div.button.link { color: blue; text-align: center; text-decoration-line: underline }
+div.button.med { height: 3em; width: 3em; }
+div.button.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
+div.button.round { border-radius: 50% }
+div.button.sml { height: 1.5em; width: 1.5em; }
+div.button.tab { border: none }
+div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
+div.button.tiny { height: 1em; width: 1em; }
+div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
+div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
+div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+
 div.content { align-items: stretch; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
-div.cta_desktop { display: none }
-div.cta_mobile { bottom: 4em; position: fixed; right: 2em }
 div.detail { align-items: stretch; display: none; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
+
+div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
+div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
+div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
+div.day.sat { grid-column: 1 / 1; grid-row: 6 / 6 }
+div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
+div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
+div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
+div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
+div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
+div.detail_body { }
+div.detail_form { }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_n { flex: 0 0 auto; gap: 1em; }
+div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
+div.detail_summary { }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 1.8em; white-space: nowrap; width: 100%; z-index: 1 }
+div.drop_down { flex-direction: column; position: relative; }
+div.drop_down.icon div.down { top: 3em; width: auto }
+div.drop_down.icon div.drop { border-width: 0px; height: auto; }
+div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; display: flex; flex-direction: row; font-size: 1em; height: 1.7em; justify-content: space-between; width: 100% }
+div.drop_up {}
+div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
+div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
+div.flex_space { flex-grow: 3 }
+div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
+div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
+div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; gap: 0.5em; justify-content: start }
+div.group label { width: 100% }
+div.head_back { order: 40 }
+div.head_fwd { order: 50 }
+div.head_icon { order: 10 }
+div.head_more { order: 30 }
+div.head_txt { order: 20 }
+div.hidden { display: none }
+div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
+div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
+div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
+div.icon { border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
+div.icon.badge { border: 0.2em solid #dfa622; color: #dfa622; border-radius: 50%; height: 2.5em; padding: 0.3em; width: 2.5em; }
+div.icon.info { border-width: 0.3em; border-radius: 50%; padding: 0.3em }
+div.icon.medium { height: 3em; width: 3em }
+div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
+div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
 div.icon_bar_reserve { height: 4em }
+div.info { position: relative }
+div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; top: 150%; width: 20em; z-index: 1 }
+div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
+div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
+div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
+div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
+div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.plank { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em; width: 100% }
+div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
+div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
+div.rival_aberation { align-items: flex-start; flex-direction: column; justify-content: start; width: 100%}
+div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
+div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
+div.schedule_body { display: grid }
+div.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s }
+div.slider:before { background-color: #fff; bottom: 0.2em; content: ""; height: 1.6em; left: 0.2em; position: absolute; transition: .4s; width: 1.6em }
+div.slider.round { border-radius: 34px; }
+div.slider.round:before { border-radius: 50%; }
+div.tabs { z-index: 1 }
+div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
+div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; top: 2px; z-index: 1 }
+div.tab_content { padding: 0.3em; border: 1px solid black; width: 100% }
+div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
+div.slide_label { text-align: center }
+fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
+fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
+h1 { color: black; text-align: left; margin: 0.3em }
+h2 { align-items: center; color: black; display: flex; flex-direction: row; gap: 1em; margin: 2em 0 1em 0; text-align: left; justify-content: start; }
+h3 { align-items: center; color: black; display: flex; flex-direction: row; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; justify-content: space-between }
+h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
+h4 { color: black; text-align: left }
+h5 { color: black; text-align: left }
+h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
+h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: none; height: 3em; padding: 0.1em }
-
+input[type=text] { flex: 1 1 auto; font-size: inherit }
+input:checked + .slider { background-color: #66bb6a; }
+input:checked + .slider:before { transform: translateX(2em); }
+input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
+input.disabled { background-color: #eeeeee; color: #999999 }
+input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }
+label { color: black; display: flex; text-align: left; font-size: 1.0em }
+label.hidden { display: none }
+label.large { border: 1px solid #eeeeee; padding: 1em }
+label.option { align-items: stretch; gap: 1em; margin: 0.3em; text-align: center; width: 100% }
+label.option div.button { height: 1em }
+label.option input[type=checkbox] { display: none }
+label.option:has(input:checked) { color: #dfa622 }
+label.switch { display: inline-block; height: 2em; position: relative; width: 4em }
+label.switch input { display: none }
+label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
+label.toggle:has(input:checked).all_day div.button { border: 3px solid #dfa622 }
+label.toggle:has(input:checked).all_week div.button { border: 3px solid #dfa622 }
+label.toggle:has(input:checked) div.button.hr { border: 3px solid #dfa622 }
+label.toggle:has(input:checked):has([name="games"]) div.button { color: #dfa622 }
+label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
+p { margin: 0em; padding: 0.3em; text-align: left }
+p.bold { font-weight: bold }
+p.caption { color: #777777; font-size: small }
+p.large { color: #666666; font-size: large }
+p.small { color: #666666; font-size: small }
+span.chat_show { }
+span.flip { transform: rotate(180deg) }
+span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
+textarea { border: 0 solid black; width: 100% }
+@media only screen and (max-width:600px) {
+    body { font-size: 13px }
+    div.button { font-size: 1.07em }
+    div.content { width: 100% }
+    div.detail { display: none; flex: 1 1 100% }
+    div.flex_space { display: none }
+    div.head_back { order: 5 }
+    div.head_icon { display: none }
+    div.icon_caption { display: none }
+    div.keen_mobile { display: flex }
+    div.list_bar { flex: 1 1 100% }
+    div.slide_labels { font-size: 0.94em }
+    h1 { font-size: 1.14em }
+    h2 { font-size: 1.07em }
+    h3 { font-size: 1.03em }
+    img.logo { display: none }
+    label.keen_desktop { display: none }
+    label.toggle:has(input[name="list"]) { color: inherit }
+    p.caption { font-size: 0.94em }
+    p.fat { display: none }
+    p.name { font-size: 1.07em }
+    span.full_day { display: none }
+    span.mid_day { display: none }
+}
 @media only screen and (min-width:600px) {
     body { font-size: 13px }
+    div.button { font-size: 1.07em }
     div.content { width: 100% }
-    div.cta_desktop { display: none }
-    div.cta_mobile { display: flex }
+    .cta_desktop { display: none }
+    .cta_mobile { display: flex }
     div.detail { display: none; flex: 1 1 100% }
     div.list_bar { display: flex; flex: 1 1 100% }
+    div.flex_space { display: none }
+    div.head_back { order: 5 }
+    div.head_icon { display: none }
+    div.icon_caption { display: none }
+    div.keen_mobile { display: flex }
+    div.list_bar { flex: 1 1 100% }
+    div.slide_labels { font-size: 0.94em }
+    h1 { font-size: 1.14em }
+    h2 { font-size: 1.07em }
+    h3 { font-size: 1.03em }
     img.logo { display: none }
+    label.keen_desktop { display: none }
+    label.toggle:has(input[name="list"]) { color: inherit }
+    p.caption { font-size: 0.94em }
+    p.fat { display: none }
+    p.name { font-size: 1.07em }
+    span.full_day { display: none }
+    span.mid_day { display: inline-block }
 }
 @media only screen and (min-width:768px) {
     body { font-size: 16px }
+    div.button { font-size: 1.13em }
     div.content { width: 100% }
-    div.cta_desktop { display: flex }
-    div.cta_mobile { display: none }
+    .cta_desktop { display: flex }
+    .cta_mobile { display: none }
     div.detail { display: flex; flex: 1 1 68.75% }
     div.list_bar {display: flex; flex: 1 1 31.25% }
+    div.flex_space { display: block }
+    div.head_back { order: 50 }
+    div.head_icon { display: flex }
+    div.icon_caption { display: flex }
+    div.keen_mobile { display: none }
+    div.list_bar { flex: 1 1 31.25% }
+    div.rival_aberation { align-items: center; flex: auto; flex-direction: row; gap: 3em; justify-content: space-between }
+    div.slide_labels { font-size: 0.89em }
+    h1 { font-size: 1.27em }
+    h2 { font-size: 1.13em }
+    h3 { font-size: 1.07em }
     img.logo { display: block }
+    label.keen_desktop { display: flex }
+    label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
+    p.caption { font-size: 0.89em }
+    p.fat { display: block }
+    p.name { font-size: 1.13em }
+    span.full_day { display: inline-block }
+    span.mid_day { display: inline-block }
 }
 @media only screen and (min-width:992px) { }
 @media only screen and (min-width:1200px) { }

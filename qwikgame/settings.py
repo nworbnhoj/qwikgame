@@ -60,7 +60,7 @@ ROOT_URLCONF = 'qwikgame.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['qwikgame/templates', 'persona/templates'],
+        'DIRS': ['qwikgame/templates', 'persona/templates', 'player/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

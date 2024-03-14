@@ -1,0 +1,79 @@
+{% extends "persona/account.html" %}
+
+{% block player_public %}
+                    <h2>
+                        YOUR QWIKGAME REPUTATION
+                        <div class="button info sml" data-visible="false">
+                            <i class="fa-solid fa-info fa-1x"></i>
+                            <div class="info_text hidden">Based on feedback given by your rivals</div>
+                        </div>
+                    </h2>
+                    <div class="plank">
+                        <div class="icon color">
+                            <i class="fa-solid fa-star fa-2x"></i>
+                        </div>
+                        <div class="icon color">
+                            <i class="fa-solid fa-star fa-2x"></i>
+                        </div>
+                        <div class="icon color">
+                            <i class="fa-solid fa-star fa-2x"></i>
+                        </div>
+                        <div class="icon color">
+                            <i class="fa-regular fa-star fa-2x"></i>
+                        </div>
+                        <div class="icon color">
+                            <i class="fa-regular fa-star fa-2x"></i>
+                        </div>
+                    </div>
+                    <h2>ABOUT</h2>
+
+                    <div class="tab_area post">
+                        <div class="tabs">
+                            <div class="button tab thin active" data-tab_id="Squash">
+                                Squash
+                            </div>
+                            <div class="button tab thin" data-tab_id="Tennis">
+                                Tennis
+                            </div>
+                        </div>
+                        <div id="Squash" class="tab_content">
+                          <textarea id="" name="squash" rows="4" cols="50">I have played Squash for....., My personal sport achievements are.....,  My favorite atheletes are....</textarea>
+                        </div>
+                        <div id="Tennis" class="tab_content hidden">
+                          <textarea id="" name="tennis" rows="4">I have played Tennis for....., My personal sport achievements are.....,  My favorite atheletes are....</textarea>
+                        </div>
+                        <div class="button cta push_down wide schedule_save">
+                            <p>SAVE</p>
+                        </div>
+                    </div>
+{% endblock %}
+
+
+{% block player_private %}
+                    <h2>LIST OF BLOCKED PLAYERS</h2>
+                    <div id="block_list" class="drop_down">
+                        <div class="button drop" data-down="false">
+                            <div>Blocked Players</div>
+                            <div class="fat">v</div>
+                        </div>
+                        <div class="down hidden">
+                            <label class="option closable" for="cheater@email.com">Cheater (cheater@email.com)
+                                <div class="button link push_right closer">unblock</div>
+                            </label>
+                            <label class="option closable" for="creepy@email.com">Creepy (creepy@email.com)
+                                <div class="button link push_right closer">unblock</div>
+                            </label>
+                            <label class="option closable" for="nasty@email.com">Nasty (nasty@email.com)
+                                <div class="button link push_right closer">unblock</div>
+                            </label>
+                        </div>
+                    </div>
+                    <fieldset id="block_add" class="hidden">
+                        <input type="text" name="block" list="blocked" placeholder="Type email address"/>
+                        <div class="rival-skill-learn grid_3_col">
+                            <div class="button link show_block_list">Cancel</div>
+                            <div class="button link">Learn more</div>
+                            <div class="button ctb wide thin">Block</div>
+                        </div>
+                    </fieldset>
+{% endblock %}

@@ -22,6 +22,7 @@ from qwikgame.views import QwikView
 urlpatterns = [
     # ex: /
     path("", QwikView.as_view()),
+    path("account/", include("persona.urls")),
     path('admin/', admin.site.urls),
     path("authenticate/", include("authenticate.urls")),
 ]

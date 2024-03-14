@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
 
-# Create your views here.
+
+class AccountView(View):
+
+    def get(self, request):
+        return render(request, "persona/account.html")

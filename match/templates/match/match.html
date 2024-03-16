@@ -1,0 +1,317 @@
+{% extends "qwik.html" %}
+
+
+{% block title %}Match{% endblock %}
+
+
+{% block name %}Helen{% endblock %}
+
+
+{% block cta_mobile %}{% endblock %}
+
+
+{% block cta_desktop %}{% endblock %}
+
+
+{% block list_bar %}
+        <hr>
+        <div class="list_bar_head">
+            <h1>Sheduled Matches</h1>
+            <div class="drop_down">
+                <div class="button drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby" checked="checked">
+                        date
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        venue
+                    </label>
+                </div>
+            </div>
+        </div>
+        <h2 class="show_group">
+            Upcomming
+            <span>&#9650;</span>
+        </h2>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" name="list" data-id="A">
+                <div class="button item">
+                    <div class="pole notes">
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-circle-dot fa-1x"></i>
+                            </span>
+                            <p class="line">Squash</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-calendar fa-1x"></i>
+                            </span>
+                            <p>Aug 5, 17h</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-location-dot fa-1x"></i>
+                            </span>
+                            <p>Vasil Levski, Sofia, Bulgaria.</p>
+                        </div>
+                    </div>
+                    <div class="pole badges">
+                        <div class="icon round badge">17h</div>
+                    </div>
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="B">
+                <div class="button item">
+                    <div class="pole notes">
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                            </span>
+                            <p class="line">Tennis</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-calendar fa-1x"></i>
+                            </span>
+                            <p>Aug 5, 19h</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-location-dot fa-1x"></i>
+                            </span>
+                            <p>Vasil Levski, Sofia, Bulgaria.</p>
+                        </div>
+                    </div>
+                    <div class="pole badges">
+                        <div class="icon round badge">19h</div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <h2 class="show_group">
+            History
+            <span class="flip">&#9650;</span>
+        </h2>
+        <div class="group hidden">
+            <p>No history yet!</p>
+        </div>
+{% endblock %}
+
+
+{% block detail %}
+        <div id="A" class="post detail_n hidden">
+            <div class="detail_head">
+                <div class="icon round badge">17h</div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-circle-dot fa-1x"></i>
+                        </span>
+                        <p class="line">Squash</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>Aug 5, 17h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>Vasil Levski, Sofia, Bulgaria.</p>
+                    </div>
+                </div>
+                <div class="button head_back">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </div>
+                <div class="button head_fwd">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div id="B" class="post detail_n">
+            <div class="detail_head">
+                <div class="icon round badge">19h</div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                        </span>
+                        <p class="line">Tennis</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>Aug 5, 19h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>Vasil Levski, Sofia, Bulgaria.</p>
+                    </div>
+                </div>
+                <div class="drop_down icon head_more">
+                    <div class="button drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <div class="button thin">more 1</div>
+                        <div class="button thin">more 2</div>
+                        <div class="button thin">more 3</div>
+                    </div>
+                </div>
+                <div class="button head_back">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </div>
+                <div class="button head_fwd">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </div>
+            </div>
+            <div class="post hidden">
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p>Pesho sent invitation</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Squash at Vasil Levski, Aug 5, 13-21h</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-brands fa-redhat fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Venue Manager</p>
+                        <p>Removed 15h from available hours</p>
+                    </div>
+                </div>
+                <div class="chat_item align_end">
+                    <div class="chat_bubble">
+                        <p class="bold">Helen</p>
+                        <p>Accepted 14h</p>
+                    </div>
+                    <div class="button">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Accepted 14h</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-brands fa-redhat fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Venue Manager</p>
+                        <p>Booked 14h</p>
+                    </div>
+                </div>
+            </div>
+            <div class="button link toggle_previous_sibling align_center">
+                <span class="tog">Show invitation history</span>
+                <span class="tog hidden">Hide invitation history</span>
+            </div>
+            <div class="banner pillar">
+                <p>Match is scheduled!</p>
+                <p>Squash, Vasil Levski, Aug 5, 14h, Pesho</p>
+            </div>
+            <div class="icon align_center">
+                <i class="fa-solid fa-hat-cowboy fa-3x"></i>
+            </div>
+            <div class="post">
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Hey - looking forward to having our first match!</p>
+                    </div>
+                </div>
+                <div class="chat_item align_end">
+                    <div class="chat_bubble">
+                        <p class="bold">Helen</p>
+                        <p>Yes - me too</p>
+                    </div>
+                    <div class="button">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_end">
+                    <div class="chat_bubble">
+                        <p class="bold">Helen</p>
+                        <p>But I am really just testing qwikgame</p>
+                    </div>
+                    <div class="button">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>qwikgame is cool - I have been using it for years</p>
+                    </div>
+                </div>
+                <div class="chat_item align_end">
+                    <div class="chat_bubble">
+                        <p class="bold">Helen</p>
+                        <p>Well the UI is pretty tidy :-)</p>
+                    </div>
+                    <div class="button">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>see you tomorrow - I will be wearing the qwikgame cap</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat_input">
+                <div class="button">
+                    <i class="fa-regular fa-face-smile fa-xl"></i>
+                </div>
+                <input type="text" name="chat" placeholder="Chat here with your rival">
+                <div class="button">
+                    <i class="fa-solid fa-paper-plane fa-xl"></i>
+                </div>
+            </div>
+        </div>
+{% endblock %}

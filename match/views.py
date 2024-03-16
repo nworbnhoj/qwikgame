@@ -3,4 +3,6 @@ from django.views import View
 
 
 class MatchView(View):
-	pass
+
+    def get(self, request):
+        return render(request, "match/match.html")

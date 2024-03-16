@@ -7,3 +7,15 @@ class AccountView(View):
 
     def get(self, request):
         return render(request, "player/account_player.html")
+
+
+class AvailableView(View):
+    pass
+
+
+class InviteView(View):
+    pass
+
+
+class RivalView(View):
+    pass

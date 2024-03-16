@@ -13,8 +13,29 @@
 
 <body>
     <div id="icon_bar" class="icon_bar">
-        <img class="logo href" src="{% static 'qwik_icon.svg' %}" data-href="{% url 'index' %}">
-        {% block icon_bar %}ICON_BAR{% endblock %}        
+        <img class="logo href" src="{% static 'qwik_icon.svg' %}" data-href="{% url 'home' %}">
+        <div class="flex_space"></div>
+        <div class="button href" data-href="{% url 'invite' %}">
+            <i class="fa-solid fa-house fa-2x"></i>
+            <p class="fat">Invitations</p>
+        </div>
+        <div class="button href" data-href="{% url 'match' %}">
+            <i class="fa-regular fa-calendar-days fa-2x"></i>
+            <p class="fat">Scheduled Matches</p>
+        </div>
+        <div class="button href" data-href="{% url 'rival' %}">
+            <i class="fa-solid fa-thumbs-up fa-2x"></i>
+            <p class="fat">Rival Rating</p>
+        </div>
+        <div class="button href" data-href="{% url 'available' %}">
+            <i class="fa-solid fa-volleyball fa-2x"></i>
+            <p class="fat">My Games</p>
+        </div>
+        <div class="flex_space hide768"></div>
+        <div class="button href" data-href="{% url 'account' %}">
+            <i class="fa-solid fa-graduation-cap fa-2x"></i>
+            <p class="fat">{% block name %}Name{% endblock %}</p>
+        </div>     
     </div>
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
     <hr>

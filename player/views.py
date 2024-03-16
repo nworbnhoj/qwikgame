@@ -16,7 +16,9 @@ class AvailableView(View):
 
 
 class InviteView(View):
-    pass
+
+    def get(self, request):
+        return render(request, "player/invite.html")
 
 
 class RivalView(View):

@@ -1,0 +1,766 @@
+{% extends "qwik.html" %}
+
+
+{% block title %}Invite{% endblock %}
+
+
+{% block name %}Helen{% endblock %}
+
+
+{% block cta_mobile %}
+    <div class="button cta round lge cta_mobile">
+        <i class="fa-solid fa-paper-plane fa-3x"></i>
+    </div>
+{% endblock %}
+
+
+{% block cta_desktop %}
+        <label id="cta_desktop" class="toggle cta_desktop">
+            <input type="radio" checked="checked" name="list" data-id="KEEN">
+            <div class="button cta wide">
+                <i class="fa-solid fa-paper-plane fa-xl"></i>
+                <p>KEEN TO PLAY</p>
+            </div>
+        </label>
+{% endblock %}
+
+
+{% block list_bar %}
+        <hr>
+        <div class="list_bar_head">
+            <h1>Invitations</h1>
+            <div class="drop_down">
+                <div class="button drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        date
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby" checked="checked">
+                        sent
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        venue
+                    </label>
+                </div>
+            </div>
+        </div>
+        <h2 class="show_group">
+            Sent
+            <span>&#9650;</span>
+        </h2>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" name="list" data-id="A">
+                <div class="button item unread">
+                    <div class="pole notes">
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                            </span>
+                            <p class="line">Tennis</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-calendar fa-1x"></i>
+                            </span>
+                            <p>Aug 4, 17h-20h</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-location-dot fa-1x"></i>
+                            </span>
+                            <p>Dema Sport, Sofia, Bulgaria.</p>
+                        </div>
+                    </div>
+                    <div class="pole badges">
+                        <div class="icon">
+                            <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="B">
+                <div class="button item">
+                    <div class="pole notes">
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                            </span>
+                            <p class="line">Tennis</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-calendar fa-1x"></i>
+                            </span>
+                            <p>Aug 4, 17h-20h</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-location-dot fa-1x"></i>
+                            </span>
+                            <p> Vasil Levski, Sofia, Bulgaria.</p>
+                        </div>
+                    </div>
+                    <div class="pole badges">
+                        <div class="icon">
+                            <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <h2 class="show_group">
+            Received
+            <span>&#9650;</span>
+        </h2>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" name="list" data-id="C">
+                <div class="button item unread">
+                    <div class="pole notes">
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-circle-dot fa-1x"></i>
+                            </span>
+                            <p class="line">Squash</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-calendar fa-1x"></i>
+                            </span>
+                            <p>Aug 5, 13h-21h</p>
+                        </div>
+                        <div class="note">
+                            <span class="icon">
+                                <i class="fa-solid fa-location-dot fa-1x"></i>
+                            </span>
+                            <p> Vasil Levski, Sofia, Bulgaria.</p>
+                        </div>
+                    </div>
+                    <div class="pole badges">
+                        <div class="icon">
+                            <i class="fa-solid fa-inbox fa-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <h2 class="show_group">
+            History
+            <span class="flip">&#9650;</span>
+        </h2>
+        <div class="group hidden">
+            <p>No history yet!</p>
+        </div>
+{% endblock %}
+
+
+{% block detail %}
+        <div id="KEEN" class="post">
+            <div class="detail_head">
+                <div class="icon selected">
+                    <i class="fa-solid fa-paper-plane fa-2x"></i>
+                </div>
+                <h1>Keen To Play? Send Invitation?</h1> 
+            </div>
+            <div class="post detail_body">
+
+                <h2>GAME</h2>
+                <div class="drop_down">
+                    <div class="button drop" data-down="false">
+                        <div class="drop_up">Squash</div>
+                        <div class="fat">v</div>
+                    </div>
+                    <div class="down hidden">
+                        <label class="toggle option">
+                            <input type="radio" name="game">
+                            Badminton
+                        </label>
+                        <label class="toggle option">
+                            <input type="radio" name="game" checked="checked">
+                            Squash
+                        </label>
+                        <label class="toggle option">
+                            <input type="radio" name="game">
+                            Tennis
+                        </label>
+                    </div>
+                </div>
+
+                <h2>VENUE</h2>
+                <div class="drop_down">
+                    <div class="button drop" data-down="false">
+                        <div class="drop_up"></div>
+                        <div class="fat">v</div>
+                    </div>
+                    <div class="down hidden">
+                        <label class="toggle option">
+                            <input type="radio" name="venue">
+                            Select from map
+                        </label>
+                        <label class="toggle option">
+                            <input type="radio" name="venue">
+                            Dema Sport
+                        </label>
+                        <label class="toggle option">
+                            <input type="radio" name="venue" checked="checked">
+                            Milawa Squash Courts
+                        </label>
+                        <label class="toggle option">
+                            <input type="radio" name="venue">
+                            Vasil Levski
+                        </label>
+                    </div>
+                </div>
+
+                <h2>SCHEDULE</h2>
+                <div class="pole by_day">
+                    <h3>TODAY <span class="caption">01-JUL-2024</span></h3>
+                    <div class="schedule_body grid_3_col">
+                        <div></div>
+                        <div class="button link show-next-parent-sibling">Pick time</div>
+                        <label class="toggle wide all_day">
+                            <input type="checkbox" name="all_today">
+                            <div class="button ctb wide thin">All Day</div>
+                        </label>
+                    </div>
+                    <div class="post hidden">
+                        <div class="radio_block hour_grid">
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour" disabled>
+                                <div class="button hr">6</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour" disabled>
+                                <div class="button hr">7</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour" disabled>
+                                <div class="button hr">8</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">9</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">10</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">11</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">12</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">13</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">14</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">15</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">16</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">17</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">18</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">19</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">20</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="pole by_day">
+                    <h3>TOMORROW <span class="caption">02-JUL-2024</span></h3>
+                    <div class="schedule_body grid_3_col">
+                        <div></div>
+                        <div class="button link show-next-parent-sibling">Pick time</div>
+                        <label class="toggle wide all_day">
+                            <input type="checkbox" name="all_tomorrow">
+                            <div class="button ctb wide thin">All Day</div>
+                        </label>
+                    </div>
+                    <div class="post hidden">
+                        <div class="radio_block hour_grid">
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">6</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">7</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">8</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">9</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">10</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">11</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">12</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">13</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">14</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">15</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">16</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">17</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">18</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">19</div>
+                            </label>
+                            <label class="toggle wide hour">
+                                <input type="checkbox" name="hour">
+                                <div class="button hr">20</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>FRIENDS</h2>
+
+                <div id="friend_invite"  class="drop_down">
+                    <div class="button drop" data-down="false">
+                        <div>Invite friends</div>
+                        <div class="fat">v</div>
+                    </div>
+                    <div class="down hidden">
+                        <label class="option closable" for="best-friend@email.com">
+                            <input type="checkbox" id='best-friend@email.com'/>
+                            Best (best-friend@email.com)
+                            <div class="button tiny push_right closer">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </label>
+                        <label class="option closable" for="boy-friend@email.com">
+                            <input type="checkbox" id='boy-friend@email.com'/>
+                            Boy (boy-friend@email.com)
+                            <div class="button tiny push_right closer">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </label>
+                        <label class="option closable" for="girl-friend@email.com">
+                            <input type="checkbox" id='girl-friend@email.com'/>
+                            Girl (girl-friend@email.com)
+                            <div class="button tiny push_right closer">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </label>
+                        <label class="option closable" for="only-friend@email.com">
+                            <input type="checkbox" id='only-friend@email.com'/>
+                            Only (only-friend@email.com)
+                            <div class="button tiny push_right closer">
+                                <i class="fa-solid fa-trash"></i>
+                            </div>
+                        </label>
+                        <label class="option wide show_friend_add">
+                            <div class="button add">
+                                <i class="fa-solid fa-circle-plus"></i>
+                                <p>add a friend</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <fieldset id="friend_add" class="hidden">
+                    <h3>Friend's email address</h3>
+                    <input type="text" name="friend" list="friends" placeholder="Type email address"/>
+                    <h3>Friend's skill level</h3>
+                    <div class="slide_labels">
+                        <div class="slide_label">Much Weaker</div>
+                        <div class="slide_label">Weaker</div>
+                        <div class="slide_label">Well Matched</div>
+                        <div class="slide_label">Stronger</div>
+                        <div class="slide_label">Much Stronger</div>
+                    </div>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
+                    <div class="rival-skill-learn grid_3_col">
+                        <div class="button link show_friend_invite">Cancel</div>
+                        <div class="button link">Learn more</div>
+                        <div class="button ctb wide thin">Add</div>
+                    </div>
+                </fieldset>
+
+                <h2>RIVAL'S SKILL LEVEL</h2>
+                <fieldset id="rival_skill_body">
+                    <div class="slide_labels disabled">
+                        <div class="slide_label">Much Weaker</div>
+                        <div class="slide_label">Weaker</div>
+                        <div class="slide_label">Well Matched</div>
+                        <div class="slide_label">Stronger</div>
+                        <div class="slide_label">Much Stronger</div>
+                    </div>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)" disabled>
+                    <div class="rival-skill-learn grid_3_col">
+                        <div></div>            
+                        <div class="button link">Learn more</div>
+                        <div class="button ctb wide thin">Unlock</div>
+                    </div>
+                </fieldset>
+                <div class="button cta push_down wide">
+                    <i class="fa-solid fa-paper-plane fa-xl"></i>
+                    <p>INVITE</p>
+                </div>
+            </div>            
+        </div>
+        <div id="A" class="post detail_n hidden">
+            <div class="detail_head">
+                <div class="icon">
+                    <i class="fa-solid fa-paper-plane fa-2x"></i>
+                </div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                        </span>
+                        <p class="line">Tennis</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>Aug 4, 17h-20h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>Dema Sport, Sofia, Bulgaria.</p>
+                    </div>
+                </div>
+                <div class="drop_down icon head_more">
+                    <div class="button drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <div class="button thin">more 1</div>
+                        <div class="button thin">more 2</div>
+                        <div class="button thin">more 3</div>
+                    </div>
+                </div>
+                <div class="button head_back">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </div>
+                <div class="button head_fwd">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </div>
+            </div>
+            <div class="post">
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-paper-plane fa-2x"></i>
+                    </div>
+                    <p>Helen sent invitation</p>
+                </div>
+                <div class="chat_item align_end">
+                    <div class="button replicate show_next_parent_sibling">
+                        <i class="fa-solid fa-copy fa-2x"></i>
+                    </div>
+                    <p class="fat">Replicate</p>
+                    <div class="drop_down icon">
+                        <div class="button drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
+                            <div class="button thin">more 1</div>
+                            <div class="button thin">more 2</div>
+                            <div class="button thin">more 3</div>
+                        </div>
+                    </div>
+                    <div class="chat_bubble">
+                        <p>Tennis, Dema Sport, Aug 4, 17h-20h</p>
+                    </div>
+                </div>
+                <div class="post replicate closable hidden">
+                    <h6>BOOST YOUR CHANCES FOR A MATCH</h6>
+                    <div class="plank">
+                        <div class="icon info medium">
+                            <i class="fa-solid fa-info fa-2x"></i>
+                        </div>
+                        <div class="post">
+                            <div class="info_bubble">
+                                <div class="icon">
+                                    <i class="fa-solid fa-person fa-2x"></i>
+                                </div>
+                                <p>Potential rivals at Dema Sport</p>
+                                <div class="icon info small">3</div>
+                            </div>
+                            <div class="info_bubble">
+                                <div class="icon">
+                                    <i class="fa-solid fa-location-dot fa-2x"></i>
+                                </div>
+                                <p>Next Closest Venue:</p>
+                                <div class="button link">Vasil Levski</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <p>You can choose to replicate the same invitation at the next closest Venue to boost your chances for a match.</p>
+                    <div class="grid_2_col">
+                        <div class="button link closer">Cancel</div>
+                        <div class="button cta">
+                            <i class="fa-solid fa-copy fa-2x"></i>
+                            REPLICATE
+                        </div>          
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-brands fa-redhat fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Venue Manager</p>
+                        <p>Removed 18h from available hours</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Accepted for 19h</p>
+                    </div>
+                    <div class="drop_down icon">
+                        <div class="button drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
+                            <div class="button thin">decline</div>
+                        </div>
+                    </div>
+                    <div class="cta button round sml">
+                        <i class="fa-solid fa-right-long fa-xl"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-wizard fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Maya</p>
+                        <p>Accepted for 17h</p>
+                    </div>
+                    <div class="drop_down icon">
+                        <div class="button drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
+                            <div class="button thin">decline</div>
+                        </div>
+                    </div>
+                    <div class="cta button round sml">
+                        <i class="fa-solid fa-right-long fa-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="B" class="post detail_n hidden">
+            <div class="detail_head">
+                <div class="icon">
+                    <i class="fa-solid fa-paper-plane fa-2x"></i>
+                </div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                        </span>
+                        <p class="line">Tennis</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>Aug 4, 17h-20h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p> Vasil Levski, Sofia, Bulgaria.</p>
+                    </div>
+                </div>
+                <div class="button head_back">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </div>
+                <div class="button head_fwd">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div id="C" class="post detail_n hidden">
+            <div class="detail_head">
+                <div class="icon">
+                    <i class="fa-solid fa-inbox fa-xl"></i>
+                </div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-circle-dot fa-1x"></i>
+                        </span>
+                        <p class="line">Squash</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>Aug 5, 13h-21h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p> Vasil Levski, Sofia, Bulgaria.</p>
+                    </div>
+                </div>
+                <div class="drop_down icon head_more">
+                    <div class="button drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <div class="button thin">more 1</div>
+                        <div class="button thin">more 2</div>
+                        <div class="button thin">more 3</div>
+                    </div>
+                </div>
+                <div class="button head_back">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </div>
+                <div class="button head_fwd">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </div>
+            </div>
+            <div class="post">
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p>Pesho sent invitation</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Squash at Vasil Levski, Aug 5, 13-21h</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-brands fa-redhat fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Venue Manager</p>
+                        <p>Removed 15h from available hours</p>
+                    </div>
+                </div>
+                <div class="detail_chat_post"></div>
+            </div>
+            <div class="post">
+                <div class="paver">
+                    <div class="button ctb">DECLINE</div>
+                    <div class="button cta">ACCEPT</div>
+                </div>
+                <div class="pillar">
+                    <h2>Pick Time To Play</h2>
+                        <p>Aug 5, 2023</p>
+                    <div class="radio_block hour_grid">
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">13h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour" checked="checked">
+                            <div class="button hr">14h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour" disabled>
+                            <div class="button hr">15h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">16h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">17h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">18h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">19h</div>
+                        </label>
+                        <label class="toggle wide">
+                            <input type="radio" name="hour">
+                            <div class="button hr">20h</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

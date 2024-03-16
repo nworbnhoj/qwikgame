@@ -10,7 +10,9 @@ class AccountView(View):
 
 
 class AvailableView(View):
-    pass
+
+    def get(self, request):
+        return render(request, "player/available.html")
 
 
 class InviteView(View):

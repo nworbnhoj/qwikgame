@@ -33,7 +33,7 @@ div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; pad
 div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
 div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
 div.button.info { border: 0.1em solid black; border-radius: 50% }
-div.button.item { align-items: stretch; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-items: center; width: 100% }
+div.button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
 div.button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
 div.button.item div.note { width: 100% }
 div.button.item div.notes { flex: 1 1 0; overflow:hidden; }

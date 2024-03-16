@@ -18,4 +18,6 @@ class InviteView(View):
 
 
 class RivalView(View):
-    pass
+
+    def get(self, request):
+        return render(request, "player/rival.html")

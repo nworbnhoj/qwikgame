@@ -67,33 +67,20 @@
                         <i class="fa-solid fa-graduation-cap fa-2x"></i>
                     </div>
                     <h2>NAME OR NICK</h2>
-                    <input type="text" name="name" placeholder="Your qwikgame screen name"/>
+                    <input type="text" name="name" placeholder="Your qwikgame screen name" value="{{ name }}"/>
                     <h2>WEBSITE / SOCIAL MEDIA</h2>
-                    <label class="option closable" for="https://my.homepage.me">
-                        <input type="text" name="name" placeholder="A url link to your website or social media page" value="https://my.homepage.me"/>
+                    {% for url in social %}
+                    <label class="option closable" for="{{ url }}">
+                        <input type="text" name="name" placeholder="A url link to your website or social media page" value="{{ url }}"/>
                         <div class="button tiny closer">
                             <i class="fa-solid fa-trash"></i>
                         </div>
                     </label>
-                    <label class="option closable" for="https://facebook.com/me">
-                        <input type="text" name="name" placeholder="A url link to your website or social media page" value="https://facebook.com/me"/>
-                        <div class="button tiny closer">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </label>
-                    <label class="option closable hidden" for="https://my.homepage.me">
-                        <input type="text" name="name" placeholder="A url link to your website or social media page"/>
-                        <div class="button tiny closer">
-                            <i class="fa-solid fa-trash"></i>
-                        </div>
-                    </label>
+                    {% endfor %}
                     <label class="option wide show_social_add">
                         <div class="button add">
                             <i class="fa-solid fa-circle-plus"></i>
                             <p>add another social media url</p>
-                        </div>
-                        <div class="button tiny">
-                            <i class="fa-solid fa-trash"></i>
                         </div>
                     </label>
                     {% block player_public %}{% endblock %}
@@ -113,7 +100,7 @@
                             Change
                         </div>
                     </h2>
-                    <p>hellen@email.com</p>
+                    <p>{{ email }}</p>
                     <h2>
                         RECEIVE NOTIFICATIONS
                         <div class="button info sml" data-visible="false">

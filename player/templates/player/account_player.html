@@ -9,39 +9,31 @@
                         </div>
                     </h2>
                     <div class="plank">
+                        {% for _ in '12345'|make_list %} 
                         <div class="icon color">
+                            {% if forloop.counter <= reputation %}
                             <i class="fa-solid fa-star fa-2x"></i>
-                        </div>
-                        <div class="icon color">
-                            <i class="fa-solid fa-star fa-2x"></i>
-                        </div>
-                        <div class="icon color">
-                            <i class="fa-solid fa-star fa-2x"></i>
-                        </div>
-                        <div class="icon color">
+                            {% else %}
                             <i class="fa-regular fa-star fa-2x"></i>
+                            {% endif %}
                         </div>
-                        <div class="icon color">
-                            <i class="fa-regular fa-star fa-2x"></i>
-                        </div>
+                        {% endfor %}
                     </div>
                     <h2>ABOUT</h2>
 
                     <div class="tab_area post">
                         <div class="tabs">
-                            <div class="button tab thin active" data-tab_id="Squash">
-                                Squash
+                            {% for preci in precis %}
+                            <div class="button tab thin {% if forloop.first %} active {% endif %}" data-tab_id="{{ preci.game }}">
+                                {{ preci.game }}
                             </div>
-                            <div class="button tab thin" data-tab_id="Tennis">
-                                Tennis
-                            </div>
+                            {% endfor %}
                         </div>
-                        <div id="Squash" class="tab_content">
-                          <textarea id="" name="squash" rows="4" cols="50">I have played Squash for....., My personal sport achievements are.....,  My favorite atheletes are....</textarea>
+                        {% for preci in precis %}
+                        <div id="{{ preci.game }}" class="tab_content {% if not forloop.first %} hidden {% endif %}">
+                          <textarea id="" name="{{ preci.game }}" rows="4" cols="50">{{ preci.text }}</textarea>
                         </div>
-                        <div id="Tennis" class="tab_content hidden">
-                          <textarea id="" name="tennis" rows="4">I have played Tennis for....., My personal sport achievements are.....,  My favorite atheletes are....</textarea>
-                        </div>
+                        {% endfor %}
                         <div class="button cta push_down wide schedule_save">
                             <p>SAVE</p>
                         </div>

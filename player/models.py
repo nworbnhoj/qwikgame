@@ -25,6 +25,9 @@ class Player(models.Model):
     notify_web = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
+    def reputation(self):
+        return 3
+        
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):
         if self.user is not None:

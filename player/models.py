@@ -20,9 +20,6 @@ class Player(models.Model):
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', through='Friend', blank=True)
     games = models.ManyToManyField(Game)
-    location_auto = models.BooleanField(default=False)
-    notify_email = models.BooleanField(default=True)
-    notify_web = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     def reputation(self):

@@ -31,10 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "authenticate.apps.AuthenticateConfig",
+    'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
     'match.apps.MatchConfig',
-    'persona.apps.PersonaConfig',
+    'person.apps.PersonConfig',
     'player.apps.PlayerConfig',
     'venue.apps.VenueConfig',
     'django.contrib.admin',
@@ -60,7 +60,7 @@ ROOT_URLCONF = 'qwikgame.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['qwikgame/templates', 'persona/templates', 'player/templates'],
+        'DIRS': ['qwikgame/templates', 'person/templates', 'player/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

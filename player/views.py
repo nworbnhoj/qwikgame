@@ -2,8 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 
+from person.models import Social
 from player.models import Player, Precis
-from persona.models import Social
     
 
 class AccountView(View):
@@ -13,10 +13,10 @@ class AccountView(View):
         player = Player.objects.get(user__id=user_id)
         context = {
             "email": request.user.email,
-            "name": request.user.persona.name,
+            "name": request.user.person.name,
             "precis": Precis.objects.filter(player__user__id=user_id),
             "reputation": player.reputation(),
-            "social": Social.objects.filter(persona__user__id=user_id),
+            "social": Social.objects.filter(person__user__id=user_id),
         }
         return render(request, "player/account_player.html", context)
 

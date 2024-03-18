@@ -1,0 +1,196 @@
+{% extends "qwik.html" %}
+
+
+{% block title %}Account{% endblock %}
+
+
+{% block name %}Helen{% endblock %}
+
+
+{% block cta_mobile %}
+    <div class="button cta round lge cta_mobile">
+        <i class="fa-solid fa-trophy fa-3x"></i>
+    </div>
+{% endblock %}
+
+
+{% block cta_desktop %}
+        <label id="cta_desktop" class="toggle cta_desktop">
+            <input type="radio" checked="checked" name="list" data-id="UPGRADE">
+            <div class="button cta wide">
+                <i class="fa-solid fa-trophy fa-xl"></i>
+                <p>UPGRADE</p>
+            </div>
+        </label>
+{% endblock %}
+
+
+{% block list_bar %}
+        <hr>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" name="list" data-id="PUBLIC">
+                <div class="button item">
+                    Public Profile
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="PRIVATE">
+                <div class="button item">
+                    Private Settings
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="PRIVACY">
+                <div class="button item">
+                    Privacy
+                </div>
+            </label>
+        </div>
+{% endblock %}
+
+
+{% block detail %}
+        <div id="PUBLIC" class="post">
+            <div class="detail_head">
+                <h1>Public Profile</h1> 
+            </div>
+            <div class="post detail_body">
+                <div class="post">
+                    <h2>
+                        PROFILE PICTURE
+                        <div class="button link">
+                            Change
+                        </div>
+                    </h2>
+                    <div class="icon">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                    <h2>NAME OR NICK</h2>
+                    <input type="text" name="name" placeholder="Your qwikgame screen name" value="{{ name }}"/>
+                    <h2>WEBSITE / SOCIAL MEDIA</h2>
+                    {% for url in social %}
+                    <label class="option closable" for="{{ url }}">
+                        <input type="text" name="name" placeholder="A url link to your website or social media page" value="{{ url }}"/>
+                        <div class="button tiny closer">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                    </label>
+                    {% endfor %}
+                    <label class="option wide show_social_add">
+                        <div class="button add">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <p>add another social media url</p>
+                        </div>
+                    </label>
+                    {% block player_public %}{% endblock %}
+                    {% block manager_public %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="PRIVATE" class="post hidden">
+            <div class="detail_head">
+                <h1>PRIVATE SETTINGS</h1> 
+            </div>
+            <div class="post detail_body">
+                <div class="post">
+                    <h2>
+                        EMAIL ADDRESS
+                        <div class="button link">
+                            Change
+                        </div>
+                    </h2>
+                    <p>{{ email }}</p>
+                    <h2>
+                        RECEIVE NOTIFICATIONS
+                        <div class="button info sml" data-visible="false">
+                            <i class="fa-solid fa-info fa-1x"></i>
+                            <div class="info_text hidden">Something helpful</div>
+                        </div>
+                    </h2>
+                    <h3>
+                        Email notifications
+                        <label class="switch push_right" for="email-notify-cb">
+                            <input id="email-notify-cb" type="checkbox" name="email-notify">
+                            <div class="slider round"></div>
+                        </label>
+                        <div class="button info sml invisible" data-visible="false">
+                            <i class="fa-solid fa-info fa-1x"></i>
+                        </div>
+                    </h3>
+                    <h3>
+                        Web / App notifications
+                        <label class="switch push_right" for="app-notify-cb">
+                            <input id="app-notify-cb" type="checkbox" name="app-notify">
+                            <div class="slider round"></div>
+                        </label>
+                        <div class="button info sml invisible" data-visible="false">
+                            <i class="fa-solid fa-info fa-1x"></i>
+                        </div>
+                    </h3>
+
+                    <h2>
+                        ALLOW LOCATION ACCESS
+                        <label class="switch push_right" for="location-cb">
+                            <input id="location-cb" type="checkbox" name="location-access">
+                            <div class="slider round"></div>
+                        </label>
+                        <div class="button info sml" data-visible="false">
+                            <i class="fa-solid fa-info fa-1x"></i>
+                            <div class="info_text hidden">This will make finding a Venue nearby faster</div>
+                        </div>
+                    </h2>
+                    <h2>LANGUAGE</h2>
+                    <div class="drop_down">
+                        <div class="button drop" data-down="false">
+                            <div class="drop_up">English</div>
+                            <div class="fat">v</div>
+                        </div>
+                        <div class="down hidden">
+                            <label class="toggle option">
+                                <input type="radio" name="language">български
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language" checked="checked">English
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">Español
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">中文
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">русский
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">Français
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">हिंदी
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">الهندية...
+                            </label>
+                            <label class="toggle option">
+                                <input type="radio" name="language">عربى
+                            </label>
+                        </div>
+                    </div>
+                    {% block player_private %}{% endblock %}
+                    {% block manager_private %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="PRIVACY" class="post hidden">
+            <div class="detail_head">
+                <h1>PRIVACY</h1> 
+            </div>
+            <h2>comming soon</h2>
+        </div>
+        <div id="UPGRADE" class="post hidden">
+            <div class="detail_head">
+                <h1>UPGRADE</h1> 
+            </div>
+            <h2>comming soon</h2>
+        </div>
+{% endblock %}

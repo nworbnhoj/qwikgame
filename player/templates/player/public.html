@@ -1,4 +1,4 @@
-{% extends "person/account.html" %}
+{% extends "person/public.html" %}
 
 {% block player_public %}
                     <h2>
@@ -34,34 +34,5 @@
                           <textarea id="" name="{{ preci.game }}" rows="4" cols="50">{{ preci.text }}</textarea>
                         </div>
                         {% endfor %}
-                        <div class="button cta push_down wide schedule_save">
-                            <p>SAVE</p>
-                        </div>
                     </div>
-{% endblock %}
-
-
-{% block player_private %}
-                    <h2>LIST OF BLOCKED PLAYERS</h2>
-                    <div id="block_list" class="drop_down">
-                        <div class="button drop" data-down="false">
-                            <div>Blocked Players</div>
-                            <div class="fat">v</div>
-                        </div>
-                        <div class="down hidden">
-                            {% for block in blocked %}
-                            <label class="option closable" for="{{ block }}">{{ block.name }} ({{ block.facet }})
-                                <div class="button link push_right closer">unblock</div>
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <fieldset id="block_add" class="hidden">
-                        <input type="text" name="block" list="blocked" placeholder="Type email address"/>
-                        <div class="rival-skill-learn grid_3_col">
-                            <div class="button link show_block_list">Cancel</div>
-                            <div class="button link">Learn more</div>
-                            <div class="button ctb wide thin">Block</div>
-                        </div>
-                    </fieldset>
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends "person/account.html" %}
+
+
+{% block public_class %}selected{% endblock %}
+
+
+{% block detail %}
+        <div id="PUBLIC" class="post">
+            <div class="detail_head">
+                <h1>PUBLIC PROFILE</h1> 
+            </div>
+            <div class="post detail_body">
+                <div class="post">
+                    <h2>
+                        PROFILE PICTURE
+                        <div class="button link">
+                            Change
+                        </div>
+                    </h2>
+                    <div class="icon">
+                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
+                    </div>
+                    <h2>NAME OR NICK</h2>
+                    <input type="text" name="name" placeholder="Your qwikgame screen name" value="{{ name }}"/>
+                    <h2>WEBSITE / SOCIAL MEDIA</h2>
+                    {% for url in social %}
+                    <label class="option closable" for="{{ url }}">
+                        <input type="text" name="name" placeholder="A url link to your website or social media page" value="{{ url }}"/>
+                        <div class="button tiny closer">
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                    </label>
+                    {% endfor %}
+                    <label class="option wide show_social_add">
+                        <div class="button add">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <p>add another social media url</p>
+                        </div>
+                    </label>
+                    {% block player_public %}{% endblock %}
+                    {% block manager_public %}{% endblock %}
+                    <div class="button cta push_down wide schedule_save">
+                        <p>SAVE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

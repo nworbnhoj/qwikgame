@@ -22,6 +22,12 @@ class Player(models.Model):
     games = models.ManyToManyField(Game)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
+    def facet(self):
+        return self.email_hash[:8].upper()
+
+    def name(self):
+        return self.user.person
+
     def reputation(self):
         return 3
         

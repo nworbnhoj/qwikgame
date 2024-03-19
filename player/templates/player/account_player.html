@@ -49,15 +49,11 @@
                             <div class="fat">v</div>
                         </div>
                         <div class="down hidden">
-                            <label class="option closable" for="cheater@email.com">Cheater (cheater@email.com)
+                            {% for block in blocked %}
+                            <label class="option closable" for="{{ block }}">{{ block.name }} ({{ block.facet }})
                                 <div class="button link push_right closer">unblock</div>
                             </label>
-                            <label class="option closable" for="creepy@email.com">Creepy (creepy@email.com)
-                                <div class="button link push_right closer">unblock</div>
-                            </label>
-                            <label class="option closable" for="nasty@email.com">Nasty (nasty@email.com)
-                                <div class="button link push_right closer">unblock</div>
-                            </label>
+                            {% endfor %}
                         </div>
                     </div>
                     <fieldset id="block_add" class="hidden">

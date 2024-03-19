@@ -5,7 +5,7 @@ from .models import Appeal, Available, Friend, Invite, Opinion, Player, Precis, 
 
 
 class PlayerAdmin(admin.ModelAdmin):
-    fields = ['user', 'email_hash', 'games', 'blocked', 'notify_email']
+    fields = ['user', 'email_hash', 'games', 'blocked']
     fieldsets = []
     filter_horizontal = []
     list_display = ['__str__']

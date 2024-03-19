@@ -111,7 +111,7 @@
                     <h3>
                         Email notifications
                         <label class="switch push_right" for="email-notify-cb">
-                            <input id="email-notify-cb" type="checkbox" name="email-notify">
+                            <input id="email-notify-cb" type="checkbox" name="email-notify" {{ notify_email }}>
                             <div class="slider round"></div>
                         </label>
                         <div class="button info sml invisible" data-visible="false">
@@ -121,7 +121,7 @@
                     <h3>
                         Web / App notifications
                         <label class="switch push_right" for="app-notify-cb">
-                            <input id="app-notify-cb" type="checkbox" name="app-notify">
+                            <input id="app-notify-cb" type="checkbox" name="app-notify"{{ notify_web }}>
                             <div class="slider round"></div>
                         </label>
                         <div class="button info sml invisible" data-visible="false">
@@ -132,7 +132,7 @@
                     <h2>
                         ALLOW LOCATION ACCESS
                         <label class="switch push_right" for="location-cb">
-                            <input id="location-cb" type="checkbox" name="location-access">
+                            <input id="location-cb" type="checkbox" name="location-access" {{ location_auto }}>
                             <div class="slider round"></div>
                         </label>
                         <div class="button info sml" data-visible="false">
@@ -143,37 +143,15 @@
                     <h2>LANGUAGE</h2>
                     <div class="drop_down">
                         <div class="button drop" data-down="false">
-                            <div class="drop_up">English</div>
+                            <div class="drop_up">{{ language }}</div>
                             <div class="fat">v</div>
                         </div>
                         <div class="down hidden">
+                            {% for key,val in languages.items %}
                             <label class="toggle option">
-                                <input type="radio" name="language">български
+                                <input type="radio" name="language" {% if key == language  %} checked="checked"{% endif %}>{{ val }}
                             </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language" checked="checked">English
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">Español
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">中文
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">русский
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">Français
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">हिंदी
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">الهندية...
-                            </label>
-                            <label class="toggle option">
-                                <input type="radio" name="language">عربى
-                            </label>
+                            {% endfor %}
                         </div>
                     </div>
                     {% block player_private %}{% endblock %}

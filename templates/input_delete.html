@@ -1,0 +1,8 @@
+<!-- qwikgame/templates/input_delete.html -->
+<label class="option closable" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
+    <p>{{ widget.label }}</p>
+    <input type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}/>
+    <div class="button tiny closer">
+        <i class="fa-solid fa-trash"></i>
+    </div>
+</label>

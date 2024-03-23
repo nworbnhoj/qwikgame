@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 
 from person.models import LANGUAGE, Person, Social
+from person.forms import PublicForm
 
 class AccountView(View):
 
@@ -38,11 +39,22 @@ class PublicView(View):
 
     def get(self, request):
         user_id = request.user.id
+        if request.method == "POST":
+            form = PublicForm(request.POST)
+            if form.is_valid():
+                return HttpResponseRedirect("/account/public/")
+        else:
+            form = PublicForm(
+                initial = {
+                    'icon': request.user.person.icon,
+                    'name': request.user.person.name,
+                },
+                social = Social.objects.filter(person__user__id=user_id),
+            )
         person = Person.objects.get(user__id=user_id)
         languages = dict(LANGUAGE)
         context = {
-            "name": request.user.person.name,
-            "social": Social.objects.filter(person__user__id=user_id),
+            'person_form': form,
         }
         return render(request, "person/public.html", context)
 

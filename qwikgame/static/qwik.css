@@ -11,6 +11,7 @@ blockquote, q { quotes: "" "" }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
 .color { color: #dfa622 }
+.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 .cta_desktop { display: none; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .hidden { display: none }
@@ -43,7 +44,7 @@ div.button.item.unread { font-weight: bold }
 div.button.item.unread div.icon { color: #dfa622 }
 div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
 div.button.lge { height: 6em; width: 6em; }
-div.button.link { color: blue; text-align: center; text-decoration-line: underline }
+div.button.link { color: blue; height: auto; text-align: center; text-decoration-line: underline }
 div.button.med { height: 3em; width: 3em; }
 div.button.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
 div.button.round { border-radius: 50% }
@@ -81,6 +82,8 @@ div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; d
 div.drop_up {}
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
+div.field { padding: 0.5em 0 0.5em 0 }
+div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
@@ -107,6 +110,7 @@ div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; top: 150%; width: 20em; z-index: 1 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
+div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 1em 0; width: 100% }
 div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
 div.list_bar a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
 div.list_bar a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
@@ -146,6 +150,7 @@ h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: none; height: 3em; padding: 0.1em }
+input[type=submit] { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
 input:checked + .slider { background-color: #66bb6a; }
 input:checked + .slider:before { transform: translateX(2em); }
@@ -153,9 +158,10 @@ input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0
 input.disabled { background-color: #eeeeee; color: #999999 }
 input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }
+label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em }
-label.option { align-items: stretch; gap: 1em; margin: 0.3em; text-align: center; width: 100% }
+label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center; width: 100% }
 label.option div.button { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }
@@ -192,6 +198,7 @@ textarea { border: 0 solid black; width: 100% }
     h2 { font-size: 1.07em }
     h3 { font-size: 1.03em }
     img.logo { display: none }
+    label { font-size: 1.07em }
     label.keen_desktop { display: none }
     label.toggle:has(input[name="list"]) { color: inherit }
     p.caption { font-size: 0.94em }
@@ -219,6 +226,7 @@ textarea { border: 0 solid black; width: 100% }
     h2 { font-size: 1.07em }
     h3 { font-size: 1.03em }
     img.logo { display: none }
+    label { font-size: 1.07em }
     label.keen_desktop { display: none }
     label.toggle:has(input[name="list"]) { color: inherit }
     p.caption { font-size: 0.94em }
@@ -247,6 +255,7 @@ textarea { border: 0 solid black; width: 100% }
     h2 { font-size: 1.13em }
     h3 { font-size: 1.07em }
     img.logo { display: block }
+    label { font-size: 1.13em }
     label.keen_desktop { display: flex }
     label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
     p.caption { font-size: 0.89em }

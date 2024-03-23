@@ -1,0 +1,9 @@
+<!-- qwikgame/templates/input_multi.html -->
+<div class="post field">
+    <div class="label">
+        <label for="id_{{ field.name }}">{{ field.label }}</label>
+    </div>
+    {% for fld in field %}
+        {{ fld }}
+    {% endfor %}
+</div>

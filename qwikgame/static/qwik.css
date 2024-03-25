@@ -134,8 +134,7 @@ div.slider.round { border-radius: 34px; }
 div.slider.round:before { border-radius: 50%; }
 div.tabs { z-index: 1 }
 div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
-div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; top: 2px; z-index: 1 }
-div.tab_content { padding: 0.3em; border: 1px solid black; width: 100% }
+div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 2px; top: 4px; z-index: 1 }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
@@ -181,7 +180,7 @@ p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
-textarea { border: 0 solid black; width: 100% }
+textarea { border: 1px solid black; padding: 1em; width: 100% }
 @media only screen and (max-width:600px) {
     body { font-size: 13px }
     div.button { font-size: 1.07em }

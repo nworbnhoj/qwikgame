@@ -82,6 +82,11 @@ function close(event) {
   event.currentTarget.closest('.closable').classList.toggle('hidden');
 }
 
+function check(event) {
+  let element = event.currentTarget;
+  element.querySelector("input[type='checkbox']").checked=true;
+}
+
 function href(event) {
   let element = event.currentTarget;
   window.location.href = element.dataset.href;
@@ -101,15 +106,15 @@ function nextDetail(event) {
 function openTab(event) {
   let tab = event.currentTarget;
   let tab_area = tab.closest('.tab_area');
-  let tab_content = tab_area.querySelectorAll(".tab_content");
+  let tab_content = tab_area.querySelectorAll("textarea");
   for (let i = 0; i < tab_content.length; i++) {
-    tab_content[i].classList.add('hidden');
+    tab_content[i].setAttribute('hidden', '');
   }
   tabs = tab_area.querySelectorAll(".tab");
   for (i = 0; i < tabs.length; i++) {
     tabs[i].classList.remove('active');
   }
-  document.getElementById(tab.dataset.tab_id).classList.remove('hidden');
+  document.getElementById(tab.dataset.tab_id).removeAttribute('hidden');
   event.currentTarget.classList.add('active');
 }
 
@@ -408,6 +413,9 @@ window.onload = function() {
   });
   document.querySelectorAll('div.closer').forEach(function(div) {
     div.onclick = close;
+  });
+  document.querySelectorAll('div.checkbox_wrap').forEach(function(div) {
+    div.onclick = check;
   });
   document.querySelectorAll('.href').forEach(function(element) {
     element.onclick = href;

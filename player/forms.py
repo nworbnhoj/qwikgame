@@ -29,8 +29,8 @@ class PrecisForm(Form):
         hidden=False
         for game, precis in game_precis.items():
             name = game.code
-            self.fields[name] = CharField(initial=precis.text, template_name="input_tab.html", widget=Textarea())
-            self.fields[name].help_text = "Let rivals know why they want to play you."
-            self.fields[name].widget.attrs['placeholder'] = "some info about you and this game"
+            self.fields[name] = CharField(initial=precis.text, required = False, template_name="input_tab.html", widget=Textarea())
+            self.fields[name].help_text = "Each precis is limited to 512 characters."
+            self.fields[name].widget.attrs['placeholder'] = "Let rivals know why they want to play you."
             self.fields[name].widget.attrs['hidden'] = hidden
             hidden = True

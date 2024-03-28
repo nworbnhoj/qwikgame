@@ -103,7 +103,7 @@ class Conduct(models.Model):
 class Precis(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    text = models.CharField(max_length=512)
+    text = models.CharField(max_length=512, blank=True)
 
     class Meta:
         verbose_name_plural = 'precis'

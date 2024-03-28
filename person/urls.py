@@ -13,6 +13,6 @@ urlpatterns = [
     # name
     path("privacy/", PrivacyView.as_view(), name='privacy'),
     path("private/", PrivateView.as_view(), name='private'),
-    path("public/", PublicView.as_view(), name='public'),
+    path("public/", PublicView.as_view(), name='person_public'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
 ]

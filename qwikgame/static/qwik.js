@@ -130,23 +130,23 @@ function previousDetail(event) {
 }
 
 function showDetail() {
-  // on mobile, hide the list_bar and show the detail
+  // on mobile, hide the list and show the detail
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
   var width_768 = window.matchMedia("only screen and (max-width: 768px)").matches;
   // var width_992 = window.matchMedia("only screen and (max-width: 992px)").matches;
   // var width_1200 = window.matchMedia("only screen and (max-width: 1200px)").matches;
-  var list_bar = document.getElementById("list_bar");
+  var list = document.getElementById("list");
   var detail = document.getElementById("detail");
   if (width_600 || width_768) { // mobile
-    list_bar.style.display = "none";
+    list.style.display = "none";
     detail.style.display = "flex";
   } else { // desktop
-    list_bar.style.display = "flex";
+    list.style.display = "flex";
     detail.style.display = "flex";
   }
 
   // show the selected detail, and hide all the others
-  list_bar.querySelectorAll('[name=list]').forEach(function(radio) {
+  list.querySelectorAll('[name=list]').forEach(function(radio) {
     if (radio.checked) {
       document.getElementById(radio.dataset.id).classList.remove("hidden");
     } else {

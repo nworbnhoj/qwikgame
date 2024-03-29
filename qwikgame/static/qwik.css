@@ -111,11 +111,11 @@ div.info .info_text { background-color: white; border: 1px solid black; border-r
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 1em 0; width: 100% }
-div.list_bar { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
-div.list_bar a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
-div.list_bar a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
-div.list_bar a.selected { color: #dfa622 }
-div.list_bar_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
+div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
+div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
+div.list a.selected { color: #dfa622 }
+div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
@@ -191,7 +191,7 @@ textarea { border: 1px solid black; padding: 1em; width: 100% }
     div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
-    div.list_bar { flex: 1 1 100% }
+    div.list { flex: 1 1 100% }
     div.slide_labels { font-size: 0.94em }
     h1 { font-size: 1.14em }
     h2 { font-size: 1.07em }
@@ -213,13 +213,13 @@ textarea { border: 1px solid black; padding: 1em; width: 100% }
     .cta_desktop { display: none }
     .cta_mobile { display: flex }
     div.detail { display: none; flex: 1 1 100% }
-    div.list_bar { display: flex; flex: 1 1 100% }
+    div.list { display: flex; flex: 1 1 100% }
     div.flex_space { display: none }
     div.head_back { order: 5 }
     div.head_icon { display: none }
     div.icon_caption { display: none }
     div.keen_mobile { display: flex }
-    div.list_bar { flex: 1 1 100% }
+    div.list { flex: 1 1 100% }
     div.slide_labels { font-size: 0.94em }
     h1 { font-size: 1.14em }
     h2 { font-size: 1.07em }
@@ -241,13 +241,13 @@ textarea { border: 1px solid black; padding: 1em; width: 100% }
     .cta_desktop { display: flex }
     .cta_mobile { display: none }
     div.detail { display: flex; flex: 1 1 68.75% }
-    div.list_bar {display: flex; flex: 1 1 31.25% }
+    div.list {display: flex; flex: 1 1 31.25% }
     div.flex_space { display: block }
     div.head_back { order: 50 }
     div.head_icon { display: flex }
     div.icon_caption { display: flex }
     div.keen_mobile { display: none }
-    div.list_bar { flex: 1 1 31.25% }
+    div.list { flex: 1 1 31.25% }
     div.rival_aberation { align-items: center; flex: auto; flex-direction: row; gap: 3em; justify-content: space-between }
     div.slide_labels { font-size: 0.89em }
     h1 { font-size: 1.27em }

@@ -3,9 +3,28 @@
 	(function () {
 		var dpr = ('devicePixelRatio' in window) ? window.devicePixelRatio :
 			(('deviceXDPI' in window) && ('logicalXDPI' in window)) ? (window.deviceXDPI / window.logicalXDPI) : 1;
-
-		var	clientInfo = screen.width + ":" + screen.height + ':' + dpr;
-		document.cookie = "{{ cookie_name }}=" + clientInfo + "; max-age={{ cookie_age }}; expires={{ cookie_expires }}; path=/";
-		if (navigator.cookieEnabled) document.location.reload(true);
+		var	currentInfo = screen.width + ":" + screen.height + ':' + dpr
+		;
+        var cookieInfo = getCookie("{{ cookie_name }}");
+        if ( currentInfo != cookieInfo) {
+			document.cookie = "{{ cookie_name }}=" + currentInfo + "; max-age={{ cookie_age }}; path=/";
+			if (navigator.cookieEnabled) document.location.reload(true);
+	    }
 	})();
+
+	function getCookie(cname) {
+		let name = cname + "=";
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		for(let i = 0; i <ca.length; i++) {
+		    let c = ca[i];
+		    while (c.charAt(0) == ' ') {
+		        c = c.substring(1);
+		    }
+		    if (c.indexOf(name) == 0) {
+		        return c.substring(name.length, c.length);
+		    }
+		}
+		return "";
+	}
 </script>

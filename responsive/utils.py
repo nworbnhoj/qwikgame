@@ -33,6 +33,12 @@ class Device(object):
             if value is True:
                 self.matched.append(name)
 
+        if self.width > self.height:
+            setattr(self, 'is_landscape', True)
+            self.matched.append('landscape')
+        else:
+            setattr(self, 'is_landscape', False)
+
     def match_media_queries(self):
         matches = {}
         media_queries = self.get_media_queries()

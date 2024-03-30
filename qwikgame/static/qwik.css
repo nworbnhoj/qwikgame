@@ -115,6 +115,7 @@ div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1e
 div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
 div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 div.list a.selected { color: #dfa622 }
+div.list_bar { align-items: start; justify-content: start; }
 div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }

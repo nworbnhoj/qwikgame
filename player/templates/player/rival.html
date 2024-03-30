@@ -1,5 +1,5 @@
 <!-- qwikgame/player/templates/player/rival.html -->
-{% extends "qwik.html" %}
+{% extends "content.html" %}
 
 
 {% block title %}Rival{% endblock %}
@@ -8,22 +8,10 @@
 {% block name %}Helen{% endblock %}
 
 
-{% block cta_mobile %}
-    <div class="button cta round lge cta_mobile">
-        <i class="fa-solid fa-trophy fa-3x"></i>
-    </div>
-{% endblock %}
+{% block cta_mobile %}{% endblock %}
 
 
-{% block cta_desktop %}
-        <label id="cta_desktop" class="toggle cta_desktop">
-            <input type="radio" checked="checked" name="list" data-id="UPGRADE">
-            <div class="button cta wide">
-                <i class="fa-solid fa-trophy fa-xl"></i>
-                <p>UPGRADE</p>
-            </div>
-        </label>
-{% endblock %}
+{% block cta_desktop %}{% endblock %}
 
 
 {% block list %}

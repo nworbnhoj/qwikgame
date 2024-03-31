@@ -1,7 +1,4 @@
-<!-- qwikgame/player/templates/player/public.html -->
-{% extends "person/public.html" %}
-
-{% block player_public %}
+<!-- qwikgame/player/templates/player/account_public_snippet.html -->
                     <div class="label">
                         <label for="id_icon">YOUR QWIKGAME REPUTATION</label>
                         <div class="button info sml push_right" data-visible="false">
@@ -10,28 +7,27 @@
                         </div>
                     </div>
                     <div class="plank">
-                        {% for _ in '12345'|make_list %} 
+{% for _ in '12345'|make_list %} 
                         <div class="icon color">
-                            {% if forloop.counter <= reputation %}
+{% if forloop.counter <= reputation %}
                             <i class="fa-solid fa-star fa-2x"></i>
-                            {% else %}
+{% else %}
                             <i class="fa-regular fa-star fa-2x"></i>
-                            {% endif %}
+{% endif %}
                         </div>
-                        {% endfor %}
+{% endfor %}
                     </div>
                     <div class="label">
                         <label for="pecis">ABOUT</label>
                     </div>
                     <div class="tab_area post">
                         <div class="tabs">
-                        {% for p in precis %}
+{% for p in precis %}
                         <div class="button tab thin {% if forloop.counter0 == 0 %}active{% endif %}" data-tab_id="id_{{ p.game.code }}">
-                            {{ p.game }}
+{{ p.game }}
                         </div>
-                        {% endfor %}
+{% endfor %}
                         </div>
-                        {{ precis_form }}
+{{ precis_form }}
                     </div>
-                    {{ player_form }}
-{% endblock %}
+{{ player_form }}

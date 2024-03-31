@@ -2,14 +2,23 @@
 {% extends "person/account.html" %}
 
 
-{% block upgrade_checked %}checked{% endblock %}
+{% block upgrade_class %}selected{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
 
 
 {% block detail %}
+    <div id="detail" class="detail">
         <div id="UPGRADE" class="post">
             <div class="detail_head">
                 <h1>UPGRADE</h1> 
             </div>
             <h2>comming soon</h2>
         </div>
+    </div>
 {% endblock %}

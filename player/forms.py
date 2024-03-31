@@ -2,6 +2,7 @@ from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ComboField, Field, Form, MultipleChoiceField, MultiValueField, MultiWidget, Textarea
 
 from person.models import Person
+from player.models import Precis
 
 
 class PublicForm(Form):
@@ -34,3 +35,42 @@ class PrecisForm(Form):
             self.fields[name].widget.attrs['placeholder'] = "Let rivals know why they want to play you."
             self.fields[name].widget.attrs['hidden'] = hidden
             hidden = True
+
+    # Initializes a PublicForm with 'request_post' for 'player'.
+    # Returns a context dict including 'precis_form' 'precis' & 'reputation'
+    @staticmethod
+    def get(player):
+        return {
+            'precis_form': PrecisForm(
+                    game_precis = game_precis(player.user.id)
+                ),
+            'precis': Precis.objects.filter(player__user__id=player.user.id),
+            'reputation': player.reputation(),
+        }
+
+    # Initializes a PublicForm for 'player'.
+    # Returns a context dict including 'precis_form' 'precis' & 'reputation'
+    @staticmethod
+    def post(request_post, player):
+        context = {}
+        user_id = player.user.id
+        precis_form = PrecisForm(request_post, game_precis = game_precis(user_id))
+        if precis_form.is_valid():
+            for game_code, field in precis_form.fields.items():
+                precis = Precis.objects.get(game=game_code, player=player)
+                precis.text = precis_form.cleaned_data[game_code]
+                precis.save()
+        else:
+            context = {      
+                'precis': Precis.objects.filter(player__user__id=user_id),
+                'precis_form': precis_form,
+                'reputation': player.reputation(),
+            }
+        return context
+
+
+def game_precis(user_id):
+    gp = {}
+    for precis in Precis.objects.filter(player__user__id=user_id):
+        gp[precis.game] = precis
+    return gp

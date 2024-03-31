@@ -4,8 +4,16 @@
 
 {% block private_class %}selected{% endblock %}
 
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
 
 {% block detail %}
+    <div id="detail" class="detail">
         <div id="PRIVATE" class="post">
             <div class="detail_head">
                 <h1>PRIVATE SETTINGS</h1> 
@@ -72,12 +80,15 @@
                             {% endfor %}
                         </div>
                     </div>
-                    {% block player_private %}{% endblock %}
-                    {% block manager_private %}{% endblock %}
+{% include 'player/account_private_snippet.html' %}
+{% comment %}
+{% include 'manager/account_private_snippet.html' %}
+{% endcomment %}
                     <div class="button cta push_down wide schedule_save">
                         <p>SAVE</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}

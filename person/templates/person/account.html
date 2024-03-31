@@ -9,28 +9,31 @@
 
 
 {% block cta_mobile %}
-    <div class="button cta round lge cta_mobile">
-        <i class="fa-solid fa-trophy fa-3x"></i>
-    </div>
+{% if small_screen %}
+        <a class="cta round lge cta_mobile" href="{% url 'upgrade' %}">
+            <i class="fa-solid fa-trophy fa-3x"></i>
+        </a>
+{% endif %}
 {% endblock %}
 
 
 {% block cta_desktop %}
-        <label id="cta_desktop" class="toggle cta_desktop">
-            <input type="radio" name="list" data-id="UPGRADE" {% block upgrade_checked %}{% endblock %}>
+{% if big_screen %}
             <a class="cta wide" href="{% url 'upgrade' %}">
                 <i class="fa-solid fa-trophy fa-xl"></i>
                 <p>UPGRADE</p>
             </a>
-        </label>
+{% endif %}
 {% endblock %}
 
 
 {% block list %}
-        <hr>
         <div class="group">
             <a class="{% block public_class %}{% endblock %}" href="{% url 'public' %}">Public Profile</a>
             <a class="{% block private_class %}{% endblock %}" href="{% url 'private' %}">Private Settings</a>
             <a class="{% block privacy_class %}{% endblock %}" href="{% url 'privacy' %}">Privacy</a>
         </div>
 {% endblock %}
+
+
+{% block detail %}{% endblock %}

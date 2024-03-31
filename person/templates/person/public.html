@@ -4,8 +4,16 @@
 
 {% block public_class %}selected{% endblock %}
 
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
 
 {% block detail %}
+    <div id="detail" class="detail">
         <div id="PUBLIC" class="post">
             <div class="detail_head">
                 <h1>PUBLIC PROFILE</h1> 
@@ -13,13 +21,16 @@
             <div class="post detail_body">
                 <div class="post form">
                     <form action="{% url 'public' %}" method="post">
-                        {% csrf_token %}
-                        {{ person_form }}
-                        {% block player_public %}{% endblock %}
-                        {% block manager_public %}{% endblock %}
+{% csrf_token %}
+{{ public_form }}
+{% include 'player/account_public_snippet.html' %}
+{% comment %}
+{% include 'manager/account_public_snippet.html' %}
+{% endcomment %}
                         <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
                     </form>
                 </div>
             </div>
         </div>
+    </div>
 {% endblock %}

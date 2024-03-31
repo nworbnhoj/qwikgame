@@ -4,12 +4,21 @@
 
 {% block privacy_class %}selected{% endblock %}
 
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
 
 {% block detail %}
+    <div id="detail" class="detail">
         <div id="PRIVACY" class="post">
             <div class="detail_head">
                 <h1>PRIVACY</h1> 
             </div>
             <h2>comming soon</h2>
         </div>
+    </div>
 {% endblock %}

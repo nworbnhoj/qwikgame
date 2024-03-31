@@ -2,7 +2,7 @@ from django.urls import include, path
 from person.views import AccountView, PrivateView, PrivacyView, PublicView, UpgradeView
 
 urlpatterns = [
-    path("", PublicView.as_view(), name='account'),
+    path("", AccountView.as_view(), name='account'),
 
     # manager/ & player/ both over-ride name=(privacy/private/public/upgrade)
     # hence must preceed privacy/ private/ public & upgrade/
@@ -13,6 +13,6 @@ urlpatterns = [
     # name
     path("privacy/", PrivacyView.as_view(), name='privacy'),
     path("private/", PrivateView.as_view(), name='private'),
-    path("public/", PublicView.as_view(), name='person_public'),
+    path("public/", PublicView.as_view(), name='public'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
 ]

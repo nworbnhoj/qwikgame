@@ -12,13 +12,14 @@ blockquote, q { quotes: "" "" }
 .align_start { align-self: flex-start }
 .color { color: #dfa622 }
 .cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
-.cta_desktop { display: none; width: 100% }
+.cta_desktop { width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .hidden { display: none }
 .invisible { visibility: hidden }
 .push_down { margin-top: 4em; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
+.round { border-radius: 50%; }
 .selected { color: #dfa622 }
 .wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
@@ -55,10 +56,7 @@ div.button.tiny { height: 1em; width: 1em; }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
-
 div.content { align-items: stretch; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
-div.detail { align-items: stretch; display: none; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
-
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
 div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
@@ -115,7 +113,7 @@ div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1e
 div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
 div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 div.list a.selected { color: #dfa622 }
-div.list_bar { align-items: start; justify-content: start; }
+div.list_bar { align-items: start; flex: 0 1 31.25%; justify-content: start; }
 div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
@@ -183,84 +181,17 @@ span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
 @media only screen and (max-width:600px) {
-    body { font-size: 13px }
-    div.button { font-size: 1.07em }
-    div.content { width: 100% }
-    div.detail { display: none; flex: 1 1 100% }
     div.flex_space { display: none }
-    div.head_back { order: 5 }
-    div.head_icon { display: none }
-    div.icon_caption { display: none }
-    div.keen_mobile { display: flex }
-    div.list { flex: 1 1 100% }
-    div.slide_labels { font-size: 0.94em }
-    h1 { font-size: 1.14em }
-    h2 { font-size: 1.07em }
-    h3 { font-size: 1.03em }
-    img.logo { display: none }
-    label { font-size: 1.07em }
-    label.keen_desktop { display: none }
-    label.toggle:has(input[name="list"]) { color: inherit }
-    p.caption { font-size: 0.94em }
-    p.fat { display: none }
-    p.name { font-size: 1.07em }
     span.full_day { display: none }
     span.mid_day { display: none }
 }
 @media only screen and (min-width:600px) {
-    body { font-size: 13px }
-    div.button { font-size: 1.07em }
-    div.content { width: 100% }
-    .cta_desktop { display: none }
-    .cta_mobile { display: flex }
-    div.detail { display: none; flex: 1 1 100% }
-    div.list { display: flex; flex: 1 1 100% }
     div.flex_space { display: none }
-    div.head_back { order: 5 }
-    div.head_icon { display: none }
-    div.icon_caption { display: none }
-    div.keen_mobile { display: flex }
-    div.list { flex: 1 1 100% }
-    div.slide_labels { font-size: 0.94em }
-    h1 { font-size: 1.14em }
-    h2 { font-size: 1.07em }
-    h3 { font-size: 1.03em }
-    img.logo { display: none }
-    label { font-size: 1.07em }
-    label.keen_desktop { display: none }
-    label.toggle:has(input[name="list"]) { color: inherit }
-    p.caption { font-size: 0.94em }
-    p.fat { display: none }
-    p.name { font-size: 1.07em }
     span.full_day { display: none }
     span.mid_day { display: inline-block }
 }
 @media only screen and (min-width:768px) {
-    body { font-size: 16px }
-    div.button { font-size: 1.13em }
-    div.content { width: 100% }
-    .cta_desktop { display: flex }
-    .cta_mobile { display: none }
-    div.detail { display: flex; flex: 1 1 68.75% }
-    div.list {display: flex; flex: 1 1 31.25% }
     div.flex_space { display: block }
-    div.head_back { order: 50 }
-    div.head_icon { display: flex }
-    div.icon_caption { display: flex }
-    div.keen_mobile { display: none }
-    div.list { flex: 1 1 31.25% }
-    div.rival_aberation { align-items: center; flex: auto; flex-direction: row; gap: 3em; justify-content: space-between }
-    div.slide_labels { font-size: 0.89em }
-    h1 { font-size: 1.27em }
-    h2 { font-size: 1.13em }
-    h3 { font-size: 1.07em }
-    img.logo { display: block }
-    label { font-size: 1.13em }
-    label.keen_desktop { display: flex }
-    label.toggle:has(input[name="list"]:checked) { color: #dfa622 }
-    p.caption { font-size: 0.89em }
-    p.fat { display: block }
-    p.name { font-size: 1.13em }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
 }

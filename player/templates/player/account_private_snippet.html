@@ -1,8 +1,4 @@
-<!-- qwikgame/player/templates/player/private.html -->
-{% extends "person/private.html" %}
-
-
-{% block player_private %}
+<!-- qwikgame/player/templates/player/account_private_snippet.html -->
                     <h2>LIST OF BLOCKED PLAYERS</h2>
                     <div id="block_list" class="drop_down">
                         <div class="button drop" data-down="false">
@@ -10,11 +6,12 @@
                             <div class="fat">v</div>
                         </div>
                         <div class="down hidden">
-                            {% for block in blocked %}
-                            <label class="option closable" for="{{ block }}">{{ block.name }} ({{ block.facet }})
+{% for block in blocked %}
+                            <label class="option closable" for="{{ block }}">
+{{ block.name }} ({{ block.facet }})
                                 <div class="button link push_right closer">unblock</div>
                             </label>
-                            {% endfor %}
+{% endfor %}
                         </div>
                     </div>
                     <fieldset id="block_add" class="hidden">
@@ -25,4 +22,3 @@
                             <div class="button ctb wide thin">Block</div>
                         </div>
                     </fieldset>
-{% endblock %}

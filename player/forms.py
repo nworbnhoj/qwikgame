@@ -1,8 +1,70 @@
 from django import forms
-from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ComboField, Field, Form, MultipleChoiceField, MultiValueField, MultiWidget, Textarea
+from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, ComboField, Field, Form,ModelMultipleChoiceField, MultipleChoiceField, MultiValueField, MultiWidget, Textarea
 
 from person.models import Person
 from player.models import Precis
+
+
+class ActionMultiple(CheckboxSelectMultiple):
+    attrs = {"class": "down hidden"}
+
+
+class MultipleActionField(MultipleChoiceField):
+    widget = ActionMultiple
+
+    def __init__(self, action='delete:', *args, **kwargs):
+        self.action = action
+        super().__init__(*args, **kwargs)
+        self.widget.attrs={"class": "down hidden"}
+        self.template_name='dropdown.html'
+
+
+class BlockedForm(Form):
+    blocked = MultipleActionField(
+        action='unblock:',
+        help_text='When you block a player, neither of you will see the other on qwikgame.',
+        label='LIST OF BLOCKED PLAYERS',
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['blocked'].widget.option_template_name='option_delete.html'
+        
+    # Initializes a PrivateForm for 'player'.
+    # Returns a context dict including 'player_form'
+    @classmethod
+    def get(klass, player):
+        form = klass()
+        form.fields['blocked'].choices = klass.blocked_choices(player)
+        return {
+            'blocked_form': form,
+        }
+
+    # Initializes a PrivateForm for 'player'.
+    # Returns a context dict including 'player_form'
+    @classmethod
+    def post(klass, request_post, player):
+        context = {}
+        user_id = player.user.id
+        form = klass(request_post)
+        form.fields['blocked'].choices = klass.blocked_choices(player)
+        if form.is_valid():
+            for unblock in form.cleaned_data['blocked']:
+                player.blocked.remove(unblock)
+            player.save()
+        else:
+            context = {  
+                'blocked_form': form,
+            }
+        return context
+
+    @classmethod
+    def blocked_choices(klass, player):
+        choices={}
+        for blocked in player.blocked.all():
+            choices[blocked.email_hash] = "{} ({})".format(blocked.name(), blocked.facet())
+        return choices
 
 
 class PublicForm(Form):

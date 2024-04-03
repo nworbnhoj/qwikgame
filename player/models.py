@@ -23,7 +23,7 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     def facet(self):
-        return self.email_hash[:8].upper()
+        return self.email_hash[:3].upper()
 
     def name(self):
         return self.user.person

@@ -4,10 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
-from person.models import LANGUAGE, Person
-from person.forms import PublicForm
+from person.models import Person
+from person.forms import PrivateForm, PublicForm
 from player.models import Player, Precis
-from player.forms import PrecisForm
+from player.forms import BlockedForm, PrecisForm
 from qwikgame.views import small_screen
 
 
@@ -33,24 +33,43 @@ class PrivacyView(View):
 
 
 class PrivateView(View):
+    private_form_class = PrivateForm
+    blocked_form_class = BlockedForm
+    template_name = "person/private.html"
 
-    def get(self, request):
-        user_id = request.user.id
-        user = User.objects.get(pk=user_id)
-        person = user.person
-        languages = dict(LANGUAGE)
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(pk=request.user.id)
+        context = self.private_form_class.get(user.person)
+        if hasattr(user, "player"):
+            context = context | self.blocked_form_class.get(user.player)
+        if hasattr(user, "manager"):
+            manager = user.manager
+            context = context | {}
         small = small_screen(request.device)
-        context = {
+        context = context | {
             'big_screen': not small,
             "email": request.user.email,
-            "language": person.language,
-            "languages": languages,
-            "location_auto": "checked" if person.location_auto else "",
-            "notify_email": "checked" if person.notify_email else "",
-            "notify_web": "checked" if person.notify_web else "",
             'small_screen': small,
         }
-        return render(request, "person/private.html", context)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=request.user.id)
+        context = self.private_form_class.post(request.POST, user.person)
+        if hasattr(user, "player"):
+            context = context | self.blocked_form_class.post(request.POST, user.player)
+        if len(context) == 0:
+            return HttpResponseRedirect("/account/private/")
+        small = small_screen(request.device)
+        context = context | {
+            'big_screen': not small,
+            'small_screen': small,
+        }
+        return render(request, self.template_name, context)
 
 
 class PublicView(View):
@@ -84,7 +103,7 @@ class PublicView(View):
             player = user.player
             context = context | self.precis_form_class.post(request.POST, player)
         if len(context) == 0:
-            return HttpResponseRedirect("/account/")
+            return HttpResponseRedirect("/account/public/")
         small = small_screen(request.device)
         context = context | {
             'big_screen': not small,

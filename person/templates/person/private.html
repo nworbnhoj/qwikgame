@@ -19,74 +19,29 @@
                 <h1>PRIVATE SETTINGS</h1> 
             </div>
             <div class="post detail_body">
-                <div class="post">
-                    <h2>
-                        EMAIL ADDRESS
-                        <div class="button link">
-                            Change
+                <div class="post form">
+                    <form action="{% url 'private' %}" method="post">
+                        <div class="post">
+                            <h2>
+                                EMAIL ADDRESS
+                                <div class="button link">
+                                    Change
+                                </div>
+                            </h2>
+                            <p>{{ email }}</p>
+                            <div class="label">
+                                <label for="id_icon">RECEIVE NOTIFICATIONS</label>
+                                <div class="button info sml push_right" data-visible="false">
+                                    <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
+                                    <div class="info_text hidden">Qwikgame can notify you about Match events</div>
+                                </div>
+                            </div>
+{% csrf_token %}
+{{ private_form }}
+{{ blocked_form }}
+                            <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
                         </div>
-                    </h2>
-                    <p>{{ email }}</p>
-                    <h2>
-                        RECEIVE NOTIFICATIONS
-                        <div class="button info sml" data-visible="false">
-                            <i class="fa-solid fa-info fa-1x"></i>
-                            <div class="info_text hidden">Something helpful</div>
-                        </div>
-                    </h2>
-                    <h3>
-                        Email notifications
-                        <label class="switch push_right" for="email-notify-cb">
-                            <input id="email-notify-cb" type="checkbox" name="email-notify" {{ notify_email }}>
-                            <div class="slider round"></div>
-                        </label>
-                        <div class="button info sml invisible" data-visible="false">
-                            <i class="fa-solid fa-info fa-1x"></i>
-                        </div>
-                    </h3>
-                    <h3>
-                        Web / App notifications
-                        <label class="switch push_right" for="app-notify-cb">
-                            <input id="app-notify-cb" type="checkbox" name="app-notify"{{ notify_web }}>
-                            <div class="slider round"></div>
-                        </label>
-                        <div class="button info sml invisible" data-visible="false">
-                            <i class="fa-solid fa-info fa-1x"></i>
-                        </div>
-                    </h3>
-
-                    <h2>
-                        ALLOW LOCATION ACCESS
-                        <label class="switch push_right" for="location-cb">
-                            <input id="location-cb" type="checkbox" name="location-access" {{ location_auto }}>
-                            <div class="slider round"></div>
-                        </label>
-                        <div class="button info sml" data-visible="false">
-                            <i class="fa-solid fa-info fa-1x"></i>
-                            <div class="info_text hidden">This will make finding a Venue nearby faster</div>
-                        </div>
-                    </h2>
-                    <h2>LANGUAGE</h2>
-                    <div class="drop_down">
-                        <div class="button drop" data-down="false">
-                            <div class="drop_up">{{ language }}</div>
-                            <div class="fat">v</div>
-                        </div>
-                        <div class="down hidden">
-                            {% for key,val in languages.items %}
-                            <label class="toggle option">
-                                <input type="radio" name="language" {% if key == language  %} checked="checked"{% endif %}>{{ val }}
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-{% include 'player/account_private_snippet.html' %}
-{% comment %}
-{% include 'manager/account_private_snippet.html' %}
-{% endcomment %}
-                    <div class="button cta push_down wide schedule_save">
-                        <p>SAVE</p>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

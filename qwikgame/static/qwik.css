@@ -73,6 +73,9 @@ div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
 div.detail_summary { }
 div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 1.8em; white-space: nowrap; width: 100%; z-index: 1 }
+div.down div { justify-content: space-between; width:100% }
+div.down div.link { justify-content: end; width: auto }
+div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
 div.drop_down { flex-direction: column; position: relative; }
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
@@ -159,7 +162,6 @@ label { color: black; display: flex; text-align: left; font-size: 1.0em }
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em }
-label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center; width: 100% }
 label.option div.button { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }

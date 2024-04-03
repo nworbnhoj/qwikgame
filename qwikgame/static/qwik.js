@@ -34,7 +34,7 @@ function drop(event) {
 function dropDownUpdate(drop_down){
   try {
     let drop_up = drop_down.querySelector('.drop_up');
-    let drop_up_txt = "";
+    let drop_up_txt = drop_up.dataset.action;
     drop_down.querySelectorAll('input:checked').forEach(function(checked){
         drop_up_txt += checked.parentElement.innerText + " ";
     });
@@ -387,7 +387,7 @@ window.onload = function() {
   document.querySelectorAll('div.drop_down').forEach(function(drop_down){
     dropDownUpdate(drop_down);
   });
-  document.querySelectorAll('div.drop_down label.toggle.option').forEach(function(div){
+  document.querySelectorAll('div.down label').forEach(function(div){
     div.onclick = downClick;
   });
   document.querySelectorAll('.cta_mobile').forEach(function(proxy) {

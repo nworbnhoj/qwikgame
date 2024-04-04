@@ -7,10 +7,13 @@ from game.models import Game
 class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.person.name
+
 
 class Venue(models.Model):
     games = models.ManyToManyField(Game)
-    managers = models.ManyToManyField(Manager)
+    managers = models.ManyToManyField(Manager, blank=True)
     name = models.CharField(max_length=128)
     url = models.URLField(max_length=256, blank=True)
 

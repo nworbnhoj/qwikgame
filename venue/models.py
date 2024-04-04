@@ -5,9 +5,6 @@ from game.models import Game
 
 
 class Manager(models.Model):
-    location_auto = models.BooleanField(default=False)
-    notify_email = models.BooleanField(default=True)
-    notify_web = models.BooleanField(default=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 

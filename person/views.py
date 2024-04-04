@@ -73,7 +73,7 @@ class PublicView(QwikView):
         if self.is_manager:
             manager = self.user.manager
             context = context | {}
-        return render(request, self.option_template_name, context)
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().request_init(request)

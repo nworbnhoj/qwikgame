@@ -13,9 +13,15 @@
 
 {% block cta_desktop %}{% endblock %}
 
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
 
 {% block list %}
-        <hr>
         <div class="list_head">
             <h1>Rival Rating</h1>
 

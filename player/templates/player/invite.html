@@ -1,11 +1,18 @@
 <!-- qwikgame/player/templates/player/invite.html -->
-{% extends "qwik.html" %}
+{% extends "content.html" %}
 
 
 {% block title %}Invite{% endblock %}
 
 
 {% block name %}Helen{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -27,7 +34,6 @@
 
 
 {% block list %}
-        <hr>
         <div class="list_head">
             <h1>Invitations</h1>
             <div class="drop_down">

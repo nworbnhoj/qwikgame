@@ -3,7 +3,11 @@
     <div class="label">
         <label for="id_{{ field.name }}">{{ field.label }}</label>
     </div>
-    {% for fld in field %}
-        {{ fld }}
-    {% endfor %}
+    <div class="post">
+{% for fld in field %}
+        <div class='option'>
+{{ fld }}
+        </div>
+{% endfor %}
+    </div>
 </div>

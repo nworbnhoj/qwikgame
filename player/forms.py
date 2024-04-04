@@ -100,11 +100,11 @@ class PrecisForm(Form):
 
     # Initializes a PublicForm with 'request_post' for 'player'.
     # Returns a context dict including 'precis_form' 'precis' & 'reputation'
-    @staticmethod
-    def get(player):
+    @classmethod
+    def get(klass, player):
         return {
             'precis_form': PrecisForm(
-                    game_precis = game_precis(player.user.id)
+                    game_precis = klass.game_precis(player.user.id)
                 ),
             'precis': Precis.objects.filter(player__user__id=player.user.id),
             'reputation': player.reputation(),
@@ -112,11 +112,11 @@ class PrecisForm(Form):
 
     # Initializes a PublicForm for 'player'.
     # Returns a context dict including 'precis_form' 'precis' & 'reputation'
-    @staticmethod
-    def post(request_post, player):
+    @classmethod
+    def post(klass, request_post, player):
         context = {}
         user_id = player.user.id
-        precis_form = PrecisForm(request_post, game_precis = game_precis(user_id))
+        precis_form = PrecisForm(request_post, game_precis = klass.game_precis(user_id))
         if precis_form.is_valid():
             for game_code, field in precis_form.fields.items():
                 precis = Precis.objects.get(game=game_code, player=player)
@@ -130,9 +130,9 @@ class PrecisForm(Form):
             }
         return context
 
-
-def game_precis(user_id):
-    gp = {}
-    for precis in Precis.objects.filter(player__user__id=user_id):
-        gp[precis.game] = precis
-    return gp
+    @classmethod
+    def game_precis(klass, user_id):
+        gp = {}
+        for precis in Precis.objects.filter(player__user__id=user_id):
+            gp[precis.game] = precis
+        return gp

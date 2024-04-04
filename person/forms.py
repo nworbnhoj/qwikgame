@@ -69,23 +69,29 @@ class PrivateForm(Form):
 
 
 class PublicForm(Form):
-    icon = CharField(label='PROFILE PICTURE', max_length=32, required = False, template_name="input_icon.html")
-    name = CharField(label='NAME OR NICK', max_length=32, required = False, template_name="input_text.html")
-    socials = MultipleChoiceField(choices = (), label='placeholder', required = False)
-    social = URLField(required = False, template_name="input_naked.html")
-
-    class Meta:
-        error_messages = {
-            'name': {
-                "max_length": "This name is too long.",
-            },
-        }
-        help_texts = {
-            'name': "Some useful help text.",
-        }
-        placeholders = {
-            'name': "hope"
-        }
+    icon = CharField(
+        label='PROFILE PICTURE',
+        max_length=32,
+        required = False,
+        template_name="input_icon.html"
+    )
+    name = CharField(
+        label='NAME OR NICK',
+        max_length=32,
+        required=False,
+        template_name="input_text.html"
+    )
+    socials = MultipleChoiceField(
+        choices=(),
+        label='WEBSITE / SOCIAL MEDIA',
+        required=False,
+        template_name="input_multi.html",
+        widget=CheckboxSelectMultiple()
+    )
+    social = URLField(
+        required=False,
+        template_name="input_naked.html"
+    )
 
     def __init__(self, *args, **kwargs):
         social_urls = kwargs.pop('social_urls')
@@ -93,31 +99,29 @@ class PublicForm(Form):
         self.fields['icon'].widget.attrs['placeholder'] = "your qwikgame icon"
         self.fields['name'].widget.attrs['placeholder'] = "your qwikgame screen name"
         self.fields['social'].widget.attrs['placeholder'] = "add a social media url"
-        choices=[]
-        for url in social_urls:
-            choices.append((url, url))
-        self.fields['socials'] = MultipleChoiceField(choices = choices, label='WEBSITE / SOCIAL MEDIA', required = False, template_name="input_multi.html", widget=DeleteWidget() )
+        self.fields['socials'].choices = social_urls
+        self.fields['socials'].widget.option_template_name='option_delete.html'
 
     # Initializes a PublicForm for 'person'.
     # Returns a context dict including 'public_form'
-    @staticmethod
-    def get(person):
+    @classmethod
+    def get(klass, person):
         return {
-            'public_form': PublicForm(
+            'public_form': klass(
                     initial = {
                         'icon': person.icon,
                         'name': person.name,
                     },
-                    social_urls = social_urls(person.user.id),
+                    social_urls = klass.social_urls(person.user.id),
                 ),
         }
 
     # Initializes a PublicForm with 'request_post' for 'person'.
     # Returns a context dict including 'public_form' if form is not valid
-    @staticmethod
-    def post(request_post, person):
+    @classmethod
+    def post(klass, request_post, person):
         context = {}
-        public_form = PublicForm(request_post, social_urls = social_urls(person.user.id))
+        public_form = klass(request_post, social_urls = klass.social_urls(person.user.id))
         if public_form.is_valid():
             person.icon = public_form.cleaned_data["icon"]
             person.name = public_form.cleaned_data["name"]
@@ -132,10 +136,9 @@ class PublicForm(Form):
             context = {'public_form': public_form}
         return context
 
-
-
-def social_urls(user_id):
-    urls = {}
-    for url in Social.objects.filter(person__user__id=user_id):
-        urls[url.url] = url.url
-    return urls
+    @classmethod
+    def social_urls(klass, user_id):
+        urls = {}
+        for url in Social.objects.filter(person__user__id=user_id):
+            urls[url.url] = url.url
+        return urls

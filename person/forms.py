@@ -41,7 +41,7 @@ class PrivateForm(Form):
     @classmethod
     def get(klass, person):
         return {
-            'private_form': PrivateForm(
+            'private_form': klass(
                 initial = {
                     'notify_email': person.notify_email,
                     'notify_web': person.notify_web,
@@ -56,7 +56,7 @@ class PrivateForm(Form):
     @classmethod
     def post(klass, request_post, person):
         context = {}
-        private_form = PrivateForm(request_post)
+        private_form = klass(request_post)
         if private_form.is_valid():
             person.notify_email = private_form.cleaned_data["notify_email"]
             person.notify_web = private_form.cleaned_data["notify_web"]

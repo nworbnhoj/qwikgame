@@ -163,6 +163,7 @@ label { color: black; display: flex; text-align: left; font-size: 1.0em }
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em }
+label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
 label.option div.button { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }

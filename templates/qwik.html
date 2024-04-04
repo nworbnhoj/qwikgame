@@ -37,7 +37,7 @@
         <div class="flex_space hide768"></div>
         <div class="button href" data-href="{% url 'account' %}">
             <i class="fa-solid fa-graduation-cap fa-2x"></i>
-            <p class="fat">{% block name %}Name{% endblock %}</p>
+            <p class="fat">{% block name %}{{ person_name }}{% endblock %}</p>
         </div>     
     </div>
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>

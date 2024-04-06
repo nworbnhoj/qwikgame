@@ -10,21 +10,36 @@ from person.models import LANGUAGE, Person, Social
 from person.forms import PublicForm as PersonPublicForm
 from player.models import Game, Player, Precis
 from player.forms import PublicForm, PrecisForm
+from qwikgame.views import QwikView
 
 
-class AvailableView(View):
+class AvailableView(QwikView):
 
-    def get(self, request):
-        return render(request, "player/available.html")
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        context = super().context(request)
+        if context['small_screen']:
+            return render(request, "player/available.html", context)
+        else:
+            return HttpResponseRedirect("/player/game/add/")
 
 
-class InviteView(View):
-
-    def get(self, request):
-        return render(request, "player/invite.html")
 
 
-class RivalView(View):
 
-    def get(self, request):
-        return render(request, "player/rival.html")
+
+
+class InviteView(QwikView):
+
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        context = super().context(request)
+        return render(request, "player/invite.html", context)
+
+
+class RivalView(QwikView):
+
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        context = super().context(request)
+        return render(request, "player/rival.html", context)

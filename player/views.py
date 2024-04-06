@@ -29,13 +29,13 @@ class GameView(QwikView):
     template_name = 'player/game.html'
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().get(request)
         context = self.game_form_class.get(self.user.player)
         context = context | super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().post(request)
         context = self.game_form_class.post(request.POST, self.user.player)
         if len(context) == 0:
             return HttpResponseRedirect("/player/game/")

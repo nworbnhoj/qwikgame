@@ -16,6 +16,14 @@ class QwikView(View):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        self.request_init(request)
+        return None
+
+    def post(self, request, *args, **kwargs):
+        self.request_init(request)
+        return None
+
     def request_init(self, request):
         self.user = User.objects.get(pk=request.user.id)
         self.is_player = hasattr(self.user, "player")

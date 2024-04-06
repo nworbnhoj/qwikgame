@@ -12,7 +12,7 @@ from qwikgame.views import QwikView
 class AccountView(QwikView):
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().get(request)
         context = super().context(request)
         if context['small_screen']:
             return render(request, "person/account.html", context)
@@ -23,7 +23,7 @@ class AccountView(QwikView):
 class PrivacyView(QwikView):
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().get(request)
         context = super().context(request)
         return render(request, "person/privacy.html", context)
 
@@ -34,10 +34,8 @@ class PrivateView(QwikView):
     template_name = "person/private.html"
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
-        context = super().context(request)
-        context = self.context
-        context = context | self.private_form_class.get(self.user.person)
+        super().get(request)
+        context = self.private_form_class.get(self.user.person)
         if self.is_player:
             context = context | self.blocked_form_class.get(self.user.player)
         if self.is_manager:
@@ -46,10 +44,11 @@ class PrivateView(QwikView):
         context = context | {
             'email': request.user.email,
         }
+        context = context | super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().post(request)
         context = self.private_form_class.post(request.POST, self.user.person)
         if self.is_player:
             context = context | self.blocked_form_class.post(request.POST, self.user.player)
@@ -65,18 +64,18 @@ class PublicView(QwikView):
     template_name = "person/public.html"
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
-        context = super().context(request)
-        context = context | self.public_form_class.get(self.user.person)
+        super().get(request)
+        context = self.public_form_class.get(self.user.person)
         if self.is_player:
             context = context | self.precis_form_class.get(self.user.player)
         if self.is_manager:
             manager = self.user.manager
             context = context | {}
+        context = context | super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().post(request)
         context = self.public_form_class.post(request.POST, self.user.person)
         if self.is_player:
             context = context | self.precis_form_class.post(request.POST, self.user.player)
@@ -89,7 +88,7 @@ class PublicView(QwikView):
 class UpgradeView(QwikView):
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().get(request)
         context = super().context(request)
         return render(request, "person/upgrade.html", context)
 

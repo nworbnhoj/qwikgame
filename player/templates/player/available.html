@@ -5,32 +5,22 @@
 {% block title %}Game{% endblock %}
 
 
-{% block name %}Helen{% endblock %}
-
-    
-{% block list_bar %}
-{% if big_screen %}
-    {{ block.super }}
+{% block cta_mobile %}
+{% if small_screen %}
+    <a class="cta round lge cta_mobile" href="{% url 'game' %}">
+    <i class="fa-solid fa-volleyball fa-3x"></i>
+    </a>
 {% endif %}
 {% endblock %}
 
 
-{% block cta_mobile %}
-    <div class="button cta round lge cta_mobile">
-        <i class="fa-solid fa-volleyball fa-3x"></i>
-    </div>
-{% endblock %}
-
-
 {% block cta_desktop %}
-        <label id="cta_desktop" class="toggle cta_desktop">
-        <label class="toggle wide">
-            <input type="radio" checked="checked" name="list" data-id="GAME">
-            <div class="button cta wide">
-                <i class="fa-solid fa-volleyball fa-2x"></i>
-                <p>ADD GAME</p>
-            </div>
-        </label>
+{% if big_screen %}
+    <a class="cta wide" href="{% url 'game' %}">
+        <i class="fa-solid fa-volleyball fa-2x"></i>
+        <p>ADD GAME</p>
+    </a>
+{% endif %}
 {% endblock %}
 
 
@@ -138,55 +128,6 @@
 
 
 {% block detail %}
-        <div id="GAME" class="post hidden">
-            <div class="post">
-                <label class="toggle group large">
-                    <input type="checkbox" name="games">
-                    <div class="button">
-                        <i class="fa-solid fa-shuttle-space fa-xl"></i>
-                        <p>Badminton</p>
-                    </div>
-                </label>
-                <label class="toggle group large">
-                    <input type="checkbox" name="games">
-                    <div class="button">
-                        <i class="fa-solid fa-8 fa-xl"></i>
-                        <p>Billiards</p>
-                    </div>
-                </label>
-                <label class="toggle group large">
-                    <input type="checkbox" name="games">
-                    <div class="button">
-                        <i class="fa-solid fa-chess fa-xl"></i>
-                        <p>Chess</p>
-                    </div>
-                </label>
-                <label class="toggle group large">
-                    <input type="checkbox" name="games" checked="checked">
-                    <div class="button">
-                        <i class="fa-solid fa-circle-dot fa-xl"></i>
-                        <p>Squash</p>
-                    </div>
-                </label>
-                <label class="toggle group large">
-                    <input type="checkbox" name="games">
-                    <div class="button">
-                        <i class="fa-solid fa-table-tennis-paddle-ball fa-xl"></i>
-                        <p>Table Tennis</p>
-                    </div>
-                </label>
-                <label class="toggle group large">
-                    <input type="checkbox" name="games" checked="checked">
-                    <div class="button">
-                        <i class="fa-regular fa-face-sad-tear fa-xl"></i>
-                        <p>Tennis</p>
-                    </div>
-                </label>
-            </div>
-            <div class="button cta push_down wide schedule_save">
-                <p>SUBMIT</p>
-            </div>
-        </div>
         <div id="SQUASH" class="post hidden">
             <div class="detail_head">
                 <div class="post head_txt">

@@ -9,7 +9,7 @@ from django.views import View
 from person.models import LANGUAGE, Person, Social
 from person.forms import PublicForm as PersonPublicForm
 from player.models import Game, Player, Precis
-from player.forms import PublicForm, PrecisForm
+from player.forms import GameForm, PublicForm, PrecisForm
 from qwikgame.views import QwikView
 
 
@@ -24,9 +24,23 @@ class AvailableView(QwikView):
             return HttpResponseRedirect("/player/game/add/")
 
 
+class GameView(QwikView):
+    game_form_class = GameForm
+    template_name = 'player/game.html'
 
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        context = self.game_form_class.get(self.user.player)
+        context = context | super().context(request)
+        return render(request, self.template_name, context)
 
-
+    def post(self, request, *args, **kwargs):
+        super().request_init(request)
+        context = self.game_form_class.post(request.POST, self.user.player)
+        if len(context) == 0:
+            return HttpResponseRedirect("/player/game/")
+        context = context | super().context(request)
+        return render(request, self.template_name, context)
 
 
 class InviteView(QwikView):

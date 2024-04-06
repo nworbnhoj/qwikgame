@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, ComboField, Field, Form,ModelMultipleChoiceField, MultipleChoiceField, MultiValueField, MultiWidget, Textarea
-
+from game.models import Game
 from person.models import Person
 from player.models import Precis
 
@@ -65,6 +65,57 @@ class BlockedForm(Form):
         for blocked in player.blocked.all():
             choices[blocked.email_hash] = "{} ({})".format(blocked.name(), blocked.facet())
         return choices
+
+
+class IconSelectMultiple(CheckboxSelectMultiple):
+    option_template_name='option_game.html'
+    use_fieldset=False
+
+    def __init__(self, icons={}, *args, **kwargs):
+        self.icons = icons
+        super().__init__(*args, **kwargs)
+
+    def create_option(self, *args, **kwargs):
+        option = super().create_option(*args, **kwargs)
+        option['icon'] = self.icons[option["value"]]
+        return option
+
+
+class GameForm(Form):
+    games = MultipleChoiceField(
+        choices = Game.choices(),
+        label=None,
+        required=False,
+        template_name='field_naked.html',
+        widget=IconSelectMultiple(attrs = {'class':'post'}, icons=Game.icons())
+    )
+        
+    # Initializes a GameForm for 'player'.
+    # Returns a context dict including 'game_form'
+    @classmethod
+    def get(klass, player):
+        return {
+            'game_form': klass(
+                initial = {'games': [game.code for game in player.games.all()]}
+            )
+        }
+
+    # Initializes a PrivateForm for 'player'.
+    # Returns a context dict including 'player_form'
+    @classmethod
+    def post(klass, request_post, player):
+        context = {}
+        user_id = player.user.id
+        form = klass(request_post)
+        if form.is_valid():
+            player.games.clear()
+            for game_code in form.cleaned_data['games']:
+                game = Game.objects.get(code=game_code)
+                player.games.add(game)
+            player.save()
+        else:
+            context = {'game_form': form}
+        return context
 
 
 class PublicForm(Form):

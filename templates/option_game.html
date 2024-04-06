@@ -1,0 +1,8 @@
+<!-- qwikgame/templates/option_game.html -->
+<label class="toggle group large" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
+    <input {% if widget.attrs.id %} id="{{ widget.attrs.id }}"{% endif %} type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %} {% if widget.selected %}checked{% endif %}/>
+    <div class="button">
+        <i class="{{ widget.icon }} fa-xl"></i>
+        <p>{{ widget.label }}</p>
+    </div>
+</label>

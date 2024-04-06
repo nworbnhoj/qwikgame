@@ -142,9 +142,9 @@ div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
-h1 { color: black; text-align: left; margin: 0.3em }
-h2 { align-items: center; color: black; display: flex; flex-direction: row; gap: 1em; margin: 2em 0 1em 0; text-align: left; justify-content: start; }
-h3 { align-items: center; color: black; display: flex; flex-direction: row; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; justify-content: space-between }
+h1 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
+h2 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; gap: 1em; margin: 2em 0 1em 0; text-align: left; }
+h3 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h4 { color: black; text-align: left }
 h5 { color: black; text-align: left }
@@ -162,7 +162,7 @@ input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }
 label { color: black; display: flex; text-align: left; font-size: 1.0em }
 label p { flex: auto; }
 label.hidden { display: none }
-label.large { border: 1px solid #eeeeee; padding: 1em }
+label.large { border: 1px solid #eeeeee; padding: 1em; width:100% }
 label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
 label.option div.button { height: 1em }
 label.option input[type=checkbox] { display: none }

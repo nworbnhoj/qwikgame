@@ -1,0 +1,37 @@
+<!-- qwikgame/player/templates/player/game.html -->
+{% extends "content.html" %}
+
+
+{% block title %}Add Game{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div id="GAME" class="post">
+            <div class="detail_head">
+                <h1><span>ACTIVE GAMES</span>
+                    <div class="button info sml push_right" data-visible="false">
+                        <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
+                        <div class="info_text hidden">Activate Games to organise Matches with other Players.</div>
+                    </div>
+                </h1>
+            </div>
+            <div class="post detail_body">
+                <div class="post form">
+                    <form action="{% url 'game' %}" method="post">
+{% csrf_token %}
+{{ game_form }}
+                        <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

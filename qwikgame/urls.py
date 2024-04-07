@@ -8,6 +8,7 @@ urlpatterns = [
     path('account/', include("person.urls")),
     path('admin/', admin.site.urls),
     path('authenticate/', include("authenticate.urls")),
+    path('game/', include("game.urls")),
     path('match/', include("match.urls")),
     path('player/', include('player.urls'))
 ]

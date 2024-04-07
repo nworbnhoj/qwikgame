@@ -2,36 +2,126 @@
 {% extends "content.html" %}
 
 
-{% block title %}Add Game{% endblock %}
+{% block title %}Game{% endblock %}
 
-    
-{% block list_bar %}
-{% if big_screen %}
-    {{ block.super }}
+
+{% block cta_mobile %}
+{% if small_screen %}
+    <a class="cta round lge cta_mobile" href="{% url 'active' %}">
+    <i class="fa-solid fa-volleyball fa-3x"></i>
+    </a>
 {% endif %}
 {% endblock %}
 
 
-{% block detail %}
-    <div id="detail" class="detail">
-        <div id="GAME" class="post">
-            <div class="detail_head">
-                <h1><span>ACTIVE GAMES</span>
-                    <div class="button info sml push_right" data-visible="false">
-                        <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
-                        <div class="info_text hidden">Activate Games to organise Matches with other Players.</div>
-                    </div>
-                </h1>
-            </div>
-            <div class="post detail_body">
-                <div class="post form">
-                    <form action="{% url 'game' %}" method="post">
-{% csrf_token %}
-{{ game_form }}
-                        <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
-                    </form>
+{% block cta_desktop %}
+{% if big_screen %}
+    <a class="cta wide" href="{% url 'active' %}">
+        <i class="fa-solid fa-volleyball fa-2x"></i>
+        <p>ADD GAME</p>
+    </a>
+{% endif %}
+{% endblock %}
+
+
+{% block list %}
+        <div class="list_head">
+            <h1>My Games</h1>
+
+            <div class="drop_down">
+                <div class="button drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby" checked="checked">
+                        game
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        skill
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        venue
+                    </label>
                 </div>
             </div>
         </div>
-    </div>
+        <h2 class="show_group">
+            Tennis
+            <span>&#9650;</span>
+        </h2>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" checked="checked" name="list" data-id="A">
+                <div class="button item">
+                    <div class="icon">
+                        <i class="fa-solid fa-location-dot fa-xl"></i>
+                    </div>
+                    <p>Dema Sport, Sofia</p>
+                    <div class="icon push_right">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                    </div>
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="B">
+                <div class="button item">
+                    <div class="icon">
+                        <i class="fa-solid fa-location-dot fa-xl"></i>
+                    </div>
+                    <p>Vasil Levski, Sofia</p>
+                    <div class="icon push_right">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                    </div>
+                </div>
+            </label>
+            <label class="toggle">
+                <input type="radio" name="list" data-id="C">
+                <div class="button item">
+                    <div class="icon">
+                        <i class="fa-solid fa-location-dot fa-xl"></i>
+                    </div>
+                    <p>Grebna baza, Sofia</p>
+                    <div class="icon push_right">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                    </div>
+                </div>
+            </label>
+            <label class="toggle group">
+                <input type="radio" name="list" data-id="TENNIS">
+                <div class="button add wide">
+                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                    <p>Add Venue</p>
+                </div>
+            </label>
+        </div>
+        <h2 class="show_group">
+            Squash
+            <span>&#9650;</span>
+        </h2>
+        <div class="group">
+            <label class="toggle">
+                <input type="radio" name="list" data-id="D">
+                <div class="button item">
+                    <div class="icon">
+                        <i class="fa-solid fa-location-dot fa-xl"></i>
+                    </div>
+                    <p>Squash Center, Sofia</p>
+                    <div class="icon push_right">
+                        <i class="fa-solid fa-check fa-xl"></i>
+                    </div>
+                </div>
+            </label>
+
+            <label class="toggle group">
+                <input type="radio" name="list" data-id="SQUASH">
+                <div class="button add wide">
+                    <i class="fa-solid fa-circle-plus fa-xl"></i>
+                    <p>Add Venue</p>
+                </div>
+            </label>
+        </div>
 {% endblock %}

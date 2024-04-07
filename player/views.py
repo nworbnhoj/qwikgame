@@ -9,40 +9,42 @@ from django.views import View
 from person.models import LANGUAGE, Person, Social
 from person.forms import PublicForm as PersonPublicForm
 from player.models import Game, Player, Precis
-from player.forms import GameForm, PublicForm, PrecisForm
+from player.forms import ActiveForm, PublicForm, PrecisForm
 from qwikgame.views import QwikView
 
 
-class AvailableView(QwikView):
+class GameView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().request_init(request)
         context = super().context(request)
         if context['small_screen']:
-            return render(request, "player/available.html", context)
+            return render(request, "player/game.html", context)
         else:
-            return HttpResponseRedirect("/player/game/add/")
+            return HttpResponseRedirect("/player/game/active/")
 
 
-class GameView(QwikView):
-    game_form_class = GameForm
-    template_name = 'player/game.html'
+class ActiveView(QwikView):
+    active_form_class = ActiveForm
+    template_name = 'player/active.html'
 
     def get(self, request, *args, **kwargs):
         super().get(request)
-        context = self.game_form_class.get(self.user.player)
+        context = self.active_form_class.get(self.user.player)
         context = context | super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request)
-        context = self.game_form_class.post(request.POST, self.user.player)
+        context = self.active_form_class.post(request.POST, self.user.player)
         if len(context) == 0:
-            return HttpResponseRedirect("/player/game/")
+            return HttpResponseRedirect("/player/game/active/")
         context = context | super().context(request)
         return render(request, self.template_name, context)
 
 
+class AvailableView(QwikView):
+    pass
 class InviteView(QwikView):
 
     def get(self, request, *args, **kwargs):

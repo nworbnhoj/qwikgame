@@ -81,7 +81,7 @@ class IconSelectMultiple(CheckboxSelectMultiple):
         return option
 
 
-class GameForm(Form):
+class ActiveForm(Form):
     games = MultipleChoiceField(
         choices = Game.choices(),
         label=None,

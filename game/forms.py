@@ -1,6 +1,6 @@
 from django.forms import CheckboxSelectMultiple, Form, MultipleChoiceField
 from game.models import Game
-from qwikgame.forms import ActionMultiple, MultipleActionField
+from qwikgame.fields import ActionMultiple, MultipleActionField
 
 from qwikgame.widgets import IconSelectMultiple
 

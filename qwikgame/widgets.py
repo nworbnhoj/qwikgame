@@ -1,5 +1,8 @@
 from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
 
+class ActionMultiple(CheckboxSelectMultiple):
+    attrs = {"class": "down hidden"}
+
 
 class IconSelectMultiple(CheckboxSelectMultiple):
     option_template_name='option_game.html'

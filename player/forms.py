@@ -2,7 +2,7 @@ from django.forms import CharField, Form, Textarea
 from game.models import Game
 from person.models import Person
 from player.models import Precis
-from qwikgame.forms import ActionMultiple, MultipleActionField
+from qwikgame.fields import ActionMultiple, MultipleActionField
 
 
 class BlockedForm(Form):

@@ -2,6 +2,7 @@ from django.forms import CheckboxSelectMultiple, Form, MultipleChoiceField
 from game.models import Game
 from qwikgame.forms import ActionMultiple, MultipleActionField
 
+from qwikgame.widgets import IconSelectMultiple
 
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
@@ -15,20 +16,6 @@ class MultipleActionField(MultipleChoiceField):
         super().__init__(*args, **kwargs)
         self.widget.attrs={"class": "down hidden"}
         self.template_name='dropdown.html'
-
-
-class IconSelectMultiple(CheckboxSelectMultiple):
-    option_template_name='option_game.html'
-    use_fieldset=False
-
-    def __init__(self, icons={}, *args, **kwargs):
-        self.icons = icons
-        super().__init__(*args, **kwargs)
-
-    def create_option(self, *args, **kwargs):
-        option = super().create_option(*args, **kwargs)
-        option['icon'] = self.icons[option["value"]]
-        return option
 
 
 class ActiveForm(Form):

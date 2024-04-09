@@ -83,7 +83,7 @@ div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; d
 div.drop_up {}
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
-div.field { padding: 0.5em 0 0.5em 0 }
+div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 0.5em 0 0.5em 0; width: 100% }
 div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }

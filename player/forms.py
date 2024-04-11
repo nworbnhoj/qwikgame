@@ -3,9 +3,10 @@ from game.models import Game
 from person.models import Person
 from player.models import Precis
 from qwikgame.fields import ActionMultiple, MultipleActionField
+from qwikgame.forms import QwikForm
 
 
-class BlockedForm(Form):
+class BlockedForm(QwikForm):
     blocked = MultipleActionField(
         action='unblock:',
         help_text='When you block a player, neither of you will see the other on qwikgame.',
@@ -33,7 +34,7 @@ class BlockedForm(Form):
     def post(klass, request_post, player):
         context = {}
         user_id = player.user.id
-        form = klass(request_post)
+        form = klass(data=request_post)
         form.fields['blocked'].choices = klass.blocked_choices(player)
         if form.is_valid():
             for unblock in form.cleaned_data['blocked']:
@@ -53,11 +54,11 @@ class BlockedForm(Form):
         return choices
 
 
-class PublicForm(Form):
+class PublicForm(QwikForm):
     pass
 
 
-class PrecisForm(Form):
+class PrecisForm(QwikForm):
 
     class Meta:
         error_messages = {
@@ -102,7 +103,7 @@ class PrecisForm(Form):
     def post(klass, request_post, player):
         context = {}
         user_id = player.user.id
-        precis_form = PrecisForm(request_post, game_precis = klass.game_precis(user_id))
+        precis_form = PrecisForm(data=request_post, game_precis = klass.game_precis(user_id))
         if precis_form.is_valid():
             for game_code, field in precis_form.fields.items():
                 precis = Precis.objects.get(game=game_code, player=player)

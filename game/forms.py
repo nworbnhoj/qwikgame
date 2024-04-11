@@ -10,7 +10,7 @@ from qwikgame.fields import ActionMultiple, RangeField, SelectRangeField, Multip
 from qwikgame.widgets import IconSelectMultiple
 
 
-class ActiveForm(Form):
+class ActiveForm(QwikForm):
     games = MultipleChoiceField(
         choices = Game.choices(),
         label=None,
@@ -34,7 +34,7 @@ class ActiveForm(Form):
     @classmethod
     def post(klass, request_post, player):
         context = {}
-        form = klass(request_post)
+        form = klass(data=request_post)
         if form.is_valid():
             player.games.clear()
             for game_code in form.cleaned_data['games']:

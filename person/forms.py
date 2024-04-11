@@ -1,15 +1,14 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, Select, URLField
-
 from person.models import LANGUAGE, Person, Social
-
+from qwikgame.forms import QwikForm
 
 class DeleteWidget(CheckboxSelectMultiple):
     option_template_name="input_delete.html"
 
 
 
-class PrivateForm(Form):
+class PrivateForm(QwikForm):
     notify_email = BooleanField(
         label='Email notifications',
         required=False,
@@ -56,7 +55,7 @@ class PrivateForm(Form):
     @classmethod
     def post(klass, request_post, person):
         context = {}
-        private_form = klass(request_post)
+        private_form = klass(data=request_post)
         if private_form.is_valid():
             person.notify_email = private_form.cleaned_data["notify_email"]
             person.notify_web = private_form.cleaned_data["notify_web"]
@@ -68,7 +67,7 @@ class PrivateForm(Form):
         return context
 
 
-class PublicForm(Form):
+class PublicForm(QwikForm):
     icon = CharField(
         label='PROFILE PICTURE',
         max_length=32,
@@ -121,7 +120,7 @@ class PublicForm(Form):
     @classmethod
     def post(klass, request_post, person):
         context = {}
-        public_form = klass(request_post, social_urls = klass.social_urls(person.user.id))
+        public_form = klass(data=request_post, social_urls = klass.social_urls(person.user.id))
         if public_form.is_valid():
             person.icon = public_form.cleaned_data["icon"]
             person.name = public_form.cleaned_data["name"]

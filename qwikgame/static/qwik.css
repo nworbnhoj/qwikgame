@@ -83,7 +83,7 @@ div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; d
 div.drop_up {}
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
-div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 0.5em 0 0.5em 0; width: 100% }
+div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
 div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
@@ -111,7 +111,7 @@ div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; top: 150%; width: 20em; z-index: 1 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
-div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 1em 0; width: 100% }
+div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
 div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
 div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
 div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
@@ -124,6 +124,8 @@ div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; 
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em; width: 100% }
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.range_options { gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
+div.range_options option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
 div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
@@ -156,6 +158,7 @@ input[type=submit] { border: 0px solid black; cursor: pointer; flex: 0 0 auto; f
 input[type=text] { flex: 1 1 auto; font-size: inherit }
 input:checked + .slider { background-color: #66bb6a; }
 input:checked + .slider:before { transform: translateX(2em); }
+input[type=range] { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
 input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
 input.disabled { background-color: #eeeeee; color: #999999 }
 input#disabled { background-color: #eeeeee; border: 0px solid #dfa622 }

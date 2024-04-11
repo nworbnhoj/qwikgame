@@ -10,7 +10,7 @@ class QwikView(View):
     context = {}
     user = None
     is_player = False
-    is_player = False
+    is_manager = False
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

@@ -19,3 +19,6 @@ class Venue(models.Model):
 
     def __str__(self):
         return self.name
+
+    def choices():
+        return {venue.pk: venue.name for venue in Venue.objects.all()}

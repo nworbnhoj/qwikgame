@@ -1,0 +1,7 @@
+<!-- qwikgame/templates/select_range.html -->
+<div class="range_options">
+{% for key, value in widget.choices %}
+  <div class="option {{ invisible }}">{{ value }}</div>
+{% endfor %}
+</div>
+{% include 'range.html' %}

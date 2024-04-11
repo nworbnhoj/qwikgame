@@ -129,6 +129,18 @@ function previousDetail(event) {
   showDetail();
 }
 
+function range(slider) {
+  var options = slider.closest('div.field').querySelector('div.range_options')
+  for (let i = 0; i < options.length; i++) {
+    var option = options.item(i);
+    if (i == slider.value) {
+      option.classList.remove('invisible');
+    } else {
+      option.classList.add('invisible');
+    }
+  }
+}
+
 function showDetail() {
   // on mobile, hide the list and show the detail
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
@@ -280,7 +292,7 @@ function toggleHour(event) {
       updateAllDay(all_day);
     } else {
       toggle_uncheck(all_day);
-      let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+      let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
       toggle_uncheck(all_week);
     }
   } catch (e) {
@@ -300,7 +312,7 @@ function toggleAllDay(event) {
         checkbox.checked = all_day_checked;
       }
     }
-    let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+    let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
     if (all_day_checked) {
       updateAllWeek(all_week);
     } else {
@@ -316,7 +328,7 @@ function toggleAllWeek(event) {
   try {
     let button = event.currentTarget;
     var checked = button.firstElementChild.checked;
-    let detail = button.closest('.detail_n');
+    let detail = button.closest('div.field');
     detail.querySelectorAll('.all_day').forEach(function(button) {
       button.firstElementChild.checked = checked;
     })
@@ -345,7 +357,7 @@ function updateAllDay(all_day) {
       }
     }
     toggle_check(all_day);
-    let all_week = all_day.closest('div.detail_n').querySelector("label.toggle.all_week");
+    let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
     updateAllWeek(all_week);
   } catch (e) {
     console.log(e);
@@ -356,10 +368,9 @@ function updateAllDay(all_day) {
 function updateAllWeek(all_week) {
   try {
     // check all_week if every all_day is checked
-    let days = all_week.closest('div.detail_n').querySelectorAll("div.by_day");
+    let days = all_week.closest('div.field').querySelectorAll("label.toggle.all_day");
     for (day of days) {
-      all_day = day.querySelector("label.toggle.all_day");
-      if (!toggle_disabled(all_day) && !toggle_checked(all_day)) {
+      if (!toggle_disabled(day) && !toggle_checked(day)) {
         return;
       }
     }

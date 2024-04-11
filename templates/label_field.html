@@ -1,0 +1,12 @@
+<!-- qwikgame/templates/label_field.html -->
+{% if field.label %}
+<div class="label">
+    {{ field.label }}
+    {% if field.help_text %}
+    <div class="button info sml push_right" data-visible="false">
+        <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
+        <div class="info_text hidden">{{ field.help_text|safe }}</div>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

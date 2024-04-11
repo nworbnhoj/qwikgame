@@ -1,0 +1,20 @@
+<!-- qwikgame/templates/input_week.html -->
+{% include 'label_field.html' %}
+<div class="by_week grid_2_col">
+    <div class="button link show-next-parent-sibling">Select Days and Time</div>
+    <label class="toggle wide all_week">
+        <input type="checkbox" name="all_week">
+        <div class="button ctb wide thin">Anytime</div>
+    </label>
+</div>
+<div class="post hidden">
+{% spaceless %}
+{% for widget in widget.subwidgets %}
+    <div class="pole by_day">
+        {% include 'label_widget.html' %}
+        {{ widget.errors }}
+{% include widget.template_name %}
+    </div>
+{% endfor %}
+{% endspaceless %}
+</div>

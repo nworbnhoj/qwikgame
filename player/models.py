@@ -9,11 +9,20 @@ from venue.models import Venue
 STRENGTH = [
     ('W', 'much-weaker'),
     ('w', 'weaker'),
-    ('M', 'matched'),
+    ('m', 'matched'),
     ('s', 'stronger'),
     ('S', 'much-stonger')
 ]
 
+WEEK_DAYS = [
+    ('MONDAY'),
+    ('TUESDAY'),
+    ('WEDNESDAY'),
+    ('THURSDAY'),
+    ('FRIDAY'),
+    ('SATURDAY'),
+    ('SUNDAY'),
+]
 
 class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)

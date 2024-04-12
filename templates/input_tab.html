@@ -1,2 +1,21 @@
 <!-- qwikgame/templates/input_tab.html -->
-{{ field }}
+<div class="tab_area post">
+    <div class="tabs">
+{% spaceless %}
+{% for widget in widget.subwidgets %}
+        <div class="button tab thin {% if forloop.counter0 == 0 %}active{% endif %}">
+            {{ widget.attrs.label }}
+        </div>
+{% endfor %}
+{% endspaceless %}
+    </div>
+    <div class="areas">
+{% spaceless %}
+{% for widget in widget.subwidgets %}
+        <div class="area {% if forloop.counter0 > 0 %}hidden{% endif %}">
+        {{ widget.errors }}
+{% include widget.template_name %}
+        </div>
+{% endfor %}
+{% endspaceless %}
+    </div>

@@ -1,7 +1,7 @@
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField
 from player.models import STRENGTH, WEEK_DAYS
-from qwikgame.widgets import ActionMultiple
-from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, WeekInput
+from qwikgame.widgets import ActionMultiple, MultiWidget
+from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
 
 
 class DayField(MultiValueField):
@@ -34,6 +34,20 @@ class MultipleActionField(MultipleChoiceField):
         super().__init__(*args, **kwargs)
         self.widget.attrs={"class": "down hidden"}
         self.template_name='dropdown.html'
+
+
+class MultiTabField(MultiValueField):
+    widget = MultiWidget
+
+    def __init__(self, fields, *args, **kwargs):
+        self.field_keys = list(fields.keys())
+        super().__init__(fields=fields.values(), *args, **kwargs)
+
+    def compress(self, data_list):
+        result = {}
+        for i in range(len(self.field_keys)):
+            result[self.field_keys[i]] = data_list[i]
+        return result
 
 
 class RangeField(ChoiceField):

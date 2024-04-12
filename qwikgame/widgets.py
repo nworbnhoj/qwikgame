@@ -76,6 +76,16 @@ class SelectRangeInput(RangeInput):
     template_name='select_range.html'
 
 
+class TabInput(MultiWidget):
+    template_name='input_tab.html'
+    use_fieldset=False
+
+    def decompress(self, value):
+        if value:
+            return [val for val in value]
+        return [True for tab in self.widgets]
+
+
 class WeekInput(MultiWidget):
     template_name='input_week.html'
     use_fieldset=False

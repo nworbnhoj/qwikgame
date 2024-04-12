@@ -106,16 +106,17 @@ function nextDetail(event) {
 function openTab(event) {
   let tab = event.currentTarget;
   let tab_area = tab.closest('.tab_area');
-  let tab_content = tab_area.querySelectorAll("textarea");
-  for (let i = 0; i < tab_content.length; i++) {
-    tab_content[i].setAttribute('hidden', '');
-  }
-  tabs = tab_area.querySelectorAll(".tab");
+  let tabs = tab_area.querySelectorAll(".tab");
+  let areas = tab_area.querySelectorAll(".area");
   for (i = 0; i < tabs.length; i++) {
-    tabs[i].classList.remove('active');
+    if (tabs[i] === tab) {
+      tabs[i].classList.add('active');
+      areas[i].classList.remove('hidden');
+    } else {
+      tabs[i].classList.remove('active');
+      areas[i].classList.add('hidden');
+    }
   }
-  document.getElementById(tab.dataset.tab_id).removeAttribute('hidden');
-  event.currentTarget.classList.add('active');
 }
 
 function previousDetail(event) {

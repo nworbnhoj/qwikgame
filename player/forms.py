@@ -2,7 +2,7 @@ from django.forms import CharField, Form, Textarea
 from game.models import Game
 from person.models import Person
 from player.models import Precis
-from qwikgame.fields import ActionMultiple, MultipleActionField
+from qwikgame.fields import ActionMultiple, MultipleActionField, MultiTabField, TabInput
 from qwikgame.forms import QwikForm
 
 
@@ -60,30 +60,30 @@ class PublicForm(QwikForm):
 
 class PrecisForm(QwikForm):
 
-    class Meta:
-        error_messages = {
-            'precis': {
-                "max_length": "This precis is too long.",
-            },
-        }
-        help_texts = {
-            'precis': "Some useful help text.",
-        }
-        placeholders = {
-            'precis': "hope"
-        }
-
     def __init__(self, *args, **kwargs):
-        game_precis = kwargs.pop('game_precis')
+        precis = kwargs.pop('precis')
         super(PrecisForm, self).__init__(*args, **kwargs)
-        hidden=False
-        for game, precis in game_precis.items():
-            name = game.code
-            self.fields[name] = CharField(initial=precis.text, required = False, template_name="input_tab.html", widget=Textarea())
-            self.fields[name].help_text = "Each precis is limited to 512 characters."
-            self.fields[name].widget.attrs['placeholder'] = "Let rivals know why they want to play you."
-            self.fields[name].widget.attrs['hidden'] = hidden
-            hidden = True
+        fields, widgets, initial = {}, {}, []
+        for p in precis:
+            name = p.game.code
+            widget = Textarea(
+                attrs = {
+                    'label': p.game.name,
+                    'placeholder': "Let rivals know why they want to play you.",
+                },
+            )
+            widgets[p.game.code] = widget
+            fields[p.game.code] = CharField(label=p.game.name, required=False)
+            initial.append(p.text)
+        self.fields['precis'] = MultiTabField(
+            fields,
+            label='ABOUT',
+            require_all_fields=False,
+            template_name = 'field.html',
+            widget=TabInput(widgets))
+        self.fields['precis'].help_text = "Let rivals know why they want to play you."
+        self.fields['precis'].initial = initial
+
 
     # Initializes a PublicForm with 'request_post' for 'player'.
     # Returns a context dict including 'precis_form' 'precis' & 'reputation'
@@ -91,9 +91,8 @@ class PrecisForm(QwikForm):
     def get(klass, player):
         return {
             'precis_form': PrecisForm(
-                    game_precis = klass.game_precis(player.user.id)
-                ),
-            'precis': Precis.objects.filter(player__user__id=player.user.id),
+                precis = Precis.objects.filter(player__user__id=player.user.id)
+            ),
             'reputation': player.reputation(),
         }
 
@@ -103,23 +102,18 @@ class PrecisForm(QwikForm):
     def post(klass, request_post, player):
         context = {}
         user_id = player.user.id
-        precis_form = PrecisForm(data=request_post, game_precis = klass.game_precis(user_id))
+        precis_form = PrecisForm(
+            data=request_post, 
+            precis=Precis.objects.filter(player__user__id=player.user.id)
+        )
         if precis_form.is_valid():
-            for game_code, field in precis_form.fields.items():
+            for game_code, text in precis_form.cleaned_data['precis'].items():
                 precis = Precis.objects.get(game=game_code, player=player)
-                precis.text = precis_form.cleaned_data[game_code]
+                precis.text = text
                 precis.save()
         else:
-            context = {      
-                'precis': Precis.objects.filter(player__user__id=user_id),
+            context = {
                 'precis_form': precis_form,
                 'reputation': player.reputation(),
             }
         return context
-
-    @classmethod
-    def game_precis(klass, user_id):
-        gp = {}
-        for precis in Precis.objects.filter(player__user__id=user_id):
-            gp[precis.game] = precis
-        return gp

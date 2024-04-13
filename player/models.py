@@ -68,6 +68,9 @@ class Available(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     week = models.BinaryField()
 
+    class Meta:
+        unique_together = ('game', 'player', 'venue')
+
     def __str__(self):
         return "{} {} {}".format(self.player, self.game, self.venue)
 

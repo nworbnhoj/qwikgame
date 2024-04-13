@@ -66,7 +66,7 @@ class Available(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-    week = models.BinaryField()
+    hours = models.BinaryField()
 
     class Meta:
         unique_together = ('game', 'player', 'venue')

@@ -105,7 +105,7 @@ class AvailableForm(QwikForm):
                 game=get_object_or_404(Game, pk=form.cleaned_data['game']),
                 player=player,
                 venue=get_object_or_404(Venue, pk=form.cleaned_data['venue']),
-                week=form.cleaned_data['hours'],
+                hours=form.cleaned_data['hours'],
             )
             # opinion = opinion.objects.create()
             # Strength.objects.create()

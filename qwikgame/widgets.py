@@ -4,6 +4,7 @@ from player.models import STRENGTH, WEEK_DAYS
 
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
+    use_fieldset=False
 
 
 class DayInput(MultiWidget):

@@ -72,33 +72,35 @@ class PublicForm(QwikForm):
         label='PROFILE PICTURE',
         max_length=32,
         required = False,
-        template_name="input_icon.html"
+        template_name='field.html',
     )
     name = CharField(
         label='NAME OR NICK',
         max_length=32,
         required=False,
-        template_name="input_text.html"
+        template_name='field.html',
     )
     socials = MultipleChoiceField(
         choices=(),
         label='WEBSITE / SOCIAL MEDIA',
         required=False,
-        template_name="input_multi.html",
+        template_name='field.html',
         widget=CheckboxSelectMultiple()
     )
     social = URLField(
         required=False,
-        template_name="input_naked.html"
+        template_name="field_naked.html"
     )
 
     def __init__(self, *args, **kwargs):
         social_urls = kwargs.pop('social_urls')
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['icon'].widget.attrs['placeholder'] = "your qwikgame icon"
+        self.fields['icon'].widget.attrs['class'] = "hidden"
         self.fields['name'].widget.attrs['placeholder'] = "your qwikgame screen name"
         self.fields['social'].widget.attrs['placeholder'] = "add a social media url"
         self.fields['socials'].choices = social_urls
+        self.fields['socials'].widget.attrs['class'] = "post"
         self.fields['socials'].widget.option_template_name='option_delete.html'
 
     # Initializes a PublicForm for 'person'.

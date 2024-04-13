@@ -84,6 +84,7 @@ div.drop_up {}
 div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
+div.field.naked { padding: 0 }
 div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
@@ -118,7 +119,7 @@ div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; pad
 div.list a.selected { color: #dfa622 }
 div.list_bar { align-items: start; flex: 0 1 31.25%; justify-content: start; }
 div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.option {align-items: center; justify-content: space-between; padding: 0.5em 0 0 0 }
+div.option {align-items: center; justify-content: space-between; padding: 0.5em 0 0 0; width: 100% }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
@@ -141,7 +142,7 @@ div.tab_area div.areas { width: 100%;}
 div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }
 div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
-div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 3px; z-index: 1 }
+div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 4px; z-index: 1 }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }

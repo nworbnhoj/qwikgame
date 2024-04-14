@@ -84,7 +84,7 @@ class AvailableView(QwikView):
                         start = h
                     elif start and not hour:
                         end = h - 1
-                        grid_column = "{}/{}".format(start-r_start+2, end-r_start+2)
+                        grid_column = "{}/{}".format(start-r_start+2, end-r_start+3)
                         label = start if start == end else "{}-{}".format(start, end)
                         blocks.append((grid_column, grid_row, label))
                         start = None

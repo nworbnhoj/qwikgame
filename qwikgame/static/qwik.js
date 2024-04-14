@@ -347,6 +347,13 @@ function unreadRemove(event) {
   event.currentTarget.classList.remove('unread');
 }
 
+// update ALL all_day (and all_week) toggle to be consistent with the hour toggles 
+function updateAllHour() {
+    for (all_day of document.querySelectorAll("label.toggle.all_day")) {
+        updateAllDay(all_day)
+    }
+}
+
 // update an all_day (and all_week) toggle to be consistent with the hour toggles 
 function updateAllDay(all_day) {
   try {
@@ -392,6 +399,7 @@ function togglePreviousSibling(event) {
 }
 
 window.onload = function() {
+  updateAllHour();
   document.addEventListener('click', closeStuff);
   document.querySelectorAll('div.drop').forEach(function(button) {
     button.onclick = drop;

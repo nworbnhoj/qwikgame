@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from game.forms import ActiveForm, AvailableForm
 from game.models import Game
-from player.models import Player
+from player.models import Available, Player
 from qwikgame.views import QwikView
 from venue.models import Venue
 
@@ -45,19 +45,26 @@ class AvailableView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().get(request)
-        game, venue = None, None
+        player, game, venue, hours = self.user.player, None, None, None
         game_name = kwargs.pop('game', None)
         venue_name = kwargs.pop('venue', None)
         if game_name is not None:
             game = get_object_or_404(Game, name=game_name)
+            context = { 'game': game, 'game_name': game.name }
         if venue_name is not None:
             venue = get_object_or_404(Venue, name=venue_name)
-        context = {'game': game, 'game_name': game.name }
+            context = context | { 'venue': venue, 'venue_name': venue.name }
+        if (player is not None and game is not None and venue is not None):
+            try:
+                hours: bytearray = Available.objects.get(player=player, game=game, venue=venue).hours
+            except:
+                pass                
         context = context | self.available_form_class.get(
-            self.user.player,
+            player,
             game=game.pk if game is not None else None,
             hide=self.hide,
             venue=venue.pk if venue is not None else None,
+            hours=hours,
         )
         context = context | super().context(request)
         return render(request, self.template_name, context)

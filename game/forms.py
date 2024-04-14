@@ -6,7 +6,7 @@ from qwikgame.fields import ActionMultiple, MultipleActionField
 from player.models import Available, STRENGTH, WEEK_DAYS
 from venue.models import Venue
 from qwikgame.forms import QwikForm
-from qwikgame.fields import ActionMultiple, RangeField, SelectRangeField, MultipleActionField, WeekField
+from qwikgame.fields import ActionMultiple, DayField, RangeField, SelectRangeField, MultipleActionField, WeekField
 from qwikgame.widgets import IconSelectMultiple
 
 
@@ -63,11 +63,13 @@ class AvailableForm(QwikForm):
         help_text='When are you usually available to play at this Venue?',
         label='MY AVAILABILITY AT THIS VENUE',
         range=range(6,21),
+        required=True,
     )
     strength = SelectRangeField(
         choices={'W':'Very Weak', 'w':'Weak', 'm':'Average', 's':'Strong', 'S':'Very Strong'},
         help_text='This helps qwikgame to match you skill with other players',
         label = 'MY SKILL LEVEL AT THIS VENUE',
+        required=False,
         disabled=True, # TODO design Model for reckon strength against Venue/Region
     )
 
@@ -81,7 +83,7 @@ class AvailableForm(QwikForm):
     # Initializes an AddVenueForm for 'player'.
     # Returns a context dict including 'add_venue_form'
     @classmethod
-    def get(klass, player, game=None, hide=[], hours=None, strength=None, venue=None):
+    def get(klass, player, game=None, hide=[], hours=None, strength=None, venue='map'):
         return {
             'available_form': klass(
                 hide=hide,
@@ -89,7 +91,7 @@ class AvailableForm(QwikForm):
                     'game': game,
                     'hours': hours,
                     'strength': strength,
-                    'venues': 'map'
+                    'venue': venue,
                 },
             )
         }
@@ -101,12 +103,14 @@ class AvailableForm(QwikForm):
         context = {}
         form = klass(data=request_post)
         if form.is_valid():
-            Available.objects.create(
-                game=get_object_or_404(Game, pk=form.cleaned_data['game']),
-                player=player,
-                venue=get_object_or_404(Venue, pk=form.cleaned_data['venue']),
-                hours=form.cleaned_data['hours'],
-            )
+            try:
+                game=Game.objects.get(pk=form.cleaned_data['game']),
+                venue=Venue.objects.get(pk=form.cleaned_data['venue']),
+                available = Available.objects.get_or_create(player=player, game=game[0], venue=venue[0])
+                available[0].hours = form.cleaned_data['hours']
+                available[0].save()
+            except:
+                context = {'available_form': form}
             # opinion = opinion.objects.create()
             # Strength.objects.create()
         else:

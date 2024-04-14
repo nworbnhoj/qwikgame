@@ -80,10 +80,10 @@ class SelectRangeField(RangeField):
         )
 
     def to_python(self, value):
-        index = int(value)
-        if 0 <= index <= len(self.choices):
-            return list(self.choices)[index][0]
-        return None
+        try:
+            return list(self.choices)[int(value)][0]
+        except:
+            return None
 
 
 class WeekField(MultiValueField):

@@ -1,6 +1,7 @@
 from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
 from django.forms.widgets import Input, Select
 from player.models import STRENGTH, WEEK_DAYS
+from qwikgame.utils import int_to_bools24, ENDIAN
 
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
@@ -15,12 +16,13 @@ class DayInput(MultiWidget):
         self.label=label
         self.range=range
         super().__init__(
-            widgets=[HourInput(label=hr) for hr in self.range]
+            widgets=([HourInput(label=hr) for hr in self.range])
         )
 
     def decompress(self, value):
-        if value:
+        if isinstance(value, bytes) and len(value) == 3:
             bools = int_to_bools(value)[self.range[0], self.range[-1]]
+            return int_to_bools24(int.from_bytes(value, ENDIAN))[self.range[0]: self.range[-1]+1]
         return [False for hr in self.range]
 
     def get_context(self, name, value, attrs):
@@ -98,6 +100,6 @@ class WeekInput(MultiWidget):
         )
 
     def decompress(self, value):
-        if value:
-            return [value[i, i+2] for i in range(0, 18, 3)]
-        return [[False, False, False] for day in range(7)]
+        if isinstance(value, bytes) and len(value) == 21:
+            return [value[i: i+3] for i in range(0, 21, 3)]
+        return [bytearray(3) for day in range(7)]

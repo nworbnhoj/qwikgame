@@ -112,20 +112,3 @@ class AvailableForm(QwikForm):
         else:
             context = {'available_form': form}
         return context
-
-
-# https://stackoverflow.com/questions/68423946/python-making-and-int-from-8-boolean-byte-values-and-vice-versa
-import math
-
-def bools_to_int(bits):
-    value = 0
-    for i, bit in enumerate(bits):
-        value |= bit << (len(bits) - i - 1)
-    return value
-    
-def int_to_bools(value):
-    bits = []
-    n = math.ceil(math.log2(value))
-    for i in range(n):
-        bits.append(value >> (n - i - 1) & 1 == 1)
-    return bits

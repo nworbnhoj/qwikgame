@@ -1,5 +1,6 @@
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField
 from player.models import STRENGTH, WEEK_DAYS
+from qwikgame.utils import bools_to_int, ENDIAN
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
 
@@ -8,22 +9,27 @@ class DayField(MultiValueField):
 
     def __init__(self, range=range(24), **kwargs):
         self.range = range
-        self.widget=DayInput(range)
+        self.widget=DayInput(range=range)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
                 'invalid': 'required',
                 'required': 'required',
             },
-            fields=([BooleanField(label=hr) for hr in self.range]),
+            fields=(
+                [BooleanField(label=hr, required=False)
+                for hr in self.range]
+            ),
             require_all_fields=False,
             **kwargs
         )
 
-    def compress(data_list):
-        bools = [False] * self.range[0] + data_list
+    def compress(self, data_list):
+        bools = [False] * self.range[0]
+        bools += data_list
+        bools += [False] * (23 - self.range[-1])
         integer = bools_to_int(bools)
-        return integer.to_bytes(3)
+        return integer.to_bytes(3, ENDIAN)
 
 
 class MultipleActionField(MultipleChoiceField):
@@ -84,21 +90,24 @@ class WeekField(MultiValueField):
 
     def __init__(self, range=range(24), **kwargs):
         self.range = range
-        self.widget=WeekInput(range)
+        self.widget=WeekInput(range=range)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
                 'invalid': 'required',
                 'required': 'required',
             },
-            fields=(DayField(label=day, range=self.range) for day in WEEK_DAYS),
+            fields=(
+                [DayField(label=day, range=self.range, required=False) 
+                for day in WEEK_DAYS]
+            ),
             require_all_fields=False,
             template_name='field.html',
             **kwargs
         )
 
     def compress(self, data_list):
-        result = []
-        for bytes in data_list:
-            result += bytes
+        result = bytearray()
+        for data in data_list:
+            result += data
         return result

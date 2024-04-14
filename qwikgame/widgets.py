@@ -1,7 +1,7 @@
 from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
 from django.forms.widgets import Input, Select
-from player.models import STRENGTH, WEEK_DAYS
-from qwikgame.utils import int_to_bools24, ENDIAN
+from player.models import ENDIAN, STRENGTH, WEEK_DAYS
+from qwikgame.utils import int_to_bools24
 
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}

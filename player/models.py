@@ -6,6 +6,8 @@ from game.models import Game
 from venue.models import Venue
 
 
+ENDIAN = 'big'
+
 STRENGTH = [
     ('W', 'much-weaker'),
     ('w', 'weaker'),

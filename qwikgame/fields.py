@@ -1,6 +1,6 @@
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField
-from player.models import STRENGTH, WEEK_DAYS
-from qwikgame.utils import bools_to_int, ENDIAN
+from player.models import ENDIAN, STRENGTH, WEEK_DAYS
+from qwikgame.utils import bools_to_int
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
 

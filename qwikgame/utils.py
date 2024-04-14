@@ -1,7 +1,5 @@
 import math
 
-ENDIAN = 'big'
-
 # https://stackoverflow.com/questions/68423946/python-making-and-int-from-8-boolean-byte-values-and-vice-versa
 def bools_to_int(bits):
     value = 0

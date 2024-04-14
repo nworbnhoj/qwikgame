@@ -71,7 +71,6 @@ div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.detail_summary { }
 div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 1.8em; white-space: nowrap; width: 100%; z-index: 1 }
 div.down div { justify-content: space-between; width:100% }
 div.down div.link { justify-content: end; width: auto }

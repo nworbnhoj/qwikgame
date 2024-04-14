@@ -56,9 +56,13 @@ class AvailableView(QwikView):
             context = context | { 'venue': venue, 'venue_name': venue.name }
         if (player is not None and game is not None and venue is not None):
             try:
-                hours: bytearray = Available.objects.get(player=player, game=game, venue=venue).hours
+                available = Available.objects.get(player=player, game=game, venue=venue)
+                hours: bytearray = available.hours
+                context['blocks'] = AvailableView.hour_blocks(available.get_hours_week(), range(6,21))
+                context['hide_edit'] = 'hidden'
             except:
-                pass                
+                context['hide_view'] = 'hidden'
+             
         context = context | self.available_form_class.get(
             player,
             game=game.pk if game is not None else None,
@@ -68,6 +72,32 @@ class AvailableView(QwikView):
         )
         context = context | super().context(request)
         return render(request, self.template_name, context)
+
+    def hour_blocks(week, range):
+        blocks=[]
+        start, end, r_start, r_end = None, None, range[0], range[-1]
+        for d, day in enumerate(week):
+            grid_row = "{}/{}".format(d+1, d+1)
+            for h, hour in enumerate(day):
+                if h in range:
+                    if hour and start is None:
+                        start = h
+                    elif start and not hour:
+                        end = h - 1
+                        grid_column = "{}/{}".format(start-r_start+2, end-r_start+2)
+                        label = start if start == end else "{}-{}".format(start, end)
+                        blocks.append((grid_column, grid_row, label))
+                        start = None
+            if start is not None:
+                end = r_end
+                grid_column = "{}/{}".format(start-r_start+2, end-r_start+3)
+                label = start if start == end else "{}-{}".format(start, end)
+                if start == r_start and end == r_end:
+                    label = 'All day'
+                blocks.append((grid_column, grid_row, label))
+                start = None
+        return blocks
+
 
     def post(self, request, *args, **kwargs):
         super().post(request)

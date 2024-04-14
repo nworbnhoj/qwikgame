@@ -3,6 +3,7 @@ from django.db import models
 
 from authenticate.models import User
 from game.models import Game
+from qwikgame.utils import int_to_bools24
 from venue.models import Venue
 
 
@@ -78,6 +79,13 @@ class Available(models.Model):
     def __str__(self):
         return "{} {} {}".format(self.player, self.game, self.venue)
 
+    def get_hours_day(self, day):
+        offset = 3 * day
+        three_bytes = self.hours[offset: offset+3]
+        return int_to_bools24(int.from_bytes(three_bytes, ENDIAN))
+
+    def get_hours_week(self):
+        return [self.get_hours_day(day) for day in range(len(WEEK_DAYS))]
 
 class Friend(models.Model):
     email = models.EmailField(max_length=255, verbose_name="email address", unique=True)

@@ -14,20 +14,50 @@
 
 {% block detail %}
     <div id="detail" class="detail">
-        <div id="add_game_id" class="post">
-            <div class="detail_head">
-                <div class="post head_txt">
-                    <h1>{{ game_name }}</h1>
+        <div class="detail_head">
+            <div class="post head_txt">
+                <h1>{{ game_name }}</h1>
+            </div>
+        </div>
+        <div class="pole available_view {{ hide_view }}">
+            <div class='field'>
+                <div class="label">LOCATION</div>
+                <a href="">{{ venue_name }}</a>
+            </div>
+            <div class='field'>
+                <div class="label">MY AVAILABILITY AT THIS VENUE</div>
+                <div class="schedule">
+                    <!--
+                    <div class="hrs apm" style="grid-column: 2 / 8; grid-row: 1 / 8; height:100%">AM</div>
+                    <div class="hrs apm" style="grid-column: 8 / 18; grid-row: 1 / 8; height:100%">PM</div>
+                    -->
+                    <div class="day mon">M<span class="mid_day">ON</span><span class="full_day">DAY</span></div>
+                    <div class="day tue">T<span class="mid_day">UE</span><span class="full_day">SDAY</span></div>
+                    <div class="day wed">W<span class="mid_day">ED</span><span class="full_day">NESDAY</span></div>
+                    <div class="day thu">T<span class="mid_day">HU</span><span class="full_day">RSDAY</span></div>
+                    <div class="day fri">F<span class="mid_day">RI</span><span class="full_day">DAY</span></div>
+                    <div class="day sat">S<span class="mid_day">AT</span><span class="full_day">URDAY</span></div>
+                    <div class="day sun">S<span class="mid_day">UN</span><span class="full_day">DAY</span></div>
+{% for b in blocks %}
+                    <div class="hrs" style="grid-column: {{ b.0 }}; grid-row: {{ b.1 }};">{{ b.2 }}</div>
+{% endfor %}
                 </div>
             </div>
-            <div class="post detail_body">            	
-                <div class="post form">
-                    <form action="{% url 'available_add' game=game %}" method="post">
+            <div class='field'>
+                <div class="label">MY SKILL LEVEL AT THIS VENUE</div>
+                Average
+                <div class="button ctb push_down wide edit_available">
+                    <div class="">EDIT</div>
+                </div>
+            </div>
+        </div>
+        <div class="post available_edit {{ hide_edit }}">            	
+            <div class="post form">
+                <form action="{% url 'available_add' game=game %}" method="post">
 {% csrf_token %}
 {{ available_form }}
-                        <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
-                    </form>
-                </div>
+                    <input class="button cta push_down wide schedule_save" type="submit" value="SAVE">
+                </form>
             </div>
         </div>
     </div>

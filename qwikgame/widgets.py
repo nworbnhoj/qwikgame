@@ -21,7 +21,6 @@ class DayInput(MultiWidget):
 
     def decompress(self, value):
         if isinstance(value, bytes) and len(value) == 3:
-            bools = int_to_bools(value)[self.range[0], self.range[-1]]
             return int_to_bools24(int.from_bytes(value, ENDIAN))[self.range[0]: self.range[-1]+1]
         return [False for hr in self.range]
 

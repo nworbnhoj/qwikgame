@@ -210,10 +210,9 @@ function showInfo(event) {
   event.currentTarget.querySelector('div.info_text').classList.toggle('hidden');
 }
 
-function showGameEdit(event) {
-  let detail = event.currentTarget.closest('.detail_n');
-  detail.querySelector('.detail_form').classList.remove('hidden');
-  detail.querySelector('.detail_summary').classList.add('hidden');
+function showAvailableEdit(event) {
+  document.querySelector('.available_edit').classList.remove('hidden');
+  document.querySelector('.available_view').classList.add('hidden');
 }
 
 function slide(slider) {
@@ -478,8 +477,8 @@ window.onload = function() {
   document.querySelectorAll('.show_next_parent_sibling').forEach(function(element) {
     element.onclick = showNextParentSibling;
   });
-  document.querySelectorAll('.schedule_edit').forEach(function(div) {
-    div.onclick = showGameEdit;
+  document.querySelectorAll('.edit_available').forEach(function(div) {
+    div.onclick = showAvailableEdit;
   });
   document.querySelectorAll('div.tab').forEach(function(div) {
     div.onclick = openTab;

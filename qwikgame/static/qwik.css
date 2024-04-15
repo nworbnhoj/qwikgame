@@ -12,7 +12,7 @@ blockquote, q { quotes: "" "" }
 .align_start { align-self: flex-start }
 .color { color: #dfa622 }
 .cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
-.cta_desktop { width: 100% }
+.cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .hidden { display: none }
 .invisible { visibility: hidden }
@@ -114,6 +114,7 @@ div.info_bubble { align-items: center; background-color: #eeeeee; justify-conten
 div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
 div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
 div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
+div.list a.add { border: 1px dashed black; justify-content: left; height: 2em }
 div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 div.list a.selected { color: #dfa622 }
 div.list_bar { align-items: start; flex: 0 1 31.25%; justify-content: start; }
@@ -147,7 +148,7 @@ div.slide_label { text-align: center }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
-h2 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; gap: 1em; margin: 2em 0 1em 0; text-align: left; }
+h2 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: left; }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h4 { color: black; text-align: left }

@@ -1,13 +1,10 @@
 import hashlib
-from django.db import models
-
 from authenticate.models import User
+from django.db import models
 from game.models import Game
-from qwikgame.utils import int_to_bools24
+from qwikgame.constants import ENDIAN
+from qwikgame.utils import bytes_to_bumps, int_to_bools24
 from venue.models import Venue
-
-
-ENDIAN = 'big'
 
 STRENGTH = [
     ('W', 'much-weaker'),
@@ -74,8 +71,10 @@ class Appeal(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['date', 'game', 'player', 'venue'], name='unique_appeal')
         ]
+
     def __str__(self):
-        return "{} {} {} {} {}".format(self.player, self.game, self.date, self.hours, self.venue)
+        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, bytes_to_bumps(self.hours))
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
@@ -136,7 +135,7 @@ class Invite(models.Model):
     strength = models.CharField(max_length=1, choices=STRENGTH)
 
     def __str__(self):
-        return "{} {} {} {}".format(self.rival, self.appeal.game, self.hour, self.appeal.venue)
+        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes_to_bumps(self.hours))
 
     def save(self, *args, **kwargs):
         # TODO handle duplicate or partial-duplicate invitations

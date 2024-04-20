@@ -1,18 +1,20 @@
 <!-- qwikgame/templates/input_day.html -->
 {% include 'label_field.html' %}
-<div class="grid_2_col">
-    <div class="button link show-next-parent-sibling">Pick time</div>
-    <label class="toggle wide all_day">
-        <input type="checkbox" name="all_monday">
-        <div class="button ctb wide thin">All Day</div>
-    </label>
-</div>
-<div class="post hidden">
-    <div class="radio_block hour_grid">
+<div class='post by_day'>
+    <div class="grid_2_col">
+        <div class="button link show-next-parent-sibling">Pick time</div>
+        <label class="toggle wide all_day">
+            <input type="checkbox" name="{{ field.name }}">
+            <div class="button ctb wide thin">All Day</div>
+        </label>
+    </div>
+    <div class="post hidden">
+        <div class="radio_block hour_grid">
 {% spaceless %}
 {% for widget in widget.subwidgets %}
     {% include widget.template_name %}
 {% endfor %}
 {% endspaceless %}
+        </div>
     </div>
 </div>

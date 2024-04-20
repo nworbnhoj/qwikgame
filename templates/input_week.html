@@ -10,11 +10,9 @@
 <div class="post hidden">
 {% spaceless %}
 {% for widget in widget.subwidgets %}
-    <div class="pole by_day">
-        {% include 'label_widget.html' %}
-        {{ widget.errors }}
+    {% include 'label_widget.html' %}
+    {{ widget.errors }}
 {% include widget.template_name %}
-    </div>
 {% endfor %}
 {% endspaceless %}
 </div>

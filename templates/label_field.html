@@ -2,11 +2,16 @@
 {% if field.label %}
 <div class="label">
     {{ field.label }}
-    {% if field.help_text %}
+{% if field.field.url %}
+    <a href='{{ field.field.url }}'>{{ field.field.sub_text }}</a>
+{% elif field.field.sub_text %}
+    <span>{{ field.field.sub_text }}</span>
+{% endif %}
+{% if field.help_text %}
     <div class="button info sml push_right" data-visible="false">
         <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
         <div class="info_text hidden">{{ field.help_text|safe }}</div>
     </div>
-    {% endif %}
+{% endif %}
 </div>
 {% endif %}

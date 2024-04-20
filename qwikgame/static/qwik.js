@@ -305,7 +305,7 @@ function toggleAllDay(event) {
   try {
     let all_day = event.currentTarget;
     let all_day_checked = toggle_checked(all_day);
-    var hours = all_day.closest('.by_day').querySelector('div.radio_block').children;
+    var hours = all_day.closest('div.by_day').querySelector('div.radio_block').children;
     for (hour of hours) {
       var checkbox = hour.firstElementChild;
       if (!checkbox.disabled) {

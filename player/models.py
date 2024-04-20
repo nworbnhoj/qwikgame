@@ -37,8 +37,17 @@ class Player(models.Model):
     def facet(self):
         return self.email_hash[:3].upper()
 
+    def friend_choices(self):
+        choices={}
+        for friend in Friend.objects.filter(player=self):
+            choices[friend.rival.email_hash] = "{} ({})".format(friend.name, friend.email)
+        return choices
+
     def name(self):
-        return self.user.person
+        if self.user is not None:
+            return self.user.person
+        else:
+            return self.facet()
 
     def reputation(self):
         return 3
@@ -67,6 +76,25 @@ class Appeal(models.Model):
         ]
     def __str__(self):
         return "{} {} {} {} {}".format(self.player, self.game, self.date, self.hours, self.venue)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    def invite_friends(self, friends):
+        for friend in friends:
+            invite = Invite(
+                appeal = self,
+                hours = self.hours,
+                rival = friend,
+                strength = 'm', # TODO estimate relative strength
+            )
+            invite.save()
+
+    def invite_rivals(self, friends):
+        # TODO handle an updated appeal with changed hours
+        # TODO handle an updated appeal with changed invited friends
+        # TODO handle an updated appeal with changed invited rivals
+        self.invite_friends(friends)
+        # TODO invite other suitable qwikgame Rivals
 
 
 class Available(models.Model):
@@ -109,6 +137,11 @@ class Invite(models.Model):
 
     def __str__(self):
         return "{} {} {} {}".format(self.rival, self.appeal.game, self.hour, self.appeal.venue)
+
+    def save(self, *args, **kwargs):
+        # TODO handle duplicate or partial-duplicate invitations
+        # TODO notify rival
+        super().save(*args, **kwargs)
 
 
 class Opinion(models.Model):

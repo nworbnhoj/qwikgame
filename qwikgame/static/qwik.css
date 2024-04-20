@@ -14,6 +14,7 @@ blockquote, q { quotes: "" "" }
 .cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
+.errorlist { color: red; }
 .hidden { display: none }
 .invisible { visibility: hidden }
 .push_down { margin-top: 4em; }
@@ -22,6 +23,11 @@ blockquote, q { quotes: "" "" }
 .round { border-radius: 50%; }
 .selected { color: #dfa622 }
 .wide { width: 100% }
+.button { align-items: center; border: 1px solid black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em; text-decoration: none }
+.button:hover { background-color: #eeeeee }
+.button.cta { background-color: #dfa622; border: 0px solid black; color: white; font-size: 1.13em; padding: 1em }
+.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
+.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
 div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
@@ -75,6 +81,7 @@ div.down { align-items: start; background-color: white; border: 1px solid #88888
 div.down div { justify-content: space-between; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
+div.down label:has(input:checked) { color: #dfa622 }
 div.drop_down { flex-direction: column; position: relative; }
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
@@ -145,6 +152,7 @@ div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px;
 div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 4px; z-index: 1 }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
+div.upgrade { border: 1px solid black; padding: 1em }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; text-align: left; margin: 0.3em; width: 100% }

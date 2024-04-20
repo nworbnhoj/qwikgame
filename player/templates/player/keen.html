@@ -1,0 +1,39 @@
+<!-- qwikgame/player/templates/player/keen.html -->
+{% extends "player/invite.html" %}
+
+
+{% block title %}Keen{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-paper-plane fa-2x"></i>
+            </div>
+            <div class="post head_txt">
+                <h1>Keen To Play? Send Invitation?</h1>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post form">
+                <form action="{% url 'keen' %}" method="post">
+{% csrf_token %}
+{{ keen_form }}
+                    <label class="button cta push_down wide">
+                        <input type="submit" hidden>
+                        <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        <span>INVITE</span>
+                    </label>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

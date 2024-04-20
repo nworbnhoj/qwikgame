@@ -71,11 +71,11 @@ class RangeField(ChoiceField):
 class SelectRangeField(RangeField):
     widget=SelectRangeInput
 
-    def __init__(self, **kwargs):
+    def __init__(self, template_name='field.html',**kwargs):
         super().__init__(
             max_value=len(kwargs['choices'])-1,
             min_value=0,
-            template_name='field.html',
+            template_name = template_name,
             **kwargs
         )
 

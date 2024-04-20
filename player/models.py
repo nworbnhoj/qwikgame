@@ -30,7 +30,7 @@ WEEK_DAYS = [
 class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)
     email_hash = models.CharField(max_length=32, primary_key=True)
-    friends = models.ManyToManyField('self', through='Friend', blank=True)
+    friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
     games = models.ManyToManyField(Game)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -54,13 +54,17 @@ class Player(models.Model):
 
 
 class Appeal(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    hours = models.IntegerField()
+    hours = models.BinaryField(default=b'\x00\x00\x00')
     rivals = models.ManyToManyField('self', through='Invite')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['date', 'game', 'player', 'venue'], name='unique_appeal')
+        ]
     def __str__(self):
         return "{} {} {} {} {}".format(self.player, self.game, self.date, self.hours, self.venue)
 
@@ -89,9 +93,9 @@ class Available(models.Model):
 
 class Friend(models.Model):
     email = models.EmailField(max_length=255, verbose_name="email address", unique=True)
-    rival = models.ForeignKey('self', on_delete=models.CASCADE)
     name = models.CharField(max_length=32, blank=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='usher')
 
     def __str__(self):
         return "{}:{}".format(self.player, self.rival)
@@ -99,7 +103,7 @@ class Friend(models.Model):
 
 class Invite(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
-    hour = models.SmallIntegerField(blank=True)
+    hours = models.BinaryField()
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
     strength = models.CharField(max_length=1, choices=STRENGTH)
 

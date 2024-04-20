@@ -95,6 +95,8 @@ class PublicForm(QwikForm):
     def __init__(self, *args, **kwargs):
         social_urls = kwargs.pop('social_urls')
         super(PublicForm, self).__init__(*args, **kwargs)
+        self.fields['icon'].sub_text = 'Change'
+        self.fields['icon'].url = 'icon'
         self.fields['icon'].widget.attrs['placeholder'] = "your qwikgame icon"
         self.fields['icon'].widget.attrs['class'] = "hidden"
         self.fields['name'].widget.attrs['placeholder'] = "your qwikgame screen name"

@@ -60,7 +60,7 @@
         </h2>
         <div class="group">
 {% for appeal in appeals %}
-            <a class="button item {{ unread }}" href="{% url 'replies' appeal=appeal.pk %}">
+            <a class="button item {{ unread }}" href="{% url 'reply' appeal=appeal.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">

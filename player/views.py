@@ -75,6 +75,35 @@ class InvitationView(QwikView):
         return render(request, self.template_name, context)
 
 
+class ReplyView(QwikView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        player = self.user.player
+        appeal_pk = kwargs['appeal']
+        appeal = Appeal.objects.get(pk=appeal_pk)
+        appeals = Appeal.objects.filter(player=player).all()
+        prev_pk = appeals.last().pk
+        next_pk = appeals.first().pk
+        found = False
+        for a in appeals:
+            if found:
+                next_pk = a.pk
+                break
+            if a.pk == appeal.pk:
+                found = True
+            else:
+                prev_pk = a.pk
+        context = {
+            'appeal': appeal,
+            'appeals': appeals,
+            'invites': Invite.objects.filter(rival=player).all(),
+            'next': next_pk,
+            'prev': prev_pk,
+        }
+        context |= super().context(request)
+        return render(request, "player/reply.html", context)
+
 class RivalView(QwikView):
 
     def get(self, request, *args, **kwargs):

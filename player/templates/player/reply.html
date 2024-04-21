@@ -1,0 +1,174 @@
+<!-- qwikgame/player/templates/player/reply.html -->
+{% extends "player/invite.html" %}
+
+
+{% block title %}Reply{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon">
+                <i class="fa-solid fa-paper-plane fa-2x"></i>
+            </div>
+            <div class="pole notes">
+                <div class="note">
+                    <span class="icon">
+                        <i class="{{ appeal.game.icon }} fa-1x"></i>
+                    </span>
+                    <p class="line">{{ appeal.game.name }}</p>
+                </div>
+                <div class="note">
+                    <span class="icon">
+                        <i class="fa-solid fa-calendar fa-1x"></i>
+                    </span>
+                    <p>{{ appeal.date }} <span class="todo">17-20h</span></p>
+                </div>
+                <div class="note">
+                    <span class="icon">
+                        <i class="fa-solid fa-location-dot fa-1x"></i>
+                    </span>
+                    <p>{{ appeal.venue }}</p>
+                </div>
+            </div>
+            <div class="drop_down icon head_more">
+                <div class="button drop" data-down="false">
+                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                </div>
+                <div class="down hidden">
+                    <div class="button thin">more 1</div>
+                    <div class="button thin">more 2</div>
+                    <div class="button thin">more 3</div>
+                </div>
+            </div>
+            <a class="button naked head_back" href="/player/invite/keen/{{ prev }}/">
+                <i class="fa-solid fa-chevron-left fa-2x"></i>
+            </a>
+            <a class="button naked head_fwd" href="/player/invite/keen/{{ next }}/">
+                <i class="fa-solid fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+        <div class="post todo">
+            <div class="chat_item align_start">
+                <div class="button icon">
+                    <i class="fa-solid fa-paper-plane fa-2x"></i>
+                </div>
+                <p>{{ person_name }} sent invitation</p>
+            </div>
+            <div class="chat_item align_end">
+                <div class="button replicate show_next_parent_sibling">
+                    <i class="fa-solid fa-copy fa-2x"></i>
+                </div>
+                <p class="fat">Replicate</p>
+                <div class="drop_down icon">
+                    <div class="button drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <div class="button thin">more 1</div>
+                        <div class="button thin">more 2</div>
+                        <div class="button thin">more 3</div>
+                    </div>
+                </div>
+                <div class="chat_bubble">
+                    <p>Tennis, Dema Sport, Aug 4, 17h-20h</p>
+                </div>
+            </div>
+            <div class="post replicate closable hidden">
+                <h6>BOOST YOUR CHANCES FOR A MATCH</h6>
+                <div class="plank">
+                    <div class="icon info medium">
+                        <i class="fa-solid fa-info fa-2x"></i>
+                    </div>
+                    <div class="post">
+                        <div class="info_bubble">
+                            <div class="icon">
+                                <i class="fa-solid fa-person fa-2x"></i>
+                            </div>
+                            <p>Potential rivals at Dema Sport</p>
+                            <div class="icon info small">3</div>
+                        </div>
+                        <div class="info_bubble">
+                            <div class="icon">
+                                <i class="fa-solid fa-location-dot fa-2x"></i>
+                            </div>
+                            <p>Next Closest Venue:</p>
+                            <div class="button link">Vasil Levski</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <p>You can choose to replicate the same invitation at the next closest Venue to boost your chances for a match.</p>
+                <div class="grid_2_col">
+                    <div class="button link closer">Cancel</div>
+                        <form action="{% url 'keen' %}" method="post">
+{% csrf_token %}
+                            <label class="button cta push_down wide">
+                                <input type="submit" hidden>
+                                <i class="fa-solid fa-copy fa-2x"></i>
+                                <span>REPLICATE</span>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-brands fa-redhat fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Venue Manager</p>
+                        <p>Removed 18h from available hours</p>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Pesho</p>
+                        <p>Accepted for 19h</p>
+                    </div>
+                    <div class="drop_down icon">
+                        <div class="button drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
+                            <div class="button thin">decline</div>
+                        </div>
+                    </div>
+                    <div class="cta button round sml">
+                        <i class="fa-solid fa-right-long fa-xl"></i>
+                    </div>
+                </div>
+                <div class="chat_item align_start">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-wizard fa-2x"></i>
+                    </div>
+                    <div class="chat_bubble">
+                        <p class="bold">Maya</p>
+                        <p>Accepted for 17h</p>
+                    </div>
+                    <div class="drop_down icon">
+                        <div class="button drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
+                            <div class="button thin">decline</div>
+                        </div>
+                    </div>
+                    <div class="cta button round sml">
+                        <i class="fa-solid fa-right-long fa-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

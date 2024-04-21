@@ -10,24 +10,40 @@ blockquote, q { quotes: "" "" }
 .align_center { align-self: center }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
+.button { align-items: center; border: 1px solid black; color: black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em; text-decoration: none }
+.button:hover { background-color: #eeeeee }
+.button.cta { background-color: #dfa622; border: 0px solid black; color: white; font-size: 1.13em; padding: 1em }
+.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
+.button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
+.button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
+.button.item div.note { width: 100% }
+.button.item div.notes { flex: 1 1 0; overflow:hidden; }
+.button.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
+.button.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.button.item.unread { font-weight: bold }
+.button.item.unread div.icon { color: #dfa622 }
+.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .color { color: #dfa622 }
 .cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
+.disabled { border_color: #aaaaaa; color: #aaaaaa }
 .errorlist { color: red; }
+.head_back { order: 40 }
+.head_fwd { order: 50 }
+.head_icon { order: 10 }
+.head_more { order: 30 }
+.head_txt { order: 20 }
 .hidden { display: none }
 .invisible { visibility: hidden }
+.naked {border-width: 0px }
 .push_down { margin-top: 4em; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
 .round { border-radius: 50%; }
 .selected { color: #dfa622 }
+.todo { color: SkyBlue }
 .wide { width: 100% }
-.button { align-items: center; border: 1px solid black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em; text-decoration: none }
-.button:hover { background-color: #eeeeee }
-.button.cta { background-color: #dfa622; border: 0px solid black; color: white; font-size: 1.13em; padding: 1em }
-.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
-.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
 div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
@@ -87,7 +103,7 @@ div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
 div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; display: flex; flex-direction: row; font-size: 1em; height: 1.7em; justify-content: space-between; width: 100% }
 div.drop_up {}
-div.disabled { border: 0px solid #dfa622; color: #aaaaaa }
+div.disabled { border_color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
 div.field.naked { padding: 0 }
@@ -97,11 +113,6 @@ div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justif
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
 div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; gap: 0.5em; justify-content: start }
 div.group label { width: 100% }
-div.head_back { order: 40 }
-div.head_fwd { order: 50 }
-div.head_icon { order: 10 }
-div.head_more { order: 30 }
-div.head_txt { order: 20 }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }

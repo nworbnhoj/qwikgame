@@ -20,13 +20,16 @@ function ctaKeen(event) {
 
 function drop(event) {
   let drop = event.currentTarget;
-  let down = drop.nextElementSibling;
-  if (drop.dataset.down == "false") {
-    drop.dataset.down = "true";
-    down.classList.remove('hidden');
-  } else {
-    drop.dataset.down = "false";
-    down.classList.add('hidden');
+  let drop_down = drop.closest('.drop_down')
+  if (!drop_down.classList.contains('disabled')) {
+    let down = drop.nextElementSibling;
+    if (drop.dataset.down == "false") {
+      drop.dataset.down = "true";
+      down.classList.remove('hidden');
+    } else {
+      drop.dataset.down = "false";
+      down.classList.add('hidden');
+    }
   }
 }
 

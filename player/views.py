@@ -2,6 +2,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from player.forms import KeenForm
+from player.models import Appeal, Invite
 from qwikgame.views import QwikView
 
 
@@ -9,8 +10,17 @@ class InviteView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().request_init(request)
-        context = super().context(request)
-        return render(request, "player/invite.html", context)
+        player = self.user.player
+        context = {
+            'appeals': Appeal.objects.filter(player=player).all(),
+            'invites': Invite.objects.filter(rival=player).all(),
+        }
+        context |= super().context(request)
+        if context['small_screen']:
+            return render(request, "player/invite.html", context)
+        else:
+            return HttpResponseRedirect("/player/invite/keen/")
+
 
 class KeenView(QwikView):
     keen_form_class = KeenForm
@@ -19,9 +29,10 @@ class KeenView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         player = self.user.player
-        # invitations = Invitations.objects.filter(player=player)
-        # context = {'invitations': invitations.all()}
-        context = {}
+        context = {
+            'appeals': Appeal.objects.filter(player=player).all(),
+            'invites': Invite.objects.filter(rival=player).all(),
+        }
         context |= self.keen_form_class.get(player)
         context |= super().context(request)
         return render(request, self.template_name, context)
@@ -45,9 +56,10 @@ class InvitationView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         player = self.user.player
-        invitations = Invitations.objects.filter(player=player)
-        context = {'invitations': invitations.all()}
-        # context |= self.invitation_form_class.get(player)
+        context = {
+            'appeals': Appeal.objects.filter(player=player).all(),
+            'invites': Invite.objects.filter(rival=player).all(),
+        }
         context |= super().context(request)
         return render(request, self.template_name, context)
 

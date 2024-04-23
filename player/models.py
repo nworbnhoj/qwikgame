@@ -2,8 +2,7 @@ import hashlib
 from authenticate.models import User
 from django.db import models
 from game.models import Game
-from qwikgame.constants import ENDIAN
-from qwikgame.utils import bytes_to_bumps, int_to_bools24
+from qwikgame.utils import bytes3_to_bumps, bytes3_to_int, int_to_bools24, int_to_choices24
 from venue.models import Venue
 
 STRENGTH = [
@@ -112,8 +111,8 @@ class Available(models.Model):
 
     def get_hours_day(self, day):
         offset = 3 * day
-        three_bytes = self.hours[offset: offset+3]
-        return int_to_bools24(int.from_bytes(three_bytes, ENDIAN))
+        bytes3 = self.hours[offset: offset+3]
+        return int_to_bools24(bytes3_to_int(bytes3))
 
     def get_hours_week(self):
         return [self.get_hours_day(day) for day in range(len(WEEK_DAYS))]

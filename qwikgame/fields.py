@@ -1,6 +1,6 @@
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField
-from player.models import ENDIAN, STRENGTH, WEEK_DAYS
-from qwikgame.utils import bools_to_int
+from player.models import STRENGTH, WEEK_DAYS
+from qwikgame.utils import bools_to_int, int_to_bytes3
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
 
@@ -28,8 +28,7 @@ class DayField(MultiValueField):
         bools = [False] * self.range[0]
         bools += data_list
         bools += [False] * (23 - self.range[-1])
-        integer = bools_to_int(bools)
-        return integer.to_bytes(3, ENDIAN)
+        return int_to_bytes3(bools_to_int(bools))
 
 
 class MultipleActionField(MultipleChoiceField):

@@ -1,6 +1,6 @@
 import datetime
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea
+from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TypedChoiceField
 from django.utils import timezone
 from game.models import Game
 from person.models import Person
@@ -8,6 +8,7 @@ from player.models import Appeal, Friend, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
+from qwikgame.utils import bytes3_to_int, str_to_hours24
 
 
 class BlockedForm(QwikForm):

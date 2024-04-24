@@ -1,7 +1,7 @@
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from player.forms import KeenForm
+from player.forms import KeenForm, RsvpForm
 from player.models import Appeal, Invite
 from qwikgame.views import QwikView
 
@@ -103,6 +103,73 @@ class ReplyView(QwikView):
         }
         context |= super().context(request)
         return render(request, "player/reply.html", context)
+
+
+class RsvpView(QwikView):
+    rsvp_form_class = RsvpForm
+    template_name = 'player/rsvp.html'
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        player = self.user.player
+        invite_pk = kwargs['invite']
+        invite = Invite.objects.get(pk=invite_pk)
+        invites = Invite.objects.filter(rival=player).all()
+        prev_pk = invites.last().pk
+        next_pk = invites.first().pk
+        found = False
+        for a in invites:
+            if found:
+                next_pk = a.pk
+                break
+            if a.pk == invite.pk:
+                found = True
+            else:
+                prev_pk = a.pk
+        context = {
+            'appeals': Appeal.objects.filter(player=player).all(),
+            'invite': invite,
+            'invites': invites,
+            'next': next_pk,
+            'prev': prev_pk,
+        }
+        context |= self.rsvp_form_class.get(invite)
+        context |= super().context(request)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request)
+        player = self.user.player
+        invite_pk = kwargs['invite']
+        invite = Invite.objects.get(pk=invite_pk)
+        context = self.rsvp_form_class.post(
+            request.POST,
+            invite,
+        )
+        if len(context) == 0:
+            return HttpResponseRedirect("/player/invite/")
+        invites = Invite.objects.filter(rival=player).all()
+        prev_pk = invites.last().pk
+        next_pk = invites.first().pk
+        found = False
+        for a in invites:
+            if found:
+                next_pk = a.pk
+                break
+            if a.pk == invite.pk:
+                found = True
+            else:
+                prev_pk = a.pk
+        context = {
+            'appeals': Appeal.objects.filter(player=player).all(),
+            'invite': invite,
+            'invites': invites,
+            'next': next_pk,
+            'prev': prev_pk,
+        }
+        context |= super().context(request)
+        return render(request, self.template_name, context)
+
 
 class RivalView(QwikView):
 

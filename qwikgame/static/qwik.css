@@ -12,8 +12,6 @@ blockquote, q { quotes: "" "" }
 .align_start { align-self: flex-start }
 .button { align-items: center; border: 1px solid black; color: black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em; text-decoration: none }
 .button:hover { background-color: #eeeeee }
-.button.cta { background-color: #dfa622; border: 0px solid black; color: white; font-size: 1.13em; padding: 1em }
-.button.ctb { border-width: 1px; color: black; font-size: 1.13em; padding: 1em }
 .button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
 .button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
 .button.item div.note { width: 100% }
@@ -24,7 +22,8 @@ blockquote, q { quotes: "" "" }
 .button.item.unread div.icon { color: #dfa622 }
 .button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .color { color: #dfa622 }
-.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
+.cta { background-color: #dfa622; border: 0px solid #dfa622; color: white; font-size: 1.13em; padding: 1em }
+.ctb { background-color: inherit; border: 1px solid black; color: black; font-size: 1.13em; padding: 1em }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .disabled { border_color: #aaaaaa; color: #aaaaaa }
@@ -42,7 +41,7 @@ blockquote, q { quotes: "" "" }
 .push_right { margin-left: auto }
 .round { border-radius: 50%; }
 .selected { color: #dfa622 }
-.todo { color: SkyBlue }
+.todo { border: 3px dotted SkyBlue }
 .wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
 div { align-items: center; display: flex; }
@@ -114,7 +113,7 @@ div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; ju
 div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; gap: 0.5em; justify-content: start }
 div.group label { width: 100% }
 div.hidden { display: none }
-div.hour_grid { grid-template-columns: repeat(auto-fill, minmax(3em, 1fr)); width: 100% }
+div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
@@ -176,7 +175,7 @@ h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: none; height: 3em; padding: 0.1em }
-input[type=submit] { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
+input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
 input:checked + .slider { background-color: #66bb6a; }
 input:checked + .slider:before { transform: translateX(2em); }
@@ -195,10 +194,12 @@ label.option:has(input:checked) { color: #dfa622 }
 label.switch { display: inline-block; height: 2em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
+label.toggle.hour { width: 100% }
 label.toggle:has(input:checked).all_day div.button { border: 3px solid #dfa622 }
 label.toggle:has(input:checked).all_week div.button { border: 3px solid #dfa622 }
 label.toggle:has(input:checked) div.button.hr { border: 3px solid #dfa622 }
 label.toggle:has(input:checked):has([name="games"]) div.button { color: #dfa622 }
+label.toggle:has(input.hidden) { display: none }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }

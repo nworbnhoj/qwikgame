@@ -252,3 +252,49 @@ class PrecisForm(QwikForm):
                 'reputation': player.reputation(),
             }
         return context
+
+
+
+
+class RsvpForm(QwikForm):
+    hour = TypedChoiceField(
+        coerce=str_to_hours24,
+        help_text='When are you keen to play?',
+        label='Pick Time to play',
+        required=False,
+        template_name='field_pillar.html',
+        widget=RadioSelect,
+    )
+
+    # Initializes an RspvForm for an 'invite'.
+    # Returns a context dict including 'rspv_form'
+    @classmethod
+    def get(klass, invite):
+        form = klass( initial={'hour': bytes3_to_int(invite.hours)})
+        form.fields['hour'].choices = invite.hour_choices()
+        form.fields['hour'].sub_text = invite.appeal.date
+        form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
+        form.fields['hour'].widget.option_template_name='input_hour.html'
+        return {
+            'rsvp_form': form,
+        }
+
+    # Initializes an Rsvp for an 'invite'.
+    # Returns a context dict including 'rsvp_form'
+    @classmethod
+    def post(klass, request_post, invite):
+        context = {}
+        form = klass(data=request_post)
+        form.fields['hour'].choices = invite.hour_choices()
+        if form.is_valid():
+            try:
+                if 'accept' in request_post:
+                    invite.hours = form.cleaned_data['hour']
+                    invite.save()
+                elif 'decline' in request_post:
+                    invite.delete()
+            except:
+                context = {'rsvp_form': form}
+        else:
+            context = {'rsvp_form': form}
+        return context

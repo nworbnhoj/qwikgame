@@ -10,11 +10,7 @@
     </div>
     <div class="post hidden">
         <div class="radio_block hour_grid">
-{% spaceless %}
-{% for widget in widget.subwidgets %}
-    {% include widget.template_name %}
-{% endfor %}
-{% endspaceless %}
+{% include 'input_hours.html' %}
         </div>
     </div>
 </div>

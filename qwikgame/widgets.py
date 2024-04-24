@@ -36,6 +36,7 @@ class DayInput(MultiWidget):
 
 class HourInput(CheckboxInput):
     template_name='input_hour.html'
+    require_all_fields=False,
     label=''
 
     def __init__(self, label='', **kwargs):

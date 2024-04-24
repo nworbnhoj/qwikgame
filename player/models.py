@@ -72,7 +72,7 @@ class Appeal(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, bytes_to_bumps(self.hours))
+        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, bytes3_to_bumps(self.hours))
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -81,7 +81,6 @@ class Appeal(models.Model):
         for friend in friends:
             invite = Invite(
                 appeal = self,
-                hours = self.hours,
                 rival = friend,
                 strength = 'm', # TODO estimate relative strength
             )
@@ -134,7 +133,10 @@ class Invite(models.Model):
     strength = models.CharField(max_length=1, choices=STRENGTH)
 
     def __str__(self):
-        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes_to_bumps(self.hours))
+        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes3_to_bumps(self.hours))
+
+    def hour_choices(self):
+        return int_to_choices24(bytes3_to_int(self.appeal.hours))
 
     def save(self, *args, **kwargs):
         # TODO handle duplicate or partial-duplicate invitations

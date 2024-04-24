@@ -4,6 +4,7 @@ from player.views import InviteView, InvitationView, KeenView, ReplyView, RivalV
 
 urlpatterns = [
     path("", InviteView.as_view(), name='player'),
+    path("invite/<int:invite>/", RsvpView.as_view(), name='rsvp'),
     path("invite/", InviteView.as_view(), name='invite'),
     path("invite/keen/<int:appeal>/", ReplyView.as_view(), name='reply'),
     path("invite/keen/", KeenView.as_view(), name='keen'),

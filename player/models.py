@@ -2,7 +2,7 @@ import hashlib
 from authenticate.models import User
 from django.db import models
 from game.models import Game
-from qwikgame.utils import bytes3_to_bumps, bytes3_to_int, int_to_bools24, int_to_choices24
+from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, int_to_bools24, int_to_choices24
 from venue.models import Venue
 
 STRENGTH = [
@@ -77,21 +77,47 @@ class Appeal(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-    def invite_friends(self, friends):
-        for friend in friends:
-            invite = Invite(
-                appeal = self,
-                rival = friend,
-                strength = 'm', # TODO estimate relative strength
-            )
-            invite.save()
+    def invite(self, rivals):
+        for rival in rivals:
+            try:
+                invite = Invite(
+                    appeal = self,
+                    rival = rival,
+                    strength = 'm', # TODO estimate relative strength
+                )
+                invite.save()
+            except Exception as e:
+                pass
+                # TODO log exception
 
+    # Inviting Rivals involves the following sequence:
+    # - select Rival Players Available for Game at Venue
+    # - exclude self.player
+    # - exclude Rivals blocked by self.player
+    # - exclude Rivals with no intersecting available hours
+    # - add self.friends to Rivals
+    # - exclude Rivals who block self.player
     def invite_rivals(self, friends):
         # TODO handle an updated appeal with changed hours
         # TODO handle an updated appeal with changed invited friends
         # TODO handle an updated appeal with changed invited rivals
-        self.invite_friends(friends)
-        # TODO invite other suitable qwikgame Rivals
+        available = Available.objects.filter(
+            game=self.game,
+            venue=self.venue,
+        ).exclude(
+            player=self.player
+        ).exclude (
+            player__in=self.player.blocked.all()
+        ).select_related('player')
+        appeal_hours = bytes3_to_bytes21(self.hours, self.date)
+        for a in available:
+            intersect = bytes_intersect(appeal_hours, a.hours)
+            if bytes_to_int(intersect) == 0:
+                a.delete()
+        rivals = {a.player for a in available}
+        rivals |= friends
+        rivals -= {Player.objects.filter(blocked=self.player).all()}
+        self.invite(rivals)
 
 
 class Available(models.Model):

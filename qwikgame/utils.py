@@ -7,6 +7,11 @@ def bools_to_int(bools):
         integer |= bit << (len(bools) - i - 1)
     return integer
 
+def bytes_intersect(a, b):
+    i = int.from_bytes(a, ENDIAN)
+    j = int.from_bytes(b, ENDIAN)
+    return (i&j).to_bytes(21, ENDIAN)
+
 def bytes3_to_bumps(bytes3):
     bumps = ''
     if isinstance(bytes3, bytes) and len(bytes3) == 3:
@@ -15,10 +20,24 @@ def bytes3_to_bumps(bytes3):
             bumps += ("'" if b else ",")
     return bumps
 
+def bytes_to_int(bites):
+    if isinstance(bites, bytes):
+        return int.from_bytes(bites, ENDIAN)
+    return 0
+
 def bytes3_to_int(bytes3):
     if isinstance(bytes3, bytes) and len(bytes3) == 3:
         return int.from_bytes(bytes3, ENDIAN)
     return 0
+
+def bytes3_to_bytes21(bytes3, date):
+    if isinstance(bytes3, bytes) and len(bytes3) == 3:
+        week_day = date.isoweekday() - 1
+        bytes21 = bytes3
+        bytes21 = b'\x00\x00\x00' * week_day + bytes21
+        bytes21 = bytes21 + b'\x00\x00\x00' * (6-week_day)
+        return bytes21
+    return b'\0' * 21
     
 def int_to_bools(integer):
     bools = []

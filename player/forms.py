@@ -153,7 +153,7 @@ class KeenForm(QwikForm):
             try:
                 now=timezone.now()
                 one_day=datetime.timedelta(days=1)
-                friends = [Player.objects.get(pk=friend) for friend in form.cleaned_data['friends']]
+                friends = {Player.objects.get(pk=friend) for friend in form.cleaned_data['friends']}
                 game=Game.objects.get(pk=form.cleaned_data['game'])
                 venue=Venue.objects.get(pk=form.cleaned_data['venue'])
                 # create/update/delete today appeal

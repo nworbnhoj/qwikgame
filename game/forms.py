@@ -62,7 +62,7 @@ class AvailableForm(QwikForm):
     hours = WeekField(
         help_text='When are you usually available to play at this Venue?',
         label='MY AVAILABILITY AT THIS VENUE',
-        range=range(6,21),
+        hours=[*range(6,21)],
         required=True,
     )
     strength = SelectRangeField(

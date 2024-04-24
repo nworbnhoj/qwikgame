@@ -12,11 +12,17 @@ class DayInput(MultiWidget):
     template_name='input_day.html'
     use_fieldset=False
 
-    def __init__(self, label='', range=range(24), **kwargs):
+    def __init__(self, label='', hours=[*range(24)], **kwargs):
         self.label=label
-        self.range=range
+        self.hours=hours
+        widgets = []
+        attrs={'class': 'hidden', 'type': 'radio'}
+        for hr in range(24):
+            widgets.append(HourInput(label=hr, attrs=attrs))
+        for hr in hours:
+            widgets[hr].attrs['class'] = ''
         super().__init__(
-            widgets=([HourInput(label=hr) for hr in self.range])
+            widgets=(widgets)
         )
 
     def decompress(self, bytes3):
@@ -90,10 +96,10 @@ class WeekInput(MultiWidget):
     template_name='input_week.html'
     use_fieldset=False
 
-    def __init__(self, range=range(24), **kwargs):
-        self.range = range
+    def __init__(self, hours=[*range(24)], **kwargs):
+        self.hours = hours
         super().__init__(
-            widgets=[DayInput(label=day, range=self.range) for day in WEEK_DAYS]
+            widgets=[DayInput(label=day, hours=hours) for day in WEEK_DAYS]
         )
 
     def decompress(self, bytes21):

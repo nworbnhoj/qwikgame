@@ -7,9 +7,9 @@ from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeIn
 
 class DayField(MultiValueField):
 
-    def __init__(self, range=range(24), **kwargs):
-        self.range = range
-        self.widget=DayInput(range=range)
+    def __init__(self, hours=[*range(24)], **kwargs):
+        self.hours = hours
+        self.widget=DayInput(hours=hours)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
@@ -18,16 +18,16 @@ class DayField(MultiValueField):
             },
             fields=(
                 [BooleanField(label=hr, required=False)
-                for hr in self.range]
+                for hr in range(24)]
             ),
             require_all_fields=False,
             **kwargs
         )
 
     def compress(self, data_list):
-        bools = [False] * self.range[0]
-        bools += data_list
-        bools += [False] * (23 - self.range[-1])
+        bools=[False] * 24
+        for hr in self.hours:
+            bools[hr] = data_list[hr]
         return int_to_bytes3(bools_to_int(bools))
 
 
@@ -87,9 +87,9 @@ class SelectRangeField(RangeField):
 
 class WeekField(MultiValueField):
 
-    def __init__(self, range=range(24), **kwargs):
-        self.range = range
-        self.widget=WeekInput(range=range)
+    def __init__(self, hours=[*range(24)], **kwargs):
+        self.hours=hours
+        self.widget=WeekInput(hours=hours)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
@@ -97,7 +97,7 @@ class WeekField(MultiValueField):
                 'required': 'required',
             },
             fields=(
-                [DayField(label=day, range=self.range, required=False) 
+                [DayField(label=day, hours=hours, required=False) 
                 for day in WEEK_DAYS]
             ),
             require_all_fields=False,

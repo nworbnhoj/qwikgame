@@ -76,14 +76,14 @@ class KeenForm(QwikForm):
     today = DayField(
         help_text='When are you keen to play?',
         label='TODAY',
-        range=range(6,21),
+        hours=[*range(6,21)],
         required=False,
         template_name='field.html'
     )
     tomorrow = DayField(
         help_text='When are you keen to play?',
         label='TOMORROW',
-        range=range(6,21),
+        hours=[*range(6,21)],
         required=False,
         template_name='field.html'
     )

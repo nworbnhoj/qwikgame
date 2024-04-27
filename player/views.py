@@ -19,7 +19,7 @@ class InviteView(QwikView):
         if context['small_screen']:
             return render(request, "player/invite.html", context)
         else:
-            return HttpResponseRedirect("/player/invite/keen/")
+            return HttpResponseRedirect("/player/keen/")
 
 
 class KeenView(QwikView):

@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
-    'match.apps.MatchConfig',
     'person.apps.PersonConfig',
     'player.apps.PlayerConfig',
     'venue.apps.VenueConfig',

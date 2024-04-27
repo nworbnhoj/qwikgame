@@ -14,3 +14,14 @@ class Game(models.Model):
 
     def icons():
         return {game.code: game.icon for game in Game.objects.all()}
+
+
+class Match(models.Model):
+    date = models.DateTimeField()
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    rivals = models.ManyToManyField('player.Player')
+    venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {} {}".format(self.rivals, self.date, self.venue)
+

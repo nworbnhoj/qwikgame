@@ -132,3 +132,9 @@ class AvailableView(QwikView):
         context |= {'game': game, 'game_name': game.name }
 
         return render(request, self.template_name, context)
+
+
+class MatchView(View):
+
+    def get(self, request):
+        return render(request, "game/match.html")

@@ -20,6 +20,27 @@ def bytes3_to_bumps(bytes3):
             bumps += ("'" if b else ",")
     return bumps
 
+def bytes3_to_str(bytes3):
+    result = ''
+    if isinstance(bytes3, bytes) and len(bytes3) == 3:
+        bools = int_to_bools24(bytes3_to_int(bytes3))[0: 24]
+        start = finish = None
+        for hr, include in enumerate(bools):
+            if include:
+                finish = hr
+                if start is None:
+                    start = hr
+            elif start is not None:
+                if start != finish:
+                    result += "{}-".format(start)
+                result += "{}h ".format(finish)
+                start = finish = None
+        if start is not None:
+            if start != finish:
+                result += "{}-".format(start)
+            result += "{}h ".format(finish)
+    return result
+
 def bytes_to_int(bites):
     if isinstance(bites, bytes):
         return int.from_bytes(bites, ENDIAN)

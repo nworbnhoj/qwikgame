@@ -2,7 +2,7 @@ import hashlib
 from authenticate.models import User
 from django.db import models
 from game.models import Game
-from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, int_to_bools24, int_to_choices24
+from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools24, int_to_choices24
 from venue.models import Venue
 
 STRENGTH = [
@@ -77,11 +77,15 @@ class Appeal(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
+    def hour_str(self):
+        return bytes3_to_str(self.hours)
+
     def invite(self, rivals):
         for rival in rivals:
             try:
                 invite = Invite(
                     appeal = self,
+                    hours = None,
                     rival = rival,
                     strength = 'm', # TODO estimate relative strength
                 )
@@ -154,12 +158,15 @@ class Friend(models.Model):
 
 class Invite(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
-    hours = models.BinaryField()
+    hours = models.BinaryField(default=None, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
     strength = models.CharField(max_length=1, choices=STRENGTH)
 
     def __str__(self):
         return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes3_to_bumps(self.hours))
+
+    def hour_str(self):
+        return bytes3_to_str(self.hours)
 
     def hour_choices(self):
         return int_to_choices24(bytes3_to_int(self.appeal.hours))

@@ -2,13 +2,56 @@ import datetime
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TypedChoiceField
 from django.utils import timezone
-from game.models import Game
+from game.models import Game, Match
 from person.models import Person
-from player.models import Appeal, Friend, Player, Precis
+from player.models import Appeal, Friend, Invite, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.utils import bytes3_to_int, str_to_hours24
+
+
+class AcceptForm(QwikForm):
+
+    # Initializes an AcceptForm for an 'invite'.
+    # Returns a context dict including 'accept_form'
+    @classmethod
+    def get(klass):
+        form = klass()
+        return {
+            'accept_form': form,
+        }
+
+    # Initializes an Accept for an 'invite'.
+    # Returns a context dict including 'accept_form'
+    @classmethod
+    def post(klass, request_post):
+        context={'refresh_view': True}
+        form = klass(data=request_post)
+        if form.is_valid():
+            try:
+                if 'accept' in request_post:
+                    accept_id = int(request_post['accept'])
+                    invite = Invite.objects.get(pk=accept_id)
+                    match = Match (
+                        date=invite.appeal.date,
+                        game=invite.appeal.game,
+                        venue=invite.appeal.venue,
+                    )
+                    match.save()
+                    match.rivals.add(invite.appeal.player, invite.rival)
+                    # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
+                    invite.delete()
+                    context={}
+                elif 'decline' in request_post:
+                    decline_id = int(request_post['decline'])
+                    invite = Invite.objects.get(pk=decline_id)
+                    invite.delete()
+            except:
+                pass
+        else:
+            pass
+        return context
 
 
 class BlockedForm(QwikForm):

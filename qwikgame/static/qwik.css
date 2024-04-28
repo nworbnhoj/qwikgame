@@ -41,6 +41,7 @@ blockquote, q { quotes: "" "" }
 .push_right { margin-left: auto }
 .round { border-radius: 50%; }
 .selected { color: #dfa622 }
+.sml { height: 1.5em; width: 1.5em; }
 .todo { border: 3px dotted SkyBlue }
 .wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }

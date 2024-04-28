@@ -1,8 +1,9 @@
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from player.forms import KeenForm, RsvpForm
-from player.models import Appeal, Invite
+from player.forms import AcceptForm, KeenForm, RsvpForm
+from player.models import Appeal, Friend, Invite
+from qwikgame.utils import bytes3_to_str
 from qwikgame.views import QwikView
 
 
@@ -76,6 +77,8 @@ class InvitationView(QwikView):
 
 
 class ReplyView(QwikView):
+    accept_form_class = AcceptForm
+    template_name = 'player/reply.html'
 
     def get(self, request, *args, **kwargs):
         super().get(request)
@@ -94,15 +97,34 @@ class ReplyView(QwikView):
                 found = True
             else:
                 prev_pk = a.pk
+        replies = Invite.objects.filter(appeal=appeal).exclude(hours=None)
+        friends = Friend.objects.filter(player=player)
+        for reply in replies:
+            reply.hour_str = bytes3_to_str(reply.hours)
+            try:
+                reply.name = friends.get(rival=reply.rival).name
+            except:
+                reply.name=reply.rival.name
         context = {
             'appeal': appeal,
             'appeals': appeals,
             'invites': Invite.objects.filter(rival=player).all(),
             'next': next_pk,
             'prev': prev_pk,
+            'replies': replies,
         }
+        context |= self.accept_form_class.get()
         context |= super().context(request)
-        return render(request, "player/reply.html", context)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request)
+        context = self.accept_form_class.post(
+            request.POST,
+        )
+        if len(context) == 0:
+            return HttpResponseRedirect("/game/match/")
+        return HttpResponseRedirect("/player/keen/{}/".format(kwargs['appeal']))
 
 
 class RsvpView(QwikView):

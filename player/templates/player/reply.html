@@ -55,13 +55,15 @@
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
-        <div class="post todo">
+        <div class="post">
             <div class="chat_item align_start">
                 <div class="button icon">
                     <i class="fa-solid fa-paper-plane fa-2x"></i>
                 </div>
                 <p>{{ person_name }} sent invitation</p>
             </div>
+        </div>
+        <div class="post todo">
             <div class="chat_item align_end">
                 <div class="button replicate show_next_parent_sibling">
                     <i class="fa-solid fa-copy fa-2x"></i>
@@ -127,48 +129,39 @@
                         <p>Removed 18h from available hours</p>
                     </div>
                 </div>
-                <div class="chat_item align_start">
-                    <div class="button icon">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>Accepted for 19h</p>
-                    </div>
-                    <div class="drop_down icon">
-                        <div class="button drop" data-down="false">
-                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+            </div>
+            <div class="post">
+
+                <form action="{% url 'reply' appeal=appeal.pk %}" method="post">
+{% csrf_token %}
+{% for reply in replies %}
+                    <div class="chat_item align_start">
+                        <div class="button icon todo">
+                            <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                         </div>
-                        <div class="down hidden">
-                            <div class="button thin">decline</div>
+                        <div class="chat_bubble">
+                            <p class="bold">{{ reply.name }}</p>
+                            <p>Accepted for {{ reply.hour_str }}</p>
                         </div>
-                    </div>
-                    <div class="cta button round sml">
-                        <i class="fa-solid fa-right-long fa-xl"></i>
-                    </div>
-                </div>
-                <div class="chat_item align_start">
-                    <div class="button icon">
-                        <i class="fa-solid fa-hat-wizard fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Maya</p>
-                        <p>Accepted for 17h</p>
-                    </div>
-                    <div class="drop_down icon">
-                        <div class="button drop" data-down="false">
-                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        <div class="drop_down icon">
+                            <div class="button drop" data-down="false">
+                                <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                            </div>
+                            <div class="down hidden">
+                                <label class="thin">
+                                    <input hidden type="submit" name='decline' value='{{ reply.pk }}'>
+                                    decline
+                                </label>
+                            </div>
                         </div>
-                        <div class="down hidden">
-                            <div class="button thin">decline</div>
-                        </div>
+                        <label class="cta button round sml">
+                            <input hidden type="submit" name='accept' value='{{ reply.pk }}'>
+                            <i class="fa-solid fa-right-long fa-xl"></i>
+                        </label>
                     </div>
-                    <div class="cta button round sml">
-                        <i class="fa-solid fa-right-long fa-xl"></i>
-                    </div>
-                </div>
+{% endfor %}
+                </form>
             </div>
         </div>
-
     </div>
 {% endblock %}

@@ -1,8 +1,9 @@
-import hashlib
+import hashlib, pytz
 from authenticate.models import User
 from django.db import models
 from game.models import Game
-from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools24, int_to_choices24
+from pytz import datetime
+from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools, int_to_bools24, int_to_choices24
 from venue.models import Venue
 
 STRENGTH = [
@@ -123,6 +124,9 @@ class Appeal(models.Model):
         rivals -= {Player.objects.filter(blocked=self.player).all()}
         self.invite(rivals)
 
+    def tzinfo(self):
+        return self.venue.tzinfo()
+
 
 class Available(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
@@ -165,6 +169,31 @@ class Invite(models.Model):
     def __str__(self):
         return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes3_to_bumps(self.hours))
 
+    def accepted(self):
+        return self.hours is not None
+
+    # returns the accepted datetime in venue timezone - or None otherwise
+    def datetime(self):
+        accepted_hour = self._hour()
+        if accepted_hour is None:
+            return None
+        naive = datetime.datetime.combine(
+            self.appeal.date,
+            datetime.time(hour=accepted_hour)
+        )
+        aware = self.appeal.tzinfo().localize(naive)
+        return aware
+
+    def game(self):
+        return self.appeal.game
+
+    def _hour(self):
+        if self.accepted():
+            for hr, include in enumerate(int_to_bools24(bytes3_to_int(self.hours))):
+                if include:
+                    return hr
+        return None
+
     def hour_str(self):
         return bytes3_to_str(self.hours)
 
@@ -175,6 +204,9 @@ class Invite(models.Model):
         # TODO handle duplicate or partial-duplicate invitations
         # TODO notify rival
         super().save(*args, **kwargs)
+
+    def venue(self):
+        return self.appeal.venue
 
 
 class Opinion(models.Model):

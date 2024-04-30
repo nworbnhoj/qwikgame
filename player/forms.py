@@ -33,11 +33,7 @@ class AcceptForm(QwikForm):
                 if 'accept' in request_post:
                     accept_id = int(request_post['accept'])
                     invite = Invite.objects.get(pk=accept_id)
-                    match = Match (
-                        date=invite.appeal.date,
-                        game=invite.appeal.game,
-                        venue=invite.appeal.venue,
-                    )
+                    match = Match (accept=invite)
                     match.save()
                     match.rivals.add(invite.appeal.player, invite.rival)
                     # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
@@ -48,6 +44,7 @@ class AcceptForm(QwikForm):
                     invite = Invite.objects.get(pk=decline_id)
                     invite.delete()
             except:
+                # TODO log exception
                 pass
         else:
             pass

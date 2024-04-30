@@ -2,10 +2,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from game.forms import ActiveForm, AvailableForm
-from game.models import Game
+from game.models import Game, Match
 from player.models import Available, Player
 from qwikgame.views import QwikView
 from venue.models import Venue
+from qwikgame.views import QwikView
 
 
 class GameView(QwikView):
@@ -134,7 +135,21 @@ class AvailableView(QwikView):
         return render(request, self.template_name, context)
 
 
-class MatchView(View):
+class MatchView(QwikView):
+    template_name = 'game/matches.html'
 
-    def get(self, request):
-        return render(request, "game/match.html")
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        player = self.user.player
+        matches = Match.objects.filter(rivals__in=[player]).all().order_by('date')
+        context = { 'matches': matches, }
+        context |= super().context(request)
+        if context['small_screen']:
+            return render(request, self.template_name, context)
+        elif 'match' in kwargs:            
+            return HttpResponseRedirect("/game/match/{}/".format(kwargs['match']))
+        elif len(matches) > 0:
+            first_match_id = matches[0].pk
+            return HttpResponseRedirect("/game/match/{}/".format(first_match_id))
+        else:
+            return render(request, self.template_name, context)

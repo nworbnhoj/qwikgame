@@ -22,6 +22,24 @@ class Match(models.Model):
     rivals = models.ManyToManyField('player.Player')
     venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
 
+    def __init__(self, *args, **kwargs):
+        if 'accept' in kwargs:
+            invite = kwargs.pop('accept')
+            kwargs['date']=invite.datetime()
+            kwargs['game']=invite.game()
+            kwargs['venue']=invite.venue()
+        super().__init__(*args, **kwargs)
+
     def __str__(self):
         return "{} {} {}".format(self.rivals, self.date, self.venue)
 
+    # format venue_time on server, rather than in template (user timezone)
+    def venue_date_str(self):
+        return self.venue_time().strftime("%d %b %Y")
+
+    # format venue_time on server, rather than in template (user timezone)
+    def venue_hour_str(self):
+        return self.venue_time().strftime("%H")
+
+    def venue_time(self):
+        return self.date.astimezone(self.venue.tzinfo())

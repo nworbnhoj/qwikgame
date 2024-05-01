@@ -1,173 +1,44 @@
 <!-- qwikgame/match/templates/match/match.html -->
-{% extends "content.html" %}
+{% extends "game/matches.html" %}
 
 
 {% block title %}Match{% endblock %}
 
-
-{% block name %}Helen{% endblock %}
-
-
-{% block cta_mobile %}{% endblock %}
-
-
-{% block cta_desktop %}{% endblock %}
-
-
-{% block list %}
-        <div class="list_head">
-            <h1>Sheduled Matches</h1>
-            <div class="drop_down">
-                <div class="button drop" data-down="false">
-                    <div>Group by</div>
-                    <div class="fat">v</div>
-                </div>
-                <div class="down hidden">
-                    <label class="toggle option">
-                        <input type="radio" name="groupby" checked="checked">
-                        date
-                    </label>
-                    <label class="toggle option">
-                        <input type="radio" name="groupby">
-                        game
-                    </label>
-                    <label class="toggle option">
-                        <input type="radio" name="groupby">
-                        venue
-                    </label>
-                </div>
-            </div>
-        </div>
-        <h2 class="show_group">
-            Upcomming
-            <span>&#9650;</span>
-        </h2>
-        <div class="group">
-            <label class="toggle">
-                <input type="radio" name="list" data-id="A">
-                <div class="button item">
-                    <div class="pole notes">
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-circle-dot fa-1x"></i>
-                            </span>
-                            <p class="line">Squash</p>
-                        </div>
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-calendar fa-1x"></i>
-                            </span>
-                            <p>Aug 5, 17h</p>
-                        </div>
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-location-dot fa-1x"></i>
-                            </span>
-                            <p>Vasil Levski, Sofia, Bulgaria.</p>
-                        </div>
-                    </div>
-                    <div class="pole badges">
-                        <div class="icon round badge">17h</div>
-                    </div>
-                </div>
-            </label>
-            <label class="toggle">
-                <input type="radio" name="list" data-id="B">
-                <div class="button item">
-                    <div class="pole notes">
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-face-sad-tear fa-1x"></i>
-                            </span>
-                            <p class="line">Tennis</p>
-                        </div>
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-calendar fa-1x"></i>
-                            </span>
-                            <p>Aug 5, 19h</p>
-                        </div>
-                        <div class="note">
-                            <span class="icon">
-                                <i class="fa-solid fa-location-dot fa-1x"></i>
-                            </span>
-                            <p>Vasil Levski, Sofia, Bulgaria.</p>
-                        </div>
-                    </div>
-                    <div class="pole badges">
-                        <div class="icon round badge">19h</div>
-                    </div>
-                </div>
-            </label>
-        </div>
-        <h2 class="show_group">
-            History
-            <span class="flip">&#9650;</span>
-        </h2>
-        <div class="group hidden">
-            <p>No history yet!</p>
-        </div>
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
 {% endblock %}
 
 
 {% block detail %}
-        <div id="A" class="post detail_n hidden">
+        <div id="detail" class="detail">
             <div class="detail_head">
-                <div class="icon round badge">17h</div>
-                <div class="pole notes">
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-circle-dot fa-1x"></i>
-                        </span>
-                        <p class="line">Squash</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-calendar fa-1x"></i>
-                        </span>
-                        <p>Aug 5, 17h</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-location-dot fa-1x"></i>
-                        </span>
-                        <p>Vasil Levski, Sofia, Bulgaria.</p>
-                    </div>
-                </div>
-                <div class="button head_back">
-                    <i class="fa-solid fa-chevron-left fa-2x"></i>
-                </div>
-                <div class="button head_fwd">
-                    <i class="fa-solid fa-chevron-right fa-2x"></i>
-                </div>
-            </div>
-        </div>
-        <div id="B" class="post detail_n">
-            <div class="detail_head">
-                <div class="icon round badge">19h</div>
+                <div class="icon round badge">{{ match.venue_hour_str }}h</div>
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-face-sad-tear fa-1x"></i>
                         </span>
-                        <p class="line">Tennis</p>
+                        <p class="line">{{ match.game.name }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>Aug 5, 19h</p>
+                        <p>{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>Vasil Levski, Sofia, Bulgaria.</p>
+                        <p>{{ match.venue }}</p>
                     </div>
                 </div>
                 <div class="drop_down icon head_more">
                     <div class="button drop" data-down="false">
-                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x todo"></i>
                     </div>
                     <div class="down hidden">
                         <div class="button thin">more 1</div>
@@ -175,14 +46,14 @@
                         <div class="button thin">more 3</div>
                     </div>
                 </div>
-                <div class="button head_back">
+                <a class="button naked head_back" href="/game/match/{{ prev }}/">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
-                </div>
-                <div class="button head_fwd">
+                </a>
+                <a class="button naked head_fwd" href="/game/match/{{ next }}/">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
-                </div>
+                </a>
             </div>
-            <div class="post hidden">
+            <div class="post hidden todo">
                 <div class="chat_item align_start">
                     <div class="button">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>
@@ -237,18 +108,18 @@
                     </div>
                 </div>
             </div>
-            <div class="button link toggle_previous_sibling align_center">
+            <div class="button link toggle_previous_sibling align_center todo">
                 <span class="tog">Show invitation history</span>
                 <span class="tog hidden">Hide invitation history</span>
             </div>
-            <div class="banner pillar">
+            <div class="banner pillar todo">
                 <p>Match is scheduled!</p>
                 <p>Squash, Vasil Levski, Aug 5, 14h, Pesho</p>
             </div>
             <div class="icon align_center">
-                <i class="fa-solid fa-hat-cowboy fa-3x"></i>
+                <i class="fa-solid fa-hat-cowboy fa-3x todo"></i>
             </div>
-            <div class="post">
+            <div class="post todo">
                 <div class="chat_item align_start">
                     <div class="button">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>
@@ -304,7 +175,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chat_input">
+            <div class="chat_input todo">
                 <div class="button">
                     <i class="fa-regular fa-face-smile fa-xl"></i>
                 </div>

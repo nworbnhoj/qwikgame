@@ -153,3 +153,33 @@ class MatchView(QwikView):
             return HttpResponseRedirect("/game/match/{}/".format(first_match_id))
         else:
             return render(request, self.template_name, context)
+
+
+class ChatView(QwikView):
+    template_name = 'game/match.html'
+
+    def get(self, request, *args, **kwargs):
+        super().request_init(request)
+        player = self.user.player
+        match_pk = kwargs['match']
+        match = Match.objects.get(pk=match_pk)
+        matches = Match.objects.filter(rivals__in=[player]).all().order_by('date')
+        prev_pk = matches.last().pk
+        next_pk = matches.first().pk
+        found = False
+        for m in matches:
+            if found:
+                next_pk = m.pk
+                break
+            if m.pk == match.pk:
+                found = True
+            else:
+                prev_pk = m.pk
+        context = {
+            'match': match,
+            'matches': matches,
+            'next': next_pk,
+            'prev': prev_pk,
+        }
+        context |= super().context(request)
+        return render(request, self.template_name, context)

@@ -55,24 +55,20 @@
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
+        <div class="post">
+{% for entry in invite.appeal.log %}
+            <div class="log_entry align_start {{ entry.klass }}">
+                <div class="button icon">
+                    <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
+                </div>
+                <div class="chat_bubble">
+                    <p>{{ entry.name }}</p>
+                    <p>{{ entry.text }}</p>
+                </div>
+            </div>
+{% endfor %}
+        </div>
         <div class="post todo">
-            <div class="chat_item align_start">
-                <div class="button icon">
-                    <i class="fa-solid fa-hat-cowboy fa-2x"></i>
-                </div>
-                <div class="chat_bubble">
-                    <p>Pesho sent invitation</p>
-                </div>
-            </div>
-            <div class="chat_item align_start">
-                <div class="button icon">
-                    <i class="fa-solid fa-hat-cowboy fa-2x"></i>
-                </div>
-                <div class="chat_bubble">
-                    <p class="bold">Pesho</p>
-                    <p>Squash at Vasil Levski, Aug 5, 13-21h</p>
-                </div>
-            </div>
             <div class="chat_item align_start">
                 <div class="button icon">
                     <i class="fa-brands fa-redhat fa-2x"></i>

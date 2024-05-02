@@ -56,12 +56,17 @@
             </a>
         </div>
         <div class="post">
-            <div class="chat_item align_start">
+{% for entry in appeal.log %}
+            <div class="log_entry align_start {{ entry.klass }}">
                 <div class="button icon">
                     <i class="fa-solid fa-paper-plane fa-2x"></i>
                 </div>
-                <p>{{ person_name }} sent invitation</p>
+                <div class="chat_bubble">
+                    <p>{{ entry.name }}</p>
+                    <p>{{ entry.text }}</p>
+                </div>
             </div>
+{% endfor %}
         </div>
         <div class="post todo">
             <div class="chat_item align_end">

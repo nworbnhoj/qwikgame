@@ -3,6 +3,7 @@ from authenticate.models import User
 from django.db import models
 from game.models import Game
 from pytz import datetime
+from qwikgame.log import Entry
 from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools, int_to_bools24, int_to_choices24
 from venue.models import Venue
 
@@ -63,6 +64,7 @@ class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     hours = models.BinaryField(default=b'\x00\x00\x00')
+    log = models.JSONField(default=list)
     rivals = models.ManyToManyField('self', through='Invite')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
@@ -123,6 +125,28 @@ class Appeal(models.Model):
         rivals |= friends
         rivals -= {Player.objects.filter(blocked=self.player).all()}
         self.invite(rivals)
+
+    def log_entry(self, template):
+        entry = Entry(
+            icon = self.player.user.person.icon,
+            id = self.player.facet(),
+            klass= 'event',
+            name=self.player.user.person.name,
+            role='keen',
+        )
+        match template:
+            case 'keen':
+                entry['text'] = "sent invitation".format()
+            case 'appeal':
+                entry['text'] = "{} at {}, {}, {}".format(
+                    self.game,
+                    self.venue,
+                    self.venue.datetime(self.date).strftime("%b %d"),
+                    self.hour_str()
+                )
+            case _:
+                entry['text'] = "unknown template"
+        self.log.append(entry)
 
     def tzinfo(self):
         return self.venue.tzinfo()

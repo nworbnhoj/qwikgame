@@ -2,7 +2,7 @@ import pytz
 from authenticate.models import User
 from django.db import models
 from game.models import Game
-from pytz import timezone
+from pytz import datetime, timezone
 
 
 TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
@@ -27,6 +27,12 @@ class Venue(models.Model):
 
     def choices():
         return {venue.pk: venue.name for venue in Venue.objects.all()}
+
+    # returns an aware datetime based in the venue timezone
+    def datetime(self, date, time=datetime.time(hour=0)):
+        naive = datetime.datetime.combine(date, time)
+        aware = self.tzinfo().localize(naive)
+        return aware
 
     def tzinfo(self):
         return timezone(self.tz)

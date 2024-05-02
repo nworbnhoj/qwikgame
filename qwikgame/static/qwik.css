@@ -137,6 +137,10 @@ div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; pad
 div.list a.selected { color: #dfa622 }
 div.list_bar { align-items: start; flex: 0 1 31.25%; justify-content: start; }
 div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div.log_entry.chat {}
+div.log_entry.event {}
+div.log_entry.match {} 
 div.option {align-items: center; justify-content: space-between; padding: 0.5em 0 0 0; width: 100% }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }

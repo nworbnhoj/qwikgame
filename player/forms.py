@@ -8,6 +8,7 @@ from player.models import Appeal, Friend, Invite, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
+from qwikgame.log import Entry
 from qwikgame.utils import bytes3_to_int, str_to_hours24
 
 
@@ -207,6 +208,8 @@ class KeenForm(QwikForm):
                     appeal.delete()
                 elif appeal.hours != form.cleaned_data['today']:
                     appeal.hours = form.cleaned_data['today']
+                    appeal.log_entry('keen')
+                    appeal.log_entry('appeal')
                     appeal.save()
                     appeal.invite_rivals(friends)
                 # create/update/delete tomorrow appeal
@@ -220,6 +223,8 @@ class KeenForm(QwikForm):
                     appeal.delete()
                 elif appeal.hours != form.cleaned_data['tomorrow']:
                     appeal.hours = form.cleaned_data['tomorrow']
+                    appeal.log_entry('keen')
+                    appeal.log_entry('appeal')
                     appeal.save()
                     appeal.invite_rivals(friends)
             except:

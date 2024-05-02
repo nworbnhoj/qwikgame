@@ -80,6 +80,10 @@ class Appeal(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
+    # returns an aware datetime based in the venue timezone
+    def datetime(self, time=None):
+        return self.venue.datetime(self.date, time)
+
     def hour_str(self):
         return bytes3_to_str(self.hours)
 
@@ -201,12 +205,8 @@ class Invite(models.Model):
         accepted_hour = self._hour()
         if accepted_hour is None:
             return None
-        naive = datetime.datetime.combine(
-            self.appeal.date,
-            datetime.time(hour=accepted_hour)
-        )
-        aware = self.appeal.tzinfo().localize(naive)
-        return aware
+        time = datetime.time(hour=accepted_hour)
+        return self.appeal.datetime(time=time)
 
     def game(self):
         return self.appeal.game

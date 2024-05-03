@@ -34,6 +34,7 @@ class AcceptForm(QwikForm):
                 if 'accept' in request_post:
                     accept_id = int(request_post['accept'])
                     invite = Invite.objects.get(pk=accept_id)
+                    invite.log_event('accept')
                     match = Match (accept=invite)
                     match.save()
                     match.rivals.add(invite.appeal.player, invite.rival)
@@ -336,6 +337,7 @@ class RsvpForm(QwikForm):
                 if 'accept' in request_post:
                     invite.hours = form.cleaned_data['hour']
                     invite.save()
+                    invite.log_event('rsvp')
                 elif 'decline' in request_post:
                     invite.delete()
             except:

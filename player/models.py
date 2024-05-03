@@ -228,6 +228,31 @@ class Invite(models.Model):
     def hour_choices(self):
         return int_to_choices24(bytes3_to_int(self.appeal.hours))
 
+    def log_event(self, template):
+        match template:
+            case 'accept':
+                player = self.appeal.player
+                person = player.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = player.facet(),
+                    klass= 'event',
+                    name = person.name,
+                    text = "accepted {}".format(self.hour_str())
+                )
+            case 'rsvp':
+                person = self.rival.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = self.rival.facet(),
+                    klass= 'event rival',
+                    name = person.name,
+                    text = "accepted {}".format(self.hour_str())
+                )
+            case _:
+                entry = Entry(text="unknown template")
+        self.appeal.log_entry(entry)
+
     def save(self, *args, **kwargs):
         # TODO handle duplicate or partial-duplicate invitations
         # TODO notify rival

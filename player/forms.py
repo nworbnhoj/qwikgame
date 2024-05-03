@@ -208,8 +208,8 @@ class KeenForm(QwikForm):
                     appeal.delete()
                 elif appeal.hours != form.cleaned_data['today']:
                     appeal.hours = form.cleaned_data['today']
-                    appeal.log_entry('keen')
-                    appeal.log_entry('appeal')
+                    appeal.log_event('keen')
+                    appeal.log_event('appeal')
                     appeal.save()
                     appeal.invite_rivals(friends)
                 # create/update/delete tomorrow appeal
@@ -223,8 +223,8 @@ class KeenForm(QwikForm):
                     appeal.delete()
                 elif appeal.hours != form.cleaned_data['tomorrow']:
                     appeal.hours = form.cleaned_data['tomorrow']
-                    appeal.log_entry('keen')
-                    appeal.log_entry('appeal')
+                    appeal.log_event('keen')
+                    appeal.log_event('appeal')
                     appeal.save()
                     appeal.invite_rivals(friends)
             except:

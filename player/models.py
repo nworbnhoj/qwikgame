@@ -130,13 +130,17 @@ class Appeal(models.Model):
         rivals -= {Player.objects.filter(blocked=self.player).all()}
         self.invite(rivals)
 
-    def log_entry(self, template):
+    def log_entry(self, entry):
+        self.log.append(entry)
+        self.save()
+
+
+    def log_event(self, template):
         entry = Entry(
             icon = self.player.user.person.icon,
             id = self.player.facet(),
             klass= 'event',
             name=self.player.user.person.name,
-            role='keen',
         )
         match template:
             case 'keen':
@@ -150,7 +154,7 @@ class Appeal(models.Model):
                 )
             case _:
                 entry['text'] = "unknown template"
-        self.log.append(entry)
+        self.log_entry(entry)
 
     def tzinfo(self):
         return self.venue.tzinfo()

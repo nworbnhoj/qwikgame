@@ -53,56 +53,32 @@
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
-            <div class="post hidden todo">
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+            <div class="post hidden">
+{% for entry in match.log %}
+                <div class="log_entry align_start {{ entry.klass }}">
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                     </div>
                     <div class="chat_bubble">
-                        <p>Pesho sent invitation</p>
+                        <p>{{ entry.name }}</p>
+                        <p>{{ entry.text }}</p>
                     </div>
                 </div>
+{% endfor %}
                 <div class="chat_item align_start">
                     <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                        <i class="fa-brands fa-redhat fa-2x todo"></i>
                     </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>Squash at Vasil Levski, Aug 5, 13-21h</p>
-                    </div>
-                </div>
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-brands fa-redhat fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
+                    <div class="chat_bubble todo">
                         <p class="bold">Venue Manager</p>
                         <p>Removed 15h from available hours</p>
                     </div>
                 </div>
-                <div class="chat_item align_end">
-                    <div class="chat_bubble">
-                        <p class="bold">Helen</p>
-                        <p>Accepted 14h</p>
-                    </div>
-                    <div class="button">
-                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
-                    </div>
-                </div>
                 <div class="chat_item align_start">
                     <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                        <i class="fa-brands fa-redhat fa-2x todo"></i>
                     </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>Accepted 14h</p>
-                    </div>
-                </div>
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-brands fa-redhat fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
+                    <div class="chat_bubble todo">
                         <p class="bold">Venue Manager</p>
                         <p>Booked 14h</p>
                     </div>
@@ -112,9 +88,9 @@
                 <span class="tog">Show invitation history</span>
                 <span class="tog hidden">Hide invitation history</span>
             </div>
-            <div class="banner pillar todo">
+            <div class="banner pillar">
                 <p>Match is scheduled!</p>
-                <p>Squash, Vasil Levski, Aug 5, 14h, Pesho</p>
+                <p>{{ match.game }}, {{ match.venue }}, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center">
                 <i class="fa-solid fa-hat-cowboy fa-3x todo"></i>

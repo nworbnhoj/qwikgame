@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from game.forms import ActiveForm, AvailableForm
+from game.forms import ActiveForm, AvailableForm, ChatForm
 from game.models import Game, Match
 from player.models import Available, Player
 from qwikgame.views import QwikView
@@ -156,6 +156,7 @@ class MatchView(QwikView):
 
 
 class ChatView(QwikView):
+    chat_form_class = ChatForm
     template_name = 'game/match.html'
 
     def get(self, request, *args, **kwargs):
@@ -179,7 +180,20 @@ class ChatView(QwikView):
             'match': match,
             'matches': matches,
             'next': next_pk,
+            'player_id': player.facet(),
             'prev': prev_pk,
         }
+        context |= self.chat_form_class.get()
         context |= super().context(request)
         return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().request_init(request)
+        match_pk = kwargs['match']
+        self.chat_form_class.post(
+            request.POST,
+            Match.objects.get(pk=match_pk),
+            self.user.player,
+        )
+        return HttpResponseRedirect("/game/match/{}/".format(match_pk))
+        

@@ -54,13 +54,17 @@
                 </a>
             </div>
             <div class="post hidden">
-{% for entry in match.log %}
+{% for entry in match.appeal.log %}
+{% if entry.id == player_id %}
                 <div class="log_entry align_start {{ entry.klass }}">
+{% else %}
+                <div class="log_entry align_end {{ entry.klass }}">
+{% endif %}
                     <div class="button icon">
                         <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                     </div>
                     <div class="chat_bubble">
-                        <p>{{ entry.name }}</p>
+                        <p class='bold'>{{ entry.name }}</p>
                         <p>{{ entry.text }}</p>
                     </div>
                 </div>
@@ -95,70 +99,37 @@
             <div class="icon align_center">
                 <i class="fa-solid fa-hat-cowboy fa-3x todo"></i>
             </div>
-            <div class="post todo">
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+
+            <div class="post">
+{% for entry in match.log %}
+{% if entry.id == player_id %}
+                <div class="log_entry align_start {{ entry.klass }}">
+{% else %}
+                <div class="log_entry align_end {{ entry.klass }}">
+{% endif %}
+                    <div class="button icon">
+                        <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                     </div>
                     <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>Hey - looking forward to having our first match!</p>
+                        <p class='bold'>{{ entry.name }}</p>
+                        <p>{{ entry.text }}</p>
                     </div>
                 </div>
-                <div class="chat_item align_end">
-                    <div class="chat_bubble">
-                        <p class="bold">Helen</p>
-                        <p>Yes - me too</p>
-                    </div>
-                    <div class="button">
-                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
-                    </div>
-                </div>
-                <div class="chat_item align_end">
-                    <div class="chat_bubble">
-                        <p class="bold">Helen</p>
-                        <p>But I am really just testing qwikgame</p>
-                    </div>
-                    <div class="button">
-                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
-                    </div>
-                </div>
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>qwikgame is cool - I have been using it for years</p>
-                    </div>
-                </div>
-                <div class="chat_item align_end">
-                    <div class="chat_bubble">
-                        <p class="bold">Helen</p>
-                        <p>Well the UI is pretty tidy :-)</p>
-                    </div>
-                    <div class="button">
-                        <i class="fa-solid fa-graduation-cap fa-2x"></i>
-                    </div>
-                </div>
-                <div class="chat_item align_start">
-                    <div class="button">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
-                    </div>
-                    <div class="chat_bubble">
-                        <p class="bold">Pesho</p>
-                        <p>see you tomorrow - I will be wearing the qwikgame cap</p>
-                    </div>
-                </div>
+{% endfor %}
+
             </div>
-            <div class="chat_input todo">
-                <div class="button">
-                    <i class="fa-regular fa-face-smile fa-xl"></i>
+            <form action="{% url 'chat' match=match.pk %}" method="post">
+{% csrf_token %}
+                <div class="chat_input">
+                    <div class="button">
+                        <i class="fa-regular fa-face-smile fa-xl"></i>
+                    </div>
+                    {{ chat_form }}
+                    <label class="round sml">
+                        <input hidden type="submit" name='chat'>
+                        <i class="fa-solid fa-paper-plane fa-xl"></i>
+                    </label>
                 </div>
-                <input type="text" name="chat" placeholder="Chat here with your rival">
-                <div class="button">
-                    <i class="fa-solid fa-paper-plane fa-xl"></i>
-                </div>
-            </div>
+            </form>
         </div>
 {% endblock %}

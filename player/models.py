@@ -1,7 +1,6 @@
 import hashlib, pytz
 from authenticate.models import User
 from django.db import models
-from game.models import Game
 from pytz import datetime
 from qwikgame.log import Entry
 from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools, int_to_bools24, int_to_choices24
@@ -29,7 +28,7 @@ class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
-    games = models.ManyToManyField(Game)
+    games = models.ManyToManyField('game.Game')
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
     def facet(self):
@@ -62,7 +61,7 @@ class Player(models.Model):
 
 class Appeal(models.Model):
     date = models.DateField()
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=b'\x00\x00\x00')
     log = models.JSONField(default=list)
     rivals = models.ManyToManyField('self', through='Invite')
@@ -134,7 +133,6 @@ class Appeal(models.Model):
         self.log.append(entry)
         self.save()
 
-
     def log_event(self, template):
         entry = Entry(
             icon = self.player.user.person.icon,
@@ -161,7 +159,7 @@ class Appeal(models.Model):
 
 
 class Available(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     hours = models.BinaryField()
@@ -281,7 +279,7 @@ class Conduct(models.Model):
 
 
 class Precis(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     text = models.CharField(max_length=512, blank=True)
 

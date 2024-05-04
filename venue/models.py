@@ -1,7 +1,6 @@
 import pytz
 from authenticate.models import User
 from django.db import models
-from game.models import Game
 from pytz import datetime, timezone
 
 
@@ -16,7 +15,7 @@ class Manager(models.Model):
 
 
 class Venue(models.Model):
-    games = models.ManyToManyField(Game)
+    games = models.ManyToManyField('game.Game')
     managers = models.ManyToManyField(Manager, blank=True)
     name = models.CharField(max_length=128)
     url = models.URLField(max_length=256, blank=True)

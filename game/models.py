@@ -1,4 +1,6 @@
 from django.db import models
+from player.models import Appeal, Player
+from venue.models import Venue
 
 
 class Game(models.Model):
@@ -20,8 +22,8 @@ class Match(models.Model):
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
-    rivals = models.ManyToManyField('player.Player')
-    venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
+    rivals = models.ManyToManyField(Player)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __init__(self, *args, **kwargs):
         if 'accept' in kwargs:

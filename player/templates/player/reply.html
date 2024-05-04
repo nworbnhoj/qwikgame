@@ -57,7 +57,11 @@
         </div>
         <div class="post">
 {% for entry in appeal.log %}
-            <div class="log_entry align_start {{ entry.klass }}">
+{% if entry.id == player_id %}
+                <div class="log_entry align_start {{ entry.klass }}">
+{% else %}
+                <div class="log_entry align_end {{ entry.klass }}">
+{% endif %}
                 <div class="button icon">
                     <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                 </div>

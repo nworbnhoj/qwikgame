@@ -110,6 +110,7 @@ class ReplyView(QwikView):
             'appeals': appeals,
             'invites': Invite.objects.filter(rival=player).all(),
             'next': next_pk,
+            'player_id': player.facet(),
             'prev': prev_pk,
             'replies': replies,
         }
@@ -153,6 +154,7 @@ class RsvpView(QwikView):
             'invite': invite,
             'invites': invites,
             'next': next_pk,
+            'player_id': player.facet(),
             'prev': prev_pk,
         }
         context |= self.rsvp_form_class.get(invite)

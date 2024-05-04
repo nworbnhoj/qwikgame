@@ -141,7 +141,6 @@ div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
-div.log_entry.rival { align-self: flex-end }
 div.option {align-items: center; justify-content: space-between; padding: 0.5em 0 0 0; width: 100% }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }

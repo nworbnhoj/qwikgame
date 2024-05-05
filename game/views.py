@@ -33,7 +33,10 @@ class ActiveView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         player = self.user.player
-        available = Available.objects.filter(player=player)
+        available = Available.objects.filter(
+            player = player,
+            game__in = player.games.all()
+        )
         context = {'available': available.all()}
         context |= self.active_form_class.get(player)
         context |= super().context(request)
@@ -41,11 +44,14 @@ class ActiveView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request)
-        context = self.active_form_class.post(request.POST, self.user.player)
-        if len(context) == 0:
-            return HttpResponseRedirect("/game/")
-        context |= super().context(request)
-        return render(request, self.template_name, context)
+        self.active_form_class.post(request.POST, self.user.player)
+        player = self.user.player        
+        available = Available.objects.filter(player=player)
+        for game in player.games.all():
+            if len(available.filter(game=game)) == 0:
+                url = "/game/{}".format(game)
+                return HttpResponseRedirect(url)
+        return HttpResponseRedirect("/game/")
 
 
 class AvailableView(QwikView):

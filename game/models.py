@@ -9,14 +9,16 @@ class Game(models.Model):
     icon = models.CharField(max_length=48)
     name = models.CharField(max_length=32)
 
+    @classmethod
+    def choices(klass):
+        return {game.code: game.name for game in klass.objects.all()}
+
+    @classmethod
+    def icons(klass):
+        return {game.code: game.icon for game in klass.objects.all()}
+
     def __str__(self):
         return self.name
-
-    def choices():
-        return {game.code: game.name for game in Game.objects.all()}
-
-    def icons():
-        return {game.code: game.icon for game in Game.objects.all()}
 
 
 class Match(models.Model):

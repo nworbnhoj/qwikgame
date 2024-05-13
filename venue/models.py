@@ -21,11 +21,12 @@ class Venue(models.Model):
     url = models.URLField(max_length=256, blank=True)
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
 
+    @classmethod
+    def choices(klass):
+        return {venue.pk: venue.name for venue in klass.objects.all()}
+
     def __str__(self):
         return self.name
-
-    def choices():
-        return {venue.pk: venue.name for venue in Venue.objects.all()}
 
     # returns an aware datetime based in the venue timezone
     def datetime(self, date, time=datetime.time(hour=0)):

@@ -22,7 +22,6 @@ class Game(models.Model):
 
 
 class Match(models.Model):
-    appeal = models.ForeignKey(Appeal, null=True, on_delete=models.CASCADE)
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
@@ -32,9 +31,9 @@ class Match(models.Model):
     def __init__(self, *args, **kwargs):
         if 'accept' in kwargs:
             invite = kwargs.pop('accept')
-            kwargs['appeal']=invite.appeal
             kwargs['date']=invite.datetime()
             kwargs['game']=invite.game()
+            kwargs['log']=invite.appeal.log.copy()
             kwargs['venue']=invite.venue()
         super().__init__(*args, **kwargs)
 

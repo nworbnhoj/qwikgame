@@ -26,7 +26,7 @@ class AcceptForm(QwikForm):
     # Initializes an Accept for an 'invite'.
     # Returns a context dict including 'accept_form'
     @classmethod
-    def post(klass, request_post):
+    def post(klass, request_post, player):
         context={'refresh_view': True}
         form = klass(data=request_post)
         if form.is_valid():
@@ -39,6 +39,7 @@ class AcceptForm(QwikForm):
                     match.save()
                     match.rivals.add(invite.appeal.player, invite.rival)
                     # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
+                    match.log_event('scheduled', player)
                     invite.delete()
                     context={}
                 elif 'decline' in request_post:

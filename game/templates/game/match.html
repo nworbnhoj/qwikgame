@@ -54,12 +54,13 @@
                 </a>
             </div>
             <div class="post hidden">
-{% for entry in match.appeal.log %}
-{% if entry.id == player_id %}
+{% for entry in match.log %}
+    {% if forloop.counter <= match_log_start %}
+        {% if entry.id == player_id %}
                 <div class="log_entry align_start {{ entry.klass }}">
-{% else %}
+        {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
-{% endif %}
+        {% endif %}
                     <div class="button icon">
                         <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                     </div>
@@ -68,6 +69,7 @@
                         <p>{{ entry.text }}</p>
                     </div>
                 </div>
+    {% endif %}
 {% endfor %}
                 <div class="chat_item align_start">
                     <div class="button">
@@ -102,11 +104,12 @@
 
             <div class="post">
 {% for entry in match.log %}
-{% if entry.id == player_id %}
+    {% if forloop.counter > match_log_start %}
+        {% if entry.id == player_id %}
                 <div class="log_entry align_start {{ entry.klass }}">
-{% else %}
+        {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
-{% endif %}
+        {% endif %}
                     <div class="button icon">
                         <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
                     </div>
@@ -115,6 +118,7 @@
                         <p>{{ entry.text }}</p>
                     </div>
                 </div>
+    {% endif %}
 {% endfor %}
 
             </div>

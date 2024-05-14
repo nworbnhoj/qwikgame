@@ -120,8 +120,10 @@ class ReplyView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request)
+        player = self.user.player
         context = self.accept_form_class.post(
             request.POST,
+            player,
         )
         if len(context) == 0:
             return HttpResponseRedirect("/game/match/")

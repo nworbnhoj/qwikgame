@@ -182,8 +182,14 @@ class ChatView(QwikView):
                 found = True
             else:
                 prev_pk = m.pk
+        match_log_start = len(match.log) + 1
+        for i, entry in enumerate(match.log):
+            if 'klass' in entry and 'scheduled' in entry['klass']:
+                match_log_start = i+1
+                break
         context = {
             'match': match,
+            'match_log_start': match_log_start,
             'matches': matches,
             'next': next_pk,
             'player_id': player.facet(),

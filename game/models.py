@@ -25,7 +25,7 @@ class Match(models.Model):
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
-    rivals = models.ManyToManyField(Player)
+    competitors = models.ManyToManyField(Player)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __init__(self, *args, **kwargs):

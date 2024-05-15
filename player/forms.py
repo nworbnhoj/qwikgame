@@ -37,7 +37,7 @@ class AcceptForm(QwikForm):
                     invite.log_event('accept')
                     match = Match (accept=invite)
                     match.save()
-                    match.rivals.add(invite.appeal.player, invite.rival)
+                    match.competitors.add(invite.appeal.player, invite.rival)
                     # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
                     match.log_event('scheduled', player)
                     invite.delete()

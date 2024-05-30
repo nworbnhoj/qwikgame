@@ -27,7 +27,11 @@ class Migration(migrations.Migration):
             name='date',
             field=models.DateField(),
         ),
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='appeal',
+            name='hours',
+        ),
+        migrations.AddField(
             model_name='appeal',
             name='hours',
             field=models.BinaryField(default=b'\x00\x00\x00'),

@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-%%ow*cyif)h7op61xa6&pk+fk0r*$(n&fu*oy)6h!j-uh+cry4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'alpha.qwikgame.org',
+    'beta.qwikgame.org',
+    'www.qwikgame.org',
+]
 
 # Application definition
 
@@ -136,9 +139,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
 
 STATICFILES_DIRS = [
-    BASE_DIR / "qwikgame/static"
+    BASE_DIR / 'qwikgame/static'
 ]
 
 

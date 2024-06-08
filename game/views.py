@@ -147,7 +147,7 @@ class MatchView(QwikView):
     def get(self, request, *args, **kwargs):
         super().request_init(request)
         player = self.user.player
-        matches = Match.objects.filter(rivals__in=[player]).all().order_by('date')
+        matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
         context = { 'matches': matches, }
         context |= super().context(request)
         if context['small_screen']:
@@ -170,7 +170,7 @@ class ChatView(QwikView):
         player = self.user.player
         match_pk = kwargs['match']
         match = Match.objects.get(pk=match_pk)
-        matches = Match.objects.filter(rivals__in=[player]).all().order_by('date')
+        matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
         prev_pk = matches.last().pk
         next_pk = matches.first().pk
         found = False

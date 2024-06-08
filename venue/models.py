@@ -23,7 +23,10 @@ class Venue(models.Model):
 
     @classmethod
     def choices(klass):
-        return {venue.pk: venue.name for venue in klass.objects.all()}
+        try:
+            return {venue.pk: venue.name for venue in klass.objects.all()}
+        except:
+            return {}
 
     def __str__(self):
         return self.name

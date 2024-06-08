@@ -11,11 +11,17 @@ class Game(models.Model):
 
     @classmethod
     def choices(klass):
-        return {game.code: game.name for game in klass.objects.all()}
+        try:
+            return {game.code: game.name for game in klass.objects.all()}
+        except:
+            return {}
 
     @classmethod
     def icons(klass):
-        return {game.code: game.icon for game in klass.objects.all()}
+        try:
+            return {game.code: game.icon for game in klass.objects.all()}
+        except:
+            return {}
 
     def __str__(self):
         return self.name

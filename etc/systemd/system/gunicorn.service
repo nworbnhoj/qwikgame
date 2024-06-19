@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/home/django/qwikgame
-ExecStart=/usr/bin/gunicorn3 --name=django_qwikgame --pythonpath=/home/django/qwikgame --bind unix:/home/django/gunicorn.socket --config /etc/gunicorn.d/guni>
+ExecStart=/usr/bin/gunicorn3 --name=django_qwikgame --pythonpath=/home/django/qwikgame --bind unix:/home/django/gunicorn.socket --config /etc/gunicorn.d/gunicorn.py qwikgame.wsgi:application
 Restart=always
 SyslogIdentifier=gunicorn
 User=django

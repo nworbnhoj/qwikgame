@@ -89,12 +89,12 @@ WSGI_APPLICATION = 'qwikgame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'qwikgame',
-        'USER': 'django',
-        'PASSWORD': 'qwikgame',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': os.environ.get('DATABASE_ENGINE','error: set environ variable DATABASE_ENGINE'),
+        'NAME': os.environ.get('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER','error: set environ variable DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST','error: set environ variable DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT','error: set environ variable DATABASE_PORT'),
     }
 }
 

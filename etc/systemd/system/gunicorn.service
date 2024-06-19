@@ -11,6 +11,12 @@ SyslogIdentifier=gunicorn
 User=django
 Group=django
 
+Environment="DATABASE_ENGINE=django.db.backends.XXX"
+Environment="DATABASE_NAME=qwikgame"
+Environment="DATABASE_USER=DATABASE_USER"
+Environment="DATABASE_PASSWORD=DATABASE_PASSWORD"
+Environment="DATABASE_HOST=DATABASE_HOST"
+Environment="DATABASE_PORT=DATABASE_PORT"
 
 [Install]
 WantedBy=multi-user.target

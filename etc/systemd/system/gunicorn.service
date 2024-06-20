@@ -10,7 +10,7 @@ Restart=always
 SyslogIdentifier=gunicorn
 User=django
 Group=django
-
+Environment="DJANGO_SECRET_KEY=DJANGO_SECRET_KEY"
 Environment="DATABASE_ENGINE=django.db.backends.XXX"
 Environment="DATABASE_NAME=qwikgame"
 Environment="DATABASE_USER=DATABASE_USER"

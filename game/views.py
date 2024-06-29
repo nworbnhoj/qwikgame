@@ -1,3 +1,4 @@
+import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -8,6 +9,7 @@ from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.views import QwikView
 
+logger = logging.getLogger(__file__)
 
 class GameView(QwikView):
 
@@ -76,12 +78,12 @@ class AvailableView(QwikView):
         if (player is not None and game is not None and venue is not None):
             try:
                 available = Available.objects.get(player=player, game=game, venue=venue)
-                hours: bytearray = available.hours
+                hours = bytes(available.hours)
                 context['blocks'] = AvailableView.hour_blocks(available.get_hours_week(), range(6,21))
                 context['hide_edit'] = 'hidden'
                 context['hide_view'] = ''
             except:
-                pass             
+                logger.exception("failed to get Available object")            
         context |= self.available_form_class.get(
             player,
             game=game.pk if game is not None else None,

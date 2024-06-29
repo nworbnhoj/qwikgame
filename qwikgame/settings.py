@@ -1,6 +1,4 @@
-
-
-
+import logging
 
 import os
 from pathlib import Path
@@ -145,6 +143,34 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["file"]},
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": "/var/log/django.log",
+            "formatter": "app",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True
+        },
+    },
+    "formatters": {
+        "app": {
+            'format': '%(asctime)s %(levelname)-8s %(name)-12s %(message)s',
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+}
+
 
 
 """

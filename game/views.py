@@ -94,13 +94,13 @@ class AvailableView(QwikView):
         context |= super().context(request)
         return render(request, self.template_name, context)
 
-    def hour_blocks(week, range):
+    def hour_blocks(week, hours):
         blocks=[]
-        start, end, r_start, r_end = None, None, range[0], range[-1]
+        start, end, r_start, r_end = None, None, hours[0], hours[-1]
         for d, day in enumerate(week):
             grid_row = "{}/{}".format(d+1, d+1)
             for h, hour in enumerate(day):
-                if h in range:
+                if h in hours:
                     if hour and start is None:
                         start = h
                     elif start and not hour:

@@ -18,7 +18,7 @@
 {% if big_screen %}
     <a class="cta wide" href="{% url 'keen' %}">
         <i class="fa-solid fa-paper-plane fa-xl"></i>
-        <p>KEEN TO PLAY</p>
+        <p>INVITE</p>
     </a>
 {% endif %}
 {% endblock %}
@@ -27,70 +27,26 @@
 {% block list %}
     <div id="list_bar" class="list_bar post">
         <div class="list_bar_head">
-            <h1>Invitations</h1> 
-            <div class="drop_down todo">
-                <div class="button drop" data-down="false">
-                    <div>Group by</div>
-                    <div class="fat" aria-hidden="true">v</div>
-                </div>
-                <div class="down hidden">
-                    <label class="toggle option">
-                        <input type="radio" name="groupby">
-                        date
-                    </label>
-                    <label class="toggle option">
-                        <input type="radio" name="groupby">
-                        game
-                    </label>
-                    <label class="toggle option">
-                        <input type="radio" name="groupby" checked="checked">
-                        sent
-                    </label>
-                    <label class="toggle option">
-                        <input type="radio" name="groupby">
-                        venue
-                    </label>
-                </div>
+            <h1>Feed</h1>
+            <div class="button ctb push_right">
+                <a class="button" href="{% url 'screen' %}">
+                    <i class="fa-solid fa-filter fa-xl"></i>
+                    <p>Filter</p>
+                </a>
             </div>
         </div>
         <hr>
-        <h2 class="show_group">
-            Sent
+        <h2 class="show_group todo">
+            Accepted
             <span>▲</span>
         </h2>
-        <div class="group">
-{% for appeal in appeals %}
-            <a class="button item {{ unread }}" href="{% url 'reply' appeal=appeal.pk %}">
-                <div class="pole notes">
-                    <div class="note">
-                        <span class="icon">
-                            <i class="{{ appeal.game.icon }} fa-1x"></i>
-                        </span>
-                        <p class="line">{{ appeal.game }}</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-calendar fa-1x"></i>
-                        </span>
-                        <p>{{ appeal.date }}</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-location-dot fa-1x"></i>
-                        </span>
-                        <p>{{ appeal.venue}}</p>
-                    </div>
-                </div>
-                <div class="pole badges todo">
-                    <div class="icon">
-                        <i class="fa-solid fa-paper-plane fa-xl"></i>
-                    </div>
-                </div>
-            </a>
+        <div class="group hidden">
+            <p>No accepted invitations!</p>
+{% for invite in accepted %}
 {% endfor %}
         </div>
         <h2 class="show_group">
-            Received
+            New
             <span>▲</span>
         </h2>
         <div class="group">
@@ -123,13 +79,6 @@
                 </div>
             </a>
 {% endfor %}
-        </div>
-        <h2 class="show_group todo">
-            History
-            <span>▲</span>
-        </h2>
-        <div class="group hidden">
-            <p>No history yet!</p>
         </div>
     </div>
 {% endblock %}

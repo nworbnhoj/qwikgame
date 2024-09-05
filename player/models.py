@@ -195,6 +195,61 @@ class Filter(models.Model):
     def __str__(self):
         return "{} {} {}".format(self.player, self.game, self.venue)
 
+    def get_day_bytes3(self, day):
+        offset = 3 * day
+        return self.hours[offset: offset+3]
+
+    def get_day_hours(self, day):
+        bytes3 = self.get_day_bytes3(day)
+        return int_to_bools24(bytes3_to_int(bytes3))
+
+    def get_hours_str(self, hours=range(0,23)):
+        week=self.get_week_hours()
+        r_start, r_end = hours[0], hours[-1]
+        day_blocks=[]
+        for d, day in enumerate(week):
+            start, end = None, None
+            hour_blocks=[]
+            for h, hour in enumerate(day):
+                if h in hours:
+                    if hour and start is None:
+                        start = h
+                    elif start and not hour:
+                        end = h - 1
+                        hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
+                        start = None
+            if start is not None:
+                end = r_end
+                hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
+                if start == r_start and end == r_end:
+                    hour_blocks=['']
+            if len(hour_blocks) > 0:
+                day_block = '{}({})'.format(
+                    WEEK_DAYS[d][:3].casefold().capitalize(),
+                    ' '.join(hour_blocks)
+                )
+                day_blocks.append(day_block)
+        return ' '.join(day_blocks)
+
+    def get_week_hours(self):
+        return [self.get_day_hours(day) for day in range(len(WEEK_DAYS))]
+
+    def is_week_all(self):
+        for day in range(len(WEEK_DAYS)):
+            if not self.is_day_all(day):
+                return False
+        return True
+
+    def is_day_all(self, day):
+        return bytes3_to_int(self.get_day_bytes3(day)) == 262136
+
+    def is_day_none(self, day):
+        return not any(self.get_day_bytes3(day))
+
+    def is_week_none(self):
+        return not any(self.hours)
+
+
 class Friend(models.Model):
     email = models.EmailField(max_length=255, verbose_name="email address", unique=True)
     name = models.CharField(max_length=32, blank=True)

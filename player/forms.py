@@ -4,7 +4,7 @@ from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectM
 from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
-from player.models import Appeal, Friend, Invite, Player, Precis
+from player.models import Appeal, Filter, Friend, Invite, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
@@ -345,4 +345,30 @@ class RsvpForm(QwikForm):
                 context = {'rsvp_form': form}
         else:
             context = {'rsvp_form': form}
+        return context
+
+
+class ScreenForm(QwikForm):
+    filters = MultipleChoiceField(
+        choices = {'None': 'No filters applied.'},
+        label='FILTERS',
+        required=True,
+        widget=CheckboxSelectMultiple,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @classmethod
+    def get(klass, player, filters=[]):
+        form = klass()
+        form.fields['filters'].choices=filters
+        return {
+            'screen_form': form,
+        }
+
+    @classmethod
+    def post(klass, request_post, player, hide=[]):
+        context = {}
+        form = klass(data=request_post)
         return context

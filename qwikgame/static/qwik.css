@@ -170,6 +170,7 @@ div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
+fieldset div { display:block; padding: 1em}
 h1 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: left; }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; }
@@ -180,6 +181,7 @@ h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: none; height: 3em; padding: 0.1em }
+input[type=checkbox] { margin: 0em 1em 0em 1em; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
 input:checked + .slider { background-color: #66bb6a; }
@@ -206,6 +208,7 @@ label.toggle:has(input:checked) div.button.hr { border: 3px solid #dfa622 }
 label.toggle:has(input:checked):has([name="games"]) div.button { color: #dfa622 }
 label.toggle:has(input.hidden) { display: none }
 label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
+legend { padding: 1em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
 p.caption { color: #777777; font-size: small }

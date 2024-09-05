@@ -180,6 +180,21 @@ class Available(models.Model):
     def get_hours_week(self):
         return [self.get_hours_day(day) for day in range(len(WEEK_DAYS))]
 
+
+class Filter(models.Model):
+    game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE)
+    hours = models.BinaryField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['game', 'player', 'venue'], name='unique_filter')
+        ]
+
+    def __str__(self):
+        return "{} {} {}".format(self.player, self.game, self.venue)
+
 class Friend(models.Model):
     email = models.EmailField(max_length=255, verbose_name="email address", unique=True)
     name = models.CharField(max_length=32, blank=True)

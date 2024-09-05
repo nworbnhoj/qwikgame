@@ -1,10 +1,42 @@
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from player.forms import AcceptForm, KeenForm, RsvpForm, ScreenForm
+from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
 from qwikgame.utils import bytes3_to_str
 from qwikgame.views import QwikView
+
+
+class FilterView(QwikView):
+    filter_form_class = FilterForm
+    hide=[]
+    template_name = 'player/filter.html'
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = self.filter_form_class.get(
+            self.user.player,
+            game='ANY',
+            hide=self.hide,
+            venue='ANY',
+            hours=[],
+        )
+        context |= super().context(request)
+        return render(request, self.template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        super().post(request)
+        context = self.filter_form_class.post(
+            request.POST,
+            self.user.player,
+            hide=self.hide,
+        )
+        if len(context) == 0:
+            return HttpResponseRedirect("/player/")
+        context |= super().context(request)
+
+        return render(request, self.template_name, context)
 
 
 class InviteView(QwikView):
@@ -211,29 +243,13 @@ class ScreenView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().get(request)
-        player, game, venue, hours = self.user.player, None, None, None
-        filters = Filter.objects.filter(player=player).all()
-        filter_options = []
-        for filter in filters:
-            filter.is_week_all()
-            option = '{}, {}, {}'.format(
-                'Any Game' if filter.game is None else filter.game,
-                'Any Venue' if filter.venue is None else filter.venue,
-                'Any Time' if filter.is_week_all() else filter.get_hours_str()
-                )
-            filter_options.append((filter.id, option))
-        context = {'filters': filter_options}
-        context |= self.screen_form_class.get(
-            player,
-            filters=filter_options,
-        )
-        context |= super().context(request)
+        context = super().context(request)
+        context |= self.screen_form_class.get(self.user.player)
         return render(request, self.template_name, context)
-
 
     def post(self, request, *args, **kwargs):
         super().post(request)
-        context = self.filter_form_class.post(
+        context = self.screen_form_class.post(
             request.POST,
             self.user.player,
         )

@@ -48,6 +48,7 @@ body { align-items: center; display: flex; flex-direction: column; font-family: 
 div { align-items: center; display: flex; }
 div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
+div.button a { border: 0px solid black; }
 div.button i { }
 div.button p { }
 div.button:hover { background-color: #eeeeee }

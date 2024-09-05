@@ -193,7 +193,11 @@ class Filter(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {}".format(self.player, self.game, self.venue)
+        return  '{}, {}, {}'.format(
+                'Any Game' if self.game is None else self.game,
+                'Any Venue' if self.venue is None else self.venue,
+                'Any Time' if self.is_week_all() else self.get_hours_str()
+                )
 
     def get_day_bytes3(self, day):
         offset = 3 * day

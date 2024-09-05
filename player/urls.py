@@ -1,9 +1,10 @@
 from django.urls import include, path
 
-from player.views import InviteView, InvitationView, KeenView, ReplyView, RivalView, RsvpView, ScreenView
+from player.views import FilterView, InviteView, InvitationView, KeenView, ReplyView, RivalView, RsvpView, ScreenView
 
 urlpatterns = [
     path("", InviteView.as_view(), name='player'),
+    path("filter/", FilterView.as_view(), name='filter'),
     path("invite/<int:invite>/", RsvpView.as_view(), name='rsvp'),
     path("invite/", InviteView.as_view(), name='invite'),
     path("keen/<int:appeal>/", ReplyView.as_view(), name='reply'),

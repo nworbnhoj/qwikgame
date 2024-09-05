@@ -102,6 +102,73 @@ class BlockedForm(QwikForm):
         return choices
 
 
+class FilterForm(QwikForm):
+    game = ChoiceField(
+        choices = {'ANY':'Any Game'} | Game.choices(),
+        label = 'Game',
+        required=True,
+        template_name='dropdown.html',
+        widget=RadioSelect(attrs={"class": "down hidden"}),
+    )
+    venue = ChoiceField(
+        choices = {'ANY':'Any Venue'} | {'map': 'Select from map'} | Venue.choices(),
+        label='Venue',
+        template_name='dropdown.html',
+        widget=RadioSelect(attrs={"class": "down hidden"})
+    )
+    hours = WeekField(
+        label='Time',
+        hours=[*range(6,21)],
+        required=True,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    # Initializes an AddVenueForm for 'player'.
+    # Returns a context dict including 'add_venue_form'
+    @classmethod
+    def get(klass, player, game=None, hide=[], hours=None, strength=None, venue='map'):
+        logger.info(type(hours))
+        logger.info(hours)
+        return {
+            'filter_form': klass(
+                initial = {
+                    'game': game,
+                    'hours': hours,
+                    # 'strength': strength,
+                    'venue': venue,
+                },
+            )
+        }
+
+    # Initializes an AddVenueForm for 'player'.
+    # Returns a context dict including 'add_venue_form'
+    @classmethod
+    def post(klass, request_post, player, hide=[]):
+        context = {}
+        form = klass(data=request_post)
+        if form.is_valid():
+            try:
+                game=Game.objects.filter(pk=form.cleaned_data['game']).first(),
+                venue=Venue.objects.filter(pk=form.cleaned_data['venue']).first(),
+                new_filter = Filter.objects.get_or_create(player=player, game=game[0], venue=venue[0])
+                new_filter[0].hours = form.cleaned_data['hours']
+                new_filter[0].save()
+                logger.info('Added filter: {} : {}, {}, {}'.format(
+                    player,
+                    'Any Game' if new_filter[0].game is None else new_filter[0].game,
+                    'Any Venue' if new_filter[0].venue is None else new_filter[0].venue,
+                    'Any Time' if new_filter[0].is_week_all() else new_filter[0].get_hours_str()
+                    )
+                )
+            except:
+                logger.exception("failed to add filter")
+                context = {'filter_form': form}
+        else:
+            context = {'filter_form': form}
+        return context
+
 
 class KeenForm(QwikForm):
     game = ChoiceField(
@@ -350,25 +417,25 @@ class RsvpForm(QwikForm):
 
 class ScreenForm(QwikForm):
     filters = MultipleChoiceField(
-        choices = {'None': 'No filters applied.'},
-        label='FILTERS',
-        required=True,
+        label='no active filters',
         widget=CheckboxSelectMultiple,
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, player, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        filters = Filter.objects.filter(player=player)
+        choices = { str(filter.id) : filter for filter in filters}
+        self.fields['filters'].choices = choices
+        self.fields['filters'].label = '{} active filters'.format(len(choices))
 
     @classmethod
-    def get(klass, player, filters=[]):
-        form = klass()
-        form.fields['filters'].choices=filters
-        return {
-            'screen_form': form,
-        }
+    def get(klass, player):
+        return { 'screen_form' : klass(player), }
 
     @classmethod
-    def post(klass, request_post, player, hide=[]):
+    def post(klass, request_post, player):
         context = {}
-        form = klass(data=request_post)
+        form = klass(player, data=request_post)
+        
+        context = {'screen_form': form}
         return context

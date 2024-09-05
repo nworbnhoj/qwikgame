@@ -1,4 +1,4 @@
-<!-- qwikgame/player/templates/player/screen.html -->
+<!-- qwikgame/player/templates/player/filter.html -->
 {% extends "player/invite.html" %}
 
 
@@ -18,20 +18,15 @@
             <div class="icon selected">
                 <i class="fa-solid fa-filter fa-2x"></i>
             </div>
-            <h1>Invitation Filters</h1>
-            <div class="button ctb push_right">
-                <a class="button" href="{% url 'filter' %}">
-                    <i class="fa-solid fa-plus fa-xl"></i>
-                    <p>Add</p>
-                </a>
-            </div>
+            <h1>New Invitation Filter</h1>
         </div>
 
         <div class="post">
             <div class="post form">
-                <form action="{% url 'screen' %}" method="post">
+                <form action="{% url 'filter' %}" method="post">
 {% csrf_token %}
-{{ screen_form }}
+{{ filter_form }}
+                    <input class="button ctb push_down wide schedule_save" type="submit" value="ADD FILTER">
                 </form>
             </div>
         </div>

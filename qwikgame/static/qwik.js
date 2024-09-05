@@ -145,6 +145,16 @@ function range(slider) {
   }
 }
 
+function setAllWeek(button, checked) {
+  if (button.firstElementChild.checked != checked) {
+    button.dispatchEvent(new MouseEvent("click", {
+      "view": window,
+      "bubbles": true,
+      "cancelable": false
+    }));
+  }
+}
+
 function showDetail() {
   // on mobile, hide the list and show the detail
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
@@ -461,6 +471,7 @@ window.onload = function() {
   });
   document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
     all_week.onclick = toggleAllWeek;
+    setAllWeek(all_week, true);
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;

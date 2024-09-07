@@ -33,11 +33,11 @@ class DayInput(MultiWidget):
             widgets=(widgets)
         )
 
-    def decompress(self, bytes3=DAY_NONE):
-        return int_to_bools24(bytes3_to_int(bytes3))
-        if isinstance(bytes3, bytes) and len(bytes3) == 3:
-            return int_to_bools24(bytes3_to_int(bytes3))
-        logger.warn('wrong type for DayInput.decompress(bytes3)')
+    def decompress(self, hours24=DAY_NONE):
+        return int_to_bools24(bytes3_to_int(hours24))
+        if isinstance(hours24, bytes) and len(hours24) == 3:
+            return int_to_bools24(bytes3_to_int(hours24))
+        logger.warn('wrong type for DayInput.decompress(hours24)')
         return [False for hr in range(24)]
 
     def get_context(self, name, value, attrs):
@@ -115,8 +115,8 @@ class WeekInput(MultiWidget):
             widgets=[DayInput(label=day, hours=hours) for day in WEEK_DAYS]
         )
 
-    def decompress(self, bytes21=WEEK_NONE):
-        if isinstance(bytes21, bytes) and len(bytes21) == 21:
-            return [bytes(bytes21[i: i+3]) for i in range(0, 21, 3)]
-        logger.warn('wrong type for WeekInput.decompress(bytes21)')
+    def decompress(self, hours168=WEEK_NONE):
+        if isinstance(hours168, bytes) and len(hours168) == 21:
+            return [bytes(hours168[i: i+3]) for i in range(0, 21, 3)]
+        logger.warn('wrong type for WeekInput.decompress(hours168)')
         return [DAY_NONE for day in range(7)]

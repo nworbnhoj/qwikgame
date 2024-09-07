@@ -174,7 +174,7 @@ class Available(models.Model):
 
     def get_hours_day(self, day):
         offset = 3 * day
-        bytes3 = self.hours[offset: offset+3]
+        bytes3 = bytes(self.hours[offset: offset+3])
         return int_to_bools24(bytes3_to_int(bytes3))
 
     def get_hours_week(self):
@@ -205,7 +205,7 @@ class Filter(models.Model):
         return self.hours[offset: offset+3]
 
     def get_day_hours(self, day):
-        bytes3 = self.get_day_bytes3(day)
+        bytes3 = bytes(self.get_day_bytes3(day))
         return int_to_bools24(bytes3_to_int(bytes3))
 
     def get_hours_str(self, hours=range(0,23)):
@@ -246,7 +246,7 @@ class Filter(models.Model):
         return True
 
     def is_day_all(self, day):
-        return bytes3_to_int(self.get_day_bytes3(day)) == 262136
+        return bytes3_to_int(bytes(self.get_day_bytes3(day))) == 262136
 
     def is_day_none(self, day):
         return not any(self.get_day_bytes3(day))
@@ -290,7 +290,7 @@ class Invite(models.Model):
 
     def _hour(self):
         if self.accepted():
-            for hr, include in enumerate(int_to_bools24(bytes3_to_int(self.hours))):
+            for hr, include in enumerate(int_to_bools24(bytes(bytes3_to_int(self.hours)))):
                 if include:
                     return hr
         return None
@@ -299,7 +299,7 @@ class Invite(models.Model):
         return bytes3_to_str(self.hours)
 
     def hour_choices(self):
-        return int_to_choices24(bytes3_to_int(self.appeal.hours))
+        return int_to_choices24(bytes(bytes3_to_int(self.appeal.hours)))
 
     def log_event(self, template):
         rival = self.rival.user.person

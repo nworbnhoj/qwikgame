@@ -130,9 +130,7 @@ class FilterForm(QwikForm):
     # Initializes an AddVenueForm for 'player'.
     # Returns a context dict including 'add_venue_form'
     @classmethod
-    def get(klass, player, game=None, hide=[], hours=None, strength=None, venue='map'):
-        logger.info(type(hours))
-        logger.info(hours)
+    def get(klass, player, game=None, hide=[], hours=bytes(21), strength=None, venue='map'):
         return {
             'filter_form': klass(
                 initial = {
@@ -221,8 +219,8 @@ class KeenForm(QwikForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('today') == b'\x00\x00\x00':
-            if cleaned_data.get('tomorrow') == b'\x00\x00\x00':
+        if cleaned_data.get('today') == bytes(3):
+            if cleaned_data.get('tomorrow') == bytes(3):
                 raise ValidationError(
                     'Please select at least one hour in today or tomorrow.'
                 )
@@ -242,12 +240,13 @@ class KeenForm(QwikForm):
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'
     @classmethod
-    def get(klass, player, game=None, hours=None, strength=None, venue='map'):
+    def get(klass, player, game=None, hours=bytes(21), strength=None, venue='map'):
         form = klass(
                 initial = {
                     'game': game,
-                    'hours': hours,
                     'strength': strength,
+                    'today': bytes(3),
+                    'tomorrow': bytes(3),
                     'venue': venue,
                 },
             )
@@ -388,7 +387,7 @@ class RsvpForm(QwikForm):
     # Returns a context dict including 'rspv_form'
     @classmethod
     def get(klass, invite):
-        form = klass( initial={'hour': bytes3_to_int(invite.hours)})
+        form = klass( initial={'hour': bytes3_to_int(bytes(invite.hours))})
         form.fields['hour'].choices = invite.hour_choices()
         form.fields['hour'].sub_text = invite.appeal.date
         form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}

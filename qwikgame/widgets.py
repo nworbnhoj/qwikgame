@@ -1,8 +1,10 @@
+import logging
 from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
 from django.forms.widgets import Input, Select
 from player.models import STRENGTH, WEEK_DAYS
 from qwikgame.utils import bytes3_to_int, int_to_bools24
 
+logger = logging.getLogger(__file__)
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
     use_fieldset=False
@@ -25,8 +27,12 @@ class DayInput(MultiWidget):
             widgets=(widgets)
         )
 
-    def decompress(self, bytes3):
+    def decompress(self, bytes3=bytes(3)):
         return int_to_bools24(bytes3_to_int(bytes3))
+        if isinstance(bytes3, bytes) and len(bytes3) == 3:
+            return int_to_bools24(bytes3_to_int(bytes3))
+        logger.warn('wrong type for DayInput.decompress(bytes3)')
+        return [False for hr in range(24)]
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
@@ -103,7 +109,8 @@ class WeekInput(MultiWidget):
             widgets=[DayInput(label=day, hours=hours) for day in WEEK_DAYS]
         )
 
-    def decompress(self, bytes21):
+    def decompress(self, bytes21=bytes(21)):
         if isinstance(bytes21, bytes) and len(bytes21) == 21:
-            return [bytes21[i: i+3] for i in range(0, 21, 3)]
-        return [bytearray(3) for day in range(7)]
+            return [bytes(bytes21[i: i+3]) for i in range(0, 21, 3)]
+        logger.warn('wrong type for WeekInput.decompress(bytes21)')
+        return [bytes(3) for day in range(7)]

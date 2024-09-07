@@ -1,5 +1,7 @@
-import math
+import logging, math
 from qwikgame.constants import ENDIAN
+
+logger = logging.getLogger(__file__)
 
 def bools_to_int(bools):
     integer = 0
@@ -49,6 +51,7 @@ def bytes_to_int(bites):
 def bytes3_to_int(bytes3):
     if isinstance(bytes3, bytes) and len(bytes3) == 3:
         return int.from_bytes(bytes3, ENDIAN)
+    logger.warn('wrong type for bytes3_to_int')
     return 0
 
 def bytes3_to_bytes21(bytes3, date):

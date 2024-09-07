@@ -21,7 +21,7 @@ class FilterView(QwikView):
             game='ANY',
             hide=self.hide,
             venue='ANY',
-            hours=[],
+            hours=bytes(21),
         )
         context |= super().context(request)
         return render(request, self.template_name, context)

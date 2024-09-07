@@ -182,6 +182,7 @@ class Available(models.Model):
 
 
 class Filter(models.Model):
+    active = models.BooleanField(default=True)
     game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE)

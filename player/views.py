@@ -1,11 +1,13 @@
+import logging
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
 from qwikgame.utils import bytes3_to_str
 from qwikgame.views import QwikView
 
+logger = logging.getLogger(__file__)
 
 class FilterView(QwikView):
     filter_form_class = FilterForm

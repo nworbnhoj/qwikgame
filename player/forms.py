@@ -1,4 +1,4 @@
-import datetime
+import datetime, logging
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TypedChoiceField
 from django.utils import timezone
@@ -10,6 +10,8 @@ from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, Multi
 from qwikgame.forms import QwikForm
 from qwikgame.log import Entry
 from qwikgame.utils import bytes3_to_int, str_to_hours24
+
+logger = logging.getLogger(__file__)
 
 
 class AcceptForm(QwikForm):
@@ -424,9 +426,11 @@ class ScreenForm(QwikForm):
     def __init__(self, player, *args, **kwargs):
         super().__init__(*args, **kwargs)
         filters = Filter.objects.filter(player=player)
+        active = [ str(filter.id) for filter in filters.filter(active=True) ]
         choices = { str(filter.id) : filter for filter in filters}
         self.fields['filters'].choices = choices
-        self.fields['filters'].label = '{} active filters'.format(len(choices))
+        self.fields['filters'].label = '{} active filters'.format(len(active))
+        self.fields['filters'].initial = active
 
     @classmethod
     def get(klass, player):
@@ -434,15 +438,22 @@ class ScreenForm(QwikForm):
 
     @classmethod
     def post(klass, request_post, player):
-        context = {}
         form = klass(player, data=request_post)
         if form.is_valid():
-            for filter_code in form.cleaned_data['filters']:
-                try:
-                    junk = Filter.objects.get(pk=filter_code)
-                    logger.info('Deleting filter: {}'.format(junk))
-                    junk.delete()
-                except:
-                    logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        context = {'screen_form': form}
-        return context
+            if 'ACTIVATE' in request_post:
+                logger.info('activating filters {}'.format(form.cleaned_data['filters']))
+                for filter in Filter.objects.filter(player=player):
+                    try:
+                        filter.active = str(filter.id) in form.cleaned_data['filters']
+                        filter.save()
+                    except:
+                        logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
+            if 'DELETE' in request_post:
+                for filter_code in form.cleaned_data['filters']:
+                    try:
+                        junk = Filter.objects.get(pk=filter_code)
+                        logger.info('Deleting filter: {}'.format(junk))
+                        junk.delete()
+                    except:
+                        logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
+        return {'screen_form': form}

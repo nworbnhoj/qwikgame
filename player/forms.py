@@ -148,28 +148,30 @@ class FilterForm(QwikForm):
     # Returns a context dict including 'add_venue_form'
     @classmethod
     def post(klass, request_post, player, hide=[]):
-        context = {}
         form = klass(data=request_post)
         if form.is_valid():
             try:
-                game=Game.objects.filter(pk=form.cleaned_data['game']).first(),
-                venue=Venue.objects.filter(pk=form.cleaned_data['venue']).first(),
-                new_filter = Filter.objects.get_or_create(player=player, game=game[0], venue=venue[0])
+                game=Game.objects.get(pk=form.cleaned_data['game'])
+            except:
+                game=None
+            try:
+                venue=Venue.objects.get(pk=form.cleaned_data['venue'])
+            except:
+                venue=None
+            try:
+                new_filter = Filter.objects.get_or_create(player=player, game=game, venue=venue)
                 new_filter[0].hours = form.cleaned_data['hours']
                 new_filter[0].save()
                 logger.info('Added filter: {} : {}, {}, {}'.format(
                     player,
-                    'Any Game' if new_filter[0].game is None else new_filter[0].game,
-                    'Any Venue' if new_filter[0].venue is None else new_filter[0].venue,
+                    'Any Game' if game is None else new_filter[0].game,
+                    'Any Venue' if venue is None else new_filter[0].venue,
                     'Any Time' if new_filter[0].is_week_all() else new_filter[0].get_hours_str()
                     )
                 )
             except:
                 logger.exception("failed to add filter")
-                context = {'filter_form': form}
-        else:
-            context = {'filter_form': form}
-        return context
+        return {'filter_form': form}
 
 
 class KeenForm(QwikForm):

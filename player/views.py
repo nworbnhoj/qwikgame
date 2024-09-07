@@ -34,11 +34,7 @@ class FilterView(QwikView):
             self.user.player,
             hide=self.hide,
         )
-        if len(context) == 0:
-            return HttpResponseRedirect("/player/")
-        context |= super().context(request)
-
-        return render(request, self.template_name, context)
+        return HttpResponseRedirect("/player/")
 
 
 class InviteView(QwikView):

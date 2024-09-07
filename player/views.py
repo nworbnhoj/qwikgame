@@ -253,7 +253,4 @@ class ScreenView(QwikView):
             request.POST,
             self.user.player,
         )
-        if len(context) == 0:
-            return HttpResponseRedirect("/player/")
-        context |= super().context(request)
-        return render(request, self.template_name, context)
+        return HttpResponseRedirect("/player/")

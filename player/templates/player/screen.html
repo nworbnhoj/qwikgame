@@ -32,6 +32,7 @@
                 <form action="{% url 'screen' %}" method="post">
 {% csrf_token %}
 {{ screen_form }}
+                        <input class="button ctb push_down schedule_saveS" type="submit" value="DELETE SELECTED FILTERS">
                 </form>
             </div>
         </div>

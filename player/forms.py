@@ -436,6 +436,13 @@ class ScreenForm(QwikForm):
     def post(klass, request_post, player):
         context = {}
         form = klass(player, data=request_post)
-        
+        if form.is_valid():
+            for filter_code in form.cleaned_data['filters']:
+                try:
+                    junk = Filter.objects.get(pk=filter_code)
+                    logger.info('Deleting filter: {}'.format(junk))
+                    junk.delete()
+                except:
+                    logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
         context = {'screen_form': form}
         return context

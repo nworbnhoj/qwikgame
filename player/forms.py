@@ -10,6 +10,7 @@ from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, Multi
 from qwikgame.forms import QwikForm
 from qwikgame.log import Entry
 from qwikgame.utils import bytes3_to_int, str_to_hours24
+from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
@@ -130,7 +131,7 @@ class FilterForm(QwikForm):
     # Initializes an AddVenueForm for 'player'.
     # Returns a context dict including 'add_venue_form'
     @classmethod
-    def get(klass, player, game=None, hide=[], hours=bytes(21), strength=None, venue='map'):
+    def get(klass, player, game=None, hide=[], hours=WEEK_NONE, strength=None, venue='map'):
         return {
             'filter_form': klass(
                 initial = {
@@ -219,8 +220,8 @@ class KeenForm(QwikForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('today') == bytes(3):
-            if cleaned_data.get('tomorrow') == bytes(3):
+        if cleaned_data.get('today') == DAY_NONE:
+            if cleaned_data.get('tomorrow') == DAY_NONE:
                 raise ValidationError(
                     'Please select at least one hour in today or tomorrow.'
                 )
@@ -240,13 +241,13 @@ class KeenForm(QwikForm):
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'
     @classmethod
-    def get(klass, player, game=None, hours=bytes(21), strength=None, venue='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue='map'):
         form = klass(
                 initial = {
                     'game': game,
                     'strength': strength,
-                    'today': bytes(3),
-                    'tomorrow': bytes(3),
+                    'today': DAY_ALL,
+                    'tomorrow': DAY_ALL,
                     'venue': venue,
                 },
             )

@@ -5,6 +5,12 @@ from player.models import STRENGTH, WEEK_DAYS
 from qwikgame.utils import bytes3_to_int, int_to_bools24
 
 logger = logging.getLogger(__file__)
+
+DAY_ALL = b'\xff\xff\xff'
+DAY_NONE = bytes(3)
+WEEK_ALL = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
+WEEK_NONE = bytes(21)
+
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
     use_fieldset=False
@@ -27,7 +33,7 @@ class DayInput(MultiWidget):
             widgets=(widgets)
         )
 
-    def decompress(self, bytes3=bytes(3)):
+    def decompress(self, bytes3=DAY_NONE):
         return int_to_bools24(bytes3_to_int(bytes3))
         if isinstance(bytes3, bytes) and len(bytes3) == 3:
             return int_to_bools24(bytes3_to_int(bytes3))
@@ -109,8 +115,8 @@ class WeekInput(MultiWidget):
             widgets=[DayInput(label=day, hours=hours) for day in WEEK_DAYS]
         )
 
-    def decompress(self, bytes21=bytes(21)):
+    def decompress(self, bytes21=WEEK_NONE):
         if isinstance(bytes21, bytes) and len(bytes21) == 21:
             return [bytes(bytes21[i: i+3]) for i in range(0, 21, 3)]
         logger.warn('wrong type for WeekInput.decompress(bytes21)')
-        return [bytes(3) for day in range(7)]
+        return [DAY_NONE for day in range(7)]

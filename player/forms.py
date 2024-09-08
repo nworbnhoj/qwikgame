@@ -9,7 +9,7 @@ from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.log import Entry
-from qwikgame.utils import bytes3_to_int, str_to_hours24
+from qwikgame.utils import str_to_hours24
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
@@ -159,15 +159,12 @@ class FilterForm(QwikForm):
                 venue=None
             try:
                 new_filter = Filter.objects.get_or_create(player=player, game=game, venue=venue)
-                new_filter[0].hours = form.cleaned_data['hours']
+                new_filter[0].set_hours(form.cleaned_data['hours'])
                 new_filter[0].save()
-                logger.info('Added filter: {} : {}, {}, {}'.format(
+                logger.info('Added filter: {} : {}'.format(
                     player,
-                    'Any Game' if game is None else new_filter[0].game,
-                    'Any Venue' if venue is None else new_filter[0].venue,
-                    'Any Time' if new_filter[0].is_week_all() else new_filter[0].get_hours_str()
-                    )
-                )
+                    new_filter[0],
+                ))
             except:
                 logger.exception("failed to add filter")
         return {'filter_form': form}
@@ -220,8 +217,8 @@ class KeenForm(QwikForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('today') == DAY_NONE:
-            if cleaned_data.get('tomorrow') == DAY_NONE:
+        if cleaned_data.get('today').is_none():
+            if cleaned_data.get('tomorrow').is_none():
                 raise ValidationError(
                     'Please select at least one hour in today or tomorrow.'
                 )
@@ -277,10 +274,10 @@ class KeenForm(QwikForm):
                     player=player,
                     venue=venue,
                 )[0]
-                if form.cleaned_data['today'] == b'\x00\x00\x00':
+                if form.cleaned_data['today'].is_none():
                     appeal.delete()
-                elif appeal.hours != form.cleaned_data['today']:
-                    appeal.hours = form.cleaned_data['today']
+                elif appeal.hours24x7() != form.cleaned_data['today']:
+                    appeal.set_hours(form.cleaned_data['today'])
                     appeal.log_event('keen')
                     appeal.log_event('appeal')
                     appeal.save()
@@ -292,10 +289,10 @@ class KeenForm(QwikForm):
                     player=player,
                     venue=venue,
                 )[0]
-                if form.cleaned_data['tomorrow'] == b'\x00\x00\x00':
+                if form.cleaned_data['tomorrow'].is_none():
                     appeal.delete()
-                elif appeal.hours != form.cleaned_data['tomorrow']:
-                    appeal.hours = form.cleaned_data['tomorrow']
+                elif appeal.hours24x7() != form.cleaned_data['tomorrow']:
+                    appeal.set_hours(form.cleaned_data['tomorrow'])
                     appeal.log_event('keen')
                     appeal.log_event('appeal')
                     appeal.save()
@@ -388,7 +385,7 @@ class RsvpForm(QwikForm):
     # Returns a context dict including 'rspv_form'
     @classmethod
     def get(klass, invite):
-        form = klass( initial={'hour': bytes3_to_int(bytes(invite.hours))})
+        form = klass( initial={'hour': Hours24(invite.hours).as_int()})
         form.fields['hour'].choices = invite.hour_choices()
         form.fields['hour'].sub_text = invite.appeal.date
         form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}

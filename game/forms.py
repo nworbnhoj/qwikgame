@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from game.models import Game
 from qwikgame.fields import ActionMultiple, MultipleActionField
-from player.models import Available, STRENGTH, WEEK_DAYS
+from qwikgame.constants import STRENGTH, WEEK_DAYS
 from venue.models import Venue
 from qwikgame.forms import QwikForm
 from qwikgame.fields import ActionMultiple, DayField, RangeField, SelectRangeField, MultipleActionField, WeekField

@@ -1,9 +1,11 @@
+import logging
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField
-from player.models import STRENGTH, WEEK_DAYS
-from qwikgame.utils import bools_to_int, int_to_bytes3
+from qwikgame.constants import STRENGTH, WEEK_DAYS
+from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
 
+logger = logging.getLogger(__file__)
 
 class DayField(MultiValueField):
 
@@ -28,7 +30,7 @@ class DayField(MultiValueField):
         bools=[False] * 24
         for hr in self.hours:
             bools[hr] = data_list[hr]
-        return int_to_bytes3(bools_to_int(bools))
+        return Hours24(bools)
 
 
 class MultipleActionField(MultipleChoiceField):
@@ -106,7 +108,4 @@ class WeekField(MultiValueField):
         )
 
     def compress(self, data_list):
-        result = bytearray()
-        for data in data_list:
-            result += data
-        return result
+        return Hours24x7(data_list)

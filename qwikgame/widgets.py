@@ -1,8 +1,8 @@
 import logging
 from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
 from django.forms.widgets import Input, Select
-from player.models import STRENGTH, WEEK_DAYS
-from qwikgame.utils import bytes3_to_int, int_to_bools24
+from qwikgame.constants import WEEK_DAYS
+from qwikgame.hourbits import Hours24, Hours24x7
 
 logger = logging.getLogger(__file__)
 
@@ -34,11 +34,7 @@ class DayInput(MultiWidget):
         )
 
     def decompress(self, hours24=DAY_NONE):
-        return int_to_bools24(bytes3_to_int(hours24))
-        if isinstance(hours24, bytes) and len(hours24) == 3:
-            return int_to_bools24(bytes3_to_int(hours24))
-        logger.warn('wrong type for DayInput.decompress(hours24)')
-        return [False for hr in range(24)]
+        return Hours24(hours24).as_bools()
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
@@ -116,7 +112,4 @@ class WeekInput(MultiWidget):
         )
 
     def decompress(self, hours168=WEEK_NONE):
-        if isinstance(hours168, bytes) and len(hours168) == 21:
-            return [bytes(hours168[i: i+3]) for i in range(0, 21, 3)]
-        logger.warn('wrong type for WeekInput.decompress(hours168)')
-        return [DAY_NONE for day in range(7)]
+        return Hours24x7(hours168).as_days7()

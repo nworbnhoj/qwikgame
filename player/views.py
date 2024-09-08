@@ -4,7 +4,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
-from qwikgame.utils import bytes3_to_str
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
@@ -131,7 +130,7 @@ class ReplyView(QwikView):
         replies = Invite.objects.filter(appeal=appeal).exclude(hours=None)
         friends = Friend.objects.filter(player=player)
         for reply in replies:
-            reply.hour_str = bytes3_to_str(reply.hours)
+            reply.hour_str = reply.hours24().as_str()
             try:
                 reply.name = friends.get(rival=reply.rival).name
             except:

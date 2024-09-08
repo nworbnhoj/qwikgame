@@ -1,28 +1,16 @@
+import logging
 import hashlib, pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime
+from qwikgame.constants import STRENGTH, WEEK_DAYS
+from qwikgame.hourbits import Hours24, Hours24x7,DAY_ALL
 from qwikgame.log import Entry
-from qwikgame.utils import bytes_intersect, bytes_to_int, bytes3_to_bumps, bytes3_to_bytes21, bytes3_to_int, bytes3_to_str, int_to_bools, int_to_bools24, int_to_choices24
+from qwikgame.utils import bytes3_to_int, int_to_bools, int_to_bools24
 from venue.models import Venue
 
-STRENGTH = [
-    ('W', 'much-weaker'),
-    ('w', 'weaker'),
-    ('m', 'matched'),
-    ('s', 'stronger'),
-    ('S', 'much-stonger')
-]
 
-WEEK_DAYS = [
-    ('MONDAY'),
-    ('TUESDAY'),
-    ('WEDNESDAY'),
-    ('THURSDAY'),
-    ('FRIDAY'),
-    ('SATURDAY'),
-    ('SUNDAY'),
-]
+logger = logging.getLogger(__file__)
 
 class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)
@@ -74,7 +62,7 @@ class Appeal(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, bytes3_to_bumps(self.hours))
+        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, hours24(self.hours).as_bumps())
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -83,8 +71,8 @@ class Appeal(models.Model):
     def datetime(self, time=None):
         return self.venue.datetime(self.date, time)
 
-    def hour_str(self):
-        return bytes3_to_str(self.hours)
+    def hours24x7(self):
+        return Hours24x7(self.hours)
 
     def invite(self, rivals):
         for rival in rivals:
@@ -119,10 +107,10 @@ class Appeal(models.Model):
         ).exclude (
             player__in=self.player.blocked.all()
         ).select_related('player')
-        appeal_hours = bytes3_to_bytes21(self.hours, self.date)
+        appeal_hours = Hours24x7().set_date(self.hours, self.date)
         for a in available:
-            intersect = bytes_intersect(appeal_hours, a.hours)
-            if bytes_to_int(intersect) == 0:
+            intersect = appeal_hours.intersect(a)
+            if intersect.is_none():
                 a.delete()
         rivals = {a.player for a in available}
         rivals |= friends
@@ -148,7 +136,7 @@ class Appeal(models.Model):
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),
-                    self.hour_str()
+                    self.hours24x7().as_str()
                 )
             case _:
                 entry['text'] = "unknown template"
@@ -172,6 +160,9 @@ class Available(models.Model):
     def __str__(self):
         return "{} {} {}".format(self.player, self.game, self.venue)
 
+    def hours24x7(self):
+        return Hours24x7(self.hours)
+
     def get_hours_day(self, day):
         offset = 3 * day
         bytes3 = bytes(self.hours[offset: offset+3])
@@ -194,65 +185,18 @@ class Filter(models.Model):
         ]
 
     def __str__(self):
+        hours24x7 = Hours24x7(self.hours)
         return  '{}, {}, {}'.format(
                 'Any Game' if self.game is None else self.game,
                 'Any Venue' if self.venue is None else self.venue,
-                'Any Time' if self.is_week_all() else self.get_hours_str()
+                'Any Time' if hours24x7.is_week_all() else hours24x7.as_str()
                 )
 
-    def get_day_bytes3(self, day):
-        offset = 3 * day
-        return self.hours[offset: offset+3]
+    def hours24x7(self):
+        return Hours24x7(self.hours)
 
-    def get_day_hours(self, day):
-        bytes3 = bytes(self.get_day_bytes3(day))
-        return int_to_bools24(bytes3_to_int(bytes3))
-
-    def get_hours_str(self, hours=range(0,23)):
-        week=self.get_week_hours()
-        r_start, r_end = hours[0], hours[-1]
-        day_blocks=[]
-        for d, day in enumerate(week):
-            start, end = None, None
-            hour_blocks=[]
-            for h, hour in enumerate(day):
-                if h in hours:
-                    if hour and start is None:
-                        start = h
-                    elif start and not hour:
-                        end = h - 1
-                        hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
-                        start = None
-            if start is not None:
-                end = r_end
-                hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
-                if start == r_start and end == r_end:
-                    hour_blocks=['']
-            if len(hour_blocks) > 0:
-                day_block = '{}({})'.format(
-                    WEEK_DAYS[d][:3].casefold().capitalize(),
-                    ' '.join(hour_blocks)
-                )
-                day_blocks.append(day_block)
-        return ' '.join(day_blocks)
-
-    def get_week_hours(self):
-        return [self.get_day_hours(day) for day in range(len(WEEK_DAYS))]
-
-    def is_week_all(self):
-        for day in range(len(WEEK_DAYS)):
-            if not self.is_day_all(day):
-                return False
-        return True
-
-    def is_day_all(self, day):
-        return bytes3_to_int(bytes(self.get_day_bytes3(day))) == 262136
-
-    def is_day_none(self, day):
-        return not any(self.get_day_bytes3(day))
-
-    def is_week_none(self):
-        return not any(self.hours)
+    def set_hours(self, hours24x7):
+        self.hours = hours24x7.as_bytes()
 
 
 class Friend(models.Model):
@@ -272,7 +216,7 @@ class Invite(models.Model):
     strength = models.CharField(max_length=1, choices=STRENGTH)
 
     def __str__(self):
-        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, bytes3_to_bumps(self.hours))
+        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, Hours24(self.hours).as_bumps())
 
     def accepted(self):
         return self.hours is not None
@@ -290,16 +234,16 @@ class Invite(models.Model):
 
     def _hour(self):
         if self.accepted():
-            for hr, include in enumerate(int_to_bools24(bytes(bytes3_to_int(self.hours)))):
+            for hr, include in enumerate(self.hours24().as_bools()):
                 if include:
                     return hr
         return None
 
-    def hour_str(self):
-        return bytes3_to_str(self.hours)
+    def hours24(self):
+        return Hours24(self.hours)
 
     def hour_choices(self):
-        return int_to_choices24(bytes(bytes3_to_int(self.appeal.hours)))
+        return self.appeal.hours24x7().as_choices()
 
     def log_event(self, template):
         rival = self.rival.user.person
@@ -312,7 +256,7 @@ class Invite(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = "accepted {} with {}".format(self.hour_str(), rival.name)
+                    text = "accepted {} with {}".format(self.hours24().as_str(), rival.name)
                 )
             case 'rsvp':
                 person = self.rival.user.person
@@ -321,7 +265,7 @@ class Invite(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = rival.name,
-                    text = "accepted {}".format(self.hour_str())
+                    text = "accepted {}".format(self.hours24().as_str())
                 )
             case _:
                 entry = Entry(text="unknown template")

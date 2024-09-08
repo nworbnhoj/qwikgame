@@ -6,11 +6,11 @@ from pytz import datetime
 from qwikgame.constants import STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7,DAY_ALL
 from qwikgame.log import Entry
-from qwikgame.utils import bytes3_to_int, int_to_bools, int_to_bools24
 from venue.models import Venue
 
 
 logger = logging.getLogger(__file__)
+
 
 class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)
@@ -144,32 +144,6 @@ class Appeal(models.Model):
 
     def tzinfo(self):
         return self.venue.tzinfo()
-
-
-class Available(models.Model):
-    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-    hours = models.BinaryField()
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['game', 'player', 'venue'], name='unique_availability')
-        ]
-
-    def __str__(self):
-        return "{} {} {}".format(self.player, self.game, self.venue)
-
-    def hours24x7(self):
-        return Hours24x7(self.hours)
-
-    def get_hours_day(self, day):
-        offset = 3 * day
-        bytes3 = bytes(self.hours[offset: offset+3])
-        return int_to_bools24(bytes3_to_int(bytes3))
-
-    def get_hours_week(self):
-        return [self.get_hours_day(day) for day in range(len(WEEK_DAYS))]
 
 
 class Filter(models.Model):

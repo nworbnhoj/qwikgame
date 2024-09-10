@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'small_screen.css' %}">
     {% endif %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-    <script src="{% static 'qwik.js' %}"></script>
+
     <script src="https://kit.fontawesome.com/ddb61c7fcf.js" crossorigin="anonymous"></script>
+    <script defer src="{% static 'qwik.js' %}"></script>
+    {% block script %}{% endblock %}
+
     <title>{% block title %}QwikGame{% endblock %}</title>
 </head>
 

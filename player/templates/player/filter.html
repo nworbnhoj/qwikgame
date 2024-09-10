@@ -1,5 +1,14 @@
 <!-- qwikgame/player/templates/player/filter.html -->
 {% extends "player/invite.html" %}
+{% load static %}
+
+{% block script %}
+    <script defer src="{% static 'map.js' %}"></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGFtZIHPrGiP6ocQl6_BCxLKi4H6ulDwM&callback=venuesMap&libraries=places">
+    </script>
+    <script defer src="{% static 'filter.js' %}"></script>
+{% endblock %}
 
 
 {% block title %}Filter{% endblock %}
@@ -31,4 +40,44 @@
             </div>
         </div>
     </div>
+
+
+    <div id='map-elements' style='display:none;'>    
+      <div id='map' class='center wide'></div>      
+      <input id="map-search" class="controls" type="text" form="not-register-form" placeholder="{search_box}" />
+      <template id="infowindow-venue">
+        <div>
+          <div class="map-mark-info-head">
+            <a id="map-mark-venue-link" href="">name</a>
+          </div>
+          <div class="map-mark-info-body">
+            <span class="map-mark-info-label">{players}: </span>
+            <span id="map-mark-venue-players">number</span>
+          </div>
+        </div>
+      </template>
+      <template id="infowindow-region">
+        <div>
+          <div class="map-mark-info-head">
+            <span id="map-mark-region-name"></span>
+          </div>
+          <div class="map-mark-info-body">
+            <span class="map-mark-info-label">{venues}: </span>
+            <span id="map-mark-region-venues">number</span>
+          </div>
+        </div>
+      </template>
+      <template id='infowindow-poi'>
+        <div>
+          <div id='poi-id' style='display:none;'></div>
+          <div class="map-mark-info-head">
+            <div id='poi-name'>name</div>
+          </div>
+          <div class="map-mark-info-body">
+            <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+          </div>
+        </div>
+      </template>
+    </div>
+
 {% endblock detail %}

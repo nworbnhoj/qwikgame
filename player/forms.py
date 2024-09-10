@@ -1,6 +1,6 @@
 import datetime, logging
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TypedChoiceField
+from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
@@ -114,7 +114,7 @@ class FilterForm(QwikForm):
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
     venue = ChoiceField(
-        choices = {'ANY':'Any Venue'} | {'map': 'Select from map'} | Venue.choices(),
+        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map'} | Venue.choices(),
         label='Venue',
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"})
@@ -123,6 +123,20 @@ class FilterForm(QwikForm):
         label='Time',
         hours=[*range(6,21)],
         required=True,
+    )
+    lat = DecimalField(
+        decimal_places=6,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    lng = DecimalField(
+        decimal_places=6,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
     )
 
     def __init__(self, *args, **kwargs):

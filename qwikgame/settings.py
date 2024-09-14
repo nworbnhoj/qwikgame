@@ -26,6 +26,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
     'person.apps.PersonConfig',

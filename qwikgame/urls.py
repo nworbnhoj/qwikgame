@@ -7,6 +7,7 @@ urlpatterns = [
     path("", QwikView.as_view(), name='home'),
     path('account/', include("person.urls")),
     path('admin/', admin.site.urls),
+    path('api/', include("api.urls")),
     path('authenticate/', include("authenticate.urls")),
     path('game/', include("game.urls")),
     path('player/', include('player.urls'))

@@ -15,9 +15,22 @@ class Manager(models.Model):
 
 
 class Venue(models.Model):
+    address = models.CharField(max_length=256, blank=True)
+    admin1 = models.CharField(max_length=64, blank=True)
+    country = models.CharField(max_length=2, blank=True)
     games = models.ManyToManyField('game.Game')
+    hours = models.BinaryField(default=bytes(21))
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=-36.449786)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, default=146.430037)
+    locality = models.CharField(max_length=64, blank=True)
     managers = models.ManyToManyField(Manager, blank=True)
     name = models.CharField(max_length=128)
+    note = models.TextField(max_length=256, blank=True)
+    phone = models.CharField(max_length=12, blank=True)
+    placeid = models.TextField(blank=True)
+    route = models.CharField(max_length=64, blank=True)
+    str_num = models.CharField(max_length=8, blank=True)
+    suburb = models.CharField(max_length=32, blank=True)
     url = models.URLField(max_length=256, blank=True)
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
 

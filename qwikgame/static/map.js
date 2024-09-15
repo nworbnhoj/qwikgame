@@ -128,7 +128,7 @@ function game(){
   try {
     const MAP_ELEMENT = document.getElementById("map");
     const FORM = MAP_ELEMENT.previousSibling;
-    const GAME = FORM.querySelector("[name=game]").value;
+    const GAME = FORM.querySelector("[name=game]:checked").value;
     return GAME;
   }
   catch (error) {
@@ -632,13 +632,14 @@ function fetchMarks(game, center, region, regions){
   if(region !== null && !isRegion(region)){ return; }
   if(region !== null && regions.includes(region)){ return; }
   if(region === null && center === null){ return; }
+  const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
   const PARAMS = region === null ? 
                  {game:game, lat:center.lat(), lng:center.lng(), avoidable:regions} :
                  {game:game, region:region, avoidable:regions} ;              
   const ESC = encodeURIComponent;
   const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
-  const PATH = 'json/venue.marks.php?'+QUERY;
-  qwikJSON(PATH, receiveMarks);
+  const PATH = 'api/venue_marks/';
+  qwikJSON(PATH, PARAMS, TOKEN, receiveMarks);
   // report to console
   const LOC = region ? region : center;
   console.log("fetching marks for "+LOC+" # "+regions);

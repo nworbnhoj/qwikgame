@@ -181,19 +181,22 @@ function fillDatalist(datalist){
 }
 
 
-function qwikJSON(path, callback, element){
+function qwikJSON(path, params, csrftoken, callback, element){
     var protocol = window.location.protocol;
     var host = window.location.host;
     var url = protocol + "//" + host + "/" + path;
     args = Array.prototype.slice.call(arguments);
     args.splice(1, 1);
+    let json = JSON.stringify(params)
     var xhr = new XMLHttpRequest();
     xhr.callback = callback;
     xhr.arguments = args;
     xhr.onload = xhrSuccess;
     xhr.onerror = xhrError;
-    xhr.open("GET", url, true);
-    xhr.send(null);
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+    xhr.send(JSON.stringify(params));
 }
 
 

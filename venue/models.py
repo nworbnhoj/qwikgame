@@ -2,6 +2,7 @@ import pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
+from qwikgame.constants import LAT, LNG, NAME
 
 
 TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
@@ -49,6 +50,21 @@ class Venue(models.Model):
         naive = datetime.datetime.combine(date, time)
         aware = self.tzinfo().localize(naive)
         return aware
+
+    def mark(self):
+        return {
+            LAT: self.lat,
+            LNG: self.lng,
+            NAME: self.name,
+        }
+
+    def place(self):
+        kwargs = { COUNTRY: self.country }
+        if self.admin1:
+            kwargs[ADMIN1] = self.admin1
+        if self.locality:
+            kwargs[LOCALITY] = self.locality
+        return kwargs
 
     def tzinfo(self):
         return timezone(self.tz)

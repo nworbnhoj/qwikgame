@@ -18,3 +18,21 @@ WEEK_DAYS = [
     ('SATURDAY'),
     ('SUNDAY'),
 ]
+
+# key constants
+ADMIN1    = 'admin1'
+AVOIDABLE = 'avoidable'
+COUNTRY   = 'country'
+ERRORS    = 'errors'
+GAME      = 'game'
+LOCALITY  = 'locality'
+LAT       = 'lat'
+LNG       = 'lng'
+MARKS     = 'marks'
+MSG       = 'msg'
+NAME      = 'name'
+POS       = 'pos'
+REGION    = 'region'
+SIZE      = 'num'
+STATUS    = 'status'
+VENUE     = 'venue'

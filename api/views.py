@@ -1,25 +1,15 @@
 import json, logging
 from django.http import JsonResponse
-from api.forms import AVOIDABLE, ERRORS, GAME, LAT, LNG, REGION
-from api.forms import VenueMarksJson
+from api.forms import REGION_KEYS, VenueMarksJson
+from api.models import Mark, Region
 from player.models import Filter
 from venue.models import Venue
+from qwikgame.constants import ADMIN1, AVOIDABLE, COUNTRY, ERRORS, GAME, LAT, LNG, LOCALITY, MARKS, POS, REGION, STATUS
 from qwikgame.locate import Locate
 from qwikgame.views import QwikView
 
 logger = logging.getLogger(__file__)
 
-# key constants
-ADMIN1    = 'admin1';
-COUNTRY   = 'country';
-LOCALITY  = 'locality';
-MARKS     = 'marks';
-NAME      = 'name'
-MSG       = 'msg';
-STATUS    = 'status';
-VENUE     = 'venue';
-
-REGION_KEYS = [COUNTRY, ADMIN1, LOCALITY]
 SUMMARY_THRESHOLD = 100;
 
 class DefaultJson(QwikView):
@@ -51,47 +41,70 @@ class VenueMarksJson(QwikView):
  
         logger.info('API venue_marks request:\n\t{}'.format(context))
 
-        game = context.get(GAME)
+        regions = None
         region = context.get(REGION)
-        lat = context.get(LAT)
-        lng = context.get(LNG)
-
-        if not region:
-            # get the region from lat-lng coordinates
-            region = Locate.get_address(lat, lng);
-            logger.info('Obtained region for ({} {}):\n\t{}'.format(lat, lng, region))
-        if not region:
-            msg = 'failed to obtain country|admin1|locality for {} {}'.format(context[LAT], context[LNG])
+        pos = context.get(POS)
+        if region:
+            regions = [region]
+        elif pos:
+            lat, lng = pos[LAT], pos[LNG]
+            regions = Region.objects.filter(
+                east__gte=lng,
+                north__gte=lat,
+                south__lte=lat,
+                west__lte=lng,
+                )
+            logger.info('Obtained regions for ({} {}):\n\t{}'.format(lat, lng, regions))
+        else:
+            msg = 'failed to obtain marks (missing both region and lat-lng)'
             logger.warn(msg)
             return JsonResponse({
                 STATUS: 'error', 
                 MSG: msg,
             })
 
-        marks = self._get_venue_marks(region, context.get('AVOIDABLE'))
+        game = context.get(GAME, 'ALL')
+        marks = []
+        for region in regions:
+            if region.locality:
+                # get Venue Marks
+                kwargs = Mark.venue_filter(region.place) | {GAME: game}
+                marks = marks + list(Mark.objects.filter(**kwargs).all())
+            # get Region Marks
+            kwargs = Mark.region_filter(region.place()) | {GAME: game}
+            mark = Mark.objects.filter(**kwargs).first()
+            if mark:
+                marks.append(mark)
+
+        # The client can supply a list of "|country|admin1|locality" keys 
+        # which are already in-hand, and not required in the JSON response.    
+        avoidable = context.get(AVOIDABLE)
+        if avoidable:
+            for avoid in avoidable:
+                region = dict(zip(REGION_KEYS, avoid.rsplit('|').reverse()))
+                marks = marks.exclude(**region)
+
+        # TODO fix this fudge: select the first region, rather than the list, or smallest etc
+        region0 = regions[0].place()
 
         json_response = JsonResponse({
             STATUS: 'OK' if marks else 'NO_RESULTS',
-            GAME: game.code,
-            COUNTRY: region.get(COUNTRY),
-            ADMIN1: region.get(ADMIN1),
-            LOCALITY: region.get(LOCALITY),
-            MARKS: marks,
+            GAME: game,
+            COUNTRY: region0.get(COUNTRY, ''),
+            ADMIN1: region0.get(ADMIN1, ''),
+            LOCALITY: region0.get(LOCALITY, ''),
+            MARKS: [mark.mark() for mark in marks],
         })
 
         logger.info('API response venue_marks response:\n\t{}'.format(json_response))
  
         return json_response
 
-    def _get_venue_marks(self, region, avoidable=None):
-        venues = Venue.objects.filter(**region)
-        # The client can supply a list of "|country|admin1|locality" keys 
-        # which are already in-hand, and not required in the JSON response.    
-        if avoidable:
-            for avoid in avoidable:
-                region = dict(zip(REGION_KEYS, avoid.rsplit('|').reverse()))
-                venues = venues.exclude(**region)
-        marks = [{LAT:v.lat, LNG:v.lng, NAME:v.name} for v in venues]
-        for mark in marks:
-            mark['num'] = Filter.objects.filter(venue=mark.get(VENUE)).count()
-        return marks
+
+    def locate(lat, lng):
+        regions = Region.objects.filter(
+            east__lte=lng,
+            north__gte=lat,
+            south__lte=lat,
+            west__gte=lng
+            )

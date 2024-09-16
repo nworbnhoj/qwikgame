@@ -3,16 +3,12 @@ from qwikgame.forms import QwikForm
 from django.forms import CharField, ChoiceField, DecimalField
 from game.models import Game
 from venue.models import Venue
+from qwikgame.constants import ADMIN1, AVOIDABLE, COUNTRY, ERRORS, GAME, LAT, LNG, LOCALITY, POS, REGION
+
 
 logger = logging.getLogger(__file__)
 
-# key constants
-AVOIDABLE = 'avoidable';
-ERRORS    = 'errors'
-GAME      = 'game';
-LAT       = 'lat';
-LNG       = 'lng';
-REGION    = 'region';
+REGION_KEYS = [COUNTRY, ADMIN1, LOCALITY]
 
 class VenueMarksJson(QwikForm):
     game = ChoiceField( 
@@ -70,13 +66,12 @@ class VenueMarksJson(QwikForm):
         values = json.loads(request_body.decode('utf8'))
         form = klass(data=values)
         if form.is_valid():
-            try:
-                context[GAME]=Game.objects.get(pk=form.cleaned_data['game'])
-            except:
-                logger.warn('Invalid game (default to ALL): {}'.format(context[GAME]))
+            context[GAME]=form.cleaned_data[GAME]
             context[AVOIDABLE] = form.cleaned_data.get(AVOIDABLE)
-            context[LAT] = form.cleaned_data.get(LAT)
-            context[LNG] = form.cleaned_data.get(LNG)
+            lat = form.cleaned_data.get(LAT)
+            lng = form.cleaned_data.get(LNG)
+            if lat and lng:
+                context[POS] = {LAT:lat, LNG:lng}
             region = form.cleaned_data.get(REGION)
             if region:
                 context[REGION] = dict(zip(REGION_KEYS, region.rsplit('|').reverse()))

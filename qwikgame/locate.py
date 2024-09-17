@@ -3,7 +3,11 @@ from api.models import Service
 
 logger = logging.getLogger(__file__)
 
+GEOPLACE = 'goeplace'
+GEODETAILS = 'geodetails'
+GEOTIMEZONE = 'geotimezone'
 GEOCODE = 'geocode'
+GEOPLUGIN_CONTEXT = {"http": {"timeout": 1}}
 
 class Locate:
 
@@ -19,6 +23,47 @@ class Locate:
             logger.exception("Google geocoding: {}?{}\n{}".format(url, param, response))
         return result
 
+
+    @staticmethod
+    def geoplace(text, country):
+        geoplace = Service.objects.get(pk=GEOPLACE)
+        return Locate.geo(
+            {'input': text, 'components': f"country:{country}"},
+            geoplace.key,
+            geoplace.url
+        )
+
+
+    @staticmethod
+    def geodetails(placeid):
+        geodetails = Service.objects.get(pk=GEODETAILS)
+        geo = Locate.geo(
+            {'place_id': placeid},
+            geodetails.key,
+            geodetails.url
+        )
+        return geo['result'] if 'result' in geo else None
+
+
+    @staticmethod
+    def geotime(lat, lng):
+        geotimezone = Service.objects.get(pk=GEOTIMEZONE)
+        location = f"{lat},{lng}"
+        return Locate.geo(
+            {'location': location, 'timestamp': time.time()},
+            geotimezone.key,
+            geotimezone.url
+        )
+
+
+    @staticmethod
+    def geocode(address, country):
+        geocode = Service.objects.get(pk=GEOCODE)
+        geo = Locate.geo(
+            {'address': address, 'components': f"country:{country}"},
+            geocode.key,
+            geocode.url
+        )
         return geo['result'] if 'result' in geo else None
 
 
@@ -27,11 +72,162 @@ class Locate:
         geocode = Service.objects.get(pk=GEOCODE)
         type_ = "country|administrative_area_level_1|locality"
         geo = Locate.geo(
-            {'latlng': f"{lat},{lng}", 'result_type': type_},
+            {'pos': f"{lat},{lng}", 'result_type': type_},
             geocode.key,
             geocode.url
         )
         return geo['results'] if 'results' in geo else None
+
+
+    @staticmethod
+    def getPlace(description, country):
+        placeid = None
+        geoplace = Locate.geoplace(description, country)
+        if 'predictions' in geoplace and len(geoplace['predictions']) > 0:
+            place = geoplace['predictions'][0]
+            placeid = str(place['place_id'])
+        return placeid
+
+
+    @staticmethod
+    def get_details(placeid):
+        details = None
+        result = Locate.geodetails(placeid)
+        if result is not None:
+            details = {}
+            details['placeid'] = placeid
+
+            details['name'] = str(result.get('name', ''))
+            details['address'] = str(result.get('formatted_address', ''))
+
+            if 'geometry' in result and 'location' in result['geometry']:
+                location = result['geometry']['location']
+                lat = str(location['lat'])
+                lng = str(location['lng'])
+                details['lat'] = lat
+                details['lng'] = lng
+                details['tz'] = Locate.get_timezone(lat, lng)
+
+            if 'address_components' in result:
+                address_components = result['address_components']
+                for addr in address_components:
+                    types = addr.get('types', [])
+                    for type in types:
+                        if type == 'country':
+                            details['country'] = str(addr['long_name'])
+                            details['country_iso'] = str(addr['short_name'])
+                        elif type == 'administrative_area_level_1':
+                            details['admin1'] = str(addr['long_name'])
+                            details['admin1_code'] = str(addr['short_name'])
+                        elif type == 'street_number':
+                            details['str-num'] = str(addr['long_name'])
+                        elif type == 'route':
+                            details['route'] = str(addr['long_name'])
+                        elif type == 'locality':
+                            details['locality'] = str(addr['long_name'])
+
+            if 'opening_hours' in result:
+                opening_hours = result['opening_hours']
+                if 'periods' in opening_hours:
+                    periods = opening_hours['periods']
+                    for period in periods:
+                        open = period.get('open')
+                        if open is None:
+                            continue
+                        day = int(open['day'])
+                        open_time = str(open['time'])
+                        if day is None or open_time is None:
+                            continue
+                        first = int(open_time[:2])
+                        last = 23
+                        if 'close' in period:
+                            close = period['close']
+                            close_time = str(close['time'])
+                            last = int(close_time[:2])
+                        hours = Hours()  # Ensure Hours class is defined
+                        hours.set_span(first, last)
+                        details[f'open{day}'] = hours.bits()
+
+            details['phone'] = str(result.get('phone', ''))
+            details['international_phone_number'] = str(result.get('international_phone_number', ''))
+            details['url'] = str(result.get('website', ''))
+
+        return details
+
+
+    @staticmethod
+    def get_timezone(lat, lng):
+        geotime = Locate.geotime(lat, lng)
+        return str(geotime['timeZoneId']) if 'timeZoneId' in geotime else ''
+
+
+    @staticmethod
+    def parse_address(address, country=None):
+        parsed = False
+        placeid = Locate.get_place(address, country)
+        if placeid is not None:
+            parsed = Locate.get_details(placeid)
+        return parsed
+
+
+    @staticmethod
+    def guess_timezone(location, admin1, country):
+        tz = None
+        placeid = Locate.get_place(f"{location}, {admin1}", country)
+        if placeid is not None:
+            details = Locate.geodetails(placeid)
+            if 'geometry' in details and 'location' in details['geometry']:
+                loc = details['geometry']['location']
+                tz = Locate.get_timezone(loc['lat'], loc['lng'])
+        return tz
+
+
+    @staticmethod
+    def geolocate(key):
+        global geo
+        if 'geo' not in globals():
+            if 'REMOTE_ADDR' in os.environ:
+                remote_add = os.environ['REMOTE_ADDR']
+                url = f"http://www.geoplugin.net/php.gp?ip={remote_add}"
+                response = requests.get(url)
+                geo = json.loads(response.text)
+                if geo is None:
+                    return None  # geoplugin.net is offline
+        if isinstance(key, list):
+            result = {}
+            for k in key:
+                geo_key = f"geoplugin_{k}"
+                result[k] = geo.get(geo_key, None)
+            return result
+        else:
+            geo_key = f"geoplugin_{key}"
+            return geo.get(geo_key, None)
+
+    def __init__(self):
+        super().__init__()
+
+
+    @staticmethod
+    def geo_guess(input):
+        result = "{}"
+        param = {
+            'input': input,
+            'key': Locate.geoplace.key('private')
+        }
+        url = Locate.geoplace.url("json")
+        try:
+            query = urllib.parse.urlencode(param)
+            response = requests.get(f"{url}?{query}")
+            json_data = response.text
+            decoded = json.loads(json_data)
+            status = str(decoded["status"])
+            if status in ['OK', 'ZERO_RESULTS']:
+                result = json_data
+            else:
+                raise RuntimeError(status)
+        except RuntimeError as e:
+            msg = str(e)
+            logger.warn(f"Google geocoding: {msg}\n{url}?{query}\n{msg}")
         return result
 
     @staticmethod
@@ -51,3 +247,27 @@ class Locate:
                     elif type == 'locality':
                         address['locality'] = str(component['short_name'])
         return address
+
+
+    @staticmethod
+    def get_geometry(country, admin1, locality):
+        geometry = None
+        if admin1 and locality:
+            input_str = f"{locality}, {admin1}"
+        elif admin1:
+            input_str = admin1
+        elif locality:
+            input_str = locality
+        elif country in Qwik.countries():
+            input_str = Qwik.countries()[country]
+        else:
+            logger.warn(f"Locate::getGeometry({country}, {admin1}, {locality}) insufficient parameters")
+            return
+        
+        placeid = Locate.get_place(input_str, country)
+        if placeid is not None:
+            details = Locate.geodetails(placeid)
+            if 'geometry' in details:
+                geometry = details['geometry']
+        
+        return geometry

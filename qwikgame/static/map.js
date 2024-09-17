@@ -239,7 +239,7 @@ function clickRegionMarker(mark){
   SPAN_NAME.textContent = mark.name;
 
   const SPAN_NUM = FRAG.getElementById("map-mark-region-venues");
-  SPAN_NUM.textContent = mark.num + '';       // + '' is a string conversion
+  SPAN_NUM.textContent = mark.size + '';       // + '' is a string conversion
   
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
@@ -265,7 +265,7 @@ function clickVenueMarker(mark){
   });
 
   const SPAN = FRAG.getElementById("map-mark-venue-players");
-  SPAN.textContent = mark.num + '';       // + '' is a string conversion
+  SPAN.textContent = mark.size + '';       // + '' is a string conversion
 
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
@@ -383,7 +383,7 @@ function clickMapIcon(event){
     KEY,
     ELEMENT.dataset.lat,
     ELEMENT.dataset.lng,
-    ELEMENT.dataset.num,
+    ELEMENT.dataset.size,
     GAME
   );
   focusOnMark(KEY, GAME);
@@ -786,14 +786,14 @@ function endowMark(key, mark){
 }
 
 
-function addVenueMark(key, lat, lng, num, game){
+function addVenueMark(key, lat, lng, size, game){
   fetchMarks(game, null, key, '');
   const SUPER_KEY = superKey(key);
   if (!QWIK_REGION.has(SUPER_KEY)){
     addRegionMark(SUPER_KEY, lat, lng, game);
   }
   const NAME = key.split("|")[0];  
-  const MARK = {lat:lat, lng:lng, name:NAME, num: num};
+  const MARK = {lat:lat, lng:lng, name:NAME, size: size};
   addMark(key, MARK, game);
   return MARK;
 }
@@ -809,7 +809,7 @@ function addRegionMark(key, lat, lng, game){
   const E = Math.round(lng) + 1;
   const S = Math.round(lat) - 1;
   const W = Math.round(lng) - 1;
-  const MARK = {lat:lat, lng:lng, name:NAME, num: 1, n:N, e:E, s:S, w:W};
+  const MARK = {lat:lat, lng:lng, name:NAME, size: 1, n:N, e:E, s:S, w:W};
   addMark(key, MARK, game);
   return MARK;
 }

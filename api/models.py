@@ -1,7 +1,9 @@
 import logging
 from django.db import models
+from django.db.models import Sum
 from game.models import Game
 from venue.models import Venue
+from player.models import Filter
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
 
 
@@ -84,6 +86,51 @@ class Mark(models.Model):
             return self.region.mark() | { SIZE: self.size }
         logger.warn('Mark missing both venue and region:'.format(self.id))
         return None
+
+    def parent(self):
+        if self.venue:
+            kwargs = Mark.region_filter(self.venue.place())
+            return Mark.objects.filter(**kwargs).first()
+        place = self.region.place()
+        if place.pop(LOCALITY, None):
+            kwargs = Mark.region_filter(place)
+            return Mark.objects.filter(**kwargs).exclude(region__locality__isnull=False).first()
+        if place.pop(ADMIN1, None):
+            kwargs = Mark.region_filter(place)
+            return Mark.objects.filter(**kwargs).exclude(region__admin1__isnull=False).first()
+        return None
+
+    # TODO call update_size() on add/delete Filter and add Match
+    def update_size(self):
+        place = None
+        if self.venue:
+            self.size = Filter.objects.filter(active=True, game=self.game, venue=self.venue).count()
+            # TODO add historical match count in prior year
+            # TODO make distinct per player
+        elif self.region:
+            size = None
+            place = self.region.place()
+            if place.get(LOCALITY):
+                kwargs = Mark.venue_filter(place)
+                marks = Mark.objects.filter(**kwargs)
+                size = marks.aggregate(Sum('size'))
+            elif place.get(ADMIN1):
+                kwargs = Mark.region_filter(place)
+                marks = Mark.objects.filter(**kwargs)
+                marks = marks.exclude(region__locality__isnull=True)
+                size = marks.aggregate(Sum('size'))
+            else:
+                kwargs = Mark.region_filter(place)
+                marks = Mark.objects.filter(**kwargs)
+                marks = marks.exclude(region__locality__isnull=False)
+                marks = marks.exclude(region__admin1__isnull=True)
+                size = marks.aggregate(Sum('size'))
+            self.size = size['size__sum']
+        self.save()
+        logger.info('update size {} = {}'.format(place, self.size))
+        parent = self.parent()
+        if parent:
+            parent.update_size()
 
 
 class Service(models.Model):

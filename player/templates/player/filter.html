@@ -7,6 +7,12 @@
     <script defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGFtZIHPrGiP6ocQl6_BCxLKi4H6ulDwM&callback=venuesMap&libraries=places">
     </script>
+    <script>
+        const VENUE_ICON = "{% static 'img/qwik.pin.21x35.png' %}";
+        const REGION_ICON = "{% static 'img/qwik.cluster.24x24.png' %}";
+        const PLACE_ICON = "{% static 'img/qwik.place.24x24.png' %}";
+    </script>
+
     <script defer src="{% static 'filter.js' %}"></script>
 {% endblock %}
 

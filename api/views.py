@@ -64,17 +64,17 @@ class VenueMarksJson(QwikView):
             })
 
         game = context.get(GAME, 'ALL')
-        marks = []
+        marks = {}
         for region in regions:
             if region.locality:
                 # get Venue Marks
-                kwargs = Mark.venue_filter(region.place) | {GAME: game}
-                marks = marks + list(Mark.objects.filter(**kwargs).all())
+                kwargs = Mark.venue_filter(region.place()) | {GAME: game}
+                marks = marks | {mark.key(): mark.mark() for mark in Mark.objects.filter(**kwargs).all()}
             # get Region Marks
             kwargs = Mark.region_filter(region.place()) | {GAME: game}
             mark = Mark.objects.filter(**kwargs).first()
             if mark:
-                marks.append(mark)
+                marks[mark.key()] = mark.mark()
 
         # The client can supply a list of "|country|admin1|locality" keys 
         # which are already in-hand, and not required in the JSON response.    
@@ -93,7 +93,7 @@ class VenueMarksJson(QwikView):
             COUNTRY: region0.get(COUNTRY, ''),
             ADMIN1: region0.get(ADMIN1, ''),
             LOCALITY: region0.get(LOCALITY, ''),
-            MARKS: [mark.mark() for mark in marks],
+            MARKS: marks,
         })
 
         logger.info('API response venue_marks response:\n\t{}'.format(json_response))

@@ -138,6 +138,10 @@ class FilterForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
+    placeid = CharField(
+        required=False,
+        widget=HiddenInput(),
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

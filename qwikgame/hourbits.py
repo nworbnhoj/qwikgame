@@ -172,6 +172,21 @@ class Hours24x7():
             return self.bits == other.bits
         return NotImplemented
 
+    def __or__(self, other):
+        if other and type(other) == type(self):
+            bits = bytes([a | b for a,b in zip(self.bits, other.bits)])
+            return Hours24x7(bits)
+        else:
+            logger.warn('type mismatch: {}'.format(type(other)))
+            return None
+
+    def __and__(self, other):
+        if other and type(other) == type(self):
+            bits = bytes([a & b for a,b in zip(self.bits, other.bits)])
+            return Hours24x7(bits)
+        else:
+            logger.warn('type mismatch: {}'.format(type(other)))
+
     # https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes
     def __hash__(self):
         """Overrides the default implementation"""
@@ -202,12 +217,6 @@ class Hours24x7():
     def get_day(self, day):
         offset = 3 * day
         return hours24(self.hours[offset: offset+3])
-
-    def intersection(self, other):
-        intersection = bytearray(21)
-        for b in range(len(intersection)):
-            intersection[b] = self.bits[b] & other.bits[b]
-        return Hours24x7(intersection)
 
     def is_week_all(self):
         return self.bits == WEEK_ALL

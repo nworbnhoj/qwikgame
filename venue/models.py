@@ -2,8 +2,8 @@ import pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
-from qwikgame.constants import LAT, LNG, NAME
-
+from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME
+from qwikgame.hourbits import Hours24x7
 
 TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
 
@@ -50,6 +50,9 @@ class Venue(models.Model):
         naive = datetime.datetime.combine(date, time)
         aware = self.tzinfo().localize(naive)
         return aware
+
+    def hours_open(self):
+        return Hours24x7(self.hours)
 
     def mark(self):
         return {

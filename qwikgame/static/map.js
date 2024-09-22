@@ -348,14 +348,30 @@ function clickCreateVenue(event){
   let vid = event.target.getAttribute("vid");
     
   // add a new option to venueSelect and select it
-  let venueSelect = document.getElementById('venue-select');
-  let option = document.createElement('option');
-  option.value = vid;
-  option.text = name;
-  venueSelect.add(option);
-  venueSelect.value = vid;
+  let id = 'id_venue'
+  let venueSelect = document.getElementById('id_venue');
+  let ord = venueSelect.childElementCount;
+  let newId = id + '_' + ord;
+  let newOption = venueSelect.lastElementChild.cloneNode(true);
+  let newInput = newOption.querySelector('input');
+  newInput.id = newId;
+  newInput.value = "placeid";
+  newInput.checked = true;
+  let newLabel = newOption.querySelector('label');
+  newLabel.textContent = name; // removes inner <input>
+  newLabel.setAttribute('for', newId);
+  newLabel.appendChild(newInput)
 
-  let placeidInput = document.getElementById('placeid');
+  // add event listener and send click event to select
+  newLabel.onclick = downClick
+  venueSelect.appendChild(newOption);
+  newLabel.dispatchEvent(new MouseEvent("click", {
+    "view": window,
+    "bubbles": true,
+    "cancelable": false
+  }));
+
+  let placeidInput = document.getElementById('id_placeid');
   placeidInput.value = placeid;
  
   showMap(false);

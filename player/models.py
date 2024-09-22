@@ -62,7 +62,7 @@ class Appeal(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, hours24(self.hours).as_bumps())
+        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, Hours24(self.hours).as_bumps())
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

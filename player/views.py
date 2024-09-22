@@ -4,6 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
+from qwikgame.hourbits import Hours24x7
+from qwikgame.locate import Locate
+from api.models import Region
+from venue.models import Venue
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
@@ -19,7 +23,6 @@ class FilterView(QwikView):
         context = self.filter_form_class.get(
             self.user.player,
             game='ANY',
-            hide=self.hide,
             venue='ANY',
             hours=WEEK_NONE,
         )
@@ -31,11 +34,44 @@ class FilterView(QwikView):
         super().post(request)
         context = self.filter_form_class.post(
             request.POST,
-            self.user.player,
-            hide=self.hide,
         )
+
+        game = context.get('game')
+        venue = context.get('venue')
+        if not venue:
+            placeid = context.get('placeid')
+            if placeid:
+                venue = self._venue_from_placeid(placeid, game)
+                if venue and game:
+                    venue.games.add(game)
+        try:
+            new_filter = Filter.objects.get_or_create(
+                player=self.user.player,
+                game=game,
+                venue=venue)
+            filter_hours = context['hours']
+            venue_hours = venue.hours_open()
+            if venue_hours:
+                filter_hours = filter_hours & venue_hours
+            new_filter[0].set_hours(filter_hours)
+            new_filter[0].save()
+            logger.info('Added filter: {} : {}'.format(
+                self.user.player,
+                new_filter[0],
+            ))
+        except:
+            logger.exception("failed to add filter")
         return HttpResponseRedirect("/player/")
 
+    def _venue_from_placeid(self, placeid, game):
+        details = Locate.get_details(placeid)
+        if details:
+            logger.debug(f'google details for placeid:{placeid}\n{details}')  
+            venue = Venue.objects.create(**details)
+            logger.info(f'new venue: {venue}')
+        else:
+            logger.warn(f'invalide placeid: {placeid}')
+        return venue
 
 class InviteView(QwikView):
 

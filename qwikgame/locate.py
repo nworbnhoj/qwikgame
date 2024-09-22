@@ -1,5 +1,6 @@
 import json, logging, requests, time, urllib.parse
 from api.models import Service
+from qwikgame.hourbits import Hours24x7, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 
@@ -11,7 +12,7 @@ GEOPLUGIN_CONTEXT = {"http": {"timeout": 1}}
 
 class Locate:
 
-    @staticmethod
+    @staticmethod   
     def geo(param, key, url):
         result = None
         param['key'] = key
@@ -96,62 +97,59 @@ class Locate:
         if result is not None:
             details = {}
             details['placeid'] = placeid
+            details['name'] = result.get('name', '')
+            details['address'] = result.get('formatted_address', '')
+            details['url'] = result.get('website', '')
+            details['phone'] = result.get('international_phone_number', '').replace(' ','')
+            editorial_summary = result.get('editorial_summary', None)
+            if editorial_summary:
+                details['note'] = editorial_summary.get('overview' '')
+            geometry = result.get('geometry', None)
+            if geometry:
+                location = geometry.get('location', None)
+                if location:
+                    lat = location.get('lat', 0)
+                    lng = location.get('lng', 0)
+                    details['lat'] = lat
+                    details['lng'] = lng
+                    details['tz'] = Locate.get_timezone(lat, lng)  # Replace with the actual class name
+            for comp in result.get('address_components', []):
+                types = comp.get('types', None)
+                if types:
+                    if 'country' in types:
+                        details['country'] = comp.get('short_name', '')
+                        # details['country_long'] = comp.get('long_name', '')
+                    elif 'administrative_area_level_1' in types:
+                        details['admin1'] = comp.get('short_name', '')
+                        # details['admin1_long'] = comp.get('long_name', '')
+                    elif 'administrative_area_level_2' in types:
+                        details['suburb'] = comp.get('short_name', '')
+                    elif 'locality' in types: 
+                        details['locality'] = comp.get('short_name', '')
+                        # details['locality_long'] = comp.get('short_name', '')
+                    elif 'route' in types:
+                        details['route'] = comp.get('short_name', '')
+                    elif 'street_number' in types:
+                        details['str_num'] = comp.get('short_name', '')
 
-            details['name'] = str(result.get('name', ''))
-            details['address'] = str(result.get('formatted_address', ''))
-
-            if 'geometry' in result and 'location' in result['geometry']:
-                location = result['geometry']['location']
-                lat = str(location['lat'])
-                lng = str(location['lng'])
-                details['lat'] = lat
-                details['lng'] = lng
-                details['tz'] = Locate.get_timezone(lat, lng)
-
-            if 'address_components' in result:
-                address_components = result['address_components']
-                for addr in address_components:
-                    types = addr.get('types', [])
-                    for type in types:
-                        if type == 'country':
-                            details['country'] = str(addr['long_name'])
-                            details['country_iso'] = str(addr['short_name'])
-                        elif type == 'administrative_area_level_1':
-                            details['admin1'] = str(addr['long_name'])
-                            details['admin1_code'] = str(addr['short_name'])
-                        elif type == 'street_number':
-                            details['str-num'] = str(addr['long_name'])
-                        elif type == 'route':
-                            details['route'] = str(addr['long_name'])
-                        elif type == 'locality':
-                            details['locality'] = str(addr['long_name'])
-
-            if 'opening_hours' in result:
-                opening_hours = result['opening_hours']
-                if 'periods' in opening_hours:
-                    periods = opening_hours['periods']
-                    for period in periods:
-                        open = period.get('open')
-                        if open is None:
-                            continue
-                        day = int(open['day'])
-                        open_time = str(open['time'])
-                        if day is None or open_time is None:
-                            continue
-                        first = int(open_time[:2])
-                        last = 23
-                        if 'close' in period:
-                            close = period['close']
-                            close_time = str(close['time'])
-                            last = int(close_time[:2])
-                        hours = Hours()  # Ensure Hours class is defined
-                        hours.set_span(first, last)
-                        details[f'open{day}'] = hours.bits()
-
-            details['phone'] = str(result.get('phone', ''))
-            details['international_phone_number'] = str(result.get('international_phone_number', ''))
-            details['url'] = str(result.get('website', ''))
-
+            opening_hours = result.get('opening_hours', None)
+            if opening_hours:
+                hours = Hours24x7()
+                for period in opening_hours.get('periods', []):
+                    try :
+                        open_day = int(period['open']['day'])
+                        open_hour = int(period['open']['time'])
+                        close_day = int(period['close']['day'])
+                        close_hour = int(period['close']['time'])
+                        first_hour = (open_hour // 100) if ((open_hour % 100) == 0) else ((open_hour // 100) + 1)
+                        last_hour = (close_hour // 100) - 1
+                        hours.set_period(open_day, first_hour, close_day, last_hour)
+                    except:
+                        logger.exception('Invalid opening hours period {period}')
+                details['hours'] = hours.as_bytes()
+            else:
+                hours = Hours24x7(WEEK_ALL)
+                logger.warn(f'opening_hours unavailable ({placeid}) - default to 24x7')
         return details
 
 

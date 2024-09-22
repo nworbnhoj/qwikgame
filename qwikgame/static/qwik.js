@@ -137,9 +137,9 @@ function replicateBase(base){
     var baseHtml = base.outerHTML;
     var params = {html:baseHtml};
     var esc = encodeURIComponent;
-    var query = Object.keys(params).map(k => esc(k) + '=' + esc(params[k])).join('&');
-    var path = 'json/'+id+'.listing.php?'+query;
-    qwikJSON(path, replaceRecords, base);
+    var path = 'api/listing/'+id+'/';
+    const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
+    qwikJSON(path, params, TOKEN, replaceRecords, base);
 }
 
 
@@ -151,9 +151,10 @@ function fillOptions(element){
     }
     const FORM = element.closest("form");
     const GAME_ELEMENT = FORM.querySelector("[name=game]");
-    let query = (GAME_ELEMENT !== null) ? '?game='+GAME_ELEMENT.value : '' ;    
-    var path = 'json/'+id+'.options.php'+query;
-    qwikJSON(path, setInnerJSON, element);
+    let PARAM = (GAME_ELEMENT !== null) ? {'game': GAME_ELEMENT.value} : {} ;    
+    var path = 'api/options/'+id+'/';
+    const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
+    qwikJSON(path, PARAM, TOKEN, setInnerJSON, element);
 }
 
 
@@ -171,13 +172,14 @@ function fillDatalist(datalist){
     var selectGame = input.form.querySelector(".select-game");
     if (selectGame){
         var game = selectGame.value;
-        var query = "?game="+game;
+        PARAM = {"game" : game};
     } else {
         console.log("Failed to fill datalist: unable to find .select-game");        
-        var query = '';
+        PARAM = {};
     }
-    var path = "json/"+id+".options.php"+query;
-    qwikJSON(path, setInnerJSON, datalist);
+    var path = "api/options/"+id+"/";
+    const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
+    qwikJSON(path, PARAM, TOKEN, setInnerJSON, datalist);
 }
 
 

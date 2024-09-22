@@ -114,7 +114,7 @@ class FilterForm(QwikForm):
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
     venue = ChoiceField(
-        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map'} | Venue.choices(),
+        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map', 'placeid': ''} | Venue.choices(),
         label='Venue',
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"})
@@ -142,10 +142,10 @@ class FilterForm(QwikForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    # Initializes an AddVenueForm for 'player'.
-    # Returns a context dict including 'add_venue_form'
+    # Initializes an FilterForm for 'player'.
+    # Returns a context dict including 'filter_form'
     @classmethod
-    def get(klass, player, game=None, hide=[], hours=WEEK_NONE, strength=None, venue='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue='map'):
         return {
             'filter_form': klass(
                 initial = {
@@ -157,31 +157,27 @@ class FilterForm(QwikForm):
             )
         }
 
-    # Initializes an AddVenueForm for 'player'.
-    # Returns a context dict including 'add_venue_form'
+    # Processes a FilterForm for 'player'.
+    # Returns a context dict game, venue|placeid, hours
     @classmethod
-    def post(klass, request_post, player, hide=[]):
+    def post(klass, request_post):
+        context = {}
         form = klass(data=request_post)
         if form.is_valid():
-            try:
-                game=Game.objects.get(pk=form.cleaned_data['game'])
-            except:
-                game=None
-            try:
-                venue=Venue.objects.get(pk=form.cleaned_data['venue'])
-            except:
-                venue=None
-            try:
-                new_filter = Filter.objects.get_or_create(player=player, game=game, venue=venue)
-                new_filter[0].set_hours(form.cleaned_data['hours'])
-                new_filter[0].save()
-                logger.info('Added filter: {} : {}'.format(
-                    player,
-                    new_filter[0],
-                ))
-            except:
-                logger.exception("failed to add filter")
-        return {'filter_form': form}
+            game_id = form.cleaned_data['game']
+            context['game'] = Game.objects.filter(pk=game_id).first()
+            venue_id = form.cleaned_data['venue']
+            if venue_id == 'placeid':
+                placeid = form.cleaned_data['placeid']
+                context['venue'] = Venue.objects.filter(placeid=placeid).first()
+                context['placeid'] = placeid
+            else:
+                context['venue'] = Venue.objects.filter(pk=venue_id).first()
+            context['hours'] = form.cleaned_data['hours']
+        else:
+            logger.info(form)
+        context['filter_form'] = form
+        return context
 
 
 class KeenForm(QwikForm):

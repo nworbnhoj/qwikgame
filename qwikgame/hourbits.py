@@ -32,9 +32,7 @@ class Hours24():
                 self.bits = DAY_NONE
                 logger.warn('failed to initialise Hours24: int out of range')
             case list() if len(value)==24:    # interpretted as list(bool)
-                integer = 0
-                for i, bit in enumerate(value):
-                    integer |= bit << (len(value) - i - 1)
+                integer = sum(v << i for i, v in enumerate(value[::-1]))
                 self.bits = integer.to_bytes(3, ENDIAN)
             case list():
                 self.bits = DAY_NONE
@@ -148,12 +146,12 @@ class Hours24x7():
                     bites+=hours24.as_bytes()
                 self.bits = bytes(bites)
             case list() if len(value)==168:    # interpretted as [bool]
-                bites = []
+                bites = bytearray()
                 for day in range(len(WEEK_DAYS)):
                     offset = 24 * day
-                    bools = value[offset: offset+3]
+                    bools = value[offset: offset+24]
                     hours24 = Hours24(bools)
-                    bites.append(hours24.as_bytes())
+                    bites += hours24.as_bytes()
                 self.bits = bytes(bites)
             case bytes():
                 self.bits = WEEK_NONE
@@ -225,3 +223,19 @@ class Hours24x7():
         week_day = date.isoweekday() - 1
         offset = 3 * week_day
         self.bits[offset:offset+2:] = hours24.bits
+
+    def set_period(self, first_day, first_hour, last_day, last_hour, on=True):
+        first = first_day * 24 + first_hour
+        last = last_day * 24 + last_hour
+        if first == last:
+            return
+        elif first < last:
+            hours = [False]*first
+            hours += [True]*(last-first+1)
+            hours += [False]*(24*7-len(hours))
+        else:
+            hours = [True]*last
+            hours += [False]*(first-last+1)
+            hours += [True]*(24*7-first)
+        period = Hours24x7(hours)
+        self.bits = (self | period).as_bytes()

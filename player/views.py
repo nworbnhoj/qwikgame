@@ -41,7 +41,8 @@ class FilterView(QwikView):
         if not venue:
             placeid = context.get('placeid')
             if placeid:
-                venue = self._venue_from_placeid(placeid, game)
+                venue = Venue.from_placeid(placeid)
+                venue.save()
                 if venue and game:
                     venue.games.add(game)
         try:
@@ -63,15 +64,6 @@ class FilterView(QwikView):
             logger.exception("failed to add filter")
         return HttpResponseRedirect("/player/")
 
-    def _venue_from_placeid(self, placeid, game):
-        details = Locate.get_details(placeid)
-        if details:
-            logger.debug(f'google details for placeid:{placeid}\n{details}')  
-            venue = Venue.objects.create(**details)
-            logger.info(f'new venue: {venue}')
-        else:
-            logger.warn(f'invalide placeid: {placeid}')
-        return venue
 
 class InviteView(QwikView):
 

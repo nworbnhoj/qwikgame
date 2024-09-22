@@ -1,9 +1,12 @@
-import pytz
+import logging, pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME
 from qwikgame.hourbits import Hours24x7
+from service.locate import Locate
+
+logger = logging.getLogger(__file__)
 
 TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
 
@@ -34,6 +37,17 @@ class Venue(models.Model):
     suburb = models.CharField(max_length=32, blank=True)
     url = models.URLField(max_length=256, blank=True)
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
+
+    @classmethod
+    def from_placeid(klass, placeid):
+        details = Locate.get_details(placeid)
+        if details:
+            logger.debug(f'google details for placeid:{placeid}\n{details}')  
+            venue = klass(**details)
+            logger.info(f'new venue: {venue}')
+            return venue
+        logger.warn(f'invalid placeid: {placeid}')
+        return None
 
     @classmethod
     def choices(klass):

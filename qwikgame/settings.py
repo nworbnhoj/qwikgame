@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'game.apps.GameConfig',
     'person.apps.PersonConfig',
     'player.apps.PlayerConfig',
+    'service.apps.ServiceConfig',
     'venue.apps.VenueConfig',
     'responsive.conf.ResponsiveAppConf',
     'django.contrib.admin',

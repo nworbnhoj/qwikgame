@@ -1,5 +1,5 @@
 import json, logging, requests, time, urllib.parse
-from api.models import Service
+from service.models import Service
 from qwikgame.hourbits import Hours24x7, WEEK_ALL
 
 logger = logging.getLogger(__file__)

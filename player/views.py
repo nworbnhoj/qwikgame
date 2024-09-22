@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
 from qwikgame.hourbits import Hours24x7
-from qwikgame.locate import Locate
 from api.models import Region
+from service.locate import Locate
 from venue.models import Venue
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE

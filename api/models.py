@@ -5,7 +5,7 @@ from game.models import Game
 from venue.models import Venue
 from player.models import Filter
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
-
+# from qwikgame.service import Locate
 
 logger = logging.getLogger(__file__)
 
@@ -150,10 +150,4 @@ class Mark(models.Model):
         parent = self.parent()
         if parent:
             parent.update_size()
-
-
-class Service(models.Model):
-    name = models.CharField(max_length=32, primary_key=True)
-    url = models.URLField(max_length=64)
-    key = models.CharField(max_length=64)
     

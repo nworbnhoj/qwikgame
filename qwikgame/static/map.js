@@ -257,6 +257,8 @@ function clickVenueMarker(mark){
   const LINK = FRAG.getElementById("map-mark-venue-link");
   LINK.textContent = mark.name;
   LINK.href = "";
+  LINK.setAttribute('placeid', mark.placeid)
+  LINK.setAttribute('venuename', mark.name)
   LINK.addEventListener('click', (event) => {
     clickMapMarkVenue(event, mark.key);
   });

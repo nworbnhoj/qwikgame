@@ -2,7 +2,7 @@ import logging, pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
-from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME
+from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, PLACEID
 from qwikgame.hourbits import Hours24x7
 from service.locate import Locate
 
@@ -73,6 +73,7 @@ class Venue(models.Model):
             LAT: self.lat,
             LNG: self.lng,
             NAME: self.name,
+            PLACEID: self.placeid,
         }
 
     def place(self):

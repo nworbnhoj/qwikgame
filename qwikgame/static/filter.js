@@ -51,14 +51,35 @@ function clickShowMapOption(event){
 
 function clickMapMarkVenue(event, venueId){
   event.preventDefault();
-    
+  let placeid = event.target.getAttribute("placeid");
+  let name = event.target.getAttribute("venuename");
+  
   // add a new option to venueSelect and select it
-  let venueSelect = document.getElementById('venue-select');
-  let option = document.createElement('option');
-  option.value = venueId;
-  option.text = venueId.split('|')[0];
-  venueSelect.add(option);
-  venueSelect.value=venueId;
+  let id = 'id_venue'
+  let venueSelect = document.getElementById('id_venue');
+  let ord = venueSelect.childElementCount;
+  let newId = id + '_' + ord;
+  let newOption = venueSelect.lastElementChild.cloneNode(true);
+  let newInput = newOption.querySelector('input');
+  newInput.id = newId;
+  newInput.value = "placeid";
+  newInput.checked = true;
+  let newLabel = newOption.querySelector('label');
+  newLabel.textContent = name; // removes inner <input>
+  newLabel.setAttribute('for', newId);
+  newLabel.appendChild(newInput)
+
+  // add event listener and send click event to select
+  newLabel.onclick = downClick
+  venueSelect.appendChild(newOption);
+  newLabel.dispatchEvent(new MouseEvent("click", {
+    "view": window,
+    "bubbles": true,
+    "cancelable": false
+  }));
+
+  let placeidInput = document.getElementById('id_placeid');
+  placeidInput.value = placeid;
 
   showMap(false);
 }

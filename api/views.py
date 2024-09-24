@@ -29,31 +29,30 @@ class VenueMarksJson(QwikView):
         context = self.venue_marks_json_class.post(
             request.body,
         )
-
         if context.get(ERRORS):
             msg = "Invalid api request: {}".format(context.get(ERRORS))
             logger.warn(msg)
             return JsonResponse({
                 STATUS: 'error', 
                 MSG: msg,
-            })
- 
-        logger.info('API venue_marks request:\n\t{}'.format(context))
+            }) 
 
         regions = None
         region = context.get(REGION)
         pos = context.get(POS)
         if region:
             regions = [region]
+            logger.info(f'API venue_marks request: {region}')
         elif pos:
             lat, lng = pos[LAT], pos[LNG]
+            logger.info(f'API venue_marks request: ({lat} {lng})')
             regions = Region.objects.filter(
                 east__gte=lng,
                 north__gte=lat,
                 south__lte=lat,
                 west__lte=lng,
                 )
-            logger.info('Obtained regions for ({} {}):\n\t{}'.format(lat, lng, regions))
+            logger.info(f'Regions for ({lat} {lng}): {[ r.name for r in regions]}')
         else:
             msg = 'failed to obtain marks (missing both region and lat-lng)'
             logger.warn(msg)
@@ -95,7 +94,7 @@ class VenueMarksJson(QwikView):
             MARKS: marks,
         })
 
-        logger.info('API response venue_marks response:\n\t{}'.format(json_response))
+        logger.info(f'API venue_marks response: status={json_response.status_code} marks={len(marks)}')
  
         return json_response
 

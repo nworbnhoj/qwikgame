@@ -675,9 +675,9 @@ function fetchMarks(game, center, region, regions){
  *****************************************************************************/
 function receiveMarks(json){
   if(typeof json.status === 'undefined' || json.status === null){ return; }
-  const COUNTRY = json.country !== null ? json.country : '';
-  const ADMIN1 = json.admin1 !== null ? json.admin1+'|' : '';
-  const LOCALITY = json.locality !== null ? json.locality+'|' : '';
+  const COUNTRY = json.country ? json.country : '';
+  const ADMIN1 = json.admin1 ? json.admin1+'|' : '';
+  const LOCALITY = json.locality ? json.locality+'|' : '';
   const REGION = LOCALITY+ADMIN1+COUNTRY;
   switch (json.status){
     case 'OK':

@@ -1,4 +1,4 @@
-import json, logging
+import json, logging, math
 from django.http import JsonResponse
 from api.forms import REGION_KEYS, VenueMarksJson
 from api.models import Mark, Region
@@ -82,20 +82,33 @@ class VenueMarksJson(QwikView):
                 region = dict(zip(REGION_KEYS, avoid.rsplit('|').reverse()))
                 marks = marks.exclude(**region)
 
-        # TODO fix this fudge: select the first region, rather than the list, or smallest etc
-        region0 = regions[0].place()
-
-        json_response = JsonResponse({
+        response = {
             STATUS: 'OK' if marks else 'NO_RESULTS',
             GAME: game,
-            COUNTRY: region0.get(COUNTRY, ''),
-            ADMIN1: region0.get(ADMIN1, ''),
-            LOCALITY: region0.get(LOCALITY, ''),
             MARKS: marks,
-        })
+        }
 
+        # find the closest region and include in the response
+        if len(regions) == 0:
+            closest = {}
+        if len(regions) == 1:
+            for k,v in regions[0].place().items():
+                response[k] = v
+        else:
+            closest = None
+            min_distance = 1000 # arbitrary big number > 360
+            for region in regions:
+                lat = region.lat - pos[LAT]
+                lng = region.lng - pos[LNG]
+                distance = math.sqrt(lat**2 + lng**2)
+                if distance < min_distance:
+                    min_distance = distance
+                    closest = region
+            for k,v in closest.place().items():
+                response[k] = v
+
+        json_response = JsonResponse(response)
         logger.info(f'API venue_marks response: status={json_response.status_code} marks={len(marks)}')
- 
         return json_response
 
 

@@ -23,6 +23,7 @@ WEEK_DAYS = [
 ADMIN1    = 'admin1'
 AVOIDABLE = 'avoidable'
 COUNTRY   = 'country'
+EAST      = 'e'
 ERRORS    = 'errors'
 GAME      = 'game'
 LOCALITY  = 'locality'
@@ -31,11 +32,14 @@ LNG       = 'lng'
 MARKS     = 'marks'
 MSG       = 'msg'
 NAME      = 'name'
+NORTH     = 'n'
 POS       = 'pos'
 REGION    = 'region'
 SIZE      = 'size'
+SOUTH     = 's'
 STATUS    = 'status'
 VENUE     = 'venue'
+WEST      = 'w'
 
 
 

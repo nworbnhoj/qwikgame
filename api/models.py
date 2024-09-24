@@ -4,7 +4,7 @@ from django.db.models import Sum
 from game.models import Game
 from venue.models import Venue
 from player.models import Filter
-from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
+from qwikgame.constants import ADMIN1, COUNTRY, EAST, LAT, LNG, LOCALITY, NAME, NORTH, SIZE, SOUTH, WEST
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
@@ -15,6 +15,8 @@ class Region(models.Model):
     country = models.CharField(max_length=2)
     east = models.DecimalField(max_digits=9, decimal_places=6, default=180)
     name = models.CharField(max_length=128, blank=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     north = models.DecimalField(max_digits=9, decimal_places=6, default=90)
     south = models.DecimalField(max_digits=9, decimal_places=6, default=-90)
     west = models.DecimalField(max_digits=9, decimal_places=6, default=-180)
@@ -34,7 +36,7 @@ class Region(models.Model):
         if geometry:
             try:
                 smallest = 'locality' if locality else 'admin1' if admin1 else 'country'
-                # coords = geometry['coords']
+                location = geometry['location']
                 viewport = geometry['viewport']
                 northeast = viewport['northeast']
                 southwest = viewport['southwest']
@@ -42,8 +44,8 @@ class Region(models.Model):
                     admin1 = admin1,
                     country = country,
                     east = float(northeast['lng']),
-                    # lat = float(coords['lat']),
-                    # lng = float(coords['lng']),
+                    lat = float(location['lat']),
+                    lng = float(location['lng']),
                     locality = locality,
                     name = geometry['names'][smallest],
                     north = float(northeast['lat']),
@@ -59,9 +61,13 @@ class Region(models.Model):
 
     def mark(self):
         return {
-            LAT: self.south + (self.north - self.south)/2,
-            LNG: self.west + (self.east - self.west)/2,
+            EAST: self.east,
+            LAT: self.lat,
+            LNG: self.lng,
             NAME: self.name,
+            NORTH: self.north,
+            SOUTH: self.south,
+            WEST: self.west,
         }
 
     def place(self):

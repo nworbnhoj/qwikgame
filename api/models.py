@@ -175,26 +175,24 @@ class Mark(models.Model):
             # TODO add historical match count in prior year
             # TODO make distinct per player
         elif self.region:
-            size = None
+            size = 0
             place = self.region.place()
             if place.get(LOCALITY):
                 kwargs = Mark.venue_filter(place)
-                marks = Mark.objects.filter(**kwargs)
-                size = marks.aggregate(Sum('size'))
+                self.size = Mark.objects.filter(**kwargs).count()
             elif place.get(ADMIN1):
                 kwargs = Mark.region_filter(place)
                 marks = Mark.objects.filter(**kwargs)
                 marks = marks.exclude(region__locality__isnull=True)
-                size = marks.aggregate(Sum('size'))
+                self.size = marks.aggregate(Sum('size', default=0)).get('size__sum', 0)
             else:
                 kwargs = Mark.region_filter(place)
                 marks = Mark.objects.filter(**kwargs)
-                marks = marks.exclude(region__locality__isnull=False)
+                marks = marks.exclude(region__locality__isnull=True)
                 marks = marks.exclude(region__admin1__isnull=True)
-                size = marks.aggregate(Sum('size'))
-            self.size = size['size__sum']
+                self.size = marks.aggregate(Sum('size', default=0)).get('size__sum', 0)
         self.save()
-        logger.info('update size {} = {}'.format(place, self.size))
+        logger.debug('update size {} = {}'.format(place, self.size))
         parent = self.parent()
         if parent:
             parent.update_size()

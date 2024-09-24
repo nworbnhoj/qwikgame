@@ -5,7 +5,7 @@ from game.models import Game
 from venue.models import Venue
 from player.models import Filter
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
-# from qwikgame.service import Locate
+from service.locate import Locate
 
 logger = logging.getLogger(__file__)
 
@@ -27,6 +27,35 @@ class Region(models.Model):
             self.locality if self.locality else '',
             self.name,
             )
+
+    @classmethod
+    def from_place(cls, country, admin1=None, locality=None):
+        geometry = Locate.get_geometry(country, admin1, locality)
+        if geometry:
+            try:
+                smallest = 'locality' if locality else 'admin1' if admin1 else 'country'
+                # coords = geometry['coords']
+                viewport = geometry['viewport']
+                northeast = viewport['northeast']
+                southwest = viewport['southwest']
+                region = cls(
+                    admin1 = admin1,
+                    country = country,
+                    east = float(northeast['lng']),
+                    # lat = float(coords['lat']),
+                    # lng = float(coords['lng']),
+                    locality = locality,
+                    name = geometry['names'][smallest],
+                    north = float(northeast['lat']),
+                    south = float(southwest['lat']),
+                    west = float(southwest['lng']),
+                    )
+                logger.info(f'new region: {region}')
+                return region
+            except:
+                logger.warn(f'invalid geometry for: {country}|{admin1}|{locality}\n{geometry}')
+        logger.warn(f'failed to get geometry for: {country}|{admin1}|{locality}')
+        return None
 
     def mark(self):
         return {
@@ -52,6 +81,25 @@ class Mark(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # recursively add Region Marks as required
+        regions = Region.objects
+        if self.venue:
+            place = self.venue.place()
+        elif self.region:
+            place = self.region.place()
+            if place.pop(LOCALITY, None):
+                regions = regions.exclude(locality__isnull=False)
+            elif place.pop(ADMIN1, None):
+                regions = regions.exclude(admin1__isnull=False)
+        if not regions.filter(**place).exists():
+            try:
+                region = Region.from_place(**place)
+                region.save()
+                mark = Mark(game=self.game, region=region, size=1)
+                mark.save()
+            except:
+                logger.exception('failed to create Mark')
+        self.update_size()
 
     def __str__(self):
 

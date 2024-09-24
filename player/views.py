@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
 from player.models import Appeal, Filter, Friend, Invite
 from qwikgame.hourbits import Hours24x7
-from api.models import Region
+from api.models import Region, Mark
 from service.locate import Locate
 from venue.models import Venue
 from qwikgame.views import QwikView
@@ -45,6 +45,8 @@ class FilterView(QwikView):
                 venue.save()
                 if venue and game:
                     venue.games.add(game)
+                    venue.save()
+                Mark(game=game, venue=venue, size=1).save()
         try:
             new_filter = Filter.objects.get_or_create(
                 player=self.user.player,

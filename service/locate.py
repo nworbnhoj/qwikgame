@@ -1,10 +1,11 @@
 import json, logging, requests, time, urllib.parse
 from service.models import Service
+from qwikgame.constants import COUNTRIES
 from qwikgame.hourbits import Hours24x7, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 
-GEOPLACE = 'goeplace'
+GEOPLACE = 'geoplace'
 GEODETAILS = 'geodetails'
 GEOTIMEZONE = 'geotimezone'
 GEOCODE = 'geocode'
@@ -81,7 +82,7 @@ class Locate:
 
 
     @staticmethod
-    def getPlace(description, country):
+    def get_place(description, country):
         placeid = None
         geoplace = Locate.geoplace(description, country)
         if 'predictions' in geoplace and len(geoplace['predictions']) > 0:
@@ -249,23 +250,31 @@ class Locate:
 
     @staticmethod
     def get_geometry(country, admin1, locality):
-        geometry = None
+        result = None
         if admin1 and locality:
             input_str = f"{locality}, {admin1}"
         elif admin1:
             input_str = admin1
         elif locality:
             input_str = locality
-        elif country in Qwik.countries():
-            input_str = Qwik.countries()[country]
+        elif country in COUNTRIES:
+            input_str = COUNTRIES[country]
         else:
             logger.warn(f"Locate::getGeometry({country}, {admin1}, {locality}) insufficient parameters")
             return
-        
         placeid = Locate.get_place(input_str, country)
-        if placeid is not None:
+        if placeid:
             details = Locate.geodetails(placeid)
-            if 'geometry' in details:
-                geometry = details['geometry']
-        
-        return geometry
+            if details:
+                result = details.get('geometry', {})
+                result['names'] = {}
+                tipes = ['country', 'admin1', 'locality']
+                for comp in details.get('address_components', []):
+                    tipes = comp.get('types', [])
+                    if 'country' in tipes:
+                        result['names']['country'] = comp['long_name'] or comp['short_name'] or country
+                    if 'administrative_area_level_1' in tipes:
+                        result['names']['admin1'] = comp['long_name'] or comp['short_name'] or admin1
+                    if 'locality' in tipes:
+                        result['names']['locality'] = comp['long_name'] or comp['short_name'] or locality
+        return result

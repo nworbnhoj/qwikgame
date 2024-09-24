@@ -66,26 +66,44 @@ class VenueMarksJson(QwikView):
                 MSG: msg,
             })
 
-        game = context.get(GAME, 'ALL')
-        marks = {}
-        for region in regions:
-            if region.locality:
-                # get Venue Marks
-                kwargs = Mark.venue_filter(region.place()) | {GAME: game}
-                marks = marks | {mark.key(): mark.mark() for mark in Mark.objects.filter(**kwargs).all()}
-            # get Region Marks
-            kwargs = Mark.region_filter(region.place()) | {GAME: game}
-            mark = Mark.objects.filter(**kwargs).first()
-            if mark:
-                marks[mark.key()] = mark.mark()
+        game = context.get(GAME, None)
+        kwargs = {GAME: game} if game else {}
+        mark_objects =  Mark.objects.filter(**kwargs)
 
         # The client can supply a list of "|country|admin1|locality" keys 
         # which are already in-hand, and not required in the JSON response.    
         avoidable = context.get(AVOIDABLE)
+        logger.warn(f'======== {avoidable}')
         if avoidable:
             for avoid in avoidable:
                 region = dict(zip(REGION_KEYS, avoid.rsplit('|').reverse()))
-                marks = marks.exclude(**region)
+                mark_objects = mark_objects.exclude(**region)
+
+        marks = {}
+        for region in regions:
+            place = region.place()
+            if place.get(LOCALITY, None):
+                # get Venue Marks
+                kwargs = Mark.venue_filter(place)
+                venue_marks = mark_objects.filter(**kwargs).all()
+                marks = marks | {vm.key(): vm.mark() for vm in venue_marks}
+                place.pop(LOCALITY, None)
+            if place.get(ADMIN1, None):
+                # get locality marks
+                kwargs = Mark.region_filter(place)
+                locality_marks = mark_objects.filter(**kwargs)
+                marks = marks | {lm.key(): lm.mark() for lm in locality_marks}
+                place.pop(ADMIN1, None)
+            if place.get(COUNTRY, None):
+                # get admin1 marks
+                kwargs = Mark.region_filter(place)
+                admin1_marks = mark_objects.filter(**kwargs)
+                admin1_marks = admin1_marks.exclude(region__locality__isnull=True)
+                marks = marks | {am.key(): am.mark() for am in admin1_marks}
+            # get country marks
+            country_marks = mark_objects.exclude(region__locality__isnull=True)
+            country_marks = country_marks.exclude(region__admin1__isnull=True)
+            marks = marks | {cm.key(): cm.mark() for cm in country_marks}
 
         response = {
             STATUS: 'OK' if marks else 'NO_RESULTS',

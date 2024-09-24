@@ -74,7 +74,9 @@ class VenueMarksJson(QwikForm):
                 context[POS] = {LAT:lat, LNG:lng}
             region = form.cleaned_data.get(REGION)
             if region:
-                context[REGION] = dict(zip(REGION_KEYS, region.rsplit('|').reverse()))
+                regions = region.rsplit('|')
+                regions.reverse()
+                context[REGION] = dict(zip(REGION_KEYS, regions))
         else:
             logger.warn("invalid form: {}".format(form.errors))
             context[ERRORS] = form.errors

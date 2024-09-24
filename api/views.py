@@ -41,7 +41,12 @@ class VenueMarksJson(QwikView):
         region = context.get(REGION)
         pos = context.get(POS)
         if region:
-            regions = [region]
+            region_objects = Region.objects.filter(**region)
+            if not region.get(LOCALITY, None):
+                region_objects = region_objects.exclude(region__locality__isnull=False)
+            if not region.get(ADMIN1, None):
+                region_objects = region_objects.exclude(admin1__locality__isnull=False)
+            regions = region_objects.all()
             logger.info(f'API venue_marks request: {region}')
         elif pos:
             lat, lng = pos[LAT], pos[LNG]

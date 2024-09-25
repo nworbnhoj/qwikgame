@@ -44,7 +44,10 @@ class Locate:
             geodetails.key,
             geodetails.url
         )
-        return geo['result'] if 'result' in geo else None
+        if 'result' in geo:
+            return geo['result']
+        logger.warn('no result from geodetails: {geo}')
+        return None
 
 
     @staticmethod
@@ -66,7 +69,10 @@ class Locate:
             geocode.key,
             geocode.url
         )
-        return geo['result'] if 'result' in geo else None
+        if 'result' in geo:
+            return geo['result']
+        logger.warn('no result from geocode: {geo}')
+        return None
 
 
     @staticmethod
@@ -78,7 +84,10 @@ class Locate:
             geocode.key,
             geocode.url
         )
-        return geo['results'] if 'results' in geo else None
+        if 'result' in geo:
+            return geo['result']
+        logger.warn('no result from revgeocode: {geo}')
+        return None
 
 
     @staticmethod

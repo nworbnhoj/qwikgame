@@ -42,11 +42,12 @@ class FilterView(QwikView):
             placeid = context.get('placeid')
             if placeid:
                 venue = Venue.from_placeid(placeid)
-                venue.save()
-                if venue and game:
-                    venue.games.add(game)
+                if venue:
                     venue.save()
-                Mark(game=game, venue=venue, size=1).save()
+                    if game:
+                        venue.games.add(game)
+                        venue.save()
+                        Mark(game=game, venue=venue, size=1).save()
         try:
             new_filter = Filter.objects.get_or_create(
                 player=self.user.player,

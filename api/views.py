@@ -73,11 +73,13 @@ class VenueMarksJson(QwikView):
         # The client can supply a list of "|country|admin1|locality" keys 
         # which are already in-hand, and not required in the JSON response.    
         avoidable = context.get(AVOIDABLE)
-        logger.warn(f'======== {avoidable}')
         if avoidable:
-            for avoid in avoidable:
-                region = dict(zip(REGION_KEYS, avoid.rsplit('|').reverse()))
-                mark_objects = mark_objects.exclude(**region)
+            for avoid in avoidable.rsplit(':'):
+                place = avoid.rsplit('|')
+                place.reverse()
+                place = dict(zip(REGION_KEYS, place))
+                kwargs = Mark.region_filter(place)
+                mark_objects = mark_objects.exclude(**kwargs)
 
         marks = {}
         for region in regions:

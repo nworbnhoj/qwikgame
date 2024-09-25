@@ -11,6 +11,9 @@ logger = logging.getLogger(__file__)
 REGION_KEYS = [COUNTRY, ADMIN1, LOCALITY]
 
 class VenueMarksJson(QwikForm):
+    avoidable = CharField(
+        required=False
+    )
     game = ChoiceField( 
         choices = {'ANY':'Any Game'} | Game.choices(),
         required=True,

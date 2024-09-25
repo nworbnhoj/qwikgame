@@ -22,6 +22,22 @@ ALLOWED_HOSTS = [
     'beta.qwikgame.org',
     'www.qwikgame.org',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://alpha.qwikgame.org",
+    "https://beta.qwikgame.org",
+    "https://www.qwikgame.org",
+]
+CSRF_ALLOWED_ORIGINS = [
+    "https://alpha.qwikgame.org",
+    "https://beta.qwikgame.org",
+    "https://www.qwikgame.org",
+]
+CORS_ORIGINS_WHITELIST = [
+    "https://alpha.qwikgame.org",
+    "https://beta.qwikgame.org",
+    "https://www.qwikgame.org",
+]
+
 
 # Application definition
 

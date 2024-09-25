@@ -176,6 +176,7 @@ class FilterForm(QwikForm):
                 context['venue'] = Venue.objects.filter(placeid=placeid).first()
                 context['placeid'] = placeid
             else:
+                venue_id = int(venue_id)
                 context['venue'] = Venue.objects.filter(pk=venue_id).first()
             context['hours'] = form.cleaned_data['hours']
         else:

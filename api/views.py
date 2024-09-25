@@ -116,7 +116,7 @@ class VenueMarksJson(QwikView):
         # find the closest region and include in the response
         if len(regions) == 0:
             closest = {}
-        if len(regions) == 1:
+        elif len(regions) == 1:
             for k,v in regions[0].place().items():
                 response[k] = v
         else:

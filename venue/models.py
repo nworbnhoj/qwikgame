@@ -39,11 +39,17 @@ class Venue(models.Model):
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
 
     @classmethod
-    def from_placeid(klass, placeid):
+    def from_placeid(cls, placeid):
         details = Locate.get_details(placeid)
         if details:
-            logger.debug(f'google details for placeid:{placeid}\n{details}')  
-            venue = klass(**details)
+            logger.warn(f'google details for placeid:{placeid}\n{details}')
+            # truncate CharField values to respect field.max_length
+            for field in cls._meta.get_fields(include_parents=False):
+                if field.get_internal_type() == 'CharField' and field.max_length and field.name in details.keys():
+                    if field.max_length < len(details[field.name]):
+                        logger.warn(f'truncated CharField Venue.{field.name}: {details[field.name]}')
+                    details[field.name] = details[field.name][:field.max_length]
+            venue = cls(**details)
             logger.info(f'new venue: {venue}')
             return venue
         logger.warn(f'invalid placeid: {placeid}')

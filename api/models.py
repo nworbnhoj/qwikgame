@@ -47,7 +47,7 @@ class Region(models.Model):
                     lat = float(location['lat']),
                     lng = float(location['lng']),
                     locality = locality,
-                    name = geometry['names'][smallest],
+                    name = geometry['names'][smallest][:128],
                     north = float(northeast['lat']),
                     south = float(southwest['lat']),
                     west = float(southwest['lng']),

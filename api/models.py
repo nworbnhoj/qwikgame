@@ -217,6 +217,14 @@ class Mark(models.Model):
             return mark_qs.first()
         return None
 
+    def place(self):
+        place = { COUNTRY: self.country }
+        if self.admin1:
+            place[ADMIN1] = self.admin1
+        if self.locality:
+            place[LOCALITY] = self.locality
+        return place
+
     # TODO call update_size() on add/delete Filter and add Match
     def update_size(self):
         place = None

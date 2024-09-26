@@ -161,21 +161,28 @@ class Mark(models.Model):
         return None
 
     def parent(self):
+        mark_qs = Mark.objects.filter(game=self.game)
+        mark_qs = mark_qs.exclude(venue__isnull=False)
         if self.venue:
             kwargs = Mark.region_filter(self.venue.place())
-            return Mark.objects.filter(**kwargs).first()
+            return mark_qs.filter(**kwargs).first()
         place = self.region.place()
-        if place.pop(LOCALITY, None):
+        if place.pop(LOCALITY, None):            
             kwargs = Mark.region_filter(place)
-            return Mark.objects.filter(**kwargs).exclude(region__locality__isnull=False).first()
+            mark_qs = mark_qs.filter(**kwargs)
+            mark_qs = mark_qs.exclude(region__locality__isnull=False)
+            return mark_qs.first()
         if place.pop(ADMIN1, None):
             kwargs = Mark.region_filter(place)
-            return Mark.objects.filter(**kwargs).exclude(region__admin1__isnull=False).first()
+            mark_qs = mark_qs.filter(**kwargs)
+            mark_qs = mark_qs.exclude(region__admin1__isnull=False)
+            return mark_qs.first()
         return None
 
     # TODO call update_size() on add/delete Filter and add Match
     def update_size(self):
         place = None
+        old_size = self.size
         if self.venue:
             self.size = Filter.objects.filter(active=True, game=self.game, venue=self.venue).count()
             # TODO add historical match count in prior year
@@ -183,23 +190,24 @@ class Mark(models.Model):
         elif self.region:
             size = 0
             place = self.region.place()
+            mark_qs = Mark.objects.filter(game=self.game)
             if place.get(LOCALITY):
                 kwargs = Mark.venue_filter(place)
-                self.size = Mark.objects.filter(**kwargs).count()
+                self.size = mark_qs.filter(**kwargs).count()
             elif place.get(ADMIN1):
                 kwargs = Mark.region_filter(place)
-                marks = Mark.objects.filter(**kwargs)
-                marks = marks.exclude(region__locality__isnull=True)
-                self.size = marks.aggregate(Sum('size', default=0)).get('size__sum', 0)
+                mark_qs.filter(**kwargs)
+                mark_qs.exclude(region__locality__isnull=True)
+                self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
             else:
                 kwargs = Mark.region_filter(place)
-                marks = Mark.objects.filter(**kwargs)
-                marks = marks.exclude(region__locality__isnull=True)
-                marks = marks.exclude(region__admin1__isnull=True)
-                self.size = marks.aggregate(Sum('size', default=0)).get('size__sum', 0)
-        self.save()
-        logger.debug('update size {} = {}'.format(place, self.size))
-        parent = self.parent()
-        if parent:
-            parent.update_size()
+                mark_qs.filter(**kwargs)
+                mark_qs.exclude(region__locality__isnull=True)
+                mark_qs.exclude(region__admin1__isnull=True)
+                self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
+        if self.size != old_size:
+            logger.info(f'Mark update size: {self}')
+            parent = self.parent()
+            if parent:
+                parent.save()
     

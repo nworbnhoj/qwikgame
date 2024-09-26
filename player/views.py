@@ -59,10 +59,11 @@ class FilterView(QwikView):
                 filter_hours = filter_hours & venue_hours
             new_filter[0].set_hours(filter_hours)
             new_filter[0].save()
-            logger.info('Added filter: {} : {}'.format(
-                self.user.player,
-                new_filter[0],
-            ))
+            logger.info(f'Filter new: {new_filter[0]}')
+            # update the Mark size
+            mark = Mark.objects.filter(game=game, venue=venue).first()
+            if mark:
+                mark.save()
         except:
             logger.exception("failed to add filter")
         return HttpResponseRedirect("/player/")

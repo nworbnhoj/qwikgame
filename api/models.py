@@ -222,33 +222,33 @@ class Mark(models.Model):
 
     # TODO call update_size() on add/delete Filter and add Match
     def update_size(self):
-        place = None
         old_size = self.size
         if self.venue:
-            self.size = Filter.objects.filter(active=True, game=self.game, venue=self.venue).count()
+            filter_qs = Filter.objects.filter(active=True, game=self.game, venue=self.venue)
+            self.size = filter_qs.count()
             # TODO add historical match count in prior year
             # TODO make distinct per player
         elif self.region:
-            size = 0
-            place = self.region.place()
             mark_qs = Mark.objects.filter(game=self.game)
-            if place.get(LOCALITY):
-                kwargs = Mark.venue_filter(place)
-                self.size = mark_qs.filter(**kwargs).count()
-            elif place.get(ADMIN1):
-                kwargs = Mark.region_filter(place)
-                mark_qs.filter(**kwargs)
-                mark_qs.exclude(region__locality__isnull=True)
+            if self.locality:
+                mark_qs = mark_qs.filter(venue__country=self.country)
+                mark_qs = mark_qs.filter(venue__admin1=self.admin1)
+                mark_qs = mark_qs.filter(venue__locality=self.locality)
+                self.size = mark_qs.count()
+            elif self.admin1:
+                mark_qs = mark_qs.filter(region__country=self.country)
+                mark_qs = mark_qs.filter(region__admin1=self.admin1)
+                mark_qs = mark_qs.exclude(region__locality__isnull=True)
                 self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
             else:
-                kwargs = Mark.region_filter(place)
-                mark_qs.filter(**kwargs)
-                mark_qs.exclude(region__locality__isnull=True)
-                mark_qs.exclude(region__admin1__isnull=True)
+                mark_qs = mark_qs.filter(region__country=self.country)
+                mark_qs = mark_qs.exclude(region__admin1__isnull=True)
+                mark_qs = mark_qs.exclude(region__locality__isnull=True)
                 self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
         if self.size != old_size:
             logger.info(f'Mark update size: {self}')
             parent = self.parent()
+            logger.warn(f'parent: {self}    {parent}')
             if parent:
                 parent.save()
     

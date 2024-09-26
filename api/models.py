@@ -85,8 +85,10 @@ class Mark(models.Model):
     size = models.PositiveIntegerField(default=0)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True, null=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def save(self, **kwargs):
+        self.update_size()
+        super().save(**kwargs)
+        logger.debug(f'Mark save: {self}')
         # recursively add Region Marks as required
         regions = Region.objects
         if self.venue:
@@ -97,15 +99,20 @@ class Mark(models.Model):
                 regions = regions.exclude(locality__isnull=False)
             elif place.pop(ADMIN1, None):
                 regions = regions.exclude(admin1__isnull=False)
-        if not regions.filter(**place).exists():
+        region = regions.filter(**place).first()
+        if not region:
             try:
                 region = Region.from_place(**place)
                 region.save()
-                mark = Mark(game=self.game, region=region, size=1)
-                mark.save()
+                logger.info(f'Region new: {region}')
+            except:
+                logger.exception('failed to create Region')
+        if region and not Mark.objects.filter(region=region, game=self.game).exists():
+            try:
+                Mark(game=self.game, region=region).save()
             except:
                 logger.exception('failed to create Mark')
-        self.update_size()
+
 
     def __str__(self):
 

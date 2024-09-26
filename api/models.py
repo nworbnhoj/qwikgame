@@ -30,6 +30,10 @@ class Region(models.Model):
             self.name,
             )
 
+    def save(self, **kwargs):
+        super().save(**kwargs)
+        logger.debug(f'Region save: {self}')
+
     @classmethod
     def from_place(cls, country, admin1=None, locality=None):
         geometry = Locate.get_geometry(country, admin1, locality)
@@ -52,7 +56,6 @@ class Region(models.Model):
                     south = float(southwest['lat']),
                     west = float(southwest['lng']),
                     )
-                logger.info(f'new region: {region}')
                 return region
             except:
                 logger.warn(f'invalid geometry for: {country}|{admin1}|{locality}\n{geometry}')

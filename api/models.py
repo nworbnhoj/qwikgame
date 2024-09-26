@@ -143,6 +143,34 @@ class Mark(models.Model):
     def venue_filter(place):
         return {'venue__'+k: v for k, v in place.items() if v is not None}
 
+    @property
+    def country(self):
+        if self.venue:
+            return self.venue.country
+        elif self.region:
+            return self.region.country
+        logger.warn('Mark missing both region and venue')
+        return None
+
+    @property
+    def admin1(self):
+        if self.venue:
+            return self.venue.admin1
+        elif self.region:
+            return self.region.admin1
+        logger.warn('Mark missing both region and venue')
+        return None
+
+    @property
+    def locality(self):
+        if self.venue:
+            return self.venue.locality
+        elif self.region:
+            return self.region.locality
+        logger.warn('Mark missing both region and venue')
+        return None
+    
+
     def key(self):
         if self.venue:
             key = self.venue.country

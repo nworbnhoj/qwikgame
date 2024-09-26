@@ -36,7 +36,6 @@ class FilterView(QwikView):
             request.POST,
         )
 
-        game = context.get('game')
         venue = context.get('venue')
         if not venue:
             placeid = context.get('placeid')
@@ -44,10 +43,15 @@ class FilterView(QwikView):
                 venue = Venue.from_placeid(placeid)
                 if venue:
                     venue.save()
-                    if game:
-                        venue.games.add(game)
-                        venue.save()
-                        Mark(game=game, venue=venue, size=1).save()
+                    logger.info(f'Venue new: {venue}')
+        game = context.get('game')
+        if game and venue and not(game in venue.games.all()):
+            venue.games.add(game)
+            logger.info(f'Venue Game add: {game}')
+            venue.save()
+            mark = Mark(game=game, venue=venue, size=1)
+            mark.save()
+            logger.info(f'Mark new {mark}')
         try:
             new_filter = Filter.objects.get_or_create(
                 player=self.user.player,

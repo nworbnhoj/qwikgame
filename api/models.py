@@ -199,22 +199,17 @@ class Mark(models.Model):
         return None
 
     def parent(self):
-        mark_qs = Mark.objects.filter(game=self.game)
+        mark_qs = Mark.objects.filter(game=self.game, region__country=self.country)
         mark_qs = mark_qs.exclude(venue__isnull=False)
         if self.venue:
-            kwargs = Mark.region_filter(self.venue.place())
-            return mark_qs.filter(**kwargs).first()
-        place = self.region.place()
-        if place.pop(LOCALITY, None):            
-            kwargs = Mark.region_filter(place)
-            mark_qs = mark_qs.filter(**kwargs)
+            mark_qs = mark_qs.filter(region__admin1=self.admin1)
+            mark_qs = mark_qs.filter(region__locality=self.locality)
+            return mark_qs.first()
+        if self.locality:
             mark_qs = mark_qs.exclude(region__locality__isnull=False)
-            return mark_qs.first()
-        if place.pop(ADMIN1, None):
-            kwargs = Mark.region_filter(place)
-            mark_qs = mark_qs.filter(**kwargs)
-            mark_qs = mark_qs.exclude(region__admin1__isnull=False)
-            return mark_qs.first()
+            return mark_qs.filter(region__admin1=self.admin1).first()
+        if self.admin1:
+            return mark_qs.exclude(region__admin1__isnull=False).first()
         return None
 
     def place(self):

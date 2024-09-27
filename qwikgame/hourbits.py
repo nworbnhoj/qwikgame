@@ -16,6 +16,8 @@ class Hours24():
 
     def __init__(self, value=DAY_NONE):
         match value:
+            case Hours24():
+                self.bits = value.bits
             case bytes() if len(value) == 3:
                 self.bits = value
             case bytes():
@@ -44,7 +46,7 @@ class Hours24():
                     logger.warn('failed to initialise Hours24: str not int')
             case _:
                 self.bits = DAY_NONE
-                logger.warn('failed to initialise Hours24: invalid type')
+                logger.warn(f'failed to initialise Hours24: invalid type {type(value)}')
 
     # https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes
     def __eq__(self, other):
@@ -100,6 +102,10 @@ class Hours24():
         return int.from_bytes(self.bits, ENDIAN)
 
     def as_str(self, hours=range(0,23)):
+        if self.bits == DAY_NONE:
+            return '--'
+        if self.bits == DAY_ALL:
+            return '24hrs'
         day = self.as_bools()
         start, end = None, None
         r_start, r_end = hours[0], hours[-1]
@@ -139,6 +145,8 @@ class Hours24x7():
 
     def __init__(self, value=WEEK_NONE):
         match value:
+            case Hours24x7():
+                self.bits = value.bits
             case bytes() if len(value) == 21:
                 self.bits = value
             case list() if len(value)==7:      # interptretted as [hours24]
@@ -162,7 +170,7 @@ class Hours24x7():
                 logger.warn('failed to initialise Hours24x7: len(list)!=168')
             case _:
                 self.bits = WEEK_NONE
-                logger.warn('failed to initialise Hours24x7: invalid type')
+                logger.warn(f'failed to initialise Hours24x7: invalid type {type(value)}')
 
     # https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes
     def __eq__(self, other):
@@ -198,6 +206,10 @@ class Hours24x7():
         return self.bits
 
     def as_str(self, hours=range(0,23)):
+        if self.bits == WEEK_NONE:
+            return '--'
+        if self.bits == WEEK_ALL:
+            return '24x7'
         r_start, r_end = hours[0], hours[-1]
         day_blocks=[]
         for d, bytes3 in enumerate(self.as_days7()):

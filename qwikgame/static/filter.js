@@ -96,7 +96,7 @@ function mapShortcut(){
 function showMap(show=true, target){
     let map = document.getElementById('map');
     if (show){
-        showMapBelowForm(target);
+        showMapBelowField(target);
         map.style.display = 'block';
         map.focus();
     } else {

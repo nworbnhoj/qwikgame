@@ -67,24 +67,26 @@ function venuesMap() {
 
 
 /******************************************************************************
- * Relocates the Map Element (contains global qwikMap) to immediately after
- * the Form Element containing the supplied element.
+ * Relocates the Map Element (contains global qwikMap) as the last element in
+ * the Form Field containing the supplied element.
  *
- * element DOM Element indicating the form to locate the Map after
+ * element DOM Element indicating the field to locate the Map within
  * display boolean true to display the Map immediately on relocation
  * @global qwikMap google.maps.Map
  * @return null
  *
  * https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
  *****************************************************************************/
-function showMapBelowForm(element, display=true){
+function showMapBelowField(element, display=true){
   if(element){
     try {
       const MAP = qwikMap;
       const PRE_GAME = game();
       const MAP_ELEMENT = document.getElementById("map");
-      const FORM = element.closest("form");
-      FORM.parentElement.insertBefore(MAP_ELEMENT, FORM.nextSibling);
+      const ID = element.id
+      const FIELD_ID = ID.slice(0,ID.lastIndexOf('_'))
+      const FIELD = document.getElementById(FIELD_ID)
+      FIELD.parentElement.appendChild(MAP_ELEMENT);
       if(game() !== PRE_GAME){
         clearMarks();
       }
@@ -124,7 +126,7 @@ function clearMarks(){
 function game(){
   try {
     const MAP_ELEMENT = document.getElementById("map");
-    const FORM = MAP_ELEMENT.previousSibling;
+    const FORM = MAP_ELEMENT.closest("form");
     const GAME = FORM.querySelector("[name=game]:checked").value;
     return GAME;
   }

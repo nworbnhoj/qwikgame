@@ -4,7 +4,7 @@ from authenticate.models import User
 from django.db import models
 from pytz import datetime
 from qwikgame.constants import STRENGTH, WEEK_DAYS
-from qwikgame.hourbits import Hours24, Hours24x7,DAY_ALL
+from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, WEEK_NONE
 from qwikgame.log import Entry
 from venue.models import Venue
 
@@ -50,7 +50,7 @@ class Player(models.Model):
 class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
-    hours = models.BinaryField(default=b'\x00\x00\x00')
+    hours = models.BinaryField(default=DAY_NONE)
     log = models.JSONField(default=list)
     rivals = models.ManyToManyField('self', through='Invite')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
@@ -151,7 +151,7 @@ class Filter(models.Model):
     game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE)
-    hours = models.BinaryField()
+    hours = models.BinaryField(default=WEEK_NONE)
 
     class Meta:
         constraints = [
@@ -185,7 +185,7 @@ class Friend(models.Model):
 
 class Invite(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
-    hours = models.BinaryField(default=None, null=True)
+    hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
     strength = models.CharField(max_length=1, choices=STRENGTH)
 

@@ -3,7 +3,7 @@ from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, PLACEID
-from qwikgame.hourbits import Hours24x7
+from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
@@ -23,7 +23,7 @@ class Venue(models.Model):
     admin1 = models.CharField(max_length=64, blank=True)
     country = models.CharField(max_length=2, blank=True)
     games = models.ManyToManyField('game.Game')
-    hours = models.BinaryField(default=bytes(21))
+    hours = models.BinaryField(default=WEEK_NONE)
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=-36.449786)
     lng = models.DecimalField(max_digits=9, decimal_places=6, default=146.430037)
     locality = models.CharField(max_length=64, blank=True)

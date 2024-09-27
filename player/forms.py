@@ -177,7 +177,7 @@ class FilterForm(QwikForm):
                 placeid = form.cleaned_data['placeid']
                 context['venue'] = Venue.objects.filter(placeid=placeid).first()
                 context['placeid'] = placeid
-            elif isdigit(venue_id):
+            elif venue_id.isdigit():
                 venue_id = int(venue_id)
                 context['venue'] = Venue.objects.filter(pk=venue_id).first()
             else:

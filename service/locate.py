@@ -158,7 +158,7 @@ class Locate:
                         logger.exception('Invalid opening hours period {period}')
                 details['hours'] = hours.as_bytes()
             else:
-                hours = Hours24x7(WEEK_ALL)
+                details['hours'] = WEEK_ALL
                 logger.warn(f'opening_hours unavailable ({placeid}) - default to 24x7')
         return details
 

@@ -70,7 +70,7 @@ class FilterView(QwikView):
                 mark.save()
         except:
             logger.exception("failed to add filter")
-        return HttpResponseRedirect("/player/")
+        return HttpResponseRedirect("/player/screen")
 
 
 class InviteView(QwikView):

@@ -114,7 +114,7 @@ class FilterForm(QwikForm):
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
     venue = ChoiceField(
-        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map', 'placeid': ''} | Venue.choices(),
+        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map', 'placeid': ''},
         label='Venue',
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"})
@@ -150,8 +150,7 @@ class FilterForm(QwikForm):
     # Returns a context dict including 'filter_form'
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue='map'):
-        return {
-            'filter_form': klass(
+        form = klass(
                 initial = {
                     'game': game,
                     'hours': hours,
@@ -159,7 +158,12 @@ class FilterForm(QwikForm):
                     'venue': venue,
                 },
             )
-        }
+        # TODO set distinct for venues
+        # TODO include venues for past matches
+        filters = Filter.objects.filter(player=player).all()
+        venues = [(f.venue_id, f.venue.name) for f in filters]
+        form.fields['venue'].choices += venues[:8]
+        return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.
     # Returns a context dict game, venue|placeid, hours

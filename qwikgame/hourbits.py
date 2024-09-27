@@ -102,6 +102,7 @@ class Hours24():
     def as_str(self, hours=range(0,23)):
         day = self.as_bools()
         start, end = None, None
+        r_start, r_end = hours[0], hours[-1]
         hour_blocks=[]
         for h, hour in enumerate(day):
             if h in hours:

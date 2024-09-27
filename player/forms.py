@@ -171,13 +171,17 @@ class FilterForm(QwikForm):
             game_id = form.cleaned_data['game']
             context['game'] = Game.objects.filter(pk=game_id).first()
             venue_id = form.cleaned_data['venue']
-            if venue_id == 'placeid':
+            if venue_id == 'ALL':
+                context['venue'] = None
+            elif venue_id == 'placeid':
                 placeid = form.cleaned_data['placeid']
                 context['venue'] = Venue.objects.filter(placeid=placeid).first()
                 context['placeid'] = placeid
-            else:
+            elif isdigit(venue_id):
                 venue_id = int(venue_id)
                 context['venue'] = Venue.objects.filter(pk=venue_id).first()
+            else:
+                context['venue'] = None
             context['hours'] = form.cleaned_data['hours']
         else:
             logger.info(form)

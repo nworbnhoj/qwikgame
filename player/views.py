@@ -57,7 +57,7 @@ class FilterView(QwikView):
                 player=self.user.player,
                 game=game,
                 venue=venue)
-            filter_hours = context['hours']
+            filter_hours = Hours24x7(context['hours'])
             venue_hours = venue.hours_open()
             if venue_hours:
                 filter_hours = filter_hours & venue_hours

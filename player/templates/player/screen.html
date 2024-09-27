@@ -19,8 +19,8 @@
                 <i class="fa-solid fa-filter fa-2x"></i>
             </div>
             <h1>Invitation Filters</h1>
-            <div class="button ctb push_right">
-                <a class="button" href="{% url 'filter' %}">
+            <div class="push_right">
+                <a class="button ctb" href="{% url 'filter' %}">
                     <i class="fa-solid fa-plus fa-xl"></i>
                     <p>Add</p>
                 </a>
@@ -33,8 +33,8 @@
 {% csrf_token %}
 {{ screen_form }}
                     <div class="grid_2_col">
-                        <input class="button ctb push_down schedule_saveS" name="ACTIVATE" type="submit" value="ACTIVATE SELECTED FILTERS">
-                        <input class="button ctb push_down schedule_saveS" name="DELETE" type="submit" value="DELETE SELECTED FILTERS">
+                        <input class="ctc push_down" name="DELETE" type="submit" value="REMOVE">
+                        <input class="cta push_down" name="ACTIVATE" type="submit" value="APPLY">
                     </div>
                 </form>
             </div>

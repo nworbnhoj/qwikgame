@@ -36,6 +36,8 @@ class Hours24():
             case list() if len(value)==24:    # interpretted as list(bool)
                 integer = sum(v << i for i, v in enumerate(value[::-1]))
                 self.bits = integer.to_bytes(3, ENDIAN)
+            case memoryview():
+                self.bits = bytes(value[:3])
             case list():
                 self.bits = DAY_NONE
                 logger.warn('failed to initialise Hours24: len(list)!=24')
@@ -103,7 +105,7 @@ class Hours24():
 
     def as_str(self, hours=range(0,23)):
         if self.bits == DAY_NONE:
-            return '--'
+            return ''
         if self.bits == DAY_ALL:
             return '24hrs'
         day = self.as_bools()
@@ -162,6 +164,8 @@ class Hours24x7():
                     hours24 = Hours24(bools)
                     bites += hours24.as_bytes()
                 self.bits = bytes(bites)
+            case memoryview():
+                self.bits = bytes(value[:21])
             case bytes():
                 self.bits = WEEK_NONE
                 logger.warn('failed to initialise Hours24x7: len(byte)!=21')

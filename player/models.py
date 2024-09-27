@@ -159,7 +159,7 @@ class Filter(models.Model):
         ]
 
     def __str__(self):
-        hours24x7 = Hours24x7(bytes(self.hours))
+        hours24x7 = Hours24x7(self.hours)
         return  '{}, {}, {}'.format(
                 'Any Game' if self.game is None else self.game,
                 'Any Venue' if self.venue is None else self.venue,

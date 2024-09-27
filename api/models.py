@@ -246,9 +246,8 @@ class Mark(models.Model):
                 mark_qs = mark_qs.exclude(region__locality__isnull=True)
                 self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
         if self.size != old_size:
-            logger.info(f'Mark update size: {self}')
+            logger.debug(f'Mark update size: {self}')
             parent = self.parent()
-            logger.warn(f'parent: {self}    {parent}')
             if parent:
                 parent.save()
     

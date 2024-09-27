@@ -347,7 +347,6 @@ function clickCreateVenue(event){
   event.preventDefault();
   let placeid = event.target.getAttribute("placeid");
   let name = event.target.getAttribute("venuename");
-  let vid = event.target.getAttribute("vid");
     
   // add a new option to venueSelect and select it
   let id = 'id_venue'

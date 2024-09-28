@@ -287,4 +287,4 @@ class ScreenView(QwikView):
             request.POST,
             self.user.player,
         )
-        return HttpResponseRedirect("/player/")
+        return HttpResponseRedirect("/player/screen")

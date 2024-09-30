@@ -84,7 +84,7 @@ class InviteView(QwikView):
         }
         context |= super().context(request)
         if context['small_screen']:
-            return render(request, "player/invite.html", context)
+            return render(request, "player/bid.html", context)
         else:
             return HttpResponseRedirect("/player/keen/")
 

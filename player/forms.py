@@ -394,7 +394,7 @@ class PrecisForm(QwikForm):
 
 
 
-class RsvpForm(QwikForm):
+class BidForm(QwikForm):
     hour = TypedChoiceField(
         coerce=str_to_hours24,
         help_text='When are you keen to play?',
@@ -404,34 +404,35 @@ class RsvpForm(QwikForm):
         widget=RadioSelect,
     )
 
-    # Initializes an RspvForm for an 'invite'.
+    # Initializes an BidForm for an 'appeal'.
     # Returns a context dict including 'rspv_form'
     @classmethod
-    def get(klass, invite):
-        form = klass( initial={'hour': Hours24(invite.hours).as_int()})
-        form.fields['hour'].choices = invite.hour_choices()
-        form.fields['hour'].sub_text = invite.appeal.date
+    def get(klass, appeal):
+        hours = appeal.hours24
+        form = klass( initial={'hour': hours})
+        form.fields['hour'].choices = hours.as_choices()
+        form.fields['hour'].sub_text = appeal.date
         form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
         form.fields['hour'].widget.option_template_name='input_hour.html'
         return {
             'bid_form': form,
         }
 
-    # Initializes an Rsvp for an 'invite'.
+    # Initializes an BidForm for an 'appeal'.
     # Returns a context dict including 'bid_form'
     @classmethod
-    def post(klass, request_post, invite):
+    def post(klass, request_post, appeal):
         context = {}
         form = klass(data=request_post)
-        form.fields['hour'].choices = invite.hour_choices()
+        form.fields['hour'].choices = appeal.hour_choices()
         if form.is_valid():
             try:
                 if 'accept' in request_post:
-                    invite.hours = form.cleaned_data['hour']
-                    invite.save()
-                    invite.log_event('bid')
+                    appeal.invite.hours = form.cleaned_data['hour']
+                    appeal.save()
+                    appeal.log_event('bid')
                 elif 'decline' in request_post:
-                    invite.delete()
+                    appeal.delete()
             except:
                 context = {'bid_form': form}
         else:

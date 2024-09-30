@@ -2,7 +2,7 @@ import logging
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
+from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, ScreenForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.hourbits import Hours24x7
 from api.models import Region, Mark
@@ -194,7 +194,7 @@ class ReplyView(QwikView):
 
 
 class BidView(QwikView):
-    bid_form_class = RsvpForm
+    bid_form_class = BidForm
     template_name = 'player/bid.html'
 
     def get(self, request, *args, **kwargs):
@@ -229,11 +229,11 @@ class BidView(QwikView):
     def post(self, request, *args, **kwargs):
         super().post(request)
         player = self.user.player
-        invite_pk = kwargs['invite']
-        invite = Invite.objects.get(pk=invite_pk)
+        appeal_pk = kwargs['appeal']
+        appeal = Bid.objects.get(pk=appeal_pk)
         context = self.bid_form_class.post(
             request.POST,
-            invite,
+            appeal,
         )
         if len(context) == 0:
             return HttpResponseRedirect("/player/feed/")

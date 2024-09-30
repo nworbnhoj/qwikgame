@@ -50,26 +50,26 @@
             <span>▲</span>
         </h2>
         <div class="group">
-{% for invite in invites %}
-            <a class="button item {{ unread }}" href="{% url 'rsvp' invite=invite.pk %}">
+{% for appeal in appeals %}
+            <a class="button item {{ unread }}" href="{% url 'bid' appeal=appeal.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
-                            <i class="{{ invite.appeal.game.icon }} fa-1x"></i>
+                            <i class="{{ appeal.game.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ invite.appeal.game }}</p>
+                        <p class="line">{{ appeal.game }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>{{ invite.appeal.date }}</p>
+                        <p>{{ appeal.date }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ invite.appeal.venue}}</p>
+                        <p>{{ appeal.venue}}</p>
                     </div>
                 </div>
                 <div class="pole badges todo">

@@ -232,7 +232,7 @@ class Invite(models.Model):
                     name = person.name,
                     text = "accepted {} with {}".format(self.hours24().as_str(), rival.name)
                 )
-            case 'rsvp':
+            case 'bid':
                 person = self.rival.user.person
                 entry = Entry(
                     icon = rival.icon,

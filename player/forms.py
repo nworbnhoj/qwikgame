@@ -414,11 +414,11 @@ class RsvpForm(QwikForm):
         form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
         form.fields['hour'].widget.option_template_name='input_hour.html'
         return {
-            'rsvp_form': form,
+            'bid_form': form,
         }
 
     # Initializes an Rsvp for an 'invite'.
-    # Returns a context dict including 'rsvp_form'
+    # Returns a context dict including 'bid_form'
     @classmethod
     def post(klass, request_post, invite):
         context = {}
@@ -429,13 +429,13 @@ class RsvpForm(QwikForm):
                 if 'accept' in request_post:
                     invite.hours = form.cleaned_data['hour']
                     invite.save()
-                    invite.log_event('rsvp')
+                    invite.log_event('bid')
                 elif 'decline' in request_post:
                     invite.delete()
             except:
-                context = {'rsvp_form': form}
+                context = {'bid_form': form}
         else:
-            context = {'rsvp_form': form}
+            context = {'bid_form': form}
         return context
 
 

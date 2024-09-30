@@ -1,4 +1,4 @@
-<!-- qwikgame/player/templates/player/rsvp.html -->
+<!-- qwikgame/player/templates/player/bid.html -->
 {% extends "player/invite.html" %}
 
 
@@ -23,19 +23,19 @@
                     <span class="icon">
                         <i class="{{ invite.appeal.game.icon }} fa-1x"></i>
                     </span>
-                    <p class="line">{{ invite.appeal.game.name }}</p>
+                    <p class="line">{{ appeal.game.name }}</p>
                 </div>
                 <div class="note">
                     <span class="icon">
                         <i class="fa-solid fa-calendar fa-1x"></i>
                     </span>
-                    <p>{{ invite.appeal.date }}, {{ invite.hour_str }}</p>
+                    <p>{{ appeal.date }}, {{ appeal.hour_str }}</p>
                 </div>
                 <div class="note">
                     <span class="icon">
                         <i class="fa-solid fa-location-dot fa-1x"></i>
                     </span>
-                    <p>{{ invite.appeal.venue }}</p>
+                    <p>{{ appeal.venue }}</p>
                 </div>
             </div>
             <div class="drop_down icon head_more">
@@ -56,7 +56,7 @@
             </a>
         </div>
         <div class="post">
-{% for entry in invite.appeal.log %}
+{% for entry in appeal.log %}
             <div class="log_entry align_start {{ entry.klass }}">
                 <div class="button icon">
                     <i class="fa-solid fa-hat-cowboy fa-2x todo"></i>
@@ -81,13 +81,13 @@
             <div class="detail_chat_post"></div>
         </div>
         <div class="post form">
-            <form action="{% url 'rsvp' invite=invite.pk %}" method="post">
+            <form action="{% url 'bid' appeal=appeal.pk %}" method="post">
             <div class="paver">
                 <input class="ctb push_down" type="submit" name='decline' value='DECLINE'>
                 <input class="cta push_down" type="submit" name='accept'value='ACCEPT'>
             </div>
 {% csrf_token %}
-{{ rsvp_form }}
+{{ bid_form }}
             </form>
         </div>
     </div>

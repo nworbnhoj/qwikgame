@@ -196,36 +196,36 @@ class ReplyView(QwikView):
         return HttpResponseRedirect("/player/keen/{}/".format(kwargs['appeal']))
 
 
-class RsvpView(QwikView):
-    rsvp_form_class = RsvpForm
-    template_name = 'player/rsvp.html'
+class BidView(QwikView):
+    bid_form_class = RsvpForm
+    template_name = 'player/bid.html'
 
     def get(self, request, *args, **kwargs):
         super().get(request)
         player = self.user.player
-        invite_pk = kwargs['invite']
-        invite = Invite.objects.get(pk=invite_pk)
-        invites = Invite.objects.filter(rival=player).all()
-        prev_pk = invites.last().pk
-        next_pk = invites.first().pk
+        appeal_pk = kwargs['appeal']
+        appeal = Appeal.objects.get(pk=appeal_pk)
+        appeals = Appeal.objects.all()
+        prev_pk = appeals.last().pk
+        next_pk = appeals.first().pk
         found = False
-        for a in invites:
+        for a in appeals:
             if found:
                 next_pk = a.pk
                 break
-            if a.pk == invite.pk:
+            if a.pk == appeal.pk:
                 found = True
             else:
                 prev_pk = a.pk
         context = {
             'appeals': Appeal.objects.filter(player=player).all(),
-            'invite': invite,
-            'invites': invites,
+            'appeal': appeal,
+            'appeals': appeals,
             'next': next_pk,
             'player_id': player.facet(),
             'prev': prev_pk,
         }
-        context |= self.rsvp_form_class.get(invite)
+        context |= self.bid_form_class.get(appeal)
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -234,7 +234,7 @@ class RsvpView(QwikView):
         player = self.user.player
         invite_pk = kwargs['invite']
         invite = Invite.objects.get(pk=invite_pk)
-        context = self.rsvp_form_class.post(
+        context = self.bid_form_class.post(
             request.POST,
             invite,
         )

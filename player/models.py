@@ -71,8 +71,12 @@ class Appeal(models.Model):
     def datetime(self, time=None):
         return self.venue.datetime(self.date, time)
 
-    def hours24x7(self):
-        return Hours24x7(self.hours)
+    @property
+    def hours24(self):
+        return Hours24(self.hours)
+
+    def hour_choices(self):
+        return self.hours24().as_choices()
 
     def invite(self, rivals):
         for rival in rivals:
@@ -136,11 +140,14 @@ class Appeal(models.Model):
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),
-                    self.hours24x7().as_str()
+                    self.hours24().as_str()
                 )
             case _:
                 entry['text'] = "unknown template"
         self.log_entry(entry)
+
+    def set_hours(self, hours24):
+        self.hours = hours24.as_bytes()
 
     def tzinfo(self):
         return self.venue.tzinfo()

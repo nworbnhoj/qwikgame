@@ -8,6 +8,7 @@ from player.models import Appeal, Bid, Filter, Friend, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
+from qwikgame.hourbits import Hours24
 from qwikgame.log import Entry
 from qwikgame.utils import str_to_hours24
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
@@ -299,7 +300,7 @@ class KeenForm(QwikForm):
                 )[0]
                 if form.cleaned_data['today'].is_none():
                     appeal.delete()
-                elif appeal.hours24x7() != form.cleaned_data['today']:
+                elif appeal.hours24() != form.cleaned_data['today']:
                     appeal.set_hours(form.cleaned_data['today'])
                     appeal.log_event('keen')
                     appeal.log_event('appeal')
@@ -314,7 +315,7 @@ class KeenForm(QwikForm):
                 )[0]
                 if form.cleaned_data['tomorrow'].is_none():
                     appeal.delete()
-                elif appeal.hours24x7() != form.cleaned_data['tomorrow']:
+                elif appeal.hours24() != form.cleaned_data['tomorrow']:
                     appeal.set_hours(form.cleaned_data['tomorrow'])
                     appeal.log_event('keen')
                     appeal.log_event('appeal')

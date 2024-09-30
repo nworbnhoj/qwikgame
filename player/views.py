@@ -26,6 +26,10 @@ class FilterView(QwikView):
             venue='ANY',
             hours=WEEK_NONE,
         )
+        context |= {
+            'appeals': Appeal.objects.all(),
+            'bids': Bid.objects.all(),
+        }
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -79,7 +83,7 @@ class InviteView(QwikView):
         super().request_init(request)
         player = self.user.player
         context = {
-            'appeals': Appeal.objects.filter(player=player).all(),
+            'appeals': Appeal.objects.all(),
             'bids': Bid.objects.all(),
         }
         context |= super().context(request)
@@ -94,7 +98,7 @@ class KeenView(QwikView):
         super().get(request)
         player = self.user.player
         context = {
-            'appeals': Appeal.objects.filter(player=player).all(),
+            'appeals': Appeal.objects.all(),
             'bids': Bid.objects.all(),
         }
         context |= self.keen_form_class.get(player)
@@ -121,7 +125,7 @@ class InvitationView(QwikView):
         super().get(request)
         player = self.user.player
         context = {
-            'appeals': Appeal.objects.filter(player=player).all(),
+            'appeals': Appeal.objects.all(),
             'bids': Bid.objects.all(),
         }
         context |= super().context(request)
@@ -275,6 +279,10 @@ class ScreenView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = super().context(request)
+        context |= {
+            'appeals': Appeal.objects.all(),
+            'bids': Bid.objects.all(),
+        }
         context |= self.screen_form_class.get(self.user.player)
         return render(request, self.template_name, context)
 

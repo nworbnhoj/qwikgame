@@ -4,7 +4,7 @@ from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectM
 from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
-from player.models import Appeal, Filter, Friend, Invite, Player, Precis
+from player.models import Appeal, Bid, Filter, Friend, Player, Precis
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
@@ -17,7 +17,7 @@ logger = logging.getLogger(__file__)
 
 class AcceptForm(QwikForm):
 
-    # Initializes an AcceptForm for an 'invite'.
+    # Initializes an AcceptForm for a 'bid'.
     # Returns a context dict including 'accept_form'
     @classmethod
     def get(klass):
@@ -26,7 +26,7 @@ class AcceptForm(QwikForm):
             'accept_form': form,
         }
 
-    # Initializes an Accept for an 'invite'.
+    # Initializes an Accept for a 'bid'.
     # Returns a context dict including 'accept_form'
     @classmethod
     def post(klass, request_post, player):
@@ -36,19 +36,19 @@ class AcceptForm(QwikForm):
             try:
                 if 'accept' in request_post:
                     accept_id = int(request_post['accept'])
-                    invite = Invite.objects.get(pk=accept_id)
-                    invite.log_event('accept')
-                    match = Match (accept=invite)
+                    bid = Bid.objects.get(pk=accept_id)
+                    bid.log_event('accept')
+                    match = Match (accept=bid)
                     match.save()
-                    match.competitors.add(invite.appeal.player, invite.rival)
+                    match.competitors.add(bid.appeal.player, bid.rival)
                     # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
                     match.log_event('scheduled', player)
-                    invite.delete()
+                    bid.delete()
                     context={}
                 elif 'decline' in request_post:
                     decline_id = int(request_post['decline'])
-                    invite = Invite.objects.get(pk=decline_id)
-                    invite.delete()
+                    bid = Bid.objects.get(pk=decline_id)
+                    bid.delete()
             except:
                 # TODO log exception
                 pass

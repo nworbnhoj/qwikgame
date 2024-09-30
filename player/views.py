@@ -3,7 +3,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from player.forms import AcceptForm, FilterForm, KeenForm, RsvpForm, ScreenForm
-from player.models import Appeal, Filter, Friend, Invite
+from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.hourbits import Hours24x7
 from api.models import Region, Mark
 from service.locate import Locate
@@ -80,7 +80,7 @@ class InviteView(QwikView):
         player = self.user.player
         context = {
             'appeals': Appeal.objects.filter(player=player).all(),
-            'invites': Invite.objects.filter(rival=player).all(),
+            'bids': Bid.objects.all(),
         }
         context |= super().context(request)
         if context['small_screen']:
@@ -98,7 +98,7 @@ class KeenView(QwikView):
         player = self.user.player
         context = {
             'appeals': Appeal.objects.filter(player=player).all(),
-            'invites': Invite.objects.filter(rival=player).all(),
+            'bids': Bid.objects.all(),
         }
         context |= self.keen_form_class.get(player)
         context |= super().context(request)
@@ -111,7 +111,7 @@ class KeenView(QwikView):
             self.user.player,
         )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/invite/")
+            return HttpResponseRedirect("/player/bid/")
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -125,7 +125,7 @@ class InvitationView(QwikView):
         player = self.user.player
         context = {
             'appeals': Appeal.objects.filter(player=player).all(),
-            'invites': Invite.objects.filter(rival=player).all(),
+            'bids': Bid.objects.all(),
         }
         context |= super().context(request)
         return render(request, self.template_name, context)
@@ -137,7 +137,7 @@ class InvitationView(QwikView):
         #     self.user.player,
         # )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/invite/keen/")
+            return HttpResponseRedirect("/player/bid/keen/")
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -163,7 +163,7 @@ class ReplyView(QwikView):
                 found = True
             else:
                 prev_pk = a.pk
-        replies = Invite.objects.filter(appeal=appeal).exclude(hours=None)
+        replies = Bid.objects.filter(appeal=appeal).exclude(hours=None)
         friends = Friend.objects.filter(player=player)
         for reply in replies:
             reply.hour_str = reply.hours24().as_str()
@@ -174,7 +174,7 @@ class ReplyView(QwikView):
         context = {
             'appeal': appeal,
             'appeals': appeals,
-            'invites': Invite.objects.filter(rival=player).all(),
+            'bids': Bid.objects.filter(rival=player).all(),
             'next': next_pk,
             'player_id': player.facet(),
             'prev': prev_pk,
@@ -239,23 +239,23 @@ class BidView(QwikView):
             invite,
         )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/invite/")
-        invites = Invite.objects.filter(rival=player).all()
-        prev_pk = invites.last().pk
-        next_pk = invites.first().pk
+            return HttpResponseRedirect("/player/bid/")
+        bids = Bid.objects.filter(rival=player).all()
+        prev_pk = bids.last().pk
+        next_pk = bids.first().pk
         found = False
-        for a in invites:
+        for a in bids:
             if found:
                 next_pk = a.pk
                 break
-            if a.pk == invite.pk:
+            if a.pk == bid.pk:
                 found = True
             else:
                 prev_pk = a.pk
         context = {
             'appeals': Appeal.objects.filter(player=player).all(),
-            'invite': invite,
-            'invites': invites,
+            'bid': bid,
+            'bids': bids,
             'next': next_pk,
             'prev': prev_pk,
         }

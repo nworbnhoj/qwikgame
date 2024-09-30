@@ -52,7 +52,7 @@ class Appeal(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=DAY_NONE)
     log = models.JSONField(default=list)
-    rivals = models.ManyToManyField('self', through='Invite')
+    rivals = models.ManyToManyField('self', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
@@ -77,7 +77,7 @@ class Appeal(models.Model):
     def invite(self, rivals):
         for rival in rivals:
             try:
-                invite = Invite(
+                invite = Bid(
                     appeal = self,
                     hours = None,
                     rival = rival,
@@ -183,7 +183,7 @@ class Friend(models.Model):
         return "{}:{}".format(self.player, self.rival)
 
 
-class Invite(models.Model):
+class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)

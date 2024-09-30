@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from player.views import FilterView, InviteView, InvitationView, KeenView, ReplyView, RivalView, BidView, ScreenView
+from player.views import BidView, FilterView, InvitationView, KeenView, ReplyView, RivalView, BidView, ScreenView
 
 urlpatterns = [
     path("", InviteView.as_view(), name='player'),

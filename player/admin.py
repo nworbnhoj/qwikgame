@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from .models import Appeal, Filter, Friend, Invite, Opinion, Player, Precis, Strength
+from .models import Appeal, Bid, Filter, Friend, Opinion, Player, Precis, Strength
 
 
 class PlayerAdmin(admin.ModelAdmin):
@@ -15,9 +15,9 @@ class PlayerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Appeal)
+admin.site.register(Bid)
 admin.site.register(Filter)
 admin.site.register(Friend)
-admin.site.register(Invite)
 admin.site.register(Opinion)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(Precis)

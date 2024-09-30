@@ -1,5 +1,5 @@
 <!-- qwikgame/player/templates/player/bid.html -->
-{% extends "player/invite.html" %}
+{% extends "player/feed.html" %}
 
 
 {% block title %}Rsvp{% endblock %}
@@ -48,10 +48,10 @@
                     <div class="button thin">more 3</div>
                 </div>
             </div>
-            <a class="button naked head_back" href="/player/invite/{{ prev }}/">
+            <a class="button naked head_back" href="/player/feed/{{ prev }}/">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
             </a>
-            <a class="button naked head_fwd" href="/player/invite/{{ next }}/">
+            <a class="button naked head_fwd" href="/player/feed/{{ next }}/">
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>

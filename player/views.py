@@ -70,7 +70,7 @@ class FilterView(QwikView):
                 mark.save()
         except:
             logger.exception("failed to add filter")
-        return HttpResponseRedirect("/player/screen")
+        return HttpResponseRedirect("/player/feed/filters")
 
 
 class InviteView(QwikView):
@@ -83,10 +83,7 @@ class InviteView(QwikView):
             'bids': Bid.objects.all(),
         }
         context |= super().context(request)
-        if context['small_screen']:
-            return render(request, "player/bid.html", context)
-        else:
-            return HttpResponseRedirect("/player/keen/")
+        return render(request, "player/feed.html", context)
 
 
 class KeenView(QwikView):
@@ -111,7 +108,7 @@ class KeenView(QwikView):
             self.user.player,
         )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/bid/")
+            return HttpResponseRedirect("/player/feed/replys/")
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -137,7 +134,7 @@ class InvitationView(QwikView):
         #     self.user.player,
         # )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/bid/keen/")
+            return HttpResponseRedirect("/player/feed/")
         context |= super().context(request)
         return render(request, self.template_name, context)
 
@@ -193,7 +190,7 @@ class ReplyView(QwikView):
         )
         if len(context) == 0:
             return HttpResponseRedirect("/game/match/")
-        return HttpResponseRedirect("/player/keen/{}/".format(kwargs['appeal']))
+        return HttpResponseRedirect("/player/feed/replys/{}/".format(kwargs['appeal']))
 
 
 class BidView(QwikView):
@@ -239,7 +236,7 @@ class BidView(QwikView):
             invite,
         )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/bid/")
+            return HttpResponseRedirect("/player/feed/")
         bids = Bid.objects.filter(rival=player).all()
         prev_pk = bids.last().pk
         next_pk = bids.first().pk
@@ -287,4 +284,4 @@ class ScreenView(QwikView):
             request.POST,
             self.user.player,
         )
-        return HttpResponseRedirect("/player/screen")
+        return HttpResponseRedirect("/player/feed/filters")

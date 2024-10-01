@@ -415,7 +415,7 @@ class BidForm(QwikForm):
         return context
 
 
-class ScreenForm(QwikForm):
+class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
         label='no active filters',
         widget=CheckboxSelectMultiple,

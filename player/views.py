@@ -3,7 +3,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, ScreenForm
+from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, FiltersForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
@@ -318,8 +318,8 @@ class RivalView(QwikView):
         return render(request, "player/rival.html", context)
 
 
-class ScreenView(QwikView):
-    screen_form_class = ScreenForm
+class FiltersView(QwikView):
+    screen_form_class = FiltersForm
     template_name = 'player/screen.html'
 
     def get(self, request, *args, **kwargs):

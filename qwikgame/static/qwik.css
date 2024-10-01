@@ -162,6 +162,7 @@ div.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; positi
 div.slider:before { background-color: #fff; bottom: 0.2em; content: ""; height: 1.6em; left: 0.2em; position: absolute; transition: .4s; width: 1.6em }
 div.slider.round { border-radius: 34px; }
 div.slider.round:before { border-radius: 50%; }
+div.splash { align-items: center; display: flex; height: 100%; justify-content:center; }
 div.tab_area div.areas { width: 100%;}
 div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }

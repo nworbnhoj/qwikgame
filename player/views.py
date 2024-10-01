@@ -1,7 +1,8 @@
-import logging
+import datetime, logging
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, ScreenForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.hourbits import Hours24x7
@@ -107,14 +108,48 @@ class KeenView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request)
+        player = self.user.player 
         context = self.keen_form_class.post(
             request.POST,
-            self.user.player,
+            player,
         )
-        if len(context) == 0:
-            return HttpResponseRedirect("/player/feed/replys/")
-        context |= super().context(request)
-        return render(request, self.template_name, context)
+        if 'keen_form' in context: 
+            context |= {
+                'appeals': Appeal.objects.all(),
+                'bids': Bid.objects.all(),
+            }
+            return render(request, self.template_name, context)
+        # create/update/delete today appeal
+        now=timezone.now()
+        appeal = Appeal.objects.get_or_create(
+            date=now.date(),
+            game=context['game'],
+            player=player,
+            venue=context['venue'],
+        )[0]
+        if context['today'].is_none():
+            appeal.delete()
+        elif appeal.hours24 != context['today']:
+            appeal.set_hours(context['today'])
+            appeal.log_event('keen')
+            appeal.log_event('appeal')
+            appeal.save()
+        # create/update/delete tomorrow appeal
+        one_day=datetime.timedelta(days=1)
+        appeal = Appeal.objects.get_or_create(
+            date=(now + one_day).date(),
+            game=context['game'],
+            player=player,
+            venue=context['venue'],
+        )[0]
+        if context['tomorrow'].is_none():
+            appeal.delete()
+        elif appeal.hours24 != context['tomorrow']:
+            appeal.set_hours(context['tomorrow'])
+            appeal.log_event('keen')
+            appeal.log_event('appeal')
+            appeal.save()
+        return HttpResponseRedirect(f'/player/feed/replys/{appeal.id}/')
 
 
 class InvitationView(QwikView):

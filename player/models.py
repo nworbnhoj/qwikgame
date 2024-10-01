@@ -140,7 +140,7 @@ class Appeal(models.Model):
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),
-                    self.hours24().as_str()
+                    self.hours24.as_str()
                 )
             case _:
                 entry['text'] = "unknown template"

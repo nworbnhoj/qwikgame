@@ -286,44 +286,19 @@ class KeenForm(QwikForm):
         form.personalise(player)
         if form.is_valid():
             try:
-                now=timezone.now()
-                one_day=datetime.timedelta(days=1)
-                friends = {Player.objects.get(pk=friend) for friend in form.cleaned_data['friends']}
-                game=Game.objects.get(pk=form.cleaned_data['game'])
-                venue=Venue.objects.get(pk=form.cleaned_data['venue'])
-                # create/update/delete today appeal
-                appeal = Appeal.objects.get_or_create(
-                    date=now.date(),
-                    game=game,
-                    player=player,
-                    venue=venue,
-                )[0]
-                if form.cleaned_data['today'].is_none():
-                    appeal.delete()
-                elif appeal.hours24() != form.cleaned_data['today']:
-                    appeal.set_hours(form.cleaned_data['today'])
-                    appeal.log_event('keen')
-                    appeal.log_event('appeal')
-                    appeal.save()
-                    appeal.invite_rivals(friends)
-                # create/update/delete tomorrow appeal
-                appeal = Appeal.objects.get_or_create(
-                    date=(now + one_day).date(),
-                    game=game,
-                    player=player,
-                    venue=venue,
-                )[0]
-                if form.cleaned_data['tomorrow'].is_none():
-                    appeal.delete()
-                elif appeal.hours24() != form.cleaned_data['tomorrow']:
-                    appeal.set_hours(form.cleaned_data['tomorrow'])
-                    appeal.log_event('keen')
-                    appeal.log_event('appeal')
-                    appeal.save()
-                    appeal.invite_rivals(friends)
+                friends = form.cleaned_data['friends']
+                context = {
+                    'friends': { Player.objects.get(pk=f) for f in friends },
+                    'game': Game.objects.get(pk=form.cleaned_data['game']),
+                    'today': form.cleaned_data['today'],
+                    'tomorrow': form.cleaned_data['tomorrow'],
+                    'venue': Venue.objects.get(pk=form.cleaned_data['venue'])
+                    }
             except:
+                logger.exception('failed to parse KeenForm')
                 context = {'keen_form': form}
         else:
+            logger.warn('invalid Appeal form')
             context = {'keen_form': form}
         return context
 

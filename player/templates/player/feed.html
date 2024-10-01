@@ -36,13 +36,41 @@
             </div>
         </div>
         <hr>
-        <h2 class="show_group todo">
+        <h2 class="show_group">
             Accepted
             <span>▲</span>
         </h2>
-        <div class="group hidden">
+        <div class="group">
+{% for bid in bids %}
+            <a class="button item {{ unread }}" href="{% url 'bid' appeal=bid.appeal.pk %}">
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="{{ bid.appeal.game.icon }} fa-1x"></i>
+                        </span>
+                        <p class="line">{{ bid.appeal.game }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>{{ bid.appeal.date }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>{{ bid.appeal.venue}}</p>
+                    </div>
+                </div>
+                <div class="pole badges todo">
+                    <div class="icon">
+                        <i class="fa-solid fa-inbox fa-xl"></i>
+                    </div>
+                </div>
+            </a>
+{% empty %}
             <p>No accepted invitations!</p>
-{% for invite in accepted %}
 {% endfor %}
         </div>
         <h2 class="show_group">

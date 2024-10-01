@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, ScreenForm
 from player.models import Appeal, Bid, Filter, Friend
+from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
 from api.models import Region, Mark
 from service.locate import Locate
@@ -21,15 +22,16 @@ class FilterView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().get(request)
+        player = self.user.player
         context = self.filter_form_class.get(
-            self.user.player,
+            player,
             game='ANY',
             venue='ANY',
             hours=WEEK_NONE,
         )
         context |= {
             'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
         }
         context |= super().context(request)
         return render(request, self.template_name, context)
@@ -78,14 +80,14 @@ class FilterView(QwikView):
         return HttpResponseRedirect("/player/feed/filters")
 
 
-class InviteView(QwikView):
+class FeedView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().request_init(request)
         player = self.user.player
         context = {
             'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
         }
         context |= super().context(request)
         return render(request, "player/feed.html", context)
@@ -100,7 +102,7 @@ class KeenView(QwikView):
         player = self.user.player
         context = {
             'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
         }
         context |= self.keen_form_class.get(player)
         context |= super().context(request)
@@ -116,7 +118,7 @@ class KeenView(QwikView):
         if 'keen_form' in context: 
             context |= {
                 'appeals': Appeal.objects.all(),
-                'bids': Bid.objects.all(),
+                'bids': Bid.objects.filter(rival=player).all(),
             }
             return render(request, self.template_name, context)
         # create/update/delete today appeal
@@ -161,7 +163,7 @@ class InvitationView(QwikView):
         player = self.user.player
         context = {
             'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
         }
         context |= super().context(request)
         return render(request, self.template_name, context)
@@ -254,7 +256,7 @@ class BidView(QwikView):
             else:
                 prev_pk = a.pk
         context = {
-            'appeals': Appeal.objects.filter(player=player).all(),
+            'appeals': Appeal.objects.filter().all(),
             'appeal': appeal,
             'appeals': appeals,
             'next': next_pk,
@@ -322,10 +324,11 @@ class ScreenView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().get(request)
+        player = self.user.player
         context = super().context(request)
         context |= {
             'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
         }
         context |= self.screen_form_class.get(self.user.player)
         return render(request, self.template_name, context)

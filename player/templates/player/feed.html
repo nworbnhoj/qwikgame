@@ -2,7 +2,7 @@
 {% extends "content.html" %}
 
 
-{% block title %}Invite{% endblock %}
+{% block title %}Feed{% endblock %}
 
 
 {% block cta_mobile %}
@@ -113,6 +113,7 @@
 
 
 {% block detail %}
+{% if big_screen %}
     <div id="detail" class="detail">
         <div class="splash">
             <div class="pillar push_down">
@@ -128,4 +129,5 @@
             <div>
         </div>
     </div>
+{% endif %}
 {% endblock detail %}

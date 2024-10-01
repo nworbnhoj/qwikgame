@@ -771,7 +771,6 @@ window.onload = function() {
   });
   document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
     all_week.onclick = toggleAllWeek;
-    setAllWeek(all_week, true);
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;

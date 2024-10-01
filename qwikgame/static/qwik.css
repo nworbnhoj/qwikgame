@@ -152,7 +152,7 @@ div.pole { align-items: start; flex: auto; flex-direction: column; justify-conte
 div.range_options { gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
-div.post { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.post { align-items: stretch; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
 div.rival_aberation { align-items: flex-start; flex-direction: column; justify-content: start; width: 100%}
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }

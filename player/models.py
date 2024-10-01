@@ -76,7 +76,7 @@ class Appeal(models.Model):
         return Hours24(self.hours)
 
     def hour_choices(self):
-        return self.hours24().as_choices()
+        return self.hours24.as_choices()
 
     def invite(self, rivals):
         for rival in rivals:

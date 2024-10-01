@@ -269,34 +269,43 @@ class BidView(QwikView):
         super().post(request)
         player = self.user.player
         appeal_pk = kwargs['appeal']
-        appeal = Bid.objects.get(pk=appeal_pk)
+        appeal = Appeal.objects.get(pk=appeal_pk)
         context = self.bid_form_class.post(
             request.POST,
             appeal,
         )
-        if len(context) == 0:
-            return HttpResponseRedirect("/player/feed/")
-        bids = Bid.objects.filter(rival=player).all()
-        prev_pk = bids.last().pk
-        next_pk = bids.first().pk
-        found = False
-        for a in bids:
-            if found:
-                next_pk = a.pk
-                break
-            if a.pk == bid.pk:
-                found = True
-            else:
-                prev_pk = a.pk
-        context = {
-            'appeals': Appeal.objects.filter(player=player).all(),
-            'bid': bid,
-            'bids': bids,
-            'next': next_pk,
-            'prev': prev_pk,
-        }
-        context |= super().context(request)
-        return render(request, self.template_name, context)
+        if 'bid_form' in context:
+            bids = Bid.objects.filter(rival=player).all()
+            prev_pk = bids.last().pk
+            next_pk = bids.first().pk
+            found = False
+            for a in bids:
+                if found:
+                    next_pk = a.pk
+                    break
+                if a.pk == bid.pk:
+                    found = True
+                else:
+                    prev_pk = a.pk
+            context |= {
+                'appeals': Appeal.objects.filter().all(),
+                'bid': bid,
+                'bids': bids,
+                'next': next_pk,
+                'prev': prev_pk,
+            }
+            context |= super().context(request)
+            return render(request, self.template_name, context)
+        if 'accept' in context:
+            bid = Bid(
+                appeal=context['accept'],
+                hours=context['hours'],
+                rival=player,
+                strength='m',
+                )
+            bid.save()
+            bid.log_event('bid')
+        return HttpResponseRedirect("/player/feed")
 
 
 class RivalView(QwikView):

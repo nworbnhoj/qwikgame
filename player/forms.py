@@ -404,11 +404,10 @@ class BidForm(QwikForm):
         if form.is_valid():
             try:
                 if 'accept' in request_post:
-                    appeal.invite.hours = form.cleaned_data['hour']
-                    appeal.save()
-                    appeal.log_event('bid')
-                elif 'decline' in request_post:
-                    appeal.delete()
+                    context={
+                        'accept': appeal,
+                        'hours': form.cleaned_data['hour']
+                    }
             except:
                 context = {'bid_form': form}
         else:

@@ -147,6 +147,22 @@ class FilterForm(QwikForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        game = cleaned_data.get("game")
+        venue = cleaned_data.get("venue")
+        if game and venue:
+            if game == 'ANY' and venue == 'ANY':
+                raise ValidationError(
+                    "You must select a Game and/or a Venue."
+                )
+
+    def clean_hours(self):
+        hours = self.cleaned_data["hours"]
+        if hours.as_bytes() == WEEK_NONE:
+            raise ValidationError("You must select at least one hour.")
+        return hours
+
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
     @classmethod
@@ -170,8 +186,8 @@ class FilterForm(QwikForm):
     # Returns a context dict game, venue|placeid, hours
     @classmethod
     def post(klass, request_post):
-        context = {}
         form = klass(data=request_post)
+        context = { 'filter_form': form}
         if form.is_valid():
             game_id = form.cleaned_data['game']
             context['game'] = Game.objects.filter(pk=game_id).first()
@@ -190,7 +206,6 @@ class FilterForm(QwikForm):
             context['hours'] = form.cleaned_data['hours']
         else:
             logger.info(form)
-        context['filter_form'] = form
         return context
 
 

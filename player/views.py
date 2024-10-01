@@ -39,9 +39,18 @@ class FilterView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request)
+        player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
         )
+        form = context.get('filter_form')
+        if form and not form.is_valid():
+            context |= {
+                'appeals': Appeal.objects.all(),
+                'bids': Bid.objects.filter(rival=player).all(),
+            }
+            context |= super().context(request)
+            return render(request, self.template_name, context)
 
         venue = context.get('venue')
         if not venue:

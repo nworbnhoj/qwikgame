@@ -178,7 +178,7 @@ class FilterForm(QwikForm):
         # TODO set distinct for venues
         # TODO include venues for past matches
         filters = Filter.objects.filter(player=player).all()
-        venues = [(f.venue_id, f.venue.name) for f in filters]
+        venues = [(f.venue_id, f.venue.name) for f in filters if f.venue]
         form.fields['venue'].choices += venues[:8]
         return { 'filter_form': form }
 

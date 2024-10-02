@@ -109,6 +109,7 @@ class BlockedForm(QwikForm):
 class FilterForm(QwikForm):
     game = ChoiceField(
         choices = {'ANY':'Any Game'} | Game.choices(),
+        help_text='Only see invitations for a particular Game.',
         label = 'Game',
         required=True,
         template_name='dropdown.html',
@@ -116,11 +117,13 @@ class FilterForm(QwikForm):
     )
     venue = ChoiceField(
         choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map', 'placeid': ''},
+        help_text='Only see invitations for a particular Venue.',
         label='Venue',
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
     hours = WeekField(
+        help_text='Only see invitations at specific times in your week.',
         label='Time',
         hours=[*range(6,21)],
         required=True,
@@ -160,7 +163,7 @@ class FilterForm(QwikForm):
     def clean_hours(self):
         hours = self.cleaned_data["hours"]
         if hours.as_bytes() == WEEK_NONE:
-            raise ValidationError("You must select at least one hour.")
+            raise ValidationError("You must select at least one hour in the week.")
         return hours
 
     # Initializes an FilterForm for 'player'.

@@ -42,6 +42,7 @@ class FilterView(QwikView):
         player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
+            player,
         )
         form = context.get('filter_form')
         if form and not form.is_valid():

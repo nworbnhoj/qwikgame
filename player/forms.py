@@ -152,12 +152,11 @@ class FilterForm(QwikForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        game = cleaned_data.get("game")
-        venue = cleaned_data.get("venue")
-        if game and venue:
-            if game == 'ANY' and venue == 'ANY':
-                raise ValidationError(
-                    "You must select a Game and/or a Venue."
+        if not cleaned_data.get('venue'):
+            if not cleaned_data.get('placeid'):
+                self.add_error(
+                    "venue",
+                    'Sorry, that Venue selection did not work. Please try again.'
                 )
 
     def clean_hours(self):
@@ -165,6 +164,17 @@ class FilterForm(QwikForm):
         if hours.as_bytes() == WEEK_NONE:
             raise ValidationError("You must select at least one hour in the week.")
         return hours
+
+    def clean_venue(self):
+        venue_id = self.cleaned_data.get('venue')
+        if venue_id == 'placeid':
+            return venue_id
+        if venue_id.isdigit():
+            if Venue.objects.filter(pk=int(venue_id)).exists():
+                return venue_id
+        raise ValidationError(
+            'Sorry, that Venue selection did not work. Please try again.'
+        )
 
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
@@ -178,35 +188,34 @@ class FilterForm(QwikForm):
                     'venue': venue,
                 },
             )
-        # TODO set distinct for venues
-        # TODO include venues for past matches
-        filters = Filter.objects.filter(player=player).all()
-        venues = [(f.venue_id, f.venue.name) for f in filters if f.venue]
-        form.fields['venue'].choices += venues[:8]
+        form.fields['venue'].choices += player.venue_choices()[:8]
         return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.
     # Returns a context dict game, venue|placeid, hours
     @classmethod
-    def post(klass, request_post):
+    def post(klass, request_post, player):
         form = klass(data=request_post)
-        context = { 'filter_form': form}
+        form.fields['venue'].choices += player.venue_choices()
+        context = { 'filter_form': form }
         if form.is_valid():
             game_id = form.cleaned_data['game']
-            context['game'] = Game.objects.filter(pk=game_id).first()
-            venue_id = form.cleaned_data['venue']
+            context = {
+                'game': Game.objects.filter(pk=game_id).first(),
+                'hours': form.cleaned_data['hours'],
+            }
+            venue_id = form.cleaned_data.get('venue')
             if venue_id == 'ALL':
-                context['venue'] = None
-            elif venue_id == 'placeid':
+                pass
+            if venue_id == 'placeid':
                 placeid = form.cleaned_data['placeid']
-                context['venue'] = Venue.objects.filter(placeid=placeid).first()
-                context['placeid'] = placeid
-            elif venue_id.isdigit():
-                venue_id = int(venue_id)
-                context['venue'] = Venue.objects.filter(pk=venue_id).first()
+                venue = Venue.objects.filter(placeid=placeid)
+                if venue.exists():
+                    context['venue'] = venue.first()
+                else:
+                    context['placeid'] = placeid
             else:
-                context['venue'] = None
-            context['hours'] = form.cleaned_data['hours']
+                context['venue'] = Venue.objects.filter(pk=venue_id).first()
         else:
             logger.info(form)
         return context

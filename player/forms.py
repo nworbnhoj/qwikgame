@@ -454,7 +454,14 @@ class BidForm(QwikForm):
         required=False,
         template_name='field_pillar.html',
         widget=RadioSelect,
-    )
+    )    
+
+    def clean_hours(self):
+        hour = self.cleaned_data["hour"]
+        logger.warn(hour)
+        if hour.as_bytes() == DAY_NONE:
+            raise ValidationError("You must select at least one hour.")
+        return hour
 
     # Initializes an BidForm for an 'appeal'.
     # Returns a context dict including 'rspv_form'
@@ -474,20 +481,14 @@ class BidForm(QwikForm):
     # Returns a context dict including 'bid_form'
     @classmethod
     def post(klass, request_post, appeal):
-        context = {}
         form = klass(data=request_post)
+        context = {'bid_form': form}
         form.fields['hour'].choices = appeal.hour_choices()
         if form.is_valid():
-            try:
-                if 'accept' in request_post:
-                    context={
-                        'accept': appeal,
-                        'hours': form.cleaned_data['hour']
-                    }
-            except:
-                context = {'bid_form': form}
-        else:
-            context = {'bid_form': form}
+            context={
+                'accept': appeal,
+                'hours': form.cleaned_data['hour']
+            }
         return context
 
 

@@ -2,7 +2,7 @@
 {% extends "player/feed.html" %}
 
 
-{% block title %}Rsvp{% endblock %}
+{% block title %}Bid{% endblock %}
 
     
 {% block list_bar %}
@@ -82,12 +82,11 @@
         </div>
         <div class="post form">
             <form action="{% url 'bid' appeal=appeal.pk %}" method="post">
-            <div class="paver">
-                <input class="ctb push_down" type="submit" name='decline' value='DECLINE'>
-                <input class="cta push_down" type="submit" name='accept'value='ACCEPT'>
-            </div>
 {% csrf_token %}
 {{ bid_form }}
+            <div class="paver">
+                <input class="cta push_down" type="submit" name='accept'value='ACCEPT'>
+            </div>
             </form>
         </div>
     </div>

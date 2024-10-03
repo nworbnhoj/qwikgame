@@ -306,7 +306,8 @@ class BidView(QwikView):
             request.POST,
             appeal,
         )
-        if 'bid_form' in context:
+        form = context.get('bid_form')
+        if form and not form.is_valid():
             bids = Bid.objects.filter(rival=player).all()
             prev_pk = bids.last().pk
             next_pk = bids.first().pk
@@ -328,15 +329,14 @@ class BidView(QwikView):
             }
             context |= super().context(request)
             return render(request, self.template_name, context)
-        if 'accept' in context:
-            bid = Bid(
-                appeal=context['accept'],
-                hours=context['hours'],
-                rival=player,
-                strength='m',
-                )
-            bid.save()
-            bid.log_event('bid')
+        bid = Bid(
+            appeal=context['accept'],
+            hours=context['hours'],
+            rival=player,
+            strength='m',
+            )
+        bid.save()
+        bid.log_event('bid')
         return HttpResponseRedirect("/player/feed")
 
 

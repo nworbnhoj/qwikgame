@@ -1,8 +1,23 @@
 <!-- qwikgame/player/templates/player/keen.html -->
 {% extends "player/feed.html" %}
+{% load static %}
+
+{% block script %}
+    <script defer src="{% static 'map.js' %}"></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&callback=venuesMap&libraries=places">
+    </script>
+    <script>
+        const VENUE_ICON = "{% static 'img/qwik.pin.21x35.png' %}";
+        const REGION_ICON = "{% static 'img/qwik.cluster.24x24.png' %}";
+        const PLACE_ICON = "{% static 'img/qwik.place.24x24.png' %}";
+    </script>
+
+    <script defer src="{% static 'keen.js' %}"></script>
+{% endblock %}
 
 
-{% block title %}Keen{% endblock %}
+{% block title %}Invite{% endblock %}
 
     
 {% block list_bar %}
@@ -36,4 +51,44 @@
             </div>
         </div>
     </div>
-{% endblock %}
+
+
+    <div id='map-elements' style='display:none;'>    
+      <div id='map' class='center wide'></div>      
+      <input id="map-search" class="controls" type="text" form="not-register-form" placeholder="{search_box}" />
+      <template id="infowindow-venue">
+        <div>
+          <div class="map-mark-info-head">
+            <a id="map-mark-venue-link" href="">name</a>
+          </div>
+          <div class="map-mark-info-body">
+            <span class="map-mark-info-label">{players}: </span>
+            <span id="map-mark-venue-players">number</span>
+          </div>
+        </div>
+      </template>
+      <template id="infowindow-region">
+        <div class="pole">
+          <div class="map-mark-info-head">
+            <span id="map-mark-region-name"></span>
+          </div>
+          <div class="map-mark-info-body">
+            <span class="map-mark-info-label">{venues}: </span>
+            <span id="map-mark-region-venues">number</span>
+          </div>
+        </div>
+      </template>
+      <template id='infowindow-poi'>
+        <div class="pole">
+          <div id='poi-id' style='display:none;'></div>
+          <div class="map-mark-info-head">
+            <div id='poi-name'>name</div>
+          </div>
+          <div class="map-mark-info-body">
+            <a id='poi-link' href='' onclick="clickCreateVenue(event)">{create_new_venue}</a>
+          </div>
+        </div>
+      </template>
+    </div>
+
+{% endblock detail %}

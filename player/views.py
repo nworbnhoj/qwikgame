@@ -125,19 +125,33 @@ class KeenView(QwikView):
             request.POST,
             player,
         )
-        if 'keen_form' in context: 
+        form = context.get('keen_form')
+        if form and not form.is_valid():
             context |= {
                 'appeals': Appeal.objects.all(),
                 'bids': Bid.objects.filter(rival=player).all(),
             }
             return render(request, self.template_name, context)
+        venue = context.get('venue')
+        if not venue:
+            placeid = context.get('placeid')
+            if placeid:
+                venue = Venue.from_placeid(placeid)
+                if venue:
+                    venue.save()
+                    logger.info(f'Venue new: {venue}')
+            else:
+                logger.warn("failed to create venue from placeid: {placeid}")
+                return HttpResponseRedirect('/player/feed/')
+
+        appeal_pk = None
         # create/update/delete today appeal
         now=timezone.now()
         appeal = Appeal.objects.get_or_create(
             date=now.date(),
             game=context['game'],
             player=player,
-            venue=context['venue'],
+            venue=venue,
         )[0]
         if context['today'].is_none():
             appeal.delete()
@@ -146,13 +160,14 @@ class KeenView(QwikView):
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()
+            appeal_pk = appeal.pk
         # create/update/delete tomorrow appeal
         one_day=datetime.timedelta(days=1)
         appeal = Appeal.objects.get_or_create(
             date=(now + one_day).date(),
             game=context['game'],
             player=player,
-            venue=context['venue'],
+            venue=venue,
         )[0]
         if context['tomorrow'].is_none():
             appeal.delete()
@@ -161,7 +176,11 @@ class KeenView(QwikView):
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()
-        return HttpResponseRedirect(f'/player/feed/replys/{appeal.id}/')
+            if not appeal_pk:
+                appeal_pk = appeal.pk
+        if appeal_pk:
+            return HttpResponseRedirect(f'/player/feed/replys/{appeal_pk}/')
+        return HttpResponseRedirect('/player/feed/')        
 
 
 class InvitationView(QwikView):

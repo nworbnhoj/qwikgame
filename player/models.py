@@ -43,6 +43,12 @@ class Player(models.Model):
             self.email_hash = hashlib.md5(self.user.email.encode()).hexdigest()
         super().save(*args, **kwargs)
 
+    def venue_choices(self):
+        # TODO set distinct for venues
+        # TODO include venues for past matches
+        filters = Filter.objects.filter(player=self).all()
+        return [(f.venue_id, f.venue.name) for f in filters if f.venue]
+
     def __str__(self):
         return self.email_hash if self.user is None else self.user.email
 

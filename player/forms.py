@@ -216,12 +216,14 @@ class KeenForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),
         label = 'GAME',
+        required = True,
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
     venue = ChoiceField(
-        choices = {'map': 'Select from map'} | Venue.choices(),
+        choices = {'show-map': 'Select from map', 'placeid': ''},
         label='VENUE',
+        required = True,
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
@@ -245,25 +247,62 @@ class KeenForm(QwikForm):
         label='FRIENDS',
         required=False,
     )
-    strength = SelectRangeField(
-        choices={'W':'Much Weaker', 'w':'Weaker', 'm':'Well Matched', 's':'Stronger', 'S':'Much Stronger'},
-        help_text='Restrict this invitation to Rivals of a particular skill level.',
-        label = "RIVAL'S SKILL LEVEL",
+    lat = DecimalField(
+        decimal_places=6,
+        initial=-36.449786,
+        max_value=180.0,
+        min_value=-180.0,
         required=False,
-        template_name = 'upgrade.html',
-        disabled=True, # TODO design Model for reckon strength against Venue/Region
+        widget=HiddenInput(),
     )
+    lng = DecimalField(
+        decimal_places=6,
+        initial=146.430037,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    placeid = CharField(
+        required=False,
+        widget=HiddenInput(),
+    )
+    # strength = SelectRangeField(
+    #     choices={'W':'Much Weaker', 'w':'Weaker', 'm':'Well Matched', 's':'Stronger', 'S':'Much Stronger'},
+    #     help_text='Restrict this invitation to Rivals of a particular skill level.',
+    #     label = "RIVAL'S SKILL LEVEL",
+    #     required=False,
+    #     template_name = 'upgrade.html',
+    #     disabled=True, # TODO design Model for reckon strength against Venue/Region
+    # )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('today').is_none():
-            if cleaned_data.get('tomorrow').is_none():
-                raise ValidationError(
-                    'Please select at least one hour in today or tomorrow.'
+        if not cleaned_data.get('today'):
+            if not cleaned_data.get('tomorrow'):
+                msg = 'Please select at least one hour in today or tomorrow.'
+                self.add_error('today', msg)
+                self.add_error('tomorrow', msg)
+        if not cleaned_data.get('venue'):
+            if not cleaned_data.get('placeid'):
+                self.add_error(
+                    "venue",
+                    'Sorry, that Venue selection did not work. Please try again.'
                 )
+
+    def clean_venue(self):
+        venue_id = self.cleaned_data.get('venue')
+        if venue_id == 'placeid':
+            return venue_id
+        if venue_id.isdigit():
+            if Venue.objects.filter(pk=int(venue_id)).exists():
+                return venue_id
+        raise ValidationError(
+            'Sorry, that Venue selection did not work. Please try again.'
+        )
 
     def personalise(self, player):
         self.fields['friends'].choices = player.friend_choices()
@@ -275,6 +314,7 @@ class KeenForm(QwikForm):
         self.fields['today'].help_text = 'What time are you keen to play today?'
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
+        self.fields['venue'].choices += player.venue_choices()[:8]
 
 
     # Initializes an KeenForm for 'player'.
@@ -310,14 +350,23 @@ class KeenForm(QwikForm):
                     'game': Game.objects.get(pk=form.cleaned_data['game']),
                     'today': form.cleaned_data['today'],
                     'tomorrow': form.cleaned_data['tomorrow'],
-                    'venue': Venue.objects.get(pk=form.cleaned_data['venue'])
+                    'player_id': form.cleaned_data['placeid'],
                     }
+                venue_id = form.cleaned_data.get('venue')
+                if venue_id == 'placeid':
+                    placeid = form.cleaned_data['placeid']
+                    venue = Venue.objects.filter(placeid=placeid)
+                    if venue.exists():
+                        context['venue'] = venue.first()
+                    else:
+                        context['placeid'] = placeid
+                else:
+                    context['venue'] = Venue.objects.filter(pk=venue_id).first()
             except:
                 logger.exception('failed to parse KeenForm')
-                context = {'keen_form': form}
         else:
-            logger.warn('invalid Appeal form')
-            context = {'keen_form': form}
+            logger.warn('invalid KeenForm')
+        context |= {'keen_form': form}
         return context
 
 

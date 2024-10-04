@@ -23,7 +23,7 @@ class FeedView(QwikView):
         super().context(request, args, kwargs)
         player = self.user.player
         self.context |= {
-            'appeals': player.feed(),
+            'appeals': player.feed()[:100],
             'bids': Bid.objects.filter(rival=player).all(),
         }
         return self.context

@@ -140,6 +140,12 @@ class Hours24():
     def is_none(self):
         return self.bits == DAY_NONE
 
+    # returns the hour (index) of the least significant bit
+    def last_hour(self):
+        i = self.as_int()
+        lsb = (i & -i) # least significant bit
+        return lsb.bit_length()-1
+
 
 # represents 24*7 hours in 21 bytes
 class Hours24x7():

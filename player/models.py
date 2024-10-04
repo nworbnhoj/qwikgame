@@ -22,6 +22,10 @@ class Player(models.Model):
     def facet(self):
         return self.email_hash[:3].upper()
 
+    # return a list of Appeals sorted by urgency:
+    # - matching Player Filters,
+    # - or by direct invitation,
+    # - excluding Blocked Players. 
     def feed(self):
         appeal_qs = Appeal.objects.none()
         for f in Filter.objects.filter(player=self, active=True):
@@ -35,7 +39,12 @@ class Player(models.Model):
             appeal_qs |= qs
         # TODO include direct invites
         # TODO exclude Blocked Players
-        return appeal_qs.all()
+        feed = list(appeal_qs.distinct().all())
+        # sort the feed by urgency
+        #TODO optimise this sort (possibly at dbase order_by)
+        feed.sort(key=lambda x: x.last_hour, reverse=True)
+        feed.sort(key=lambda x: x.date)
+        return feed
 
     def friend_choices(self):
         choices={}
@@ -98,6 +107,10 @@ class Appeal(models.Model):
 
     def hour_choices(self):
         return self.hours24.as_choices()
+
+    @property
+    def last_hour(self):
+        return self.hours24.last_hour()
 
     def invite(self, rivals):
         for rival in rivals:

@@ -22,6 +22,21 @@ class Player(models.Model):
     def facet(self):
         return self.email_hash[:3].upper()
 
+    def feed(self):
+        appeal_qs = Appeal.objects.none()
+        for f in Filter.objects.filter(player=self, active=True):
+            qs = Appeal.objects.exclude(player=self)
+            logger.warn(type(qs))
+            if f.game:
+                qs = qs.filter(game=f.game)
+            if f.venue:
+                qs = qs.filter(venue=f.venue)
+            # TODO hours intersection
+            appeal_qs |= qs
+        # TODO include direct invites
+        # TODO exclude Blocked Players
+        return appeal_qs.all()
+
     def friend_choices(self):
         choices={}
         for friend in Friend.objects.filter(player=self):

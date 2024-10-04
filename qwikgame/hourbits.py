@@ -42,10 +42,11 @@ class Hours24():
                 self.bits = DAY_NONE
                 logger.warn('failed to initialise Hours24: len(list)!=24')
             case str():
-                try:	
+                if value.isdigit():
                     self.bits = int(value).to_bytes(3, ENDIAN)
-                except:
-                    logger.warn('failed to initialise Hours24: str not int')
+                else:
+                    logger.warn('failed to initialise Hours24: str not int - default DAY_NONE')
+                    self.bits = DAY_NONE
             case _:
                 self.bits = DAY_NONE
                 logger.warn(f'failed to initialise Hours24: invalid type {type(value)}')

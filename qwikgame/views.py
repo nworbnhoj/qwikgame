@@ -29,7 +29,7 @@ class QwikView(View):
         self.is_player = hasattr(self.user, "player")
         self.is_manager = hasattr(self.user, "manager")
 
-    def context(self, request):
+    def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
         self.context = {
             'big_screen': not small,

@@ -13,32 +13,47 @@ from venue.models import Venue
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
+
 logger = logging.getLogger(__file__)
 
-class FilterView(QwikView):
+
+class FeedView(QwikView):
+
+    def context(self, request, *args, **kwargs):
+        super().context(request, args, kwargs)
+        player = self.user.player
+        self.context |= {
+            'appeals': Appeal.objects.all(),
+            'bids': Bid.objects.filter(rival=player).all(),
+        }
+        return self.context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, args, kwargs)
+        context = self.context(request, args, kwargs)
+        return render(request, "player/feed.html", context)
+
+
+class FilterView(FeedView):
     filter_form_class = FilterForm
     hide=[]
     template_name = 'player/filter.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request)
+        super().get(request, args, kwargs)
+        context = super().context(request, args, kwargs)
         player = self.user.player
-        context = self.filter_form_class.get(
+        context |= self.filter_form_class.get(
             player,
             game='ANY',
             venue='ANY',
             hours=WEEK_NONE,
         )
-        context |= {
-            'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.filter(rival=player).all(),
-        }
-        context |= super().context(request)
         return render(request, self.template_name, context)
 
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)     
         player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
@@ -46,13 +61,8 @@ class FilterView(QwikView):
         )
         form = context.get('filter_form')
         if form and not form.is_valid():
-            context |= {
-                'appeals': Appeal.objects.all(),
-                'bids': Bid.objects.filter(rival=player).all(),
-            }
-            context |= super().context(request)
+            context |= super().context(request, args, kwargs)
             return render(request, self.template_name, context)
-
         venue = context.get('venue')
         if not venue:
             placeid = context.get('placeid')
@@ -91,36 +101,21 @@ class FilterView(QwikView):
         return HttpResponseRedirect("/player/feed/filters")
 
 
-class FeedView(QwikView):
-
-    def get(self, request, *args, **kwargs):
-        super().request_init(request)
-        player = self.user.player
-        context = {
-            'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.filter(rival=player).all(),
-        }
-        context |= super().context(request)
-        return render(request, "player/feed.html", context)
 
 
-class KeenView(QwikView):
+class KeenView(FeedView):
     keen_form_class = KeenForm
     template_name = 'player/keen.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request)
+        super().get(request, args, kwargs)
+        context = super().context(request, args, kwargs)
         player = self.user.player
-        context = {
-            'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.filter(rival=player).all(),
-        }
         context |= self.keen_form_class.get(player)
-        context |= super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)
         player = self.user.player 
         context = self.keen_form_class.post(
             request.POST,
@@ -128,10 +123,7 @@ class KeenView(QwikView):
         )
         form = context.get('keen_form')
         if form and not form.is_valid():
-            context |= {
-                'appeals': Appeal.objects.all(),
-                'bids': Bid.objects.filter(rival=player).all(),
-            }
+            context |= super().context(request, args, kwargs)
             return render(request, self.template_name, context)
         venue = context.get('venue')
         if not venue:
@@ -184,41 +176,47 @@ class KeenView(QwikView):
         return HttpResponseRedirect('/player/feed/')        
 
 
-class InvitationView(QwikView):
+class InvitationView(FeedView):
     # invitation_form_class = InvitationForm
     template_name = 'game/invitation.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request)
-        player = self.user.player
-        context = {
-            'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.filter(rival=player).all(),
-        }
-        context |= super().context(request)
+        super().get(request, args, kwargs)
+        context = super().context(request, args, kwargs)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)
         # context = self.invitation_form_class.post(
         #     request.POST,
         #     self.user.player,
         # )
         if len(context) == 0:
             return HttpResponseRedirect("/player/feed/")
-        context |= super().context(request)
+        context |= super().context(request, args, kwargs)
         return render(request, self.template_name, context)
 
 
-class ReplyView(QwikView):
+class ReplyView(FeedView):
     accept_form_class = AcceptForm
     template_name = 'player/reply.html'
 
-    def get(self, request, *args, **kwargs):
-        super().get(request)
+    def appeal(self, appeal_pk):
+        if not appeal_pk:
+            logger.warn(f'appeal_pk missing')
+            return None
+        appeal = Appeal.objects.filter(pk=appeal_pk).first()
+        if not appeal:
+            logger.warn(f'appeal missing: {appeal_pk}')
+            return None
+        return appeal
+
+    def contxt(self, request, *args, **kwargs):
+        super().context(request, args, kwargs)
         player = self.user.player
-        appeal_pk = kwargs['appeal']
-        appeal = Appeal.objects.get(pk=appeal_pk)
+        appeal = self.appeal(kwargs.get('appeal'))
+        if not appeal:
+            return {}
         appeals = Appeal.objects.filter(player=player).all()
         prev_pk = appeals.last().pk
         next_pk = appeals.first().pk
@@ -239,7 +237,7 @@ class ReplyView(QwikView):
                 reply.name = friends.get(rival=reply.rival).name
             except:
                 reply.name=reply.rival.name
-        context = {
+        self.context |= {
             'appeal': appeal,
             'appeals': appeals,
             'bids': Bid.objects.filter(rival=player).all(),
@@ -248,31 +246,49 @@ class ReplyView(QwikView):
             'prev': prev_pk,
             'replies': replies,
         }
+        return self.context
+
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, args, kwargs)
+        context = self.contxt(request, args, kwargs)
         context |= self.accept_form_class.get()
-        context |= super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)
         player = self.user.player
         context = self.accept_form_class.post(
             request.POST,
             player,
         )
-        if len(context) == 0:
-            return HttpResponseRedirect("/game/match/")
-        return HttpResponseRedirect("/player/feed/replys/{}/".format(kwargs['appeal']))
+        form = context.get('reply_form')
+        if form and not form.is_valid():
+            context |= self.contxt(request, args, kwargs)
+            return render(request, self.template_name, context)
+        return HttpResponseRedirect("/game/match/{}/".format(kwargs['appeal']))
 
 
-class BidView(QwikView):
+class BidView(FeedView):
     bid_form_class = BidForm
     template_name = 'player/bid.html'
 
-    def get(self, request, *args, **kwargs):
-        super().get(request)
+    def appeal(self, appeal_pk):
+        if not appeal_pk:
+            logger.warn(f'appeal_pk missing')
+            return None
+        appeal = Appeal.objects.filter(pk=appeal_pk).first()
+        if not appeal:
+            logger.warn(f'appeal missing: {appeal_pk}')
+            return None
+        return appeal
+
+    def contxt(self, request, args, kwargs):
+        super().context(request, args, kwargs)
         player = self.user.player
-        appeal_pk = kwargs['appeal']
-        appeal = Appeal.objects.get(pk=appeal_pk)
+        appeal = self.appeal(kwargs.get('appeal'))
+        if not appeal:
+            return {}
         appeals = Appeal.objects.all()
         prev_pk = appeals.last().pk
         next_pk = appeals.first().pk
@@ -285,7 +301,7 @@ class BidView(QwikView):
                 found = True
             else:
                 prev_pk = a.pk
-        context = {
+        self.context |= {
             'appeals': Appeal.objects.filter().all(),
             'appeal': appeal,
             'appeals': appeals,
@@ -293,41 +309,32 @@ class BidView(QwikView):
             'player_id': player.facet(),
             'prev': prev_pk,
         }
+        return self.context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, args, kwargs)
+        context = self.contxt(request, args, kwargs)
+        appeal = context.get('appeal')
+        if not appeal:
+            logger.warn("BidView.get() called without appeal")
+            return HttpResponseRedirect("/player/feed/")
         context |= self.bid_form_class.get(appeal)
-        context |= super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)
+        appeal = self.appeal(kwargs.get('appeal'))
+        if not appeal:
+            logger.warn("BidView.get() called without appeal")
+            return HttpResponseRedirect("/player/feed/")
         player = self.user.player
-        appeal_pk = kwargs['appeal']
-        appeal = Appeal.objects.get(pk=appeal_pk)
         context = self.bid_form_class.post(
             request.POST,
             appeal,
         )
         form = context.get('bid_form')
         if form and not form.is_valid():
-            bids = Bid.objects.filter(rival=player).all()
-            prev_pk = bids.last().pk
-            next_pk = bids.first().pk
-            found = False
-            for a in bids:
-                if found:
-                    next_pk = a.pk
-                    break
-                if a.pk == bid.pk:
-                    found = True
-                else:
-                    prev_pk = a.pk
-            context |= {
-                'appeals': Appeal.objects.filter().all(),
-                'bid': bid,
-                'bids': bids,
-                'next': next_pk,
-                'prev': prev_pk,
-            }
-            context |= super().context(request)
+            context |= self.contxt(request, args, kwargs)
             return render(request, self.template_name, context)
         bid = Bid(
             appeal=context['accept'],
@@ -340,31 +347,26 @@ class BidView(QwikView):
         return HttpResponseRedirect("/player/feed")
 
 
-class RivalView(QwikView):
+class RivalView(FeedView):
 
     def get(self, request, *args, **kwargs):
-        super().request_init(request)
-        context = super().context(request)
+        super().get(request, args, kwargs)
+        context = super().context(request, args, kwargs)
         return render(request, "player/rival.html", context)
 
 
-class FiltersView(QwikView):
+class FiltersView(FeedView):
     screen_form_class = FiltersForm
     template_name = 'player/screen.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request)
-        player = self.user.player
-        context = super().context(request)
-        context |= {
-            'appeals': Appeal.objects.all(),
-            'bids': Bid.objects.filter(rival=player).all(),
-        }
+        super().get(request, args, kwargs)
+        context = super().context(request, args, kwargs)
         context |= self.screen_form_class.get(self.user.player)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request)
+        super().post(request, args, kwargs)
         context = self.screen_form_class.post(
             request.POST,
             self.user.player,

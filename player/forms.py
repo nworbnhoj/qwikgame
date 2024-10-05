@@ -58,6 +58,52 @@ class AcceptForm(QwikForm):
         return context
 
 
+class BidForm(QwikForm):
+    hour = TypedChoiceField(
+        coerce=str_to_hours24,
+        help_text='When are you keen to play?',
+        label='Pick Time to play',
+        required=False,
+        template_name='field_pillar.html',
+        widget=RadioSelect,
+    )    
+
+    def clean_hours(self):
+        hour = self.cleaned_data["hour"]
+        logger.warn(hour)
+        if hour.as_bytes() == DAY_NONE:
+            raise ValidationError("You must select at least one hour.")
+        return hour
+
+    # Initializes an BidForm for an 'appeal'.
+    # Returns a context dict including 'rspv_form'
+    @classmethod
+    def get(klass, appeal):
+        hours = appeal.hours24
+        form = klass( initial={'hour': hours})
+        form.fields['hour'].choices = hours.as_choices()
+        form.fields['hour'].sub_text = appeal.date
+        form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
+        form.fields['hour'].widget.option_template_name='input_hour.html'
+        return {
+            'bid_form': form,
+        }
+
+    # Initializes an BidForm for an 'appeal'.
+    # Returns a context dict including 'bid_form'
+    @classmethod
+    def post(klass, request_post, appeal):
+        form = klass(data=request_post)
+        context = {'bid_form': form}
+        form.fields['hour'].choices = appeal.hour_choices()
+        if form.is_valid():
+            context={
+                'accept': appeal,
+                'hours': form.cleaned_data['hour']
+            }
+        return context
+
+
 class BlockedForm(QwikForm):
     blocked = MultipleActionField(
         action='unblock:',
@@ -104,7 +150,7 @@ class BlockedForm(QwikForm):
         for blocked in player.blocked.all():
             choices[blocked.email_hash] = "{} ({})".format(blocked.name(), blocked.facet())
         return choices
-
+    
 
 class FilterForm(QwikForm):
     game = ChoiceField(
@@ -219,6 +265,49 @@ class FilterForm(QwikForm):
         else:
             logger.info(form)
         return context
+    
+
+class FiltersForm(QwikForm):
+    filters = MultipleChoiceField(
+        label='no active filters',
+        widget=CheckboxSelectMultiple,
+    )
+
+    def __init__(self, player, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        filters = Filter.objects.filter(player=player)
+        active = [ str(filter.id) for filter in filters.filter(active=True) ]
+        choices = { str(filter.id) : filter for filter in filters}
+        self.fields['filters'].choices = choices
+        self.fields['filters'].label = '{} active filters'.format(len(active))
+        self.fields['filters'].initial = active
+        # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
+
+    @classmethod
+    def get(klass, player):
+        return { 'screen_form' : klass(player), }
+
+    @classmethod
+    def post(klass, request_post, player):
+        form = klass(player, data=request_post)
+        if form.is_valid():
+            if 'ACTIVATE' in request_post:
+                logger.info('activating filters {}'.format(form.cleaned_data['filters']))
+                for filter in Filter.objects.filter(player=player):
+                    try:
+                        filter.active = str(filter.id) in form.cleaned_data['filters']
+                        filter.save()
+                    except:
+                        logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
+            if 'DELETE' in request_post:
+                for filter_code in form.cleaned_data['filters']:
+                    try:
+                        junk = Filter.objects.get(pk=filter_code)
+                        logger.info('Deleting filter: {}'.format(junk))
+                        junk.delete()
+                    except:
+                        logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
+        return {'screen_form': form}
 
 
 class KeenForm(QwikForm):
@@ -333,9 +422,9 @@ class KeenForm(QwikForm):
         form = klass(
                 initial = {
                     'game': game,
-                    'strength': strength,
-                    'today': DAY_ALL,
-                    'tomorrow': DAY_ALL,
+                    # 'strength': strength,
+                    'today': DAY_NONE,       # TODO extract today from hours
+                    'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
                     'venue': venue,
                 },
             )
@@ -377,10 +466,6 @@ class KeenForm(QwikForm):
             logger.warn('invalid KeenForm')
         context |= {'keen_form': form}
         return context
-
-
-class PublicForm(QwikForm):
-    pass
 
 
 class PrecisForm(QwikForm):
@@ -444,91 +529,5 @@ class PrecisForm(QwikForm):
         return context
 
 
-
-
-class BidForm(QwikForm):
-    hour = TypedChoiceField(
-        coerce=str_to_hours24,
-        help_text='When are you keen to play?',
-        label='Pick Time to play',
-        required=False,
-        template_name='field_pillar.html',
-        widget=RadioSelect,
-    )    
-
-    def clean_hours(self):
-        hour = self.cleaned_data["hour"]
-        logger.warn(hour)
-        if hour.as_bytes() == DAY_NONE:
-            raise ValidationError("You must select at least one hour.")
-        return hour
-
-    # Initializes an BidForm for an 'appeal'.
-    # Returns a context dict including 'rspv_form'
-    @classmethod
-    def get(klass, appeal):
-        hours = appeal.hours24
-        form = klass( initial={'hour': hours})
-        form.fields['hour'].choices = hours.as_choices()
-        form.fields['hour'].sub_text = appeal.date
-        form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
-        form.fields['hour'].widget.option_template_name='input_hour.html'
-        return {
-            'bid_form': form,
-        }
-
-    # Initializes an BidForm for an 'appeal'.
-    # Returns a context dict including 'bid_form'
-    @classmethod
-    def post(klass, request_post, appeal):
-        form = klass(data=request_post)
-        context = {'bid_form': form}
-        form.fields['hour'].choices = appeal.hour_choices()
-        if form.is_valid():
-            context={
-                'accept': appeal,
-                'hours': form.cleaned_data['hour']
-            }
-        return context
-
-
-class FiltersForm(QwikForm):
-    filters = MultipleChoiceField(
-        label='no active filters',
-        widget=CheckboxSelectMultiple,
-    )
-
-    def __init__(self, player, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        filters = Filter.objects.filter(player=player)
-        active = [ str(filter.id) for filter in filters.filter(active=True) ]
-        choices = { str(filter.id) : filter for filter in filters}
-        self.fields['filters'].choices = choices
-        self.fields['filters'].label = '{} active filters'.format(len(active))
-        self.fields['filters'].initial = active
-
-    @classmethod
-    def get(klass, player):
-        return { 'screen_form' : klass(player), }
-
-    @classmethod
-    def post(klass, request_post, player):
-        form = klass(player, data=request_post)
-        if form.is_valid():
-            if 'ACTIVATE' in request_post:
-                logger.info('activating filters {}'.format(form.cleaned_data['filters']))
-                for filter in Filter.objects.filter(player=player):
-                    try:
-                        filter.active = str(filter.id) in form.cleaned_data['filters']
-                        filter.save()
-                    except:
-                        logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
-            if 'DELETE' in request_post:
-                for filter_code in form.cleaned_data['filters']:
-                    try:
-                        junk = Filter.objects.get(pk=filter_code)
-                        logger.info('Deleting filter: {}'.format(junk))
-                        junk.delete()
-                    except:
-                        logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        return {'screen_form': form}
+class PublicForm(QwikForm):
+    pass

@@ -57,7 +57,7 @@ class Player(models.Model):
         else:
             return self.facet()
 
-    # return a list of Appeals that this Player has:
+    # return a list of Appeals that this Player has
     # either made or bid-on, sorted by urgency
     def prospects(self):
         appeal_qs = Appeal.objects.filter(bid__rival=self)
@@ -122,49 +122,6 @@ class Appeal(models.Model):
     @property
     def last_hour(self):
         return self.hours24.last_hour()
-
-    def invite(self, rivals):
-        for rival in rivals:
-            try:
-                invite = Bid(
-                    appeal = self,
-                    hours = None,
-                    rival = rival,
-                    strength = 'm', # TODO estimate relative strength
-                )
-                invite.save()
-            except Exception as e:
-                pass
-                # TODO log exception
-
-    # Inviting Rivals involves the following sequence:
-    # - select Rival Players Available for Game at Venue
-    # - exclude self.player
-    # - exclude Rivals blocked by self.player
-    # - exclude Rivals with no intersecting available hours
-    # - add self.friends to Rivals
-    # - exclude Rivals who block self.player
-    def invite_rivals(self, friends):
-        # TODO handle an updated appeal with changed hours
-        # TODO handle an updated appeal with changed invited friends
-        # TODO handle an updated appeal with changed invited rivals
-        available = Available.objects.filter(
-            game=self.game,
-            venue=self.venue,
-        ).exclude(
-            player=self.player
-        ).exclude (
-            player__in=self.player.blocked.all()
-        ).select_related('player')
-        appeal_hours = Hours24x7().set_date(self.hours, self.date)
-        for a in available:
-            intersect = appeal_hours.intersect(a)
-            if intersect.is_none():
-                a.delete()
-        rivals = {a.player for a in available}
-        rivals |= friends
-        rivals -= {Player.objects.filter(blocked=self.player).all()}
-        self.invite(rivals)
 
     def log_entry(self, entry):
         self.log.append(entry)

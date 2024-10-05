@@ -5,6 +5,7 @@ from pytz import datetime, timezone
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, PLACEID
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
+# from api.models import Mark
 
 logger = logging.getLogger(__file__)
 
@@ -37,6 +38,10 @@ class Venue(models.Model):
     suburb = models.CharField(max_length=32, blank=True)
     url = models.URLField(max_length=256, blank=True)
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
+    
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     Mark(game=game, venue=self).save()
 
     def save(self, **kwargs):
         super().save(**kwargs)

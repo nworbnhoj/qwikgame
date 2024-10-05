@@ -83,7 +83,7 @@
         </h2>
         <div class="group">
 {% for appeal in appeals %}
-            <a class="button item {{ unread }}" href="{% url 'bid' appeal=appeal.pk %}">
+            <a class="button item {{ unread }}" href="{% url 'bid' appeal.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">

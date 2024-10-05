@@ -20,7 +20,7 @@ logger = logging.getLogger(__file__)
 class FeedView(QwikView):
 
     def context(self, request, *args, **kwargs):
-        super().context(request, args, kwargs)
+        super().context(request, *args, **kwargs)
         player = self.user.player
         self._context |= {
             'appeals': player.feed()[:100],
@@ -30,8 +30,8 @@ class FeedView(QwikView):
         return self._context
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = self.context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         return render(request, "player/feed.html", context)
 
 
@@ -41,8 +41,8 @@ class FilterView(FeedView):
     template_name = 'player/filter.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = super().context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         player = self.user.player
         context |= self.filter_form_class.get(
             player,
@@ -54,7 +54,7 @@ class FilterView(FeedView):
 
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)     
+        super().post(request, *args, **kwargs)     
         player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
@@ -62,7 +62,7 @@ class FilterView(FeedView):
         )
         form = context.get('filter_form')
         if form and not form.is_valid():
-            context |= super().context(request, args, kwargs)
+            context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         venue = context.get('venue')
         if not venue:
@@ -109,14 +109,14 @@ class KeenView(FeedView):
     template_name = 'player/keen.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = super().context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         player = self.user.player
         context |= self.keen_form_class.get(player)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)
+        super().post(request, *args, **kwargs)
         player = self.user.player 
         context = self.keen_form_class.post(
             request.POST,
@@ -124,7 +124,7 @@ class KeenView(FeedView):
         )
         form = context.get('keen_form')
         if form and not form.is_valid():
-            context |= super().context(request, args, kwargs)
+            context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         venue = context.get('venue')
         if not venue:
@@ -182,19 +182,19 @@ class InvitationView(FeedView):
     template_name = 'game/invitation.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = super().context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)
+        super().post(request, *args, **kwargs)
         # context = self.invitation_form_class.post(
         #     request.POST,
         #     self.user.player,
         # )
         if len(context) == 0:
             return HttpResponseRedirect("/player/feed/")
-        context |= super().context(request, args, kwargs)
+        context |= super().context(request, *args, **kwargs)
         return render(request, self.template_name, context)
 
 
@@ -213,7 +213,7 @@ class ReplyView(FeedView):
         return appeal
 
     def context(self, request, *args, **kwargs):
-        super().context(request, args, kwargs)
+        super().context(request, *args, **kwargs)
         player = self.user.player
         appeal = self.appeal(kwargs.get('appeal'))
         if not appeal:
@@ -249,13 +249,13 @@ class ReplyView(FeedView):
 
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = self.context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         context |= self.accept_form_class.get()
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)
+        super().post(request, *args, **kwargs)
         player = self.user.player
         context = self.accept_form_class.post(
             request.POST,
@@ -263,7 +263,7 @@ class ReplyView(FeedView):
         )
         form = context.get('reply_form')
         if form and not form.is_valid():
-            context |= self.context(request, args, kwargs)
+            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         return HttpResponseRedirect("/game/match/{}/".format(kwargs['appeal']))
 
@@ -282,8 +282,8 @@ class BidView(FeedView):
             return None
         return appeal
 
-    def context(self, request, args, kwargs):
-        super().context(request, args, kwargs)
+    def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
         player = self.user.player
         appeal = self.appeal(kwargs.get('appeal'))
         if not appeal:
@@ -309,8 +309,8 @@ class BidView(FeedView):
         return self._context
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = self.context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         appeal = context.get('appeal')
         if not appeal:
             logger.warn("BidView.get() called without appeal")
@@ -319,7 +319,7 @@ class BidView(FeedView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)
+        super().post(request, *args, **kwargs)
         appeal = self.appeal(kwargs.get('appeal'))
         if not appeal:
             logger.warn("BidView.get() called without appeal")
@@ -331,7 +331,7 @@ class BidView(FeedView):
         )
         form = context.get('bid_form')
         if form and not form.is_valid():
-            context |= self.context(request, args, kwargs)
+            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         bid = Bid(
             appeal=context['accept'],
@@ -347,8 +347,8 @@ class BidView(FeedView):
 class RivalView(FeedView):
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = super().context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         return render(request, "player/rival.html", context)
 
 
@@ -357,13 +357,13 @@ class FiltersView(FeedView):
     template_name = 'player/screen.html'
 
     def get(self, request, *args, **kwargs):
-        super().get(request, args, kwargs)
-        context = super().context(request, args, kwargs)
+        super().get(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         context |= self.screen_form_class.get(self.user.player)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, args, kwargs)
+        super().post(request, *args, **kwargs)
         context = self.screen_form_class.post(
             request.POST,
             self.user.player,

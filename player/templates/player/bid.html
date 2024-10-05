@@ -81,7 +81,7 @@
             <div class="detail_chat_post"></div>
         </div>
         <div class="post form">
-            <form action="{% url 'bid' appeal=appeal.pk %}" method="post">
+            <form action="{% url 'bid' appeal.pk %}" method="post">
 {% csrf_token %}
 {{ bid_form }}
             <div class="paver">

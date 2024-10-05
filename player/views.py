@@ -24,7 +24,8 @@ class FeedView(QwikView):
         player = self.user.player
         self._context |= {
             'appeals': player.feed()[:100],
-            'bids': Bid.objects.filter(rival=player).all(),
+            'player': player,
+            'prospects': player.prospects()[:100],
         }
         return self._context
 
@@ -239,8 +240,6 @@ class ReplyView(FeedView):
                 reply.name=reply.rival.name
         self._context |= {
             'appeal': appeal,
-            'appeals': appeals,
-            'bids': Bid.objects.filter(rival=player).all(),
             'next': next_pk,
             'player_id': player.facet(),
             'prev': prev_pk,
@@ -302,9 +301,7 @@ class BidView(FeedView):
             else:
                 prev_pk = a.pk
         self._context |= {
-            'appeals': Appeal.objects.filter().all(),
             'appeal': appeal,
-            'appeals': appeals,
             'next': next_pk,
             'player_id': player.facet(),
             'prev': prev_pk,

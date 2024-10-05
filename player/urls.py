@@ -9,6 +9,6 @@ urlpatterns = [
     path("feed/filters/", FiltersView.as_view(), name='filters'),
     path("feed/<int:appeal>/", BidView.as_view(), name='bid'),
     path("feed/keen/", KeenView.as_view(), name='keen'),
-    path("feed/replys/<int:appeal>/", ReplyView.as_view(), name='reply'),
+    path("feed/reply/<int:appeal>/", ReplyView.as_view(), name='reply'),
     path("rival/", RivalView.as_view(), name='rival'),
 ]

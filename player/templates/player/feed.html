@@ -37,30 +37,34 @@
         </div>
         <hr>
         <h2 class="show_group">
-            Accepted
+            Active
             <span>▲</span>
         </h2>
         <div class="group">
-{% for bid in bids %}
-            <a class="button item {{ unread }}" href="{% url 'bid' appeal=bid.appeal.pk %}">
+{% for appeal in prospects %}
+{% if appeal.player == player %}
+            <a class="button item {{ unread }}" href="{% url 'reply' appeal.pk %}">
+{% else %}
+            <a class="button item {{ unread }}" href="{% url 'bid' appeal.pk %}">
+{% endif %}
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
-                            <i class="{{ bid.appeal.game.icon }} fa-1x"></i>
+                            <i class="{{ appeal.game.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ bid.appeal.game }}</p>
+                        <p class="line">{{ appeal.game }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>{{ bid.appeal.date }}</p>
+                        <p>{{ appeal.date }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ bid.appeal.venue}}</p>
+                        <p>{{ appeal.venue}}</p>
                     </div>
                 </div>
                 <div class="pole badges todo">

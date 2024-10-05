@@ -143,7 +143,7 @@
             </div>
             <div class="post">
 
-                <form action="{% url 'reply' appeal=appeal.pk %}" method="post">
+                <form action="{% url 'reply' appeal.pk %}" method="post">
 {% csrf_token %}
 {% for reply in replies %}
                     <div class="chat_item align_start">

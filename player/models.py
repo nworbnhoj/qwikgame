@@ -30,7 +30,6 @@ class Player(models.Model):
         appeal_qs = Appeal.objects.none()
         for f in Filter.objects.filter(player=self, active=True):
             qs = Appeal.objects.exclude(player=self)
-            logger.warn(type(qs))
             if f.game:
                 qs = qs.filter(game=f.game)
             if f.venue:
@@ -57,6 +56,18 @@ class Player(models.Model):
             return self.user.person
         else:
             return self.facet()
+
+    # return a list of Appeals that this Player has:
+    # either made or bid-on, sorted by urgency
+    def prospects(self):
+        appeal_qs = Appeal.objects.filter(bid__rival=self)
+        appeal_qs |= Appeal.objects.filter(player=self)
+        prospects = list(appeal_qs.distinct().all())
+        # sort the prospects by urgency
+        #TODO optimise this sort (possibly at dbase order_by)
+        prospects.sort(key=lambda x: x.last_hour, reverse=True)
+        prospects.sort(key=lambda x: x.date)
+        return prospects
 
     def reputation(self):
         return 3

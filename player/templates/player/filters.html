@@ -31,7 +31,7 @@
             <div class="post form">
                 <form action="{% url 'filters' %}" method="post">
 {% csrf_token %}
-{{ screen_form }}
+{{ filters_form }}
                     <div class="grid_2_col">
                         <input class="ctc push_down" name="DELETE" type="submit" value="REMOVE" onclick="return confirm('Delete these Filters?')">
                         <input class="cta push_down" name="ACTIVATE" type="submit" value="APPLY">

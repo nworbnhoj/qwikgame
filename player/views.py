@@ -250,7 +250,7 @@ class FilterView(FeedView):
 
 class FiltersView(FeedView):
     filters_form_class = FiltersForm
-    template_name = 'player/screen.html'
+    template_name = 'player/filters.html'
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)

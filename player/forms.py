@@ -285,7 +285,7 @@ class FiltersForm(QwikForm):
 
     @classmethod
     def get(klass, player):
-        return { 'screen_form' : klass(player), }
+        return { 'filters_form' : klass(player), }
 
     @classmethod
     def post(klass, request_post, player):
@@ -307,7 +307,7 @@ class FiltersForm(QwikForm):
                         junk.delete()
                     except:
                         logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        return {'screen_form': form}
+        return {'filters_form': form}
 
 
 class KeenForm(QwikForm):

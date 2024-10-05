@@ -249,18 +249,18 @@ class FilterView(FeedView):
 
 
 class FiltersView(FeedView):
-    screen_form_class = FiltersForm
+    filters_form_class = FiltersForm
     template_name = 'player/screen.html'
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = super().context(request, *args, **kwargs)
-        context |= self.screen_form_class.get(self.user.player)
+        context |= self.filters_form_class.get(self.user.player)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        context = self.screen_form_class.post(
+        context = self.filters_form_class.post(
             request.POST,
             self.user.player,
         )

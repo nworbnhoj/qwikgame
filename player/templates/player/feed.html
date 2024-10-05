@@ -43,7 +43,7 @@
         <div class="group">
 {% for appeal in prospects %}
 {% if appeal.player == player %}
-            <a class="button item {{ unread }}" href="{% url 'reply' appeal.pk %}">
+            <a class="button item {{ unread }}" href="{% url 'accept' appeal.pk %}">
 {% else %}
             <a class="button item {{ unread }}" href="{% url 'bid' appeal.pk %}">
 {% endif %}

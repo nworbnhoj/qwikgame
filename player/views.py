@@ -198,7 +198,7 @@ class InvitationView(FeedView):
         return render(request, self.template_name, context)
 
 
-class ReplyView(FeedView):
+class AcceptView(FeedView):
     accept_form_class = AcceptForm
     template_name = 'player/reply.html'
 
@@ -261,7 +261,7 @@ class ReplyView(FeedView):
             request.POST,
             player,
         )
-        form = context.get('reply_form')
+        form = context.get('accept_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)

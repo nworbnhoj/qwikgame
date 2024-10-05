@@ -22,11 +22,11 @@ class FeedView(QwikView):
     def context(self, request, *args, **kwargs):
         super().context(request, args, kwargs)
         player = self.user.player
-        self.context |= {
+        self._context |= {
             'appeals': player.feed()[:100],
             'bids': Bid.objects.filter(rival=player).all(),
         }
-        return self.context
+        return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, args, kwargs)
@@ -211,7 +211,7 @@ class ReplyView(FeedView):
             return None
         return appeal
 
-    def contxt(self, request, *args, **kwargs):
+    def context(self, request, *args, **kwargs):
         super().context(request, args, kwargs)
         player = self.user.player
         appeal = self.appeal(kwargs.get('appeal'))
@@ -237,7 +237,7 @@ class ReplyView(FeedView):
                 reply.name = friends.get(rival=reply.rival).name
             except:
                 reply.name=reply.rival.name
-        self.context |= {
+        self._context |= {
             'appeal': appeal,
             'appeals': appeals,
             'bids': Bid.objects.filter(rival=player).all(),
@@ -246,12 +246,12 @@ class ReplyView(FeedView):
             'prev': prev_pk,
             'replies': replies,
         }
-        return self.context
+        return self._context
 
 
     def get(self, request, *args, **kwargs):
         super().get(request, args, kwargs)
-        context = self.contxt(request, args, kwargs)
+        context = self.context(request, args, kwargs)
         context |= self.accept_form_class.get()
         return render(request, self.template_name, context)
 
@@ -264,7 +264,7 @@ class ReplyView(FeedView):
         )
         form = context.get('reply_form')
         if form and not form.is_valid():
-            context |= self.contxt(request, args, kwargs)
+            context |= self.context(request, args, kwargs)
             return render(request, self.template_name, context)
         return HttpResponseRedirect("/game/match/{}/".format(kwargs['appeal']))
 
@@ -283,7 +283,7 @@ class BidView(FeedView):
             return None
         return appeal
 
-    def contxt(self, request, args, kwargs):
+    def context(self, request, args, kwargs):
         super().context(request, args, kwargs)
         player = self.user.player
         appeal = self.appeal(kwargs.get('appeal'))
@@ -301,7 +301,7 @@ class BidView(FeedView):
                 found = True
             else:
                 prev_pk = a.pk
-        self.context |= {
+        self._context |= {
             'appeals': Appeal.objects.filter().all(),
             'appeal': appeal,
             'appeals': appeals,
@@ -309,11 +309,11 @@ class BidView(FeedView):
             'player_id': player.facet(),
             'prev': prev_pk,
         }
-        return self.context
+        return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, args, kwargs)
-        context = self.contxt(request, args, kwargs)
+        context = self.context(request, args, kwargs)
         appeal = context.get('appeal')
         if not appeal:
             logger.warn("BidView.get() called without appeal")
@@ -334,7 +334,7 @@ class BidView(FeedView):
         )
         form = context.get('bid_form')
         if form and not form.is_valid():
-            context |= self.contxt(request, args, kwargs)
+            context |= self.context(request, args, kwargs)
             return render(request, self.template_name, context)
         bid = Bid(
             appeal=context['accept'],

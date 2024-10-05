@@ -7,7 +7,7 @@ from django.views import View
 
 
 class QwikView(View):
-    context = {}
+    _context = {}
     user = None
     is_player = False
     is_manager = False
@@ -31,13 +31,13 @@ class QwikView(View):
 
     def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
-        self.context = {
+        self._context = {
             'big_screen': not small,
             'person_icon': self.user.person.icon,
             'person_name': self.user.person.name,
             'small_screen': small,
         }
-        return self.context
+        return self._context
 
     def small_screen(self, device):
         if device.is_landscape and device.width >= 768:

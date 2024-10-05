@@ -33,7 +33,7 @@
 {% csrf_token %}
 {{ screen_form }}
                     <div class="grid_2_col">
-                        <input class="ctc push_down" name="DELETE" type="submit" value="REMOVE">
+                        <input class="ctc push_down" name="DELETE" type="submit" value="REMOVE" onclick="return confirm('Delete these Filters?')">
                         <input class="cta push_down" name="ACTIVATE" type="submit" value="APPLY">
                     </div>
                 </form>

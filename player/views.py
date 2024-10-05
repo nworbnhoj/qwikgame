@@ -173,7 +173,7 @@ class KeenView(FeedView):
             if not appeal_pk:
                 appeal_pk = appeal.pk
         if appeal_pk:
-            return HttpResponseRedirect(f'/player/feed/replys/{appeal_pk}/')
+            return HttpResponseRedirect(f'/player/feed/accept/{appeal_pk}/')
         return HttpResponseRedirect('/player/feed/')        
 
 

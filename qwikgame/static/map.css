@@ -1,0 +1,29 @@
+
+/*https://developers.google.com/maps/documentation/javascript/place-autocomplete#style-autocomplete*/
+
+/* The visual element containing the list of predictions returned by the Place Autocomplete service. This list appears as a dropdown list below the Autocomplete or SearchBox widget.*/
+.pac-container { display: block; width: 30%;}
+
+/* The icon displayed to the left of each item in the list of predictions.*/
+.pac-icon {}
+
+/* An item in the list of predictions supplied by the Autocomplete or SearchBox widget.*/
+.pac-item {}
+
+/* The item when the user hovers their mouse pointer over it.*/
+.pac-item:hover 	
+
+/* The item when the user selects it via the keyboard. Note: Selected items will be a member of this class and of the pac-item class.*/
+.pac-item-selected 	
+
+/* A span inside a pac-item that is the main part of the prediction. For geographic locations, this contains a place name, like 'Sydney', or a street name and number, like '10 King Street'. For text-based searches such as 'pizza in New York', it contains the full text of the query. By default, the pac-item-query is colored black. If there is any additional text in the pac-item, it is outside pac-item-query and inherits its styling from pac-item. It is colored gray by default. The additional text is typically an address.*/
+.pac-item-query 	
+
+/* The part of the returned prediction that matches the user’s input. By default, this matched text is highlighted in bold text. Note that the matched text may be anywhere within pac-item. It is not necessarily part of pac-item-query, and it could be partly within pac-item-query as well as partly in the remaining text in pac-item.*/
+.pac-matched {}
+
+.pac-target-input { display: block; width: 30%;}
+
+
+div#map { align-items: center; display: block; height: 30em; position:absolute; z-index: 4 }
+div#map div {display: block;}

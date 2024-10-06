@@ -12,9 +12,10 @@
     {% endif %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
+{% block script %}
     <script src="https://kit.fontawesome.com/ddb61c7fcf.js" crossorigin="anonymous"></script>
     <script defer src="{% static 'qwik.js' %}"></script>
-    {% block script %}{% endblock %}
+{% endblock %}
 
     <title>{% block title %}QwikGame{% endblock %}</title>
 </head>

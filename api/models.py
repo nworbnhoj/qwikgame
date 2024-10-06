@@ -2,87 +2,12 @@ import logging
 from django.db import models
 from django.db.models import Sum
 from game.models import Game
-from venue.models import Venue
+from venue.models import Region, Venue
 from player.models import Filter
-from qwikgame.constants import ADMIN1, COUNTRY, EAST, LAT, LNG, LOCALITY, NAME, NORTH, SIZE, SOUTH, WEST
+from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
-
-
-class Region(models.Model):
-    admin1 = models.CharField(max_length=64, blank=True, null=True)
-    country = models.CharField(max_length=2)
-    east = models.DecimalField(max_digits=9, decimal_places=6, default=180)
-    name = models.CharField(max_length=128, blank=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
-    lng = models.DecimalField(max_digits=9, decimal_places=6, default=0)
-    north = models.DecimalField(max_digits=9, decimal_places=6, default=90)
-    placeid = models.TextField(blank=False, null=False)
-    south = models.DecimalField(max_digits=9, decimal_places=6, default=-90)
-    west = models.DecimalField(max_digits=9, decimal_places=6, default=-180)
-    locality = models.CharField(max_length=64, blank=True, null=True)
-
-    def __str__(self):
-        return '{}|{}|{} : {}'.format(
-            self.country,
-            self.admin1 if self.admin1 else '',
-            self.locality if self.locality else '',
-            self.name,
-            )
-
-    def save(self, **kwargs):
-        super().save(**kwargs)
-        logger.debug(f'Region save: {self}')
-
-    @classmethod
-    def from_place(cls, country, admin1=None, locality=None):
-        geometry = Locate.get_geometry(country, admin1, locality)
-        if geometry:
-            try:
-                smallest = 'locality' if locality else 'admin1' if admin1 else 'country'
-                location = geometry['location']
-                viewport = geometry['viewport']
-                northeast = viewport['northeast']
-                southwest = viewport['southwest']
-                region = cls(
-                    admin1 = admin1,
-                    country = country,
-                    east = float(northeast['lng']),
-                    lat = float(location['lat']),
-                    lng = float(location['lng']),
-                    locality = locality,
-                    name = geometry['names'][smallest][:128],
-                    north = float(northeast['lat']),
-                    placeid = geometry['placeid'],
-                    south = float(southwest['lat']),
-                    west = float(southwest['lng']),
-                    )
-                return region
-            except:
-                logger.warn(f'invalid geometry for: {country}|{admin1}|{locality}\n{geometry}')
-        logger.warn(f'failed to get geometry for: {country}|{admin1}|{locality}')
-        return None
-
-    def mark(self):
-        return {
-            EAST: self.east,
-            LAT: self.lat,
-            LNG: self.lng,
-            NAME: self.name,
-            NORTH: self.north,
-            SOUTH: self.south,
-            WEST: self.west,
-        }
-
-    def place(self):
-        kwargs = { COUNTRY: self.country }
-        if self.admin1:
-            kwargs[ADMIN1] = self.admin1
-        if self.locality:
-            kwargs[LOCALITY] = self.locality
-        return kwargs
-
 
 class Mark(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)

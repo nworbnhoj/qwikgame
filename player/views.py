@@ -7,9 +7,9 @@ from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, FiltersForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
-from api.models import Region, Mark
+from api.models import Mark
 from service.locate import Locate
-from venue.models import Venue
+from venue.models import Region, Venue
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 

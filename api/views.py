@@ -1,9 +1,9 @@
 import json, logging, math
 from django.http import JsonResponse
 from api.forms import REGION_KEYS, VenueMarksJson
-from api.models import Mark, Region
+from api.models import Mark
 from player.models import Filter
-from venue.models import Venue
+from venue.models import Region, Venue
 from qwikgame.constants import ADMIN1, AVOIDABLE, COUNTRY, ERRORS, GAME, LAT, LNG, LOCALITY, MARKS, POS, REGION, STATUS
 from qwikgame.views import QwikView
 

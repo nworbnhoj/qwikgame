@@ -276,6 +276,7 @@ class Locate:
             details = Locate.geodetails(placeid)
             if details:
                 result = details.get('geometry', {})
+                result['placeid'] = details.get('place_id', placeid)
                 result['names'] = {}
                 tipes = ['country', 'admin1', 'locality']
                 for comp in details.get('address_components', []):

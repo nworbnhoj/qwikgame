@@ -18,6 +18,7 @@ class Region(models.Model):
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     lng = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     north = models.DecimalField(max_digits=9, decimal_places=6, default=90)
+    placeid = models.TextField(blank=False, null=False)
     south = models.DecimalField(max_digits=9, decimal_places=6, default=-90)
     west = models.DecimalField(max_digits=9, decimal_places=6, default=-180)
     locality = models.CharField(max_length=64, blank=True, null=True)
@@ -53,6 +54,7 @@ class Region(models.Model):
                     locality = locality,
                     name = geometry['names'][smallest][:128],
                     north = float(northeast['lat']),
+                    placeid = geometry['placeid'],
                     south = float(southwest['lat']),
                     west = float(southwest['lng']),
                     )

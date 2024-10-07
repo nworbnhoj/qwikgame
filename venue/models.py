@@ -19,6 +19,16 @@ class Manager(models.Model):
         return self.user.person.name
 
 
+class Place(models.Model):
+    admin1 = models.CharField(max_length=64, blank=True, null=True)
+    country = models.CharField(max_length=2, blank=True, null=True)
+    name = models.CharField(max_length=128, blank=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, default=-36.449786)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, default=146.430037)
+    placeid = models.TextField(blank=False, null=False)
+    locality = models.CharField(max_length=64, blank=True, null=True)
+
+
 class Region(models.Model):
     admin1 = models.CharField(max_length=64, blank=True, null=True)
     country = models.CharField(max_length=2)

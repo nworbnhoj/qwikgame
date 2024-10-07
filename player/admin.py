@@ -13,7 +13,7 @@ class BidAdmin(admin.ModelAdmin):
     ordering = ['appeal__game']
 
 class FilterAdmin(admin.ModelAdmin):
-    list_filter = ['active', 'game', 'venue']
+    list_filter = ['active', 'place', 'game']
     ordering = ['game']
 
 class FriendAdmin(admin.ModelAdmin):

@@ -6,7 +6,7 @@ from pytz import datetime
 from qwikgame.constants import STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, WEEK_NONE
 from qwikgame.log import Entry
-from venue.models import Venue
+from venue.models import Place, Venue
 
 
 logger = logging.getLogger(__file__)
@@ -158,20 +158,20 @@ class Appeal(models.Model):
 class Filter(models.Model):
     active = models.BooleanField(default=True)
     game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
+    place = models.ForeignKey(Place, null=True, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
-    venue = models.ForeignKey(Venue, null=True, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['game', 'player', 'venue'], name='unique_filter')
+            models.UniqueConstraint(fields=['game', 'place', 'player'], name='unique_filter')
         ]
 
     def __str__(self):
         hours24x7 = Hours24x7(self.hours)
         return  '{}, {}, {}'.format(
                 'Any Game' if self.game is None else self.game,
-                'Any Venue' if self.venue is None else self.venue,
+                'Anywhere' if self.place is None else self.place,
                 'Any Time' if hours24x7.is_week_all() else hours24x7.as_str()
                 )
 

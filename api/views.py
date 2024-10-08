@@ -78,27 +78,27 @@ class VenueMarksJson(QwikView):
                 place = avoid.rsplit('|')
                 place.reverse()
                 place = dict(zip(REGION_KEYS, place))
-                kwargs = Mark.region_filter(place)
+                kwargs = Mark.place_filter(place)
                 mark_objects = mark_objects.exclude(**kwargs)
 
         marks = {}
         for region in regions:
-            place = region.place()
+            place = region.place_dict()
             if place.get(LOCALITY, None):
                 # get Venue Marks
-                kwargs = Mark.venue_filter(place)
+                kwargs = Mark.place_filter(place)
                 venue_marks = mark_objects.filter(**kwargs).all()
                 marks = marks | {vm.key(): vm.mark() for vm in venue_marks}
                 place.pop(LOCALITY, None)
             if place.get(ADMIN1, None):
                 # get locality marks
-                kwargs = Mark.region_filter(place)
+                kwargs = Mark.place_filter(place)
                 locality_marks = mark_objects.filter(**kwargs)
                 marks = marks | {lm.key(): lm.mark() for lm in locality_marks}
                 place.pop(ADMIN1, None)
             if place.get(COUNTRY, None):
                 # get admin1 marks
-                kwargs = Mark.region_filter(place)
+                kwargs = Mark.place_filter(place)
                 admin1_marks = mark_objects.filter(**kwargs)
                 admin1_marks = admin1_marks.exclude(region__locality__isnull=True)
                 marks = marks | {am.key(): am.mark() for am in admin1_marks}
@@ -117,7 +117,7 @@ class VenueMarksJson(QwikView):
         if len(regions) == 0:
             closest = {}
         elif len(regions) == 1:
-            for k,v in regions[0].place().items():
+            for k,v in regions[0].place_dict().items():
                 response[k] = v
         else:
             closest = None
@@ -129,7 +129,7 @@ class VenueMarksJson(QwikView):
                 if distance < min_distance:
                     min_distance = distance
                     closest = region
-            for k,v in closest.place().items():
+            for k,v in closest.place_dict().items():
                 response[k] = v
 
         json_response = JsonResponse(response)

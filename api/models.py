@@ -2,7 +2,7 @@ import logging
 from django.db import models
 from django.db.models import Sum
 from game.models import Game
-from venue.models import Region, Venue
+from venue.models import Place
 from player.models import Filter
 from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
@@ -11,9 +11,8 @@ logger = logging.getLogger(__file__)
 
 class Mark(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, blank=True, null=True)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
     size = models.PositiveIntegerField(default=0)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True, null=True)
 
     def save(self, **kwargs):
         self.update_size()
@@ -21,10 +20,10 @@ class Mark(models.Model):
         logger.debug(f'Mark save: {self}')
         # recursively add Region Marks as required
         regions = Region.objects
-        if self.venue:
-            place = self.venue.place()
-        elif self.region:
-            place = self.region.place()
+        if hasattr(self, 'venue'):
+            place = self.venue.place_dict()
+        elif hasattr(self, 'region'):
+            place = self.region.place_dict()
             if place.pop(LOCALITY, None):
                 regions = regions.exclude(locality__isnull=False)
             elif place.pop(ADMIN1, None):
@@ -63,83 +62,42 @@ class Mark(models.Model):
         return mark
 
     @staticmethod
-    def region_filter(place):
-        return {'region__'+k: v for k, v in place.items() if v is not None}
-
-    @staticmethod
-    def venue_filter(place):
-        return {'venue__'+k: v for k, v in place.items() if v is not None}
-
-    @property
-    def country(self):
-        if self.venue:
-            return self.venue.country
-        elif self.region:
-            return self.region.country
-        logger.warn('Mark missing both region and venue')
-        return None
-
-    @property
-    def admin1(self):
-        if self.venue:
-            return self.venue.admin1
-        elif self.region:
-            return self.region.admin1
-        logger.warn('Mark missing both region and venue')
-        return None
-
-    @property
-    def locality(self):
-        if self.venue:
-            return self.venue.locality
-        elif self.region:
-            return self.region.locality
-        logger.warn('Mark missing both region and venue')
-        return None
-    
+    def place_filter(place):
+        return {k: v for k, v in place.items() if v is not None}    
 
     def key(self):
-        if self.venue:
-            key = self.venue.country
-            if self.venue.admin1:
-                key = f'{self.venue.admin1}|{key}'
-                if self.venue.locality:
-                    key = f'{self.venue.locality}|{key}'
-                    key = f'{self.venue.name}|{key}'
-            return key
-        elif self.region:
-            key = self.region.country
-            if self.region.admin1:
-                key = f'{self.region.admin1}|{key}'
-                if self.region.locality:
-                    key = f'{self.region.locality}|{key}'
-            return key
-        logger.warn('Mark missing both region and venue')
-        return None
+        key = self.country
+        if self.admin1:
+            key = f'{self.admin1}|{key}'
+            if self.locality:
+                key = f'{self.locality}|{key}'
+                if hasattr(self, 'venue'):
+                    key = f'{self.name}|{key}'
+        return key
 
     def mark(self):
-        if self.venue:
+        if hasattr(self, 'venue'):
             return self.venue.mark() | { SIZE: self.size }
-        elif self.region:
+        elif hasattr(self, 'region'):
             return self.region.mark() | { SIZE: self.size }
-        logger.warn('Mark missing both venue and region:'.format(self.id))
+        logger.warn('Mark not venue or region:'.format(self.id))
         return None
 
     def parent(self):
-        mark_qs = Mark.objects.filter(game=self.game, region__country=self.country)
-        mark_qs = mark_qs.exclude(venue__isnull=False)
+        mark_qs = Mark.objects.filter(game=self.game, place__country=self.country)
+        mark_qs = mark_qs.select_related('place__region')
         if self.venue:
-            mark_qs = mark_qs.filter(region__admin1=self.admin1)
-            mark_qs = mark_qs.filter(region__locality=self.locality)
+            mark_qs = mark_qs.filter(place__admin1=self.admin1)
+            mark_qs = mark_qs.filter(place__locality=self.locality)
             return mark_qs.first()
         if self.locality:
-            mark_qs = mark_qs.exclude(region__locality__isnull=False)
-            return mark_qs.filter(region__admin1=self.admin1).first()
+            mark_qs = mark_qs.exclude(place__locality__isnull=False)
+            return mark_qs.filter(place__admin1=self.admin1).first()
         if self.admin1:
-            return mark_qs.exclude(region__admin1__isnull=False).first()
+            return mark_qs.exclude(place__admin1__isnull=False).first()
         return None
 
-    def place(self):
+    def place_dict(self):
         place = { COUNTRY: self.country }
         if self.admin1:
             place[ADMIN1] = self.admin1
@@ -150,27 +108,27 @@ class Mark(models.Model):
     # TODO call update_size() on add/delete Filter and add Match
     def update_size(self):
         old_size = self.size
-        if self.venue:
+        if hasattr(self, 'venue'):
             filter_qs = Filter.objects.filter(active=True, game=self.game, venue=self.venue)
             self.size = filter_qs.count()
             # TODO add historical match count in prior year
             # TODO make distinct per player
-        elif self.region:
+        elif hasattr(self, 'region'):
             mark_qs = Mark.objects.filter(game=self.game)
             if self.locality:
-                mark_qs = mark_qs.filter(venue__country=self.country)
-                mark_qs = mark_qs.filter(venue__admin1=self.admin1)
-                mark_qs = mark_qs.filter(venue__locality=self.locality)
+                mark_qs = mark_qs.filter(place__country=self.country)
+                mark_qs = mark_qs.filter(place__admin1=self.admin1)
+                mark_qs = mark_qs.filter(place__locality=self.locality)
                 self.size = mark_qs.count()
             elif self.admin1:
-                mark_qs = mark_qs.filter(region__country=self.country)
-                mark_qs = mark_qs.filter(region__admin1=self.admin1)
-                mark_qs = mark_qs.exclude(region__locality__isnull=True)
+                mark_qs = mark_qs.filter(place__country=self.country)
+                mark_qs = mark_qs.filter(place__admin1=self.admin1)
+                mark_qs = mark_qs.exclude(place__locality__isnull=True)
                 self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
             else:
-                mark_qs = mark_qs.filter(region__country=self.country)
-                mark_qs = mark_qs.exclude(region__admin1__isnull=True)
-                mark_qs = mark_qs.exclude(region__locality__isnull=True)
+                mark_qs = mark_qs.filter(place__country=self.country)
+                mark_qs = mark_qs.exclude(place__admin1__isnull=True)
+                mark_qs = mark_qs.exclude(place__locality__isnull=True)
                 self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
         if self.size != old_size:
             logger.debug(f'Mark update size: {self}')

@@ -4,8 +4,8 @@ from .models import Mark
 
 
 class MarkAdmin(admin.ModelAdmin):
-    list_filter = ['game', 'region__country', 'region__admin1', 'region__locality']
-    ordering = ['game', 'region__country', 'region__admin1', 'region__locality']
+    list_filter = ['game', 'place__country', 'place__admin1', 'place__locality']
+    ordering = ['game', 'place__country', 'place__admin1', 'place__locality']
 
 
 admin.site.register(Mark, MarkAdmin)

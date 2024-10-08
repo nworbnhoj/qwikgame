@@ -29,18 +29,11 @@ class Place(models.Model):
     locality = models.CharField(max_length=64, blank=True, null=True)
 
 
-class Region(models.Model):
-    admin1 = models.CharField(max_length=64, blank=True, null=True)
-    country = models.CharField(max_length=2)
+class Region(Place):
     east = models.DecimalField(max_digits=9, decimal_places=6, default=180)
-    name = models.CharField(max_length=128, blank=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
-    lng = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     north = models.DecimalField(max_digits=9, decimal_places=6, default=90)
-    placeid = models.TextField(blank=False, null=False)
     south = models.DecimalField(max_digits=9, decimal_places=6, default=-90)
     west = models.DecimalField(max_digits=9, decimal_places=6, default=-180)
-    locality = models.CharField(max_length=64, blank=True, null=True)
 
     def __str__(self):
         return '{}|{}|{} : {}'.format(

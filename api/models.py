@@ -24,11 +24,11 @@ class Mark(models.Model):
         locality = self.place.locality
         region = None
         try:
-            if hasattr(self.place, 'venue'):
+            if self.place.is_venue:
                 region = Region.objects.filter(country=country, admin1=admin1, locality=locality).first()
                 if not region:
                     region = Region.from_place(country=country, admin1=admin1, locality=locality)
-            elif hasattr(self.place, 'region'):
+            elif self.place.is_region:
                 if locality:
                     region = Region.objects.filter(country=country, admin1=admin1, locality__isnull=True).first()
                     if not region:
@@ -76,14 +76,14 @@ class Mark(models.Model):
             key = f'{self.place.admin1}|{key}'
             if self.place.locality:
                 key = f'{self.place.locality}|{key}'
-                if hasattr(self, 'venue'):
+                if self.place.is_venue:
                     key = f'{self.place.name}|{key}'
         return key
 
     def mark(self):
-        if hasattr(self.place, 'venue'):
+        if self.place.is_venue:
             return self.place.venue.mark() | { SIZE: self.size }
-        elif hasattr(self.place, 'region'):
+        elif self.place.is_region:
             return self.place.region.mark() | { SIZE: self.size }
         logger.warn('Mark not venue or region:'.format(self.id))
         return None
@@ -115,8 +115,8 @@ class Mark(models.Model):
     # TODO call update_size() on add/delete Filter and add Match
     def update_size(self):
         old_size = self.size
-        if hasattr(self, 'venue'):
         place = self.place
+        if place.is_venue:
             filter_qs = Filter.objects.filter(active=True, game=self.game, place=place)
             self.size = filter_qs.count()
             # TODO add historical match count in prior year

@@ -36,6 +36,14 @@ class Place(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def is_region(self):
+        return hasattr(self, 'region')
+
+    @property
+    def is_venue(self):
+        return hasattr(self, 'venue')
+
 
 class Region(Place):
     east = models.DecimalField(max_digits=9, decimal_places=6, default=180)

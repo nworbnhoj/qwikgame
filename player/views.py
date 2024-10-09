@@ -3,13 +3,14 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from game.models import Game
 from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, FiltersForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
 from api.models import Mark
 from service.locate import Locate
-from venue.models import Region, Venue
+from venue.models import Place, Region, Venue
 from qwikgame.views import QwikView
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
@@ -210,25 +211,36 @@ class FilterView(FeedView):
         if form and not form.is_valid():
             context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
+        game, place, venue = None, None, None
         placeid = context.get('placeid')
         if placeid:
-            venue = Venue.from_placeid(placeid)
-            if venue:
-                venue.save()
-                logger.info(f'Venue new: {venue}')
-        game = context.get('game')
+            place = Place.objects.filter(placeid=placeid).first()
+            if place:
+                if place.is_venue:
+                    venue = place.venue
+            else:  # then it must be a new Venue from a google POI
+                venue = Venue.from_placeid(placeid)
+                if venue:
+                    venue.save()
+                    logger.info(f'Venue new: {venue}')
+                    place = venue.place_ptr
+                else:
+                    logger.warn(f'Failed to create new Venue: {placeid}')
+        gameid = context.get('game')
+        game = Game.objects.filter(pk=gameid).first()
+        # add this Game to a Venue if required
         if game and venue and not(game in venue.games.all()):
             venue.games.add(game)
             logger.info(f'Venue Game add: {game}')
             venue.save()
-            mark = Mark(game=game, place=venue.place_ptr, size=1)
+            mark = Mark(game=game, place=place, size=1)
             mark.save()
             logger.info(f'Mark new {mark}')
         try:
             new_filter = Filter.objects.get_or_create(
                 player=self.user.player,
                 game=game,
-                place=venue.place_ptr)
+                place=place)
             filter_hours = Hours24x7(context['hours'])
             if venue:
                 venue_hours = venue.hours_open()
@@ -238,7 +250,7 @@ class FilterView(FeedView):
             new_filter[0].save()
             logger.info(f'Filter new: {new_filter[0]}')
             # update the Mark size
-            mark = Mark.objects.filter(game=game, place=venue.place_ptr).first()
+            mark = Mark.objects.filter(game=game, place=place).first()
             if mark:
                 mark.save()
         except:

@@ -234,9 +234,8 @@ class FilterForm(QwikForm):
         form.fields['place'].choices += player.place_choices()
         context = { 'filter_form': form }
         if form.is_valid():
-            game_id = form.cleaned_data['game']
             context = {
-                'game': Game.objects.filter(pk=game_id).first(),
+                'game': form.cleaned_data['game'],
                 'hours': form.cleaned_data['hours'],
             }
             placeid = form.cleaned_data.get('place')

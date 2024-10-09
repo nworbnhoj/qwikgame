@@ -193,7 +193,7 @@ class FilterView(FeedView):
         context |= self.filter_form_class.get(
             player,
             game='ANY',
-            venue='ANY',
+            place='ANY',
             hours=WEEK_NONE,
         )
         return render(request, self.template_name, context)
@@ -210,27 +210,25 @@ class FilterView(FeedView):
         if form and not form.is_valid():
             context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
-        venue = context.get('venue')
-        if not venue:
-            placeid = context.get('placeid')
-            if placeid:
-                venue = Venue.from_placeid(placeid)
-                if venue:
-                    venue.save()
-                    logger.info(f'Venue new: {venue}')
+        placeid = context.get('placeid')
+        if placeid:
+            venue = Venue.from_placeid(placeid)
+            if venue:
+                venue.save()
+                logger.info(f'Venue new: {venue}')
         game = context.get('game')
         if game and venue and not(game in venue.games.all()):
             venue.games.add(game)
             logger.info(f'Venue Game add: {game}')
             venue.save()
-            mark = Mark(game=game, venue=venue, size=1)
+            mark = Mark(game=game, place=venue.place_ptr, size=1)
             mark.save()
             logger.info(f'Mark new {mark}')
         try:
             new_filter = Filter.objects.get_or_create(
                 player=self.user.player,
                 game=game,
-                venue=venue)
+                place=venue.place_ptr)
             filter_hours = Hours24x7(context['hours'])
             if venue:
                 venue_hours = venue.hours_open()
@@ -240,7 +238,7 @@ class FilterView(FeedView):
             new_filter[0].save()
             logger.info(f'Filter new: {new_filter[0]}')
             # update the Mark size
-            mark = Mark.objects.filter(game=game, venue=venue).first()
+            mark = Mark.objects.filter(game=game, place=venue.place_ptr).first()
             if mark:
                 mark.save()
         except:

@@ -161,10 +161,10 @@ class FilterForm(QwikForm):
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
-    venue = ChoiceField(
-        choices = {'ANY':'Any Venue'} | {'show-map': 'Select from map', 'placeid': ''},
+    place = ChoiceField(
+        choices = {'ANY':'Anywhere'} | {'show-map': 'Select from map', 'placeid': ''},
         help_text='Only see invitations for a particular Venue.',
-        label='Venue',
+        label='Place',
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
@@ -198,10 +198,10 @@ class FilterForm(QwikForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if not cleaned_data.get('venue'):
+        if not cleaned_data.get('place'):
             if not cleaned_data.get('placeid'):
                 self.add_error(
-                    "venue",
+                    "place",
                     'Sorry, that Venue selection did not work. Please try again.'
                 )
 
@@ -211,30 +211,19 @@ class FilterForm(QwikForm):
             raise ValidationError("You must select at least one hour in the week.")
         return hours
 
-    def clean_venue(self):
-        venue_id = self.cleaned_data.get('venue')
-        if venue_id == 'placeid':
-            return venue_id
-        if venue_id.isdigit():
-            if Venue.objects.filter(pk=int(venue_id)).exists():
-                return venue_id
-        raise ValidationError(
-            'Sorry, that Venue selection did not work. Please try again.'
-        )
-
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
     @classmethod
-    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, place='map'):
         form = klass(
                 initial = {
                     'game': game,
                     'hours': hours,
                     # 'strength': strength,
-                    'venue': venue,
+                    'place': place,
                 },
             )
-        form.fields['venue'].choices += player.venue_choices()[:8]
+        form.fields['place'].choices += player.place_choices()[:8]
         return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.
@@ -242,7 +231,7 @@ class FilterForm(QwikForm):
     @classmethod
     def post(klass, request_post, player):
         form = klass(data=request_post)
-        form.fields['venue'].choices += player.venue_choices()
+        form.fields['place'].choices += player.place_choices()
         context = { 'filter_form': form }
         if form.is_valid():
             game_id = form.cleaned_data['game']
@@ -250,18 +239,12 @@ class FilterForm(QwikForm):
                 'game': Game.objects.filter(pk=game_id).first(),
                 'hours': form.cleaned_data['hours'],
             }
-            venue_id = form.cleaned_data.get('venue')
-            if venue_id == 'ALL':
+            placeid = form.cleaned_data.get('place')
+            if placeid == 'ALL':
                 pass
-            if venue_id == 'placeid':
+            elif placeid == 'placeid':
                 placeid = form.cleaned_data['placeid']
-                venue = Venue.objects.filter(placeid=placeid)
-                if venue.exists():
-                    context['venue'] = venue.first()
-                else:
-                    context['placeid'] = placeid
-            else:
-                context['venue'] = Venue.objects.filter(pk=venue_id).first()
+            context['placeid'] = placeid
         else:
             logger.info(form)
         return context
@@ -412,7 +395,7 @@ class KeenForm(QwikForm):
         self.fields['today'].help_text = 'What time are you keen to play today?'
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
-        self.fields['venue'].choices += player.venue_choices()[:8]
+        self.fields['venue'].choices += player.place_choices()[:8]
 
 
     # Initializes an KeenForm for 'player'.

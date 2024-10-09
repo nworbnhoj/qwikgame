@@ -260,9 +260,9 @@ function clickVenueMarker(mark){
   LINK.textContent = mark.name;
   LINK.href = "";
   LINK.setAttribute('placeid', mark.placeid)
-  LINK.setAttribute('venuename', mark.name)
+  LINK.setAttribute('placename', mark.name)
   LINK.addEventListener('click', (event) => {
-    clickMapMarkVenue(event, mark.key);
+    setPlaceSelection(event, mark.key);
   });
 
   const SPAN = FRAG.getElementById("map-mark-venue-players");
@@ -301,7 +301,7 @@ function showInfowindowPlace(place){
   FRAG.getElementById("poi-name").textContent = place.name;
   const LINK = FRAG.getElementById("poi-link");
   LINK.setAttribute("placeid", place.place_id);
-  LINK.setAttribute("venuename", place.name);
+  LINK.setAttribute("placename", place.name);
   LINK.setAttribute("vid", vid(place.address_components, place.name));
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
@@ -345,30 +345,23 @@ function showInfowindowPlaceId(placeId){
 }
 
 
-function clickCreateVenue(event){
+function setPlaceSelection(event, venueId){
   event.preventDefault();
   let placeid = event.target.getAttribute("placeid");
-  let name = event.target.getAttribute("venuename");
-    
-  // add a new option to venueSelect and select it
-  let id = 'id_venue'
-  let venueSelect = document.getElementById('id_venue');
-  let ord = venueSelect.childElementCount;
-  let newId = id + '_' + ord;
-  let newOption = venueSelect.lastElementChild.cloneNode(true);
-  let newInput = newOption.querySelector('input');
-  newInput.id = newId;
-  newInput.value = "placeid";
-  newInput.checked = true;
-  let newLabel = newOption.querySelector('label');
-  newLabel.textContent = name; // removes inner <input>
-  newLabel.setAttribute('for', newId);
-  newLabel.appendChild(newInput)
+  let name = event.target.getAttribute("placename");
 
-  // add event listener and send click event to select
-  newLabel.onclick = downClick
-  venueSelect.appendChild(newOption);
-  newLabel.dispatchEvent(new MouseEvent("click", {
+  // get the custom placeid element, adjust and select
+  let id = 'id_place'
+  let venueSelect = document.getElementById('id_place');
+  let customInput = venueSelect.querySelector("[value='placeid']");
+  let customLabel =  customInput.parentElement;
+  customLabel.textContent = name; // removes inner <input>
+  customLabel.appendChild(customInput) // re-add inner <input>
+  customInput.setAttribute('data-placeid', placeid);
+  console.log(customLabel)
+
+  // send click event to select
+  customLabel.dispatchEvent(new MouseEvent("click", {
     "view": window,
     "bubbles": true,
     "cancelable": false
@@ -376,7 +369,7 @@ function clickCreateVenue(event){
 
   let placeidInput = document.getElementById('id_placeid');
   placeidInput.value = placeid;
- 
+
   showMap(false);
 }
 

@@ -41,12 +41,22 @@ class VenueMarksJson(QwikView):
         region = context.get(REGION)
         pos = context.get(POS)
         if region:
-            region_objects = Region.objects.filter(**region)
-            if not region.get(LOCALITY, None):
-                region_objects = region_objects.exclude(region__locality__isnull=False)
-            if not region.get(ADMIN1, None):
-                region_objects = region_objects.exclude(admin1__locality__isnull=False)
-            regions = region_objects.all()
+            country = region.get('country')
+            if country:
+                region_objects = Region.objects.filter(country=country)
+                admin1 = region.get('admin1')
+                if admin1:
+                    region_objects = region_objects.filter(admin1=admin1)
+                    locality = region.get('locality')
+                    if locality:
+                        region_objects = region_objects.filter(locality=locality)
+                    else:
+                        region_objects = region_objects.filter(locality__isnull=True)
+                else:
+                    region_objects = region_objects.filter(admin1__isnull=True)
+                regions = region_objects.all()
+            else:
+                logger.warn('region missing country')
             logger.info(f'API venue_marks request: {region}')
         elif pos:
             lat, lng = pos[LAT], pos[LNG]
@@ -78,34 +88,36 @@ class VenueMarksJson(QwikView):
                 place = avoid.rsplit('|')
                 place.reverse()
                 place = dict(zip(REGION_KEYS, place))
-                kwargs = Mark.place_filter(place)
-                mark_objects = mark_objects.exclude(**kwargs)
+                country = place.get('country')
+                admin1 = place.get('admin1')
+                locality = place.get('locality')
+                if locality:
+                    mark_objects = mark_objects.exclude(place__country=country, place__admin1=admin1, place__locality=locality)
+                elif admin1:
+                    mark_objects = mark_objects.exclude(place__country=country, place__admin1=admin1)
+                elif country:
+                    mark_objects = mark_objects.exclude(place__country=country)
 
         marks = {}
         for region in regions:
-            place = region.place_dict()
-            if place.get(LOCALITY, None):
+            country = region.country
+            admin1 = region.admin1
+            locality = region.locality
+            if locality:
                 # get Venue Marks
-                kwargs = Mark.place_filter(place)
-                venue_marks = mark_objects.filter(**kwargs).all()
-                marks = marks | {vm.key(): vm.mark() for vm in venue_marks}
-                place.pop(LOCALITY, None)
-            if place.get(ADMIN1, None):
+                venue_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality=locality)
+                marks = marks | {vm.key(): vm.mark() for vm in venue_marks.all()}
+            if admin1:
                 # get locality marks
-                kwargs = Mark.place_filter(place)
-                locality_marks = mark_objects.filter(**kwargs)
-                marks = marks | {lm.key(): lm.mark() for lm in locality_marks}
-                place.pop(ADMIN1, None)
-            if place.get(COUNTRY, None):
+                locality_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality=locality)
+                marks = marks | {lm.key(): lm.mark() for lm in locality_marks.all()}
+            if country:
                 # get admin1 marks
-                kwargs = Mark.place_filter(place)
-                admin1_marks = mark_objects.filter(**kwargs)
-                admin1_marks = admin1_marks.exclude(region__locality__isnull=True)
-                marks = marks | {am.key(): am.mark() for am in admin1_marks}
+                admin1_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality__isnull=True)
+                marks = marks | {am.key(): am.mark() for am in admin1_marks.all()}
             # get country marks
-            country_marks = mark_objects.exclude(region__locality__isnull=True)
-            country_marks = country_marks.exclude(region__admin1__isnull=True)
-            marks = marks | {cm.key(): cm.mark() for cm in country_marks}
+            country_marks = mark_objects.filter(place__country=country, place__admin1__isnull=True, place__locality__isnull=True)
+            marks = marks | {cm.key(): cm.mark() for cm in country_marks.all()}
 
         response = {
             STATUS: 'OK' if marks else 'NO_RESULTS',
@@ -117,7 +129,7 @@ class VenueMarksJson(QwikView):
         if len(regions) == 0:
             closest = {}
         elif len(regions) == 1:
-            for k,v in regions[0].place_dict().items():
+            for k,v in regions[0].place().items():
                 response[k] = v
         else:
             closest = None
@@ -129,7 +141,7 @@ class VenueMarksJson(QwikView):
                 if distance < min_distance:
                     min_distance = distance
                     closest = region
-            for k,v in closest.place_dict().items():
+            for k,v in closest.place().items():
                 response[k] = v
 
         json_response = JsonResponse(response)

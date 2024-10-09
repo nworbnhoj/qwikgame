@@ -28,6 +28,14 @@ class Place(models.Model):
     placeid = models.TextField(blank=False, null=False)
     locality = models.CharField(max_length=64, blank=True, null=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['placeid'], name='unique_placeid')
+        ]
+
+    def __str__(self):
+        return self.name
+
 
 class Region(Place):
     east = models.DecimalField(max_digits=9, decimal_places=6, default=180)

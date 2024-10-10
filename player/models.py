@@ -32,8 +32,14 @@ class Player(models.Model):
             qs = Appeal.objects.exclude(player=self)
             if f.game:
                 qs = qs.filter(game=f.game)
-            if f.venue:
-                qs = qs.filter(venue=f.venue)
+            if f.place:
+                if f.place.is_venue:
+                    qs = qs.filter(venue=f.place)
+                elif f.place.is_region:
+                    qs = qs.filter(venue__lat__lte=f.place.region.north)
+                    qs = qs.filter(venue__lat__gte=f.place.region.south)
+                    qs = qs.filter(venue__lng__lte=f.place.region.east)
+                    qs = qs.filter(venue__lng__gte=f.place.region.west)
             # TODO hours intersection
             appeal_qs |= qs
         # TODO include direct invites

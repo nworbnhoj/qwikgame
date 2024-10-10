@@ -300,7 +300,7 @@ class KeenForm(QwikForm):
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
-    venue = ChoiceField(
+    place = ChoiceField(
         choices = {'show-map': 'Select from map', 'placeid': ''},
         label='VENUE',
         required = True,
@@ -366,20 +366,19 @@ class KeenForm(QwikForm):
                 msg = 'Please select at least one hour in today or tomorrow.'
                 self.add_error('today', msg)
                 self.add_error('tomorrow', msg)
-        if not cleaned_data.get('venue'):
+        if not cleaned_data.get('place'):
             if not cleaned_data.get('placeid'):
                 self.add_error(
-                    "venue",
+                    "place",
                     'Sorry, that Venue selection did not work. Please try again.'
                 )
 
-    def clean_venue(self):
-        venue_id = self.cleaned_data.get('venue')
-        if venue_id == 'placeid':
-            return venue_id
-        if venue_id.isdigit():
-            if Venue.objects.filter(pk=int(venue_id)).exists():
-                return venue_id
+    def clean_place(self):
+        place_id = self.cleaned_data.get('place')
+        if place_id == 'placeid':
+            return place_id
+        if Venue.objects.filter(placeid=placeid).exists():
+            return place_id
         raise ValidationError(
             'Sorry, that Venue selection did not work. Please try again.'
         )
@@ -394,20 +393,20 @@ class KeenForm(QwikForm):
         self.fields['today'].help_text = 'What time are you keen to play today?'
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
-        self.fields['venue'].choices += player.place_choices()[:8]
+        self.fields['place'].choices += player.venue_choices()[:8]
 
 
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'
     @classmethod
-    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue_id='map'):
         form = klass(
                 initial = {
                     'game': game,
                     # 'strength': strength,
                     'today': DAY_NONE,       # TODO extract today from hours
                     'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
-                    'venue': venue,
+                    'place': venue_id,
                 },
             )
         form.personalise(player)
@@ -427,21 +426,16 @@ class KeenForm(QwikForm):
                 friends = form.cleaned_data['friends']
                 context = {
                     'friends': { Player.objects.get(pk=f) for f in friends },
-                    'game': Game.objects.get(pk=form.cleaned_data['game']),
+                    'game': form.cleaned_data['game'],
                     'today': form.cleaned_data['today'],
                     'tomorrow': form.cleaned_data['tomorrow'],
                     'player_id': form.cleaned_data['placeid'],
                     }
-                venue_id = form.cleaned_data.get('venue')
-                if venue_id == 'placeid':
-                    placeid = form.cleaned_data['placeid']
-                    venue = Venue.objects.filter(placeid=placeid)
-                    if venue.exists():
-                        context['venue'] = venue.first()
-                    else:
-                        context['placeid'] = placeid
+                place_id = form.cleaned_data.get('place')
+                if place_id == 'placeid':
+                    context['placeid'] = form.cleaned_data['placeid']
                 else:
-                    context['venue'] = Venue.objects.filter(pk=venue_id).first()
+                    context['placeid'] = form.cleaned_data['place']
             except:
                 logger.exception('failed to parse KeenForm')
         else:

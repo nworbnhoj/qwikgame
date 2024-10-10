@@ -63,6 +63,12 @@ class Player(models.Model):
         else:
             return self.facet()
 
+    def place_choices(self):
+        # TODO set distinct for venues
+        # TODO include venues for past matches
+        filters = Filter.objects.filter(player=self, place__isnull=False).all()
+        return [(f.place.placeid, f.place.name) for f in filters]
+
     # return a list of Appeals that this Player has
     # either made or bid-on, sorted by urgency
     def prospects(self):
@@ -84,11 +90,15 @@ class Player(models.Model):
             self.email_hash = hashlib.md5(self.user.email.encode()).hexdigest()
         super().save(*args, **kwargs)
 
-    def place_choices(self):
+    def venue_choices(self):
         # TODO set distinct for venues
         # TODO include venues for past matches
-        filters = Filter.objects.filter(player=self).all()
-        return [(f.place.placeid, f.place.name) for f in filters if f.place]
+        filters = Filter.objects.filter(
+            player=self,
+            place__isnull=False,
+            place__venue__isnull=False
+            ).all()
+        return [(f.place.placeid, f.place.name) for f in filters]
 
     def __str__(self):
         return self.email_hash if self.user is None else self.user.email

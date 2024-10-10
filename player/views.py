@@ -299,24 +299,40 @@ class KeenView(FeedView):
         if form and not form.is_valid():
             context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
-        venue = context.get('venue')
-        if not venue:
-            placeid = context.get('placeid')
-            if placeid:
+        game, place, venue = None, None, None
+        placeid = context.get('placeid')
+        if placeid:
+            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
+            if place:
+                venue = place.venue
+            else:  # then it must be a new Venue from a google POI
                 venue = Venue.from_placeid(placeid)
                 if venue:
                     venue.save()
                     logger.info(f'Venue new: {venue}')
-            else:
-                logger.warn("failed to create venue from placeid: {placeid}")
-                return HttpResponseRedirect('/player/feed/')
-
+                    place = venue.place_ptr
+        if not venue:
+            logger.warn(f'Venue missing from Appeal: {placeid}')
+            return HttpResponseRedirect('/player/feed/')
+        gameid = context.get('game')
+        game = Game.objects.filter(pk=gameid).first()
+        if not game:
+            logger.warn(f'Game missing from Appeal: {game}')
+            return HttpResponseRedirect('/player/feed/')
+        # add this Game to a Venue if required
+        if not(game in venue.games.all()):
+            venue.games.add(game)
+            logger.info(f'Venue Game add: {game}')
+            venue.save()
+            mark = Mark(game=game, place=place, size=1)
+            mark.save()
+            logger.info(f'Mark new {mark}')
         appeal_pk = None
         # create/update/delete today appeal
         now=timezone.now()
         appeal = Appeal.objects.get_or_create(
             date=now.date(),
-            game=context['game'],
+            game=game,
             player=player,
             venue=venue,
         )[0]
@@ -332,7 +348,7 @@ class KeenView(FeedView):
         one_day=datetime.timedelta(days=1)
         appeal = Appeal.objects.get_or_create(
             date=(now + one_day).date(),
-            game=context['game'],
+            game=game,
             player=player,
             venue=venue,
         )[0]

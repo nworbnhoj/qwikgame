@@ -1,8 +1,8 @@
 docReady(event => {
     initPage();
-    document.getElementById('id_venue_1').addEventListener('click', clickShowMapOption);
-    // document.getElementById('id_venue_1').addEventListener('change', clickShowMapOption);
-    // document.getElementById('id_venue_1').addEventListener('focus', mapShortcut);
+    document.getElementById('id_place_1').addEventListener('click', clickShowMapOption);
+    // document.getElementById('id_place_1').addEventListener('change', clickShowMapOption);
+    // document.getElementById('id_place_1').addEventListener('focus', mapShortcut);
 });
 
 

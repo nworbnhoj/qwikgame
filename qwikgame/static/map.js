@@ -227,46 +227,32 @@ function resetVenues(){
 }
 
 
-function clickRegionMarker(mark){
-  const MAP = qwikMap;
-  const INFOWINDOW = qwikInfowindow;
-  MAP.panTo(mark.marker.getPosition());
-  const TEMPLATE = document.getElementById("infowindow-region");
-  const FRAG = TEMPLATE.content.cloneNode(true);
-
-  const SPAN_NAME = FRAG.getElementById("map-mark-region-name");
-  SPAN_NAME.textContent = mark.name;
-
-  const SPAN_NUM = FRAG.getElementById("map-mark-region-venues");
-  SPAN_NUM.textContent = mark.size + '';       // + '' is a string conversion
-  
-  INFOWINDOW.setOptions({
-    content: FRAG.firstElementChild,
-    position: mark.center,
-    pixelOffset: new google.maps.Size(0,-30)
-  });
-  INFOWINDOW.open(MAP);
-}
-
-
-function clickVenueMarker(mark){
+function clickMarker(mark, link=true, stat='players:'){
   const INFOWINDOW = qwikInfowindow;
   const MAP = qwikMap;
   MAP.panTo(mark.marker.getPosition());
-  const TEMPLATE = document.getElementById("infowindow-venue");
+  const TEMPLATE = document.getElementById("infowindow-mark");
   const FRAG = TEMPLATE.content.cloneNode(true);
+  let element = null;
+  let junk = null;
+  if (link){
+    element = FRAG.getElementById("map-mark-info-link");
+    element.href = "";
+    element.addEventListener('click', (event) => {
+      setPlaceSelection(event, mark.key);
+    });
+    junk = FRAG.getElementById("map-mark-info-name");
+  } else {
+    element = FRAG.getElementById("map-mark-info-name");
+    junk = FRAG.getElementById("map-mark-info-link");
+  }
+  junk.parentNode.removeChild(junk);
+  element.textContent = mark.name;
+  element.setAttribute('placeid', mark.placeid)
+  element.setAttribute('placename', mark.name)
 
-  const LINK = FRAG.getElementById("map-mark-venue-link");
-  LINK.textContent = mark.name;
-  LINK.href = "";
-  LINK.setAttribute('placeid', mark.placeid)
-  LINK.setAttribute('placename', mark.name)
-  LINK.addEventListener('click', (event) => {
-    setPlaceSelection(event, mark.key);
-  });
-
-  const SPAN = FRAG.getElementById("map-mark-venue-players");
-  SPAN.textContent = mark.size + '';       // + '' is a string conversion
+  FRAG.getElementById("map-mark-info-stat").textContent=stat;
+  FRAG.getElementById("map-mark-info-val").textContent=mark.size+'';
 
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
@@ -781,14 +767,14 @@ function endowMark(key, mark){
   if(K.length === 4){  // venue Mark
     mark.marker.setIcon(VENUE_ICON);
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickVenueMarker(mark);
+      clickMarker(mark, true, 'players:');
     });      
   } else {  // metaMark
     mark.marker.setIcon(REGION_ICON);
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickRegionMarker(mark);
+      clickMarker(mark, true, 'venues:');
     }); 
   }
   return mark;

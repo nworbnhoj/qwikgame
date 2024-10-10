@@ -99,6 +99,7 @@ class Region(Place):
             LNG: self.lng,
             NAME: self.name,
             NORTH: self.north,
+            PLACEID: self.placeid,
             SOUTH: self.south,
             WEST: self.west,
         }

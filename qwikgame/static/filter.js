@@ -7,7 +7,7 @@ docReady(event => {
 
 
 winReady(event => {
-  venuesMap();
+  venuesMap(showUnitCluster=true);
 });
 
 

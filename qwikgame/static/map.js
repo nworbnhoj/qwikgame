@@ -12,25 +12,29 @@ const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const MAP_REGION = new Map();               // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
-const MAP_OPTIONS = {
+const GOOGLE_MAP_OPTIONS = {
   zoom: 10,
   mapTypeID: 'ROADMAP',
   mapTypeControl: false,
   streetViewControl: false,
   zoomControl: true
 };
+const MAP_OPTIONS = {
+  showUnitCluster: true,
+}
 
 var qwikMap;
 var qwikInfowindow;
 var mapCenterIdle = null;
     
 
-function venuesMap() {
+function venuesMap(showUnitCluster=true) {
+    MAP_OPTIONS.showUnitCluster=showUnitCluster;
     const MAP_ELEMENT = document.getElementById('map');
     const LAT = parseFloat(document.getElementById('id_lat').value);
     const LNG = parseFloat(document.getElementById('id_lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
-    qwikMap = new google.maps.Map(MAP_ELEMENT, MAP_OPTIONS);
+    qwikMap = new google.maps.Map(MAP_ELEMENT, GOOGLE_MAP_OPTIONS);
     qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
     const MAP = qwikMap;
     const INFOWINDOW = qwikInfowindow;
@@ -223,7 +227,7 @@ function resetVenues(){
         OPTION.parentNode.removeChild(OPTION);
     }
     document.getElementById('venue-prompt').selected=true;
-    venuesMap();
+    venuesMap(MAP_OPTIONS.showUnitCluster);
 }
 
 
@@ -514,7 +518,7 @@ function showMarks(){
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, KEYS);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
-    } else if(SUB_KEYS.size === 1){    // is there only 1 subMarker?
+    } else if(MAP_OPTIONS.showUnitCluster == false & SUB_KEYS.size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers

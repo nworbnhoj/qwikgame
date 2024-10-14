@@ -71,3 +71,7 @@ function showMap(show=true, target){
         map.style.display = 'none';
     }
 }
+
+function setPlaceDefault(){
+    setPlaceOption();
+}

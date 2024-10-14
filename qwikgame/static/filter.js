@@ -72,6 +72,10 @@ function showMap(show=true, target){
     }
 }
 
+function setPlaceDefault(){
+    setPlaceOption("ANY");
+}
+
 
 // https://stackoverflow.com/questions/1484506/random-color-generator-in-javascript
 function getRandomColor() {

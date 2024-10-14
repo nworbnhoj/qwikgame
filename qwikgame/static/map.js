@@ -59,7 +59,7 @@ function venuesMap(showUnitCluster=true) {
     CLOSE.classList.add('map-close');
     CLOSE.classList.add('gmnoprint');
     CLOSE.addEventListener("click", () => {
-      setPlaceOption("ANY");
+      setPlaceDefault();
     });
     const CLOSE_DIV = document.createElement("div");
     CLOSE_DIV.appendChild(CLOSE);
@@ -375,7 +375,7 @@ function setPlace(event){
   }
 }
 
-function setPlaceOption(placeid){
+function setPlaceOption(placeid='placeid'){
   const PLACE_SELECT = document.getElementById('id_place');
   INPUT = PLACE_SELECT.querySelector("[value='"+placeid+"']");
   if (INPUT){
@@ -384,8 +384,8 @@ function setPlaceOption(placeid){
       "bubbles": true,
       "cancelable": false
     }));
-    showMap(false);
   }
+  showMap(false);
 }
 
 

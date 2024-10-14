@@ -12,13 +12,6 @@ const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const MAP_REGION = new Map();               // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
-const GOOGLE_MAP_OPTIONS = {
-  zoom: 10,
-  mapTypeID: 'ROADMAP',
-  mapTypeControl: false,
-  streetViewControl: false,
-  zoomControl: true
-};
 const MAP_OPTIONS = {
   showUnitCluster: true,
 }
@@ -34,6 +27,17 @@ function venuesMap(showUnitCluster=true) {
     const LAT = parseFloat(document.getElementById('id_lat').value);
     const LNG = parseFloat(document.getElementById('id_lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
+    const GOOGLE_MAP_OPTIONS = {
+      fullscreenControl: true,
+      // fullscreenControlOptions: {
+      //     position: google.maps.ControlPosition.RIGHT_BOTTOM,
+      //   },
+      mapTypeID: 'ROADMAP',
+      mapTypeControl: false,
+      streetViewControl: false,
+      zoom: 10,
+      zoomControl: true
+    };
     qwikMap = new google.maps.Map(MAP_ELEMENT, GOOGLE_MAP_OPTIONS);
     qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
     const MAP = qwikMap;
@@ -46,6 +50,21 @@ function venuesMap(showUnitCluster=true) {
     const INPUT = document.getElementById("map-search");
     const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
     MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
+
+    //setup Close button in map
+    const CLOSE = document.createElement("button");
+    CLOSE.textContent = 'X';
+    CLOSE.title = 'click to close map';
+    CLOSE.type = 'button';
+    CLOSE.classList.add('map-close');
+    CLOSE.classList.add('gmnoprint');
+    CLOSE.addEventListener("click", () => {
+      setPlaceOption("ANY");
+    });
+    const CLOSE_DIV = document.createElement("div");
+    CLOSE_DIV.appendChild(CLOSE);
+    MAP.controls[google.maps.ControlPosition.TOP_RIGHT].push(CLOSE_DIV);
+
     MAP.addListener("bounds_changed", () => {
         SEARCHBOX.setBounds(MAP.getBounds());
     });

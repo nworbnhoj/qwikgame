@@ -1,8 +1,8 @@
 docReady(event => {
     initPage();
-    document.getElementById('id_place_0').addEventListener('click', clickShowMapOption);
-    // document.getElementById('id_place_1').addEventListener('change', clickShowMapOption);
-    // document.getElementById('id_place_1').addEventListener('focus', mapShortcut);
+    const MAP_OPTION = document.querySelector("[name='place'][value='show-map']");
+    MAP_OPTION.addEventListener('input', changeMapRadio);
+    MAP_OPTION.addEventListener('deselect', changeMapRadio);
 });
 
 
@@ -44,8 +44,12 @@ function changeSelectLanguage(){
 }
 
 
-function clickShowMapOption(event){
-  showMap(this.value === 'show-map', event.target);
+function changeMapRadio(event){
+  if(event.target.checked){
+    showMap(this.value === 'show-map', event.target);
+  } else {
+    showMap(false)
+  }
 }
 
 

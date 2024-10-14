@@ -25,5 +25,5 @@
 .pac-target-input { display: block; width: 30%;}
 
 
-div#map { align-items: center; display: block; height: 30em; position:absolute; z-index: 4 }
+div#map { align-items: center; display: block; height: 30em; position:absolute; top:1.8em; z-index: 4 }
 div#map div {display: block;}

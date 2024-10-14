@@ -22,6 +22,7 @@ function winReady(callbackFunction){
 // A general DOM document ready function
 docReady(event => {
     refreshData();
+    dropInit();
 });
 
 
@@ -353,6 +354,26 @@ function downClick(event){
   let option = event.currentTarget;
   dropDownUpdate(option.closest('.drop_down'));
   option.closest('.down').classList.add('hidden');
+}
+
+function dropInit() {
+  const DROP_DOWNS = document.querySelectorAll('.drop_down');
+  DROP_DOWNS.forEach(function(dd){
+    dd.querySelectorAll("input[type='radio']").forEach(function(radio){
+      radio.addEventListener('input', deselectDropRadio);
+    });
+  });
+}
+
+function deselectDropRadio(event){
+  const RADIO = event.target;
+  const DROP_DOWN = RADIO.closest('.drop_down');
+  const RADIOS = DROP_DOWN.querySelectorAll("input[type='radio']");
+  RADIOS.forEach(function(radio){
+    if (!radio.checked){
+      radio.dispatchEvent(new Event("deselect"));
+    }
+  });
 }
 
 function enableElement(element, enable) {

@@ -22,7 +22,16 @@
 /* The part of the returned prediction that matches the user’s input. By default, this matched text is highlighted in bold text. Note that the matched text may be anywhere within pac-item. It is not necessarily part of pac-item-query, and it could be partly within pac-item-query as well as partly in the remaining text in pac-item.*/
 .pac-matched {}
 
-.pac-target-input { display: block; width: 30%;}
+.pac-target-input {
+	border: none;
+	border-radius: 2em;
+	display: block;
+	font-size: inherit;
+	height: 2em;
+	margin: 1em;
+	padding: 0.6em 0.6em 0.6em 2em;
+	width: 30%;
+}
 
 
 /*style the box which holds the text of the information window*/  

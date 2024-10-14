@@ -243,7 +243,7 @@ function clickMarker(mark, link=true, stat='players:'){
     element = FRAG.getElementById("map-mark-info-link");
     element.href = "";
     element.addEventListener('click', (event) => {
-      setPlaceSelection(event, mark.key);
+      setPlace(event);
     });
     junk = FRAG.getElementById("map-mark-info-name");
   } else {
@@ -334,33 +334,39 @@ function showInfowindowPlaceId(placeId){
   });
 }
 
-
-function setPlaceSelection(event, venueId){
+function setPlace(event){
   event.preventDefault();
-  let placeid = event.target.getAttribute("placeid");
-  let name = event.target.getAttribute("placename");
+  PLACEID = event.target.getAttribute("placeid");
+  const PLACE_SELECT = document.getElementById('id_place');
+  const EXISTS = PLACE_SELECT.querySelector('[value=PLACEID]')
+  if (!EXISTS){
+    setPlaceOption(PLACEID)
+  } else {
+    // rename the temporary placeid option in the place drop-down field
+    let input = PLACE_SELECT.querySelector("[value='placeid']");
+    let label =  input.parentElement;
+    const PLACE_NAME = event.target.getAttribute("placename");
+    label.textContent = PLACE_NAME; // removes inner <input>
+    label.appendChild(input) // re-add inner <input>
+    input.setAttribute('data-placeid', placeid);
+    setPlaceOption('placeid')
+    // populate the placeid input with the new placeid
+    const PLACEID_INPUT = document.getElementById('id_placeid');
+    PLACEID_INPUT.value = PLACEID;
+  }
+}
 
-  // get the custom placeid element, adjust and select
-  let id = 'id_place'
-  let venueSelect = document.getElementById('id_place');
-  let customInput = venueSelect.querySelector("[value='placeid']");
-  let customLabel =  customInput.parentElement;
-  customLabel.textContent = name; // removes inner <input>
-  customLabel.appendChild(customInput) // re-add inner <input>
-  customInput.setAttribute('data-placeid', placeid);
-  console.log(customLabel)
-
-  // send click event to select
-  customLabel.dispatchEvent(new MouseEvent("click", {
-    "view": window,
-    "bubbles": true,
-    "cancelable": false
-  }));
-
-  let placeidInput = document.getElementById('id_placeid');
-  placeidInput.value = placeid;
-
-  showMap(false);
+function setPlaceOption(placeid){
+  const PLACE_SELECT = document.getElementById('id_place');
+  INPUT = PLACE_SELECT.querySelector("[value='"+placeid+"']");
+  if (INPUT){
+    INPUT.dispatchEvent(new MouseEvent("click", {
+      "view": window,
+      "bubbles": true,
+      "cancelable": false
+    }));
+    showMap(false);
+  }
 }
 
 

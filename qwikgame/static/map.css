@@ -25,5 +25,31 @@
 .pac-target-input { display: block; width: 30%;}
 
 
-div#map { align-items: center; display: block; height: 30em; position:absolute; top:1.8em; z-index: 4 }
-div#map div {display: block;}
+/*style the box which holds the text of the information window*/  
+.gm-style div { display: block; }
+.gm-style .gm-style-iw {
+	display: flex;
+	flex-direction: row-reverse;
+	padding: 0em 2em 0em 0em;
+}
+.gm-style-iw-chr {
+	position: absolute;
+	right: -0.8em;
+	top: -2em;
+	vertical-align:
+	top; margin: 0px;
+	padding: 0px;
+} 
+.gm-style-iw-d {
+    margin: 1em; 
+    text-align: center;
+}
+
+div#map {
+	align-items: center;
+	display: block;
+	height: 30em;
+	position:absolute;
+	top:1.8em;
+	z-index: 4
+}

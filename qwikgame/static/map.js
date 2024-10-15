@@ -357,8 +357,8 @@ function setPlace(event){
   event.preventDefault();
   PLACEID = event.target.getAttribute("placeid");
   const PLACE_SELECT = document.getElementById('id_place');
-  const EXISTS = PLACE_SELECT.querySelector('[value=PLACEID]')
-  if (!EXISTS){
+  const EXISTS = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
+  if (EXISTS){
     setPlaceOption(PLACEID)
   } else {
     // rename the temporary placeid option in the place drop-down field
@@ -367,7 +367,7 @@ function setPlace(event){
     const PLACE_NAME = event.target.getAttribute("placename");
     label.textContent = PLACE_NAME; // removes inner <input>
     label.appendChild(input) // re-add inner <input>
-    input.setAttribute('data-placeid', placeid);
+    input.setAttribute('data-placeid', PLACEID);
     setPlaceOption('placeid')
     // populate the placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');

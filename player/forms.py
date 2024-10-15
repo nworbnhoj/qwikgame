@@ -377,7 +377,7 @@ class KeenForm(QwikForm):
         place_id = self.cleaned_data.get('place')
         if place_id == 'placeid':
             return place_id
-        if Venue.objects.filter(placeid=placeid).exists():
+        if Venue.objects.filter(placeid=place_id).exists():
             return place_id
         raise ValidationError(
             'Sorry, that Venue selection did not work. Please try again.'

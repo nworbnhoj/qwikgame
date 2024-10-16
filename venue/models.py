@@ -34,7 +34,12 @@ class Place(models.Model):
         ]
 
     def __str__(self):
-        return self.name
+        return "{}, {}, {}, {}".format(
+            self.name,
+            self.locality,
+            self.admin1,
+            self.country,
+        )
 
     @property
     def is_region(self):
@@ -178,13 +183,8 @@ class Venue(Place):
             PLACEID: self.placeid,
         }
 
-    def place(self):
-        kwargs = { COUNTRY: self.country }
-        if self.admin1:
-            kwargs[ADMIN1] = self.admin1
-        if self.locality:
-            kwargs[LOCALITY] = self.locality
-        return kwargs
+    def place_str(self):
+        return super().__str__()
 
     def tzinfo(self):
         return timezone(self.tz)

@@ -23,8 +23,10 @@ class FeedView(QwikView):
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         player = self.user.player
+        feed = player.feed()
         self._context |= {
-            'appeals': player.feed()[:100],
+            'appeals': feed[:100],
+            'feed_length': len(feed),
             'player': player,
             'prospects': player.prospects()[:100],
         }

@@ -235,6 +235,7 @@ textarea { border: 1px solid black; padding: 1em; width: 100% }
 }
 @media only screen and (min-width:768px) {
     div.flex_space { display: block }
+    p.fat { display: block }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
 }

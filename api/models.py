@@ -4,7 +4,7 @@ from django.db.models import Sum
 from game.models import Game
 from venue.models import Place, Region
 from player.models import Filter
-from qwikgame.constants import ADMIN1, COUNTRY, LAT, LNG, LOCALITY, NAME, SIZE
+from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
@@ -42,9 +42,12 @@ class Mark(models.Model):
                 logger.info(f'Region new: {region}')
         except:
             logger.exception('failed to create Region')
-        if region and not Mark.objects.filter(place=region.place_ptr, game=self.game).exists():
+        if region:
             try:
-                Mark(game=self.game, place=region.place_ptr).save()
+                if not Mark.objects.filter(place=region.place_ptr, game=self.game).exists():
+                    Mark(game=self.game, place=region.place_ptr).save()
+                if not Mark.objects.filter(place=region.place_ptr, game__isnull=True).exists():
+                    Mark(place=region.place_ptr).save()
             except:
                 logger.exception('failed to create Mark')
 
@@ -81,12 +84,17 @@ class Mark(models.Model):
         return key
 
     def mark(self):
+        mark = { SIZE: self.size }
+        if self.game:
+            mark |= { GAME: self.game.code }
         if self.place.is_venue:
-            return self.place.venue.mark() | { SIZE: self.size }
+            mark |= self.place.venue.mark()
         elif self.place.is_region:
-            return self.place.region.mark() | { SIZE: self.size }
-        logger.warn('Mark not venue or region:'.format(self.id))
-        return None
+            mark |= self.place.region.mark()
+        else:
+            logger.warn('Mark not venue or region:'.format(self.id))
+            return None
+        return mark;
 
     def parent(self):
         logger.warn(self)

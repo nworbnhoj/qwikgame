@@ -271,11 +271,32 @@ class FiltersView(FeedView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)
+        super().post(request, *args, **kwargs)     
+        player = self.user.player
         context = self.filters_form_class.post(
             request.POST,
-            self.user.player,
+            player,
         )
+        form = context.get('filters_form')
+        if form and not form.is_valid():
+            context |= super().context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
+        logger.warn(context)
+        activate = context.get('ACTIVATE', [])
+        logger.info(f'activating filters {activate}')
+        for filter in Filter.objects.filter(player=player):
+            try:
+                filter.active = str(filter.id) in activate
+                filter.save()
+            except:
+                logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
+        for filter_code in context.get('DELETE', []):
+            try:
+                junk = Filter.objects.get(pk=filter_code)
+                logger.info(f'Deleting filter: {junk}')
+                junk.delete()
+            except:
+                logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
         return HttpResponseRedirect("/player/feed/filters")
 
 

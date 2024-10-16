@@ -252,6 +252,7 @@ class FilterForm(QwikForm):
 class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
         label='no active filters',
+        required=False,
         widget=CheckboxSelectMultiple,
     )
 
@@ -272,24 +273,13 @@ class FiltersForm(QwikForm):
     @classmethod
     def post(klass, request_post, player):
         form = klass(player, data=request_post)
+        context = {'filters_form': form}
         if form.is_valid():
             if 'ACTIVATE' in request_post:
-                logger.info('activating filters {}'.format(form.cleaned_data['filters']))
-                for filter in Filter.objects.filter(player=player):
-                    try:
-                        filter.active = str(filter.id) in form.cleaned_data['filters']
-                        filter.save()
-                    except:
-                        logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
+                context['ACTIVATE'] = form.cleaned_data['filters']
             if 'DELETE' in request_post:
-                for filter_code in form.cleaned_data['filters']:
-                    try:
-                        junk = Filter.objects.get(pk=filter_code)
-                        logger.info('Deleting filter: {}'.format(junk))
-                        junk.delete()
-                    except:
-                        logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        return {'filters_form': form}
+                context['DELETE'] = form.cleaned_data['filters']
+        return context
 
 
 class KeenForm(QwikForm):

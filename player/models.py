@@ -27,24 +27,29 @@ class Player(models.Model):
     # - or by direct invitation,
     # - excluding Blocked Players. 
     def feed(self):
-        appeal_qs = Appeal.objects.none()
-        for f in Filter.objects.filter(player=self, active=True):
-            qs = Appeal.objects.exclude(player=self)
-            if f.game:
-                qs = qs.filter(game=f.game)
-            if f.place:
-                if f.place.is_venue:
-                    qs = qs.filter(venue=f.place)
-                elif f.place.is_region:
-                    qs = qs.filter(venue__lat__lte=f.place.region.north)
-                    qs = qs.filter(venue__lat__gte=f.place.region.south)
-                    qs = qs.filter(venue__lng__lte=f.place.region.east)
-                    qs = qs.filter(venue__lng__gte=f.place.region.west)
-            # TODO hours intersection
-            appeal_qs |= qs
+        filters = Filter.objects.filter(player=self, active=True)
+        if filters:
+            appeal_qs = Appeal.objects.none()            
+            for f in filters:
+                qs = Appeal.objects
+                if f.game:
+                    qs = qs.filter(game=f.game)
+                if f.place:
+                    if f.place.is_venue:
+                        qs = qs.filter(venue=f.place)
+                    elif f.place.is_region:
+                        qs = qs.filter(venue__lat__lte=f.place.region.north)
+                        qs = qs.filter(venue__lat__gte=f.place.region.south)
+                        qs = qs.filter(venue__lng__lte=f.place.region.east)
+                        qs = qs.filter(venue__lng__gte=f.place.region.west)
+                # TODO hours intersection
+                appeal_qs |= qs
+        else:
+            appeal_qs = Appeal.objects.all()
         # TODO include direct invites
         # TODO exclude Blocked Players
         feed = list(appeal_qs.distinct().all())
+        feed = list(appeal_qs.exclude(player=self).distinct().all())
         # sort the feed by urgency
         #TODO optimise this sort (possibly at dbase order_by)
         feed.sort(key=lambda x: x.last_hour, reverse=True)

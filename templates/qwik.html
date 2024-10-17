@@ -24,24 +24,24 @@
     <div id="icon_bar" class="icon_bar">
         <img class="logo href" src="{% static 'qwik_icon.svg' %}" data-href="{% url 'home' %}">
         <div class="flex_space"></div>
-        <div class="button href" data-href="{% url 'feed' %}">
+        <div class="button href {{ feed }}" data-href="{% url 'feed' %}">
             <i class="fa-solid fa-house fa-2x"></i>
             <p class="fat">Invitations</p>
         </div>
-        <div class="button href" data-href="{% url 'match' %}">
+        <div class="button href {{ schedule }}" data-href="{% url 'match' %}">
             <i class="fa-regular fa-calendar-days fa-2x"></i>
             <p class="fat">Scheduled Matches</p>
         </div>
-        <div class="button href" data-href="{% url 'rival' %}">
+        <div class="button href {{ rate }}" data-href="{% url 'rival' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>
             <p class="fat">Rival Rating</p>
         </div>
-        <div class="button href">
+        <div class="button href {{ friend }}">
             <i class="fa-solid fa-user-group fa-2x"></i>
             <p class="fat">Friends</p>
         </div>
         <div class="flex_space hide768"></div>
-        <div class="button href" data-href="{% url 'account' %}">
+        <div class="button href {{ account }}" data-href="{% url 'account' %}">
             <i class="fa-solid fa-graduation-cap fa-2x"></i>
             <p class="fat">{% block name %}{{ person_name }}{% endblock %}</p>
         </div>     

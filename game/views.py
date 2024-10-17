@@ -19,7 +19,10 @@ class MatchView(QwikView):
         super().request_init(request)
         player = self.user.player
         matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
-        context = { 'matches': matches, }
+        context = {
+            'schedule-tab': 'selected',
+            'matches': matches,
+        }
         context |= super().context(request)
         if context['small_screen']:
             return render(request, self.template_name, context)

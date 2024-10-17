@@ -20,7 +20,7 @@ class MatchView(QwikView):
         player = self.user.player
         matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
         context = {
-            'schedule-tab': 'selected',
+            'schedule_tab': 'selected',
             'matches': matches,
         }
         context |= super().context(request)

@@ -26,7 +26,7 @@ class FeedView(QwikView):
         feed = player.feed()
         self._context |= {
             'appeals': feed[:100],
-            'feed-tab': 'selected',
+            'feed_tab': 'selected',
             'feed_length': len(feed),
             'player': player,
             'prospects': player.prospects()[:100],
@@ -416,5 +416,5 @@ class RivalView(FeedView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = super().context(request, *args, **kwargs)
-        context |= { 'rate-tab': 'selected' }
+        context |= { 'rate_tab': 'selected' }
         return render(request, "player/rival.html", context)

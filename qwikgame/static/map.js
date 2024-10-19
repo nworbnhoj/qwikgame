@@ -8,6 +8,7 @@
  * (data underlying Markers) are fetched from the server on demand. A click
  * on a Marker will show a Map InfoWindow with further actions.
  *****************************************************************************/
+// TODO extend QWIK_MARKS to be Game:Map(Mark) to avoid clearMarks() on Game change
 const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const MAP_REGION = new Map();               // observable subset of QWIK_REGION

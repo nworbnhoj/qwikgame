@@ -1,4 +1,5 @@
-const MSqC = {lat: -36.449786, lng: 146.430037};
+const MSqC = {lat: -36.4497, lng: 146.4300};
+const Sofia = {lat: 42.6977, lng: 23.3217};
 
 ///////////////// DOM Ready functions ///////////////////
 
@@ -336,8 +337,8 @@ function drop(event) {
 
 // update a drop_down display to be consistent with the selected options
 function dropDownUpdate(drop_down){
-  try {
-    let drop_up = drop_down.querySelector('.drop_up');
+  let drop_up = drop_down.querySelector('.drop_up');
+  if (drop_up) {
     let drop_up_txt = drop_up.dataset.action;
     drop_down.querySelectorAll('input:checked').forEach(function(checked){
         drop_up_txt += checked.parentElement.innerText + " ";
@@ -345,8 +346,8 @@ function dropDownUpdate(drop_down){
     drop_up_txt = drop_up_txt.replaceAll("\n", "");
     drop_up_txt = drop_up_txt.trim();
     drop_up.innerText = drop_up_txt;
-  } catch (e) {
-    console.log(e);
+  } else {
+    console.log("failed to get drop_up for drop_down: "+drop_down.outerHTML);
   }
 }
 
@@ -707,6 +708,9 @@ function updateAllDay(all_day) {
 
 // update an all_week toggle to be consistent with the all_day toggles
 function updateAllWeek(all_week) {
+  if (!all_week) {
+    return;
+  }
   try {
     // check all_week if every all_day is checked
     let days = all_week.closest('div.field').querySelectorAll("label.toggle.all_day");

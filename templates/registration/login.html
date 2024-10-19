@@ -1,0 +1,23 @@
+<!-- templates/registration/login.html -->
+{% extends "qwik.html" %}
+
+
+{% block icon_bar %}
+{% if user.is_authenticated %}
+    {{ block.super }}
+{% else %}
+    <h1>Welcome</h1>
+{% endif %}
+{% endblock icon_bar %}
+
+
+{% block list_bar %}___________{% endblock list_bar %}
+
+
+{% block detail %}
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">Log In</button>
+</form>
+{% endblock detail %}

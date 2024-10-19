@@ -6,15 +6,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 
-class QwikView(View):
+class BaseView(View):
     _context = {}
-    user = None
-    is_player = False
-    is_manager = False
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
         self.request_init(request)
@@ -25,16 +18,12 @@ class QwikView(View):
         return None
 
     def request_init(self, request):
-        self.user = User.objects.get(pk=request.user.id)
-        self.is_player = hasattr(self.user, "player")
-        self.is_manager = hasattr(self.user, "manager")
+        pass
 
     def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
         self._context = {
             'big_screen': not small,
-            'person_icon': self.user.person.icon,
-            'person_name': self.user.person.name,
             'small_screen': small,
         }
         return self._context
@@ -46,3 +35,37 @@ class QwikView(View):
             return False
         else:
             return True
+
+
+
+class QwikView(BaseView):
+    is_player = False
+    is_manager = False
+    user = None
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def request_init(self, request):
+        super().request_init(request)
+        self.user = User.objects.get(pk=request.user.id)
+        self.is_player = hasattr(self.user, "player")
+        self.is_manager = hasattr(self.user, "manager")
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        self._context |= {
+            'person_icon': self.user.person.icon,
+            'person_name': self.user.person.name,
+        }
+        return self._context
+
+
+
+class WelcomeView(BaseView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        return render(request, "welcome.html", self._context)
+

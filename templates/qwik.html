@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    {% block icon_bar %}
     <div id="icon_bar" class="icon_bar">
         <img class="logo href" src="{% static 'qwik_icon.svg' %}" data-href="{% url 'home' %}">
         <div class="flex_space"></div>
@@ -48,9 +49,10 @@
     </div>
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
     <hr>
+    {% endblock icon_bar %}
     <div id="content" class="content">
-        {% block list_bar %}LIST_BAR{% endblock %}
-        {% block detail %}DETAIL{% endblock %}
+        {% block list_bar %}LIST_BAR{% endblock list_bar %}
+        {% block detail %}DETAIL{% endblock detail %}
     </div>
 </body>
 </html>

@@ -6,19 +6,16 @@
 {% if user.is_authenticated %}
     {{ block.super }}
 {% else %}
-    <h1>Welcome</h1>
+    <div class="plank">
+        <h1>qwikgame</h1>
+        <h1>Welcome</h1>
+        <p><a href="{% url 'login' %}">login</a></p>
+    </div>
 {% endif %}
 {% endblock icon_bar %}
 
 
-{% block list_bar %}___________{% endblock list_bar %}
+{% block list_bar %}{% endblock list_bar %}
 
 
-{% block detail %}
-{% if user.is_authenticated %}
-    Hi {{ user.username }}!
-{% else %}
-    <p>Please <a href="{% url 'login' %}">log in</a></p>
-    
-{% endif %}
-{% endblock %}
+{% block detail %}{% endblock %}

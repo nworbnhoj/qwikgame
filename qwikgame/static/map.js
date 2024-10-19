@@ -22,6 +22,10 @@ var mapCenterIdle = null;
     
 
 function venuesMap(showUnitCluster=true) {
+    if (typeof google == 'undefined'){
+        console.log('failed to initiate Venue Map: google undefined');
+        return;
+    }
     MAP_OPTIONS.showUnitCluster=showUnitCluster;
     const MAP_ELEMENT = document.getElementById('map');
     const LAT = parseFloat(document.getElementById('id_lat').value);

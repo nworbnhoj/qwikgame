@@ -8,6 +8,12 @@ docReady(event => {
 
 winReady(event => {
   venuesMap(showUnitCluster=true);
+  if (!qwikMap){
+    for(input of document.querySelectorAll("input[value='show-map']")){
+        input.parentElement.remove(input);
+        console.log("removed input[value='show-map']")
+    }
+  }
 });
 
 
@@ -63,12 +69,16 @@ function mapShortcut(){
 
 function showMap(show=true, target){
     let map = document.getElementById('map');
-    if (show){
-        showMapBelowField(target);
-        map.style.display = 'block';
-        map.focus();
+    if (qwikMap && map){
+        if (show){
+            showMapBelowField(target);
+            map.style.display = 'block';
+            map.focus();
+        } else {
+            map.style.display = 'none';
+        }
     } else {
-        map.style.display = 'none';
+        console.log("failed to show map");        
     }
 }
 

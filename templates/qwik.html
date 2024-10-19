@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'qwik.css' %}">
 {% endblock css %}
     {% if small_screen %}
@@ -13,7 +14,6 @@
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
 {% block script %}
-    <script src="https://kit.fontawesome.com/ddb61c7fcf.js" crossorigin="anonymous"></script>
     <script defer src="{% static 'qwik.js' %}"></script>
 {% endblock %}
 

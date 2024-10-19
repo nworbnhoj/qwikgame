@@ -6,7 +6,7 @@ table { border-collapse: separate; border-spacing: 0 }
 caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
-@font-face { font-family: 'NotoSans-Regular'; src: url(NotoSans-Regular.ttf) }
+@font-face { font-family: 'NotoSans-Regular'; src: url(../NotoSans-Regular.ttf) }
 .align_center { align-self: center }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }

@@ -704,12 +704,12 @@ function receiveMarks(json){
         addToRegion(key, QWIK_REGION);
         addToRegion(key, MAP_REGION);
         if(!QWIK_MARKS.has(key)){
-          addMark(key, mark, GAME);
+          addMark(key, mark);
         }
       }
       console.log("received "+NEW_MARKS.size+" marks for "+REGION);
       const VISIBLE = showMarks();
-      fetchSubKeys(VISIBLE, GAME);              // prepare for possible zoom-in
+      fetchSubKeys(VISIBLE, GAME);    // prepare for possible zoom-in
       break;
     case 'NO_RESULTS':
       // TODO initiate google search for Game Name in this area
@@ -724,8 +724,7 @@ function receiveMarks(json){
 
 
 
-function addMark(key, mark, game){
-  const MAP = qwikMap;
+function addMark(key, mark){
   if (typeof key === 'undefined' || typeof mark === 'undefined'){
     console.log("Warning: addMark() called without required parameters "+key+" "+mark);
     return;

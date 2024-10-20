@@ -12,8 +12,7 @@
 {% block script %}
     {{ block.super }}
     <script defer src="{% static 'map.js' %}"></script>
-    <script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&callback=venuesMap&libraries=places">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGqWu3u-CPIU_MkURpe7mTxJcDku-qeDw&loading=async&callback=venuesMap&libraries=places">
     </script>
     <script>
         const VENUE_ICON = "{% static 'img/qwik.pin.21x35.png' %}";

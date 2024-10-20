@@ -6,15 +6,7 @@ docReady(event => {
 });
 
 
-winReady(event => {
-  venuesMap(showUnitCluster=true);
-  if (!qwikMap){
-    for(input of document.querySelectorAll("input[value='show-map']")){
-        input.parentElement.remove(input);
-        console.log("removed input[value='show-map']")
-    }
-  }
-});
+winReady(event => {});
 
 
 function initPage(){
@@ -42,6 +34,7 @@ function showMap(show=true, target){
             map.style.display = 'none';
         }
     } else {
+        alert('sorry - the map is not available')
         console.log("failed to show map");        
     }
 }

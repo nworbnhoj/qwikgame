@@ -99,33 +99,47 @@ function venuesMap(showUnitCluster=true) {
  * the Form Field containing the supplied element.
  *
  * element DOM Element indicating the field to locate the Map within
- * display boolean true to display the Map immediately on relocation
  * @global qwikMap google.maps.Map
  * @return null
  *
  * https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
  *****************************************************************************/
-function showMapBelowField(element, display=true){
+function positionMapBelowField(element){
   if(element){
     try {
-      const MAP = qwikMap;
-      const PRE_GAME = game();
       const MAP_ELEMENT = document.getElementById("map");
       const ID = element.id
       const FIELD_ID = ID.slice(0,ID.lastIndexOf('_'))
       const FIELD = document.getElementById(FIELD_ID)
       FIELD.parentElement.appendChild(MAP_ELEMENT);
-      if(game() !== PRE_GAME){
-        clearMarks();
-      }
-      MAP_ELEMENT.style.display = display ? "block" : "none";
-      google.maps.event.trigger(MAP, 'resize');
-      return MAP_ELEMENT;
     } catch (error) {
       console.log("Warning: failed to relocate map - missing map|form|game");
       return null;
     }
   }
+}
+
+
+/******************************************************************************
+ * Make the Map Element (containing global qwikMap) visible/invisible
+ *
+ * show Boolean true to make map visible - invisible otherwise
+ * @global qwikMap google.maps.Map
+ * @return null
+ *
+ *****************************************************************************/
+function showMap(show=true){
+    let map = document.getElementById('map');
+    if (!map){
+        console.log("failed to show map");
+        return;  
+    }
+    if (show){
+        map.style.display = 'block';
+        map.focus();
+    } else {
+        map.style.display = 'none';
+    }
 }
 
 

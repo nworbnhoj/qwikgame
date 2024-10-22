@@ -2,7 +2,7 @@ import logging
 from django.db import models
 from django.db.models import Sum
 from game.models import Game
-from venue.models import Place, Region
+from venue.models import Place, Region, Venue
 from player.models import Filter
 from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
@@ -42,6 +42,7 @@ class Mark(models.Model):
                 logger.info(f'Region new: {region}')
         except:
             logger.exception('failed to create Region')
+        # create Marks for regions as required
         if region:
             try:
                 if not Mark.objects.filter(place=region.place_ptr, game=self.game).exists():
@@ -97,7 +98,6 @@ class Mark(models.Model):
         return mark;
 
     def parent(self):
-        logger.warn(self)
         mark_qs = Mark.objects.filter(game=self.game, place__country=self.place.country)
         mark_qs = mark_qs.select_related('place__region')
         mark_qs = mark_qs.filter(place__region__isnull=False)
@@ -125,30 +125,41 @@ class Mark(models.Model):
         old_size = self.size
         place = self.place
         if place.is_venue:
-            filter_qs = Filter.objects.filter(active=True, game=self.game, place=place)
+            filter_qs = Filter.objects.filter(active=True, place=place)
+            if self.game:
+                filter_qs = filter_qs.filter(game=self.game)
             self.size = filter_qs.count()
             # TODO add historical match count in prior year
             # TODO make distinct per player
         elif place.is_region:
-            mark_qs = Mark.objects.filter(game=self.game)
+            venue_qs = Venue.objects.filter(country=place.country)
+            if place.admin1:
+                venue_qs = venue_qs.filter(admin1=place.admin1)
             if place.locality:
-                mark_qs = mark_qs.filter(place__country=place.country)
-                mark_qs = mark_qs.filter(place__admin1=place.admin1)
-                mark_qs = mark_qs.filter(place__locality=place.locality)
-                self.size = mark_qs.count()
-            elif place.admin1:
-                mark_qs = mark_qs.filter(place__country=place.country)
-                mark_qs = mark_qs.filter(place__admin1=place.admin1)
-                mark_qs = mark_qs.exclude(place__locality__isnull=True)
-                self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
-            else:
-                mark_qs = mark_qs.filter(place__country=place.country)
-                mark_qs = mark_qs.exclude(place__admin1__isnull=True)
-                mark_qs = mark_qs.exclude(place__locality__isnull=True)
-                self.size = mark_qs.aggregate(Sum('size', default=0)).get('size__sum', 0)
+                venue_qs = venue_qs.filter(locality=place.locality)
+            if self.game:
+                venue_qs = venue_qs.filter(games__in=[self.game.pk])
+            self.size = venue_qs.distinct().count()
         if self.size != old_size:
-            logger.debug(f'Mark update size: {self}')
+            logger.info(f'Mark update size: {self}')
+            # update the size of the parent region Mark
             parent = self.parent()
             if parent:
                 parent.save()
+            # update the size of the non-game Mark
+            if self.game:
+                mark_qs = Mark.objects.filter(game__isnull=True, place__country=place.country)
+                if place.admin1:
+                    mark_qs = mark_qs.filter(place__admin1=place.admin1)
+                else:
+                    mark_qs = mark_qs.filter(place__admin1__isnull=True)
+                if place.locality:
+                    mark_qs = mark_qs.filter(place__locality=place.locality)
+                else:
+                    mark_qs = mark_qs.filter(place__locality__isnull=True)
+                mark = mark_qs.first()
+                if mark:
+                    mark.save()
+                else:
+                    logger.warn(f'failed to update non-game Mark: {self}')
     

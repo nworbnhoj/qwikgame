@@ -7,6 +7,7 @@ caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
 @font-face { font-family: 'NotoSans-Regular'; src: url(../NotoSans-Regular.ttf) }
+@font-face { font-family: 'AstroSpace'; src: url(../webfonts/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
 .align_center { align-self: center }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
@@ -168,6 +169,7 @@ div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }
 div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
 div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 4px; z-index: 1 }
+div.qwikgame { align-items: center; display: flex; flex-direction: row; font-size: 30px; font-family: AstroSpace; padding: 1em; }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
@@ -183,7 +185,7 @@ h5 { color: black; text-align: left }
 h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
-img.logo { display: none; height: 3em; padding: 0.1em }
+img.logo { display: block; height: 3em; padding: 0.1em }
 input[type=checkbox] { margin: 0em 1em 0em 1em; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
@@ -221,6 +223,7 @@ p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
+span.qwik { color: #dfa622 }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
 @media only screen and (max-width:600px) {
     div.flex_space { display: none }

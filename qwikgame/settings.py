@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
 ]
 
 LOGIN_REDIRECT_URL = "/player/"
@@ -157,6 +158,10 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'qwikgame/static'
+]
+
+CRONJOBS = [
+    ('*/1 * * * *', 'player.cron.appeal_perish')
 ]
 
 

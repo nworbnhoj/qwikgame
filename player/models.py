@@ -169,6 +169,39 @@ class Appeal(models.Model):
                 entry['text'] = "unknown template"
         self.log_entry(entry)
 
+    # Compares the Appeal date and hours to the current datetime at the Venue
+    # and removes past hours or deletes the Appeal when all hours have passed.
+    def perish(self, dry_run=False):
+        action = 'noop'
+        now = self.venue.now()
+        if now.date() > self.date:
+            if not dry_run:
+                self.delete()
+            action = 'expired'
+        elif now.date() == self.date:
+            hour = self.venue.now().hour
+            past =  [False for h in range(0, hour+1)]
+            future = [True for h in range(hour+1, 24)]
+            hours = Hours24(self.hours).intersect(Hours24(past + future))
+            if hours.is_none():
+                if not dry_run:
+                    self.delete()
+                action = 'expired'
+            elif hours.as_bytes() != self.hours:
+                self.hours = hours.as_bytes()
+                if not dry_run:
+                    self.save()
+                action = 'perished'
+        logger.debug('Appeal{} {: <9} {} @ {} {}'.format(
+                ' (dry-run)' if dry_run else '',
+                action,
+                self.date.strftime('%a'),
+                now.strftime('%a %X'),
+                self.venue.name
+            )
+        )
+        return action
+
     def set_hours(self, hours24):
         self.hours = hours24.as_bytes()
 

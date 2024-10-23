@@ -183,6 +183,9 @@ class Venue(Place):
             PLACEID: self.placeid,
         }
 
+    def now(self):
+        return datetime.datetime.now(pytz.timezone(self.tz))
+
     def place_str(self):
         return super().__str__()
 

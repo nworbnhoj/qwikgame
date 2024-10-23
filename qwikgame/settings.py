@@ -161,7 +161,7 @@ STATICFILES_DIRS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'player.cron.appeal_perish')
+    ('1 * * * *', 'player.cron.appeal_perish')
 ]
 
 

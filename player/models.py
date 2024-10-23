@@ -182,13 +182,13 @@ class Appeal(models.Model):
             hour = self.venue.now().hour
             past =  [False for h in range(0, hour+1)]
             future = [True for h in range(hour+1, 24)]
-            hours = Hours24(self.hours).intersect(Hours24(past + future))
-            if hours.is_none():
+            hours24 = Hours24(self.hours).intersect(Hours24(past + future))
+            if hours24.is_none():
                 if not dry_run:
                     self.delete()
                 action = 'expired'
-            elif hours.as_bytes() != self.hours:
-                self.hours = hours.as_bytes()
+            elif hours24 != self.hours24:
+                self.hours = hours24.as_bytes()
                 if not dry_run:
                     self.save()
                 action = 'perished'

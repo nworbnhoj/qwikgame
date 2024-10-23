@@ -6,8 +6,8 @@ table { border-collapse: separate; border-spacing: 0 }
 caption, th, td { text-align: left; font-weight: normal }
 blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
-@font-face { font-family: 'NotoSans-Regular'; src: url(../NotoSans-Regular.ttf) }
-@font-face { font-family: 'AstroSpace'; src: url(../webfonts/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
+@font-face { font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
+@font-face { font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
 .align_center { align-self: center }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
@@ -28,7 +28,7 @@ blockquote, q { quotes: "" "" }
 .ctc { background-color: transparent; border: 0px; color: blue; height: auto; text-align: center; text-decoration-line: underline }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
-.disabled { border_color: #aaaaaa; color: #aaaaaa }
+.disabled { border-color: #aaaaaa; color: #aaaaaa }
 .errorlist { color: red; }
 .head_back { order: 40 }
 .head_fwd { order: 50 }
@@ -46,7 +46,7 @@ blockquote, q { quotes: "" "" }
 .sml { height: 1.5em; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
 .wide { width: 100% }
-body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans-Regular }
+body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { align-items: center; display: flex; }
 div.banner { background-color: #dfa622; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
@@ -106,7 +106,7 @@ div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
 div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; display: flex; flex-direction: row; font-size: 1em; height: 1.7em; justify-content: space-between; width: 100% }
 div.drop_up {}
-div.disabled { border_color: #aaaaaa; color: #aaaaaa }
+div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
 div.field.naked { padding: 0 }

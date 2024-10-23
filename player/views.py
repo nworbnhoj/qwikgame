@@ -353,7 +353,7 @@ class KeenView(FeedView):
             logger.info(f'Mark new {mark}')
         appeal_pk = None
         # create/update/delete today appeal
-        now=timezone.now()
+        now=venue.now()
         appeal = Appeal.objects.get_or_create(
             date=now.date(),
             game=game,
@@ -366,7 +366,7 @@ class KeenView(FeedView):
             appeal.set_hours(context['today'])
             appeal.log_event('keen')
             appeal.log_event('appeal')
-            appeal.save()
+            appeal.perish()
             appeal_pk = appeal.pk
         # create/update/delete tomorrow appeal
         one_day=datetime.timedelta(days=1)

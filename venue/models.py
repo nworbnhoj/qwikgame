@@ -107,7 +107,24 @@ class Region(Place):
             PLACEID: self.placeid,
             SOUTH: self.south,
             WEST: self.west,
-        }
+        }        
+
+    # TODO add parent as a Region field
+    @property
+    def parent(self):
+        if self.place.admin1:
+            if self.place.locality:
+                return Region.object.filter(
+                    country=self.country,
+                    admin1=self.admin1,
+                    locality__isnull=True
+                ).first()
+            return Region.object.filter(
+                country=self.country,
+                admin1__isnull=True,
+                locality__isnull=True
+            ).first()
+        return None
 
     def place(self):
         kwargs = { COUNTRY: self.country }

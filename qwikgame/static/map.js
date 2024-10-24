@@ -48,8 +48,8 @@ function venuesMap(showUnitCluster=true) {
     const MAP = qwikMap;
     const INFOWINDOW = qwikInfowindow;
     MAP.setCenter(CENTER);
-    // const GAME_SELECTS = document.querySelectorAll("select[name=game]");
-    // addListeners(GAME_SELECTS, 'change', changeGame);
+    const GAME_OPTIONS = document.querySelectorAll("input[name=game]");
+    addListeners(GAME_OPTIONS, 'input', changeGame);
 
     // setup Places search box in map
     const INPUT = document.getElementById("map-search");
@@ -255,17 +255,7 @@ function clickHandler(event){
 
 function changeGame(){
   clearMarks();
-  resetVenues();
-}    
-
-
-function resetVenues(){
-    const VENUE_SELECT = document.getElementById('venue-select');
-    for(const OPTION of VENUE_SELECT.querySelectorAll(':not([id])')){
-        OPTION.parentNode.removeChild(OPTION);
-    }
-    document.getElementById('venue-prompt').selected=true;
-    venuesMap(MAP_OPTIONS.showUnitCluster);
+  fetchMarks(game(), mapCenterIdle, null, '');
 }
 
 
@@ -545,6 +535,7 @@ function showMarks(){
   const MAP = qwikMap;
   // Use the diagonal distance across the Map as a proxy of Map area
   const MAP_BOUNDS = MAP.getBounds();
+  if (!MAP_BOUNDS){ return visibleMarks; }
   const NE = MAP_BOUNDS.getNorthEast();
   const SW = MAP_BOUNDS.getSouthWest();
   const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());

@@ -114,14 +114,14 @@ class VenueMarksJson(QwikView):
                 mark_objects = mark_objects.filter(game__isnull=True)
             if admin1:
                 # get locality marks
-                locality_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality=locality)
+                locality_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality__isnull=False)
                 marks = marks | {lm.key(): lm.mark() for lm in locality_marks.all()}
             if country:
                 # get admin1 marks
-                admin1_marks = mark_objects.filter(place__country=country, place__admin1=admin1, place__locality__isnull=True)
+                admin1_marks = mark_objects.filter(place__country=country, place__admin1__isnull=False, place__locality__isnull=True)
                 marks = marks | {am.key(): am.mark() for am in admin1_marks.all()}
             # get country marks
-            country_marks = mark_objects.filter(place__country=country, place__admin1__isnull=True, place__locality__isnull=True)
+            country_marks = mark_objects.filter(place__country__isnull=False, place__admin1__isnull=True, place__locality__isnull=True)
             marks = marks | {cm.key(): cm.mark() for cm in country_marks.all()}
 
         response = {

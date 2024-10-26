@@ -805,14 +805,14 @@ function endowMark(key, mark){
   if(K.length === 4){  // venue Mark
     mark.marker.setIcon(VENUE_ICON);
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickMarker(mark, true, 'players:');
+      clickMarker(mark, INFOWINDOW_VENUE_LINK, 'players:');
     });      
   } else {  // metaMark
     mark.marker.setIcon(REGION_ICON);
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickMarker(mark, true, 'venues:');
+      clickMarker(mark, INFOWINDOW_REGION_LINK, 'venues:');
     }); 
   }
   return mark;

@@ -43,7 +43,7 @@ class PlacesBulkView(QwikView):
                 if search_form.is_valid() and game and query:
                     region = Region.objects.filter(pk=context.get('region')).first()
                     if region:
-                        places = Locate.get_places(query, region.country, region.admin1, region.locality)
+                        places = Locate.get_places(query, region)
                         places = self.__new_places(places, game)
                         request.session['game'] = game.code
                         request.session['place_choices'] = places

@@ -27,10 +27,16 @@ class Locate:
 
 
     @staticmethod
-    def geoplace(text, country=None, admin1=None, locality=None):
+    def geoplace(text, country=None, region=None):
         geoplace = Service.objects.get(pk=GEOPLACE)
+        param = {'input': text}
+        if country:
+            param['components'] = f'country:{country}'
+        if region:
+            param['components'] = f'country:{region.country}'
+            param['locationbias'] = f'rectangle:{region.south},{region.west}|{region.north},{region.east}'
         return Locate.geo(
-            {'input': text, 'components': f"country:{country}"},
+            param,
             geoplace.key,
             geoplace.url
         )
@@ -101,9 +107,9 @@ class Locate:
 
 
     @staticmethod
-    def get_places(description, country=None, admin1=None, locality=None):
+    def get_places(description, region=None):
         places = {}
-        geoplace = Locate.geoplace(description, country, admin1, locality)
+        geoplace = Locate.geoplace(description, region=region)
         predictions = geoplace.get('predictions', None)
         logger.info(predictions)
         return { str(place['place_id']): str(place['description']) for place in predictions}

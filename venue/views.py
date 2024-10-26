@@ -20,7 +20,7 @@ class PlacesBulkView(QwikView):
     def __new_places(self, places, game=None):
         venue_qs = Venue.objects
         if game:
-            venue_qs = venue_qs.filter(games__in=game.code)
+            venue_qs = venue_qs.filter(games__in=[game])
         return { k:v for k,v in places.items() if not venue_qs.filter(placeid=k).exists()}
 
     def get(self, request, *args, **kwargs):

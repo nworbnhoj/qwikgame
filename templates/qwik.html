@@ -55,9 +55,11 @@
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
     <hr>
     {% endblock icon_bar %}
+    {% block content %}
     <div id="content" class="content">
         {% block list_bar %}LIST_BAR{% endblock list_bar %}
         {% block detail %}DETAIL{% endblock detail %}
     </div>
+    {% endblock content %}
 </body>
 </html>

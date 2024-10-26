@@ -27,7 +27,7 @@ class Locate:
 
 
     @staticmethod
-    def geoplace(text, country):
+    def geoplace(text, country=None, admin1=None, locality=None):
         geoplace = Service.objects.get(pk=GEOPLACE)
         return Locate.geo(
             {'input': text, 'components': f"country:{country}"},
@@ -98,6 +98,15 @@ class Locate:
             place = geoplace['predictions'][0]
             placeid = str(place['place_id'])
         return placeid
+
+
+    @staticmethod
+    def get_places(description, country=None, admin1=None, locality=None):
+        places = {}
+        geoplace = Locate.geoplace(description, country, admin1, locality)
+        predictions = geoplace.get('predictions', None)
+        logger.info(predictions)
+        return { str(place['place_id']): str(place['description']) for place in predictions}
 
 
     @staticmethod

@@ -69,6 +69,13 @@ class Region(Place):
         logger.debug(f'Region save: {self}')
 
     @classmethod
+    def choices(klass):
+        try:
+            return {region.pk: region.name for region in klass.objects.all()}
+        except:
+            return {}
+
+    @classmethod
     def from_place(cls, country, admin1=None, locality=None):
         geometry = Locate.get_geometry(country, admin1, locality)
         if geometry:

@@ -1,0 +1,33 @@
+<!-- venue/templates/venue/places_bulk.html -->
+{% extends "qwik.html" %}
+
+
+{% block content %}
+    <div style="flex-direction: column; max-width: 100em;">
+        <p>This form enables admins to search and add Venues in bulk.</p>
+        <div class="post form" style="max-width: 100em;">
+            <form action="{% url 'places_bulk' %}" method="post">
+{% csrf_token %}
+{{ search_form }}
+                <div class="pillar">
+                    <input class="cta push_down" type="submit" name='search'value='SEARCH'>
+                    <p>$US0.032 per Text Search</p>
+                </div>
+            </form>
+        </div>
+{% if places_form %}
+        <hr><hr>
+        <div class="post form">
+            <form action="{% url 'places_bulk' %}" method="post">
+{% csrf_token %}
+{{ places_form }}
+                <div class="pillar">
+                    <h6 style='text-transform: uppercase;'> {{ game }} VENUES</h6>
+                    <input class="cta push_down" type="submit" name='add' value='ADD'>
+                    <p>$US0.017 per Venue (Place Details)</p>
+                </div>
+            </form>
+        </div>
+{% endif %}
+    </div>
+{% endblock content %}

@@ -1,8 +1,8 @@
 from django.urls import include, path
 
-#from venue.views import AccountView
+from venue.views import PlacesBulkView
 
 urlpatterns = [
     # ex: /
-    # path("", AccountView.as_view()),
+    path("bulk", PlacesBulkView.as_view(), name='places_bulk'),
 ]

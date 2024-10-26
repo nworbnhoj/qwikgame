@@ -23,8 +23,8 @@ blockquote, q { quotes: "" "" }
 .button.item.unread div.icon { color: #dfa622 }
 .button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .color { color: #dfa622 }
-.cta { background-color: #dfa622; border: 0px solid #dfa622; color: white; font-size: 1.13em; padding: 1em }
-.ctb { background-color: inherit; border: 2px solid #dfa622; color: black; font-size: 1.13em; padding: 1em }
+.cta { background-color: #dfa622; border: 0px solid #dfa622; color: white; font-size: 1.13em; padding: 1em;  text-transform: uppercase; }
+.ctb { background-color: inherit; border: 2px solid #dfa622; color: black; font-size: 1.13em; padding: 1em;  text-transform: uppercase; }
 .ctc { background-color: transparent; border: 0px; color: blue; height: auto; text-align: center; text-decoration-line: underline }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
@@ -56,8 +56,8 @@ div.button p { }
 div.button:hover { background-color: #eeeeee }
 div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em; width: 100% }
 div.button.auto { height: auto; width: 100%; }
-div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
-div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; height: auto; padding: 0em 0.3em 0em 0.3em }
+div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em; text-transform: uppercase; }
+div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; height: auto; padding: 0em 0.3em 0em 0.3em; text-transform: uppercase;  }
 div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
 div.button.info { border: 0.1em solid black; border-radius: 50% }
 div.button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }

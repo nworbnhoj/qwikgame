@@ -68,6 +68,7 @@ class ChatView(QwikView):
             'next': next_pk,
             'player_id': player.facet(),
             'prev': prev_pk,
+            'schedule_tab': 'selected',
         }
         context |= self.chat_form_class.get()
         context |= super().context(request)

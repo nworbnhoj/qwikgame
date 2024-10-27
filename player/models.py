@@ -159,7 +159,7 @@ class Appeal(models.Model):
             case 'keen':
                 entry['text'] = "sent invitation".format()
             case 'appeal':
-                entry['text'] = "{} at {}, {}, {}".format(
+                entry['text'] = "{} at {}, {}, {}h".format(
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),
@@ -293,7 +293,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = f'accepted {self.hours24().as_str()} with {rival.name}'
+                    text = f'accepted {self.hours24().as_str()}h with {rival.name}'
                 )
             case 'bid':
                 person = self.rival.user.person
@@ -302,7 +302,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = rival.name,
-                    text = f'accepted {self.hours24().as_str()}'
+                    text = f'accepted {self.hours24().as_str()}h'
                 )
             case 'decline':
                 player = self.appeal.player
@@ -312,7 +312,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = f'declined {self.hours24().as_str()} with {rival.name}'
+                    text = f'declined {self.hours24().as_str()}h with {rival.name}'
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

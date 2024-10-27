@@ -38,7 +38,7 @@ class Match(models.Model):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return "{} {} {}".format(self.rivals, self.date, self.venue)
+        return "{} {} {}".format(self.competitors, self.date, self.venue)
 
     @classmethod
     def from_bid(cls, bid):

@@ -58,6 +58,22 @@ class Match(models.Model):
         self.log.append(entry)
         self.save()
 
+    def log_event(self, template):
+        match template:
+            case 'scheduled':
+                player = self.appeal.player
+                person = player.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = player.facet(),
+                    klass= 'scheduled',
+                    name = person.name,
+                    text = f'scheduled'
+                )
+            case _:
+                logger.warn(f'unknown template: {template}')
+        self.log_entry(entry)
+
     # format venue_time on server, rather than in template (user timezone)
     def venue_date_str(self):
         return self._venue_time().strftime("%d %b %Y")

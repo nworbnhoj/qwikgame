@@ -53,9 +53,13 @@
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
-            <div class="post hidden">
+            <h2 class="show_group">
+                History
+                <span>▼</span>
+            </h2>
+            <div class="post group hidden">
 {% for entry in match.log %}
-    {% if forloop.counter <= match_log_start %}
+    {% if forloop.counter < match_log_start %}
         {% if entry.id == player_id %}
                 <div class="log_entry align_start {{ entry.klass }}">
         {% else %}

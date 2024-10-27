@@ -7,6 +7,7 @@ from game.models import Game, Match
 from player.models import Player
 from qwikgame.views import QwikView
 from venue.models import Venue
+from qwikgame.log import Entry
 from qwikgame.views import QwikView
 
 logger = logging.getLogger(__file__)
@@ -39,8 +40,8 @@ class ChatView(QwikView):
     chat_form_class = ChatForm
     template_name = 'game/match.html'
 
-    def get(self, request, *args, **kwargs):
-        super().request_init(request)
+    def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
         player = self.user.player
         match_pk = kwargs['match']
         match = Match.objects.get(pk=match_pk)
@@ -61,7 +62,7 @@ class ChatView(QwikView):
             if 'klass' in entry and 'scheduled' in entry['klass']:
                 match_log_start = i+1
                 break
-        context = {
+        self._context |= {
             'match': match,
             'match_log_start': match_log_start,
             'matches': matches,
@@ -70,17 +71,34 @@ class ChatView(QwikView):
             'prev': prev_pk,
             'schedule_tab': 'selected',
         }
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         context |= self.chat_form_class.get()
-        context |= super().context(request)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().request_init(request)
+        super().post(request, *args, **kwargs)
         match_pk = kwargs['match']
-        self.chat_form_class.post(
-            request.POST,
-            Match.objects.get(pk=match_pk),
-            self.user.player,
-        )
-        return HttpResponseRedirect("/game/match/{}/".format(match_pk))
+        context = self.chat_form_class.post(request.POST)
+        form = context.get('chat_form')
+        if form and not form.is_valid():
+            return render(request, self.template_name, context)
+        try:
+            player = self.user.player
+            match = Match.objects.get(pk=match_pk)
+            entry = Entry(
+                icon = player.user.person.icon,
+                id = player.facet(),
+                klass = 'chat',
+                name = player.user.person.name,
+                text = context.get('txt'),
+            )
+            match.log_entry(entry)
+        except:
+            logger.exception(f'failed chat entry: {match_pk} {context}')
+        context |= self.context(request, *args, **kwargs)
+        return HttpResponseRedirect(f'/game/match/{match_pk}/')
         

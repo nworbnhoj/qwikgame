@@ -113,6 +113,7 @@ class AcceptView(FeedView):
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
                 bid.appeal.delete()
+                match.log_event('scheduled')
             decline = context.get('decline')
             if decline:
                 bid = Bid.objects.get(pk=decline_id)

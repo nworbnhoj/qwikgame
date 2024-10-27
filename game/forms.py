@@ -30,19 +30,9 @@ class ChatForm(QwikForm):
     # Initializes an ChatForm for 'match'.
     # Returns a context dict including 'chat_form'
     @classmethod
-    def post(klass, request_post, match, player):
+    def post(klass, request_post):
         form = klass(data=request_post)
+        context = { 'chat_form': form }
         if form.is_valid():
-            try:
-                entry = Entry(
-                    icon = player.user.person.icon,
-                    id = player.facet(),
-                    name = player.user.person.name,
-                    text = form.cleaned_data['txt']
-                )
-                match.log_entry(entry)
-            except:
-                pass # simply drop the input
-        else:
-            pass # simply drop the input
-        return {} # never represent the form
+            context['txt'] = form.cleaned_data['txt']
+        return context

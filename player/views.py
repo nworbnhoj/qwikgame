@@ -112,11 +112,12 @@ class AcceptView(FeedView):
                 bid = Bid.objects.get(pk=accept)
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
+                bid.appeal.delete()
             decline = context.get('decline')
             if decline:
                 bid = Bid.objects.get(pk=decline_id)
                 bid.log_event('decline')
-            bid.delete()
+                bid.delete()
             return HttpResponseRedirect("/game/match/{}/".format(match.id))
         except:
             logger.exception(f'failed to process Bid: {context}')

@@ -141,8 +141,8 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="post">
-
                 <form action="{% url 'accept' appeal.pk %}" method="post">
 {% csrf_token %}
 {% for reply in replies %}

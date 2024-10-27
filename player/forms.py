@@ -31,30 +31,18 @@ class AcceptForm(QwikForm):
     # Returns a context dict including 'accept_form'
     @classmethod
     def post(klass, request_post, player):
-        context={'refresh_view': True}
         form = klass(data=request_post)
+        context = {
+            'accept_form': form,
+            'refresh_view': True,
+        }
         if form.is_valid():
-            try:
-                if 'accept' in request_post:
-                    accept_id = int(request_post['accept'])
-                    bid = Bid.objects.get(pk=accept_id)
-                    bid.log_event('accept')
-                    match = Match (accept=bid)
-                    match.save()
-                    match.competitors.add(bid.appeal.player, bid.rival)
-                    # TODO optimise with https://stackoverflow.com/questions/6996176/how-to-create-an-object-for-a-django-model-with-a-many-to-many-field
-                    match.log_event('scheduled', player)
-                    bid.delete()
-                    context={}
-                elif 'decline' in request_post:
-                    decline_id = int(request_post['decline'])
-                    bid = Bid.objects.get(pk=decline_id)
-                    bid.delete()
-            except:
-                # TODO log exception
-                pass
-        else:
-            pass
+            accept = request_post.get('accept')
+            if accept:
+                context['accept'] = int(accept)
+            decline = request_post.get('decline')
+            if decline:
+                context['decline'] = int(decline)
         return context
 
 

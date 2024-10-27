@@ -35,16 +35,24 @@ class Match(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __init__(self, *args, **kwargs):
-        if 'accept' in kwargs:
-            invite = kwargs.pop('accept')
-            kwargs['date']=invite.datetime()
-            kwargs['game']=invite.game()
-            kwargs['log']=invite.appeal.log.copy()
-            kwargs['venue']=invite.venue()
         super().__init__(*args, **kwargs)
 
     def __str__(self):
         return "{} {} {}".format(self.rivals, self.date, self.venue)
+
+    @classmethod
+    def from_bid(cls, bid):
+        appeal = bid.appeal
+        match = cls(
+            date = bid.datetime(),
+            game = bid.appeal.game,
+            log = bid.appeal.log.copy(),
+            venue = bid.appeal.venue,
+        )
+        match.save()
+        match.competitors.add(bid.appeal.player, bid.rival)
+        match.save()
+        return match
 
     def log_entry(self, entry):
         self.log.append(entry)

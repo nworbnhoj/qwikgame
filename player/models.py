@@ -130,7 +130,7 @@ class Appeal(models.Model):
         super().save(*args, **kwargs)
 
     # returns an aware datetime based in the venue timezone
-    def datetime(self, time=None):
+    def datetime(self, time=datetime.time(hour=0)):
         return self.venue.datetime(self.date, time)
 
     @property
@@ -166,7 +166,7 @@ class Appeal(models.Model):
                     self.hours24.as_str()
                 )
             case _:
-                entry['text'] = "unknown template"
+                logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
 
     # Compares the Appeal date and hours to the current datetime at the Venue
@@ -293,7 +293,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = "accepted {} with {}".format(self.hours24().as_str(), rival.name)
+                    text = f'accepted {self.hours24().as_str()} with {rival.name}'
                 )
             case 'bid':
                 person = self.rival.user.person
@@ -302,10 +302,20 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = rival.name,
-                    text = "accepted {}".format(self.hours24().as_str())
+                    text = f'accepted {self.hours24().as_str()}'
+                )
+            case 'decline':
+                player = self.appeal.player
+                person = player.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = player.facet(),
+                    klass= 'event',
+                    name = person.name,
+                    text = f'declined {self.hours24().as_str()} with {rival.name}'
                 )
             case _:
-                entry = Entry(text="unknown template")
+                logger.warn(f'unknown template: {template}')
         self.appeal.log_entry(entry)
 
     def save(self, *args, **kwargs):

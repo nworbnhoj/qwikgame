@@ -3,7 +3,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
-from game.models import Game
+from game.models import Game, Match
 from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, FiltersForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.constants import STRENGTH
@@ -106,7 +106,21 @@ class AcceptView(FeedView):
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
-        return HttpResponseRedirect("/game/match/{}/".format(kwargs['appeal']))
+        try:
+            accept = context.get('accept')
+            if accept:
+                bid = Bid.objects.get(pk=accept)
+                bid.log_event('accept')
+                match = Match.from_bid(bid)
+            decline = context.get('decline')
+            if decline:
+                bid = Bid.objects.get(pk=decline_id)
+                bid.log_event('decline')
+            bid.delete()
+            return HttpResponseRedirect("/game/match/{}/".format(match.id))
+        except:
+            logger.exception(f'failed to process Bid: {context}')
+        return HttpResponseRedirect("/player/feed/accept/{}/".format(bid.appeal.id))
 
 
 class BidView(FeedView):

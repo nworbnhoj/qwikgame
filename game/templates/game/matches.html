@@ -43,7 +43,7 @@
         </h2>
         <div class="group">
 {% for match in matches %}
-            <a class="button item" href="{% url 'chat' match=match.pk %}">
+            <a class="button item" href="{% url target match=match.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">

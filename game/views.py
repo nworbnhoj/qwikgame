@@ -16,61 +16,71 @@ logger = logging.getLogger(__file__)
 class MatchView(QwikView):
     template_name = 'game/matches.html'
 
-    def get(self, request, *args, **kwargs):
-        super().request_init(request)
-        player = self.user.player
-        matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
-        context = {
-            'schedule_tab': 'selected',
-            'matches': matches,
-        }
-        context |= super().context(request)
-        if context['small_screen']:
-            return render(request, self.template_name, context)
-        elif 'match' in kwargs:            
-            return HttpResponseRedirect("/game/match/{}/".format(kwargs['match']))
-        elif len(matches) > 0:
-            first_match_id = matches[0].pk
-            return HttpResponseRedirect("/game/match/{}/".format(first_match_id))
-        else:
-            return render(request, self.template_name, context)
-
-
-class ChatView(QwikView):
-    chat_form_class = ChatForm
-    template_name = 'game/match.html'
+    def _matches(self):
+        return Match.objects.filter(competitors__in=[self.user.player])
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         player = self.user.player
-        match_pk = kwargs['match']
-        match = Match.objects.get(pk=match_pk)
-        matches = Match.objects.filter(competitors__in=[player]).all().order_by('date')
-        prev_pk = matches.last().pk
-        next_pk = matches.first().pk
-        found = False
-        for m in matches:
-            if found:
-                next_pk = m.pk
-                break
-            if m.pk == match.pk:
-                found = True
-            else:
-                prev_pk = m.pk
-        match_log_start = len(match.log) + 1
-        for i, entry in enumerate(match.log):
-            if 'klass' in entry and 'scheduled' in entry['klass']:
-                match_log_start = i+1
-                break
+        matches = self._matches().all().order_by('date')
         self._context |= {
-            'match': match,
-            'match_log_start': match_log_start,
             'matches': matches,
-            'next': next_pk,
             'player_id': player.facet(),
-            'prev': prev_pk,
-            'schedule_tab': 'selected',
+            'target': 'chat',
         }
+        if matches.first():
+            match_pk = kwargs.get('match', matches.first().pk)
+            prev_pk = matches.last().pk
+            next_pk = matches.first().pk
+            found = False
+            for m in matches:
+                if found:
+                    next_pk = m.pk
+                    break
+                if m.pk == match_pk:
+                    found = True
+                else:
+                    prev_pk = m.pk
+            self._context |= {
+                'match': Match.objects.get(pk=match_pk),
+                'next': next_pk,
+                'prev': prev_pk,
+            }
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        if not kwargs.get('match'):
+            first_match = self._matches().all().order_by('date').first()
+            if first_match:
+                return HttpResponseRedirect(f'{request.path}{first_match.pk}/')
+            return render(request, self.template_name, context)
+
+
+class ReviewView(MatchView):
+    # chat_form_class = ChatForm
+    template_name = 'game/match.html'
+
+
+
+class ChatView(MatchView):
+    chat_form_class = ChatForm
+    template_name = 'game/match.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        player = self.user.player
+        match = context.get('match')
+        if match:
+            match_log_start = len(match.log) + 1
+            for i, entry in enumerate(match.log):
+                if 'klass' in entry and 'scheduled' in entry['klass']:
+                    match_log_start = i+1
+                    break
+            self._context |= {
+                'match_log_start': match_log_start,
+                'schedule_tab': 'selected',
+             }
         return self._context
 
     def get(self, request, *args, **kwargs):

@@ -119,19 +119,17 @@
 {% block detail %}
 {% if big_screen %}
     <div id="detail" class="detail">
-        <div class="splash">
-            <div class="pillar push_down">
-                <div class="push_down">
-                    Open an Invitation<br>or send a new one!
-                </div>
-                <div class="push_down">
-                    <a class="cta" href="{% url 'keen' %}">
-                        <i class="fa-solid fa-paper-plane fa-xl"></i>
-                        INVITE
-                    </a>
-                </div>
-            <div>
-        </div>
+        <div class="pillar push_down">
+            <div class="push_down">
+                Open an Invitation<br>or send a new one!
+            </div>
+            <div class="push_down">
+                <a class="cta" href="{% url 'keen' %}">
+                    <i class="fa-solid fa-paper-plane fa-xl"></i>
+                    INVITE
+                </a>
+            </div>
+        <div>
     </div>
 {% endif %}
 {% endblock detail %}

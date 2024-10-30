@@ -64,7 +64,7 @@ class Player(models.Model):
 
     def name(self):
         if self.user is not None:
-            return self.user.person
+            return self.user.person.name
         else:
             return self.facet()
 
@@ -329,11 +329,11 @@ class Bid(models.Model):
 
 class Opinion(models.Model):
     date = models.DateTimeField()
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    rival = models.ForeignKey('self', on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewer')
+    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewee')
 
     def __str__(self):
-        return "{} {}:{} {}".format(self.date, self.player, self.rival)
+        return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival}"
 
 
 class Conduct(models.Model):

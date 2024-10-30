@@ -169,6 +169,7 @@ div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }
 div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
 div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 4px; z-index: 1 }
+div.todo { display: none; border: 3px dotted SkyBlue }
 div.qwikgame { align-items: center; display: flex; flex-direction: row; font-size: 30px; font-family: AstroSpace; padding: 1em; }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }

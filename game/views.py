@@ -2,9 +2,10 @@ import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from game.forms import ChatForm
+from game.forms import ChatForm, ReviewForm
 from game.models import Game, Match
-from player.models import Player
+from player.models import Conduct, Opinion, Player, Strength
+from qwikgame.constants import STRENGTH
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry
@@ -58,9 +59,72 @@ class MatchView(QwikView):
 
 
 class ReviewView(MatchView):
-    # chat_form_class = ChatForm
-    template_name = 'game/match.html'
+    review_form_class = ReviewForm
+    template_name = 'game/review.html'
 
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        # TODO refine matches to unreviewed Matches
+        self._context |= {
+            'review_tab': 'selected',
+            'target': 'review',
+            }
+        return self._context
+
+    def _rivals(self, match):
+        if match:
+            player = self.user.player
+            competitors = match.competitors.all()
+            return {p.pk:'name' for p in competitors if p != player}
+        return {}
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        rivals = self._rivals(context.get('match'))
+        request.session['rivals'] = rivals
+        context |= self.review_form_class.get(rivals)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        rivals = request.session.get('rivals')
+        context = self.review_form_class.post(request.POST, rivals)
+        form = context.get('review_form')
+        if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
+        try:
+            match = Match.objects.get(pk=kwargs['match'])
+            player = self.user.player
+            rival_pk = context['rival']
+            logger.warn(match)
+            opinion = Opinion.objects.create(
+                date = match.date,
+                player = player,
+                rival = Player.objects.filter(pk=rival_pk).first()
+            )
+            Conduct.objects.create(
+                opinion=opinion,
+                good=context['conduct']
+            )
+            Strength.objects.create(
+                opinion=opinion,
+                relative=context['strength'],
+                weight=3
+            )
+            entry = Entry(
+                icon = player.user.person.icon,
+                id = player.facet(),
+                klass = 'chat',
+                name = player.user.person.name,
+                text = context.get('txt')
+            )
+            logger.warn(type(match))
+            match.log_entry(entry)
+        except:
+            logger.exception(f'failed opinion: {match} {context}')
+        return HttpResponseRedirect(f'/game/match/review/')
 
 
 class ChatView(MatchView):

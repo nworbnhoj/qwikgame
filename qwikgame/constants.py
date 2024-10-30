@@ -1,13 +1,13 @@
 
 ENDIAN = 'big'
 
-STRENGTH = [
-    ('W', 'much-weaker'),
-    ('w', 'weaker'),
-    ('m', 'matched'),
-    ('s', 'stronger'),
-    ('S', 'much-stonger')
-]
+STRENGTH = {
+    'W': 'much-weaker',
+    'w': 'weaker',
+    'm': 'matched',
+    's': 'stronger',
+    'S': 'much-stonger',
+}
 
 WEEK_DAYS = [
     ('SUNDAY'),

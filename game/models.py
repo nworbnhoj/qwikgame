@@ -38,7 +38,8 @@ class Match(models.Model):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return "{} {} {}".format(self.competitors, self.date, self.venue)
+        names = [player.name() for player in self.competitors.all()]
+        return f'{names} {self.date.strftime("%Y-%m-%d %H")}h {self.venue}'
 
     @classmethod
     def from_bid(cls, bid):
@@ -60,6 +61,16 @@ class Match(models.Model):
 
     def log_event(self, template):
         match template:
+            case 'reviewed':
+                player = self.appeal.player
+                person = player.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = player.facet(),
+                    klass= 'reviewed',
+                    name = person.name,
+                    text = f'reviewed'
+                )
             case 'scheduled':
                 player = self.appeal.player
                 person = player.user.person

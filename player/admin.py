@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from .models import Appeal, Bid, Filter, Friend, Opinion, Player, Precis, Strength
+from .models import Appeal, Bid, Conduct, Filter, Friend, Opinion, Player, Precis, Strength
 
 
 class AppealAdmin(admin.ModelAdmin):
@@ -11,6 +11,10 @@ class AppealAdmin(admin.ModelAdmin):
 class BidAdmin(admin.ModelAdmin):
     list_filter = ['appeal__game', 'appeal__venue__country', 'appeal__venue__admin1', 'appeal__venue__locality', 'appeal__venue']
     ordering = ['appeal__game']
+
+class ConductAdmin(admin.ModelAdmin):
+    list_filter = []
+    ordering = ['opinion__date']
 
 class FilterAdmin(admin.ModelAdmin):
     list_filter = ['active', 'place', 'game']
@@ -32,6 +36,7 @@ class PlayerAdmin(admin.ModelAdmin):
 
 admin.site.register(Appeal, AppealAdmin)
 admin.site.register(Bid, BidAdmin)
+admin.site.register(Conduct, ConductAdmin)
 admin.site.register(Filter, FilterAdmin)
 admin.site.register(Friend, FriendAdmin)
 admin.site.register(Opinion)

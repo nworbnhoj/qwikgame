@@ -1,0 +1,113 @@
+<!-- qwikgame/match/templates/game/review.html -->
+{% extends "game/matches.html" %}
+
+
+{% block title %}Match{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+        <div id="detail" class="detail">
+            <div class="detail_head">
+                <div class="icon round badge">{{ match.venue_hour_str }}h</div>
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
+                        </span>
+                        <p class="line">{{ match.game.name }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>{{ match.venue }}</p>
+                    </div>
+                </div>
+                <div class="drop_down icon head_more todo">
+                    <div class="button drop todo" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <div class="button thin">more 1</div>
+                        <div class="button thin">more 2</div>
+                        <div class="button thin">more 3</div>
+                    </div>
+                </div>
+                <a class="button naked head_back" href="{% url target match=prev %}">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </a>
+                <a class="button naked head_fwd" href="{% url target match=next %}">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </a>
+            </div>
+            <div class="post">
+            <h1>Review Match</h1>
+                <div class="post form">
+                    <form action="{% url target match=match.id %}" method="post">
+    {% csrf_token %}
+    {{ review_form }}
+                        <input class="button ctb push_down wide schedule_save" type="submit" value="SUBMIT">
+                    </form>
+                </div>
+            </div>
+            <div class="detail_rival todo">
+                <div class="rival_aberation">
+                    <div class="pillar todo">
+                        <i class="fa-solid fa-hat-cowboy fa-4x"></i>
+                        <p class="name">Pesho</p>
+                    </div>
+                    <div class="pole">
+                        <h2>REPUTATION</h2>
+                        <div class="radio_block rival_rate_grid">
+                            <label class="toggle wide">
+                                <input type="radio" name="all_week">
+                                <div class="button ctb auto">
+                                    <i class="fa-solid fa-thumbs-down fa-2x"></i>
+                                    <div class="post">
+                                        <p>Bad</p>
+                                        <p class="caption">Something was off</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="toggle wide">
+                                <input type="radio" name="all_week" checked="checked">
+                                <div class="button ctb auto">
+                                    <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                                    <div class="post">
+                                        <p>Good</p>
+                                        <p class="caption">Well mannered</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="pole">
+                    <h2>SKILL LEVEL</h2>
+                    <div class="slide_labels">
+                        <div class="slide_label invisible">Very weak</div>
+                        <div class="slide_label invisible">Weak</div>
+                        <div class="slide_label ">Well Matched</div>
+                        <div class="slide_label invisible">Strong</div>
+                        <div class="slide_label invisible">Very Strong</div>
+                    </div>
+                    <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
+                </div>
+                <div class="button cta push_down wide">
+                    <p>SUBMIT</p>
+                </div>
+            </div>
+{% endblock %}

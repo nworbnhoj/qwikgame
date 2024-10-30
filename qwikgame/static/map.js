@@ -731,7 +731,9 @@ function endowMark(key, mark){
   const K = key.split('|');
   mark.name = K[0];
   if(K.length === 4){  // venue Mark
-    mark.marker.setLabel(mark.size.toString());
+    size = mark.size.toString();
+    mark.marker.setLabel(size);
+    mark.marker.setTitle(mark.name+'\n'+size+' players');
     google.maps.event.addListener(mark.marker, 'click', () => {
       setPlace(mark.placeid, mark.name)
     });      

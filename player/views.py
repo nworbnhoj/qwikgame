@@ -250,7 +250,7 @@ class FilterView(FeedView):
         # add this Game to a Venue if required
         if game and venue and not(game in venue.games.all()):
             venue.games.add(game)
-            logger.info(f'Venue Game add: {game}')
+            logger.info(f'Venue add Game: {game}')
             venue.save()
             mark = Mark(game=game, place=place, size=1)
             mark.save()

@@ -226,7 +226,8 @@ function searchChangeHandler(places){
     const MARKER = new google.maps.Marker({
       label: '0',
       map: MAP,
-      position: place.geometry.location
+      position: place.geometry.location,
+      title: place.name+'\nnew qwikgame venue'
     });
     
     SEARCH_MARKERS.push(MARKER);

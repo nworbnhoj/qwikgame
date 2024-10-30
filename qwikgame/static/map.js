@@ -224,15 +224,15 @@ function searchChangeHandler(places){
     if (!place.geometry) { return; }
     
     const MARKER = new google.maps.Marker({
+      label: '0',
       map: MAP,
-      icon: PLACE_ICON,
       position: place.geometry.location
     });
     
     SEARCH_MARKERS.push(MARKER);
         
     google.maps.event.addListener(MARKER, 'click', () => {
-      clickSearchMarker(place);
+      setPlace(place.place_id, place.name)
     });    
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
@@ -247,7 +247,7 @@ function searchChangeHandler(places){
 
 function clickHandler(event){
   if (event.placeId) {
-    clickPOI(event.placeId, event.latLng);
+    requestPlace(event.placeId)
     event.stop();
   }
 }
@@ -256,77 +256,6 @@ function clickHandler(event){
 function changeGame(){
   clearMarks();
   fetchMarks(game(), mapCenterIdle, null, '');
-}
-
-
-function clickMarker(mark, link=true, stat='players:'){
-  const INFOWINDOW = qwikInfowindow;
-  const MAP = qwikMap;
-  MAP.panTo(mark.marker.getPosition());
-  const TEMPLATE = document.getElementById("infowindow-mark");
-  const FRAG = TEMPLATE.content.cloneNode(true);
-  let element = null;
-  let junk = null;
-  if (link){
-    element = FRAG.getElementById("map-mark-info-link");
-    element.href = "";
-    element.addEventListener('click', (event) => {
-      setPlace(event);
-    });
-    junk = FRAG.getElementById("map-mark-info-name");
-  } else {
-    element = FRAG.getElementById("map-mark-info-name");
-    junk = FRAG.getElementById("map-mark-info-link");
-  }
-  junk.parentNode.removeChild(junk);
-  element.textContent = mark.name;
-  element.setAttribute('placeid', mark.placeid)
-  element.setAttribute('placename', mark.name)
-
-  FRAG.getElementById("map-mark-info-stat").textContent=stat;
-  FRAG.getElementById("map-mark-info-val").textContent=mark.size+'';
-
-  INFOWINDOW.setOptions({
-    content: FRAG.firstElementChild,
-    position: mark.center,
-    pixelOffset: new google.maps.Size(0,-30)
-  });
-  INFOWINDOW.open(MAP);
-}
-
-
-
-function clickSearchMarker(place){
-  const MAP = qwikMap;
-  MAP.panTo(place.geometry.location);
-  showInfowindowPlace(place);
-}
-
-
-function clickPOI(placeId, latLng){
-  const MAP = qwikMap;
-  MAP.panTo(latLng);
-  showInfowindowPlaceId(placeId);
-}
-
-
-function showInfowindowPlace(place){
-  const MAP = qwikMap;
-  const INFOWINDOW = qwikInfowindow;
-  const TEMPLATE = document.getElementById("infowindow-poi");
-  const FRAG = TEMPLATE.content.cloneNode(true);
-
-  FRAG.getElementById("poi-name").textContent = place.name;
-  const LINK = FRAG.getElementById("poi-link");
-  LINK.setAttribute("placeid", place.place_id);
-  LINK.setAttribute("placename", place.name);
-  LINK.setAttribute("vid", vid(place.address_components, place.name));
-  INFOWINDOW.setOptions({
-    content: FRAG.firstElementChild,
-    position: place.geometry.location,
-    pixelOffset: new google.maps.Size(0,-24)
-  });
-  INFOWINDOW.open(MAP);
 }
 
 
@@ -349,38 +278,35 @@ function vid(address_components, name){
 }
 
 
-function showInfowindowPlaceId(placeId){
+function requestPlace(placeId){
   const MAP = qwikMap;   
   const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
   const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
-      showInfowindowPlace(place);
+      setPlace(place.place_id, place.name);
     } else {
       console.log(status);
     }
   });
 }
 
-function setPlace(event){
-  event.preventDefault();
-  PLACEID = event.target.getAttribute("placeid");
+function setPlace(placeid, place_name){
   const PLACE_SELECT = document.getElementById('id_place');
-  const EXISTS = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
+  const EXISTS = PLACE_SELECT.querySelector("[value='"+placeid+"']")
   if (EXISTS){
-    setPlaceOption(PLACEID)
+    setPlaceOption(placeid)
   } else {
     // rename the temporary placeid option in the place drop-down field
     let input = PLACE_SELECT.querySelector("[value='placeid']");
     let label =  input.parentElement;
-    const PLACE_NAME = event.target.getAttribute("placename");
-    label.textContent = PLACE_NAME; // removes inner <input>
+    label.textContent = place_name; // removes inner <input>
     label.appendChild(input) // re-add inner <input>
-    input.setAttribute('data-placeid', PLACEID);
+    input.setAttribute('data-placeid', placeid);
     setPlaceOption('placeid')
     // populate the placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');
-    PLACEID_INPUT.value = PLACEID;
+    PLACEID_INPUT.value = placeid;
   }
 }
 
@@ -393,6 +319,8 @@ function setPlaceOption(placeid='placeid'){
       "bubbles": true,
       "cancelable": false
     }));
+  } else {
+    console.log("failed to find input[value='placeid']")
   }
   showMap(false);
 }
@@ -803,16 +731,16 @@ function endowMark(key, mark){
   const K = key.split('|');
   mark.name = K[0];
   if(K.length === 4){  // venue Mark
-    mark.marker.setIcon(VENUE_ICON);
+    mark.marker.setLabel(mark.size.toString());
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickMarker(mark, INFOWINDOW_VENUE_LINK, 'players:');
+      setPlace(mark.placeid, mark.name)
     });      
   } else {  // metaMark
     mark.marker.setIcon(REGION_ICON);
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     google.maps.event.addListener(mark.marker, 'click', () => {
-      clickMarker(mark, INFOWINDOW_REGION_LINK, 'venues:');
+      setPlace(mark.placeid, mark.name)
     }); 
   }
   return mark;

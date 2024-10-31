@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from game.forms import ChatForm, ReviewForm
 from game.models import Game, Match
-from player.models import Conduct, Opinion, Player, Strength
+from player.models import Opinion, Player, Strength
 from qwikgame.constants import STRENGTH
 from qwikgame.views import QwikView
 from venue.models import Venue
@@ -104,10 +104,8 @@ class ReviewView(MatchView):
                 player = player,
                 rival = Player.objects.filter(pk=rival_pk).first()
             )
-            Conduct.objects.create(
-                opinion=opinion,
-                good=context['conduct']
-            )
+            player.conduct_add(context['conduct'])
+            player.save()
             Strength.objects.create(
                 opinion=opinion,
                 relative=context['strength'],

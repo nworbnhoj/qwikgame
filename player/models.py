@@ -3,7 +3,7 @@ import hashlib, pytz
 from authenticate.models import User
 from django.db import models
 from pytz import datetime
-from qwikgame.constants import STRENGTH, WEEK_DAYS
+from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, WEEK_NONE
 from qwikgame.log import Entry
 from venue.models import Place, Venue
@@ -12,12 +12,41 @@ from venue.models import Place, Venue
 logger = logging.getLogger(__file__)
 
 
+INIT_CONDUCT = b'\x00\xff\xff'
+
+
 class Player(models.Model):
     blocked = models.ManyToManyField('self', blank=True)
+    # conduct is a bitfield representing a timeseries of good/bad Player reviews
+    conduct = models.BinaryField(default=INIT_CONDUCT)
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    # add a Player conduct review to the least significant bit
+    def conduct_add(self, good=True):
+        conduct = int.from_bytes(self.conduct, ENDIAN)
+        conduct = (conduct << 1) | int(good)
+        self.conduct = conduct.to_bytes(3, ENDIAN)
+
+    # return a string of dip switches representing Player conduct with the most
+    # recent on the right.
+    def conduct_dips(self):
+        dips = ''
+        conduct = int.from_bytes(self.conduct, ENDIAN)
+        for b in range(0,24):
+            dips += ('·' if (conduct & 1) else '.')
+            conduct = conduct >> 1
+        return dips[::-1]
+
+    # return a float [0.0,1.0] representing the fracton of good Player conduct reviews
+    # span int [1,24] limits the range of the calculated fraction
+    def conduct_fraction(self, span=24):
+        span = max(1, min(span, 24))
+        mask = 2 ** span - 1
+        conduct = int.from_bytes(self.conduct, ENDIAN)
+        return (conduct & mask).bit_count() / span
 
     def facet(self):
         return self.email_hash[:3].upper()
@@ -334,14 +363,6 @@ class Opinion(models.Model):
 
     def __str__(self):
         return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival}"
-
-
-class Conduct(models.Model):
-    opinion = models.ForeignKey(Opinion, on_delete=models.CASCADE)
-    good = models.BooleanField()
-
-    def __str__(self):
-        return "{}: {}".format(self.opinion, self.good)
 
 
 class Precis(models.Model):

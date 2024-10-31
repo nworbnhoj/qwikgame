@@ -65,7 +65,7 @@ class Match(models.Model):
     def log_event(self, template):
         match template:
             case 'scheduled':
-                player = self.appeal.player
+                player = self.competitors.first()
                 person = player.user.person
                 entry = Entry(
                     icon = person.icon,

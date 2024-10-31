@@ -64,9 +64,9 @@
 {% for entry in match.log %}
     {% if forloop.counter < match_log_start %}
         {% if entry.id == player_id %}
-                <div class="log_entry align_start {{ entry.klass }}">
-        {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
+        {% else %}
+                <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
                     <div class="button icon todo">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>
@@ -105,9 +105,9 @@
 {% for entry in match.log %}
     {% if forloop.counter > match_log_start %}
         {% if entry.id == player_id %}
-                <div class="log_entry align_start {{ entry.klass }}">
-        {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
+        {% else %}
+                <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
                     <div class="button icon todo">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>

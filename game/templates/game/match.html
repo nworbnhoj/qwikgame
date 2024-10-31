@@ -53,10 +53,13 @@
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
-            <h2 class="show_group">
-                History
-                <span>▼</span>
-            </h2>
+            <div class="banner pillar">
+                <p>Match is scheduled!</p>
+                <p>{{ match.game }}, {{ match.venue }}, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
+            </div>
+            <div class="icon align_center todo">
+                <i class="fa-solid fa-hat-cowboy fa-3x"></i>
+            </div>
             <div class="post group hidden">
 {% for entry in match.log %}
     {% if forloop.counter < match_log_start %}
@@ -94,18 +97,10 @@
                     </div>
                 </div>
             </div>
-            <div class="button link toggle_previous_sibling align_center todo">
+            <div class="button link toggle_previous_sibling align_center">
                 <span class="tog">Show invitation history</span>
                 <span class="tog hidden">Hide invitation history</span>
-            </div>
-            <div class="banner pillar">
-                <p>Match is scheduled!</p>
-                <p>{{ match.game }}, {{ match.venue }}, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
-            </div>
-            <div class="icon align_center todo">
-                <i class="fa-solid fa-hat-cowboy fa-3x"></i>
-            </div>
-
+            </div>  
             <div class="post">
 {% for entry in match.log %}
     {% if forloop.counter > match_log_start %}

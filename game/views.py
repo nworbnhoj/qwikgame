@@ -1,4 +1,5 @@
-import logging
+import logging, pytz
+from datetime import datetime, timedelta
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -25,8 +26,10 @@ class MatchesView(QwikView):
         super().context(request, *args, **kwargs)
         player = self.user.player
         matches = self._matches().all().order_by('date')
+        now = datetime.now(pytz.utc) + timedelta(minutes=10)
         self._context |= {
-            'matches': matches,
+            'matches_future': matches.filter(date__gt=now),
+            'matches_past': matches.filter(date__lte=now),
             'player_id': player.facet(),
             'target': 'match',
         }

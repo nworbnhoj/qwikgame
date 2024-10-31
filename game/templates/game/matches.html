@@ -14,7 +14,7 @@
 {% block list %}
     <div id="list_bar" class="list_bar post">
         <div class="list_bar_head">
-            <h1>Sheduled Matches</h1> 
+            <h1>Matches</h1> 
             <div class="drop_down todo">
                 <div class="button drop" data-down="false">
                     <div>Group by</div>
@@ -42,7 +42,7 @@
             <span>▲</span>
         </h2>
         <div class="group">
-{% for match in matches %}
+{% for match in matches_future %}
             <a class="button item" href="{% url target match=match.pk %}">
                 <div class="pole notes">
                     <div class="note">
@@ -68,14 +68,41 @@
                     <div class="icon round badge">{{ match.venue_hour_str }}h</div>
                 </div>
             </a>
+{% empty %}
+           <p>No pending Matches</p>
 {% endfor %}
         </div>
-        <h2 class="show_group todo">
+        <h2 class="show_group">
             History
             <span>▲</span>
         </h2>
-        <div class="group hidden">
+        <div class="group">
+{% for match in matches_past %}
+            <a class="button item" href="{% url target match=match.pk %}">
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="{{ match.game.icon }} fa-1x"></i>
+                        </span>
+                        <p class="line">{{ match.game }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>{{ match.venue_date_str }} {{ match.venue_hour_str }}h</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>{{ match.venue}}</p>
+                    </div>
+                </div>
+            </a>
+{% empty %}
             <p>No history yet!</p>
+{% endfor %}
         </div>
     </div>
 {% endblock %}

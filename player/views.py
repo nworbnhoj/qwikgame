@@ -198,7 +198,7 @@ class BidView(FeedView):
             )
         bid.save()
         bid.log_event('bid')
-        return HttpResponseRedirect("/player/feed")
+        return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
 class FilterView(FeedView):

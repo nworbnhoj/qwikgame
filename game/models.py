@@ -31,6 +31,7 @@ class Game(models.Model):
 
 
 class Match(models.Model):
+    complete = models.BooleanField(default=False)
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)

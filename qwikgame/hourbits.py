@@ -66,12 +66,6 @@ class Hours24():
     def __str__(self):
     	return self.as_str()
 
-    def as_bumps(self):
-        bumps = ''
-        for b in self.as_bools():
-            bumps += ("'" if b else ",")
-        return bumps
-
     def as_bytes(self):
         return self.bits
 
@@ -145,6 +139,16 @@ class Hours24():
         i = self.as_int()
         lsb = (i & -i) # least significant bit
         return lsb.bit_length()-1
+
+    # return a string of dip switches representing the active hours.
+    @property    
+    def to_dips(self):
+        dips = ''
+        hours = self.as_int()
+        for h in range(0,24):
+            dips += ('·' if (hours & 1) else '.')
+            hours = hours >> 1
+        return dips[::-1]
 
 
 # represents 24*7 hours in 21 bytes

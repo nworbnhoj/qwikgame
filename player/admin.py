@@ -10,6 +10,7 @@ class AppealAdmin(admin.ModelAdmin):
     ordering = ['game']
 
 class BidAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'hour_dips']
     list_filter = ['appeal__game', 'appeal__venue__country', 'appeal__venue__admin1', 'appeal__venue__locality', 'appeal__venue']
     ordering = ['appeal__game']
 

@@ -153,7 +153,7 @@ class Appeal(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {} {} {}".format(self.player, self.game, self.venue, self.date, Hours24(self.hours).as_bumps())
+        return "{} {} {} {}".format(self.player, self.game, self.venue, self.date)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -168,6 +168,9 @@ class Appeal(models.Model):
 
     def hour_choices(self):
         return self.hours24.as_choices()
+
+    def hour_dips(self):
+        return self.hours24.to_dips
 
     @property
     def last_hour(self):
@@ -282,7 +285,7 @@ class Bid(models.Model):
     strength = models.CharField(max_length=1, choices=STRENGTH)
 
     def __str__(self):
-        return "{} {} {} {}".format(self.rival, self.appeal.game, self.appeal.venue, Hours24(self.hours).as_bumps())
+        return "{} {} {}".format(self.rival, self.appeal.game, self.appeal.venue)
 
     def accepted(self):
         return self.hours is not None
@@ -310,6 +313,9 @@ class Bid(models.Model):
 
     def hour_choices(self):
         return self.appeal.hours24x7().as_choices()
+
+    def hour_dips(self):
+        return self.hours24.to_dips
 
     def log_event(self, template):
         rival = self.rival.user.person

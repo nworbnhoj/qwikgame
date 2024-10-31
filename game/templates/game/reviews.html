@@ -1,0 +1,73 @@
+<!-- qwikgame/game/templates/game/reviews.html -->
+{% extends "content.html" %}
+
+
+{% block title %}Review{% endblock %}
+
+
+{% block cta_mobile %}{% endblock %}
+
+
+{% block cta_desktop %}{% endblock %}
+
+
+{% block list %}
+    <div id="list_bar" class="list_bar post">
+        <div class="list_bar_head">
+            <h1>Match Reviews</h1> 
+            <div class="drop_down todo">
+                <div class="button drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat" aria-hidden="true">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        date
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        venue
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="group">
+{% for review in reviews %}
+            <a class="button item" href="{% url target review=review.pk %}">
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="{{ review.match.game.icon }} fa-1x"></i>
+                        </span>
+                        <p class="line">{{ review.match.game }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        <p>{{ review.match.venue_date_str }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>{{ review.match.venue}}</p>
+                    </div>
+                </div>
+                <div class="pole badges">
+                    <div class="icon round badge">{{ review.match.venue_hour_str }}h</div>
+                </div>
+            </a>
+{% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block detail %}{% endblock %}

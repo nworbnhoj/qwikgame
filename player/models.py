@@ -362,15 +362,6 @@ class Bid(models.Model):
         return self.appeal.venue
 
 
-class Opinion(models.Model):
-    date = models.DateTimeField()
-    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewer')
-    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewee')
-
-    def __str__(self):
-        return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival}"
-
-
 class Precis(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
@@ -384,9 +375,11 @@ class Precis(models.Model):
 
 
 class Strength(models.Model):
-    opinion = models.ForeignKey(Opinion, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='basis')
+    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='relative')
     relative = models.CharField(max_length=1, choices=STRENGTH)
     weight = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return "{} : {} {}".format(self.opinion, self.relative, self.weight)
+        return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival} {self.relative} {self.weight}"

@@ -45,14 +45,14 @@ class ReviewForm(QwikForm):
     conduct = ChoiceField(
         choices = {'good':'good', 'bad':'bad'},
         initial = 'good',
-        label = 'CONDUCT',
+        label = 'RIVAL CONDUCT',
         required = True,
         widget = RadioSelect,
     )
     strength = ChoiceField(
         choices = STRENGTH,
         initial = STRENGTH.get('m'),
-        label = 'SKILL LEVEL',
+        label = 'RIVAL SKILL LEVEL',
         required = True,
         widget = RadioSelect,
     )

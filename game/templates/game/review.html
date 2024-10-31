@@ -1,8 +1,8 @@
 <!-- qwikgame/match/templates/game/review.html -->
-{% extends "game/matches.html" %}
+{% extends "game/reviews.html" %}
 
 
-{% block title %}Match{% endblock %}
+{% block title %}Review{% endblock %}
 
     
 {% block list_bar %}
@@ -15,25 +15,25 @@
 {% block detail %}
         <div id="detail" class="detail">
             <div class="detail_head">
-                <div class="icon round badge">{{ match.venue_hour_str }}h</div>
+                <div class="icon round badge">{{ review.match.venue_hour_str }}h</div>
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-face-sad-tear fa-1x"></i>
                         </span>
-                        <p class="line">{{ match.game.name }}</p>
+                        <p class="line">{{ review.match.game.name }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
+                        <p>{{ review.match.venue_date_str }}, {{ review.match.venue_hour_str }}h</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ match.venue }}</p>
+                        <p>{{ mreview.atch.venue }}</p>
                     </div>
                 </div>
                 <div class="drop_down icon head_more todo">
@@ -46,17 +46,17 @@
                         <div class="button thin">more 3</div>
                     </div>
                 </div>
-                <a class="button naked head_back" href="{% url target match=prev %}">
+                <a class="button naked head_back" href="{% url target review=prev %}">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
                 </a>
-                <a class="button naked head_fwd" href="{% url target match=next %}">
+                <a class="button naked head_fwd" href="{% url target review=next %}">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
             <div class="post">
             <h1>Review Match</h1>
                 <div class="post form">
-                    <form action="{% url target match=match.id %}" method="post">
+                    <form action="{% url target review=review.id %}" method="post">
     {% csrf_token %}
     {{ review_form }}
                         <input class="button ctb push_down wide schedule_save" type="submit" value="SUBMIT">

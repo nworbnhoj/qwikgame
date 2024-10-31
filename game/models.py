@@ -1,7 +1,10 @@
+import logging
 from django.db import models
 from player.models import Appeal, Player
 from qwikgame.log import Entry
 from venue.models import Venue
+
+logger = logging.getLogger(__file__)
 
 
 class Game(models.Model):
@@ -39,7 +42,7 @@ class Match(models.Model):
 
     def __str__(self):
         names = [player.name() for player in self.competitors.all()]
-        return f'{names} {self.date.strftime("%Y-%m-%d %H")}h {self.venue}'
+        return f'{self.game} {names} {self.date.strftime("%Y-%m-%d %H")}h {self.venue}'
 
     @classmethod
     def from_bid(cls, bid):
@@ -61,16 +64,6 @@ class Match(models.Model):
 
     def log_event(self, template):
         match template:
-            case 'reviewed':
-                player = self.appeal.player
-                person = player.user.person
-                entry = Entry(
-                    icon = person.icon,
-                    id = player.facet(),
-                    klass= 'reviewed',
-                    name = person.name,
-                    text = f'reviewed'
-                )
             case 'scheduled':
                 player = self.appeal.player
                 person = player.user.person
@@ -95,3 +88,29 @@ class Match(models.Model):
 
     def _venue_time(self):
         return self.date.astimezone(self.venue.tzinfo())
+
+
+class Review(models.Model):
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewer')
+    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='reviewee')
+
+    def __str__(self):
+        return f"{self.player}: {self.rival} {self.match}"
+
+    def log_event(self, template):
+        logger.warn('log_event()')
+        match template:
+            case 'review':
+                player = self.player
+                person = self.player.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = self.player.facet(),
+                    klass= 'reviewed',
+                    name = person.name,
+                    text = f'reviewed {self.rival}'
+                )
+            case _:
+                logger.warn(f'unknown template: {template}')
+        self.match.log_entry(entry)

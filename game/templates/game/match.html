@@ -121,15 +121,15 @@
 {% endfor %}
 
             </div>
-            <form action="{% url 'chat' match=match.pk %}" method="post">
+            <form action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}
                 <div class="chat_input">
                     <div class="button">
                         <i class="fa-regular fa-face-smile fa-xl"></i>
                     </div>
-                    {{ chat_form }}
+                    {{ match_form }}
                     <label class="round sml">
-                        <input hidden type="submit" name='chat'>
+                        <input hidden type="submit" name='match'>
                         <i class="fa-solid fa-paper-plane fa-xl"></i>
                     </label>
                 </div>

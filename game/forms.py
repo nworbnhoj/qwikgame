@@ -14,28 +14,28 @@ from qwikgame.widgets import IconSelectMultiple
 logger = logging.getLogger(__file__)
 
 
-class ChatForm(QwikForm):
+class MatchForm(QwikForm):
     txt = CharField(
         required = True,
         template_name = 'field_naked.html' #'input_chat.html'
     )
 
     # Initializes a ChatForm for a 'match'.
-    # Returns a context dict including 'chat_form'
+    # Returns a context dict including 'match_form'
     @classmethod
     def get(klass):
         form = klass()
         form.fields['txt'].widget.attrs = { 'placeholder': 'Chat here with your rival'}
         return {
-            'chat_form': form,
+            'match_form': form,
         }
 
     # Initializes an ChatForm for 'match'.
-    # Returns a context dict including 'chat_form'
+    # Returns a context dict including 'match_form'
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = { 'chat_form': form }
+        context = { 'match_form': form }
         if form.is_valid():
             context['txt'] = form.cleaned_data['txt']
         return context

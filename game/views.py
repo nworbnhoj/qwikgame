@@ -2,7 +2,7 @@ import logging
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
-from game.forms import ChatForm, ReviewForm
+from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match
 from player.models import Opinion, Player, Strength
 from qwikgame.constants import STRENGTH
@@ -14,7 +14,7 @@ from qwikgame.views import QwikView
 logger = logging.getLogger(__file__)
 
 
-class MatchView(QwikView):
+class MatchesView(QwikView):
     template_name = 'game/matches.html'
 
     def _matches(self):
@@ -27,7 +27,7 @@ class MatchView(QwikView):
         self._context |= {
             'matches': matches,
             'player_id': player.facet(),
-            'target': 'chat',
+            'target': 'match',
         }
         if matches.first():
             match_pk = kwargs.get('match', matches.first().pk)
@@ -58,7 +58,7 @@ class MatchView(QwikView):
             return render(request, self.template_name, context)
 
 
-class ReviewView(MatchView):
+class ReviewView(MatchesView):
     review_form_class = ReviewForm
     template_name = 'game/review.html'
 
@@ -125,8 +125,8 @@ class ReviewView(MatchView):
         return HttpResponseRedirect(f'/game/match/review/')
 
 
-class ChatView(MatchView):
-    chat_form_class = ChatForm
+class MatchView(MatchesView):
+    match_form_class = MatchForm
     template_name = 'game/match.html'
 
     def context(self, request, *args, **kwargs):
@@ -148,13 +148,13 @@ class ChatView(MatchView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        context |= self.chat_form_class.get()
+        context |= self.match_form_class.get()
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         match_pk = kwargs['match']
-        context = self.chat_form_class.post(request.POST)
+        context = self.match_form_class.post(request.POST)
         form = context.get('chat_form')
         if form and not form.is_valid():
             return render(request, self.template_name, context)

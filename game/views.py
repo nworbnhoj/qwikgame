@@ -51,6 +51,9 @@ class MatchesView(QwikView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        if context['small_screen']:
+            return render(request, self.template_name, context)
         if not kwargs.get('match'):
             first_match = self._matches().all().order_by('date').first()
             if first_match:

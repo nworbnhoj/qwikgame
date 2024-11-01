@@ -19,38 +19,19 @@ logger = logging.getLogger(__file__)
 class MatchesView(QwikView):
     template_name = 'game/matches.html'
 
-    def _matches(self):
-        return Match.objects.filter(competitors__in=[self.user.player])
-
     def context(self, request, *args, **kwargs):
+        kwargs['pk'] = kwargs.get('match')
+        kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player])
         super().context(request, *args, **kwargs)
-        player = self.user.player
-        matches = self._matches().all().order_by('date')
+        self._context['matches'] = self._context['items'].order_by('date')
         now = datetime.now(pytz.utc) + timedelta(minutes=10)
         self._context |= {
-            'matches_future': matches.filter(date__gt=now),
-            'matches_past': matches.filter(date__lte=now),
-            'player_id': player.facet(),
+            'match': self._context['item'],
+            'matches_future': self._context['items'].filter(date__gt=now),
+            'matches_past': self._context['items'].filter(date__lte=now),
+            'player_id': self.user.player.facet(),
             'target': 'match',
         }
-        if matches.first():
-            match_pk = kwargs.get('match', matches.first().pk)
-            prev_pk = matches.last().pk
-            next_pk = matches.first().pk
-            found = False
-            for m in matches:
-                if found:
-                    next_pk = m.pk
-                    break
-                if m.pk == match_pk:
-                    found = True
-                else:
-                    prev_pk = m.pk
-            self._context |= {
-                'match': Match.objects.get(pk=match_pk),
-                'next': next_pk,
-                'prev': prev_pk,
-            }
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -59,7 +40,7 @@ class MatchesView(QwikView):
         if context['small_screen']:
             return render(request, self.template_name, context)
         if not kwargs.get('match'):
-            first_match = self._matches().all().order_by('date').first()
+            first_match = self._context['matches'].first()
             if first_match:
                 return HttpResponseRedirect(f'{request.path}{first_match.pk}/')
             return render(request, self.template_name, context)
@@ -122,32 +103,15 @@ class ReviewsView(QwikView):
         return Review.objects.filter(player=self.user.player)
 
     def context(self, request, *args, **kwargs):
+        kwargs['pk'] = kwargs.get('refiew')
+        kwargs['items'] = Review.objects.filter(player=self.user.player)
         super().context(request, *args, **kwargs)
-        player = self.user.player
-        reviews = self._reviews().all().order_by('match__date')
         self._context |= {
-            'reviews': reviews,
-            'player_id': player.facet(),
+            'review': self._context['item'],
+            'reviews': self._context['items'].order_by('match__date'),
+            'player_id': self.user.player.facet(),
             'target': 'review',
         }
-        if reviews.first():
-            review_pk = kwargs.get('review', reviews.first().pk)
-            prev_pk = reviews.last().pk
-            next_pk = reviews.first().pk
-            found = False
-            for r in reviews:
-                if found:
-                    next_pk = r.pk
-                    break
-                if r.pk == review_pk:
-                    found = True
-                else:
-                    prev_pk = r.pk
-            self._context |= {
-                'review': Review.objects.get(pk=review_pk),
-                'next': next_pk,
-                'prev': prev_pk,
-            }
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -156,7 +120,7 @@ class ReviewsView(QwikView):
         if context['small_screen']:
             return render(request, self.template_name, context)
         if not kwargs.get('review'):
-            first_review = self._reviews().all().order_by('match__date').first()
+            first_review = self._context['reviews'].first()
             if first_review:
                 return HttpResponseRedirect(f'{request.path}{first_review.pk}/')
             return render(request, self.template_name, context)

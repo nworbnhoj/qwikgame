@@ -1,9 +1,13 @@
+import logging
 from authenticate.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views import View
+
+
+logger = logging.getLogger(__file__)
 
 
 class BaseView(View):
@@ -55,7 +59,29 @@ class QwikView(BaseView):
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
+        items = kwargs.get('items')
+        item_pk = kwargs.get('pk')
+        if items and items.first():
+            if not item_pk:
+                item_pk = items.first().pk
+            prev_pk = items.last().pk
+            next_pk = items.first().pk
+            found = False
+            for i in items:
+                if found:
+                    next_pk = i.pk
+                    break
+                if i.pk == item_pk:
+                    found = True
+                else:
+                    prev_pk = i.pk
+            self._context |= {
+                'item': items.filter(pk=item_pk).first(),
+                'next': next_pk,
+                'prev': prev_pk,
+            }
         self._context |= {
+            'items': items,
             'person_icon': self.user.person.icon,
             'person_name': self.user.person.name,
         }

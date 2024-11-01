@@ -46,10 +46,10 @@
                         <div class="button thin">more 3</div>
                     </div>
                 </div>
-                <a class="button naked head_back" href="/game/match/{{ prev }}/">
+                <a class="button naked head_back" href="{% url 'match' match=prev %}">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
                 </a>
-                <a class="button naked head_fwd" href="/game/match/{{ next }}/">
+                <a class="button naked head_fwd" href="{% url 'match' match=next %}">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>

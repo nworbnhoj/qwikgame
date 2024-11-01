@@ -60,7 +60,9 @@ class MatchView(MatchesView):
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
                     break
+            now = datetime.now(pytz.utc)
             self._context |= {
+                'enable_banner': now < match.date + timedelta(minutes=10),
                 'match_log_start': match_log_start,
                 'schedule_tab': 'selected',
              }

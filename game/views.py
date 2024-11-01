@@ -63,6 +63,7 @@ class MatchView(MatchesView):
             now = datetime.now(pytz.utc)
             self._context |= {
                 'enable_banner': now < match.date + timedelta(minutes=10),
+                'enable_chat': now < match.date + timedelta(hours=24),
                 'match_log_start': match_log_start,
                 'schedule_tab': 'selected',
              }

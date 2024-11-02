@@ -377,6 +377,7 @@ class Precis(models.Model):
 
 class Strength(models.Model):
     date = models.DateTimeField()
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='basis')
     rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='relative')
     relative = models.CharField(max_length=1, choices=STRENGTH)

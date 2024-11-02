@@ -1,6 +1,6 @@
 import datetime, logging
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
+from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
@@ -270,6 +270,34 @@ class FiltersForm(QwikForm):
         return context
 
 
+class FriendAddForm(QwikForm):
+    email = EmailField(
+        label = "Friend's email address",
+        max_length=255,
+        required = True,
+    )
+    name = CharField(
+        max_length=32,
+        required=False,
+    )
+
+    @classmethod
+    def get(klass):
+        form = klass()  
+        form.fields['email'].widget.attrs = { 'placeholder': 'Type email address'}
+        form.fields['name'].widget.attrs = { 'placeholder': 'A screen name for your friend (optional)'}
+        return { 'friend_form' : form, }
+
+    @classmethod
+    def post(klass, request_post):
+        form = klass(data=request_post)
+        context = {'friend_form': form}
+        if form.is_valid():
+            context={
+                'email': form.cleaned_data['email'],
+                'name': form.cleaned_data['name']
+            }
+        return context
 class KeenForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),

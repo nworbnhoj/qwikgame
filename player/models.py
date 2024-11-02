@@ -24,6 +24,10 @@ class Player(models.Model):
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
 
+    @classmethod
+    def hash(cls, text):
+        return hashlib.md5(text.encode()).hexdigest()
+
     # add a Player conduct review to the least significant bit
     def conduct_add(self, good=True):
         conduct = int.from_bytes(self.conduct, ENDIAN)
@@ -121,7 +125,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):
         if self.user is not None:
-            self.email_hash = hashlib.md5(self.user.email.encode()).hexdigest()
+            self.email_hash = Player.hash(self.user.email)
         super().save(*args, **kwargs)
 
     def venue_choices(self):
@@ -276,7 +280,7 @@ class Friend(models.Model):
     strengths = models.ManyToManyField('player.Strength')
 
     def __str__(self):
-        return "{}:{}".format(self.player, self.rival)
+        return "{} knows {}".format(self.player, self.rival)
 
 
 class Bid(models.Model):

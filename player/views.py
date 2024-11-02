@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from game.models import Game, Match
-from player.forms import AcceptForm, FilterForm, KeenForm, BidForm, FiltersForm
+from player.forms import AcceptForm, FilterForm, FriendAddForm, KeenForm, BidForm, FiltersForm
 from player.models import Appeal, Bid, Filter, Friend
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
@@ -434,3 +434,56 @@ class RivalView(FeedView):
         context = super().context(request, *args, **kwargs)
         context |= { 'rate_tab': 'selected' }
         return render(request, "player/rival.html", context)
+
+
+class FriendsView(QwikView):
+    friend_add_form_class = FriendAddForm
+    template_name = 'player/friends.html'
+
+    def context(self, request, *args, **kwargs):        
+        kwargs['items'] = Friend.objects.filter(player=self.user.player)
+        kwargs['pk'] = kwargs.get('friend')
+        logger.warn(kwargs['pk'])
+        super().context(request, *args, **kwargs)
+        self._context |= {
+            'friend': self._context['item'],
+            'friends': self._context['items'].order_by('name'),
+            'friend_tab': 'selected',
+            'player_id': self.user.player.facet(),
+            'target': 'friend',
+        }
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        context |= self.friend_add_form_class.get()
+        logger.warn(context)
+        if context['small_screen']:
+            return render(request, self.template_name, context)
+        # if not kwargs.get('item'):
+        #     first_friend = self._context['friends'].first()
+        #     if first_friend:
+        #         return HttpResponseRedirect(f'{request.path}{first_friend.pk}/')
+        #     return render(request, self.template_name, context)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.friend_add_form_class.post(request.POST)
+        form = context.get('friend_form')
+        if form and not form.is_valid():
+            return render(request, self.template_name, context)
+        try:
+            email = context['email']
+            email_hash = Player.hash(email)
+            rival, created = Player.objects.get_or_create(email_hash = email_hash)
+            friend = Friend.objects.create(
+                email = email,
+                name = context['name'],
+                player = self.user.player,
+                rival = rival,
+            )
+        except:
+            logger.exception(f'failed add friend: {context}')
+        return HttpResponseRedirect(f'/player/friend/')

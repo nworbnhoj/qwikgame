@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from player.views import AcceptView, BidView, FeedView, FilterView, InvitationView, KeenView, RivalView, BidView, FiltersView
+from player.views import AcceptView, BidView, FeedView, FilterView, FriendsView, InvitationView, KeenView, RivalView, BidView, FiltersView
 
 urlpatterns = [
     path("", FeedView.as_view()),
@@ -10,5 +10,6 @@ urlpatterns = [
     path("feed/<int:appeal>/", BidView.as_view(), name='bid'),
     path("feed/keen/", KeenView.as_view(), name='keen'),
     path("feed/accept/<int:appeal>/", AcceptView.as_view(), name='accept'),
+    path("friend/", FriendsView.as_view(), name='friend'),
     path("rival/", RivalView.as_view(), name='rival'),
 ]

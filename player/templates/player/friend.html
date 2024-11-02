@@ -1,0 +1,90 @@
+<!-- qwikgame/player/templates/player/friends.html -->
+{% extends "player/friends.html" %}
+
+{% block js %}{% endblock %}
+
+
+{% block title %}Friends{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-user-group fa-2x"></i>
+            </div>
+            <div class="pole notes">
+                <div class="note">
+                    <span class="icon">
+                        <i class="fa-solid user-group fa-1x"></i>
+                    </span>
+                    <p class="line">{{ friend.name }}</p>
+                </div>
+                <div class="note">
+                    <span class="icon">
+                        <i class="fa-solid fa-email fa-1x"></i>
+                    </span>
+                    <p>{{ friend.email }}</p>
+                </div>
+            </div>
+            <div class="drop_down icon head_more">
+                <div class="button drop" data-down="false">
+                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                </div>
+                <div class="down hidden">
+                    <div class="button thin">delete</div>
+                </div>
+            </div>
+            <a class="button naked head_back" href="{% url target friend=prev %}">
+                <i class="fa-solid fa-chevron-left fa-2x"></i>
+            </a>
+            <a class="button naked head_fwd" href="{% url target friend=next %}">
+                <i class="fa-solid fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+        <div class="post">
+{% for strength in strengths %}        
+        <div class="grid_3_col">
+            <h1>{{ strength.game }}</h1>
+            <h1>{{ strength.relative_str }}</h1>
+            <div class="button link">delete</div>
+        </div>
+{% empty %}
+        <h1>Important!</h1>
+        <p> Please take a little time to let qwikgame know how strong your Friend is. This will help qwikgame make better Matches for you, and your friend, and other qwikgame Players who know either of you. </p>
+{% endfor %}            
+        </div>
+        <div class="post">
+            <div class="post form">
+                <form action="{% url target friend=friend.pk %}" method="post">
+{% csrf_token %}
+{{ form }}
+                    <input class="ctb push_down" name="ADD" type="submit" value="SUBMIT">
+                </form>
+            </div>
+        </div>
+        <div id="KEEN" class="post hidden">
+        <hr><hr>
+            <div class="post detail_body">
+                <h1>GAME</h1>
+                <h3>STRENGTH</h3>
+                <div class="slide_labels">
+                    <div class="slide_label">Much Weaker</div>
+                    <div class="slide_label">Weaker</div>
+                    <div class="slide_label">Well Matched</div>
+                    <div class="slide_label">Stronger</div>
+                    <div class="slide_label">Much Stronger</div>
+                </div>
+                <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
+                <div class="rival-skill-learn grid_3_col">
+                    <div class="button link show_friend_invite">Cancel</div>
+                    <div class="button link">Learn more</div>
+                    <div class="button ctb wide thin">Add</div>
+                </div>
+            </div>            
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block map %}{% endblock map %}

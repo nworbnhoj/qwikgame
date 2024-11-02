@@ -83,7 +83,7 @@
             <div class="post form">
                 <form action="{% url 'friend' %}" method="post">
 {% csrf_token %}
-{{ friend_form }}
+{{ form }}
                     <input class="ctb push_down" name="ADD" type="submit" value="ADD">
                 </form>
             </div>

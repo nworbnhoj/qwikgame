@@ -389,3 +389,7 @@ class Strength(models.Model):
 
     def __str__(self):
         return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival} {self.relative} {self.weight}"
+
+    @property
+    def relative_str(self):
+        return STRENGTH.get(self.relative, 'unknown')

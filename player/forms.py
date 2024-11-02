@@ -6,6 +6,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Appeal, Bid, Filter, Friend, Player, Precis
 from venue.models import Venue
+from qwikgame.constants import STRENGTH
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24
@@ -286,18 +287,54 @@ class FriendAddForm(QwikForm):
         form = klass()  
         form.fields['email'].widget.attrs = { 'placeholder': 'Type email address'}
         form.fields['name'].widget.attrs = { 'placeholder': 'A screen name for your friend (optional)'}
-        return { 'friend_form' : form, }
+        return { 'form' : form, }
 
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = {'friend_form': form}
+        context = {'form': form}
         if form.is_valid():
             context={
                 'email': form.cleaned_data['email'],
                 'name': form.cleaned_data['name']
             }
         return context
+
+
+class FriendForm(QwikForm):
+    game = ChoiceField(
+        choices = Game.choices(),
+        label = 'GAME',
+        required = True,
+        template_name='dropdown.html', 
+        widget=RadioSelect(attrs={"class": "down hidden"})
+    )
+    strength = ChoiceField(
+        choices = STRENGTH,
+        initial = STRENGTH.get('m'),
+        label = 'FRIEND SKILL LEVEL',
+        required = True,
+        widget = RadioSelect,
+    )
+
+
+    @classmethod
+    def get(klass):
+        form = klass()
+        return { 'form' : form, }
+
+    @classmethod
+    def post(klass, request_post):
+        form = klass(data=request_post)
+        context = {'form': form}
+        if form.is_valid():
+            context={
+                'game': form.cleaned_data['game'],
+                'strength': form.cleaned_data['strength']
+            }
+        return context
+
+
 class KeenForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),

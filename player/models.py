@@ -273,6 +273,7 @@ class Friend(models.Model):
     name = models.CharField(max_length=32, blank=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='usher')
+    strengths = models.ManyToManyField('player.Strength')
 
     def __str__(self):
         return "{}:{}".format(self.player, self.rival)

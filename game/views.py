@@ -173,6 +173,7 @@ class ReviewView(ReviewsView):
             rival.save()
             Strength.objects.create(
                 date = review.match.date,
+                game = review.match.game,
                 player = player,
                 rival = rival,
                 relative=context['strength'],

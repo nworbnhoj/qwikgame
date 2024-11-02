@@ -20,8 +20,8 @@ class MatchesView(QwikView):
     template_name = 'game/matches.html'
 
     def context(self, request, *args, **kwargs):
-        kwargs['pk'] = kwargs.get('match')
         kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player])
+        kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         self._context['matches'] = self._context['items'].order_by('date')
         now = datetime.now(pytz.utc) + timedelta(minutes=10)
@@ -106,8 +106,8 @@ class ReviewsView(QwikView):
         return Review.objects.filter(player=self.user.player)
 
     def context(self, request, *args, **kwargs):
-        kwargs['pk'] = kwargs.get('refiew')
         kwargs['items'] = Review.objects.filter(player=self.user.player)
+        kwargs['pk'] = kwargs.get('refiew', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         self._context |= {
             'review': self._context['item'],

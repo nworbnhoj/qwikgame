@@ -1,0 +1,91 @@
+<!-- qwikgame/player/templates/player/friends.html -->
+{% extends "content.html" %}
+
+
+{% block title %}Friends{% endblock %}
+
+
+{% block cta_mobile %}
+{% if small_screen %}
+    <a class="cta round lge cta_mobile" href="{% url 'keen' %}">
+    <i class="fa-solid fa-paper-plane fa-3x"></i>
+    </a>
+{% endif %}
+{% endblock %}
+
+
+{% block cta_desktop %}
+{% if big_screen %}
+    <a class="cta wide" href="{% url 'keen' %}">
+        <i class="fa-solid fa-paper-plane fa-xl"></i>
+        <p>INVITE</p>
+    </a>
+{% endif %}
+{% endblock %}
+
+
+{% block list %}
+    <div id="list_bar" class="list_bar post">
+        <div class="list_bar_head">
+            <h1>Friends</h1> 
+            <div class="drop_down todo">
+                <div class="button drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat" aria-hidden="true">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="pole">
+{% for friend in friends %}
+            <a class="button item" href="{% url 'friend' friend=friend.pk %}">
+                <div class="pole notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="{{ friend.icon }} fa-1x"></i>
+                        </span>
+                        <p class="line">{{ friend.name }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-email fa-1x"></i>
+                        </span>
+                        <p>{{ friend.email }}</p>
+                    </div>
+                </div>
+                <div class="pole badges">
+                    <div class="icon round badge"></div>
+                </div>
+            </a>
+{% empty %}
+           <p>No friends :-(</p>
+{% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-user-group     fa-2x"></i>
+            </div>
+            <h1>Add Friend</h1>
+        </div>
+        <div class="post available_edit {{ hide_edit }}">
+            <div class="post form">
+                <form action="{% url 'friend' %}" method="post">
+{% csrf_token %}
+{{ friend_form }}
+                    <input class="ctb push_down" name="ADD" type="submit" value="ADD">
+                </form>
+            </div>
+        </div>
+{% endblock %}

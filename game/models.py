@@ -1,6 +1,7 @@
 import logging
 from django.db import models
 from player.models import Appeal, Player
+from qwikgame.constants import DELAY_REVIEW_PERISH
 from qwikgame.log import Entry
 from venue.models import Venue
 
@@ -115,3 +116,12 @@ class Review(models.Model):
             case _:
                 logger.warn(f'unknown template: {template}')
         self.match.log_entry(entry)
+
+    def perish(self, dry_run=False):
+        action = 'noop'
+        now = self.match.venue.now()
+        if now.date() > self.match.date + DELAY_REVIEW_PERISH:
+            if not dry_run:
+                self.delete()
+            action = 'expired'
+        return action

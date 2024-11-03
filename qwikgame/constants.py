@@ -1,3 +1,6 @@
+import logging, pytz
+from datetime import datetime, timedelta
+
 
 ENDIAN = 'big'
 
@@ -42,6 +45,8 @@ STATUS    = 'status'
 VENUE     = 'venue'
 WEST      = 'w'
 
+
+DELAY_REVIEW_PERISH = timedelta(days=7)
 
 
 COUNTRIES = {

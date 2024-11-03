@@ -21,7 +21,8 @@ class MatchesView(QwikView):
 
     def context(self, request, *args, **kwargs):
         kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player])
-        kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
+        if kwargs['items'].first():
+            kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         self._context['matches'] = self._context['items'].order_by('date')
         now = datetime.now(pytz.utc) + DELAY_MATCHS_LIST
@@ -107,7 +108,8 @@ class ReviewsView(QwikView):
 
     def context(self, request, *args, **kwargs):
         kwargs['items'] = Review.objects.filter(player=self.user.player)
-        kwargs['pk'] = kwargs.get('refiew', kwargs['items'].first().pk)
+        if kwargs['items'].first():
+            kwargs['pk'] = kwargs.get('review', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         self._context |= {
             'review': self._context['item'],

@@ -439,7 +439,8 @@ class FriendsView(QwikView):
 
     def context(self, request, *args, **kwargs):        
         kwargs['items'] = Friend.objects.filter(player=self.user.player)
-        kwargs['pk'] = kwargs.get('friend', kwargs['items'].first().pk)
+        if kwargs['items'].first():
+            kwargs['pk'] = kwargs.get('friend', kwargs['items'].first().pk)
         logger.warn(kwargs['pk'])
         super().context(request, *args, **kwargs)
         self._context |= {

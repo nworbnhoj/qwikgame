@@ -1,10 +1,15 @@
 <!-- qwikgame/player/templates/player/friends.html -->
 {% extends "player/friends.html" %}
 
-{% block js %}{% endblock %}
-
 
 {% block title %}Friends{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
 
 
 {% block detail %}

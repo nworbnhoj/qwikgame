@@ -7,8 +7,8 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-    <a class="cta round lge cta_mobile" href="{% url 'keen' %}">
-    <i class="fa-solid fa-paper-plane fa-3x"></i>
+    <a class="cta round lge cta_mobile" href="{% url 'friend_add' %}">
+    <i class="fa-solid fa-plus fa-3x"></i>
     </a>
 {% endif %}
 {% endblock %}
@@ -16,9 +16,9 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-    <a class="cta wide" href="{% url 'keen' %}">
-        <i class="fa-solid fa-paper-plane fa-xl"></i>
-        <p>INVITE</p>
+    <a class="cta wide" href="{% url 'friend_add' %}">
+        <i class="fa-solid fa-plus fa-xl"></i>
+        <p>ADD</p>
     </a>
 {% endif %}
 {% endblock %}
@@ -71,21 +71,4 @@
 {% endblock %}
 
 
-{% block detail %}
-    <div id="detail" class="detail">
-        <div class="detail_head">
-            <div class="icon selected">
-                <i class="fa-solid fa-user-group     fa-2x"></i>
-            </div>
-            <h1>Add Friend</h1>
-        </div>
-        <div class="post available_edit {{ hide_edit }}">
-            <div class="post form">
-                <form action="{% url 'friend' %}" method="post">
-{% csrf_token %}
-{{ form }}
-                    <input class="ctb push_down" name="ADD" type="submit" value="ADD">
-                </form>
-            </div>
-        </div>
-{% endblock %}
+{% block detail %}{% endblock %}

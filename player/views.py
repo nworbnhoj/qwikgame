@@ -438,12 +438,11 @@ class RivalView(FeedView):
 
 
 class FriendsView(QwikView):
-    form_class = FriendAddForm
     template_name = 'player/friends.html'
 
     def context(self, request, *args, **kwargs):        
         kwargs['items'] = Friend.objects.filter(player=self.user.player)
-        kwargs['pk'] = kwargs.get('friend')
+        kwargs['pk'] = kwargs.get('friend', kwargs['items'].first().pk)
         logger.warn(kwargs['pk'])
         super().context(request, *args, **kwargs)
         self._context |= {
@@ -458,33 +457,46 @@ class FriendsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        if not context.get('friend'):
-            context |= self.form_class.get()
-            if context['small_screen']:
-                return render(request, self.template_name, context)
+        friend = kwargs.get('item')
+        if not friend: 
             return render(request, self.template_name, context)
+
+
+class FriendAddView(FriendsView):
+    form_class = FriendAddForm
+    template_name = 'player/friend_add.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        context |= self.form_class.get()
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        if not context.get('friend'):
-            context |= self.form_class.post(request.POST)
-            form = context.get('form')
-            if form and not form.is_valid():
-                return render(request, self.template_name, context)
-            try:
-                email = context['email']
-                email_hash = Player.hash(email)
-                rival, created = Player.objects.get_or_create(email_hash = email_hash)
-                friend = Friend.objects.create(
-                    email = email,
-                    name = context['name'],
-                    player = self.user.player,
-                    rival = rival,
-                )
-            except:
-                logger.exception(f'failed add friend: {context}')
-            return HttpResponseRedirect(f'/player/friend/{friend.pk}/')
+        context |= self.form_class.post(request.POST)
+        form = context.get('form')
+        if form and not form.is_valid():
+            return render(request, self.template_name, context)
+        try:
+            email = context['email']
+            email_hash = Player.hash(email)
+            rival, created = Player.objects.get_or_create(email_hash = email_hash)
+            friend = Friend.objects.create(
+                email = email,
+                name = context['name'],
+                player = self.user.player,
+                rival = rival,
+            )
+        except:
+            logger.exception(f'failed add friend: {context}')
+        return HttpResponseRedirect(f'/player/friend/{friend.pk}/')
+
 
 
 class FriendView(FriendsView):

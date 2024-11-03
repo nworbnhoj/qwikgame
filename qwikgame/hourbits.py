@@ -100,10 +100,10 @@ class Hours24():
     def as_int(self):
         return int.from_bytes(self.bits, ENDIAN)
 
-    def as_str(self, hours=range(0,23)):
+    def as_str(self, hours=range(0,23), day_all=DAY_ALL):
         if self.bits == DAY_NONE:
             return ''
-        if self.bits == DAY_ALL:
+        if self.bits == day_all:
             return '24hrs'
         day = self.as_bools()
         start, end = None, None
@@ -226,20 +226,19 @@ class Hours24x7():
     def as_bytes(self):
         return self.bits
 
-    def as_str(self, hours=range(0,23)):
+    def as_str(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
         if self.bits == WEEK_NONE:
             return '--'
-        if self.bits == WEEK_ALL:
+        if self.bits == week_all:
             return '24x7'
         r_start, r_end = hours[0], hours[-1]
         day_blocks=[]
         for d, bytes3 in enumerate(self.as_days7()):
-            hours_str = Hours24(bytes3).as_str()
+            hours_str = Hours24(bytes3).as_str(day_all=day_all)
             if len(hours_str) > 0:
-                day_block = '{}({})'.format(
-                    WEEK_DAYS[d][:3].casefold().capitalize(),
-                    hours_str
-                )
+                day_block = WEEK_DAYS[d][:3].casefold().capitalize()
+                if hours_str != '24hrs':
+                    day_block += f'({hours_str})'
                 day_blocks.append(day_block)
         return ' '.join(day_blocks)
 

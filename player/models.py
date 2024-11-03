@@ -4,7 +4,7 @@ from authenticate.models import User
 from django.db import models
 from pytz import datetime
 from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
-from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, WEEK_NONE
+from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 from venue.models import Place, Venue
 
@@ -259,10 +259,11 @@ class Filter(models.Model):
 
     def __str__(self):
         hours24x7 = Hours24x7(self.hours)
+        week_str = hours24x7.as_str(week_all=WEEK_QWIK, day_all=DAY_QWIK)
         return  '{}, {}, {}'.format(
                 'Any Game' if self.game is None else self.game,
                 'Anywhere' if self.place is None else self.place,
-                'Any Time' if hours24x7.is_qwik_all() else hours24x7.as_str()
+                'Any Time' if week_str == '24x7' else week_str,
                 )
 
     def hours24x7(self):

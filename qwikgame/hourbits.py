@@ -211,6 +211,10 @@ class Hours24x7():
         else:
             logger.warn('type mismatch: {}'.format(type(other)))
 
+    def __invert__(self):
+        bits = bytes([~a + 256 for a in self.bits])
+        return Hours24x7(bits)
+
     # https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes
     def __hash__(self):
         """Overrides the default implementation"""

@@ -1,0 +1,32 @@
+<!-- qwikgame/player/templates/player/friends.html -->
+{% extends "player/friends.html" %}
+
+
+{% block title %}Friends{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-user-group fa-2x"></i>
+            </div>
+            <h1>Add Friend</h1>
+        </div>
+        <div class="post available_edit {{ hide_edit }}">
+            <div class="post form">
+                <form action="{% url 'friend_add' %}" method="post">
+{% csrf_token %}
+{{ form }}
+                    <input class="ctb push_down" name="ADD" type="submit" value="ADD">
+                </form>
+            </div>
+        </div>
+{% endblock %}

@@ -4,8 +4,10 @@ from qwikgame.constants import ENDIAN, WEEK_DAYS
 DAY_ALL = b'\xff\xff\xff'
 DAY_MAX_INT = int.from_bytes(DAY_ALL, ENDIAN)
 DAY_NONE = bytes(3)
+DAY_QWIK = b'\x03\xff\xf8'
 WEEK_ALL = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
 WEEK_NONE = bytes(21)
+WEEK_QWIK = DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK
 
 logger = logging.getLogger(__file__)
 
@@ -243,6 +245,9 @@ class Hours24x7():
     def get_day(self, day):
         offset = 3 * day
         return hours24(self.hours[offset: offset+3])
+
+    def is_qwik_all(self):
+        return self.bits == WEEK_QWIK
 
     def is_week_all(self):
         return self.bits == WEEK_ALL

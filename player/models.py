@@ -262,7 +262,7 @@ class Filter(models.Model):
         return  '{}, {}, {}'.format(
                 'Any Game' if self.game is None else self.game,
                 'Anywhere' if self.place is None else self.place,
-                'Any Time' if hours24x7.is_week_all() else hours24x7.as_str()
+                'Any Time' if hours24x7.is_qwik_all() else hours24x7.as_str()
                 )
 
     def hours24x7(self):

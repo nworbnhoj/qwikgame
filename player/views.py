@@ -262,10 +262,6 @@ class FilterView(FeedView):
                 game=game,
                 place=place)
             filter_hours = Hours24x7(context['hours'])
-            if venue:
-                venue_hours = venue.hours_open()
-                if venue_hours:
-                    filter_hours = filter_hours & venue_hours
             new_filter[0].set_hours(filter_hours)
             new_filter[0].save()
             logger.info(f'Filter new: {new_filter[0]}')
@@ -371,6 +367,7 @@ class KeenView(FeedView):
         appeal_pk = None
         # create/update/delete today appeal
         now=venue.now()
+        venue_hours = venue.hours_open()
         appeal = Appeal.objects.get_or_create(
             date=now.date(),
             game=game,
@@ -380,7 +377,7 @@ class KeenView(FeedView):
         if context['today'].is_none():
             appeal.delete()
         elif appeal.hours24 != context['today']:
-            appeal.set_hours(context['today'])
+            appeal.set_hours(venue_hours & context['today'])
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.perish()
@@ -396,7 +393,7 @@ class KeenView(FeedView):
         if context['tomorrow'].is_none():
             appeal.delete()
         elif appeal.hours24 != context['tomorrow']:
-            appeal.set_hours(context['tomorrow'])
+            appeal.set_hours(venue_hours & context['tomorrow'])
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()

@@ -6,7 +6,7 @@ from django.views import View
 from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match, Review
 from player.models import Player, Strength
-from qwikgame.constants import STRENGTH
+from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST, STRENGTH
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry
@@ -24,7 +24,7 @@ class MatchesView(QwikView):
         kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         self._context['matches'] = self._context['items'].order_by('date')
-        now = datetime.now(pytz.utc) + timedelta(minutes=10)
+        now = datetime.now(pytz.utc) + DELAY_MATCHS_LIST
         self._context |= {
             'match': self._context['item'],
             'matches_future': self._context['items'].filter(date__gt=now),
@@ -62,8 +62,8 @@ class MatchView(MatchesView):
                     break
             now = datetime.now(pytz.utc)
             self._context |= {
-                'enable_banner': now < match.date + timedelta(minutes=10),
-                'enable_chat': now < match.date + timedelta(hours=24),
+                'enable_banner': now < match.date + DELAY_MATCH_BANNER,
+                'enable_chat': now < match.date + DELAY_MATCH_CHAT,
                 'match_log_start': match_log_start,
                 'schedule_tab': 'selected',
              }

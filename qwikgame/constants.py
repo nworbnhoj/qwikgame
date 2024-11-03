@@ -46,6 +46,9 @@ VENUE     = 'venue'
 WEST      = 'w'
 
 
+DELAY_MATCH_BANNER = timedelta(minutes=10)
+DELAY_MATCH_CHAT = timedelta(hours=24)
+DELAY_MATCHS_LIST = timedelta(minutes=10)
 DELAY_REVIEW_PERISH = timedelta(days=7)
 
 

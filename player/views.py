@@ -20,73 +20,59 @@ logger = logging.getLogger(__file__)
 
 
 class FeedView(QwikView):
+    template_name = 'player/feed.html'
 
     def context(self, request, *args, **kwargs):
+        feed = self.user.player.feed()
+        kwargs['items'] = feed
+        if kwargs['items'].first():
+            kwargs['pk'] = kwargs.get('appeal', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
-        player = self.user.player
-        feed = player.feed()
+        feed = list(feed)
+        # sort the feed by urgency
+        feed.sort(key=lambda x: x.last_hour, reverse=True)
+        feed.sort(key=lambda x: x.date)
         self._context |= {
+            'appeal': self._context['item'],
             'appeals': feed[:100],
             'feed_tab': 'selected',
             'feed_length': len(feed),
-            'player': player,
-            'prospects': player.prospects()[:100],
+            'player': self.user.player,
+            'prospects': self.user.player.prospects()[:100],
         }
         return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        return render(request, "player/feed.html", context)
+        invite = kwargs.get('item')
+        if not invite: 
+            return render(request, self.template_name, context)
 
 
 class AcceptView(FeedView):
     accept_form_class = AcceptForm
     template_name = 'player/reply.html'
 
-    def appeal(self, appeal_pk):
-        if not appeal_pk:
-            logger.warn(f'appeal_pk missing')
-            return None
-        appeal = Appeal.objects.filter(pk=appeal_pk).first()
-        if not appeal:
-            logger.warn(f'appeal missing: {appeal_pk}')
-            return None
-        return appeal
-
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         player = self.user.player
-        appeal = self.appeal(kwargs.get('appeal'))
-        if not appeal:
-            return {}
-        appeals = Appeal.objects.filter(player=player).all()
-        prev_pk = appeals.last().pk
-        next_pk = appeals.first().pk
-        found = False
-        for a in appeals:
-            if found:
-                next_pk = a.pk
-                break
-            if a.pk == appeal.pk:
-                found = True
-            else:
-                prev_pk = a.pk
-        replies = Bid.objects.filter(appeal=appeal).exclude(hours=None)
-        friends = Friend.objects.filter(player=player)
-        for reply in replies:
-            reply.hour_str = reply.hours24().as_str()
-            try:
-                reply.name = friends.get(rival=reply.rival).name
-            except:
-                reply.name=reply.rival.name
-        self._context |= {
-            'appeal': appeal,
-            'next': next_pk,
-            'player_id': player.facet(),
-            'prev': prev_pk,
-            'replies': replies,
-        }
+        appeal = kwargs.get('item')
+        if appeal:
+            replies = Bid.objects.filter(appeal=appeal).exclude(hours=None)
+            friends = Friend.objects.filter(player=player)
+            for reply in replies:
+                reply.hour_str = reply.hours24().as_str()
+                try:
+                    reply.name = friends.get(rival=reply.rival).name
+                except:
+                    reply.name=reply.rival.name
+            self._context |= {
+                'appeal': appeal,
+                'player_id': player.facet(),
+                'replies': replies,
+                'target': 'bid',
+            }
         return self._context
 
 
@@ -130,49 +116,21 @@ class BidView(FeedView):
     bid_form_class = BidForm
     template_name = 'player/bid.html'
 
-    def appeal(self, appeal_pk):
-        if not appeal_pk:
-            logger.warn(f'appeal_pk missing')
-            return None
-        appeal = Appeal.objects.filter(pk=appeal_pk).first()
-        if not appeal:
-            logger.warn(f'appeal missing: {appeal_pk}')
-            return None
-        return appeal
-
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         player = self.user.player
-        appeal = self.appeal(kwargs.get('appeal'))
-        if not appeal:
-            return {}
-        appeals = Appeal.objects.all()
-        prev_pk = appeals.last().pk
-        next_pk = appeals.first().pk
-        found = False
-        for a in appeals:
-            if found:
-                next_pk = a.pk
-                break
-            if a.pk == appeal.pk:
-                found = True
-            else:
-                prev_pk = a.pk
-        self._context |= {
-            'appeal': appeal,
-            'next': next_pk,
-            'player_id': player.facet(),
-            'prev': prev_pk,
-        }
+        appeal = kwargs.get('item')
+        if appeal:
+            self._context |= {
+                'appeal': appeal,
+                'player_id': player.facet(),
+            }
         return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         appeal = context.get('appeal')
-        if not appeal:
-            logger.warn("BidView.get() called without appeal")
-            return HttpResponseRedirect("/player/feed/")
         context |= self.bid_form_class.get(appeal)
         return render(request, self.template_name, context)
 

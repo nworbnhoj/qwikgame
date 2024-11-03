@@ -81,13 +81,7 @@ class Player(models.Model):
             appeal_qs = Appeal.objects.all()
         # TODO include direct invites
         # TODO exclude Blocked Players
-        feed = list(appeal_qs.distinct().all())
-        feed = list(appeal_qs.exclude(player=self).distinct().all())
-        # sort the feed by urgency
-        #TODO optimise this sort (possibly at dbase order_by)
-        feed.sort(key=lambda x: x.last_hour, reverse=True)
-        feed.sort(key=lambda x: x.date)
-        return feed
+        return appeal_qs.distinct()
 
     def friend_choices(self):
         choices={}

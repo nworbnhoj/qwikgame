@@ -48,10 +48,10 @@
                     <div class="button thin">more 3</div>
                 </div>
             </div>
-            <a class="button naked head_back" href="/player/keen/{{ prev }}/">
+            <a class="button naked head_back" href="{% url 'bid' appeal=prev %}">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
             </a>
-            <a class="button naked head_fwd" href="/player/keen/{{ next }}/">
+            <a class="button naked head_fwd" href="{% url 'bid' appeal=next %}">
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
@@ -143,7 +143,7 @@
             </div>
             <hr>
             <div class="post">
-                <form action="{% url 'accept' appeal.pk %}" method="post">
+                <form action="{% url 'accept' appeal=appeal.pk %}" method="post">
 {% csrf_token %}
 {% for reply in replies %}
                     <div class="chat_item align_start">

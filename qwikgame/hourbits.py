@@ -53,6 +53,13 @@ class Hours24():
                 self.bits = DAY_NONE
                 logger.warn(f'failed to initialise Hours24: invalid type {type(value)}')
 
+    def __and__(self, other):
+        if other and type(other) == type(self):
+            bits = bytes([a & b for a,b in zip(self.bits, other.bits)])
+            return Hours24(bits)
+        else:
+            logger.warn('type mismatch: {}'.format(type(other)))
+
     # https://stackoverflow.com/questions/390250/elegant-ways-to-support-equivalence-equality-in-python-classes
     def __eq__(self, other):
         """Overrides the default implementation"""

@@ -160,7 +160,7 @@ class Hours24():
         return dips[::-1]
 
 
-# represents 24*7 hours in 21 bytes
+# represents 24*7 hours in 21 bytes, ordered as SMTWTFS
 class Hours24x7():
 
     bits = WEEK_NONE
@@ -263,9 +263,9 @@ class Hours24x7():
         return self.bits == WEEK_ALL
 
     def set_date(self, hours24, date):
-        week_day = date.isoweekday() - 1
-        offset = 3 * week_day
-        self.bits[offset:offset+2:] = hours24.bits
+        div, mod = divmod(date.isoweekday(), 7)
+        offset = 3 * mod
+        self.bits[offset:offset+3:] = hours24.bits
 
     def set_period(self, first_day, first_hour, last_day, last_hour, on=True):
         first = first_day * 24 + first_hour

@@ -81,6 +81,9 @@
             <div class="detail_chat_post"></div>
         </div>
         <div class="post form">
+{% if bade %}
+            <p>Awaiting Players to accept</p>
+{% else %}
             <form action="{% url 'bid' appeal.pk %}" method="post">
 {% csrf_token %}
 {{ bid_form }}
@@ -88,6 +91,7 @@
                 <input class="cta push_down" type="submit" name='accept'value='ACCEPT'>
             </div>
             </form>
+{% endif %}
         </div>
     </div>
 {% endblock %}

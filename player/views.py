@@ -122,8 +122,13 @@ class BidView(FeedView):
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
+        bade = Bid.objects.filter(
+            appeal = self._context.get('appeal'),
+            rival = self.user.player,
+        ).exists()
         self._context |= {
             'player_id': self.user.player.facet(),
+            'bade': bade,
         }
         return self._context
 

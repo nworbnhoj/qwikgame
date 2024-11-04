@@ -210,6 +210,10 @@ class Venue(Place):
     @property
     def open_week(self):
         return Hours24x7(self.hours)
+
+    def open_date(self, date):
+        return Hours24x7(self.hours).get_date(date)
+
     def place_str(self):
         return super().__str__()
 

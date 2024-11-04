@@ -42,6 +42,7 @@ class FeedView(QwikView):
             'appeals': feed_list[:100],
             'feed_tab': 'selected',
             'feed_length': len(feed_list),
+            'player': player,
             'prospects': participate[:100],
         }
         return self._context

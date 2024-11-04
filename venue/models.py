@@ -196,9 +196,6 @@ class Venue(Place):
         aware = self.tzinfo().localize(naive)
         return aware
 
-    def hours_open(self):
-        return Hours24x7(self.hours)
-
     def mark(self):
         return {
             LAT: self.lat,
@@ -210,6 +207,9 @@ class Venue(Place):
     def now(self):
         return datetime.datetime.now(pytz.timezone(self.tz))
 
+    @property
+    def open_week(self):
+        return Hours24x7(self.hours)
     def place_str(self):
         return super().__str__()
 

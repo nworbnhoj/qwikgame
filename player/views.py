@@ -23,20 +23,20 @@ class FeedView(QwikView):
     template_name = 'player/feed.html'
 
     def context(self, request, *args, **kwargs):
-        feed = self.user.player.feed()
+        player = self.user.player
+        feed = player.feed()
         kwargs['items'] = feed
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
-        feed_list = list(feed)
-        # sort the feed by urgency
-        feed_list.sort(key=lambda x: x.last_hour, reverse=True)
-        feed_list.sort(key=lambda x: x.date)
-        participate = feed.filter(bid__rival=self) | feed.filter(player=self)
+        participate = feed.filter(bid__rival=player) | feed.filter(player=player)
         participate_list = list(participate)
-        # sort the feed by urgency
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
         participate_list.sort(key=lambda x: x.date)
+        feed = feed.exclude(pk__in=participate)
+        feed_list = list(feed)  
+        feed_list.sort(key=lambda x: x.last_hour, reverse=True)
+        feed_list.sort(key=lambda x: x.date)
         self._context |= {  
             'appeal': self._context['item'],
             'appeals': feed_list[:100],

@@ -28,17 +28,21 @@ class FeedView(QwikView):
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
-        feed = list(feed)
+        feed_list = list(feed)
         # sort the feed by urgency
-        feed.sort(key=lambda x: x.last_hour, reverse=True)
-        feed.sort(key=lambda x: x.date)
-        self._context |= {
+        feed_list.sort(key=lambda x: x.last_hour, reverse=True)
+        feed_list.sort(key=lambda x: x.date)
+        participate = feed.filter(bid__rival=self) | feed.filter(player=self)
+        participate_list = list(participate)
+        # sort the feed by urgency
+        participate_list.sort(key=lambda x: x.last_hour, reverse=True)
+        participate_list.sort(key=lambda x: x.date)
+        self._context |= {  
             'appeal': self._context['item'],
-            'appeals': feed[:100],
+            'appeals': feed_list[:100],
             'feed_tab': 'selected',
-            'feed_length': len(feed),
-            'player': self.user.player,
-            'prospects': self.user.player.prospects()[:100],
+            'feed_length': len(feed_list),
+            'prospects': participate[:100],
         }
         return self._context
 
@@ -57,7 +61,7 @@ class AcceptView(FeedView):
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         player = self.user.player
-        appeal = kwargs.get('item')
+        appeal = self._context.get('appeal')
         if appeal:
             replies = Bid.objects.filter(appeal=appeal).exclude(hours=None)
             friends = Friend.objects.filter(player=player)
@@ -68,7 +72,6 @@ class AcceptView(FeedView):
                 except:
                     reply.name=reply.rival.name
             self._context |= {
-                'appeal': appeal,
                 'player_id': player.facet(),
                 'replies': replies,
                 'target': 'bid',
@@ -118,36 +121,28 @@ class BidView(FeedView):
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
-        player = self.user.player
-        appeal = kwargs.get('item')
-        if appeal:
-            self._context |= {
-                'appeal': appeal,
-                'player_id': player.facet(),
-            }
+        self._context |= {
+            'player_id': self.user.player.facet(),
+        }
         return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        appeal = context.get('appeal')
-        context |= self.bid_form_class.get(appeal)
+        context |= self.bid_form_class.get(context.get('appeal'))
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        appeal = self.appeal(kwargs.get('appeal'))
-        if not appeal:
-            logger.warn("BidView.get() called without appeal")
-            return HttpResponseRedirect("/player/feed/")
+        context = self.context(request, *args, **kwargs)
         player = self.user.player
-        context = self.bid_form_class.post(
+        appeal = context.get('appeal')
+        context |= self.bid_form_class.post(
             request.POST,
             appeal,
         )
         form = context.get('bid_form')
         if form and not form.is_valid():
-            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         bid = Bid(
             appeal=context['accept'],

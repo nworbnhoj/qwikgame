@@ -80,6 +80,9 @@
         <h2 class="show_group">
             All
             <span>▲</span>
+{% if filtered %}
+            <a href="{% url 'filters' %}">filtered</a>
+{% endif %}
         </h2>
         <div class="group">
 {% for appeal in appeals %}

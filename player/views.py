@@ -42,6 +42,7 @@ class FeedView(QwikView):
             'appeals': feed_list[:100],
             'feed_tab': 'selected',
             'feed_length': len(feed_list),
+            'filtered': Filter.objects.filter(player=player, active=True).exists(),
             'player': player,
             'prospects': participate[:100],
         }

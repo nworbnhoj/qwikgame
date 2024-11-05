@@ -163,7 +163,8 @@ STATICFILES_DIRS = [
 CRONJOBS = [
     ('1 * * * *', 'player.cron.appeal_perish'),
     ('15 * * * *', 'game.cron.match_review_init'),
-    ('30 23 * * *', 'game.cron.match_review_perish'),
+    ('30 23 * * *', 'game.cron.match_perish'),
+    ('31 23 * * *', 'game.cron.match_review_perish'),
 ]
 
 

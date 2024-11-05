@@ -1,7 +1,7 @@
 import logging
 from django.db import models
 from player.models import Appeal, Player
-from qwikgame.constants import DELAY_REVIEW_PERISH
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH
 from qwikgame.log import Entry
 from venue.models import Venue
 
@@ -60,6 +60,10 @@ class Match(models.Model):
         match.save()
         return match
 
+    def log_clear(self):
+        self.log = []
+        self.save()
+
     def log_entry(self, entry):
         self.log.append(entry)
         self.save()
@@ -79,6 +83,16 @@ class Match(models.Model):
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
+
+    def perish(self, dry_run=False):
+        now = self.match.venue.now()
+        if now.date() > self.match.date + DELAY_MATCH_PERISH_CHAT:
+            if not dry_run:
+                self.log_clear()
+                self.log_entry(Entry(klass='system', text=f'chat perished on {now}'))
+                self.save()
+            return 'chat'
+        return 'noop'
 
     # format venue_time on server, rather than in template (user timezone)
     def venue_date_str(self):

@@ -393,7 +393,7 @@ class RivalView(FeedView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = super().context(request, *args, **kwargs)
-        context |= { 'rate_tab': 'selected' }
+        context |= { 'review_tab': 'selected' }
         return render(request, "player/rival.html", context)
 
 

@@ -115,6 +115,7 @@ class ReviewsView(QwikView):
             'review': self._context['item'],
             'reviews': self._context['items'].order_by('match__date'),
             'player_id': self.user.player.facet(),
+            'review_tab': 'selected',
             'target': 'review',
         }
         return self._context
@@ -139,7 +140,6 @@ class ReviewView(ReviewsView):
         context = super().context(request, *args, **kwargs)
         # TODO refine matches to unreviewed Matches
         self._context |= {
-            'review_tab': 'selected',
             'target': 'review',
             }
         return self._context

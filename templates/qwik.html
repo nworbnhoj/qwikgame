@@ -27,30 +27,30 @@
             <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'home' %}">
         </p>
         <div class="flex_space"></div>
-        <div class="button href {{ feed_tab }}" data-href="{% url 'feed' %}">
+        <a class="btn special2 {{ feed_tab }}" href="{% url 'feed' %}">
             <i class="fa-solid fa-house fa-2x"></i>
-            <p class="fat">Invitations</p>
-        </div>
-        <div class="button href {{ schedule_tab }}" data-href="{% url 'matches' %}">
-            <i class="fa-regular fa-calendar-days fa-2x"></i>
-            <p class="fat">Matches</p>
-        </div>
-        <div class="button href {{ review_tab }}" data-href="{% url 'review' %}">
+            <span class="fat">Invitations</span>
+        </a>
+        <a class="btn special2 {{ schedule_tab }}" href="{% url 'matches' %}">
+            <i class="fa-solid fa-calendar-days fa-2x"></i>
+            <span class="fat">Matches</span>
+        </a>
+        <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>
-            <p class="fat">Reviews</p>
-        </div>
-        <div class="button href {{ friend_tab }}" data-href="{% url 'friend' %}">
+            <span class="fat">Reviews</span>
+        </a>
+        <a class="btn special2 {{ friend_tab }}" href="{% url 'friend' %}">
             <i class="fa-solid fa-user-group fa-2x"></i>
-            <p class="fat">Friends</p>
-        </div>
+            <span class="fat">Friends</span>
+        </a>
         <div class="flex_space hide768"></div>
         <div class="qwikgame">
-            <p class="fat"><span class="qwik">QWIK</span>GAME</p>
+            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
         </div>
-        <div class="button href {{ account_tab }}" data-href="{% url 'account' %}">
+        <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
             <i class="fa-solid fa-graduation-cap fa-2x"></i>
-            <p class="fat">{% block name %}{{ person_name }}{% endblock %}</p>
-        </div>     
+            <span class="fat">{% block name %}{{ person_name }}{% endblock %}</span>
+        </a>
     </div>
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
     <hr>

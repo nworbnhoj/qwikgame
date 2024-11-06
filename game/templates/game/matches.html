@@ -16,7 +16,7 @@
         <div class="list_bar_head">
             <h1>Matches</h1> 
             <div class="drop_down todo">
-                <div class="button drop" data-down="false">
+                <div class="btn drop" data-down="false">
                     <div>Group by</div>
                     <div class="fat" aria-hidden="true">v</div>
                 </div>
@@ -36,14 +36,13 @@
                 </div>
             </div>
         </div>
-        <hr>
         <h2 class="show_group">
             Upcomming
             <span>▲</span>
         </h2>
-        <div class="group">
+        <div class="post group">
 {% for match in matches_future %}
-            <a class="button item" href="{% url target match=match.pk %}">
+            <a class="btn secondary item" href="{% url target match=match.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
@@ -76,9 +75,9 @@
             History
             <span>▲</span>
         </h2>
-        <div class="group">
+        <div class="post group">
 {% for match in matches_past %}
-            <a class="button item" href="{% url target match=match.pk %}">
+            <a class="btn secondary item" href="{% url target match=match.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">

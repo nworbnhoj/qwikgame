@@ -412,11 +412,6 @@ function check(event) {
   element.querySelector("input[type='checkbox']").checked=true;
 }
 
-function href(event) {
-  let element = event.currentTarget;
-  window.location.href = element.dataset.href;
-}
-
 function nextDetail(event) {
   let current_id = event.currentTarget.closest('.detail_n').id;
   let detail_id = Array.from(document.querySelectorAll('.detail_n'));
@@ -628,7 +623,9 @@ function toggleHour(event) {
     } else {
       toggle_uncheck(all_day);
       let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
-      toggle_uncheck(all_week);
+      if (all_week){
+        toggle_uncheck(all_week);
+      }
     }
   } catch (e) {
     console.log(e);
@@ -651,7 +648,9 @@ function toggleAllDay(event) {
     if (all_day_checked) {
       updateAllWeek(all_week);
     } else {
-      toggle_uncheck(all_week);
+      if (all_week){
+        toggle_uncheck(all_week);
+      }
     }
   } catch (e) {
     console.log(e);
@@ -774,13 +773,10 @@ window.onload = function() {
   document.querySelectorAll('div.checkbox_wrap').forEach(function(div) {
     div.onclick = check;
   });
-  document.querySelectorAll('.href').forEach(function(element) {
-    element.onclick = href;
-  });
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
     checkbox.oninput = enableInviteFriend;
   });
-  document.querySelectorAll('label.toggle div.button').forEach(function(hr) {
+  document.querySelectorAll('label.toggle span.stop-prop').forEach(function(hr) {
     hr.onclick = function(event) {
       event.stopPropagation()
     };

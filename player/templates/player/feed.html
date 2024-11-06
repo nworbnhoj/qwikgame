@@ -7,7 +7,7 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-    <a class="cta round lge cta_mobile" href="{% url 'keen' %}">
+    <a class="btn primary round lge cta_mobile" href="{% url 'keen' %}">
     <i class="fa-solid fa-paper-plane fa-3x"></i>
     </a>
 {% endif %}
@@ -16,7 +16,7 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-    <a class="cta wide" href="{% url 'keen' %}">
+    <a class="btn primary wide" href="{% url 'keen' %}">
         <i class="fa-solid fa-paper-plane fa-xl"></i>
         <p>INVITE</p>
     </a>
@@ -26,26 +26,23 @@
 
 {% block list %}
     <div id="list_bar" class="list_bar post">
-        <div class="list_bar_head">
+        <div class="list_head">
             <h1>Feed ({{ feed_length }})</h1>
-            <div class="button ctb push_right">
-                <a class="button" href="{% url 'filters' %}">
-                    <i class="fa-solid fa-filter fa-1x"></i>
-                    Filter
-                </a>
-            </div>
+            <a class="btn secondary" href="{% url 'filters' %}">
+                <i class="fa-solid fa-filter fa-1x"></i>
+                Filter
+            </a>
         </div>
-        <hr>
         <h2 class="show_group">
             Participating
             <span>▲</span>
         </h2>
-        <div class="group">
+        <div class="post group">
 {% for appeal in prospects %}
 {% if appeal.player == player %}
-            <a class="button item {{ unread }}" href="{% url 'accept' appeal.pk %}">
+            <a class="btn secondary item {{ unread }}" href="{% url 'accept' appeal.pk %}">
 {% else %}
-            <a class="button item {{ unread }}" href="{% url 'bid' appeal.pk %}">
+            <a class="btn secondary item {{ unread }}" href="{% url 'bid' appeal.pk %}">
 {% endif %}
                 <div class="pole notes">
                     <div class="note">
@@ -86,7 +83,7 @@
         </h2>
         <div class="group">
 {% for appeal in appeals %}
-            <a class="button item {{ unread }}" href="{% url 'bid' appeal.pk %}">
+            <a class="btn secondary item {{ unread }}" href="{% url 'bid' appeal.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
@@ -126,12 +123,10 @@
             <div class="push_down">
                 Open an Invitation<br>or send a new one!
             </div>
-            <div class="push_down">
-                <a class="cta" href="{% url 'keen' %}">
-                    <i class="fa-solid fa-paper-plane fa-xl"></i>
-                    INVITE
-                </a>
-            </div>
+            <a class="btn primary push_down" href="{% url 'keen' %}">
+                <i class="fa-solid fa-paper-plane fa-xl"></i>
+                INVITE
+            </a>
         <div>
     </div>
 {% endif %}

@@ -39,19 +39,19 @@
                 </div>
             </div>
             <div class="drop_down icon head_more">
-                <div class="button drop todo" data-down="false">
+                <div class="btn drop todo" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="button thin">more 1</div>
-                    <div class="button thin">more 2</div>
-                    <div class="button thin">more 3</div>
+                    <div class="btn secondary thin">more 1</div>
+                    <div class="btn secondary thin">more 2</div>
+                    <div class="btn secondary thin">more 3</div>
                 </div>
             </div>
-            <a class="button naked head_back" href="{% url 'bid' appeal=prev %}">
+            <a class="btn special2 head_back" href="{% url 'bid' appeal=prev %}">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
             </a>
-            <a class="button naked head_fwd" href="{% url 'bid' appeal=next %}">
+            <a class="btn special2 head_fwd" href="{% url 'bid' appeal=next %}">
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
@@ -62,7 +62,7 @@
 {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
 {% endif %}
-                <div class="button icon todo">
+                <div class="btn special2 todo">
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
@@ -74,18 +74,18 @@
         </div>
         <div class="post todo">
             <div class="chat_item align_end">
-                <div class="button replicate show_next_parent_sibling">
+                <div class="btn replicate show_next_parent_sibling">
                     <i class="fa-solid fa-copy fa-2x"></i>
                 </div>
                 <p class="fat">Replicate</p>
                 <div class="drop_down icon">
-                    <div class="button drop todo" data-down="false">
+                    <div class="btn drop todo" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
-                        <div class="button thin">more 1</div>
-                        <div class="button thin">more 2</div>
-                        <div class="button thin">more 3</div>
+                        <div class="btn secondary thin">more 1</div>
+                        <div class="btn secondary thin">more 2</div>
+                        <div class="btn secondary thin">more 3</div>
                     </div>
                 </div>
                 <div class="chat_bubble">
@@ -113,17 +113,17 @@
                                 <i class="fa-solid fa-location-dot fa-2x"></i>
                             </div>
                             <p>Next Closest Venue:</p>
-                            <div class="button link">Vasil Levski</div>
+                            <div class="btn tertiary">Vasil Levski</div>
                         </div>
                     </div>
                     
                 </div>
                 <p>You can choose to replicate the same invitation at the next closest Venue to boost your chances for a match.</p>
                 <div class="grid_2_col">
-                    <div class="button link closer">Cancel</div>
+                    <div class="btn tertiary closer">Cancel</div>
                         <form action="{% url 'keen' %}" method="post">
 {% csrf_token %}
-                            <label class="button cta push_down wide">
+                            <label class="btn primary push_down wide">
                                 <input type="submit" hidden>
                                 <i class="fa-solid fa-copy fa-2x"></i>
                                 <span>REPLICATE</span>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <div class="chat_item align_start">
-                    <div class="button icon">
+                    <div class="btn special2">
                         <i class="fa-brands fa-redhat fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
@@ -147,7 +147,7 @@
 {% csrf_token %}
 {% for reply in replies %}
                     <div class="chat_item align_start">
-                        <div class="button icon todo">
+                        <div class="btn special2 todo">
                             <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                         </div>
                         <div class="chat_bubble">
@@ -155,7 +155,7 @@
                             <p>Accepted for {{ reply.hour_str }}</p>
                         </div>
                         <div class="drop_down icon">
-                            <div class="button  todo" data-down="false">
+                            <div class="btn todo" data-down="false">
                                 <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                             </div>
                             <div class="down hidden">
@@ -165,7 +165,7 @@
                                 </label>
                             </div>
                         </div>
-                        <label class="cta button round sml">
+                        <label class="btn primary round">
                             <input hidden type="submit" name='accept' value='{{ reply.pk }}'>
                             <i class="fa-solid fa-right-long fa-xl"></i>
                         </label>

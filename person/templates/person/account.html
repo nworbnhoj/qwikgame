@@ -7,7 +7,7 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-        <a class="cta round lge cta_mobile" href="{% url 'upgrade' %}">
+        <a class="btn primary round lge cta_mobile" href="{% url 'upgrade' %}">
             <i class="fa-solid fa-trophy fa-3x"></i>
         </a>
 {% endif %}
@@ -16,7 +16,7 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-            <a class="cta wide" href="{% url 'upgrade' %}">
+            <a class="btn primary wide" href="{% url 'upgrade' %}">
                 <i class="fa-solid fa-trophy fa-xl"></i>
                 <p>UPGRADE</p>
             </a>
@@ -25,11 +25,11 @@
 
 
 {% block list %}
-        <div class="group">
-            <a class="{% block public_class %}{% endblock %}" href="{% url 'public' %}">Public Profile</a>
-            <a class="{% block private_class %}{% endblock %}" href="{% url 'private' %}">Private Settings</a>
-            <a class="{% block privacy_class %}{% endblock %}" href="{% url 'privacy' %}">Privacy</a>
-            <a class="" href="{% url 'login' %}">Log Out</a>
+        <div class="post">
+            <a class="btn secondary public_class" href="{% url 'public' %}">Public Profile</a>
+            <a class="btn secondary private_class" href="{% url 'private' %}">Private Settings</a>
+            <a class="btn secondary privacy_class" href="{% url 'privacy' %}">Privacy</a>
+            <a class="btn secondary" href="{% url 'login' %}">Log Out</a>
         </div>
 {% endblock %}
 

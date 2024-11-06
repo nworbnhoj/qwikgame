@@ -33,17 +33,17 @@
                 </div>
             </div>
             <div class="drop_down icon head_more">
-                <div class="button drop" data-down="false">
+                <div class="btn drop" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="button thin">delete</div>
+                    <div class="btn secondary thin">delete</div>
                 </div>
             </div>
-            <a class="button naked head_back" href="{% url target friend=prev %}">
+            <a class="btn special2 head_back" href="{% url target friend=prev %}">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
             </a>
-            <a class="button naked head_fwd" href="{% url target friend=next %}">
+            <a class="btn special2 head_fwd" href="{% url target friend=next %}">
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
@@ -52,7 +52,7 @@
         <div class="grid_3_col">
             <h1>{{ strength.game }}</h1>
             <h1>{{ strength.relative_str }}</h1>
-            <div class="button link">delete</div>
+            <div class="btn tertiary">delete</div>
         </div>
 {% empty %}
         <h1>Important!</h1>
@@ -64,7 +64,7 @@
                 <form action="{% url target friend=friend.pk %}" method="post">
 {% csrf_token %}
 {{ form }}
-                    <input class="ctb push_down" name="ADD" type="submit" value="SUBMIT">
+                    <input class="btn secondary push_down" name="ADD" type="submit" value="SUBMIT">
                 </form>
             </div>
         </div>
@@ -82,9 +82,9 @@
                 </div>
                 <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 <div class="rival-skill-learn grid_3_col">
-                    <div class="button link show_friend_invite">Cancel</div>
-                    <div class="button link">Learn more</div>
-                    <div class="button ctb wide thin">Add</div>
+                    <div class="btn tertiary show_friend_invite">Cancel</div>
+                    <div class="btn tertiary">Learn more</div>
+                    <div class="btn secondary wide thin">Add</div>
                 </div>
             </div>            
         </div>

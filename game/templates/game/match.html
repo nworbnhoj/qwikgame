@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="drop_down icon head_more">
-                    <div class="button drop todo" data-down="false">
+                    <div class="btn drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
@@ -46,10 +46,10 @@
                         <div class="button thin">more 3</div>
                     </div>
                 </div>
-                <a class="button naked head_back" href="{% url 'match' match=prev %}">
+                <a class="btn special2 head_back" href="{% url 'match' match=prev %}">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
                 </a>
-                <a class="button naked head_fwd" href="{% url 'match' match=next %}">
+                <a class="btn special2 head_fwd" href="{% url 'match' match=next %}">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
@@ -73,7 +73,7 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
-                    <div class="button icon todo">
+                    <div class="btn special2 todo">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="button link toggle_previous_sibling align_center">
+            <div class="btn tertiary toggle_previous_sibling align_center">
                 <span class="tog">Show invitation history</span>
                 <span class="tog hidden">Hide invitation history</span>
             </div>  
@@ -114,7 +114,7 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
-                    <div class="button icon todo">
+                    <div class="btn special2 todo">
                         <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                     </div>
                     <div class="chat_bubble">

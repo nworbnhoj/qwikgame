@@ -1,7 +1,7 @@
 <!-- qwikgame/templates/input_delete.html -->
 <label class="option" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
     <p>{{ widget.label }}</p>
-    <div class="button tiny checkbox_wrap">
+    <div class="btn tiny checkbox_wrap">
         <input {% if widget.attrs.id %} id="{{ widget.attrs.id }}"{% endif %} type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}/>
         <i class="fa-solid fa-trash"></i>
     </div>

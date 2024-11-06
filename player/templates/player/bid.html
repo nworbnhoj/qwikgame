@@ -39,26 +39,26 @@
                 </div>
             </div>
             <div class="drop_down icon head_more">
-                <div class="button drop todo" data-down="false">
+                <div class="btn drop todo" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="button thin">more 1</div>
-                    <div class="button thin">more 2</div>
-                    <div class="button thin">more 3</div>
+                    <div class="btn secondary thin">more 1</div>
+                    <div class="btn secondary thin">more 2</div>
+                    <div class="btn secondary thin">more 3</div>
                 </div>
             </div>
-            <a class="button naked head_back" href="/player/feed/{{ prev }}/">
+            <a class="btn special2 head_back" href="/player/feed/{{ prev }}/">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
             </a>
-            <a class="button naked head_fwd" href="/player/feed/{{ next }}/">
+            <a class="btn special2 head_fwd" href="/player/feed/{{ next }}/">
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
         <div class="post">
 {% for entry in appeal.log %}
             <div class="log_entry align_start {{ entry.klass }}">
-                <div class="button icon todo">
+                <div class="btn special2 todo">
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
@@ -70,7 +70,7 @@
         </div>
         <div class="post todo">
             <div class="chat_item align_start">
-                <div class="button icon">
+                <div class="btn special2">
                     <i class="fa-brands fa-redhat fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
@@ -88,7 +88,7 @@
 {% csrf_token %}
 {{ bid_form }}
             <div class="paver">
-                <input class="cta push_down" type="submit" name='accept'value='ACCEPT'>
+                <input class="btn primary push_down" type="submit" name='accept'value='ACCEPT'>
             </div>
             </form>
 {% endif %}

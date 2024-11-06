@@ -3,7 +3,7 @@
     <div class="tabs">
 {% spaceless %}
 {% for widget in widget.subwidgets %}
-        <div class="button tab thin {% if forloop.counter0 == 0 %}active{% endif %}">
+        <div class="btn special2 thin {% if forloop.counter0 == 0 %}active{% endif %}">
             {{ widget.attrs.label }}
         </div>
 {% endfor %}

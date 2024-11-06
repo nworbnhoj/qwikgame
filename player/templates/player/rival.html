@@ -26,7 +26,7 @@
             <h1>Rival Rating</h1>
 
             <div class="drop_down">
-                <div class="button drop" data-down="false">
+                <div class="btn drop" data-down="false">
                     <div>Group by</div>
                     <div class="fat">v</div>
                 </div>
@@ -61,7 +61,7 @@
         <div class="group">
             <label class="toggle">
                 <input type="radio" name="list" data-id="A">
-                <div class="button item unread">
+                <div class="btn item unread">
                     <div class="pole notes">
                         <div class="note">
                             <span class="icon">
@@ -91,7 +91,7 @@
             </label>
             <label class="toggle">
                 <input type="radio" name="list" data-id="B">
-                <div class="button item">
+                <div class="btn item">
                     <div class="pole notes">
                         <div class="note">
                             <span class="icon">
@@ -157,21 +157,21 @@
                     </div>
                 </div>
                 <div class="drop_down icon head_more">
-                    <div class="button drop todo" data-down="false">
+                    <div class="btn drop todo" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
-                        <div class="button thin">more 1</div>
-                        <div class="button thin">more 2</div>
-                        <div class="button thin">more 3</div>
+                        <div class="btn secondary thin">more 1</div>
+                        <div class="btn secondary thin">more 2</div>
+                        <div class="btn secondary thin">more 3</div>
                     </div>
                 </div>
-                <div class="button head_back">
+                <a class="btn special2 head_back" href="">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
-                </div>
-                <div class="button head_fwd">
+                </a>
+                <a class="btn special2 head_fwd" href="">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
-                </div>
+                </a>
             </div>
             <div class="detail_rival">
                 <div class="rival_aberation">
@@ -184,7 +184,7 @@
                         <div class="radio_block rival_rate_grid">
                             <label class="toggle wide">
                                 <input type="radio" name="all_week">
-                                <div class="button ctb auto">
+                                <div class="btn secondary auto">
                                     <i class="fa-solid fa-thumbs-down fa-2x"></i>
                                     <div class="post">
                                         <p>Bad</p>
@@ -194,7 +194,7 @@
                             </label>
                             <label class="toggle wide">
                                 <input type="radio" name="all_week" checked="checked">
-                                <div class="button ctb auto">
+                                <div class="btn secondary auto">
                                     <i class="fa-solid fa-thumbs-up fa-2x"></i>
                                     <div class="post">
                                         <p>Good</p>
@@ -216,7 +216,7 @@
                     </div>
                     <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 </div>
-                <div class="button cta push_down wide">
+                <div class="btn primary push_down wide">
                     <p>SUBMIT</p>
                 </div>
             </div>
@@ -246,12 +246,12 @@
                         <p>Vasil Levski, Sofia, Bulgaria.</p>
                     </div>
                 </div>
-                <div class="button head_back">
+                <a class="btn special2 head_back" href="">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
-                </div>
-                <div class="button head_fwd">
+                </a>
+                <a class="btn special2 head_fwd" href="">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
-                </div>
+                </a>
             </div>
         </div>
 {% endblock %}

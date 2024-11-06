@@ -20,7 +20,7 @@
             </div>
             <h1>Invitation Filters</h1>
             <div class="push_right">
-                <a class="button ctb" href="{% url 'filter' %}">
+                <a class="btn secondary" href="{% url 'filter' %}">
                     <i class="fa-solid fa-plus fa-xl"></i>
                     <p>Add</p>
                 </a>
@@ -33,8 +33,8 @@
 {% csrf_token %}
 {{ filters_form }}
                     <div class="grid_2_col">
-                        <input class="ctc push_down" name="DELETE" type="submit" value="REMOVE" onclick="return confirm('Delete these Filters?')">
-                        <input class="cta push_down" name="ACTIVATE" type="submit" value="APPLY">
+                        <input class="btn tertiary push_down" name="DELETE" type="submit" value="REMOVE" onclick="return confirm('Delete these Filters?')">
+                        <input class="btn primary push_down" name="ACTIVATE" type="submit" value="APPLY">
                     </div>
                 </form>
             </div>

@@ -11,21 +11,55 @@ blockquote, q { quotes: "" "" }
 .align_center { align-self: center }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
-.button { align-items: center; border: 1px solid black; color: black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em; text-decoration: none }
-.button:hover { background-color: #eeeeee }
-.button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
-.button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
-.button.item div.note { width: 100% }
-.button.item div.notes { flex: 1 1 0; overflow:hidden; }
-.button.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
-.button.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.button.item.unread { font-weight: bold }
-.button.item.unread div.icon { color: #dfa622 }
-.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
+.btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 0.3em 1em 0.3em 1em; text-decoration: none; text-overflow: ellipsis;}
+.btn:focus { outline: 0.2em solid #fffb00; }
+
+.btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333; font-size: 1.13em; text-transform: uppercase; }
+.btn.primary:active { background-color: #e09900; border-color: #e09900 }
+.btn.primary:checked {}
+.btn.primary:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999 }
+.btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
+
+.btn.secondary { background-color: #ffffff; border-color: #333333; color: #333333; font-size: 1.13em; }
+.btn.secondary:active { background-color: #c7d1e5; border-color: #c7d1e5 }
+.btn.secondary:checked { background-color: #d8dfed; border-color: #d8dfed }
+.btn.secondary:disabled { border-color: #cccccc; color: #999999 }
+.btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }
+
+.btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
+.btn.tertiary:active { background-color: #c7d1e5; border-color: c7d1e5; }
+.btn.tertiary:checked {}
+.btn.tertiary:disabled { color: #999999;  }
+.btn.tertiary:hover { background-color: #d8dfed; border-color: #d8dfed; }
+
+.btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; }
+.btn.special1:active { background-color: #e09900; border-color: #e09900 }
+.btn.special1:checked {}
+.btn.special1:disabled { background-color: #cccccc; border-color: #cccccc; }
+.btn.special1:hover { background-color: #f5a600; border-color: #f5a600; }
+
+.btn.special2 { background-color: #ffffff; border-color: #ffffff; color: #333333; margin: 0px; text-decoration: none; }
+.btn.special2:active { background-color: #c7d1e5; border-color: c7d1e5; }
+.btn.special2:checked { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
+.btn.special2:disabled {}
+.btn.special2:hover { background-color: #d8dfed; border-color: #d8dfed; }
+.btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
+
+.btn.info { border: 0.1em solid black; border-radius: 50% }
+.btn.secondary.hr { min-width: 3em; }
+.btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
+.btn.tiny { height: 1em; width: 1em; }
+
+.btn.keen_mobile { bottom: 4em; position: fixed; right: 2em }
+.btn.lge { height: 6em; width: 6em; }
+.btn.link { color: blue; height: auto; text-align: center; text-decoration-line: underline }
+.btn.med { height: 3em; width: 3em; }
+.btn.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
+.btn.sml { height: 1.5em; width: 1.5em; }
+.btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
+
+
 .color { color: #dfa622 }
-.cta { background-color: #dfa622; border: 0px solid #dfa622; color: white; font-size: 1.13em; padding: 1em;  text-transform: uppercase; }
-.ctb { background-color: inherit; border: 2px solid #dfa622; color: black; font-size: 1.13em; padding: 1em;  text-transform: uppercase; }
-.ctc { background-color: transparent; border: 0px; color: blue; height: auto; text-align: center; text-decoration-line: underline }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
 .cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .disabled { border-color: #aaaaaa; color: #aaaaaa }
@@ -36,49 +70,33 @@ blockquote, q { quotes: "" "" }
 .head_more { order: 30 }
 .head_txt { order: 20 }
 .hidden { display: none }
+
+.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
+.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
+.item div.note { width: 100% }
+.item div.notes { flex: 1 1 0; overflow:hidden; text-overflow: ellipsis;}
+.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
+.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.item.unread { font-weight: bold }
+.item.unread div.icon { color: #dfa622 }
+
 .invisible { visibility: hidden }
-.naked {border-width: 0px }
 .push_down { margin-top: 4em; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
-.round { border-radius: 50%; }
+.round { border-radius: 50%; padding: 0.3em;}
 .selected { color: #dfa622 }
-.sml { height: 1.5em; width: 1.5em; }
+.sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
 .wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { align-items: center; display: flex; }
 div.banner { background-color: lightgrey; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.banner.live { background-color: #dfa622; }
-div.button { border: 0px solid black; cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; height: 3em; justify-content: center; text-align: center; padding: 0.3em }
-div.button a { border: 0px solid black; }
-div.button i { }
-div.button p { }
-div.button:hover { background-color: #eeeeee }
-div.button.add { border: 0.1em dashed grey; gap: 1em; justify-content: center; padding: 0.5em; width: 100% }
-div.button.auto { height: auto; width: 100%; }
-div.button.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em; text-transform: uppercase; }
-div.button.ctb { border-width: 1px; color: black; font-size: 1.13em; height: auto; padding: 0em 0.3em 0em 0.3em; text-transform: uppercase;  }
-div.button.hr { border: 1px solid black; border-radius: 0.3em; height: 1.7em; justify-content: center; padding: 0.3em; width: 100% }
-div.button.info { border: 0.1em solid black; border-radius: 50% }
-div.button.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
-div.button.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
-div.button.item div.note { width: 100% }
-div.button.item div.notes { flex: 1 1 0; overflow:hidden; }
-div.button.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
-div.button.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-div.button.item.unread { font-weight: bold }
-div.button.item.unread div.icon { color: #dfa622 }
-div.button.keen_mobile { bottom: 4em; position: fixed; right: 2em }
-div.button.lge { height: 6em; width: 6em; }
-div.button.link { color: blue; height: auto; text-align: center; text-decoration-line: underline }
-div.button.med { height: 3em; width: 3em; }
-div.button.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
-div.button.round { border-radius: 50% }
-div.button.sml { height: 1.5em; width: 1.5em; }
-div.button.tab { border: none }
-div.button.thin { height: 2em; margin: 0.1em; padding: 0.3em }
-div.button.tiny { height: 1em; width: 1em; }
+
+.btn.auto { height: auto; width: 100%; }
+
+
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
@@ -97,7 +115,7 @@ div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 1.8em; white-space: nowrap; width: 100%; z-index: 10 }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
 div.down div { justify-content: space-between; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
@@ -105,7 +123,7 @@ div.down label:has(input:checked) { color: #dfa622 }
 div.drop_down { flex-direction: column; position: relative; }
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
-div.drop { align-items: center; border: 1px solid black; border-radius: 0.2em; display: flex; flex-direction: row; font-size: 1em; height: 1.7em; justify-content: space-between; width: 100% }
+div.drop { justify-content: space-between; width: 100% }
 div.drop_up {}
 div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
@@ -115,8 +133,6 @@ div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
-div.group { align-items: stretch; flex-direction: column; flex: 0 0 auto; gap: 0.5em; justify-content: start }
-div.group label { width: 100% }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
@@ -135,12 +151,8 @@ div.info .info_text::after { border-color: transparent transparent black transpa
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
 div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
-div.list a { align-items: center; border: 0px solid black; color: inherit; cursor: pointer; display: flex; flex: 0 0 auto; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; text-align: center; text-decoration-line: none; padding: 0.3em; width: 100% }
-div.list a.add { border: 1px dashed black; justify-content: left; height: 2em }
-div.list a.cta { background-color: #dfa622; color: white; font-size: 1.13em; padding: 1em }
-div.list a.selected { color: #dfa622 }
 div.list_bar { align-items: start; flex: 0 1 31.25%; justify-content: start; }
-div.list_head { align-items: start; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.list_head { align-items: center; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.log_entry.chat {}
 div.log_entry.event {}
@@ -203,25 +215,25 @@ label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em; width:100% }
 label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
-label.option div.button { height: 1em }
+label.option div.btn { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }
 label.switch { display: inline-block; height: 2em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 label.toggle.hour { width: 100% }
-label.toggle:has(input:checked).all_day div.button { border: 3px solid #dfa622 }
-label.toggle:has(input:checked).all_week div.button { border: 3px solid #dfa622 }
-label.toggle:has(input:checked) div.button.hr { border: 3px solid #dfa622 }
-label.toggle:has(input:checked):has([name="games"]) div.button { color: #dfa622 }
+label.toggle:has(input:checked).all_day div.btn { border: 3px solid #dfa622 }
+label.toggle:has(input:checked).all_week div.btn { border: 3px solid #dfa622 }
+label.toggle:has(input:checked).btn.hr { border: 3px solid #dfa622 }
+label.toggle:has(input:checked):has([name="games"]) div.btn { color: #dfa622 }
 label.toggle:has(input.hidden) { display: none }
-label.toggle:has(input:disabled) div.button { border-width: 0px; background-color: #eeeeee }
+label.toggle:has(input:disabled).btn { border-width: 0px; background-color: #eeeeee }
 legend { padding: 1em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
 p.caption { color: #777777; font-size: small }
 p.large { color: #666666; font-size: large }
-p.line { height: 1.6em; text-overflow: ellipsis; }
+p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden	; text-overflow: ellipsis; word-wrap: break-word; }
 p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
@@ -230,19 +242,19 @@ span.qwik { color: #dfa622 }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
 @media only screen and (max-width:600px) {
     div.flex_space { display: none }
-    p.fat { display: none }
+    span.fat { display: none }
     span.full_day { display: none }
     span.mid_day { display: none }
 }
 @media only screen and (min-width:600px) {
     div.flex_space { display: none }
-    p.fat { display: none }
+    span.fat { display: none }
     span.full_day { display: none }
     span.mid_day { display: inline-block }
 }
 @media only screen and (min-width:768px) {
     div.flex_space { display: block }
-    p.fat { display: block }
+    span.fat { display: block }
     span.full_day { display: inline-block }
     span.mid_day { display: inline-block }
 }

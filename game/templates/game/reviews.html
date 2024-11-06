@@ -16,7 +16,7 @@
         <div class="list_bar_head">
             <h1>Match Reviews</h1> 
             <div class="drop_down todo">
-                <div class="button drop" data-down="false">
+                <div class="btn drop" data-down="false">
                     <div>Group by</div>
                     <div class="fat" aria-hidden="true">v</div>
                 </div>
@@ -39,7 +39,7 @@
         <hr>
         <div class="group">
 {% for review in reviews %}
-            <a class="button item" href="{% url target review=review.pk %}">
+            <a class="btn item" href="{% url target review=review.pk %}">
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">

@@ -81,7 +81,7 @@
             <a href="{% url 'filters' %}">filtered</a>
 {% endif %}
         </h2>
-        <div class="group">
+        <div class="post group">
 {% for appeal in appeals %}
             <a class="btn secondary item {{ unread }}" href="{% url 'bid' appeal.pk %}">
                 <div class="pole notes">

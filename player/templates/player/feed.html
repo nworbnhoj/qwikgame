@@ -7,7 +7,7 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-    <a class="btn primary round lge cta_mobile" href="{% url 'keen' %}">
+    <a class="btn special1 mobile" href="{% url 'keen' %}">
     <i class="fa-solid fa-paper-plane fa-3x"></i>
     </a>
 {% endif %}
@@ -16,9 +16,9 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-    <a class="btn primary wide" href="{% url 'keen' %}">
+    <a class="btn special1" href="{% url 'keen' %}">
         <i class="fa-solid fa-paper-plane fa-xl"></i>
-        <p>INVITE</p>
+        <p>Invite</p>
     </a>
 {% endif %}
 {% endblock %}

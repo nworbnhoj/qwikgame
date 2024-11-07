@@ -38,12 +38,13 @@ blockquote, q { quotes: "" "" }
 .btn.tertiary:has(input:checked) {}
 .btn.tertiary:has(input:disabled) {}
 
+.btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; width: 100%}
 
-.btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; }
-.btn.special1:hover { background-color: #f5a600; border-color: #f5a600; }
-.btn.special1:active { background-color: #e09900; border-color: #e09900 }
-.btn.tertiary:has(input:checked) {}
-.btn.tertiary:has(input:disabled) {}
+.btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  }
+.btn.special1:hover { background-color: #f5a600; border-color: #f5a600; color: #ffffff }
+.btn.special1:active { background-color: #e09900; border-color: #e09900;  color: #ffffff }
+.btn.special1:has(input:checked) {}
+.btn.special1:has(input:disabled) {}
 .btn.special1:disabled { background-color: #cccccc; border-color: #cccccc; }
 
 
@@ -70,7 +71,6 @@ blockquote, q { quotes: "" "" }
 
 .color { color: #dfa622 }
 .cta_desktop { padding: 1em 0 3em 0; width: 100% }
-.cta_mobile { bottom: 4em; position: fixed; right: 2em }
 .disabled { border-color: #aaaaaa; color: #aaaaaa }
 .errorlist { color: red; }
 .head_back { order: 40 }
@@ -97,7 +97,6 @@ blockquote, q { quotes: "" "" }
 .selected { color: #dfa622 }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
-.wide { width: 100% }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { align-items: center; display: flex; }
 div.banner { background-color: lightgrey; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }

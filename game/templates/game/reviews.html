@@ -5,10 +5,23 @@
 {% block title %}Review{% endblock %}
 
 
-{% block cta_mobile %}{% endblock %}
+{% block cta_mobile %}
+{% if small_screen %}
+    <a class="btn special1 mobile" href="">
+    <i class="fa-solid fa-thumbs-up fa-3x"></i>
+    </a>
+{% endif %}
+{% endblock %}
 
 
-{% block cta_desktop %}{% endblock %}
+{% block cta_desktop %}
+{% if big_screen %}
+    <a class="btn special1" href="">
+        <i class="fa-solid fa-thumbs-up fa-xl"></i>
+        <p>Review</p>
+    </a>
+{% endif %}
+{% endblock %}
 
 
 {% block list %}

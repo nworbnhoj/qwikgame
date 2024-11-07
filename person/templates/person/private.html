@@ -31,7 +31,7 @@
                             <p>{{ email }}</p>
                             <div class="label">
                                 <label for="id_icon">RECEIVE NOTIFICATIONS</label>
-                                <div class="btn info sml push_right" data-visible="false">
+                                <div class="btn secondary small round push_right info" data-visible="false">
                                     <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
                                     <div class="info_text hidden">Qwikgame can notify you about Match events</div>
                                 </div>
@@ -39,7 +39,7 @@
 {% csrf_token %}
 {{ private_form }}
 {{ blocked_form }}
-                            <input class="btn primary push_down wide schedule_save" type="submit" value="SAVE">
+                            <input class="btn primary push_down schedule_save" type="submit" value="SAVE">
                         </div>
                     </form>
                 </div>

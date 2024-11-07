@@ -60,6 +60,7 @@ div#map {
 	height: 30em;
 	position:absolute;
 /*	top:1.8em;*/
+    width: 100%;
 	z-index: 4
 }
 

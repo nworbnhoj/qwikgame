@@ -12,7 +12,7 @@ blockquote, q { quotes: "" "" }
 .align_end { align-self: flex-end }
 .align_start { align-self: flex-start }
 
-.btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 0.3em 1em 0.3em 1em; text-decoration: none; text-overflow: ellipsis;}
+.btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550;  gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 1.25em 1.5em 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis;}
 .btn:focus { outline: 0.2em solid #fffb00; }
 .btn:has(input.hidden) { display: none }
 
@@ -31,6 +31,7 @@ blockquote, q { quotes: "" "" }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }
 
 .btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
+.btn.tertiary.menu { text-decoration: none; }
 .btn.tertiary:hover { background-color: #d8dfed; border-color: #d8dfed; }
 .btn.tertiary:active { background-color: #c7d1e5; border-color: c7d1e5; }
 .btn.tertiary:has(input:checked) {}
@@ -51,15 +52,14 @@ blockquote, q { quotes: "" "" }
 .btn.special2:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 
-.btn.info { border: 0.1em solid black; border-radius: 50% }
-.btn.secondary.hr { min-width: 3em; }
+.btn.large { font-size: 1.13em; }
+.btn.small { font-size: 0.88em; }
+.btn.square { aspect-ratio: 1 / 1; }
+.btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }
+
 .btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .btn.tiny { height: 1em; width: 1em; }
 
-.btn.keen_mobile { bottom: 4em; position: fixed; right: 2em }
-.btn.lge { height: 6em; width: 6em; }
-.btn.link { color: blue; height: auto; text-align: center; text-decoration-line: underline }
-.btn.med { height: 3em; width: 3em; }
 .btn.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
 .btn.sml { height: 1.5em; width: 1.5em; }
 .btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }

@@ -41,9 +41,9 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
-                        <div class="btn secondary thin">more 1</div>
-                        <div class="btn secondary thin">more 2</div>
-                        <div class="btn secondary thin">more 3</div>
+                        <div class="btn tertiary menu">more 1</div>
+                        <div class="btn tertiary menu">more 2</div>
+                        <div class="btn tertiary menu">more 3</div>
                     </div>
                 </div>
                 <a class="btn special2 head_back" href="{% url target review=prev %}">
@@ -59,7 +59,7 @@
                     <form action="{% url target review=review.id %}" method="post">
     {% csrf_token %}
     {{ review_form }}
-                        <input class="btn secondary push_down wide schedule_save" type="submit" value="SUBMIT">
+                        <input class="btn secondary push_down schedule_save" type="submit" value="SUBMIT">
                     </form>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <div class="pole">
                         <h2>REPUTATION</h2>
                         <div class="radio_block rival_rate_grid">
-                            <label class="toggle wide">
+                            <label class="toggle">
                                 <input type="radio" name="all_week">
                                 <div class="btn secondary auto">
                                     <i class="fa-solid fa-thumbs-down fa-2x"></i>
@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
                             </label>
-                            <label class="toggle wide">
+                            <label class="toggle">
                                 <input type="radio" name="all_week" checked="checked">
                                 <div class="btn secondary auto">
                                     <i class="fa-solid fa-thumbs-up fa-2x"></i>
@@ -106,7 +106,7 @@
                     </div>
                     <input class="strength" type="range" min="0" max="4" value="2" oninput="slide(this)">
                 </div>
-                <div class="btn primary push_down wide">
+                <div class="btn primary push_down">
                     <p>SUBMIT</p>
                 </div>
             </div>

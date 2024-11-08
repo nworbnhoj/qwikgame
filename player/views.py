@@ -56,6 +56,8 @@ class FeedView(QwikView):
         appeal = context.get('appeal')
         if not appeal: 
             return render(request, self.template_name, context)
+        elif appeal.player == self.user.player:
+            return HttpResponseRedirect(f'/player/feed/accept/{appeal.id}/')
         return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 

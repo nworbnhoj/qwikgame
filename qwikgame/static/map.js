@@ -731,15 +731,20 @@ function endowMark(key, mark){
   
   const K = key.split('|');
   mark.name = K[0];
+  size = mark.size.toString();
   if(K.length === 4){  // venue Mark
-    size = mark.size.toString();
-    mark.marker.setLabel(size);
+    mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players');
     google.maps.event.addListener(mark.marker, 'click', () => {
       setPlace(mark.placeid, mark.name)
     });      
   } else {  // metaMark
-    mark.marker.setIcon(REGION_ICON);
+    var icon = {
+      url: REGION_ICON,
+      anchor: new google.maps.Point(120,120)
+    };
+    mark.marker.setIcon(icon);
+    mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'xx-large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     google.maps.event.addListener(mark.marker, 'click', () => {

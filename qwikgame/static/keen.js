@@ -9,8 +9,8 @@ docReady(event => {
 
 winReady(event => {});
 
-const INFOWINDOW_REGION_LINK = false;
-const INFOWINDOW_VENUE_LINK = true;
+const ALLOW_SELECT_REGION = false;
+const ALLOW_SELECT_VENUE = true;
 
 function initPage(){
     // document.getElementById('name').focus();

@@ -735,9 +735,11 @@ function endowMark(key, mark){
   if(K.length === 4){  // venue Mark
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players');
-    google.maps.event.addListener(mark.marker, 'click', () => {
-      setPlace(mark.placeid, mark.name)
-    });      
+    if (ALLOW_SELECT_VENUE){
+      google.maps.event.addListener(mark.marker, 'click', () => {
+        setPlace(mark.placeid, mark.name)
+      });
+    }
   } else {  // metaMark
     var icon = {
       url: REGION_ICON,
@@ -747,9 +749,11 @@ function endowMark(key, mark){
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'xx-large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
-    google.maps.event.addListener(mark.marker, 'click', () => {
-      setPlace(mark.placeid, mark.name)
-    }); 
+    if (ALLOW_SELECT_REGION){
+      google.maps.event.addListener(mark.marker, 'click', () => {
+        setPlace(mark.placeid, mark.name)
+      }); 
+    }
   }
   return mark;
 }

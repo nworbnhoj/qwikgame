@@ -53,9 +53,10 @@ class FeedView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        invite = kwargs.get('item')
-        if not invite: 
+        appeal = context.get('appeal')
+        if not appeal: 
             return render(request, self.template_name, context)
+        return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
 class AcceptView(FeedView):

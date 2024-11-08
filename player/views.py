@@ -402,14 +402,14 @@ class FriendsView(QwikView):
     template_name = 'player/friends.html'
 
     def context(self, request, *args, **kwargs):        
-        kwargs['items'] = Friend.objects.filter(player=self.user.player)
+        kwargs['items'] = Friend.objects.filter(player=self.user.player).order_by('name')
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend', kwargs['items'].first().pk)
         logger.warn(kwargs['pk'])
         super().context(request, *args, **kwargs)
         self._context |= {
             'friend': self._context['item'],
-            'friends': self._context['items'].order_by('name'),
+            'friends': self._context['items'],
             'friend_tab': 'selected',
             'player_id': self.user.player.facet(),
             'target': 'friend',

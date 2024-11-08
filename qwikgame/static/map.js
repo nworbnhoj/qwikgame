@@ -478,7 +478,7 @@ function showMarks(){
     if(!MARK) { continue; }
     const SUB_KEYS = OBSERVABLE.get(KEY);
     const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
-    if(REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
+    if(2*REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, KEYS);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));

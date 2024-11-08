@@ -81,7 +81,7 @@ class Player(models.Model):
             appeal_qs = Appeal.objects.all()
         # TODO include direct invites
         # TODO exclude Blocked Players
-        return appeal_qs.distinct()
+        return appeal_qs.order_by('pk').distinct()
 
     def friend_choices(self):
         choices={}

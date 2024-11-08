@@ -42,20 +42,23 @@
             </div>
         </div>
         <div class="post">
-{% for friend in friends %}
-            <a class="btn secondary item" href="{% url 'friend' friend=friend.pk %}">
+{% for fri in friends %}
+            <a class="btn secondary item" href="{% url 'friend' friend=fri.pk %}">
+{% if fri.pk == friend.pk %}
+                <input type="checkbox" name="selected" checked='checked' hidden>
+{% endif %}
                 <div class="post notes">
                     <div class="note">
                         <span class="icon">
-                            <i class="{{ friend.icon }} fa-1x"></i>
+                            <i class="{{ fri.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ friend.name }}</p>
+                        <p class="line">{{ fri.name }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-email fa-1x"></i>
                         </span>
-                        <p>{{ friend.email }}</p>
+                        <p>{{ fri.email }}</p>
                     </div>
                 </div>
                 <div class="pole badges">

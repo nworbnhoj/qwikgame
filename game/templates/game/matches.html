@@ -54,30 +54,33 @@
             <span>▲</span>
         </h2>
         <div class="post group">
-{% for match in matches_future %}
-            <a class="btn secondary item" href="{% url target match=match.pk %}">
+{% for mat in matches_future %}
+            <a class="btn secondary item" href="{% url target match=mat.pk %}">
+{% if mat.pk == match.pk %}
+                <input type="checkbox" name="selected" checked='checked' hidden>
+{% endif %}
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
-                            <i class="{{ match.game.icon }} fa-1x"></i>
+                            <i class="{{ mat.game.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ match.game }}</p>
+                        <p class="line">{{ mat.game }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>{{ match.venue_date_str }}</p>
+                        <p>{{ mat.venue_date_str }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ match.venue}}</p>
+                        <p>{{ mat.venue}}</p>
                     </div>
                 </div>
                 <div class="pole badges">
-                    <div class="icon round badge">{{ match.venue_hour_str }}h</div>
+                    <div class="icon round badge">{{ mat.venue_hour_str }}h</div>
                 </div>
             </a>
 {% empty %}
@@ -89,26 +92,29 @@
             <span>▲</span>
         </h2>
         <div class="post group">
-{% for match in matches_past %}
-            <a class="btn secondary item" href="{% url target match=match.pk %}">
+{% for mat in matches_past %}
+            <a class="btn secondary item" href="{% url target match=mat.pk %}">
+{% if mat.pk == match.pk %}
+                <input type="checkbox" name="selected" checked='checked' hidden>
+{% endif %}
                 <div class="pole notes">
                     <div class="note">
                         <span class="icon">
-                            <i class="{{ match.game.icon }} fa-1x"></i>
+                            <i class="{{ mat.game.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ match.game }}</p>
+                        <p class="line">{{ mat.game }}</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        <p>{{ match.venue_date_str }} {{ match.venue_hour_str }}h</p>
+                        <p>{{ mat.venue_date_str }} {{ mat.venue_hour_str }}h</p>
                     </div>
                     <div class="note">
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ match.venue}}</p>
+                        <p>{{ mat.venue}}</p>
                     </div>
                 </div>
             </a>

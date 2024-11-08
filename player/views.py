@@ -56,8 +56,6 @@ class FeedView(QwikView):
         appeal = context.get('appeal')
         if not appeal: 
             return render(request, self.template_name, context)
-        elif appeal.player == self.user.player:
-            return HttpResponseRedirect(f'/player/feed/accept/{appeal.id}/')
         return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
@@ -141,6 +139,9 @@ class BidView(FeedView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
+        appeal = self._context.get('appeal')
+        if appeal.player == self.user.player:
+            return HttpResponseRedirect(f'/player/feed/accept/{appeal.id}/')
         context |= self.bid_form_class.get(context.get('appeal'))
         return render(request, self.template_name, context)
 

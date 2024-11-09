@@ -742,9 +742,10 @@ function endowMark(key, mark){
   } else {  // metaMark
     var icon = {
       url: REGION_ICON,
-      anchor: new google.maps.Point(120,120)
+      anchor: new google.maps.Point(100,100)
     };
     mark.marker.setIcon(icon);
+    mark.marker.setShape({type:'rect', coords:[20, 80, 180, 120]})
     mark.marker.setLabel({text:mark.name, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);

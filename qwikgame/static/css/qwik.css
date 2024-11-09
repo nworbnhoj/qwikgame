@@ -26,7 +26,7 @@ blockquote, q { quotes: "" "" }
 .btn.secondary { background-color: #ffffff; border-color: #333333; color: #333333; }
 .btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }
 .btn.secondary:active { background-color: #c7d1e5; border-color: #c7d1e5 }
-.btn.secondary:disabled { border-color: #cccccc; color: #999999 }.btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
+.btn.secondary:disabled { border-color: #cccccc; color: #999999 }
 .btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }
 

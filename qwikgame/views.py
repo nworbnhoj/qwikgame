@@ -60,8 +60,12 @@ class QwikView(BaseView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         items = kwargs.get('items')
-        item_pk = kwargs.get('pk')
-        if items and items.first() and item_pk:
+        if items and items.first():
+            item_pk = kwargs.get('pk')
+            if item_pk:
+                self._context['item'] = items.filter(pk=item_pk).first()
+            else:
+                item_pk = items.first()
             prev_pk = items.last().pk
             next_pk = items.first().pk
             found = False
@@ -74,7 +78,6 @@ class QwikView(BaseView):
                 else:
                     prev_pk = i.pk
             self._context |= {
-                'item': items.filter(pk=item_pk).first(),
                 'next': next_pk,
                 'prev': prev_pk,
             }

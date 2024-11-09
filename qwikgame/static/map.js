@@ -730,9 +730,8 @@ function endowMark(key, mark){
   mark.marker = new google.maps.Marker(OPTIONS);
   
   const K = key.split('|');
-  mark.name = K[0];
-  size = mark.size.toString();
   if(K.length === 4){  // venue Mark
+    size = mark.size.toString();
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players');
     if (ALLOW_SELECT_VENUE){
@@ -746,7 +745,7 @@ function endowMark(key, mark){
       anchor: new google.maps.Point(120,120)
     };
     mark.marker.setIcon(icon);
-    mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'xx-large'});
+    mark.marker.setLabel({text:mark.name, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     if (ALLOW_SELECT_REGION){

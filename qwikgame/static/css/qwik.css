@@ -95,7 +95,7 @@ blockquote, q { quotes: "" "" }
 .todo { display: none; border: 3px dotted SkyBlue }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { align-items: center; display: flex; }
-div.banner { background-color: lightgrey; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
+div.banner {background-color: lightgrey; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.banner.live { background-color: #dfa622; }
 
 .btn.auto { height: auto; width: 100%; }

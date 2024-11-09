@@ -27,7 +27,7 @@ class FeedView(QwikView):
         feed = player.feed()
         kwargs['items'] = feed
         if kwargs['items'].first():
-            kwargs['pk'] = kwargs.get('appeal', kwargs['items'].first().pk)
+            kwargs['pk'] = kwargs.get('appeal')
         super().context(request, *args, **kwargs)
         participate = Appeal.objects.filter(bid__rival=player)
         participate |= Appeal.objects.filter(player=player)
@@ -40,7 +40,7 @@ class FeedView(QwikView):
         feed_list.sort(key=lambda x: x.last_hour, reverse=True)
         feed_list.sort(key=lambda x: x.date)
         self._context |= {  
-            'appeal': self._context['item'],
+            'appeal': self._context.get('item'),
             'appeals': feed_list[:100],
             'feed_tab': 'selected',
             'feed_length': len(feed_list),
@@ -56,7 +56,6 @@ class FeedView(QwikView):
         appeal = context.get('appeal')
         if not appeal: 
             return render(request, self.template_name, context)
-        return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
 class AcceptView(FeedView):

@@ -33,8 +33,15 @@
 {% csrf_token %}
 {{ filters_form }}
                     <div class="grid_2_col">
-                        <input class="btn tertiary push_down" name="DELETE" type="submit" value="REMOVE" onclick="return confirm('Delete these Filters?')">
-                        <input class="btn primary push_down" name="ACTIVATE" type="submit" value="APPLY">
+                        <label class="btn tertiary push_down">
+                            <input hidden name="DELETE" type="submit"
+                            onclick="return confirm('Delete these Filters?')">
+                            Remove
+                        </label>
+                        <label class="btn primary push_down">
+                            <input hidden name="ACTIVATE" type="submit">
+                            Apply
+                        </label>
                     </div>
                 </form>
             </div>

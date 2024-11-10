@@ -49,11 +49,13 @@
                 <form action="{% url 'keen' %}" method="post">
 {% csrf_token %}
 {{ keen_form }}
-                    <label class="btn primary push_down">
-                        <input type="submit" hidden>
-                        <i class="fa-solid fa-paper-plane fa-xl"></i>
-                        <span>INVITE</span>
-                    </label>
+                    <div class="pillar">
+                        <label class="btn primary push_down">
+                            <input hidden type="submit">
+                            <i class="fa-solid fa-paper-plane fa-xl"></i>
+                            <span>Invite</span>
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>

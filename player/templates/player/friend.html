@@ -64,7 +64,12 @@
                 <form action="{% url target friend=friend.pk %}" method="post">
 {% csrf_token %}
 {{ form }}
-                    <input class="btn secondary push_down" name="ADD" type="submit" value="SUBMIT">
+                    <div class="pillar">
+                        <label class="btn secondary push_down">
+                            <input hidden name="ADD" type="submit">
+                            Submit
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>

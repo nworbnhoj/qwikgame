@@ -59,7 +59,12 @@
                     <form action="{% url target review=review.id %}" method="post">
     {% csrf_token %}
     {{ review_form }}
-                        <input class="btn secondary push_down schedule_save" type="submit" value="SUBMIT">
+                        <div class="pillar">
+                            <label class="btn primary push_down">
+                                <input hidden type="submit">
+                                Submit
+                            </label>
+                        </div>
                     </form>
                 </div>
             </div>

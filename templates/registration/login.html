@@ -23,8 +23,13 @@
 {% if user.is_authenticated %}
     <div class="paver">
         <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button class="btn secondary" type="submit">Log Out</button>
+            {% csrf_token %}
+            <div class="pillar">
+                <label class="btn secondary push_down">
+                    <input type="submit" hidden>
+                    Log Out
+                </label>
+            </div>
         </form>
     </div>
 {% else %}
@@ -32,7 +37,12 @@
         <form method="post">
           {% csrf_token %}
           {{ form }}
-          <button class='btn primary' type="submit">Log In</button>
+            <div class="pillar">
+                <label class="btn secondary push_down">
+                    <input type="submit" hidden>
+                    Log In
+                </label>
+            </div>
         </form>
     </div>
 {% endif %}

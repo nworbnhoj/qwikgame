@@ -88,7 +88,10 @@
 {% csrf_token %}
 {{ bid_form }}
             <div class="paver">
-                <input class="btn primary push_down" type="submit" name='accept'value='ACCEPT'>
+                <label class="btn primary push_down">
+                    <input hidden type="submit" name='accept'>
+                    Accept
+                </label>
             </div>
             </form>
 {% endif %}

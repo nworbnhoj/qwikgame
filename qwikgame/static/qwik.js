@@ -817,6 +817,17 @@ window.onload = function() {
   document.querySelectorAll('div.tab').forEach(function(div) {
     div.onclick = openTab;
   });
+  document.querySelectorAll("a.btn").forEach(function(element) {
+    element.addEventListener("click", () => {
+      element.classList.add("loader");
+    });
+  });
+  document.querySelectorAll("input[type='submit']").forEach(function(submit) {
+    label = submit.closest('label')
+    label.addEventListener("click", () => {
+      label.classList.add("loader");
+    });
+  });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
   });

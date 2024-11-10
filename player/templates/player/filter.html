@@ -48,7 +48,12 @@
                 <form action="{% url 'filter' %}" method="post">
 {% csrf_token %}
 {{ filter_form }}
-                    <input class="btn secondary push_down schedule_save" type="submit" value="ADD FILTER">
+                    <div class="pillar">
+                        <label class="btn primary push_down">
+                            <input type="submit" hidden>
+                            Add Filter
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>

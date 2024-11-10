@@ -10,8 +10,11 @@
 {% csrf_token %}
 {{ search_form }}
                 <div class="pillar">
-                    <input class="btn primary push_down" type="submit" name='search'value='SEARCH'>
-                    <p>$US0.032 per Text Search</p>
+                    <label class="btn primary push_down">
+                        <input type="submit" name='search'>
+                        Search
+                        <p>$US0.032 per Text Search</p>
+                    </label>
                 </div>
             </form>
         </div>
@@ -23,8 +26,12 @@
 {{ places_form }}
                 <div class="pillar">
                     <h6 style='text-transform: uppercase;'> {{ game }} VENUES</h6>
-                    <input class="btn primary push_down" type="submit" name='add' value='ADD'>
-                    <p>$US0.017 per Venue (Place Details)</p>
+
+                    <label class="btn primary push_down">
+                        <input hidden type="submit" name='add'>
+                        Add
+                        <p>$US0.017 per Venue (Place Details)</p>
+                    </label>
                 </div>
             </form>
         </div>

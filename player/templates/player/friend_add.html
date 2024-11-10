@@ -25,7 +25,12 @@
                 <form action="{% url 'friend_add' %}" method="post">
 {% csrf_token %}
 {{ form }}
-                    <input class="btn secondary push_down" name="ADD" type="submit" value="ADD">
+                    <div class="pillar">
+                        <label class="btn primary push_down">
+                            <input hidden type="submit" name="ADD">
+                            Add
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>

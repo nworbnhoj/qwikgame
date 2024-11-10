@@ -39,7 +39,12 @@
 {% csrf_token %}
 {{ private_form }}
 {{ blocked_form }}
-                            <input class="btn primary push_down schedule_save" type="submit" value="SAVE">
+                            <div class="pillar">
+                                <label class="btn primary push_down">
+                                    <input hidden type="submit">
+                                    Save
+                                </label>
+                            </div>
                         </div>
                     </form>
                 </div>

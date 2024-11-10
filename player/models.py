@@ -62,7 +62,7 @@ class Player(models.Model):
     def feed(self):
         filters = Filter.objects.filter(player=self, active=True)
         if filters:
-            appeal_qs = Appeal.objects.none()            
+            appeal_qs = Appeal.objects.filter(player=self)            
             for f in filters:
                 if f.game:
                     appeal_qs |= Appeal.objects.filter(game=f.game)

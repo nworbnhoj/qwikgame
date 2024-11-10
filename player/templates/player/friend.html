@@ -38,7 +38,10 @@
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="btn tertiary menu">delete</div>
+                    <label class="btn tertiary">
+                        <input hidden form="form" name="DELETE" type="submit" value='{{ friend.pk }}'>
+                        delete
+                    </label>
                 </div>
             </div>
             <a class="btn special2 head_back" href="{% url target friend=prev %}">
@@ -53,9 +56,9 @@
         </div>
         <div class="post form">
 {% if friend %}
-            <form action="{% url target friend=friend.pk %}" method="post">
+            <form id="form" action="{% url target friend=friend.pk %}" method="post">
 {% else %}
-            <form action="{% url 'friend_add' %}" method="post">
+            <form id="form" action="{% url 'friend_add' %}" method="post">
 {% endif %}
 {% csrf_token %}
 {{ friend_form }}

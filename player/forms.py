@@ -301,6 +301,12 @@ class FriendForm(QwikForm):
                 'email': form.cleaned_data['email'],
                 'name': form.cleaned_data['name']
             }
+            if 'DELETE' in request_post:
+                delete = request_post['DELETE']
+                try:
+                    context['DELETE'] = int(delete)
+                except:
+                    logger.warn(f'failed to convert DELETE: {delete}')
         return context
 
 

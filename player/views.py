@@ -496,6 +496,15 @@ class FriendView(FriendsView):
             return render(request, self.template_name, context)
         player = self.user.player
         friend_pk = kwargs.get('friend')
+        if 'DELETE' in context:
+            try:
+                delete_pk = context.get('DELETE')
+                junk = Friend.objects.get(pk=delete_pk)
+                logger.info(f'Deleting friend: {junk}')
+                junk.delete()
+            except:
+                logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
+            return HttpResponseRedirect(f'/player/friend/')
         if 'DELETE_STRENGTH' in context:
             try:
                 delete_pk = context.get('DELETE_STRENGTH')

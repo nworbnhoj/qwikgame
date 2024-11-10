@@ -495,9 +495,18 @@ class FriendView(FriendsView):
         if strength_form and not strength_friend_form.is_valid():
             return render(request, self.template_name, context)
         player = self.user.player
+        friend_pk = kwargs.get('friend')
+        if 'DELETE_STRENGTH' in context:
+            try:
+                delete_pk = context.get('DELETE_STRENGTH')
+                junk = Strength.objects.get(pk=delete_pk)
+                logger.info(f'Deleting strength: {junk}')
+                junk.delete()
+            except:
+                logger.exception('failed to delete strength: {} : {}'.format(player, delete_pk))
+            return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
         email = context.get('email')
         name = context.get('name')
-        friend_pk = kwargs.get('friend')
         if friend_pk:    # modifying an existing friend
             try:
                 friend = Friend.objects.get(pk=friend_pk)

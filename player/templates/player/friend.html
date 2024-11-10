@@ -63,7 +63,10 @@
                 <div class="grid_3_col">
                     <h1>{{ strength.game }}</h1>
                     <h1>{{ strength.relative_str }}</h1>
-                    <div class="btn tertiary">delete</div>
+                    <label class="btn tertiary">
+                        <input hidden name="DELETE_STRENGTH" type="submit" value='{{ strength.pk }}'>
+                        delete
+                    </label>
                 </div>
 {% endfor %}
 {% csrf_token %}

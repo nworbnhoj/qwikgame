@@ -337,6 +337,12 @@ class StrengthForm(QwikForm):
                 'game': form.cleaned_data['game'],
                 'strength': form.cleaned_data['strength']
             }
+            if 'DELETE_STRENGTH' in request_post:
+                delete = request_post['DELETE_STRENGTH']
+                try:
+                    context['DELETE_STRENGTH'] = int(delete)
+                except:
+                    logger.warn(f'failed to convert DELETE_STRENGTH: {delete}')
         return context
 
 

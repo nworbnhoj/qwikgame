@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from game.models import Game, Match
-from player.forms import AcceptForm, FilterForm, FriendAddForm, KeenForm, BidForm, FiltersForm, StrengthForm
+from player.forms import AcceptForm, FilterForm, FriendForm, KeenForm, BidForm, FiltersForm, StrengthForm
 from player.models import Appeal, Bid, Filter, Friend, Player, Strength
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
@@ -407,12 +407,11 @@ class FriendsView(QwikView):
     def context(self, request, *args, **kwargs):        
         kwargs['items'] = Friend.objects.filter(player=self.user.player).order_by('name')
         if kwargs['items'].first():
-            kwargs['pk'] = kwargs.get('friend', kwargs['items'].first().pk)
-        logger.warn(kwargs['pk'])
+            kwargs['pk'] = kwargs.get('friend')
         super().context(request, *args, **kwargs)
         self._context |= {
-            'friend': self._context['item'],
-            'friends': self._context['items'],
+            'friend': self._context.get('item'),
+            'friends': self._context.get('items'),
             'friend_tab': 'selected',
             'player_id': self.user.player.facet(),
             'target': 'friend',
@@ -428,7 +427,7 @@ class FriendsView(QwikView):
 
 
 class FriendAddView(FriendsView):
-    form_class = FriendAddForm
+    form_class = FriendForm
     template_name = 'player/friend_add.html'
 
     def context(self, request, *args, **kwargs):
@@ -464,9 +463,107 @@ class FriendAddView(FriendsView):
 
 
 
-class StrengthView(FriendsView):
+class FriendView(FriendsView):
+    friend_form_class = FriendForm
+    strength_form_class = StrengthForm
+    template_name = 'player/friend.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        friend = context.get('friend')
+        if friend:
+            self._context['strengths'] = friend.strengths.all()
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        friend = context.get('friend')
+        strength = friend.strengths.first() if friend else None
+        context |= self.friend_form_class.get(friend)
+        context |= self.strength_form_class.get(strength)
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.friend_form_class.post(request.POST)
+        context |= self.strength_form_class.post(request.POST)
+        friend_form = context.get('friend_form')
+        if friend_form and not friend_form.is_valid():
+            return render(request, self.template_name, context)
+        strength_form = context.get('strength_form')
+        if strength_form and not strength_friend_form.is_valid():
+            return render(request, self.template_name, context)
+        player = self.user.player
+        email = context.get('email')
+        name = context.get('name')
+        friend_pk = kwargs.get('friend')
+        if friend_pk:    # modifying an existing friend
+            try:
+                friend = Friend.objects.get(pk=friend_pk)
+                if email != friend.email:
+                    friend.email = email
+                    email_hash = Player.hash(email)
+                    strengths = friend.strengths.all()
+                    rival, created = Player.objects.get_or_create(email_hash = email_hash)
+                    friend.rival = rival
+                    friend.save()
+                    for strength in strengths:
+                        strength.rival = rival
+                        strength.save()
+                    friend_pk = friend.pk
+                if name != friend.name:
+                    friend.name = name
+                    friend.save()
+            except:
+                logger.exception(f'failed modify friend: {context}')
+        else:    # creating a new friend
+            try:
+                email_hash = Player.hash(email)
+                rival, created = Player.objects.get_or_create(email_hash = email_hash)
+                friend = Friend.objects.create(
+                    email = email,
+                    name = context['name'],
+                    player = player,
+                    rival = rival,
+                )
+                friend_pk = friend.pk
+            except:
+                logger.exception(f'failed add friend: {context}')
+        try:    # 
+            friend = Friend.objects.get(pk=friend_pk)
+            game = Game.objects.get(pk=context['game'])
+            strength = Strength.objects.filter(
+                game = game,
+                player = player,
+                rival = friend.rival,
+                ).first()
+            if strength:
+                strength.date = datetime.now(pytz.utc)
+                strength.relative = context['strength']
+                strength.weight = 3
+                strength.save()
+            else:                
+                strength = Strength.objects.create(
+                    date = datetime.now(pytz.utc),
+                    game = game,
+                    player = player,
+                    rival = friend.rival, 
+                    relative = context['strength'],
+                    weight = 3,
+                    )
+                friend.strengths.add(strength)
+        except:
+            logger.exception(f'failed add strength: {context}')
+        context |= self.context(request, *args, **kwargs)
+        return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
+
+
+
+
+class FriendStrengthView(FriendsView):
     form_class = StrengthForm
-    template_name = 'player/strength.html'
+    template_name = 'player/friend.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)

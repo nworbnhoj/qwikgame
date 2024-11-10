@@ -271,7 +271,7 @@ class FiltersForm(QwikForm):
         return context
 
 
-class FriendAddForm(QwikForm):
+class FriendForm(QwikForm):
     email = EmailField(
         label = "Friend's email address",
         max_length=255,
@@ -283,16 +283,19 @@ class FriendAddForm(QwikForm):
     )
 
     @classmethod
-    def get(klass):
-        form = klass()  
+    def get(klass, friend=None):
+        form = klass()
+        if friend:
+            form.fields['email'].initial = friend.email
+            form.fields['name'].initial = friend.name
         form.fields['email'].widget.attrs = { 'placeholder': 'Type email address'}
         form.fields['name'].widget.attrs = { 'placeholder': 'A screen name for your friend (optional)'}
-        return { 'form' : form, }
+        return { 'friend_form' : form, }
 
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = {'form': form}
+        context = {'friend_form': form}
         if form.is_valid():
             context={
                 'email': form.cleaned_data['email'],
@@ -317,16 +320,18 @@ class StrengthForm(QwikForm):
         widget = RadioSelect,
     )
 
-
     @classmethod
-    def get(klass):
+    def get(klass, strength=None):
         form = klass()
-        return { 'form' : form, }
+        if strength:
+            form.fields['game'].initial = strength.game.code
+            form.fields['strength'].initial = strength.relative
+        return { 'strength_form' : form, }
 
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = {'form': form}
+        context = {'strength_form': form}
         if form.is_valid():
             context={
                 'game': form.cleaned_data['game'],

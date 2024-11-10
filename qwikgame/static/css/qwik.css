@@ -53,6 +53,7 @@ blockquote, q { quotes: "" "" }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 
 .btn.large { font-size: 1.13em; }
+.btn.loader { color: transparent; }
 .btn.small { font-size: 0.88em; }
 .btn.square { aspect-ratio: 1 / 1; }
 .btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }

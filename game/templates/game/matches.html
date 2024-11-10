@@ -126,4 +126,18 @@
 {% endblock %}
 
 
-{% block detail %}{% endblock %}
+{% block detail %}
+{% if big_screen %}
+    <div id="detail" class="detail">
+        <div class="pillar push_down">
+            <div class="push_down">
+                No pending Matches<br>Keen to play?
+            </div>
+            <a class="btn special1 push_down" href="{% url 'keen' %}">
+                <i class="fa-solid fa-paper-plane fa-xl"></i>
+                Invite
+            </a>
+        <div>
+    </div>
+{% endif %}
+{% endblock detail %}

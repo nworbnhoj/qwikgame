@@ -301,7 +301,7 @@ class FriendAddForm(QwikForm):
         return context
 
 
-class FriendForm(QwikForm):
+class StrengthForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),
         label = 'GAME',

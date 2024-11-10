@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from game.models import Game, Match
-from player.forms import AcceptForm, FilterForm, FriendAddForm, FriendForm, KeenForm, BidForm, FiltersForm
+from player.forms import AcceptForm, FilterForm, FriendAddForm, KeenForm, BidForm, FiltersForm, StrengthForm
 from player.models import Appeal, Bid, Filter, Friend, Player, Strength
 from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
@@ -464,9 +464,9 @@ class FriendAddView(FriendsView):
 
 
 
-class FriendView(FriendsView):
-    form_class = FriendForm
-    template_name = 'player/friend.html'
+class StrengthView(FriendsView):
+    form_class = StrengthForm
+    template_name = 'player/strength.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)

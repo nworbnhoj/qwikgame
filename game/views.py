@@ -63,7 +63,7 @@ class MatchView(MatchesView):
                     break
             now = datetime.now(pytz.utc)
             if match.status == 'A':
-                if now < match.date + DELAY_MATCH_BANNER:
+                if now > match.date + DELAY_MATCH_BANNER:
                     match.status = 'C'
             match match.status:
                 case 'A':

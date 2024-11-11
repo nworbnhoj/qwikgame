@@ -131,12 +131,6 @@ class Hours24():
                 hour_blocks=['']
         return ' '.join(hour_blocks)
 
-    def intersect(self, other):
-        intersection = bytearray(3)
-        for b in range(len(intersection)):
-            intersection[b] = self.bits[b] & other.bits[b]
-        return Hours24(intersection)
-
     def is_all(self):
         return self.bits == DAY_ALL
 

@@ -33,7 +33,7 @@
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        <p>{{ match.venue }}</p>
+                        <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>
                     </div>
                 </div>
                 <div class="drop_down icon head_more">
@@ -58,7 +58,7 @@
             </div>
             <div class="banner {{ banner_class }}">
                 <p>{{ banner_txt }}</p>
-                <p>{{ match.game }}, {{ match.venue }}, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
+                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center todo">
                 <i class="fa-solid fa-hat-cowboy fa-3x"></i>

@@ -1,0 +1,89 @@
+<!-- qwikgame/venue/templates/venue/venues.html -->
+{% extends "content.html" %}
+
+
+{% block title %}Venues{% endblock %}
+
+
+{% block cta_mobile %}
+{% if small_screen %}
+    <a class="btn special1 mobile" href="">
+    <i class="fa-solid fa-plus fa-3x"></i>
+    </a>
+{% endif %}
+{% endblock %}
+
+
+{% block cta_desktop %}
+{% if big_screen %}
+    <a class="btn special1" href="">
+        <i class="fa-solid fa-plus fa-xl"></i>
+        <p>Add</p>
+    </a>
+{% endif %}
+{% endblock %}
+
+
+{% block list %}
+    <div id="list_bar" class="list_bar post">
+        <div class="list_head">
+            <h1>Venues</h1> 
+            <div class="drop_down todo">
+                <div class="btn drop" data-down="false">
+                    <div>Group by</div>
+                    <div class="fat" aria-hidden="true">v</div>
+                </div>
+                <div class="down hidden">
+                    <label class="toggle option">
+                        <input type="radio" name="groupby">
+                        game
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="post">
+{% for ven in venues %}
+            <a class="btn secondary item" href="{% url 'venue' venue=ven.pk %}">
+{% if ven.pk == venue.pk %}
+                <input hidden type="checkbox" name="selected" checked='checked'>
+{% endif %}
+                <div class="post notes">
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-archway fa-1x"></i>
+                        </span>
+                        <p class="line">{{ ven.name }}</p>
+                    </div>
+                    <div class="note">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        <p>{{ ven.locality }}, {{ admin1 }}, {{ ven.country }}</p>
+                    </div>
+                </div>
+                <div class="pole badges">
+                </div>
+            </a>
+{% empty %}
+           <p>No venues :-(</p>
+{% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block detail %}
+{% if big_screen %}
+    <div id="detail" class="detail">
+        <div class="pillar push_down">
+            <div class="push_down">
+                Get Venue details<br>or add a new one!
+            </div>
+            <a class="btn special1 push_down" href="{% url 'friend_add' %}">
+                <i class="fa-solid fa-plus fa-xl"></i>
+                Add Venue
+            </a>
+        <div>
+    </div>
+{% endif %}
+{% endblock detail %}

@@ -35,7 +35,7 @@
                     <span class="icon">
                         <i class="fa-solid fa-location-dot fa-1x"></i>
                     </span>
-                    <p>{{ appeal.venue.place_str }}</p>
+                    <a href="{% url 'venue' venue=appeal.venue.pk %}">{{ appeal.venue.place_str }}</a>
                 </div>
             </div>
             <div class="drop_down icon head_more">

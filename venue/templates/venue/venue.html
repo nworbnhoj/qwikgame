@@ -1,0 +1,64 @@
+<!-- qwikgame/venue/templates/venue/venue.html -->
+{% extends "venue/venues.html" %}
+
+
+{% block title %}Venues{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-archway fa-2x"></i>
+            </div>
+{% if venue %}
+            <h1>{{ venue.name }}</h1>
+            <div class="drop_down icon head_more">
+                <div class="btn drop" data-down="false">
+                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                </div>
+                <div class="down hidden">
+                </div>
+            </div>
+            <a class="btn special2 head_back" href="{% url target venue=prev %}">
+                <i class="fa-solid fa-chevron-left fa-2x"></i>
+            </a>
+            <a class="btn special2 head_fwd" href="{% url target venue=next %}">
+                <i class="fa-solid fa-chevron-right fa-2x"></i>
+            </a>
+{% else %}
+            <h1>Add Venue</h1>
+{% endif %}
+        </div>
+        <div class="pole">
+            <h1>{{ venue.name }}<h1>
+                <h1>Address</h1>
+                <p>
+                    {{ venue.address }}
+                    <button onclick=" navigator.clipboard.writeText('{{ venue.address }}');">
+                        <i class="fa-regular fa-copy fa-lg"></i>
+                    </button>
+                    <a href='https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ venue.placeid }}'  target='_blank' rel='noopener'>
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                    </a>
+                </p>
+                <h1>Website</h1> <p><a href='{{ venue.url }}' target='_blank' rel='noopener'>website</a>
+                <h1>phone</h1> <p>{{ venue.phone }}</p>
+                <h1>open hours</h1> <p>{{ venue.open_week }}</p>
+                <h1>timezone: </h1> <p>{{ venue.tz }}</p>
+                <h1>Note</h1><p>{{ venue.note }}</p>
+                <h1>Managers: </h1> <p>{{ venue.managers }}</p>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block map %}{% endblock map %}

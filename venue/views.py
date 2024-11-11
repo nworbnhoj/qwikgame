@@ -90,3 +90,45 @@ class PlacesBulkView(QwikView):
         else:
             return redirect('places_bulk')
         return render(request, self.template_name, context)
+
+
+class VenuesView(QwikView):
+    template_name = 'venue/venues.html'
+
+    def context(self, request, *args, **kwargs):
+        venue_pk = kwargs.get('venue')
+        venue= Venue.objects.get(pk=venue_pk)
+        kwargs['items'] = Venue.objects.filter(
+            country = venue.country,
+            admin1 = venue.admin1,
+            locality = venue.locality,
+        )
+        if kwargs['items'].first():
+            kwargs['pk'] = kwargs.get('venue')
+        super().context(request, *args, **kwargs)
+        self._context |= {
+            'venue': self._context.get('item'),
+            'venues': self._context.get('items'),
+            'target': 'venue',
+        }
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        venue = kwargs.get('item')
+        if not venue: 
+            return render(request, self.template_name, context)
+
+
+class VenueView(VenuesView):
+    template_name = 'venue/venue.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        return render(request, self.template_name, context)

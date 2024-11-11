@@ -53,13 +53,8 @@
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
             </div>
-{% if enable_banner %}
-            <div class="banner live">
-                <p>Match is scheduled!</p>
-{% else %}
-            <div class="banner">
-                <p>Match is complete.</p>
-{% endif %}
+            <div class="banner {{ banner_class }}">
+                <p>{{ banner_txt }}</p>
                 <p>{{ match.game }}, {{ match.venue }}, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center todo">

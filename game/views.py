@@ -62,8 +62,15 @@ class MatchView(MatchesView):
                     match_log_start = i+1
                     break
             now = datetime.now(pytz.utc)
+            if now < match.date + DELAY_MATCH_BANNER:
+                banner_txt = 'Match is scheduled!'
+                banner_class = 'live'
+            else:
+                banner_txt = 'Match complete.'
+                banner_class = ''
             self._context |= {
-                'enable_banner': now < match.date + DELAY_MATCH_BANNER,
+                'banner_class': banner_class,
+                'banner_txt': banner_txt,
                 'enable_chat': now < match.date + DELAY_MATCH_CHAT,
                 'match_log_start': match_log_start,
                 'schedule_tab': 'selected',

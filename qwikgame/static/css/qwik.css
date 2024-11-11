@@ -38,7 +38,7 @@ blockquote, q { quotes: "" "" }
 .btn.tertiary:has(input:disabled) {}
 
 .btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; width: 100%}
-.btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  }
+.btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  z-index: 10; }
 .btn.special1:hover { background-color: #f5a600; border-color: #f5a600; color: #ffffff }
 .btn.special1:active { background-color: #e09900; border-color: #e09900;  color: #ffffff }
 .btn.special1:has(input:checked) {}

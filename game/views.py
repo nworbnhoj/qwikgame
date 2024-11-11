@@ -61,8 +61,8 @@ class MatchView(MatchesView):
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
                     break
+            now = datetime.now(pytz.utc)
             if match.status == 'A':
-                now = datetime.now(pytz.utc)
                 if now < match.date + DELAY_MATCH_BANNER:
                     match.status = 'C'
             match match.status:

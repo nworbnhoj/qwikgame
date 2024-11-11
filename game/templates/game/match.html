@@ -41,10 +41,12 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
+{% if match.status == 'A' %}
                         <label class="btn tertiary">
                             <input hidden form="form" name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
                             cancel
                         </label>
+{% endif %}
                     </div>
                 </div>
                 <a class="btn special2 head_back" href="{% url 'match' match=prev %}">

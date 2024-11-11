@@ -337,32 +337,34 @@ class KeenView(FeedView):
         appeal_pk = None
         # create/update/delete today appeal
         today=venue.now()
-        appeal = Appeal.objects.get_or_create(
+        appeal, created = Appeal.objects.get_or_create(
             date=today.date(),
             game=game,
             player=player,
             venue=venue,
-        )[0]
-        if context['today'].is_none():
+        )
+        valid_hours = venue.open_date(today) & context['today']
+        if valid_hours.is_none():
             appeal.delete()
         elif appeal.hours24 != context['today']:
-            appeal.set_hours(venue.open_date(today) & context['today'])
+            appeal.set_hours(valid_hours)
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.perish()
             appeal_pk = appeal.pk
         # create/update/delete tomorrow appeal
         tomorrow = today + timedelta(days=1)
-        appeal = Appeal.objects.get_or_create(
+        appeal, created = Appeal.objects.get_or_create(
             date=tomorrow.date(),
             game=game,
             player=player,
             venue=venue,
-        )[0]
-        if context['tomorrow'].is_none():
+        )
+        valid_hours = venue.open_date(tomorrow) & context['tomorrow']
+        if valid_hours.is_none():
             appeal.delete()
         elif appeal.hours24 != context['tomorrow']:
-            appeal.set_hours(venue.open_date(tomorrow) & context['tomorrow'])
+            appeal.set_hours(valid_hours)
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()

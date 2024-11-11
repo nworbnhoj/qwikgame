@@ -346,8 +346,10 @@ class KeenView(FeedView):
         valid_hours = venue.open_date(today) & context['today']
         if valid_hours.is_none():
             appeal.delete()
+            logger.info(f"no valid hours for {context['today']} {today} at {venue}")
         elif appeal.hours24 != context['today']:
             appeal.set_hours(valid_hours)
+            logger.info(f'update Appeal: {appeal}')
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.perish()
@@ -363,8 +365,10 @@ class KeenView(FeedView):
         valid_hours = venue.open_date(tomorrow) & context['tomorrow']
         if valid_hours.is_none():
             appeal.delete()
+            logger.info(f"no valid hours for {context['today']} {tomorrow} at {venue}")
         elif appeal.hours24 != context['tomorrow']:
             appeal.set_hours(valid_hours)
+            logger.info(f'update Appeal: {appeal}')
             appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()

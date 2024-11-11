@@ -39,22 +39,34 @@
         </div>
         <div class="pole">
             <h1>{{ venue.name }}<h1>
-                <h1>Address</h1>
+                <h1>ADDRESS</h1>
                 <p>
+                    <a href='https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ venue.placeid }}'  target='_blank' rel='noopener'>
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                    </a>    
                     {{ venue.address }}
                     <button onclick=" navigator.clipboard.writeText('{{ venue.address }}');">
                         <i class="fa-regular fa-copy fa-lg"></i>
                     </button>
-                    <a href='https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ venue.placeid }}'  target='_blank' rel='noopener'>
-                        <i class="fa-solid fa-location-dot fa-lg"></i>
-                    </a>
                 </p>
-                <h1>Website</h1> <p><a href='{{ venue.url }}' target='_blank' rel='noopener'>website</a>
-                <h1>phone</h1> <p>{{ venue.phone }}</p>
-                <h1>open hours</h1> <p>{{ venue.open_week }}</p>
-                <h1>timezone: </h1> <p>{{ venue.tz }}</p>
-                <h1>Note</h1><p>{{ venue.note }}</p>
-                <h1>Managers: </h1> <p>{{ venue.managers }}</p>
+                <h1>WEBSITE</h1>
+                <p><a href='{{ venue.url }}' target='_blank' rel='noopener'>website</a>
+                <h1>PHONE</h1>
+                <p>{{ venue.phone }}</p>
+                <h1>OPEN HOURS</h1>
+                <p>{{ venue.open_week }}</p>
+                <h1>TIMEZONE</h1>
+                <p>{{ venue.tz }}</p>
+                <h1>NOTE</h1>
+                <p>{{ venue.note }}</p>
+                <h1>MANAGERS</h1>
+{% for manager in venue.managers.all %}
+                <p>{{ manager }}</p>
+{% endfor %}
+                <h1>GAMES</h1>
+{% for game in venue.games.all %}
+                <p>{{ game }}</p>
+{% endfor %}
             </ul>
         </div>
     </div>

@@ -1,7 +1,7 @@
 import logging
 from django.db import models
 from player.models import Appeal, Player
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, MATCH_STATUS
 from qwikgame.log import Entry
 from venue.models import Venue
 
@@ -32,10 +32,10 @@ class Game(models.Model):
 
 
 class Match(models.Model):
-    complete = models.BooleanField(default=False)
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
+    status = models.CharField(max_length=1, choices=MATCH_STATUS, default='A')
     competitors = models.ManyToManyField(Player)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 

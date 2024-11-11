@@ -4,6 +4,12 @@ from datetime import datetime, timedelta
 
 ENDIAN = 'big'
 
+MATCH_STATUS = {
+    'A': 'active',
+    'C': 'complete',
+    'X': 'cancelled',
+}
+
 STRENGTH = {
     'W': 'much-weaker',
     'w': 'weaker',

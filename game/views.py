@@ -6,7 +6,7 @@ from django.views import View
 from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match, Review
 from player.models import Player, Strength
-from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST, STRENGTH
+from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST, MATCH_STATUS, STRENGTH
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry
@@ -61,13 +61,20 @@ class MatchView(MatchesView):
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
                     break
-            now = datetime.now(pytz.utc)
-            if now < match.date + DELAY_MATCH_BANNER:
-                banner_txt = 'Match is scheduled!'
-                banner_class = 'live'
-            else:
-                banner_txt = 'Match complete.'
-                banner_class = ''
+            if match.status == 'A':
+                now = datetime.now(pytz.utc)
+                if now < match.date + DELAY_MATCH_BANNER:
+                    match.status = 'C'
+            match match.status:
+                case 'A':
+                    banner_txt = 'Match is scheduled!'
+                    banner_class = 'live'
+                case 'C':
+                    banner_txt = 'Match is complete.'
+                    banner_class = ''
+                case _:
+                    banner_txt = 'unknown status'
+                    banner_class = ''
             self._context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,

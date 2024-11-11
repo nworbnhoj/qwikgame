@@ -9,7 +9,7 @@ logger = logging.getLogger(__file__)
 def match_perish():
 	stats = {}
     now = datetime.now(pytz.utc)
-    matches = Match.objects.filter(complete=True).all()
+    matches = Match.objects.filter(status='C').all()
 	for match in matches:
 		action = match.perish()
 		stats[action] = stats.get(action, 0) + 1
@@ -20,7 +20,7 @@ def match_perish():
 def match_review_init():
 	stats = {}
     now = datetime.now(pytz.utc)
-    matches = Match.objects.filter(complete=False, date__lte=now).all()
+    matches = Match.objects.filter(status='A', date__lte=now).all()
 	for match in matches:
 		for player in Match.competitors.all()
 		    for rival in Match.competitors.exclude(pk=player.pk).all()
@@ -30,7 +30,7 @@ def match_review_init():
 		        	rival=rival,
 		        )
 		        stats['review'] = stats.get('review', 0) + 1
-		match.complete = True
+		match.status = 'C'
 		match.save()
 	stats['match'] = matches.count()
 	logging.info(f'CRON: match_review_init() {stats}')

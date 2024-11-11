@@ -41,9 +41,10 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down hidden">
-                        <div class="button thin">more 1</div>
-                        <div class="button thin">more 2</div>
-                        <div class="button thin">more 3</div>
+                        <label class="btn tertiary">
+                            <input hidden form="form" name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
+                            cancel
+                        </label>
                     </div>
                 </div>
                 <a class="btn special2 head_back" href="{% url 'match' match=prev %}">
@@ -122,7 +123,7 @@
 
             </div>
 {% if enable_chat %}
-            <form action="{% url 'match' match=match.pk %}" method="post">
+            <form id="form" action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}
                 <div class="chat_input">
                     <div class="button">

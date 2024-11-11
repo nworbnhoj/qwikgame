@@ -107,8 +107,10 @@ blockquote, q { quotes: "" "" }
 a.btn {position: relative;}
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { align-items: center; display: flex; }
-div.banner {background-color: lightgrey; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
-div.banner.live { background-color: #dfa622; }
+div.banner {background-color: #ffffff; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
+div.banner.active { background-color: #dfa622; }
+div.banner.complete { background-color: lightgrey; }
+div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 

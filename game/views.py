@@ -68,10 +68,13 @@ class MatchView(MatchesView):
             match match.status:
                 case 'A':
                     banner_txt = 'Match is scheduled!'
-                    banner_class = 'live'
+                    banner_class = 'active'
                 case 'C':
                     banner_txt = 'Match is complete.'
-                    banner_class = ''
+                    banner_class = 'complete'
+                case 'X':
+                    banner_txt = 'Match is cancelled!'
+                    banner_class = 'xancelled'
                 case _:
                     banner_txt = 'unknown status'
                     banner_class = ''
@@ -97,19 +100,32 @@ class MatchView(MatchesView):
         form = context.get('chat_form')
         if form and not form.is_valid():
             return render(request, self.template_name, context)
-        try:
-            player = self.user.player
-            match = Match.objects.get(pk=match_pk)
-            entry = Entry(
-                icon = player.user.person.icon,
-                id = player.facet(),
-                klass = 'chat',
-                name = player.user.person.name,
-                text = context.get('txt'),
-            )
-            match.log_entry(entry)
-        except:
-            logger.exception(f'failed chat entry: {match_pk} {context}')
+        player = self.user.player
+        if 'CANCEL' in context:
+            try:
+                cancel_pk = context.get('CANCEL')
+                match = Match.objects.get(pk=cancel_pk)
+                logger.info(f'Cancelling Match: {match}')
+                match.status = 'X'
+                match.save()
+            except:
+                logger.exception('failed to cancel match: {} : {}'.format(player, cancel_pk))
+            return HttpResponseRedirect(f'/game/match/{cancel_pk}/')
+        txt = context.get('txt')
+        if txt:
+            try:
+                person = player.user.person
+                match = Match.objects.get(pk=match_pk)
+                entry = Entry(
+                    icon = person.icon,
+                    id = player.facet(),
+                    klass = 'chat',
+                    name = person.name,
+                    text = txt,
+                )
+                match.log_entry(entry)
+            except:
+                logger.exception(f'failed chat entry: {match_pk} {context}')
         context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/game/match/{match_pk}/')
 

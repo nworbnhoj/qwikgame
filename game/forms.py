@@ -16,7 +16,7 @@ logger = logging.getLogger(__file__)
 
 class MatchForm(QwikForm):
     txt = CharField(
-        required = True,
+        required = False,
         template_name = 'field_naked.html' #'input_chat.html'
     )
 
@@ -38,6 +38,12 @@ class MatchForm(QwikForm):
         context = { 'match_form': form }
         if form.is_valid():
             context['txt'] = form.cleaned_data['txt']
+            if 'CANCEL' in request_post:
+                cancel = request_post['CANCEL']
+                try:
+                    context['CANCEL'] = int(cancel)
+                except:
+                    logger.warn(f'failed to convert CANCEL: {cancel}')
         return context
 
 

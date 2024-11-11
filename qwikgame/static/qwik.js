@@ -823,8 +823,8 @@ window.onload = function() {
     });
   });
   document.querySelectorAll("input[type='submit']").forEach(function(submit) {
-    label = submit.closest('label')
-    label.addEventListener("click", () => {
+    submit.addEventListener("click", () => {
+      label = submit.closest('label')
       label.classList.add("loader");
       setTimeout(() => label.classList.remove("loader"), 5000);
     });

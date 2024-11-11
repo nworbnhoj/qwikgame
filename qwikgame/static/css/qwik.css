@@ -33,7 +33,7 @@ blockquote, q { quotes: "" "" }
 .btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
 .btn.tertiary:hover { background-color: #d8dfed; border-color: #d8dfed; }
-.btn.tertiary:active { background-color: #; border-color: c6d2e6; }
+.btn.tertiary:active { background-color: #c6d2e6; border-color: #c6d2e6; }
 .btn.tertiary:has(input:checked) {}
 .btn.tertiary:has(input:disabled) {}
 

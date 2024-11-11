@@ -39,7 +39,7 @@
                 </div>
                 <div class="down hidden">
                     <label class="btn tertiary">
-                        <input hidden form="form" name="DELETE" type="submit" value='{{ friend.pk }}'>
+                        <input hidden form="form" name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
                         delete
                     </label>
                 </div>

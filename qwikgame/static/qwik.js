@@ -826,6 +826,7 @@ window.onload = function() {
     label = submit.closest('label')
     label.addEventListener("click", () => {
       label.classList.add("loader");
+      setTimeout(() => label.classList.remove("loader"), 5000);
     });
   });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {

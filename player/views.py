@@ -134,13 +134,13 @@ class BidView(FeedView):
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
-        bade = Bid.objects.filter(
+        bid = Bid.objects.filter(
             appeal = self._context.get('appeal'),
             rival = self.user.player,
-        ).exists()
+        ).first()
         self._context |= {
             'player_id': self.user.player.facet(),
-            'bade': bade,
+            'bid': bid,
         }
         return self._context
 
@@ -165,6 +165,18 @@ class BidView(FeedView):
         form = context.get('bid_form')
         if form and not form.is_valid():
             return render(request, self.template_name, context)
+        if 'CANCEL' in context:
+            try:
+                cancel_pk = context.get('CANCEL')
+                logger.warn(cancel_pk)
+                bid = Bid.objects.get(pk=cancel_pk)
+                logger.info(f'Cancelling Bid: {bid}')
+                bid.log_event('withdraw')
+                appeal_pk = bid.appeal.pk
+                bid.delete()
+            except:
+                logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
+            return HttpResponseRedirect(f'/player/feed/{appeal.pk}/')
         bid = Bid(
             appeal=context['accept'],
             hours=context['hours'],

@@ -349,6 +349,15 @@ class Bid(models.Model):
                     name = person.name,
                     text = f'declined {self.hours24().as_str()}h with {rival.name}'
                 )
+            case 'withdraw':
+                person = self.rival.user.person
+                entry = Entry(
+                    icon = rival.icon,
+                    id = self.rival.facet(),
+                    klass= 'event rival',
+                    name = rival.name,
+                    text = f'withdrew {self.hours24().as_str()}h'
+                )
             case _:
                 logger.warn(f'unknown template: {template}')
         self.appeal.log_entry(entry)

@@ -39,13 +39,14 @@
                 </div>
             </div>
             <div class="drop_down icon head_more">
-                <div class="btn drop todo" data-down="false">
+                <div class="btn drop" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="btn tertiary menu">more 1</div>
-                    <div class="btn tertiary menu">more 2</div>
-                    <div class="btn tertiary menu">more 3</div>
+                    <label class="btn tertiary">
+                        <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                        cancel
+                    </label>
                 </div>
             </div>
             <a class="btn special2 head_back" href="/player/feed/{{ prev }}/">
@@ -85,15 +86,24 @@
             <div class="detail_chat_post"></div>
         </div>
         <div class="post form">
-{% if bade %}
-            <p>Awaiting Players to accept</p>
+{% if bid %}
+            <div class="pillar">
+                <p>Awaiting Players to accept</p>
+                <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
+{% csrf_token %}
+                    <label class="btn tertiary">
+                        <input hidden form="form" type="submit" name='CANCEL' value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                         cancel
+                    </label>
+                </form>
+            </div>
 {% else %}
-            <form action="{% url 'bid' appeal.pk %}" method="post">
+            <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
 {% csrf_token %}
 {{ bid_form }}
             <div class="paver">
                 <label class="btn primary push_down">
-                    <input hidden type="submit" name='accept'>
+                    <input hidden form="form" type="submit" name='accept'>
                     Accept
                 </label>
             </div>

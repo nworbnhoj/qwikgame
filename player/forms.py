@@ -96,6 +96,12 @@ class BidForm(QwikForm):
                 'accept': appeal,
                 'hours': form.cleaned_data['hour']
             }
+            if 'CANCEL' in request_post:
+                cancel = request_post['CANCEL']
+                try:
+                    context['CANCEL'] = int(cancel)
+                except:
+                    logger.warn(f'failed to convert CANCEL: {cancel}')
         return context
 
 

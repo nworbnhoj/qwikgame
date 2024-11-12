@@ -100,10 +100,12 @@
                     </div>
                 </div>
             </div>
+{% if match_log_start > 0 %}
             <div class="btn tertiary toggle_previous_sibling align_center">
                 <span class="tog">Show invitation history</span>
                 <span class="tog hidden">Hide invitation history</span>
             </div>  
+{% endif %}
             <div class="post">
 {% for entry in match.log %}
     {% if forloop.counter > match_log_start %}

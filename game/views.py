@@ -56,7 +56,7 @@ class MatchView(MatchesView):
         player = self.user.player
         match = context.get('match')
         if match:
-            match_log_start = len(match.log) + 1
+            match_log_start = -1
             for i, entry in enumerate(match.log):
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1

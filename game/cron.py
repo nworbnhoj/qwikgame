@@ -1,6 +1,6 @@
 import logging,pytz
 from datetime import datetime, timedelta
-from game.models import Match
+from game.models import Match, Review
 
 
 logger = logging.getLogger(__file__)
@@ -23,9 +23,9 @@ def match_review_init():
     now = datetime.now(pytz.utc)
     matches = Match.objects.filter(status='A', date__lte=now).all()
     for match in matches:
-        for player in Match.competitors.all():
-            for rival in Match.competitors.exclude(pk=player.pk).all():
-                Review.create(
+        for player in match.competitors.all():
+            for rival in match.competitors.exclude(pk=player.pk).all():
+                Review.objects.create(
                     match = match,
                     player=player,
                     rival=rival,

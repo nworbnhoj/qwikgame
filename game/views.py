@@ -78,11 +78,13 @@ class MatchView(MatchesView):
                 case _:
                     banner_txt = 'unknown status'
                     banner_class = ''
+            review = Review.objects.filter(match=match, player=player).first()
             self._context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
                 'enable_chat': now < match.date + DELAY_MATCH_CHAT,
                 'match_log_start': match_log_start,
+                'review': review,
                 'schedule_tab': 'selected',
              }
         return self._context

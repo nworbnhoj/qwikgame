@@ -124,6 +124,15 @@
 {% endfor %}
 
             </div>
+{% if review %}
+            <div class="pillar">                
+                <a class="btn primary" href="{% url 'review' review=review.pk %}">
+                    <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                    Review
+                </a>
+            </div>
+{% endif %}
+
 {% if enable_chat %}
             <form id="form" action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}

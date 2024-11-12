@@ -222,12 +222,14 @@ function searchChangeHandler(places){
   const BOUNDS = new google.maps.LatLngBounds(null, null);
   places.forEach(place => {
     if (!place.geometry) { return; }
-    
+    var open = place.opening_hours ? 'open now' : 'closed';
+    var label_origin = new google.maps.Point(13,15)
     const MARKER = new google.maps.Marker({
-      label: '0',
+      icon: { url: VENUE_ICON, labelOrigin: label_origin },
+      label: {text:'0', className:'qg_style_mark_label place'},
       map: MAP,
       position: place.geometry.location,
-      title: place.name+'\nnew qwikgame venue'
+      title: place.name+'\nyou are the first player!\n'+open
     });
     
     SEARCH_MARKERS.push(MARKER);

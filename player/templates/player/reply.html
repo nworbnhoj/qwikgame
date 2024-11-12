@@ -39,13 +39,16 @@
                 </div>
             </div>
             <div class="drop_down icon head_more">
-                <div class="btn drop todo" data-down="false">
+                <div class="btn drop" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <div class="btn tertiary menu">more 1</div>
-                    <div class="btn tertiary menu">more 2</div>
-                    <div class="btn tertiary menu">more 3</div>
+{% if player == appeal.player %}
+                    <label class="btn tertiary">
+                        <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
+                        cancel
+                    </label>
+{% endif %}
                 </div>
             </div>
             <a class="btn special2 head_back" href="{% url 'bid' appeal=prev %}">
@@ -57,11 +60,11 @@
         </div>
         <div class="post">
 {% for entry in appeal.log %}
-{% if entry.id == player_id %}
+    {% if entry.id == player_id %}
                 <div class="log_entry align_start {{ entry.klass }}">
-{% else %}
+    {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
-{% endif %}
+    {% endif %}
                 <div class="btn special2 todo">
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                 </div>
@@ -143,7 +146,7 @@
             </div>
             <hr>
             <div class="post">
-                <form action="{% url 'accept' appeal=appeal.pk %}" method="post">
+                <form id='form' action="{% url 'accept' appeal=appeal.pk %}" method="post">
 {% csrf_token %}
 {% for reply in replies %}
                     <div class="chat_item align_start">

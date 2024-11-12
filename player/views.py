@@ -100,6 +100,15 @@ class AcceptView(FeedView):
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
+        if 'CANCEL' in context:
+            try:
+                cancel_pk = context.get('CANCEL')
+                appeal = Appeal.objects.get(pk=cancel_pk)
+                logger.info(f'Cancelling Appeal: {appeal}')
+                appeal.delete()
+            except:
+                logger.exception('failed to cancel appeal: {} : {}'.format(player, cancel_pk))
+            return HttpResponseRedirect(f'/player/feed/')
         try:
             accept = context.get('accept')
             if accept:

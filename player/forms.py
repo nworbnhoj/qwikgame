@@ -44,6 +44,12 @@ class AcceptForm(QwikForm):
             decline = request_post.get('decline')
             if decline:
                 context['decline'] = int(decline)
+            if 'CANCEL' in request_post:
+                cancel = request_post['CANCEL']
+                try:
+                    context['CANCEL'] = int(cancel)
+                except:
+                    logger.warn(f'failed to convert CANCEL: {cancel}')
         return context
 
 

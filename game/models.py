@@ -80,17 +80,27 @@ class Match(models.Model):
                     name = person.name,
                     text = f'scheduled'
                 )
+            case 'match_perished':
+                entry = Entry(
+                    icon = '',
+                    id = '',
+                    klass='system',
+                    name = 'system',
+                    text=f'match chat perished'
+                )
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
 
     def perish(self, dry_run=False):
-        now = self.match.venue.now()
-        if now.date() > self.match.date + DELAY_MATCH_PERISH_CHAT:
+        now = self.venue.now()
+        if now > (self.date + DELAY_MATCH_PERISH_CHAT):
+            dry = 'dry_run' if dry_run else ''
             if not dry_run:
                 self.log_clear()
-                self.log_entry(Entry(klass='system', text=f'chat perished on {now}'))
+                self.log_event('match_perished')
                 self.save()
+            logger.info(f'match perished {dry}: {self}')
             return 'chat'
         return 'noop'
 

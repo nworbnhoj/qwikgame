@@ -734,6 +734,19 @@ function togglePreviousSibling(event) {
   previous_sibling.classList.toggle('hidden');
 }
 
+
+// https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
+// Handle page load from cache after Browser Forward / Back button
+window.onpageshow = function(event) {
+    if (event.persisted) {
+      document.querySelectorAll(".loader").forEach(function(loader) {
+        loader.classList.remove("loader");    // to reset loader
+        window.location.reload();  // to reshow .btn.special1.mobile
+      })
+    }
+};
+
+
 window.onload = function() {
   updateAllHour();
   document.addEventListener('click', closeStuff);

@@ -735,7 +735,7 @@ function endowMark(key, mark){
   if(K.length === 4){  // venue Mark
     mark.marker.setIcon({ url: VENUE_ICON, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
-    mark.marker.setTitle(mark.name+'\n'+size+' players');
+    mark.marker.setTitle(mark.name+'\n'+size+' players\nopen: '+mark.open);
     if (ALLOW_SELECT_VENUE){
       google.maps.event.addListener(mark.marker, 'click', () => {
         setPlace(mark.placeid, mark.name)
@@ -744,6 +744,7 @@ function endowMark(key, mark){
   } else {  // metaMark
     mark.marker.setIcon({ url: REGION_ICON, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
+    mark.marker.setTitle(mark.name+'\n'+size+' venues');
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     if (ALLOW_SELECT_REGION){

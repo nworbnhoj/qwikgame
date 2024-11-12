@@ -1,10 +1,8 @@
-<?xml version="1.0" standalone="no"?>
-<svg height="200" width="200" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-      <stop offset="0%" stop-color="#f5a600" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#f5a600" stop-opacity="0.05" />
-    </radialGradient>
-  </defs>
-  <circle cx="100" cy="100" r="100" stroke="#ffffff" stroke-width="0" fill="url(#grad1)"/>
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="60" width="36" viewBox="0 0 45 75" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <g fill="white" stroke="#f5a600" stroke-width="2" >
+    <circle cx="18" cy="18" r="17" />
+    <polygon points="2,24 34,23 18,60" />
+    <polygon points="4,23 32,23  18,55" stroke="white" />
+  </g>
 </svg>

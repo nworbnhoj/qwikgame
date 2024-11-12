@@ -730,8 +730,10 @@ function endowMark(key, mark){
   mark.marker = new google.maps.Marker(OPTIONS);
   
   const K = key.split('|');
+  size = mark.size.toString();
+  var label_origin = new google.maps.Point(13,15)
   if(K.length === 4){  // venue Mark
-    size = mark.size.toString();
+    mark.marker.setIcon({ url: VENUE_ICON, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players');
     if (ALLOW_SELECT_VENUE){
@@ -740,13 +742,8 @@ function endowMark(key, mark){
       });
     }
   } else {  // metaMark
-    var icon = {
-      url: REGION_ICON,
-      anchor: new google.maps.Point(100,100)
-    };
-    mark.marker.setIcon(icon);
-    mark.marker.setShape({type:'rect', coords:[20, 80, 180, 120]})
-    mark.marker.setLabel({text:mark.name, className:'qg_style_mark_label region', fontSize: 'large'});
+    mark.marker.setIcon({ url: REGION_ICON, labelOrigin: label_origin });
+    mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     if (ALLOW_SELECT_REGION){

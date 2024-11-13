@@ -125,7 +125,6 @@ class Review(models.Model):
         return f"{self.player}: {self.rival} {self.match}"
 
     def log_event(self, template):
-        logger.warn('log_event()')
         match template:
             case 'review':
                 player = self.player
@@ -144,7 +143,7 @@ class Review(models.Model):
     def perish(self, dry_run=False):
         action = 'noop'
         now = self.match.venue.now()
-        if now.date() > self.match.date + DELAY_REVIEW_PERISH:
+        if now > self.match.date + DELAY_REVIEW_PERISH:
             if not dry_run:
                 self.delete()
             action = 'expired'

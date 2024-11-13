@@ -17,6 +17,7 @@ def match_perish():
         match.save()
     logging.info(f'CRON: match_perish() {stats}')
 
+
 # Intended to be run hourly as a cron job
 def match_review_init():
     stats = {}
@@ -35,6 +36,7 @@ def match_review_init():
         match.save()
     stats['match'] = matches.count()
     logging.info(f'CRON: match_review_init() {stats}')
+
 
 # Intended to be run hourly as a cron job
 def match_review_perish():

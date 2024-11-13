@@ -325,7 +325,7 @@ class KeenView(FeedView):
         is_admin = self.user.is_admin
         self._context |= {
             'onclick_place_marker': 'select' if is_admin else 'noop',
-            'onclick_region_marker': 'noop',
+            'onclick_region_marker': 'center',
             'onclick_venue_marker': 'select',
             'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }

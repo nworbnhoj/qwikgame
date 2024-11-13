@@ -15,9 +15,14 @@
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&loading=async&callback=venuesMap&libraries=places">
     </script>
     <script>
-        const VENUE_ICON = "{% static 'img/qwik.venue.svg' %}";
-        const REGION_ICON = "{% static 'img/qwik.region.svg' %}";
-        const PLACE_ICON = "{% static 'img/qwik.place.svg' %}";
+        const ICON_PLACE = "{% static 'img/qwik.place.svg' %}";
+        const ICON_REGION = "{% static 'img/qwik.region.svg' %}";
+        const ICON_VENUE = "{% static 'img/qwik.venue.svg' %}";
+        const ONCLICK_PLACE_MARKER = "{{ onclick_place_marker }}";
+        const ONCLICK_REGION_MARKER = "{{ onclick_region_marker }}";
+        const ONCLICK_VENUE_MARKER = "{{ onclick_venue_marker }}";
+        const SHOW_SEARCH_BOX = "{{ show_search_box }}";
+        const SHOW_UNIT_REGION = false;
     </script>
 
     <script defer src="{% static 'keen.js' %}"></script>

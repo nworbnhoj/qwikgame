@@ -9,8 +9,6 @@ docReady(event => {
 
 winReady(event => {});
 
-const ALLOW_SELECT_REGION = false;
-const ALLOW_SELECT_VENUE = true;
 
 function initPage(){
     // document.getElementById('name').focus();

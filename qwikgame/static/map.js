@@ -13,21 +13,17 @@ const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const MAP_REGION = new Map();               // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
-const MAP_OPTIONS = {
-  showUnitCluster: true,
-}
 
 var qwikMap;
 var qwikInfowindow;
 var mapCenterIdle = null;
     
 
-function venuesMap(showUnitCluster=true) {
+function venuesMap() {
     if (typeof google == 'undefined'){
         console.log('failed to initiate Venue Map: google undefined');
         return;
     }
-    MAP_OPTIONS.showUnitCluster=showUnitCluster;
     const MAP_ELEMENT = document.getElementById('map');
     const LAT = parseFloat(document.getElementById('id_lat').value);
     const LNG = parseFloat(document.getElementById('id_lng').value);
@@ -52,9 +48,17 @@ function venuesMap(showUnitCluster=true) {
     addListeners(GAME_OPTIONS, 'input', changeGame);
 
     // setup Places search box in map
-    const INPUT = document.getElementById("map-search");
-    const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
-    MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
+    if (SHOW_SEARCH_BOX == 'SHOW') {
+      const INPUT = document.getElementById("map-search");
+      const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
+      MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
+      MAP.addListener("bounds_changed", () => {
+          SEARCHBOX.setBounds(MAP.getBounds());
+      });
+      SEARCHBOX.addListener("places_changed", () => {
+          searchChangeHandler(SEARCHBOX.getPlaces());
+      });
+    }
 
     //setup Close button in map
     const CLOSE = document.createElement("button");
@@ -69,13 +73,6 @@ function venuesMap(showUnitCluster=true) {
     const CLOSE_DIV = document.createElement("div");
     CLOSE_DIV.appendChild(CLOSE);
     MAP.controls[google.maps.ControlPosition.TOP_RIGHT].push(CLOSE_DIV);
-
-    MAP.addListener("bounds_changed", () => {
-        SEARCHBOX.setBounds(MAP.getBounds());
-    });
-    SEARCHBOX.addListener("places_changed", () => {
-        searchChangeHandler(SEARCHBOX.getPlaces());
-    });
     MAP.addListener('idle', () => {
         mapIdleHandler()
     });
@@ -225,7 +222,7 @@ function searchChangeHandler(places){
     var open = place.opening_hours ? 'open now' : 'closed';
     var label_origin = new google.maps.Point(13,15)
     const MARKER = new google.maps.Marker({
-      icon: { url: VENUE_ICON, labelOrigin: label_origin },
+      icon: { url: ICON_VENUE, labelOrigin: label_origin },
       label: {text:'0', className:'qg_style_mark_label place'},
       map: MAP,
       position: place.geometry.location,
@@ -250,7 +247,14 @@ function searchChangeHandler(places){
 
 function clickHandler(event){
   if (event.placeId) {
-    requestPlace(event.placeId)
+    switch (ONCLICK_PLACE_MARKER){
+        case 'select':
+          requestPlace(event.placeId)
+          break;
+        case 'noop':
+          break;
+          console.log('warning: invalid ONCLICK_PLACE_MARKER')
+    }
     event.stop();
   }
 }
@@ -484,7 +488,7 @@ function showMarks(){
       MARK.marker.setVisible(false);
       hideSuperMarkers(KEY, KEYS);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
-    } else if(MAP_OPTIONS.showUnitCluster == false & SUB_KEYS.size === 1){    // is there only 1 subMarker?
+    } else if(!SHOW_UNIT_REGION & SUB_KEYS.size === 1){    // is there only 1 subMarker?
       MARK.marker.setVisible(false);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers
@@ -734,26 +738,35 @@ function endowMark(key, mark){
   const K = key.split('|');
   size = mark.size.toString();
   var label_origin = new google.maps.Point(13,15)
+  var onclick = 'noop';
   if(K.length === 4){  // venue Mark
-    mark.marker.setIcon({ url: VENUE_ICON, labelOrigin: label_origin });
+    mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players\nopen: '+mark.open);
-    if (ALLOW_SELECT_VENUE){
-      google.maps.event.addListener(mark.marker, 'click', () => {
-        setPlace(mark.placeid, mark.name)
-      });
-    }
+    onclick = ONCLICK_VENUE_MARKER;
   } else {  // metaMark
-    mark.marker.setIcon({ url: REGION_ICON, labelOrigin: label_origin });
+    mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.marker.setTitle(mark.name+'\n'+size+' venues');
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
-    if (ALLOW_SELECT_REGION){
-      google.maps.event.addListener(mark.marker, 'click', () => {
-        setPlace(mark.placeid, mark.name)
-      }); 
-    }
+    onclick = ONCLICK_REGION_MARKER;
+  }
+  switch (onclick){
+      case 'center':
+        google.maps.event.addListener(mark.marker, 'click', () => {
+          qwikMap.setCenter(mark.center);
+        });
+        break;
+      case 'select':
+        google.maps.event.addListener(mark.marker, 'click', () => {
+          setPlace(mark.placeid, mark.name)
+        });
+        break;
+      case 'noop':
+        break;
+      default: 
+        console.log('error: invalid ONCLICK_REGION_MARKER: '+ONCLICK_REGION_MARKER)
   }
   return mark;
 }

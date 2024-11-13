@@ -193,9 +193,20 @@ class FilterView(FeedView):
     hide=[]
     template_name = 'player/filter.html'
 
+    def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
+        is_admin = self.user.is_admin
+        self._context |= {
+            'onclick_place_marker': 'select' if is_admin else 'noop',
+            'onclick_region_marker': 'select',
+            'onclick_venue_marker': 'select',
+            'show_search_box': 'SHOW' if is_admin else 'HIDE',
+        }
+        return self._context
+
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        context = super().context(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         player = self.user.player
         context |= self.filter_form_class.get(
             player,
@@ -309,9 +320,20 @@ class KeenView(FeedView):
     keen_form_class = KeenForm
     template_name = 'player/keen.html'
 
+    def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
+        is_admin = self.user.is_admin
+        self._context |= {
+            'onclick_place_marker': 'select' if is_admin else 'noop',
+            'onclick_region_marker': 'noop',
+            'onclick_venue_marker': 'select',
+            'show_search_box': 'SHOW' if is_admin else 'HIDE',
+        }
+        return self._context
+
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        context = super().context(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
         player = self.user.player
         context |= self.keen_form_class.get(player)
         return render(request, self.template_name, context)

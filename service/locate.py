@@ -161,16 +161,19 @@ class Locate:
             if opening_hours:
                 hours = Hours24x7()
                 for period in opening_hours.get('periods', []):
-                    try :
-                        open_day = int(period['open']['day'])
-                        open_hour = int(period['open']['time'])
-                        close_day = int(period['close']['day'])
-                        close_hour = int(period['close']['time'])
-                        first_hour = (open_hour // 100) if ((open_hour % 100) == 0) else ((open_hour // 100) + 1)
-                        last_hour = (close_hour // 100) - 1
-                        hours.set_period(open_day, first_hour, close_day, last_hour)
-                    except:
-                        logger.exception('Invalid opening hours period {period}')
+                    open = period.get('open')
+                    close = period.get('close')
+                    if open and close:
+                        try:
+                            open_day = int(open.get('day'))
+                            open_hour = int(open.get('time'))
+                            close_day = int(close.get('day'))
+                            close_hour = int(close.get('time'))
+                            first_hour = (open_hour // 100) if ((open_hour % 100) == 0) else ((open_hour // 100) + 1)
+                            last_hour = (close_hour // 100)
+                            hours.set_period(open_day, first_hour, close_day, last_hour)
+                        except:
+                            logger.exception('Invalid opening hours period {period}')
                 details['hours'] = hours.as_bytes()
             else:
                 details['hours'] = WEEK_ALL

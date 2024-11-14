@@ -273,11 +273,11 @@ class Hours24x7():
             return
         elif first < last:
             hours = [False]*first
-            hours += [True]*(last-first+1)
+            hours += [True]*(last-first)
             hours += [False]*(24*7-len(hours))
         else:
             hours = [True]*last
-            hours += [False]*(first-last+1)
+            hours += [False]*(first-last)
             hours += [True]*(24*7-first)
         period = Hours24x7(hours)
         self.bits = (self | period).as_bytes()

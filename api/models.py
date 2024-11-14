@@ -70,6 +70,12 @@ class Mark(models.Model):
         mark = klass(region=region)
         return mark
 
+    @classmethod
+    def refresh_marks(klass):
+        for mark in Mark.objects.order_by('size'):
+            mark.save()
+            logger.info(mark)
+
     @staticmethod
     def place_filter(place):
         return {k: v for k, v in place.items() if v is not None}    

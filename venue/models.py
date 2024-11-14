@@ -67,6 +67,21 @@ class Region(Place):
     def save(self, **kwargs):
         super().save(**kwargs)
         logger.debug(f'Region save: {self}')
+        # recursively add parent-Region if required
+        if not self.parent:
+            try:
+                if self.locality:
+                    Region.from_place(
+                        country = self.country,
+                        admin1 = self.admin1,
+                    ).save()
+                    logger.info(f'Region new: {region}')
+                elif self.admin1:
+                    Region.from_place(country = self.country).save()
+                    logger.info(f'Region new: {region}')
+            except:
+                logger.exception(f'failed to create Region: {self}')
+
 
     @classmethod
     def choices(klass):
@@ -119,14 +134,14 @@ class Region(Place):
     # TODO add parent as a Region field
     @property
     def parent(self):
-        if self.place.admin1:
-            if self.place.locality:
-                return Region.object.filter(
+        if self.admin1:
+            if self.locality:
+                return Region.objects.filter(
                     country=self.country,
                     admin1=self.admin1,
                     locality__isnull=True
                 ).first()
-            return Region.object.filter(
+            return Region.objects.filter(
                 country=self.country,
                 admin1__isnull=True,
                 locality__isnull=True
@@ -163,6 +178,23 @@ class Venue(Place):
     def save(self, **kwargs):
         super().save(**kwargs)
         logger.debug(f'Venue save: {self}')
+        # add Region if required
+        if not Region.objects.filter(
+                country=self.country,
+                admin1=self.admin1,
+                locality=self.locality,
+            ).exists():
+            try:
+                region = Region.from_place(
+                    country=self.country,
+                    admin1=self.admin1,
+                    locality=self.locality,
+                )
+                region.save()
+                logger.info(f'Region new: {region}')
+            except:
+                logger.exception(f'failed to create Region: {self}')
+
 
     @classmethod
     def from_placeid(cls, placeid):
@@ -217,6 +249,15 @@ class Venue(Place):
 
     def place_str(self):
         return super().__str__()
+
+    @property
+    def region(self):
+        return Region.objects.filter(
+            country=self.country,
+            admin1=self.admin1,
+            locality=self.locality
+        ).first()
+
 
     def tzinfo(self):
         return timezone(self.tz)

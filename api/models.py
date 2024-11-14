@@ -18,39 +18,25 @@ class Mark(models.Model):
         self.update_size()
         super().save(**kwargs)
         logger.debug(f'Mark save: {self}')
-        # recursively add Region Marks as required
-        country = self.place.country
-        admin1 = self.place.admin1
-        locality = self.place.locality
-        region = None
+        # recursively add parent-Marks if required
         try:
+            parent = None
             if self.place.is_venue:
-                region = Region.objects.filter(country=country, admin1=admin1, locality=locality).first()
-                if not region:
-                    region = Region.from_place(country=country, admin1=admin1, locality=locality)
+                parent = self.place.venue.region
             elif self.place.is_region:
-                if locality:
-                    region = Region.objects.filter(country=country, admin1=admin1, locality__isnull=True).first()
-                    if not region:
-                        region = Region.from_place(country=country, admin1=admin1)
-                elif admin1:
-                    region = Region.objects.filter(country=country, admin1__isnull=True, locality__isnull=True).first()
-                    if not region:
-                        region = Region.from_place(country=country)
-            if region and not region.pk:
-                region.save()
-                logger.info(f'Region new: {region}')
+                parent = self.place.region.parent
+            if parent and not Mark.objects.filter(
+                game__isnull=True,
+                place = parent).exists():
+                Mark(place = parent.place_ptr).save()
+            if parent and not Mark.objects.filter(
+                place = parent,
+                game = self.game).exists():
+                Mark(
+                    game = self.game,
+                    place = parent.place_ptr).save()
         except:
-            logger.exception('failed to create Region')
-        # create Marks for regions as required
-        if region:
-            try:
-                if not Mark.objects.filter(place=region.place_ptr, game=self.game).exists():
-                    Mark(game=self.game, place=region.place_ptr).save()
-                if not Mark.objects.filter(place=region.place_ptr, game__isnull=True).exists():
-                    Mark(place=region.place_ptr).save()
-            except:
-                logger.exception('failed to create Mark')
+            logger.exception('failed to create parent Mark')
 
     def __str__(self):
 

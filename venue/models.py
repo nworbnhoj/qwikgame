@@ -170,7 +170,7 @@ class Venue(Place):
         if details:
             logger.debug(f'google details for placeid:{placeid}\n{details}')
             # truncate CharField values to respect field.max_length
-            for field in cls._meta.get_fields(include_parents=False):
+            for field in cls._meta.get_fields(include_parents=True):
                 if field.get_internal_type() == 'CharField' and field.max_length and field.name in details.keys():
                     if field.max_length < len(details[field.name]):
                         logger.warn(f'truncated CharField Venue.{field.name}: {details[field.name]}')

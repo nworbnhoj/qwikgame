@@ -1,4 +1,4 @@
-import logging
+import logging, sys
 from django.db import models
 from django.db.models import Sum
 from game.models import Game
@@ -58,27 +58,37 @@ class Mark(models.Model):
 
     @classmethod
     def refresh_marks(klass):
+        print(f'deleting all {Mark.objects.count()} marks')
         for mark in Mark.objects.all():
             mark.delete()
+        print(f'recreating marks for {Venue.objects.count()} venues')
         for venue in Venue.objects.all():
+            progress = 'v'
             venue.save()
             for game in venue.games.all():
                 Mark.objects.get_or_create(game=game, place=venue)
+                progress += '.'
                 locality = venue.region
                 if locality:
                     Mark.objects.get_or_create(game=game, place=locality)
+                    progress += '.'
                     admin1 = locality.parent
                     if admin1:
                         Mark.objects.get_or_create(game=game, place=admin1)
+                        progress += '.'
                         country = admin1.parent
                         if country:
                             Mark.objects.get_or_create(game=game, place=country)
+                            progress += '.'
                         else:
                             logger.warn(f'missing admin1 country: {admin1}')
                     else:
                         logger.warn(f'missing locality admin1: {locality}')
                 else:
                     logger.warn(f'missing venue region: {venue}')
+            sys.stdout.write(progress)
+            sys.stdout.flush()
+        sys.stdout.write('\n')
 
     @staticmethod
     def place_filter(place):

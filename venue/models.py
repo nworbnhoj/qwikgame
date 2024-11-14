@@ -210,6 +210,9 @@ class Venue(Place):
                     admin1=self.admin1,
                     locality=self.locality,
                 )
+                if Region.objects.filter(placeid=region.placeid).exists():
+                    region.placeid += ':locality'
+                    logger.warn(f'placeid exists as both locality and admin1: {region}')
                 region.save()
                 logger.info(f'Region new: {region}')
             except:

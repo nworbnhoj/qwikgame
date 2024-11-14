@@ -1,4 +1,4 @@
-import logging, pytz
+import logging, pytz, sys
 from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
@@ -128,6 +128,16 @@ class Region(Place):
                 logger.warn(f'invalid geometry for: {country}|{admin1}|{locality}\n{geometry}')
         logger.warn(f'failed to get geometry for: {country}|{admin1}|{locality}')
         return None
+
+
+    @classmethod
+    def refresh_regions(klass):
+        print(f'refreshing all {Region.objects.count()} regions')
+        for region in Region.objects.all():
+            region.save()
+            sys.stdout.write('.')
+            sys.stdout.flush()
+        sys.stdout.write('\n')
 
     def mark(self):
         return {

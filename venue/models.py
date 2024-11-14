@@ -71,13 +71,23 @@ class Region(Place):
         if not self.parent:
             try:
                 if self.locality:
-                    Region.from_place(
+                    region = Region.from_place(
                         country = self.country,
                         admin1 = self.admin1,
-                    ).save()
+                    )
+                    # On occasion a placeid exists as both admin1 and locality (eg Auckland & Wellington)
+                    if Region.objects.filter(placeid=region.placeid).exists():
+                        region.placeid += ':admin1'
+                        logger.warn(f'placeid exists as both admin1 and locality: {region}')
+                    region.save()
                     logger.info(f'Region new: {region}')
                 elif self.admin1:
-                    Region.from_place(country = self.country).save()
+                    region = Region.from_place(country = self.country)
+                    # On occasion a placeid exists as both country and admin1 (eg Vatican)
+                    if Region.objects.filter(placeid=region.placeid).exists():
+                        region.placeid += ':country'
+                        logger.warn(f'placeid exists as both country and admin1: {region}')
+                    region.save()
                     logger.info(f'Region new: {region}')
             except:
                 logger.exception(f'failed to create Region: {self}')

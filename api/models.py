@@ -58,9 +58,27 @@ class Mark(models.Model):
 
     @classmethod
     def refresh_marks(klass):
-        for mark in Mark.objects.order_by('size'):
-            mark.save()
-            logger.info(mark)
+        for mark in Mark.objects.all():
+            mark.delete()
+        for venue in Venue.objects.all():
+            venue.save()
+            for game in venue.games.all():
+                Mark.objects.get_or_create(game=game, place=venue)
+                locality = venue.region
+                if locality:
+                    Mark.objects.get_or_create(game=game, place=locality)
+                    admin1 = locality.parent
+                    if admin1:
+                        Mark.objects.get_or_create(game=game, place=admin1)
+                        country = admin1.parent
+                        if country:
+                            Mark.objects.get_or_create(game=game, place=country)
+                        else:
+                            logger.warn(f'missing admin1 country: {admin1}')
+                    else:
+                        logger.warn(f'missing locality admin1: {locality}')
+                else:
+                    logger.warn(f'missing venue region: {venue}')
 
     @staticmethod
     def place_filter(place):

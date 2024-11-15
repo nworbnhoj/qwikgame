@@ -17,14 +17,14 @@ blockquote, q { quotes: "" "" }
 .btn:has(input.hidden) { display: none }
 
 .btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333;  }
-/*.btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }*/
+.btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
 .btn.primary:active { background-color: #e09900; border-color: #e09900; }
 .btn.primary:has(input:checked) {}
 .btn.primary:has(input:disabled) {}
 .btn.primary:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999 }
 
 .btn.secondary { background-color: #ffffff; border-color: #333333; color: #333333; }
-/*.btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }*/
+.btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }
 .btn.secondary:active { background-color: #c6d2e6; border-color: #c6d2e6 }
 .btn.secondary:disabled { border-color: #cccccc; color: #999999 }
 .btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
@@ -32,21 +32,21 @@ blockquote, q { quotes: "" "" }
 
 .btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
-/*.btn.tertiary:hover { background-color: #d8dfed; border-color: #d8dfed; }*/
+.btn.tertiary:hover { background-color: #d8dfed; border-color: #d8dfed; }
 .btn.tertiary:active { background-color: #c6d2e6; border-color: #c6d2e6; }
 .btn.tertiary:has(input:checked) {}
 .btn.tertiary:has(input:disabled) {}
 
 .btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; width: 100%}
 .btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  z-index: 10; }
-/*.btn.special1:hover { background-color: #f5a600; border-color: #f5a600; color: #ffffff }*/
+.btn.special1:hover { background-color: #f5a600; border-color: #f5a600; color: #ffffff }
 .btn.special1:active { background-color: #e09900; border-color: #e09900;  color: #ffffff }
 .btn.special1:has(input:checked) {}
 .btn.special1:has(input:disabled) {}
 .btn.special1:disabled { background-color: #cccccc; border-color: #cccccc; }
 
 .btn.special2 { background-color: #ffffff; border-color: #ffffff; color: #333333; margin: 0px; text-decoration: none; }
-/*.btn.special2:hover { background-color: #d8dfed; border-color: #d8dfed; }*/
+.btn.special2:hover { background-color: #d8dfed; border-color: #d8dfed; }
 .btn.special2:active { background-color: #c6d2e6; border-color: c6d2e6; }
 .btn.special2:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
 .btn.special2:has(input:disabled) { border-color: #cccccc; color: #999999 }

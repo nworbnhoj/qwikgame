@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models import Sum
 from game.models import Game
 from venue.models import Place, Region, Venue
-from player.models import Filter
+from player.models import Filter, Player
 from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
 
@@ -145,12 +145,17 @@ class Mark(models.Model):
         old_size = self.size
         place = self.place
         if place.is_venue:
-            filter_qs = Filter.objects.filter(active=True, place=place)
+            appeal_qs = Player.objects.filter(appeal__venue=place)
+            bid_qs = Player.objects.filter(bid__appeal__venue=place)
+            filter_qs = Player.objects.filter(filter__place=place)
+            match_qs = Player.objects.filter(match__venue=place)
             if self.game:
-                filter_qs = filter_qs.filter(game=self.game)
-            self.size = filter_qs.count()
-            # TODO add historical match count in prior year
-            # TODO make distinct per player
+                appeal_qs = appeal_qs.filter(appeal__game=self.game)
+                bid_qs = bid_qs.filter(bid__appeal__game=self.game)
+                filter_qs = filter_qs.filter(filter__game=self.game)
+                match_qs = match_qs.filter(match__game=self.game)
+            player_qs = appeal_qs | bid_qs | filter_qs | match_qs
+            self.size = player_qs.distinct().count()
         elif place.is_region:
             venue_qs = Venue.objects.filter(country=place.country)
             if place.admin1:

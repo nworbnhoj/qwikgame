@@ -104,8 +104,14 @@ class AcceptView(FeedView):
             try:
                 cancel_pk = context.get('CANCEL')
                 appeal = Appeal.objects.get(pk=cancel_pk)
+                game = appeal.game
+                venue = appeal.venue
                 logger.info(f'Cancelling Appeal: {appeal}')
                 appeal.delete()
+                # update the Mark size
+                mark = Mark.objects.filter(game=game, place=venue).first()
+                if mark:
+                    mark.save()
             except:
                 logger.exception('failed to cancel appeal: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/feed/')
@@ -123,6 +129,11 @@ class AcceptView(FeedView):
                 bid = Bid.objects.get(pk=decline_id)
                 bid.log_event('decline')
                 bid.delete()
+            # update the Mark size
+            appeal = self._context.get('appeal')
+            mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+            if mark:
+                mark.save()
         except:
             logger.exception(f'failed to process Bid: {context}')
         return HttpResponseRedirect(f'/player/feed/accept/{bid.appeal.id}/')
@@ -185,6 +196,10 @@ class BidView(FeedView):
             )
         bid.save()
         bid.log_event('bid')
+        # update the Mark size
+        mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+        if mark:
+            mark.save()
         return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
@@ -417,6 +432,10 @@ class KeenView(FeedView):
             appeal.save()
             if not appeal_pk:
                 appeal_pk = appeal.pk
+        # update the Mark size
+        mark = Mark.objects.filter(game=game, place=place).first()
+        if mark:
+            mark.save()
         return HttpResponseRedirect('/player/feed/')        
 
 

@@ -839,7 +839,7 @@ window.onload = function() {
     submit.addEventListener("click", () => {
       label = submit.closest('label')
       label.classList.add("loader");
-      setTimeout(() => label.classList.remove("loader"), 5000);
+      setTimeout(() => label.classList.remove("loader"), 20000);
     });
   });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {

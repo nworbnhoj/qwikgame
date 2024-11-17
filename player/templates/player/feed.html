@@ -40,9 +40,9 @@
         <div class="post group">
 {% for app in prospects %}
 {% if app.player == player %}
-            <a class="btn secondary item {{ unread }}" href="{% url 'accept' app.pk %}">
+            <a class="btn secondary item {{ app.seen }}" href="{% url 'accept' app.pk %}">
 {% else %}
-            <a class="btn secondary item {{ unread }}" href="{% url 'bid' app.pk %}">
+            <a class="btn secondary item {{ app.seen }}" href="{% url 'bid' app.pk %}">
 {% endif %}
 {% if app.pk == appeal.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
@@ -86,7 +86,7 @@
         </h2>
         <div class="post group">
 {% for app in appeals %}
-            <a class="btn secondary item {{ unread }}" href="{% url 'bid' app.pk %}">
+            <a class="btn secondary item {{ app.seen }}" href="{% url 'bid' app.pk %}">
 {% if app.pk == appeal.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}

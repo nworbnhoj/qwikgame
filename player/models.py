@@ -141,6 +141,7 @@ class Appeal(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=DAY_NONE)
     log = models.JSONField(default=list)
+    meta = models.JSONField(default=dict)
     rivals = models.ManyToManyField('self', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
@@ -231,6 +232,13 @@ class Appeal(models.Model):
             )
         )
         return action
+
+    def mark_seen(self, player_pk):
+        seen = self.meta.get('seen', [player_pk])
+        if not player_pk in seen:
+            seen.append(player_pk)
+        self.meta['seen'] = seen
+        return self
 
     def set_hours(self, hours24):
         self.hours = hours24.as_bytes()

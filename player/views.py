@@ -34,11 +34,17 @@ class FeedView(QwikView):
         participate = participate.order_by('pk').distinct()
         participate_list = list(participate)
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
-        participate_list.sort(key=lambda x: x.date)
+        #participate_list.sort(key=lambda x: x.date)
+        for appeal in participate_list:
+            seen = player.pk in appeal.meta.get('seen', [])
+            appeal.seen = '' if seen else 'unseen'
         feed = feed.exclude(pk__in=participate)
         feed_list = list(feed)  
         feed_list.sort(key=lambda x: x.last_hour, reverse=True)
         feed_list.sort(key=lambda x: x.date)
+        for appeal in feed_list:
+            seen = player.pk in appeal.meta.get('seen', [])
+            appeal.seen = '' if seen else 'unseen'
         self._context |= {  
             'appeal': self._context.get('item'),
             'appeals': feed_list[:100],
@@ -85,6 +91,9 @@ class AcceptView(FeedView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        appeal = self._context.get('appeal')
+        # mark this Appeal seen by this Player
+        appeal.mark_seen(self.user.player.pk).save()
         context = self.context(request, *args, **kwargs)
         context |= self.accept_form_class.get()
         return render(request, self.template_name, context)
@@ -106,6 +115,10 @@ class AcceptView(FeedView):
                 appeal = Appeal.objects.get(pk=cancel_pk)
                 game = appeal.game
                 venue = appeal.venue
+                appeal.meta['seen'] = [player.pk]
+                # mark this Appeal seen by this Player only
+                appeal.meta['seen'] = [player.pk]
+                appeal.save()
                 logger.info(f'Cancelling Appeal: {appeal}')
                 appeal.delete()
                 # update the Mark size
@@ -129,8 +142,10 @@ class AcceptView(FeedView):
                 bid = Bid.objects.get(pk=decline_id)
                 bid.log_event('decline')
                 bid.delete()
-            # update the Mark size
             appeal = self._context.get('appeal')
+            # mark this Appeal seen by this Player only
+            appeal.meta['seen'] = [player.pk]
+            appeal.save()
             mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
             if mark:
                 mark.save()
@@ -159,6 +174,9 @@ class BidView(FeedView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         appeal = self._context.get('appeal')
+        # mark this Appeal seen by this Player
+        appeal.mark_seen(self.user.player.pk).save()
+        # redirect if this Player owns the Appeal
         if appeal.player == self.user.player:
             return HttpResponseRedirect(f'/player/feed/accept/{appeal.id}/')
         context |= self.bid_form_class.get(context.get('appeal'))
@@ -181,6 +199,9 @@ class BidView(FeedView):
                 cancel_pk = context.get('CANCEL')
                 logger.warn(cancel_pk)
                 bid = Bid.objects.get(pk=cancel_pk)
+                # mark this Appeal seen by this Player only
+                appeal.meta['seen'] = [player.pk]
+                appeal.save()
                 logger.info(f'Cancelling Bid: {bid}')
                 bid.log_event('withdraw')
                 appeal_pk = bid.appeal.pk
@@ -196,6 +217,9 @@ class BidView(FeedView):
             )
         bid.save()
         bid.log_event('bid')
+        # mark this Appeal seen by this Player only
+        appeal.meta['seen'] = [player.pk]
+        appeal.save()
         # update the Mark size
         mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
         if mark:

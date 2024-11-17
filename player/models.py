@@ -5,7 +5,7 @@ from pytz import datetime
 from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
-from game.models import Match
+from game.models import Match, Review
 
 
 logger = logging.getLogger(__file__)
@@ -123,6 +123,9 @@ class Player(models.Model):
 
     def reputation(self):
         return 3
+
+    def reviews(self):
+        return Review.objects.filter(player=self)
         
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):

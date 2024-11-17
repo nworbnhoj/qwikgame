@@ -99,6 +99,7 @@ class QwikView(BaseView):
             'person_name': self.user.person.name,
             'unseen_appeal': unseen_appeal,
             'unseen_match': unseen_match,
+            'unseen_review': player.reviews().count(),
         }
         return self._context
 

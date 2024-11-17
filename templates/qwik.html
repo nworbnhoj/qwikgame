@@ -44,6 +44,9 @@
         <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>
             <span class="fat">Reviews</span>
+{% if unseen_review > 0 %}
+            <div class="dot">{{ unseen_review }}</div>
+{% endif %}
         </a>
         <a class="btn special2 {{ friend_tab }}" href="{% url 'friend' %}">
             <i class="fa-solid fa-user-group fa-2x"></i>

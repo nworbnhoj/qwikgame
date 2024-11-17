@@ -55,7 +55,7 @@
         </h2>
         <div class="post group">
 {% for mat in matches_future %}
-            <a class="btn secondary item" href="{% url target match=mat.pk %}">
+            <a class="btn secondary item {{ mat.seen }}" href="{% url target match=mat.pk %}">
 {% if mat.pk == match.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
@@ -93,7 +93,7 @@
         </h2>
         <div class="post group">
 {% for mat in matches_past %}
-            <a class="btn secondary item" href="{% url target match=mat.pk %}">
+            <a class="btn secondary item {{ mat.seen }}" href="{% url target match=mat.pk %}">
 {% if mat.pk == match.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}

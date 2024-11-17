@@ -24,12 +24,22 @@ class MatchesView(QwikView):
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
-        self._context['matches'] = self._context['items'].order_by('date')
+        player = self.user.player
+        matches = self._context['items'].order_by('date')
         now = datetime.now(pytz.utc) + DELAY_MATCHS_LIST
+        matches_future = matches.filter(date__gt=now)
+        for match in matches_future:
+            seen = player.pk in match.meta.get('seen', [])
+            match.seen = '' if seen else 'unseen'
+        matches_past = matches.filter(date__lte=now)
+        for match in matches_past:
+            seen = player.pk in match.meta.get('seen', [])
+            match.seen = '' if seen else 'unseen'
+        self._context['matches'] = matches
         self._context |= {
             'match': self._context['item'],
-            'matches_future': self._context['items'].filter(date__gt=now),
-            'matches_past': self._context['items'].filter(date__lte=now),
+            'matches_future': matches_future,
+            'matches_past': matches_past,
             'player_id': self.user.player.facet(),
             'target': 'match',
         }
@@ -91,6 +101,9 @@ class MatchView(MatchesView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        match = self._context['match']
+        # mark this Match seen by this Player
+        match.mark_seen(self.user.player.pk).save()
         context = self.context(request, *args, **kwargs)
         context |= self.match_form_class.get()
         return render(request, self.template_name, context)
@@ -109,6 +122,8 @@ class MatchView(MatchesView):
                 match = Match.objects.get(pk=cancel_pk)
                 logger.info(f'Cancelling Match: {match}')
                 match.status = 'X'
+                # mark this Match seen by this Player only
+                match.meta['seen'] = [player.pk]
                 match.save()
             except:
                 logger.exception('failed to cancel match: {} : {}'.format(player, cancel_pk))
@@ -128,6 +143,9 @@ class MatchView(MatchesView):
                 match.log_entry(entry)
             except:
                 logger.exception(f'failed chat entry: {match_pk} {context}')
+        # mark this Match seen by this Player only
+        match.meta['seen'] = [player.pk]
+        match.save()
         context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/game/match/{match_pk}/')
 

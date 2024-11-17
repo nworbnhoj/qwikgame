@@ -35,6 +35,7 @@ class Match(models.Model):
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
+    meta = models.JSONField(default=dict)
     status = models.CharField(max_length=1, choices=MATCH_STATUS, default='A')
     competitors = models.ManyToManyField(Player)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
@@ -103,6 +104,13 @@ class Match(models.Model):
             logger.info(f'match perished {dry}: {self}')
             return 'chat'
         return 'noop'
+
+    def mark_seen(self, player_pk):
+        seen = self.meta.get('seen', [player_pk])
+        if not player_pk in seen:
+            seen.append(player_pk)
+        self.meta['seen'] = seen
+        return self
 
     # format venue_time on server, rather than in template (user timezone)
     def venue_date_str(self):

@@ -737,14 +737,15 @@ function endowMark(key, mark){
   
   const K = key.split('|');
   size = mark.size.toString();
-  var label_origin = new google.maps.Point(13,15)
   var onclick = 'noop';
   if(K.length === 4){  // venue Mark
+    var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
     mark.marker.setTitle(mark.name+'\n'+size+' players\nopen: '+mark.open);
     onclick = ONCLICK_VENUE_MARKER;
   } else {  // metaMark
+    var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.marker.setTitle(mark.name+'\n'+size+' venues');

@@ -83,7 +83,7 @@ blockquote, q { quotes: "" "" }
 .item div.notes { flex: 1 1 0; overflow:hidden; text-overflow: ellipsis;}
 .item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
 .item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.item.unseen { border-right-color: #f5a600; border-right-width: 1em; font-weight: bold }
+.item.unseen { border-left-color: #f5a600; border-left-width: 0.5em; font-weight: bold }
 .item.unseen div.icon { color: #dfa622 }
 
 .invisible { visibility: hidden }

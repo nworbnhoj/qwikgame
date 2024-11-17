@@ -458,7 +458,10 @@ class KeenView(FeedView):
         mark = Mark.objects.filter(game=game, place=place).first()
         if mark:
             mark.save()
-        return HttpResponseRedirect('/player/feed/')        
+        if appeal_pk:
+            return HttpResponseRedirect(f'/player/feed/{appeal_pk}/')
+        else:
+            return HttpResponseRedirect(f'/player/feed/')
 
 
 class InvitationView(FeedView):

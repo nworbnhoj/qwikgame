@@ -1,7 +1,5 @@
 from django.db import models
 
-from authenticate.models import User
-
 
 LANGUAGE = [
     ('bg', 'български'),
@@ -23,7 +21,7 @@ class Person(models.Model):
     name = models.CharField(max_length=32)
     notify_email = models.BooleanField(default=True)
     notify_web = models.BooleanField(default=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
 
     def __str__(self):
     	return self.name

@@ -1,12 +1,11 @@
 import logging
 import hashlib, pytz
-from authenticate.models import User
 from django.db import models
 from pytz import datetime
 from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
-from venue.models import Place, Venue
+from game.models import Match
 
 
 logger = logging.getLogger(__file__)
@@ -22,7 +21,7 @@ class Player(models.Model):
     email_hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
     games = models.ManyToManyField('game.Game')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE, blank=True, null=True)
 
     @classmethod
     def hash(cls, text):
@@ -144,7 +143,7 @@ class Appeal(models.Model):
     meta = models.JSONField(default=dict)
     rivals = models.ManyToManyField('self', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
@@ -250,7 +249,7 @@ class Appeal(models.Model):
 class Filter(models.Model):
     active = models.BooleanField(default=True)
     game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
-    place = models.ForeignKey(Place, null=True, on_delete=models.CASCADE)
+    place = models.ForeignKey('venue.Place', null=True, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE)
 

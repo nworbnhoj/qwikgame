@@ -1,5 +1,4 @@
 import logging, pytz, sys
-from authenticate.models import User
 from django.db import models
 from pytz import datetime, timezone
 from qwikgame.constants import ADMIN1, COUNTRY, EAST, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SIZE, SOUTH, WEST
@@ -13,7 +12,7 @@ TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
 
 
 class Manager(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.person.name

@@ -1,8 +1,7 @@
 import logging, sys
 from django.db import models
 from django.db.models import Sum
-from game.models import Game
-from venue.models import Place, Region, Venue
+from venue.models import Region, Venue
 from player.models import Filter, Player
 from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, SIZE
 from service.locate import Locate
@@ -10,8 +9,8 @@ from service.locate import Locate
 logger = logging.getLogger(__file__)
 
 class Mark(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, blank=True, null=True)
-    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE, blank=True, null=True)
+    place = models.ForeignKey('venue.Place', on_delete=models.CASCADE)
     size = models.PositiveIntegerField(default=0)
 
     def save(self, **kwargs):

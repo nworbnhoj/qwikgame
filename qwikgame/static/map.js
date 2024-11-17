@@ -756,6 +756,7 @@ function endowMark(key, mark){
   switch (onclick){
       case 'center':
         google.maps.event.addListener(mark.marker, 'click', () => {
+          qwikMap.setZoom(qwikMap.getZoom()+1);
           qwikMap.setCenter(mark.center);
         });
         break;

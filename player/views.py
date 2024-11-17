@@ -429,6 +429,7 @@ class KeenView(FeedView):
             logger.info(f"no valid hours for {context['today']} {today} at {venue}")
         elif appeal.hours24 != context['today']:
             appeal.set_hours(valid_hours)
+            appeal.mark_seen(player.pk)
             logger.info(f'update Appeal: {appeal}')
             appeal.log_event('keen')
             appeal.log_event('appeal')
@@ -448,6 +449,7 @@ class KeenView(FeedView):
             logger.info(f"no valid hours for {context['today']} {tomorrow} at {venue}")
         elif appeal.hours24 != context['tomorrow']:
             appeal.set_hours(valid_hours)
+            appeal.mark_seen(player.pk)
             logger.info(f'update Appeal: {appeal}')
             appeal.log_event('keen')
             appeal.log_event('appeal')

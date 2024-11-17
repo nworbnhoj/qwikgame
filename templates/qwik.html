@@ -30,10 +30,16 @@
         <a class="btn special2 {{ feed_tab }}" href="{% url 'feed' %}">
             <i class="fa-solid fa-house fa-2x"></i>
             <span class="fat">Invitations</span>
+{% if unseen_appeal > 0 %}
+            <div class="dot">{{ unseen_appeal }}</div>
+{% endif %}
         </a>
         <a class="btn special2 {{ schedule_tab }}" href="{% url 'matches' %}">
             <i class="fa-solid fa-calendar-days fa-2x"></i>
             <span class="fat">Matches</span>
+{% if unseen_match > 0 %}
+            <div class="dot">{{ unseen_match }}</div>
+{% endif %}
         </a>
         <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>

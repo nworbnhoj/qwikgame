@@ -29,9 +29,7 @@ class FeedView(QwikView):
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal')
         super().context(request, *args, **kwargs)
-        participate = Appeal.objects.filter(bid__rival=player)
-        participate |= Appeal.objects.filter(player=player)
-        participate = participate.order_by('pk').distinct()
+        participate = player.appeal_participate().order_by('date')
         participate_list = list(participate)
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
         #participate_list.sort(key=lambda x: x.date)

@@ -83,14 +83,24 @@ class QwikView(BaseView):
             }
         else:
             self._context['item'] = None
+        # count unseen items for unseen dots on tabs
+        player = self.user.player
+        unseen_appeal = 0;
+        for appeal in player.appeal_participate():
+            if not player.pk in appeal.meta.get('seen', []):
+                unseen_appeal += 1
+        unseen_match = 0
+        for match in player.matches():
+            if not player.pk in match.meta.get('seen', []):
+                unseen_match += 1
         self._context |= {
             'items': items,
             'person_icon': self.user.person.icon,
             'person_name': self.user.person.name,
+            'unseen_appeal': unseen_appeal,
+            'unseen_match': unseen_match,
         }
         return self._context
-
-
 
 class WelcomeView(BaseView):
 

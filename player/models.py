@@ -27,6 +27,12 @@ class Player(models.Model):
     def hash(cls, text):
         return hashlib.md5(text.encode()).hexdigest()
 
+    def appeal_participate(self):
+        as_appealer = Appeal.objects.filter(player=self)
+        as_bidder =Appeal.objects.filter(bid__rival=self)
+        return (as_appealer | as_bidder)
+
+
     # add a Player conduct review to the least significant bit
     def conduct_add(self, good=True):
         conduct = int.from_bytes(self.conduct, ENDIAN)
@@ -87,6 +93,9 @@ class Player(models.Model):
         for friend in Friend.objects.filter(player=self):
             choices[friend.rival.email_hash] = "{} ({})".format(friend.name, friend.email)
         return choices
+
+    def matches(self):
+        return Match.objects.filter(competitors__in=[self])
 
     def name(self):
         if self.user is not None:

@@ -61,9 +61,9 @@
         <div class="post">
 {% for entry in appeal.log %}
     {% if entry.id == player_id %}
-                <div class="log_entry align_start {{ entry.klass }}">
-    {% else %}
                 <div class="log_entry align_end {{ entry.klass }}">
+    {% else %}
+                <div class="log_entry align_start {{ entry.klass }}">
     {% endif %}
                 <div class="btn special2 todo">
                     <i class="fa-solid fa-hat-cowboy fa-2x"></i>

@@ -224,7 +224,7 @@ class FilterForm(QwikForm):
                     'place': place,
                 },
             )
-        form.fields['place'].choices += player.place_choices()[:8]
+        form.fields['place'].choices += player.place_choices(12)
         return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.

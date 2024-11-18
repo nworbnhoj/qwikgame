@@ -6,6 +6,7 @@ from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 from game.models import Match, Review
+from venue.models import Venue, Region
 
 
 logger = logging.getLogger(__file__)
@@ -103,11 +104,22 @@ class Player(models.Model):
         else:
             return self.facet()
 
-    def place_choices(self):
-        # TODO set distinct for venues
-        # TODO include venues for past matches
-        filters = Filter.objects.filter(player=self, place__isnull=False).all()
-        return [(f.place.placeid, f.place.name) for f in filters]
+    def place_choices(self, count=12):
+        places = self.place_suggestions(count)
+        return [(p.placeid, p.name) for p in places]
+
+    def place_suggestions(self, count):
+        venues = list(self.venue_suggestions(count))
+        places = set()
+        while len(places) < count and len(venues) > 0:
+            venue = venues.pop()
+            places.add(venue)
+            places.add(Region.objects.get(country=venue.country, admin1=venue.admin1, locality=venue.locality))
+            places.add(Region.objects.get(country=venue.country, admin1=venue.admin1, locality__isnull=True))
+            places.add(Region.objects.get(country=venue.country, admin1__isnull=True, locality__isnull=True))
+        places = list(places)[:count]
+        places.sort(key=lambda x: x.name)
+        return places
 
     # return a list of Appeals that this Player has
     # either made or bid-on, sorted by urgency

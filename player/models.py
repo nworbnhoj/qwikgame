@@ -28,6 +28,34 @@ class Player(models.Model):
     def hash(cls, text):
         return hashlib.md5(text.encode()).hexdigest()
 
+    # return a list of Appeals sorted by urgency:
+    # - matching Player Filters,
+    # - or by direct invitation,
+    # - excluding Blocked Players. 
+    def appeals(self):
+        filters = Filter.objects.filter(player=self, active=True)
+        if filters:
+            appeal_qs = Appeal.objects.filter(player=self)            
+            for f in filters:
+                if f.game:
+                    appeal_qs |= Appeal.objects.filter(game=f.game)
+                if f.place:
+                    if f.place.is_venue:
+                        appeal_qs |= Appeal.objects.filter(venue=f.place)
+                        # TODO hours intersection
+                    elif f.place.is_region:
+                        qs = Appeal.objects
+                        qs = qs.filter(venue__lat__lte=f.place.region.north)
+                        qs = qs.filter(venue__lat__gte=f.place.region.south)
+                        qs = qs.filter(venue__lng__lte=f.place.region.east)
+                        qs = qs.filter(venue__lng__gte=f.place.region.west)
+                        appeal_qs |= qs
+        else:
+            appeal_qs = Appeal.objects.all()
+        # TODO include direct invites
+        # TODO exclude Blocked Players
+        return appeal_qs.order_by('pk').distinct()
+
     def appeal_participate(self):
         as_appealer = Appeal.objects.filter(player=self)
         as_bidder =Appeal.objects.filter(bid__rival=self)
@@ -60,34 +88,6 @@ class Player(models.Model):
 
     def facet(self):
         return self.email_hash[:3].upper()
-
-    # return a list of Appeals sorted by urgency:
-    # - matching Player Filters,
-    # - or by direct invitation,
-    # - excluding Blocked Players. 
-    def feed(self):
-        filters = Filter.objects.filter(player=self, active=True)
-        if filters:
-            appeal_qs = Appeal.objects.filter(player=self)            
-            for f in filters:
-                if f.game:
-                    appeal_qs |= Appeal.objects.filter(game=f.game)
-                if f.place:
-                    if f.place.is_venue:
-                        appeal_qs |= Appeal.objects.filter(venue=f.place)
-                        # TODO hours intersection
-                    elif f.place.is_region:
-                        qs = Appeal.objects
-                        qs = qs.filter(venue__lat__lte=f.place.region.north)
-                        qs = qs.filter(venue__lat__gte=f.place.region.south)
-                        qs = qs.filter(venue__lng__lte=f.place.region.east)
-                        qs = qs.filter(venue__lng__gte=f.place.region.west)
-                        appeal_qs |= qs
-        else:
-            appeal_qs = Appeal.objects.all()
-        # TODO include direct invites
-        # TODO exclude Blocked Players
-        return appeal_qs.order_by('pk').distinct()
 
     def friend_choices(self):
         choices={}

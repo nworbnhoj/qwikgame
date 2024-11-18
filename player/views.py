@@ -24,30 +24,30 @@ class FeedView(QwikView):
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
-        feed = player.feed()
-        kwargs['items'] = feed
+        appeals = player.appeals()
+        kwargs['items'] = appeals
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal')
         super().context(request, *args, **kwargs)
-        participate = player.appeal_participate().order_by('date')
+        participate = player.appeal_participate()
         participate_list = list(participate)
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
-        #participate_list.sort(key=lambda x: x.date)
+        participate_list.sort(key=lambda x: x.date)
         for appeal in participate_list:
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
-        feed = feed.exclude(pk__in=participate)
-        feed_list = list(feed)  
-        feed_list.sort(key=lambda x: x.last_hour, reverse=True)
-        feed_list.sort(key=lambda x: x.date)
-        for appeal in feed_list:
+        appeals = appeals.exclude(pk__in=participate)
+        appeals_list = list(appeals)  
+        appeals_list.sort(key=lambda x: x.last_hour, reverse=True)
+        appeals_list.sort(key=lambda x: x.date)
+        for appeal in appeals_list:
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
         self._context |= {  
             'appeal': self._context.get('item'),
-            'appeals': feed_list[:100],
+            'appeals': appeals_list[:100],
             'feed_tab': 'selected',
-            'feed_length': len(feed_list),
+            'feed_length': len(appeals_list),
             'filtered': Filter.objects.filter(player=player, active=True).exists(),
             'player': player,
             'prospects': participate[:100],

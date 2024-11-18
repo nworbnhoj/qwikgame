@@ -133,6 +133,22 @@ class Player(models.Model):
         prospects.sort(key=lambda x: x.date)
         return prospects
 
+    # Returns a sorted dict of {Region:tally} representing the frequency of
+    # each country|admin1|locality returned by venue_favorites()
+    def region_favorites(self, count=100):
+        venues = self.venue_favorites(count)
+        regions = {}
+        for venue in venues:
+            locality = Region.objects.get(country=venue.country, admin1=venue.admin1, locality=venue.locality)
+            admin1 = locality.parent
+            country = admin1.parent
+            regions[locality] = regions.get(locality, 0) + 1
+            regions[admin1] = regions.get(admin1, 0) + 1
+            regions[country] = regions.get(country, 0) + 1
+        regions = dict(sorted(regions.items(), key=lambda item: item[1], reverse=True))
+        logger.warn(regions)
+        return regions #, len(venues)
+
     def reputation(self):
         return 3
 

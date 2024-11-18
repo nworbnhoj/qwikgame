@@ -47,7 +47,7 @@ class AppealsView(QwikView):
             'appeal': self._context.get('item'),
             'appeals': appeals_list[:100],
             'appeals_tab': 'selected',
-            'feed_length': len(appeals_list),
+            'appeals_length': len(appeals_list),
             'filtered': Filter.objects.filter(player=player, active=True).exists(),
             'player': player,
             'prospects': participate[:100],

@@ -125,7 +125,7 @@ class AcceptView(AppealsView):
                     mark.save()
             except:
                 logger.exception('failed to cancel appeal: {} : {}'.format(player, cancel_pk))
-            return HttpResponseRedirect(f'/player/feed/')
+            return HttpResponseRedirect(f'/player/appeal/')
         try:
             accept = context.get('accept')
             if accept:
@@ -149,7 +149,7 @@ class AcceptView(AppealsView):
                 mark.save()
         except:
             logger.exception(f'failed to process Bid: {context}')
-        return HttpResponseRedirect(f'/player/feed/accept/{bid.appeal.id}/')
+        return HttpResponseRedirect(f'/player/appeal/accept/{bid.appeal.id}/')
 
 
 class BidView(AppealsView):
@@ -176,7 +176,7 @@ class BidView(AppealsView):
         appeal.mark_seen(self.user.player.pk).save()
         # redirect if this Player owns the Appeal
         if appeal.player == self.user.player:
-            return HttpResponseRedirect(f'/player/feed/accept/{appeal.id}/')
+            return HttpResponseRedirect(f'/player/appeal/accept/{appeal.id}/')
         context |= self.bid_form_class.get(context.get('appeal'))
         return render(request, self.template_name, context)
 
@@ -206,7 +206,7 @@ class BidView(AppealsView):
                 bid.delete()
             except:
                 logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
-            return HttpResponseRedirect(f'/player/feed/{appeal.pk}/')
+            return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
         bid = Bid(
             appeal=context['accept'],
             hours=context['hours'],
@@ -222,7 +222,7 @@ class BidView(AppealsView):
         mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
         if mark:
             mark.save()
-        return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
+        return HttpResponseRedirect(f'/player/appeal/{appeal.id}/')
 
 
 class FilterView(AppealsView):
@@ -305,7 +305,7 @@ class FilterView(AppealsView):
                 mark.save()
         except:
             logger.exception("failed to add filter")
-        return HttpResponseRedirect("/player/feed/filters")
+        return HttpResponseRedirect("/player/appeal/filters")
 
 
 class FiltersView(AppealsView):
@@ -339,7 +339,7 @@ class FiltersView(AppealsView):
                     filter.save()
                 except:
                     logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
-            return HttpResponseRedirect("/player/feed/")
+            return HttpResponseRedirect("/player/appeal/")
         if 'DELETE' in context:
             delete = context.get('DELETE', [])
             logger.info(f'deleting filters {delete}')
@@ -350,7 +350,7 @@ class FiltersView(AppealsView):
                     junk.delete()
                 except:
                     logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        return HttpResponseRedirect("/player/feed/filters")
+        return HttpResponseRedirect("/player/appeal/filters")
 
 
 class KeenView(AppealsView):
@@ -400,12 +400,12 @@ class KeenView(AppealsView):
                     place = venue.place_ptr
         if not venue:
             logger.warn(f'Venue missing from Appeal: {placeid}')
-            return HttpResponseRedirect('/player/feed/')
+            return HttpResponseRedirect('/player/appeal/')
         gameid = context.get('game')
         game = Game.objects.filter(pk=gameid).first()
         if not game:
             logger.warn(f'Game missing from Appeal: {game}')
-            return HttpResponseRedirect('/player/feed/')
+            return HttpResponseRedirect('/player/appeal/')
         # add this Game to a Venue if required
         if not(game in venue.games.all()):
             venue.games.add(game)
@@ -459,9 +459,9 @@ class KeenView(AppealsView):
         if mark:
             mark.save()
         if appeal_pk:
-            return HttpResponseRedirect(f'/player/feed/{appeal_pk}/')
+            return HttpResponseRedirect(f'/player/appeal/{appeal_pk}/')
         else:
-            return HttpResponseRedirect(f'/player/feed/')
+            return HttpResponseRedirect(f'/player/appeal/')
 
 
 class InvitationView(AppealsView):
@@ -480,7 +480,7 @@ class InvitationView(AppealsView):
         #     self.user.player,
         # )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/feed/")
+            return HttpResponseRedirect("/player/appeal/")
         context |= super().context(request, *args, **kwargs)
         return render(request, self.template_name, context)
 

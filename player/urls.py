@@ -4,12 +4,12 @@ from player.views import AcceptView, BidView, AppealsView, FilterView, FriendVie
 
 urlpatterns = [
     path("", AppealsView.as_view()),
-    path("feed/", AppealsView.as_view(), name='feed'),
-    path("feed/filter/", FilterView.as_view(), name='filter'),
-    path("feed/filters/", FiltersView.as_view(), name='filters'),
-    path("feed/<int:appeal>/", BidView.as_view(), name='bid'),
-    path("feed/keen/", KeenView.as_view(), name='keen'),
-    path("feed/accept/<int:appeal>/", AcceptView.as_view(), name='accept'),
+    path("appeal/", AppealsView.as_view(), name='feed'),
+    path("appeal/filter/", FilterView.as_view(), name='filter'),
+    path("appeal/filters/", FiltersView.as_view(), name='filters'),
+    path("appeal/<int:appeal>/", BidView.as_view(), name='bid'),
+    path("appeal/keen/", KeenView.as_view(), name='keen'),
+    path("appeal/accept/<int:appeal>/", AcceptView.as_view(), name='accept'),
     path("friend/", FriendsView.as_view(), name='friend'),
     path("friend/add/", FriendView.as_view(), name='friend_add'),
     path("friend/<int:friend>/", FriendView.as_view(), name='friend'),

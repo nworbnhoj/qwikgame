@@ -167,11 +167,11 @@ class Player(models.Model):
         if not place:
             # TODO default to Venues in Players current location
             place = Venue.objects.get(placeid='ChIJn3L6d6nDJmsRI-bg5mhRHhA')
-        qs = qs.union(Venue.objects.filter(
+        qs = Venue.objects.filter(
             country=place.country,
             admin1=place.admin1,
             locality=place.locality
-        ))
+        )
         if qs.count() < count:
             qs = qs.union(Venue.objects.filter(
                 country=place.country,

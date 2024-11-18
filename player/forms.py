@@ -225,6 +225,10 @@ class FilterForm(QwikForm):
                 },
             )
         form.fields['place'].choices += player.place_choices(12)
+        region = player.region_favorite()
+        if region:
+            form.fields['lat'].initial = region.lat
+            form.fields['lng'].initial = region.lng
         return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.
@@ -466,7 +470,10 @@ class KeenForm(QwikForm):
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
         self.fields['place'].choices += player.venue_choices(12)
-
+        region = player.region_favorite()
+        if region:
+            self.fields['lat'].initial = region.lat
+            self.fields['lng'].initial = region.lng
 
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'

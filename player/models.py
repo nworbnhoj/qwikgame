@@ -168,6 +168,8 @@ class Player(models.Model):
             regions[locality] = regions.get(locality, 0) + 1
             regions[admin1] = regions.get(admin1, 0) + 1
             regions[country] = regions.get(country, 0) + 1
+        if regions.pop(None, None):
+            logger.warn('detected Venue with Country | Admin1 | Locality = None')
         regions = dict(sorted(regions.items(), key=lambda item: item[1], reverse=True))
         logger.warn(regions)
         return regions #, len(venues)

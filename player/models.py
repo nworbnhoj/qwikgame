@@ -320,11 +320,10 @@ class Appeal(models.Model):
         )
         return action
 
-    def mark_seen(self, player_pk):
-        seen = self.meta.get('seen', [player_pk])
-        if not player_pk in seen:
-            seen.append(player_pk)
-        self.meta['seen'] = seen
+    def mark_seen(self, player_pks=[]):
+        seen = set(self.meta.get('seen', []))
+        seen.update(player_pks)
+        self.meta['seen'] = list(seen)
         return self
 
     def set_hours(self, hours24):

@@ -103,7 +103,7 @@ class MatchView(MatchesView):
         super().get(request, *args, **kwargs)
         match = self._context['match']
         # mark this Match seen by this Player
-        match.mark_seen(self.user.player.pk).save()
+        match.mark_seen([self.user.player.pk]).save()
         context = self.context(request, *args, **kwargs)
         context |= self.match_form_class.get()
         return render(request, self.template_name, context)

@@ -104,11 +104,10 @@ class Match(models.Model):
             return 'chat'
         return 'noop'
 
-    def mark_seen(self, player_pk):
-        seen = self.meta.get('seen', [player_pk])
-        if not player_pk in seen:
-            seen.append(player_pk)
-        self.meta['seen'] = seen
+    def mark_seen(self, player_pks=[]):
+        seen = set(self.meta.get('seen', []))
+        seen.update(player_pks)
+        self.meta['seen'] = list(seen)
         return self
 
     # format venue_time on server, rather than in template (user timezone)

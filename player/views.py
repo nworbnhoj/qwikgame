@@ -91,7 +91,7 @@ class AcceptView(AppealsView):
         super().get(request, *args, **kwargs)
         appeal = self._context.get('appeal')
         # mark this Appeal seen by this Player
-        appeal.mark_seen(self.user.player.pk).save()
+        appeal.mark_seen([self.user.player.pk]).save()
         context = self.context(request, *args, **kwargs)
         context |= self.accept_form_class.get()
         return render(request, self.template_name, context)
@@ -173,7 +173,7 @@ class BidView(AppealsView):
         context = self.context(request, *args, **kwargs)
         appeal = self._context.get('appeal')
         # mark this Appeal seen by this Player
-        appeal.mark_seen(self.user.player.pk).save()
+        appeal.mark_seen([self.user.player.pk]).save()
         # redirect if this Player owns the Appeal
         if appeal.player == self.user.player:
             return HttpResponseRedirect(f'/player/appeal/accept/{appeal.id}/')

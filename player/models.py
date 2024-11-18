@@ -133,15 +133,51 @@ class Player(models.Model):
             self.email_hash = Player.hash(self.user.email)
         super().save(*args, **kwargs)
 
-    def venue_choices(self):
-        # TODO set distinct for venues
-        # TODO include venues for past matches
-        filters = Filter.objects.filter(
-            player=self,
-            place__isnull=False,
-            place__venue__isnull=False
-            ).all()
-        return [(f.place.placeid, f.place.name) for f in filters]
+    def venue_choices(self, count=10):
+        qs = self.venue_suggestions(count)
+        qs = qs.order_by('name')
+        return [(v.pk, v.name) for v in qs.all()][:count]
+
+    def venue_favorites(self, count):
+        qs = Venue.objects.filter(appeal__bid__rival=self).distinct()
+        if qs.count() < count:
+            qs = qs.union(Venue.objects.filter(appeal__player=self))
+        if qs.count() < count:
+            qs = qs.union(Venue.objects.filter(filter__player=self))
+        if qs.count() < count:
+            match_qs = Venue.objects.filter(
+                match__competitors__in=[self]
+            ).order_by('match__date').reverse()[:count]
+            qs = qs.union(match_qs)
+        return qs
+
+    def venue_local(self, count=10, place=None):
+        if not place:
+            # TODO default to Venues in Players current location
+            place = Venue.objects.get(placeid='ChIJn3L6d6nDJmsRI-bg5mhRHhA')
+        qs = qs.union(Venue.objects.filter(
+            country=place.country,
+            admin1=place.admin1,
+            locality=place.locality
+        ))
+        if qs.count() < count:
+            qs = qs.union(Venue.objects.filter(
+                country=place.country,
+                admin1=place.admin1
+            ))
+        if qs.count() < count:
+            qs = qs.union(Venue.objects.filter(country=place.country))
+        if qs.count() < count:
+            qs = qs.union(Venue.objects[:count])
+        return qs
+
+    def venue_suggestions(self, count=10):
+        qs = self.venue_favorites(count)
+        count -= qs.count()
+        if count < 0:
+            qs = qs.union(self.venue_local(count=(count)))
+        return qs
+       
 
     def __str__(self):
         return self.email_hash if self.user is None else self.user.email

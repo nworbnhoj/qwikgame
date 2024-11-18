@@ -465,7 +465,7 @@ class KeenForm(QwikForm):
         self.fields['today'].help_text = 'What time are you keen to play today?'
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
-        self.fields['place'].choices += player.venue_choices()[:8]
+        self.fields['place'].choices += player.venue_choices(12)
 
 
     # Initializes an KeenForm for 'player'.

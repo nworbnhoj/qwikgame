@@ -176,7 +176,7 @@ class Player(models.Model):
     def venue_choices(self, count=10):
         qs = self.venue_suggestions(count)
         qs = qs.order_by('name')
-        return [(v.pk, v.name) for v in qs.all()][:count]
+        return [(v.placeid, v.name) for v in qs.all()][:count]
 
     def venue_favorites(self, count):
         qs = Venue.objects.filter(appeal__bid__rival=self).distinct()

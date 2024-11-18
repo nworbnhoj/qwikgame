@@ -121,18 +121,6 @@ class Player(models.Model):
         places.sort(key=lambda x: x.name)
         return places
 
-    # return a list of Appeals that this Player has
-    # either made or bid-on, sorted by urgency
-    def prospects(self):
-        appeal_qs = Appeal.objects.filter(bid__rival=self)
-        appeal_qs |= Appeal.objects.filter(player=self)
-        prospects = list(appeal_qs.distinct().all())
-        # sort the prospects by urgency
-        #TODO optimise this sort (possibly at dbase order_by)
-        prospects.sort(key=lambda x: x.last_hour, reverse=True)
-        prospects.sort(key=lambda x: x.date)
-        return prospects
-
     # returns the favorite locality in region_favorites()
     # step thru region_favorites and select the first country, and then the
     # for admin1 in the country, and then the first locality in the admin1
@@ -171,8 +159,7 @@ class Player(models.Model):
         if regions.pop(None, None):
             logger.warn('detected Venue with Country | Admin1 | Locality = None')
         regions = dict(sorted(regions.items(), key=lambda item: item[1], reverse=True))
-        logger.warn(regions)
-        return regions #, len(venues)
+        return regions
 
     def reputation(self):
         return 3
@@ -310,7 +297,7 @@ class Appeal(models.Model):
                 self.delete()
             action = 'expired'
         elif now.date() == self.date:
-            hour = self.venue.now().hour
+            hour = now.hour
             past =  [False for h in range(0, hour+1)]
             future = [True for h in range(hour+1, 24)]
             hours24 = Hours24(self.hours) & Hours24(past + future)

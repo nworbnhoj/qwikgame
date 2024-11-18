@@ -80,9 +80,6 @@ class VenueMarksJson(QwikView):
         game = Game.objects.filter(code=context.get(GAME)).first()
         if game:
             mark_objects = mark_objects.filter(game=game)
-        logger.warn(context.get(GAME))
-        logger.warn(game)
-        logger.warn(mark_objects.all())
         # The client can supply a list of "|country|admin1|locality" keys 
         # which are already in-hand, and not required in the JSON response.    
         avoidable = context.get(AVOIDABLE)

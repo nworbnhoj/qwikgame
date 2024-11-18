@@ -20,7 +20,7 @@ logger = logging.getLogger(__file__)
 
 
 class AppealsView(QwikView):
-    template_name = 'player/feed.html'
+    template_name = 'player/appeals.html'
 
     def context(self, request, *args, **kwargs):
         player = self.user.player

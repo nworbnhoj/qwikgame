@@ -138,6 +138,15 @@ class Region(Place):
             sys.stdout.flush()
         sys.stdout.write('\n')
 
+    def is_admin1(self):
+        return self.admin1 and not self.locality
+
+    def is_country(self):
+        return not self.admin1
+
+    def is_locality(self):
+        return self.locality
+
     def mark(self):
         return {
             EAST: self.east,

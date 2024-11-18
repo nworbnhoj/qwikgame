@@ -133,6 +133,29 @@ class Player(models.Model):
         prospects.sort(key=lambda x: x.date)
         return prospects
 
+    # returns the favorite locality in region_favorites()
+    # step thru region_favorites and select the first country, and then the
+    # for admin1 in the country, and then the first locality in the admin1
+    def region_favorite(self):
+        country = None
+        admin1 = None
+        locality = None
+        for region in self.region_favorites().keys():
+            if not country and region.is_country():
+                country = region
+            elif not admin1 and region.is_admin1 and region.parent == country:
+                admin1 = region
+            elif not locality and region.is_locality and region.parent == admin1:
+                locality = region
+                break;
+        if locality:
+            return locality
+        if admin1:
+            return admin1
+        if country:
+            return country
+        return None
+
     # Returns a sorted dict of {Region:tally} representing the frequency of
     # each country|admin1|locality returned by venue_favorites()
     def region_favorites(self, count=100):

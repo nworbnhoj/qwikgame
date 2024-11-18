@@ -19,7 +19,7 @@ from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 logger = logging.getLogger(__file__)
 
 
-class FeedView(QwikView):
+class AppealsView(QwikView):
     template_name = 'player/feed.html'
 
     def context(self, request, *args, **kwargs):
@@ -62,7 +62,7 @@ class FeedView(QwikView):
             return render(request, self.template_name, context)
 
 
-class AcceptView(FeedView):
+class AcceptView(AppealsView):
     accept_form_class = AcceptForm
     template_name = 'player/reply.html'
 
@@ -152,7 +152,7 @@ class AcceptView(FeedView):
         return HttpResponseRedirect(f'/player/feed/accept/{bid.appeal.id}/')
 
 
-class BidView(FeedView):
+class BidView(AppealsView):
     bid_form_class = BidForm
     template_name = 'player/bid.html'
 
@@ -225,7 +225,7 @@ class BidView(FeedView):
         return HttpResponseRedirect(f'/player/feed/{appeal.id}/')
 
 
-class FilterView(FeedView):
+class FilterView(AppealsView):
     filter_form_class = FilterForm
     hide=[]
     template_name = 'player/filter.html'
@@ -308,7 +308,7 @@ class FilterView(FeedView):
         return HttpResponseRedirect("/player/feed/filters")
 
 
-class FiltersView(FeedView):
+class FiltersView(AppealsView):
     filters_form_class = FiltersForm
     template_name = 'player/filters.html'
 
@@ -353,7 +353,7 @@ class FiltersView(FeedView):
         return HttpResponseRedirect("/player/feed/filters")
 
 
-class KeenView(FeedView):
+class KeenView(AppealsView):
     keen_form_class = KeenForm
     template_name = 'player/keen.html'
 
@@ -464,7 +464,7 @@ class KeenView(FeedView):
             return HttpResponseRedirect(f'/player/feed/')
 
 
-class InvitationView(FeedView):
+class InvitationView(AppealsView):
     # invitation_form_class = InvitationForm
     template_name = 'game/invitation.html'
 
@@ -485,7 +485,7 @@ class InvitationView(FeedView):
         return render(request, self.template_name, context)
 
 
-class RivalView(FeedView):
+class RivalView(AppealsView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)

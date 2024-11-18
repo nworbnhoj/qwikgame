@@ -20,12 +20,12 @@ class MatchesView(QwikView):
     template_name = 'game/matches.html'
 
     def context(self, request, *args, **kwargs):
-        kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player])
+        kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player]).order_by('date').reverse()
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         player = self.user.player
-        matches = self._context['items'].order_by('date')
+        matches = self._context['items']
         now = datetime.now(pytz.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now)
         for match in matches_future:

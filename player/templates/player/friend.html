@@ -39,7 +39,7 @@
                 </div>
                 <div class="down hidden">
                     <label class="btn tertiary">
-                        <input hidden form="form" name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
+                        <input hidden form="form" name="DELETE" type="button" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
                         delete
                     </label>
                 </div>
@@ -67,7 +67,7 @@
                     <h1>{{ strength.game }}</h1>
                     <h1>{{ strength.relative_str }}</h1>
                     <label class="btn tertiary">
-                        <input hidden name="DELETE_STRENGTH" type="submit" value='{{ strength.pk }}'>
+                        <input hidden name="DELETE_STRENGTH" type="button" value='{{ strength.pk }}'>
                         delete
                     </label>
                 </div>

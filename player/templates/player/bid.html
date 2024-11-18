@@ -44,7 +44,7 @@
                 </div>
                 <div class="down hidden">
                     <label class="btn tertiary">
-                        <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                        <input hidden form="form" name="CANCEL" type="button" value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
                         cancel
                     </label>
                 </div>
@@ -92,7 +92,7 @@
                 <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
 {% csrf_token %}
                     <label class="btn tertiary">
-                        <input hidden form="form" type="submit" name='CANCEL' value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                        <input hidden form="form" type="button" name='CANCEL' value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
                          cancel
                     </label>
                 </form>

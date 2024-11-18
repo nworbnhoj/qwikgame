@@ -45,7 +45,7 @@
                 <div class="down hidden">
 {% if player == appeal.player %}
                     <label class="btn tertiary">
-                        <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
+                        <input hidden form="form" name="CANCEL" type="button" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
                         cancel
                     </label>
 {% endif %}

@@ -43,7 +43,7 @@
                     <div class="down hidden">
 {% if match.status == 'A' %}
                         <label class="btn tertiary">
-                            <input hidden form="form" name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
+                            <input hidden form="form" name="CANCEL" type="button" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
                             cancel
                         </label>
 {% endif %}

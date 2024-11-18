@@ -4,7 +4,7 @@ from player.views import AcceptView, BidView, AppealsView, FilterView, FriendVie
 
 urlpatterns = [
     path("", AppealsView.as_view()),
-    path("appeal/", AppealsView.as_view(), name='feed'),
+    path("appeal/", AppealsView.as_view(), name='appeal'),
     path("appeal/filter/", FilterView.as_view(), name='filter'),
     path("appeal/filters/", FiltersView.as_view(), name='filters'),
     path("appeal/<int:appeal>/", BidView.as_view(), name='bid'),

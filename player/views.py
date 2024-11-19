@@ -71,17 +71,17 @@ class AcceptView(AppealsView):
         player = self.user.player
         appeal = self._context.get('appeal')
         if appeal:
-            replies = Bid.objects.filter(appeal=appeal).exclude(hours=None)
+            bids = Bid.objects.filter(appeal=appeal).exclude(hours=None)
             friends = Friend.objects.filter(player=player)
-            for reply in replies:
-                reply.hour_str = reply.hours24().as_str()
+            for bid in bids:
+                bid.hour_str = bid.hours24().as_str()
                 try:
-                    reply.name = friends.get(rival=reply.rival).name
+                    bid.name = friends.get(rival=bid.rival).name
                 except:
-                    reply.name=reply.rival.name
+                    bid.name=bid.rival.name
             self._context |= {
                 'player_id': player.facet(),
-                'replies': replies,
+                'bids': bids,
                 'target': 'bid',
             }
         return self._context

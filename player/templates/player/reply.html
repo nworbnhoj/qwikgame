@@ -148,14 +148,14 @@
             <div class="post">
                 <form id='form' action="{% url 'accept' appeal=appeal.pk %}" method="post">
 {% csrf_token %}
-{% for reply in replies %}
+{% for bid in bids %}
                     <div class="chat_item align_start">
                         <div class="btn special2 todo">
                             <i class="fa-solid fa-hat-cowboy fa-2x"></i>
                         </div>
                         <div class="chat_bubble">
-                            <p class="bold">{{ reply.name }}</p>
-                            <p>Accepted for {{ reply.hour_str }}</p>
+                            <p class="bold">{{ bid.name }}</p>
+                            <p>Accepted for {{ bid.hour_str }}</p>
                         </div>
                         <div class="drop_down icon">
                             <div class="btn todo" data-down="false">
@@ -163,13 +163,13 @@
                             </div>
                             <div class="down hidden">
                                 <label class="btn tertiary menu">
-                                    <input hidden type="submit" name='decline' value='{{ reply.pk }}'>
+                                    <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
                                     decline
                                 </label>
                             </div>
                         </div>
                         <label class="btn primary round">
-                            <input hidden type="submit" name='accept' value='{{ reply.pk }}'>
+                            <input hidden type="submit" name='accept' value='{{ bid.pk }}'>
                             <i class="fa-solid fa-right-long fa-xl"></i>
                         </label>
                     </div>

@@ -219,21 +219,25 @@ function searchChangeHandler(places){
   const BOUNDS = new google.maps.LatLngBounds(null, null);
   places.forEach(place => {
     if (!place.geometry) { return; }
+    var mark = {};
+    mark.name = place.name;
     var open = place.opening_hours ? 'open now' : 'closed';
-    var label_origin = new google.maps.Point(13,15)
+    // var label_origin = new google.maps.Point(13,15)
     const MARKER = new google.maps.Marker({
-      icon: { url: ICON_VENUE, labelOrigin: label_origin },
-      label: {text:'0', className:'qg_style_mark_label place'},
+      // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
+      // label: {text:'0', className:'qg_style_mark_label place'},
       map: MAP,
       position: place.geometry.location,
-      title: place.name+'\nyou are the first player!\n'+open
+      // title: place.name+'\nyou are the first player!\n'+open
     });
+    mark.marker = MARKER;
+    mark.address = place.formatted_address;
+    mark.center = place.geometry.location;
+    mark.status = place.business_status;
     
     SEARCH_MARKERS.push(MARKER);
-        
-    google.maps.event.addListener(MARKER, 'click', () => {
-      setPlace(place.place_id, place.name)
-    });    
+
+    setMarkListeners(mark, 'search', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER)
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
       BOUNDS.union(place.geometry.viewport);
@@ -276,6 +280,14 @@ function showMarkInfo(mark, template){
     case 'region':
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
       FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+      var pixelOffset = new google.maps.Size(0,-30)
+      break;
+    case 'search':
+      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+      FRAG.getElementById("map_mark_info_status").textContent = mark.status;
+      var href = 'https://duckduckgo.com/?q='+mark.name+' '+mark.address;
+      FRAG.getElementById("map_mark_info_search").setAttribute('href', href);
+      FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
       var pixelOffset = new google.maps.Size(0,-30)
       break;
     case 'venue':

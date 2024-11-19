@@ -440,10 +440,10 @@ class Bid(models.Model):
             case 'bid':
                 person = self.rival.user.person
                 entry = Entry(
-                    icon = rival.icon,
+                    icon = person.icon,
                     id = self.rival.facet(),
                     klass= 'event rival',
-                    name = rival.name,
+                    name = person.name,
                     text = f'accepted {self.hours24().as_str()}h'
                 )
             case 'decline':

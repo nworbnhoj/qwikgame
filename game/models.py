@@ -60,6 +60,15 @@ class Match(models.Model):
         match.save()
         return match
 
+
+
+    def icons(self):
+        from player.models import Player
+        pks = list(self.competitors.values_list('pk', flat=True))
+        players = Player.objects.filter(pk__in=pks)
+        return {p.pk:p.icon for p in players}
+
+
     def log_clear(self):
         self.log = []
         self.save()

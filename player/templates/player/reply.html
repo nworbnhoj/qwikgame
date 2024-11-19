@@ -65,8 +65,8 @@
     {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
     {% endif %}
-                <div class="btn special2 todo">
-                    <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                <div class="btn special2">
+                    <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
                     <p>{{ entry.name }}</p>
@@ -150,8 +150,8 @@
 {% csrf_token %}
 {% for bid in bids %}
                     <div class="chat_item align_start">
-                        <div class="btn special2 todo">
-                            <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                        <div class="btn special2">
+                            <i class="fa-solid {{ bid.rival.icon }} fa-2x"></i>
                         </div>
                         <div class="chat_bubble">
                             <p class="bold">{{ bid.name }}</p>

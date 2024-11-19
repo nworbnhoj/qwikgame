@@ -60,8 +60,10 @@
                 <p>{{ banner_txt }}</p>
                 <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
             </div>
-            <div class="icon align_center todo">
-                <i class="fa-solid fa-hat-cowboy fa-3x"></i>
+            <div class="icon align_center">
+{% for icon in rival_icons %}
+                <i class="fa-solid {{ icon }} fa-3x"></i>
+{% endfor %}
             </div>
             <div class="post group hidden">
 {% for entry in match.log %}
@@ -71,8 +73,8 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
-                    <div class="btn special2 todo">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    <div class="btn special2">
+                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
                         <p class='bold'>{{ entry.name }}</p>
@@ -114,8 +116,8 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
         {% endif %}
-                    <div class="btn special2 todo">
-                        <i class="fa-solid fa-hat-cowboy fa-2x"></i>
+                    <div class="btn special2">
+                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
                         <p class='bold'>{{ entry.name }}</p>

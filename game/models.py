@@ -82,7 +82,7 @@ class Match(models.Model):
                 )
             case 'match_perished':
                 entry = Entry(
-                    icon = '',
+                    icon = 'fa-face-smile',
                     id = '',
                     klass='system',
                     name = 'system',
@@ -109,6 +109,10 @@ class Match(models.Model):
         seen.update(player_pks)
         self.meta['seen'] = list(seen)
         return self
+
+    def rivals(self, player):
+        competitors = list(match.competitors.values_list('pk', flat=True))
+        return competitors.remove(player.pk)
 
     # format venue_time on server, rather than in template (user timezone)
     def venue_date_str(self):

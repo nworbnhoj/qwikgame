@@ -95,6 +95,12 @@ class Player(models.Model):
             choices[friend.rival.email_hash] = "{} ({})".format(friend.name, friend.email)
         return choices
 
+    @property
+    def icon(self):
+        if self.user and self.user.person and self.user.person.icon:
+            return self.user.person.icon
+        return None
+
     def matches(self):
         return Match.objects.filter(competitors__in=[self])
 
@@ -370,6 +376,13 @@ class Friend(models.Model):
 
     def __str__(self):
         return "{} knows {}".format(self.player, self.rival)
+
+    @property
+    def icon(self):
+        icon = self.rival.icon
+        if icon:
+            return icon
+        return 'fa-face-smile'
 
 
 class Bid(models.Model):

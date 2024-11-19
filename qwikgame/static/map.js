@@ -266,23 +266,25 @@ function changeGame(){
 }
 
 
-function showMarkInfo(mark){
+function showMarkInfo(mark, template){
   const INFOWINDOW = qwikInfowindow;
   const MAP = qwikMap;
-  const TEMPLATE = document.getElementById("infowindow_mark");
+  const TEMPLATE_NAME = "infowindow_mark_"+template;
+  const TEMPLATE = document.getElementById(TEMPLATE_NAME);
   const FRAG = TEMPLATE.content.cloneNode(true);
-  FRAG.getElementById("map_mark_info_name").textContent = mark.name;
-  const K = mark.key.split('|');
-  if(K.length === 4){  // venue Mark
-    FRAG.getElementById("map_mark_info_region").remove();
-    FRAG.getElementById("map_mark_info_address").textContent = mark.address;
-    FRAG.getElementById("map_mark_info_hours").textContent = mark.hours;
-    FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
-    pixelOffset = new google.maps.Size(0,-40)
-  } else {  // region Mark
-    FRAG.getElementById("map_mark_info_venue").remove();
-    FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
-    pixelOffset = new google.maps.Size(0,-30)
+  switch (template){
+    case 'region':
+      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+      FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+      var pixelOffset = new google.maps.Size(0,-30)
+      break;
+    case 'venue':
+      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+      FRAG.getElementById("map_mark_info_address").textContent = mark.address;
+      FRAG.getElementById("map_mark_info_hours").textContent = mark.hours;
+      FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+      var pixelOffset = new google.maps.Size(0,-40)
+      break;
   }
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
@@ -768,17 +770,19 @@ function endowMark(key, mark){
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
-    onclick = ONCLICK_VENUE_MARKER;
-    onhover = ONHOVER_VENUE_MARKER;
+    setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER)
   } else {  // region Mark
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
-    onclick = ONCLICK_REGION_MARKER;
-    onhover = ONHOVER_REGION_MARKER;
+    setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER)
   }
+  return mark;
+}
+
+function setMarkListeners(mark, template, onclick, onhover){
   google.maps.event.addListener(mark.marker, 'click', () => {
     switch (onclick){
       case 'center':
@@ -789,7 +793,7 @@ function endowMark(key, mark){
          setPlace(mark.placeid, mark.name);
          break;
       case 'info':
-          showMarkInfo(mark);
+          showMarkInfo(mark, template);
         break;
       case 'noop':
         break;
@@ -800,7 +804,7 @@ function endowMark(key, mark){
   google.maps.event.addListener(mark.marker, 'mouseover', () => {
     switch (onhover){
       case 'info':
-          showMarkInfo(mark);
+          showMarkInfo(mark, template);
         break;
       case 'noop':
         break;
@@ -808,7 +812,6 @@ function endowMark(key, mark){
         console.log('error: invalid ONHOVER: '+onclick)
     }
   });
-  return mark;
 }
 
 

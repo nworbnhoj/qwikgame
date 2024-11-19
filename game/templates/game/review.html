@@ -56,6 +56,10 @@
             <div class="post">
             <h1>Review Match</h1>
                 <div class="post form">
+                    <span class="icon">
+                        <i class="fa-solid {{ review.rival.icon }} fa-3x"></i>
+                    </span>
+                    <h1>review.rival.name</h1>
                     <form action="{% url target review=review.id %}" method="post">
     {% csrf_token %}
     {{ review_form }}

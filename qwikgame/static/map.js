@@ -278,14 +278,17 @@ function showMarkInfo(mark){
     FRAG.getElementById("map_mark_info_address").textContent = mark.address;
     FRAG.getElementById("map_mark_info_hours").textContent = mark.hours;
     FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+    pixelOffset = new google.maps.Size(0,-40)
   } else {  // region Mark
     FRAG.getElementById("map_mark_info_venue").remove();
     FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+    pixelOffset = new google.maps.Size(0,-30)
   }
   INFOWINDOW.setOptions({
     content: FRAG.firstElementChild,
+    maxWidth: 300,
     position: mark.center,
-    pixelOffset: new google.maps.Size(0,-30)
+    pixelOffset: pixelOffset,
   });
   INFOWINDOW.open(MAP);
 }

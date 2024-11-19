@@ -266,6 +266,29 @@ function changeGame(){
 }
 
 
+function showMarkInfo(mark){
+  const INFOWINDOW = qwikInfowindow;
+  const MAP = qwikMap;
+  const TEMPLATE = document.getElementById("infowindow_mark");
+  const FRAG = TEMPLATE.content.cloneNode(true);
+  FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+  const K = mark.key.split('|');
+  if(K.length === 4){  // venue Mark
+    FRAG.getElementById("map_mark_info_region").remove();
+    FRAG.getElementById("map_mark_info_address").textContent = mark.address;
+    FRAG.getElementById("map_mark_info_hours").textContent = mark.hours;
+    FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+  } else {  // region Mark
+    FRAG.getElementById("map_mark_info_venue").remove();
+    FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+  }
+  INFOWINDOW.setOptions({
+    content: FRAG.firstElementChild,
+    position: mark.center,
+    pixelOffset: new google.maps.Size(0,-30)
+  });
+  INFOWINDOW.open(MAP);
+}
 function vid(address_components, name){
   var vid = [name,'locality','admin1','XX'];
   if (Array.isArray(address_components)){
@@ -742,34 +765,46 @@ function endowMark(key, mark){
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
-    mark.marker.setTitle(mark.name+'\n'+size+' players\nopen: '+mark.open);
     onclick = ONCLICK_VENUE_MARKER;
-  } else {  // metaMark
+    onhover = ONHOVER_VENUE_MARKER;
+  } else {  // region Mark
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
-    mark.marker.setTitle(mark.name+'\n'+size+' venues');
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     onclick = ONCLICK_REGION_MARKER;
+    onhover = ONHOVER_REGION_MARKER;
   }
-  switch (onclick){
+  google.maps.event.addListener(mark.marker, 'click', () => {
+    switch (onclick){
       case 'center':
-        google.maps.event.addListener(mark.marker, 'click', () => {
-          qwikMap.setZoom(qwikMap.getZoom()+1);
-          qwikMap.setCenter(mark.center);
-        });
+        qwikMap.setZoom(qwikMap.getZoom()+1);
+        qwikMap.setCenter(mark.center);
         break;
       case 'select':
-        google.maps.event.addListener(mark.marker, 'click', () => {
-          setPlace(mark.placeid, mark.name)
-        });
+         setPlace(mark.placeid, mark.name);
+         break;
+      case 'info':
+          showMarkInfo(mark);
         break;
       case 'noop':
         break;
       default: 
-        console.log('error: invalid ONCLICK_REGION_MARKER: '+ONCLICK_REGION_MARKER)
-  }
+        console.log('error: invalid ONCLICK: '+onclick)
+    }
+  });
+  google.maps.event.addListener(mark.marker, 'mouseover', () => {
+    switch (onhover){
+      case 'info':
+          showMarkInfo(mark);
+        break;
+      case 'noop':
+        break;
+      default: 
+        console.log('error: invalid ONHOVER: '+onclick)
+    }
+  });
   return mark;
 }
 

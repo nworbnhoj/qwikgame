@@ -237,6 +237,9 @@ class FilterView(AppealsView):
             'onclick_place_marker': 'select' if is_admin else 'noop',
             'onclick_region_marker': 'select',
             'onclick_venue_marker': 'select',
+            'onhover_place_marker': 'info',
+            'onhover_region_marker': 'info',
+            'onhover_venue_marker': 'info',
             'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }
         return self._context
@@ -364,6 +367,9 @@ class KeenView(AppealsView):
             'onclick_place_marker': 'select' if is_admin else 'noop',
             'onclick_region_marker': 'center',
             'onclick_venue_marker': 'select',
+            'onhover_place_marker': 'info',
+            'onhover_region_marker': 'info',
+            'onhover_venue_marker': 'info',
             'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }
         return self._context

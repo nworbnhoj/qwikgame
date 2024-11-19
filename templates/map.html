@@ -3,4 +3,24 @@
 <div id='map-elements' style='display:none;'>    
   <div id='map' class='center wide'>loading ...</div>      
   <input id="map-search" class="controls" type="text" form="not-register-form" placeholder="Search by Location or by Game" />
+  <template id="infowindow_mark">
+    <div>
+      <div class="map_mark_info_head">
+        <p id="map_mark_info_name"></p>
+      </div>
+      <div class="map_mark_info_body">
+        <div id="map_mark_info_venue">
+          <p id="map_mark_info_address"></p>
+          <!-- <button onclick=" navigator.clipboard.writeText('{{ venue.address }}');">
+            <i class="fa-regular fa-copy fa-lg"></i>
+          </button> -->
+          <p><span id='map_mark_info_size'></span> Players</p>
+        </div>
+        <div id="map_mark_info_region">
+          <p><span id='map_mark_info_size'></span> Venues</p>
+        </div>
+        <p id="map_mark_info_hours"></p>
+      </div>
+    </div>
+  </template>
 </div>

@@ -75,5 +75,6 @@ div#map {
 }
 
 .qg_style_mark_label {}
+.qg_style_mark_label.place {}
 .qg_style_mark_label.region {}
 .qg_style_mark_label.venue {}

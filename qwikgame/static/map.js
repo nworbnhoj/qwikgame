@@ -338,7 +338,7 @@ function requestPlace(placeId){
   });
 }
 
-function setPlace(placeid, place_name){
+function setPlace(placeid, name, hours=[], weekday=None, hour=None){
   const PLACE_SELECT = document.getElementById('id_place');
   const EXISTS = PLACE_SELECT.querySelector("[value='"+placeid+"']")
   if (EXISTS){
@@ -347,15 +347,19 @@ function setPlace(placeid, place_name){
     // rename the temporary placeid option in the place drop-down field
     let input = PLACE_SELECT.querySelector("[value='placeid']");
     let label =  input.parentElement;
-    label.textContent = place_name; // removes inner <input>
+    label.textContent = name; // removes inner <input>
     label.appendChild(input) // re-add inner <input>
     input.setAttribute('data-placeid', placeid);
+    input.setAttribute('data-hours', hours);
+    input.setAttribute('data-now_weekday', weekday);
+    input.setAttribute('data-now_hour', hour);
     setPlaceOption('placeid')
     // populate the placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');
     PLACEID_INPUT.value = placeid;
   }
 }
+
 
 function setPlaceOption(placeid='placeid'){
   const PLACE_SELECT = document.getElementById('id_place');
@@ -802,7 +806,7 @@ function setMarkListeners(mark, template, onclick, onhover){
         qwikMap.setCenter(mark.center);
         break;
       case 'select':
-         setPlace(mark.placeid, mark.name);
+         setPlace(mark.placeid, mark.name, mark.hours, mark.weekday, mark.hour);
          break;
       case 'info':
           showMarkInfo(mark, template);

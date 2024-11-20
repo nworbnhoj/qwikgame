@@ -1,7 +1,7 @@
 import logging, pytz, sys
 from django.db import models
 from pytz import datetime, timezone
-from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SIZE, SOUTH, WEST
+from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SIZE, SOUTH, WEEKDAY, WEST
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
 # from api.models import Mark
@@ -262,12 +262,14 @@ class Venue(Place):
     def mark(self):
         return {
             ADDRESS: self.address,
+            HOUR: self.now().hour,
             HOURS: self.open_week.as_7int(),
             LAT: self.lat,
             LNG: self.lng,
             NAME: self.name,
             OPEN: self.open_week.as_str(),
             PLACEID: self.placeid,
+            WEEKDAY: self.now().weekday(),
         }
 
     def now(self):

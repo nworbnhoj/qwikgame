@@ -246,6 +246,12 @@ class Hours24x7():
     def as_days7(self):
         return [bytes(self.bits[i: i+3]) for i in range(0, 21, 3)]
 
+    def as_7hr24(self):
+        return [self.get_day(d) for d in range(0, 7)]
+
+    def as_7int(self):
+        return [hr24.as_int() for hr24 in self.as_7hr24()]
+
     def get_date(self, date):
         div, mod = divmod(date.isoweekday(), 7)
         offset = 3 * mod
@@ -253,7 +259,7 @@ class Hours24x7():
 
     def get_day(self, day):
         offset = 3 * day
-        return hours24(self.hours[offset: offset+3])
+        return Hours24(self.bits[offset: offset+3])
 
     def is_qwik_all(self):
         return self.bits == WEEK_QWIK

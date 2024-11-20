@@ -293,7 +293,7 @@ function showMarkInfo(mark, template){
     case 'venue':
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
       FRAG.getElementById("map_mark_info_address").textContent = mark.address;
-      FRAG.getElementById("map_mark_info_hours").textContent = mark.hours;
+      FRAG.getElementById("map_mark_info_open").textContent = mark.open;
       FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
       var pixelOffset = new google.maps.Size(0,-40)
       break;

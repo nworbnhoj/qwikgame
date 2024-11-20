@@ -7,7 +7,7 @@ from person.models import Person
 from player.models import Appeal, Bid, Filter, Friend, Player, Precis
 from venue.models import Venue
 from qwikgame.constants import STRENGTH
-from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24
 from qwikgame.log import Entry
@@ -376,13 +376,7 @@ class KeenForm(QwikForm):
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
-    place = ChoiceField(
-        choices = {'show-map': 'Select from map', 'placeid': ''},
-        label='VENUE',
-        required = True,
-        template_name='dropdown.html', 
-        widget=RadioSelect(attrs={"class": "down hidden"})
-    )
+    place = ChoiceField()    # placeholder for dynamic assignment below
     today = DayField(
         help_text='When are you keen to play?',
         label='TODAY',
@@ -467,9 +461,27 @@ class KeenForm(QwikForm):
         tomorrow = today + datetime.timedelta(days=1)
         self.fields['today'].sub_text = today.strftime('%A')
         self.fields['today'].help_text = 'What time are you keen to play today?'
+        self.fields['today'].set_day_offset(0)
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
-        self.fields['place'].choices += player.venue_choices(12)
+        self.fields['tomorrow'].set_day_offset(1)
+        venues = player.venue_suggestions(12).order_by('name').all()[:12]
+        choices = [('show-map', 'Select from map'), ('placeid', '')]
+        choices += [(v.placeid, v.name) for v in venues]
+        self.fields['place'] = ChoiceField(
+            choices = choices,
+            label='VENUE',
+            required = True,
+            template_name='dropdown.html', 
+            widget=RadioDataSelect(
+                attrs={"class": "down hidden"},
+                data_attr={
+                    'hours': ['',''] + [v.open_week.as_7int() for v in venues],
+                    'now_weekday': ['',''] + [v.now().weekday() for v in venues],
+                    'now_hour': ['',''] + [v.now().hour for v in venues],
+                }
+            )
+        )
         region = player.region_favorite()
         if region:
             self.fields['lat'].initial = region.lat

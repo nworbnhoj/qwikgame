@@ -29,6 +29,7 @@ class DayInput(MultiWidget):
             widgets.append(HourInput(label=hr, attrs=attrs))
         for hr in hours:
             widgets[hr].attrs['class'] = ''
+        self.set_day_offset(kwargs.get('day_offset'))
         super().__init__(
             widgets=(widgets)
         )
@@ -40,6 +41,10 @@ class DayInput(MultiWidget):
         context = super().get_context(name, value, attrs)
         context['widget']['label'] = self.label
         return context
+
+    def set_day_offset(self, offset):
+        if offset:
+            self.attrs['data-offset_day'] = offset
 
 
 class HourInput(CheckboxInput):

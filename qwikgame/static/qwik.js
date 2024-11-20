@@ -472,6 +472,41 @@ function setAllWeek(button, checked) {
   }
 }
 
+// shows only the Venue open-hours in DayFields
+// hours24x7 is an array[int:7] representing 7 days of open hours in the
+//     24 least significant bits (--------012345....23)
+// today is the current weekday at the Venue [0..6]
+function setDays(hours24x7, now_weekday, now_hour){
+  document.querySelectorAll(".by_day").forEach(function(day){
+    var open = false;
+    day.querySelectorAll(".hour_grid input").forEach(function(input) {
+      let weekday = now_weekday
+      if (input.dataset.hasOwnProperty('offset_day')){
+        weekday += parseInt(input.dataset.offset_day);
+      }
+      weekday = weekday % 7
+      if (weekday in hours24x7){
+        hours = hours24x7[weekday]
+        hr = 23 - parseInt(input.parentElement.innerText);
+        if (hours >> hr & 1){
+          input.classList.remove('hidden');
+          open = true;
+        } else {
+          input.classList.add('hidden');
+        }
+      }
+    });
+    if (open){
+      day.querySelector('.by_hour').classList.remove('hidden')
+      day.querySelector('.no_hour').classList.add('hidden')
+    } else {
+      day.querySelector('.by_hour').classList.add('hidden')
+      day.querySelector('.no_hour').classList.remove('hidden')
+    }
+  });
+}
+
+
 function showDetail() {
   // on mobile, hide the list and show the detail
   var width_600 = window.matchMedia("only screen and (max-width: 600px)").matches;
@@ -844,5 +879,27 @@ window.onload = function() {
   });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
+  });
+  document.querySelectorAll("form:has( .by_day)").forEach(function(form){
+    const PLACE_SELECT = document.getElementById('id_place');
+    if (PLACE_SELECT){
+      PLACE_SELECT.querySelectorAll("input[type='radio']").forEach(function(radio) {
+        radio.addEventListener("change", () => {
+          hours = [];
+          if (radio.dataset.hasOwnProperty('hours')){
+            hours = radio.dataset.hours.split(',').flatMap(x => [parseInt(x)]);
+          }
+          now_weekday = NaN
+          if (radio.dataset.hasOwnProperty('now_weekday')){
+            now_weekday = parseInt(radio.dataset.now_weekday) % 7;
+          }
+          now_hour = NaN
+          if (radio.dataset.hasOwnProperty('now_hour')){
+            now_weekday = parseInt(radio.dataset.now_hour);
+          }
+          setDays(hours, now_weekday, now_hour);
+        });
+      });
+    }
   });
 }

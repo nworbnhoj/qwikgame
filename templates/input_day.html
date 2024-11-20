@@ -1,16 +1,21 @@
 <!-- qwikgame/templates/input_day.html -->
 {% include 'label_field.html' %}
 <div class='post by_day'>
-    <div class="grid_2_col">
-        <div class="btn tertiary show-next-parent-sibling">Pick time</div>
-        <label class="btn secondary wide toggle all_day">
-            <input type="checkbox" name="{{ field.name }}">
-            <span class="stop-prop">All Day</span>
-        </label>
-    </div>
-    <div class="post hidden">
-        <div class="radio_block hour_grid">
-{% include 'input_hours.html' %}
+    <div class='post by_hour'>
+        <div class="grid_2_col">
+            <div class="btn tertiary show-next-parent-sibling">Pick time</div>
+            <label class="btn secondary wide toggle all_day">
+                <input type="checkbox" name="{{ field.name }}">
+                <span class="stop-prop">All Day</span>
+            </label>
         </div>
+        <div class="post hidden">
+            <div class="radio_block hour_grid">
+    {% include 'input_hours.html' %}
+            </div>
+        </div>
+    </div>
+    <div class="hidden no_hour">
+        <p>The Venue is closed.</p>
     </div>
 </div>

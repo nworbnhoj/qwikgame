@@ -461,10 +461,10 @@ class KeenForm(QwikForm):
         tomorrow = today + datetime.timedelta(days=1)
         self.fields['today'].sub_text = today.strftime('%A')
         self.fields['today'].help_text = 'What time are you keen to play today?'
-        self.fields['today'].set_day_offset(0)
+        self.fields['today'].set_weekday(offset='0')
         self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
-        self.fields['tomorrow'].set_day_offset(1)
+        self.fields['tomorrow'].set_weekday(offset='1')
         venues = player.venue_suggestions(12).order_by('name').all()[:12]
         choices = [('show-map', 'Select from map'), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]

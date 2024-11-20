@@ -50,8 +50,8 @@ class DayField(MultiValueField):
             bools[hr] = data_list[hr]
         return Hours24(bools)
 
-    def set_day_offset(self, offset):
-        self.widget.set_day_offset(offset)
+    def set_weekday(self, weekday=None, offset=None):
+        self.widget.set_weekday(weekday=weekday, offset=offset)
 
 
 class MultipleActionField(MultipleChoiceField):

@@ -480,19 +480,25 @@ function setDays(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_day").forEach(function(day){
     var open = false;
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
-      let weekday = now_weekday
-      if (input.dataset.hasOwnProperty('offset_day')){
-        weekday += parseInt(input.dataset.offset_day);
+      var weekday = undefined
+      if (input.dataset.hasOwnProperty('weekday')){
+        var wd = parseInt(input.dataset.weekday);
+        weekday = Number.isInteger(wd) ? wd : undefined;
+      } else if (now_weekday & input.dataset.hasOwnProperty('offsetday')){
+        offset = parseInt(input.dataset.offset_day);
+        weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday; 
       }
-      weekday = weekday % 7
-      if (weekday in hours24x7){
-        hours = hours24x7[weekday]
-        hr = 23 - parseInt(input.parentElement.innerText);
-        if (hours >> hr & 1){
-          input.classList.remove('hidden');
-          open = true;
-        } else {
-          input.classList.add('hidden');
+      if (weekday){
+        weekday = weekday % 7
+        if (weekday in hours24x7){
+          hours = hours24x7[weekday]
+          hr = 23 - parseInt(input.parentElement.innerText);
+          if (hours >> hr & 1){
+            input.classList.remove('hidden');
+            open = true;
+          } else {
+            input.classList.add('hidden');
+          }
         }
       }
     });
@@ -887,15 +893,18 @@ window.onload = function() {
         radio.addEventListener("change", () => {
           hours = [];
           if (radio.dataset.hasOwnProperty('hours')){
-            hours = radio.dataset.hours.split(',').flatMap(x => [parseInt(x)]);
+            hours = radio.dataset.hours.slice(1,-1).split(',')
+            hours = hours.flatMap(x => [parseInt(x)]);
           }
-          now_weekday = NaN
+          now_weekday = undefined
           if (radio.dataset.hasOwnProperty('now_weekday')){
-            now_weekday = parseInt(radio.dataset.now_weekday) % 7;
+            now_weekday = parseInt(radio.dataset.now_weekday);
+            now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
           }
-          now_hour = NaN
+          now_hour = undefined
           if (radio.dataset.hasOwnProperty('now_hour')){
-            now_weekday = parseInt(radio.dataset.now_hour);
+            now_hour = parseInt(radio.dataset.now_hour);
+            now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
           }
           setDays(hours, now_weekday, now_hour);
         });

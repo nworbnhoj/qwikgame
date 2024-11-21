@@ -407,6 +407,39 @@ function close(event) {
   event.currentTarget.closest('.closable').classList.toggle('hidden');
 }
 
+function handlePlaceChange(place){
+  hours = [];
+  if (place.dataset.hasOwnProperty('hours')){
+    hours = place.dataset.hours.slice(1,-1).split(',')
+    hours = hours.flatMap(x => [parseInt(x)]);
+  }
+  now_weekday = undefined
+  if (place.dataset.hasOwnProperty('now_weekday')){
+    now_weekday = parseInt(place.dataset.now_weekday);
+    now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
+  }
+  now_hour = undefined
+  if (place.dataset.hasOwnProperty('now_hour')){
+    now_hour = parseInt(place.dataset.now_hour);
+    now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
+  }
+  setDayFields(hours, now_weekday, now_hour);
+}
+
+function closeStuff(event) {
+  let target = event.target;
+  if (!(target.classList.contains('info') || target.parentElement.classList.contains('info'))){
+    document.querySelectorAll('.info_text').forEach(function(info) {
+        info.classList.add('hidden');
+    })
+  }
+  document.querySelectorAll('.down').forEach(function(dropdown) {
+    if (!dropdown.parentElement.contains(event.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+}
+
 function check(event) {
   let element = event.currentTarget;
   element.querySelector("input[type='checkbox']").checked=true;
@@ -891,22 +924,7 @@ window.onload = function() {
     if (PLACE_SELECT){
       PLACE_SELECT.querySelectorAll("input[type='radio']").forEach(function(radio) {
         radio.addEventListener("change", () => {
-          hours = [];
-          if (radio.dataset.hasOwnProperty('hours')){
-            hours = radio.dataset.hours.slice(1,-1).split(',')
-            hours = hours.flatMap(x => [parseInt(x)]);
-          }
-          now_weekday = undefined
-          if (radio.dataset.hasOwnProperty('now_weekday')){
-            now_weekday = parseInt(radio.dataset.now_weekday);
-            now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
-          }
-          now_hour = undefined
-          if (radio.dataset.hasOwnProperty('now_hour')){
-            now_hour = parseInt(radio.dataset.now_hour);
-            now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
-          }
-          setDayFields(hours, now_weekday, now_hour);
+          handlePlaceChange(radio);
         });
       });
     }

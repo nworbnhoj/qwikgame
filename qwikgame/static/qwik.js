@@ -598,6 +598,12 @@ function showGroup(event) {
   button.lastElementChild.classList.toggle('flip');
 }
 
+function showLoader(input) {
+  label = input.closest('label')
+  label.classList.add("loader");
+  setTimeout(() => label.classList.remove("loader"), 20000);
+}
+
 function showNextParentSibling(event) {
   let button = event.currentTarget;
   let next_sibling = button.parentNode.nextElementSibling;
@@ -909,11 +915,9 @@ window.onload = function() {
       element.classList.add("loader");
     });
   });
-  document.querySelectorAll("input[type='submit']").forEach(function(submit) {
-    submit.addEventListener("click", () => {
-      label = submit.closest('label')
-      label.classList.add("loader");
-      setTimeout(() => label.classList.remove("loader"), 20000);
+  document.querySelectorAll("input[type='submit']").forEach(function(input) {
+    input.addEventListener("click", () => {
+      showLoader(input);
     });
   });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {

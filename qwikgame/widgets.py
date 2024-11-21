@@ -20,21 +20,21 @@ class DayInput(MultiWidget):
     template_name='input_day.html'
     use_fieldset=False
 
-    def __init__(self, label='', hours=[*range(24)], **kwargs):
+    def __init__(self, label='', hours=[*range(24)], offsetday=None, weekday=None):
         self.label=label
         self.hours=hours
         widgets = []
-        attrs={'class': 'hidden', 'type': 'checkbox'}
+        attrs = { 'class': 'hidden', 'type': 'checkbox' }
+        if offsetday:
+            attrs |= {'data-offsetday': offsetday }
+        if weekday:
+            attrs |= {'data-weekday': weekday }
         for hr in range(24):
             widgets.append(HourInput(label=hr, attrs=attrs))
         for hr in hours:
             widgets[hr].attrs['class'] = ''
         super().__init__(
             widgets=(widgets)
-        )
-        self.set_weekday(
-            weekday=kwargs.get('weekday'),
-            offset=kwargs.get('offsetday')
         )
 
     def decompress(self, hours24=DAY_NONE):
@@ -44,12 +44,6 @@ class DayInput(MultiWidget):
         context = super().get_context(name, value, attrs)
         context['widget']['label'] = self.label
         return context
-
-    def set_weekday(self, weekday=None, offset=None):
-        if weekday:
-            self.attrs['data-weekday'] = weekday
-        if offset:
-            self.attrs['data-offsetday'] = offset
 
 
 class HourInput(CheckboxInput):

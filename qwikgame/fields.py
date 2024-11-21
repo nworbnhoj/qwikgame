@@ -26,10 +26,10 @@ class RadioDataSelect(RadioSelect):
 
 class DayField(MultiValueField):
 
-    def __init__(self, hours=[*range(24)], weekday=None, **kwargs):
+    def __init__(self, hours=[*range(24)], offsetday=None, weekday=None, **kwargs):
         self.hours = hours
         self.weekday = weekday
-        self.widget=DayInput(hours=hours, weekday=weekday)
+        self.widget=DayInput(hours=hours, offsetday=offsetday, weekday=weekday)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
@@ -49,9 +49,6 @@ class DayField(MultiValueField):
         for hr in self.hours:
             bools[hr] = data_list[hr]
         return Hours24(bools)
-
-    def set_weekday(self, weekday=None, offset=None):
-        self.widget.set_weekday(weekday=weekday, offset=offset)
 
 
 class MultipleActionField(MultipleChoiceField):

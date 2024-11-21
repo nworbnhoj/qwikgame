@@ -476,7 +476,7 @@ function setAllWeek(button, checked) {
 // hours24x7 is an array[int:7] representing 7 days of open hours in the
 //     24 least significant bits (--------012345....23)
 // today is the current weekday at the Venue [0..6]
-function setDays(hours24x7, now_weekday, now_hour){
+function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_day").forEach(function(day){
     var open = false;
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
@@ -906,7 +906,7 @@ window.onload = function() {
             now_hour = parseInt(radio.dataset.now_hour);
             now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
           }
-          setDays(hours, now_weekday, now_hour);
+          setDayFields(hours, now_weekday, now_hour);
         });
       });
     }

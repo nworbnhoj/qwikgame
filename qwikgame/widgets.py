@@ -112,7 +112,7 @@ class WeekInput(MultiWidget):
     def __init__(self, hours=[*range(24)], **kwargs):
         self.hours = hours
         super().__init__(
-            widgets=[DayInput(label=day, hours=hours) for day in WEEK_DAYS]
+            widgets=[DayInput(label=name, hours=hours, weekday=day) for day, name in enumerate(WEEK_DAYS)]
         )
 
     def decompress(self, hours168=WEEK_NONE):

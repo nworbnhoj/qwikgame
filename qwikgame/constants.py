@@ -19,13 +19,13 @@ STRENGTH = {
 }
 
 WEEK_DAYS = [
-    ('SUNDAY'),
-    ('MONDAY'),
-    ('TUESDAY'),
-    ('WEDNESDAY'),
-    ('THURSDAY'),
-    ('FRIDAY'),
-    ('SATURDAY'),
+    'SUNDAY',
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
 ]
 
 # key constants

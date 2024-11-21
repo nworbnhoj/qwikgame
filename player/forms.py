@@ -9,7 +9,7 @@ from venue.models import Venue
 from qwikgame.constants import STRENGTH
 from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
-from qwikgame.hourbits import Hours24
+from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
 from qwikgame.utils import str_to_hours24
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
@@ -162,13 +162,7 @@ class FilterForm(QwikForm):
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
-    place = ChoiceField(
-        choices = {'ANY':'Anywhere'} | {'show-map': 'Select from map', 'placeid': ''},
-        help_text='Only see invitations for a particular Venue.',
-        label='Place',
-        template_name='dropdown.html',
-        widget=RadioSelect(attrs={"class": "down hidden"})
-    )
+    place = ChoiceField()    # placeholder for dynamic assignment below
     hours = WeekField(
         help_text='Only see invitations at specific times in your week.',
         label='Time',
@@ -224,7 +218,25 @@ class FilterForm(QwikForm):
                     'place': place,
                 },
             )
-        form.fields['place'].choices += player.place_choices(12)
+        open = Hours24x7(WEEK_ALL).as_7int()
+        places = player.place_suggestions(12)[:12]
+        logger.warn(places)
+        choices = [('ANY','Anywhere'), ('show-map', 'Select from map'), ('placeid', '')]
+        choices += [(p.placeid, p.name) for p in places]
+        form.fields['place'] = ChoiceField(
+            choices = choices,
+            help_text='Only see invitations for a particular Venue.',
+            label='PLACE',
+            template_name='dropdown.html',
+            widget=RadioDataSelect(
+                attrs={"class": "down hidden"},
+                data_attr={
+                    'hours': ['','',''] + [p.open_week.as_7int() if p.is_venue else open for p in places],
+                    'now_weekday': ['','',''] + [p.now().weekday() if p.is_venue else '' for p in places],
+                    'now_hour': ['','',''] + [p.now().hour if p.is_venue else '' for p in places],
+                }
+            )
+        )
         region = player.region_favorite()
         if region:
             form.fields['lat'].initial = region.lat

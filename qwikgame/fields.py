@@ -117,8 +117,8 @@ class WeekField(MultiValueField):
                 'required': 'required',
             },
             fields=(
-                [DayField(label=day, hours=hours, required=False) 
-                for day in WEEK_DAYS]
+                [DayField(label=name, hours=hours, required=False, weekday=day) 
+                for day, name in enumerate(WEEK_DAYS)]
             ),
             require_all_fields=False,
             template_name='field.html',

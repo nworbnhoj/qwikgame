@@ -338,7 +338,7 @@ function requestPlace(placeId){
   });
 }
 
-function setPlace(placeid, name, hours=[], weekday=None, hour=None){
+function setPlace(placeid, name, hours=[], weekday='', hour=''){
   const PLACE_SELECT = document.getElementById('id_place');
   const EXISTS = PLACE_SELECT.querySelector("[value='"+placeid+"']")
   if (EXISTS){

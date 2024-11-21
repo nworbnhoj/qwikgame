@@ -513,7 +513,7 @@ function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_day").forEach(function(day){
     var open = false;
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
-      var weekday = undefined
+      var weekday = now_weekday;
       if (input.dataset.hasOwnProperty('weekday')){
         var wd = parseInt(input.dataset.weekday);
         weekday = Number.isInteger(wd) ? wd : undefined;

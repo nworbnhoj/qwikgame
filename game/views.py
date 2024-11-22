@@ -224,7 +224,7 @@ class ReviewView(ReviewsView):
             review = Review.objects.get(pk=kwargs['review'])
             player = self.user.player
             rival = Player.objects.get(pk=context['rival'])
-            rival.conduct_add(context['conduct'])
+            rival.conduct_add(context['conduct_good'])
             rival.save()
             Strength.objects.create(
                 date = review.match.date,

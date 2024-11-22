@@ -48,19 +48,16 @@ class MatchForm(QwikForm):
 
 
 class ReviewForm(QwikForm):
-    conduct = ChoiceField(
-        choices = {'good':'good', 'bad':'bad'},
-        initial = 'good',
-        label = 'RIVAL CONDUCT',
-        required = True,
-        widget = RadioSelect,
-    )
-    strength = ChoiceField(
+    strength = SelectRangeField(
         choices = STRENGTH,
         initial = STRENGTH.get('m'),
         label = 'RIVAL SKILL LEVEL',
         required = True,
-        widget = RadioSelect,
+    )
+    conduct = MultipleChoiceField(
+        choices = {'poor':'poor rival conduct.', 'noshow': 'rival did not show up'},
+        label = 'Did anything go wrong?',
+        widget = CheckboxSelectMultiple,
     )
     rival = ChoiceField(
         choices = {},
@@ -84,7 +81,7 @@ class ReviewForm(QwikForm):
         form.fields['rival'].choices = rivals
         context = { 'review_form': form }
         if form.is_valid():
-            context['conduct'] = form.cleaned_data['conduct'] == 'good'
+            context['conduct_good'] = not 'poor' in form.cleaned_data['conduct']
             context['strength'] = form.cleaned_data['strength']
             context['rival'] = form.cleaned_data['rival']
         return context

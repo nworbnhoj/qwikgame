@@ -178,18 +178,17 @@ div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
-div.option {align-items: center; justify-content: space-between; padding: 0.5em 0 0 0; width: 100% }
+div.option {align-items: center; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em; width: 100% }
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.range_options { gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
-div.range_options option { text-align: center }
+div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
 div.post { align-items: stretch; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
-div.rival_aberation { align-items: flex-start; flex-direction: column; justify-content: start; width: 100%}
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }

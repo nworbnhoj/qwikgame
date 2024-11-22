@@ -31,7 +31,7 @@ def match_review_init():
                     player=player,
                     rival=rival,
                 )
-                match.seen([])
+                match.mark_seen([])
                 stats['review'] = stats.get('review', 0) + 1
         match.status = 'C'
         match.save()

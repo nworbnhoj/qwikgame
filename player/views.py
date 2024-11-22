@@ -442,7 +442,6 @@ class KeenView(AppealsView):
         elif appeal.hours24 != context['today']:
             appeal.set_hours(valid_hours)
             logger.info(f'update Appeal: {appeal}')
-            appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.perish()
             appeal_pk = appeal.pk
@@ -461,7 +460,6 @@ class KeenView(AppealsView):
         elif appeal.hours24 != context['tomorrow']:
             appeal.set_hours(valid_hours)
             logger.info(f'update Appeal: {appeal}')
-            appeal.log_event('keen')
             appeal.log_event('appeal')
             appeal.save()
             if not appeal_pk:

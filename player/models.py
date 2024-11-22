@@ -298,10 +298,8 @@ class Appeal(models.Model):
             name=self.player.user.person.name,
         )
         match template:
-            case 'keen':
-                entry['text'] = "sent invitation".format()
             case 'appeal':
-                entry['text'] = "{} at {}, {}, {}h".format(
+                entry['text'] = "Proposed {} at {}, {}, {}h".format(
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),

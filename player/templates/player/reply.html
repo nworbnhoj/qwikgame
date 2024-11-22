@@ -69,7 +69,7 @@
                     <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
-                    <p>{{ entry.name }}</p>
+                    <p><span class="name">{{ entry.name }}</span></p>
                     <p>{{ entry.text }}</p>
                 </div>
             </div>
@@ -154,19 +154,19 @@
                             <i class="fa-solid {{ bid.rival.icon }} fa-2x"></i>
                         </div>
                         <div class="chat_bubble">
-                            <p class="bold">{{ bid.name }} at {{ bid.hour_str }}h</p>
-                <div >
+                            <p><span class="name">{{ bid.name }}</span> (
 {% for _ in '12345'|make_list %} 
-                    <div class="icon color">
+                    <span class="color">
 {% if forloop.counter <= bid.conduct_stars %}
                         <i class="fa-solid fa-star fa-1x"></i>
 {% else %}
                         <i class="fa-regular fa-star fa-1x"></i>
 {% endif %}
-                    </div>
+                    </span>
 {% endfor %}
-                </div>
-                            <p>Well Matched</p>
+                
+                            , Well Matched)</p>
+                            <p>{{ bid.game }} at {{ bid.hour_str }}h</p>
                         </div>
                         <div class="drop_down icon">
                             <div class="btn todo" data-down="false">

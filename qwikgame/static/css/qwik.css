@@ -117,8 +117,10 @@ div.banner.xancelled { background-color: yellow; }
 
 
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
+div.chat_bubble .name { font-weight: bold; }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div.chat_item .name { font-weight: bold; }
 div.content { align-items: stretch; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }

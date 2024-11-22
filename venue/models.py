@@ -275,6 +275,10 @@ class Venue(Place):
     def now(self):
         return datetime.datetime.now(pytz.timezone(self.tz))
 
+    def open_7int_str(self):
+        open = self.open_week.as_7int()
+        return ','.join(map(str, open))
+
     @property
     def open_week(self):
         return Hours24x7(self.hours)

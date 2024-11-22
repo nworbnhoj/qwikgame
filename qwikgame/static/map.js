@@ -13,6 +13,8 @@ const QWIK_MARKS = new Map();
 const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
 const MAP_REGION = new Map();               // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
+const OPEN_24H = 16777215;                  // 24 least-significant-bits set
+const OPEN_24X7 = Array(7).fill(OPEN_24H);
 
 var qwikMap;
 var qwikInfowindow;
@@ -338,7 +340,7 @@ function requestPlace(placeId){
   });
 }
 
-function setPlace(placeid, name, hours=[], weekday='', hour=''){
+function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
   const PLACE_SELECT = document.getElementById('id_place');
   const EXISTS = PLACE_SELECT.querySelector("[value='"+placeid+"']")
   if (EXISTS){

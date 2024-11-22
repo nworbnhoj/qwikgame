@@ -410,7 +410,7 @@ function close(event) {
 function handlePlaceChange(place){
   hours = [];
   if (place.dataset.hasOwnProperty('hours')){
-    hours = place.dataset.hours.slice(1,-1).split(',')
+    hours = place.dataset.hours.split(',')
     hours = hours.flatMap(x => [parseInt(x)]);
   }
   now_weekday = undefined

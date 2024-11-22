@@ -488,7 +488,7 @@ class KeenForm(QwikForm):
             widget=RadioDataSelect(
                 attrs={"class": "down hidden"},
                 data_attr={
-                    'hours': ['',''] + [v.open_week.as_7int() for v in venues],
+                    'hours': ['',''] + [v.open_7int_str() for v in venues],
                     'now_weekday': ['',''] + [v.now().weekday() for v in venues],
                     'now_hour': ['',''] + [v.now().hour for v in venues],
                 }

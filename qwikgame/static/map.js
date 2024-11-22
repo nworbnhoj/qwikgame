@@ -233,13 +233,16 @@ function searchChangeHandler(places){
       // title: place.name+'\nyou are the first player!\n'+open
     });
     mark.marker = MARKER;
+    SEARCH_MARKERS.push(MARKER);
+
     mark.address = place.formatted_address;
     mark.center = place.geometry.location;
     mark.status = place.business_status;
-    
-    SEARCH_MARKERS.push(MARKER);
-
-    setMarkListeners(mark, 'search', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER)
+    let now = new Date();
+    mark.hours = OPEN_24X7;
+    mark.weekday = now.getDay();
+    mark.hour = now.getHours();
+    setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER)
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
       BOUNDS.union(place.geometry.viewport);
@@ -253,13 +256,9 @@ function searchChangeHandler(places){
 
 function clickHandler(event){
   if (event.placeId) {
-    switch (ONCLICK_PLACE_MARKER){
-        case 'select':
-          requestPlace(event.placeId)
-          break;
-        case 'noop':
-          break;
-          console.log('warning: invalid ONCLICK_PLACE_MARKER')
+    requestPlace(event.placeId);
+    if (event.latLng){
+      qwikMap.panTo(event.latLng);
     }
     event.stop();
   }
@@ -284,7 +283,7 @@ function showMarkInfo(mark, template){
       FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
       var pixelOffset = new google.maps.Size(0,-30)
       break;
-    case 'search':
+    case 'place':
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
       FRAG.getElementById("map_mark_info_status").textContent = mark.status;
       var href = 'https://duckduckgo.com/?q='+mark.name+' '+mark.address;
@@ -333,7 +332,27 @@ function requestPlace(placeId){
   const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
-      setPlace(place.place_id, place.name);
+      let now = new Date();
+      mark = {
+        address: place.formatted_address,
+        center: place.geometry.location,
+        hour:now.getHours(),
+        hours: OPEN_24X7,
+        name: place.name,
+        placeid: place.place_id,
+        status: place.business_status,
+        weekday: now.getDay(),
+      }
+      mark.marker = new google.maps.Marker({
+        position: mark.center,
+        visible:true,
+        map:qwikMap,
+      });
+      var label_origin = new google.maps.Point(13,15)
+      mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
+      mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
+
+      setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER)
     } else {
       console.log(status);
     }

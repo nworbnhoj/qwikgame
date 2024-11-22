@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg height="50" width="30" viewBox="0 0 30 50" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
-  <g  fill="#cccccc" stroke="#999999" stroke-width="1">
+  <g  fill="#ffffff" stroke="#f5a600" stroke-width="1">
     <circle cx="15" cy="15" r="14"/>
     <polygon points="2,20 28,20 15,50"/>
-    <polygon points="3,19 27,19 15,47" fill="#cccccc" stroke="#cccccc" />
+    <polygon points="3,19 27,19 15,47" fill="#ffffff" stroke="#ffffff" />
   </g>
 </svg>

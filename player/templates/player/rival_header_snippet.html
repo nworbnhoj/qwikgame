@@ -1,0 +1,17 @@
+<!-- qwikgame/player/templates/player/rival_header_snippet.html -->
+    <div class="post">
+        <div class="align_center">
+            <div class="icon">
+                <i class="fa-solid {{ rival.icon }} fa-3x"></i>
+            </div>
+            <div>
+                <h1>{{ rival.name }}</h1>
+            </div>
+        </div>
+        <div class="pillar align_center">    
+{% include 'player/conduct_stars_snippet.html' %}
+            <div>
+                <p>Stonger</p>
+            </div>
+        </div>
+    </div>

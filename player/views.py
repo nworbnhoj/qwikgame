@@ -158,11 +158,13 @@ class BidView(AppealsView):
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
+        appeal = self._context.get('appeal')
         bid = Bid.objects.filter(
-            appeal = self._context.get('appeal'),
+            appeal = appeal,
             rival = self.user.player,
         ).first()
         self._context |= {
+            'rival': appeal.player,
             'player_id': self.user.player.facet(),
             'bid': bid,
         }

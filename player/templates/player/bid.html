@@ -56,6 +56,7 @@
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
         </div>
+{% include 'player/rival_header_snippet.html' %}
         <div class="post">
 {% for entry in appeal.log %}
     {% if entry.id == player_id %}

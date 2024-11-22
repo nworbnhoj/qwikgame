@@ -124,6 +124,13 @@ class Player(models.Model):
         else:
             return self.facet()
 
+    # returns the name of a Rival, using Friend.name if exists
+    def name_rival(self, rival):
+        friend = Friend.objects.filter(player=self, rival=rival).first()
+        if friend:
+            return friend.name
+        return rival.name()
+
     def place_choices(self, count=12):
         places = self.place_suggestions(count)
         return [(p.placeid, p.name) for p in places]

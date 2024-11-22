@@ -75,10 +75,10 @@ class AcceptView(AppealsView):
             friends = Friend.objects.filter(player=player)
             for bid in bids:
                 bid.hour_str = bid.hours24().as_str()
-                try:
-                    bid.name = friends.get(rival=bid.rival).name
-                except:
-                    bid.name=bid.rival.name
+                bid.name = player.name_rival(bid.rival)
+
+
+                
             self._context |= {
                 'player_id': player.facet(),
                 'bids': bids,

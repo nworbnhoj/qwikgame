@@ -154,8 +154,19 @@
                             <i class="fa-solid {{ bid.rival.icon }} fa-2x"></i>
                         </div>
                         <div class="chat_bubble">
-                            <p class="bold">{{ bid.name }}</p>
-                            <p>Accepted for {{ bid.hour_str }}</p>
+                            <p class="bold">{{ bid.name }} at {{ bid.hour_str }}h</p>
+                <div >
+{% for _ in '12345'|make_list %} 
+                    <div class="icon color">
+{% if forloop.counter <= bid.conduct_stars %}
+                        <i class="fa-solid fa-star fa-1x"></i>
+{% else %}
+                        <i class="fa-regular fa-star fa-1x"></i>
+{% endif %}
+                    </div>
+{% endfor %}
+                </div>
+                            <p>Well Matched</p>
                         </div>
                         <div class="drop_down icon">
                             <div class="btn todo" data-down="false">

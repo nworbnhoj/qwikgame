@@ -76,9 +76,7 @@ class AcceptView(AppealsView):
             for bid in bids:
                 bid.hour_str = bid.hours24().as_str()
                 bid.name = player.name_rival(bid.rival)
-
-
-                
+                bid.conduct_stars = bid.rival.conduct_stars 
             self._context |= {
                 'player_id': player.facet(),
                 'bids': bids,

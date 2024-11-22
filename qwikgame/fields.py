@@ -7,22 +7,6 @@ from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeIn
 
 logger = logging.getLogger(__file__)
 
-class RadioDataSelect(RadioSelect):
-    def __init__(self, *args, **kwargs):
-        self.data_attr = kwargs.pop("data_attr", [])
-        super().__init__(*args, **kwargs)
-
-    def create_option(
-        self, name, value, label, selected, index, subindex=None, attrs=None
-    ):
-        option = super().create_option(
-            name, value, label, selected, index, subindex=subindex, attrs=attrs
-        )
-        for key, data in self.data_attr.items():
-            if index < len(data):
-                option["attrs"]['data-'+key] = data[index]
-        return option
-
 
 class DayField(MultiValueField):
 
@@ -73,6 +57,23 @@ class MultiTabField(MultiValueField):
         for i in range(len(self.field_keys)):
             result[self.field_keys[i]] = data_list[i]
         return result
+
+
+class RadioDataSelect(RadioSelect):
+    def __init__(self, *args, **kwargs):
+        self.data_attr = kwargs.pop("data_attr", [])
+        super().__init__(*args, **kwargs)
+
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(
+            name, value, label, selected, index, subindex=subindex, attrs=attrs
+        )
+        for key, data in self.data_attr.items():
+            if index < len(data):
+                option["attrs"]['data-'+key] = data[index]
+        return option
 
 
 class RangeField(ChoiceField):

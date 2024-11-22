@@ -579,10 +579,10 @@ class PrecisForm(QwikForm):
     @classmethod
     def get(klass, player):
         return {
+            'player': player,
             'precis_form': PrecisForm(
                 precis = Precis.objects.filter(player__user__id=player.user.id)
             ),
-            'reputation': player.reputation(),
         }
 
     # Initializes a PublicForm for 'player'.
@@ -602,8 +602,8 @@ class PrecisForm(QwikForm):
                 precis.save()
         else:
             context = {
+                'player': player,
                 'precis_form': precis_form,
-                'reputation': player.reputation(),
             }
         return context
 

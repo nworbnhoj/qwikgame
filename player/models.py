@@ -78,13 +78,27 @@ class Player(models.Model):
             conduct = conduct >> 1
         return dips[::-1]
 
-    # return a float [0.0,1.0] representing the fracton of good Player conduct reviews
+    # return a float [0,1] representing time weighted fracton of good Player Conduct reviews
     # span int [1,24] limits the range of the calculated fraction
     def conduct_fraction(self, span=24):
         span = max(1, min(span, 24))
         mask = 2 ** span - 1
         conduct = int.from_bytes(self.conduct, ENDIAN)
         return (conduct & mask).bit_count() / span
+
+    # return a float [0.0,1.0] representing the fracton of good Player conduct reviews
+    def conduct_rep(self):
+        c0 = self.conduct[0]
+        c1 = self.conduct[1]
+        c2 = self.conduct[2]
+        max = int.from_bytes(b'\xff', ENDIAN)
+        conduct = (c0 + 2*c1 + 3*c2) / (6*max)
+        return conduct
+
+    # return an int [0,5] representing Player conduct stars
+    @property
+    def conduct_stars(self):
+        return round (5 * self.conduct_rep())
 
     def facet(self):
         return self.email_hash[:3].upper()
@@ -166,9 +180,6 @@ class Player(models.Model):
             logger.warn('detected Venue with Country | Admin1 | Locality = None')
         regions = dict(sorted(regions.items(), key=lambda item: item[1], reverse=True))
         return regions
-
-    def reputation(self):
-        return 3
 
     def reviews(self):
         return Review.objects.filter(player=self)

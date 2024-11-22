@@ -9,7 +9,7 @@
                     <div class="plank">
 {% for _ in '12345'|make_list %} 
                         <div class="icon color">
-{% if forloop.counter <= reputation %}
+{% if forloop.counter <= player.conduct_stars %}
                             <i class="fa-solid fa-star fa-2x"></i>
 {% else %}
                             <i class="fa-regular fa-star fa-2x"></i>

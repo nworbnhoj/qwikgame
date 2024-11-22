@@ -26,7 +26,7 @@ class PlayerAdmin(admin.ModelAdmin):
     fields = ['user', 'email_hash', 'games', 'blocked']
     fieldsets = []
     filter_horizontal = []
-    list_display = ['__str__', 'conduct_dips']
+    list_display = ['__str__', 'conduct_stars', 'conduct_dips']
     list_filter = ['games']
     search_fields = ['email', 'email_hash']
     ordering = ['user']

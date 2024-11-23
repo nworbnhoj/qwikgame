@@ -1,4 +1,4 @@
-import logging
+import django, logging
 
 import os
 from pathlib import Path
@@ -79,7 +79,10 @@ ROOT_URLCONF = 'qwikgame.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'templates', 
+            django.__path__[0] + "/forms/templates",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

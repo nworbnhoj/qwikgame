@@ -346,12 +346,11 @@ class StrengthForm(QwikForm):
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
-    strength = ChoiceField(
+    strength = SelectRangeField(
         choices = STRENGTH,
         initial = STRENGTH.get('m'),
-        label = 'FRIEND SKILL LEVEL',
+        label = 'RIVAL SKILL LEVEL',
         required = True,
-        widget = RadioSelect,
     )
 
     @classmethod

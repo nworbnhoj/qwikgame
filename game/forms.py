@@ -55,8 +55,9 @@ class ReviewForm(QwikForm):
         required = True,
     )
     conduct = MultipleChoiceField(
-        choices = {'poor':'poor rival conduct.', 'noshow': 'rival did not show up'},
-        label = 'Did anything go wrong?',
+        choices = {'poor':'poor sportsmanship', 'noshow': 'did not show up'},
+        label = 'RIVAL CONDUCT',
+        required = False,
         widget = CheckboxSelectMultiple,
     )
     rival = ChoiceField(
@@ -69,6 +70,11 @@ class ReviewForm(QwikForm):
     @classmethod
     def get(klass, rivals):
         form = klass()
+        form.fields['conduct'].reveal = 'Did anything go wrong?'
+        form.fields['conduct'].reveal_css_classes = 'btn tertiary'
+        form.fields['conduct'].template_name = 'field.html'
+        form.fields['conduct'].widget.attrs = {'class': 'post',}
+        form.fields['conduct'].widget.use_fieldset = False
         form.fields['rival'].choices = rivals
         form.fields['rival'].initial = next(iter(rivals))
         return {
@@ -81,7 +87,9 @@ class ReviewForm(QwikForm):
         form.fields['rival'].choices = rivals
         context = { 'review_form': form }
         if form.is_valid():
-            context['conduct_good'] = not 'poor' in form.cleaned_data['conduct']
+            poor = 'poor' in form.cleaned_data['conduct']
+            noshow = 'noshow' in form.cleaned_data['conduct']
+            context['conduct_good'] = not form.cleaned_data['conduct']
             context['strength'] = form.cleaned_data['strength']
             context['rival'] = form.cleaned_data['rival']
         return context

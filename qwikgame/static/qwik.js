@@ -514,14 +514,14 @@ function setDayFields(hours24x7, now_weekday, now_hour){
     var open = false;
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
       var weekday = now_weekday;
-      if (input.dataset.hasOwnProperty('weekday')){
+      if ('weekday' in input.dataset){
         var wd = parseInt(input.dataset.weekday);
         weekday = Number.isInteger(wd) ? wd : undefined;
-      } else if (now_weekday & input.dataset.hasOwnProperty('offsetday')){
-        offset = parseInt(input.dataset.offset_day);
+      } else if (Number.isInteger(now_weekday) && 'offsetday' in input.dataset){
+        offset = parseInt(input.dataset.offsetday);
         weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday; 
       }
-      if (weekday){
+      if (Number.isInteger(weekday)){
         weekday = weekday % 7
         if (weekday in hours24x7){
           hours = hours24x7[weekday]

@@ -58,7 +58,7 @@
             </div>
             <div class="banner {{ banner_class }}">
                 <p>{{ banner_txt }}</p>
-                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.venue_date_str }}, {{ match.venue_hour_str }}, <span class="todo">Pesho</span></p>
+                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.venue_date_str }}, {{ match.venue_hour_str }}h, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center">
 {% for icon in rival_icons %}

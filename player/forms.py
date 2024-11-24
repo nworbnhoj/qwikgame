@@ -301,11 +301,12 @@ class FiltersForm(QwikForm):
 
 class FriendForm(QwikForm):
     email = EmailField(
-        label = "Friend's email address",
+        label = "FRIEND'S EMAIL ADDRESS",
         max_length=255,
         required = True,
     )
     name = CharField(
+        label = 'NAME',
         max_length=32,
         required=False,
     )

@@ -120,7 +120,7 @@ class Match(models.Model):
         return self
 
     def rivals(self, player):
-        competitors = list(match.competitors.values_list('pk', flat=True))
+        competitors = list(self.competitors.values_list('pk', flat=True))
         return competitors.remove(player.pk)
 
     # format venue_time on server, rather than in template (user timezone)

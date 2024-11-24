@@ -288,7 +288,7 @@ function showMarkInfo(mark, template){
       FRAG.getElementById("map_mark_info_status").textContent = mark.status;
       var href = 'https://duckduckgo.com/?q='+mark.name+' '+mark.address;
       FRAG.getElementById("map_mark_info_search").setAttribute('href', href);
-      FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
+      // FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
       var pixelOffset = new google.maps.Size(0,-30)
       break;
     case 'venue':
@@ -307,6 +307,8 @@ function showMarkInfo(mark, template){
   });
   INFOWINDOW.open(MAP);
 }
+
+
 function vid(address_components, name){
   var vid = [name,'locality','admin1','XX'];
   if (Array.isArray(address_components)){

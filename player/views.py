@@ -459,7 +459,7 @@ class KeenView(AppealsView):
             appeal.set_hours(valid_hours)
             logger.info(f'update Appeal: {appeal}')
             appeal.log_event('appeal')
-            appeal.save()
+            appeal.perish()
             if not appeal_pk:
                 appeal_pk = appeal.pk
         # update the Mark size

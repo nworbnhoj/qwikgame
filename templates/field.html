@@ -1,4 +1,22 @@
 <!-- qwikgame/templates/field.html -->
-{% include 'label_field.html' %}
+{% if field.use_fieldset %}
+    {% if field.label %}
+        {{ field.legend_tag }}
+    {% endif %}
+{% else %}
+    {% if field.label %}
+        {% include 'field_label.html' %}
+    {% endif %}
+{% endif %}
+
+{% if field.help_text %}
+    {% if not field.label %}
+        {{ field.help_text|safe }}
+    {% endif %}
+{% endif %}
+
 {{ field.errors }}
 {{ field }}
+
+{% if field.use_fieldset %}
+{% endif %}

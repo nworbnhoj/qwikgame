@@ -220,11 +220,14 @@ function searchChangeHandler(places){
   // For each place, get the icon, name and location.
   const BOUNDS = new google.maps.LatLngBounds(null, null);
   places.forEach(place => {
-    if (!place.geometry) { return; }
-    var mark = {};
-    mark.name = place.name;
-    var open = place.opening_hours ? 'open now' : 'closed';
-    // var label_origin = new google.maps.Point(13,15)
+    var mark = markFromPlace(place);
+
+    // neither open_hours or tz_offset are available in search results
+    // so default to 24x7 and irrelevent weekday and hour
+    mark.hours = OPEN_24X7;
+    mark.weekday = 0;
+    mark.hour = 0;
+
     const MARKER = new google.maps.Marker({
       // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
       // label: {text:'0', className:'qg_style_mark_label place'},
@@ -234,14 +237,6 @@ function searchChangeHandler(places){
     });
     mark.marker = MARKER;
     SEARCH_MARKERS.push(MARKER);
-
-    mark.address = place.formatted_address;
-    mark.center = place.geometry.location;
-    mark.status = place.business_status;
-    let now = new Date();
-    mark.hours = OPEN_24X7;
-    mark.weekday = now.getDay();
-    mark.hour = now.getHours();
     setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER)
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
@@ -256,7 +251,7 @@ function searchChangeHandler(places){
 
 function clickHandler(event){
   if (event.placeId) {
-    requestPlace(event.placeId);
+    markerFromPlaceId(event.placeId);
     if (event.latLng){
       qwikMap.panTo(event.latLng);
     }
@@ -328,23 +323,43 @@ function vid(address_components, name){
 }
 
 
-function requestPlace(placeId){
+function getPlaceOffset(place){
+  if (place.hasOwnProperty('utc_offset_minutes')){
+    var here = new Date();
+    var here_offset = here.getTimezoneOffset();
+    var place_offset = place.utc_offset_minutes;
+    var offset_diff = here_offset + place_offset;
+    var there = new Date(here.getTime() + (offset_diff * 60000));
+    return { 'weekday': there.getDay(), 'hour': there.getHours() };
+  }
+  return {}
+}
+
+
+function markFromPlace(place){
+  if (!place || !place.geometry) { return; }
+  mark = {
+    address: place.formatted_address,
+    center: place.geometry.location,
+    hours: OPEN_24X7,
+    name: place.name,
+    open: place.opening_hours ? 'open now' : 'closed',
+    placeid: place.place_id,
+    status: place.business_status,
+  }
+  offset = getPlaceOffset(place)
+  mark = {...mark, ...offset}
+  return mark
+}
+
+
+function markerFromPlaceId(placeId){
   const MAP = qwikMap;   
   const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
-  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components']};
+  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components', 'utc_offset']};
   PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
     if (status === "OK") {
-      let now = new Date();
-      mark = {
-        address: place.formatted_address,
-        center: place.geometry.location,
-        hour:now.getHours(),
-        hours: OPEN_24X7,
-        name: place.name,
-        placeid: place.place_id,
-        status: place.business_status,
-        weekday: now.getDay(),
-      }
+      mark = markFromPlace(place);      
       mark.marker = new google.maps.Marker({
         position: mark.center,
         visible:true,
@@ -353,13 +368,13 @@ function requestPlace(placeId){
       var label_origin = new google.maps.Point(13,15)
       mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
       mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
-
       setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER)
     } else {
       console.log(status);
     }
   });
 }
+
 
 function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
   const PLACE_SELECT = document.getElementById('id_place');

@@ -16,6 +16,11 @@ blockquote, q { quotes: "" "" }
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:has(input.hidden) { display: none }
 
+div.field .btn.reveal:has(input) ~ div { display: none; }
+div.field .btn.reveal:has(input:checked) ~ div { display: flex; }
+label.btn.reveal { display: inline-block; }
+
+
 .btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333;  }
 .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
 .btn.primary:active { background-color: #e09900; border-color: #e09900; }

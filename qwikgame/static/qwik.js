@@ -510,26 +510,28 @@ function setAllWeek(button, checked) {
 //     24 least significant bits (--------012345....23)
 // today is the current weekday at the Venue [0..6]
 function setDayFields(hours24x7, now_weekday, now_hour){
-  document.querySelectorAll(".by_day").forEach(function(day){
+  document.querySelectorAll(".by_hour").forEach(function(day){
     var open = false;
+    var weekday = now_weekday;
+    var offset = 0;
+    if ('weekday' in day.dataset){
+      var wd = parseInt(day.dataset.weekday);
+      weekday = Number.isInteger(wd) ? wd : undefined;
+    } else if (Number.isInteger(now_weekday) && 'offsetday' in day.dataset){
+      offset = parseInt(day.dataset.offsetday);
+      weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday; 
+    }
     const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    day.querySelectorAll(".hour_grid input").forEach(function(input) {
-      var weekday = now_weekday;
-      var offset = 0;
-      if ('weekday' in input.dataset){
-        var wd = parseInt(input.dataset.weekday);
-        weekday = Number.isInteger(wd) ? wd : undefined;
-      } else if (Number.isInteger(now_weekday) && 'offsetday' in input.dataset){
-        offset = parseInt(input.dataset.offsetday);
-        weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday; 
+    if (Number.isInteger(weekday) && Number.isInteger(offset)){
+      weekday = weekday % 7
+      // set the week day in the DayField Field Label
+      sub_text = day.closest('div.field').querySelector('.sub_text')
+      if (sub_text){
+        sub_text.innerText = WEEKDAY[now_weekday + offset];
       }
+    }
+    day.querySelectorAll(".hour_grid input").forEach(function(input) {
       if (Number.isInteger(weekday) && Number.isInteger(offset)){
-        weekday = weekday % 7
-        // set the week day in the DayField Field Label
-        sub_text = input.closest('div.field').querySelector('.sub_text')
-        if (sub_text){
-          sub_text.innerText = WEEKDAY[now_weekday + offset];
-        }
         if (weekday in hours24x7){
           hours = hours24x7[weekday]
           hr = 23 - parseInt(input.parentElement.innerText);

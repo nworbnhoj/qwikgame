@@ -218,7 +218,7 @@ class FilterForm(QwikForm):
                     'place': place,
                 },
             )
-        open = Hours24x7(WEEK_ALL).as_7int()
+        open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
         places = player.place_suggestions(12)[:12]
         logger.warn(places)
         choices = [('ANY','Anywhere'), ('show-map', 'Select from map'), ('placeid', '')]
@@ -231,8 +231,8 @@ class FilterForm(QwikForm):
             widget=RadioDataSelect(
                 attrs={"class": "down hidden"},
                 data_attr={
-                    'hours': ['','',''] + [p.open_week.as_7int() if p.is_venue else open for p in places],
-                    'now_weekday': ['','',''] + [p.now().weekday() if p.is_venue else '' for p in places],
+                    'hours': ['','',''] + [p.open_7int_str() if p.is_venue else open for p in places],
+                    'now_weekday': ['','',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
                     'now_hour': ['','',''] + [p.now().hour if p.is_venue else '' for p in places],
                 }
             )

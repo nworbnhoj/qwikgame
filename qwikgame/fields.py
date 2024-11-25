@@ -13,7 +13,6 @@ class DayField(MultiValueField):
     def __init__(self, hours=[*range(24)], offsetday=None, weekday=None, **kwargs):
         self.hours = hours
         self.weekday = weekday
-        self.widget=DayInput(hours=hours, offsetday=offsetday, weekday=weekday)
         super().__init__(
             error_messages={
                 'incomplete': 'incomplete',
@@ -27,6 +26,13 @@ class DayField(MultiValueField):
             require_all_fields=False,
             **kwargs
         )
+        attrs = {}
+        if offsetday:
+            attrs |= {'data-offsetday': offsetday }
+        if weekday:
+            attrs |= {'data-weekday': weekday }
+        self.widget=DayInput(hours=hours, input_type=input_type, attrs=attrs)
+        
 
     def compress(self, data_list):
         bools=[False] * 24

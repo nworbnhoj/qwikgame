@@ -1,6 +1,10 @@
 <!-- qwikgame/templates/input_hours.html -->
+    <div class="by_hour" {% for name, value in widget.attrs.items %} {{ name }}="{{ value|stringformat:'s' }}"{% endfor %}>
+        <div class="radio_block hour_grid">
 {% spaceless %}
 {% for widget in widget.subwidgets %}
     {% include widget.template_name %}
 {% endfor %}
 {% endspaceless %}
+        </div>
+    </div>

@@ -24,9 +24,8 @@ class DayInput(MultiWidget):
         self.label=label
         self.hours=hours
         widgets = []
-        widget_attrs = { 'class': 'hidden', 'type': 'checkbox' }
         for hr in range(24):
-            widgets.append(HourInput(label=hr, attrs=widget_attrs))
+            widgets.append(HourInput(label=hr), attrs={'class': 'hidden'})
         for hr in hours:
             widgets[hr].attrs['class'] = ''
         super().__init__(

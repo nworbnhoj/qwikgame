@@ -31,7 +31,7 @@ class DayField(MultiValueField):
             attrs |= {'data-offsetday': offsetday }
         if weekday:
             attrs |= {'data-weekday': weekday }
-        self.widget=DayInput(hours=hours, input_type=input_type, attrs=attrs)
+        self.widget=DayInput(hours=hours, attrs=attrs)
         
 
     def compress(self, data_list):

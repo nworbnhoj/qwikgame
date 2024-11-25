@@ -513,7 +513,7 @@ function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_hour").forEach(function(day){
     var open = false;
     var weekday = now_weekday;
-    var offset = 0;
+    var offset = undefined;
     if ('weekday' in day.dataset){
       var wd = parseInt(day.dataset.weekday);
       weekday = Number.isInteger(wd) ? wd : undefined;
@@ -530,19 +530,24 @@ function setDayFields(hours24x7, now_weekday, now_hour){
         sub_text.innerText = WEEKDAY[now_weekday + offset];
       }
     }
+    console.log(weekday+'    '+offset+'    '+hours24x7+'    '+now_weekday+'    '+now_hour)
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
-      if (Number.isInteger(weekday) && Number.isInteger(offset)){
+      hr = parseInt(input.parentElement.innerText);
+      if (Number.isInteger(weekday)){
         if (weekday in hours24x7){
           hours = hours24x7[weekday]
-          hr = 23 - parseInt(input.parentElement.innerText);
           // hide hour buttons when venue is closed
-          if (hours >> hr & 1){
+          if (hours >> (23 - hr) & 1){
             input.classList.remove('hidden');
             open = true;
           } else {
             input.classList.add('hidden');
           }
         }
+      }
+      if (Number.isInteger(offset)){
+        // disable hour buttons when time is passed
+        input.disabled = (offset == 0) && (hr < now_hour)
       }
     });
     by_day = day.closest('.by_day')

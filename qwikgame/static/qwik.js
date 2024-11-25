@@ -708,14 +708,19 @@ function toggle_disabled(toggle) {
 function toggleHour(event) {
   try {
     let hour = event.currentTarget;
-    let all_day = hour.closest(".by_day").querySelector("label.toggle.all_day");
-    if (toggle_checked(hour)) {
-      updateAllDay(all_day);
-    } else {
-      toggle_uncheck(all_day);
-      let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
-      if (all_week){
-        toggle_uncheck(all_week);
+    let by_day = hour.closest(".by_day")
+    if (by_day){
+      all_day = by_day.querySelector("label.toggle.all_day");
+      if (all_day){
+        if (toggle_checked(hour)) {
+          updateAllDay(all_day);
+        } else {
+          toggle_uncheck(all_day);
+          let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
+          if (all_week){
+            toggle_uncheck(all_week);
+          }
+        }
       }
     }
   } catch (e) {

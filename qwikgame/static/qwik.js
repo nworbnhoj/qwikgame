@@ -543,12 +543,13 @@ function setDayFields(hours24x7, now_weekday, now_hour){
         }
       }
     });
+    by_day = day.closest('.by_day')
     if (open){
-      day.querySelector('.by_hour').classList.remove('hidden')
-      day.querySelector('.no_hour').classList.add('hidden')
+      by_day.querySelector('.on_day').classList.remove('hidden')
+      by_day.querySelector('.no_day').classList.add('hidden')
     } else {
-      day.querySelector('.by_hour').classList.add('hidden')
-      day.querySelector('.no_hour').classList.remove('hidden')
+      by_day.querySelector('.on_day').classList.add('hidden')
+      by_day.querySelector('.no_day').classList.remove('hidden')
     }
   });
 }

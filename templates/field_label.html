@@ -12,7 +12,7 @@
 {% if field.field.url %}
     <a href='{{ field.field.url }}'>{{ field.field.sub_text }}</a>
 {% elif field.field.sub_text %}
-    <span>{{ field.field.sub_text }}</span>
+    <span class='sub_text'>{{ field.field.sub_text }}</span>
 {% endif %}
 {% if field.help_text %}
     <div class="btn secondary small round push_right info" data-visible="false">

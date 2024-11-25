@@ -512,8 +512,10 @@ function setAllWeek(button, checked) {
 function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_day").forEach(function(day){
     var open = false;
+    const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
       var weekday = now_weekday;
+      var offset = 0;
       if ('weekday' in input.dataset){
         var wd = parseInt(input.dataset.weekday);
         weekday = Number.isInteger(wd) ? wd : undefined;
@@ -521,11 +523,17 @@ function setDayFields(hours24x7, now_weekday, now_hour){
         offset = parseInt(input.dataset.offsetday);
         weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday; 
       }
-      if (Number.isInteger(weekday)){
+      if (Number.isInteger(weekday) && Number.isInteger(offset)){
         weekday = weekday % 7
+        // set the week day in the DayField Field Label
+        sub_text = input.closest('div.field').querySelector('.sub_text')
+        if (sub_text){
+          sub_text.innerText = WEEKDAY[now_weekday + offset];
+        }
         if (weekday in hours24x7){
           hours = hours24x7[weekday]
           hr = 23 - parseInt(input.parentElement.innerText);
+          // hide hour buttons when venue is closed
           if (hours >> hr & 1){
             input.classList.remove('hidden');
             open = true;

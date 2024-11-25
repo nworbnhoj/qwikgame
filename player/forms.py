@@ -471,12 +471,8 @@ class KeenForm(QwikForm):
         self.fields['friends'].choices = player.friend_choices()
         self.fields['friends'].sub_text = 'Add Friends'
         self.fields['friends'].url = 'friends'
-        today = timezone.now()
-        tomorrow = today + datetime.timedelta(days=1)
-        self.fields['today'].sub_text = today.strftime('%A')
-        self.fields['today'].help_text = 'What time are you keen to play today?'
-        self.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
-        self.fields['tomorrow'].help_text = 'What time are you keen to play tomorrow?'
+        self.fields['today'].sub_text = ' '
+        self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(12).order_by('name').all()[:12]
         choices = [('show-map', 'Select from map'), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]
@@ -489,7 +485,7 @@ class KeenForm(QwikForm):
                 attrs={"class": "down hidden"},
                 data_attr={
                     'hours': ['',''] + [v.open_7int_str() for v in venues],
-                    'now_weekday': ['',''] + [v.now().weekday() for v in venues],
+                    'now_weekday': ['',''] + [v.now().isoweekday() % 7 for v in venues],
                     'now_hour': ['',''] + [v.now().hour for v in venues],
                 }
             )
@@ -502,17 +498,23 @@ class KeenForm(QwikForm):
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'
     @classmethod
-    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue_id='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):
         form = klass(
                 initial = {
                     'game': game,
                     # 'strength': strength,
                     'today': DAY_NONE,       # TODO extract today from hours
                     'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
-                    'place': venue_id,
+                    'place': venue.placeid if venue else 'map',
                 },
             )
         form.personalise(player)
+        if venue:
+            today = venue.now()
+            logger.warn(today)
+            tomorrow = today + datetime.timedelta(days=1)
+            form.fields['today'].sub_text = today.strftime('%A')
+            form.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
         return {
             'keen_form': form,
         }

@@ -7,7 +7,7 @@ from person.models import Person
 from player.models import Appeal, Bid, Filter, Friend, Player, Precis
 from venue.models import Venue
 from qwikgame.constants import STRENGTH
-from qwikgame.fields import ActionMultiple, DayField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayField, DayRadioField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -54,19 +54,18 @@ class AcceptForm(QwikForm):
 
 
 class BidForm(QwikForm):
-    hour = TypedChoiceField(
-        coerce=str_to_hours24,
+    hour = DayRadioField(
         help_text='When are you keen to play?',
         label='Pick Time to play',
-        required=False,
-        template_name='field_pillar.html',
-        widget=RadioSelect,
-    )    
+        hours=[*range(6,21)],
+        offsetday='0',
+        required=True,
+        template_name='field.html',
+    )
 
-    def clean_hours(self):
+    def clean_hour(self):
         hour = self.cleaned_data["hour"]
-        logger.warn(hour)
-        if hour.as_bytes() == DAY_NONE:
+        if not hour:
             raise ValidationError("You must select at least one hour.")
         return hour
 
@@ -74,34 +73,28 @@ class BidForm(QwikForm):
     # Returns a context dict including 'rspv_form'
     @classmethod
     def get(klass, appeal):
-        hours = appeal.hours24
-        form = klass( initial={'hour': hours})
-        form.fields['hour'].choices = hours.as_choices()
-        form.fields['hour'].sub_text = appeal.date
-        form.fields['hour'].widget.attrs = {'class': 'radio_block hour_grid'}
-        form.fields['hour'].widget.option_template_name='input_hour.html'
-        return {
-            'bid_form': form,
-        }
+        form = klass( initial={'hours': appeal.hour_list()})
+        return { 'bid_form': form }
 
     # Initializes an BidForm for an 'appeal'.
     # Returns a context dict including 'bid_form'
     @classmethod
     def post(klass, request_post, appeal):
+        if 'CANCEL' in request_post:
+            logger.warn('here')
+            cancel = request_post['CANCEL']
+            try:
+                return {'CANCEL' : int(cancel) }
+            except:
+                logger.warn(f'failed to convert CANCEL: {cancel}')
         form = klass(data=request_post)
-        context = {'bid_form': form}
-        form.fields['hour'].choices = appeal.hour_choices()
+        context = { 'bid_form': form }
         if form.is_valid():
-            context={
+            hours24 = Hours24().set_hour(form.cleaned_data['hour'])
+            context |= {
                 'accept': appeal,
-                'hours': form.cleaned_data['hour']
+                'hour': hours24.as_bytes(),
             }
-            if 'CANCEL' in request_post:
-                cancel = request_post['CANCEL']
-                try:
-                    context['CANCEL'] = int(cancel)
-                except:
-                    logger.warn(f'failed to convert CANCEL: {cancel}')
         return context
 
 

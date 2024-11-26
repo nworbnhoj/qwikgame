@@ -153,6 +153,10 @@ class Hours24():
             hours = hours >> 1
         return dips[::-1]
 
+    def set_hour(self, hr):
+        self.bits = (self.as_int() | (1 << (23-hr))).to_bytes(3, ENDIAN)
+        return self
+
 
 # represents 24*7 hours in 21 bytes, ordered as SMTWTFS
 class Hours24x7():

@@ -1,5 +1,5 @@
 import logging
-from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget
+from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget, RadioSelect
 from django.forms.widgets import Input, Select
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
@@ -20,18 +20,26 @@ class DayInput(MultiWidget):
     template_name='input_day.html'
     use_fieldset=False
 
-    def __init__(self, attrs={}, label='', hours=[*range(24)]):
+    def __init__(self, attrs={}, label='', hours=[*range(24)], multi=True):
         self.label=label
         self.hours=hours
         widgets = []
-        for hr in range(24):
-            widgets.append(HoursInput(label=hr, attrs={'class': 'hidden'}))
+        for hr in range(24):            
+            hour_input = HourInput(
+                attrs={'class': 'hidden'},
+                input_type = 'checkbox' if multi else 'radio',
+                label=hr
+            )
+            widgets.append(hour_input)
         for hr in hours:
             widgets[hr].attrs['class'] = ''
         super().__init__(
             attrs = attrs,
             widgets=(widgets)
         )
+        if not multi:
+            self.widgets_names = [''] * len(widgets)
+        self.show_hours(hours)
 
     def decompress(self, hours24=DAY_NONE):
         return Hours24(hours24).as_bools()
@@ -41,13 +49,21 @@ class DayInput(MultiWidget):
         context['widget']['label'] = self.label
         return context
 
+    def show_hours(self, hours):
+        for hr in range(0,23):
+            self.widgets[hr].attrs['class'] = 'hidden'
+        for hr in hours:
+            self.widgets[hr].attrs['class'] = ''
+
 
 class HourInput(CheckboxInput):
     template_name='input_hour.html'
     require_all_fields=False,
     label=''
+    input_type = 'radio'
 
-    def __init__(self, label='', **kwargs):
+    def __init__(self, input_type='checkbox', label='hr', **kwargs):
+        self.input_type = input_type
         self.label=label
         super().__init__(**kwargs)
 
@@ -55,6 +71,23 @@ class HourInput(CheckboxInput):
         context = super().get_context(name, value, attrs)
         context['widget']['label'] = self.label
         return context
+
+
+class DayInputRadio(RadioSelect):
+    option_template_name = 'input_hour.html'
+    template_name='input_hour_radio.html'
+
+    def __init__(self, attrs=None, choices=(), hours=[*range(24)]):
+        self.hours = hours
+        super().__init__(attrs, choices)
+
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(name, value, label, selected, index, subindex, attrs)
+        if not int(option['value']) in self.hours:
+            option['attrs']["class"] = 'hidden'
+        return option
 
 
 class IconSelectMultiple(CheckboxSelectMultiple):

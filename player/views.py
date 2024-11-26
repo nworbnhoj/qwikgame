@@ -209,7 +209,7 @@ class BidView(AppealsView):
             return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
         bid = Bid(
             appeal=context['accept'],
-            hours=context['hours'],
+            hours=context['hour'],
             rival=player,
             strength='m',
             )

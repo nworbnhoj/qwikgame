@@ -1,0 +1,19 @@
+<!-- qwikgame/templates/input_hours.html -->
+{% with id=widget.attrs.id %}
+  <div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="by_hour {{ widget.attrs.class }}"{% else %}class="by_hour"{% endif %} {% for name, value in widget.attrs.items %} {{ name }}="{{ value|stringformat:'s' }}"{% endfor %}>
+    <div class="radio_block hour_grid">
+{% for group, options, index in widget.optgroups %}
+  {% if group %}
+      <div>
+        <label>{{ group }}</label>
+  {% endif %}
+  {% for option in options %}
+    {% include option.template_name with widget=option %}
+  {% endfor %}
+  {% if group %}
+    </div>
+  {% endif %}
+{% endfor %}
+  </div>
+</div>
+{% endwith %}

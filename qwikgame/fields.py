@@ -1,9 +1,9 @@
 import logging
-from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect
+from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, TypedChoiceField
 from qwikgame.constants import STRENGTH, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.widgets import ActionMultiple, MultiWidget
-from qwikgame.widgets import ActionMultiple, DayInput, RangeInput, SelectRangeInput, TabInput, WeekInput
+from qwikgame.widgets import ActionMultiple, DayInput, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput
 
 logger = logging.getLogger(__file__)
 
@@ -39,6 +39,22 @@ class DayField(MultiValueField):
         for hr in self.hours:
             bools[hr] = data_list[hr]
         return Hours24(bools)
+
+
+HR_CHOICES = [(str(hr),str(hr)) for hr in range(24)]
+
+class DayRadioField(TypedChoiceField):
+    template_name='input_hour_radio.html'
+    option_template_name = 'input_hour.html'
+
+    def __init__(self, hours=[*range(24)], offsetday=None, weekday=None, **kwargs):
+        attrs = {}
+        if offsetday:
+            attrs |= {'data-offsetday': offsetday }
+        if weekday:
+            attrs |= {'data-weekday': weekday }
+        self.widget = DayInputRadio(attrs=attrs, hours=hours)
+        super().__init__(choices = HR_CHOICES, coerce=int, empty_value=0, **kwargs)
 
 
 class MultipleActionField(MultipleChoiceField):

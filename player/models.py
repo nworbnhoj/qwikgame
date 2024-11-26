@@ -282,6 +282,9 @@ class Appeal(models.Model):
     def hour_dips(self):
         return self.hours24.to_dips
 
+    def hour_list(self):
+        return self.hours24.as_list()
+
     @property
     def last_hour(self):
         return self.hours24.last_hour()

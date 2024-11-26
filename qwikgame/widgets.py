@@ -77,18 +77,28 @@ class DayInputRadio(RadioSelect):
     option_template_name = 'input_hour.html'
     template_name='input_hour_radio.html'
 
-    def __init__(self, attrs=None, choices=(), hours=[*range(24)]):
-        self.hours = hours
+    def __init__(self, attrs=None, choices=()):
         super().__init__(attrs, choices)
+
+    def set_data_attr(self, key, value):
+        self.data_attrs[f'data-{key}', value]
 
     def create_option(
         self, name, value, label, selected, index, subindex=None, attrs=None
     ):
         option = super().create_option(name, value, label, selected, index, subindex, attrs)
-        if not int(option['value']) in self.hours:
+        val = int(option['value'])
+        if not val in self.hours_show:
             option['attrs']["class"] = 'hidden'
+        if not val in self.hours_enable:
+            option['attrs']['disabled'] = 'disabled'
         return option
 
+    def set_hours_enable(self, hours):
+        self.hours_enable = hours;
+
+    def set_hours_show(self, hours):
+        self.hours_show = hours;
 
 class IconSelectMultiple(CheckboxSelectMultiple):
     option_template_name='option_game.html'

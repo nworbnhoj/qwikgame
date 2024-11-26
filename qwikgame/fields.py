@@ -41,20 +41,14 @@ class DayField(MultiValueField):
         return Hours24(bools)
 
 
-HR_CHOICES = [(str(hr),str(hr)) for hr in range(24)]
-
 class DayRadioField(TypedChoiceField):
+    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
     template_name='input_hour_radio.html'
     option_template_name = 'input_hour.html'
 
-    def __init__(self, hours=[*range(24)], offsetday=None, weekday=None, **kwargs):
-        attrs = {}
-        if offsetday:
-            attrs |= {'data-offsetday': offsetday }
-        if weekday:
-            attrs |= {'data-weekday': weekday }
-        self.widget = DayInputRadio(attrs=attrs, hours=hours)
-        super().__init__(choices = HR_CHOICES, coerce=int, empty_value=0, **kwargs)
+    def __init__(self, **kwargs):
+        self.widget = DayInputRadio()
+        super().__init__(choices = DayRadioField.CHOICES, coerce=int, empty_value=0, **kwargs)
 
 
 class MultipleActionField(MultipleChoiceField):

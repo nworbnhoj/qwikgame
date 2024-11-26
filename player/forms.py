@@ -57,8 +57,6 @@ class BidForm(QwikForm):
     hour = DayRadioField(
         help_text='When are you keen to play?',
         label='Pick Time to play',
-        hours=[*range(6,21)],
-        offsetday='0',
         required=True,
         template_name='field.html',
     )
@@ -73,7 +71,10 @@ class BidForm(QwikForm):
     # Returns a context dict including 'rspv_form'
     @classmethod
     def get(klass, appeal):
-        form = klass( initial={'hours': appeal.hour_list()})
+        form = klass()
+        form.fields['hour'].widget.set_hours_show(appeal.hour_list())
+        next_hour = appeal.venue.now().hour + 1
+        form.fields['hour'].widget.set_hours_enable(list(range(next_hour, 24)))
         return { 'bid_form': form }
 
     # Initializes an BidForm for an 'appeal'.

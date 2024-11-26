@@ -107,6 +107,9 @@ class Hours24():
     def as_int(self):
         return int.from_bytes(self.bits, ENDIAN)
 
+    def as_list(self):
+        return [i for i in range(0,23) if self.as_int() >> (23-i) & 1]
+
     def as_str(self, hours=range(0,23), day_all=DAY_ALL):
         if self.bits == DAY_NONE:
             return ''
@@ -141,7 +144,7 @@ class Hours24():
     def last_hour(self):
         i = self.as_int()
         lsb = (i & -i) # least significant bit
-        return lsb.bit_length()-1
+        return 23-(lsb.bit_length()-1)
 
     # return a string of dip switches representing the active hours.
     @property    

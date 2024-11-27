@@ -74,6 +74,9 @@ class HourInput(CheckboxInput):
 
 
 class DayInputRadio(RadioSelect):
+    data_attrs = {}
+    hours_enable = [*range(24)]
+    hours_show = [*range(24)]
     option_template_name = 'input_hour.html'
     template_name='input_hour_radio.html'
 
@@ -99,6 +102,11 @@ class DayInputRadio(RadioSelect):
 
     def set_hours_show(self, hours):
         self.hours_show = hours;
+
+    def render(self, name, value, attrs=None, renderer=None):
+        attrs |= self.data_attrs
+        return super().render(name, value, attrs, renderer)
+
 
 class IconSelectMultiple(CheckboxSelectMultiple):
     option_template_name='option_game.html'

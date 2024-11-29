@@ -31,6 +31,15 @@ class PlayerAdmin(admin.ModelAdmin):
     search_fields = ['email', 'email_hash']
     ordering = ['user']
 
+class StrengthAdmin(admin.ModelAdmin):
+    fields = ['game', 'player', 'rival', 'relative']
+    fieldsets = []
+    filter_horizontal = []
+    list_display = ['game', 'player', 'rival', 'relative']
+    list_filter = ['game', 'player', 'rival', 'relative']
+    search_fields = []
+    ordering = []
+
 
 admin.site.register(Appeal, AppealAdmin)
 admin.site.register(Bid, BidAdmin)
@@ -38,4 +47,4 @@ admin.site.register(Filter, FilterAdmin)
 admin.site.register(Friend, FriendAdmin)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(Precis)
-admin.site.register(Strength)
+admin.site.register(Strength, StrengthAdmin)

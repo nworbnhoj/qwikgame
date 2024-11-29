@@ -652,25 +652,17 @@ class FriendView(FriendsView):
         try:    # 
             friend = Friend.objects.get(pk=friend_pk)
             game = Game.objects.get(pk=context['game'])
-            strength = Strength.objects.filter(
+            strength, created = Strength.objects.update_or_create(
                 game = game,
                 player = player,
                 rival = friend.rival,
-                ).first()
-            if strength:
-                strength.date = datetime.now(pytz.utc)
-                strength.relative = context['strength']
-                strength.weight = 3
-                strength.save()
-            else:                
-                strength = Strength.objects.create(
-                    date = datetime.now(pytz.utc),
-                    game = game,
-                    player = player,
-                    rival = friend.rival, 
-                    relative = context['strength'],
-                    weight = 3,
-                    )
+                defaults = {
+                    date: datetime.now(pytz.utc),
+                    relative: context['strength'],
+                    weight: 3
+                }
+            )
+            if created:
                 friend.strengths.add(strength)
         except:
             logger.exception(f'failed add strength: {context}')
@@ -708,15 +700,18 @@ class FriendStrengthView(FriendsView):
             player = self.user.player
             friend = Friend.objects.get(pk=friend_pk)
             game = Game.objects.get(pk=context['game'])
-            strength = Strength.objects.create(
-                date = datetime.now(pytz.utc),
+            strength, created = Strength.objects.update_or_create(
                 game = game,
                 player = player,
-                rival = friend.rival, 
-                relative = context['strength'],
-                weight = 3,
-                )
-            friend.strengths.add(strength)
+                rival = friend.rival,
+                defaults = {
+                    date: datetime.now(pytz.utc),
+                    relative: context['strength'],
+                    weight: 3
+                }
+            )
+            if created:
+                friend.strengths.add(strength)
         except:
             logger.exception(f'failed add strength: {context}')
         context |= self.context(request, *args, **kwargs)

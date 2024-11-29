@@ -513,6 +513,11 @@ class Strength(models.Model):
     relative = models.CharField(max_length=1, choices=STRENGTH)
     weight = models.PositiveSmallIntegerField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['game', 'player', 'rival'], name='unique_relative')
+        ]
+
     def __str__(self):
         return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival} {self.relative} {self.weight}"
 

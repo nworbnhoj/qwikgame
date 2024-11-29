@@ -226,13 +226,15 @@ class ReviewView(ReviewsView):
             rival = Player.objects.get(pk=context['rival'])
             rival.conduct_add(context['conduct_good'])
             rival.save()
-            Strength.objects.create(
-                date = review.match.date,
+            Strength.objects.update_or_create(
                 game = review.match.game,
                 player = player,
                 rival = rival,
-                relative=context['strength'],
-                weight=3
+                defaults = {
+                    date: review.match.date,
+                    relative: context['strength'],
+                    weight: 3
+                }
             )
             review.log_event('review')
             review.delete()

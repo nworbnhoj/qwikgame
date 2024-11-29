@@ -13,6 +13,7 @@ logger = logging.getLogger(__file__)
 
 
 INIT_CONDUCT = b'\x00\xff\xff'
+MASK_24 = ((1 << (24 + 1)) - 1)   # binary 000000001111111111111111111111111111111
 
 
 class Player(models.Model):
@@ -66,6 +67,7 @@ class Player(models.Model):
     def conduct_add(self, good=True):
         conduct = int.from_bytes(self.conduct, ENDIAN)
         conduct = (conduct << 1) | int(good)
+        conduct = conduct & MASK_24
         self.conduct = conduct.to_bytes(3, ENDIAN)
 
     # return a string of dip switches representing Player conduct with the most

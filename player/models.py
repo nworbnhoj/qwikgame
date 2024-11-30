@@ -249,6 +249,34 @@ class Player(models.Model):
         return self.email_hash if self.user is None else self.user.email
 
 
+
+class Strength(models.Model):
+    SCALE = {
+        'W': 'much-weaker',
+        'w': 'weaker',
+        'm': 'matched',
+        's': 'stronger',
+        'S': 'much-stonger',
+        'z': 'unknown',
+    }
+    date = models.DateTimeField()
+    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='basis')
+    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='relative')
+    relative = models.CharField(max_length=1, choices=SCALE)
+    weight = models.PositiveSmallIntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['game', 'player', 'rival'], name='unique_relative')
+        ]
+
+    def __str__(self):
+        return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival} {self.relative} {self.weight}"
+
+    @property
+    def relative_str(self):
+        return Strength.SCALE.get(self.relative, 'unknown')
 class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
@@ -404,7 +432,7 @@ class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
-    strength = models.CharField(max_length=1, choices=STRENGTH)
+    strength = models.CharField(max_length=1, choices=Strength.SCALE)
 
     def __str__(self):
         return "{} {} {}".format(self.rival, self.appeal.game, self.appeal.venue)
@@ -504,23 +532,3 @@ class Precis(models.Model):
     def __str__(self):
         return "{}:{}".format(self.player, self.game)
 
-
-class Strength(models.Model):
-    date = models.DateTimeField()
-    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='basis')
-    rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='relative')
-    relative = models.CharField(max_length=1, choices=STRENGTH)
-    weight = models.PositiveSmallIntegerField()
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['game', 'player', 'rival'], name='unique_relative')
-        ]
-
-    def __str__(self):
-        return f"{self.date.strftime('%Y-%m-%d')} {self.player}: {self.rival} {self.relative} {self.weight}"
-
-    @property
-    def relative_str(self):
-        return STRENGTH.get(self.relative, 'unknown')

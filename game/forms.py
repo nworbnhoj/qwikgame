@@ -3,8 +3,9 @@ from django.forms import BooleanField, CharField,  CheckboxInput, CheckboxSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from game.models import Game
+from player.models import Strength
 from qwikgame.fields import ActionMultiple, MultipleActionField
-from qwikgame.constants import STRENGTH, WEEK_DAYS
+from qwikgame.constants import WEEK_DAYS
 from venue.models import Venue
 from qwikgame.forms import QwikForm
 from qwikgame.fields import ActionMultiple, DayField, RangeField, SelectRangeField, MultipleActionField, WeekField
@@ -49,8 +50,8 @@ class MatchForm(QwikForm):
 
 class ReviewForm(QwikForm):
     strength = SelectRangeField(
-        choices = STRENGTH,
-        initial = STRENGTH.get('m'),
+        choices = Strength.SCALE,
+        initial = Strength.SCALE.get('m'),
         label = 'RIVAL SKILL LEVEL',
         required = True,
     )

@@ -4,9 +4,9 @@ from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectM
 from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
-from player.models import Appeal, Bid, Filter, Friend, Player, Precis
+from player.models import Appeal, Bid, Filter, Friend, Player, Precis, Strength
 from venue.models import Venue
-from qwikgame.constants import STRENGTH
+
 from qwikgame.fields import ActionMultiple, DayField, DayRadioField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
@@ -342,8 +342,8 @@ class StrengthForm(QwikForm):
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
     strength = SelectRangeField(
-        choices = STRENGTH,
-        initial = STRENGTH.get('m'),
+        choices = Strength.SCALE,
+        initial = Strength.SCALE.get('m'),
         label = 'RIVAL SKILL LEVEL',
         required = True,
     )

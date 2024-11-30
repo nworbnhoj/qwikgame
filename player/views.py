@@ -7,7 +7,6 @@ from django.utils import timezone
 from game.models import Game, Match
 from player.forms import AcceptForm, FilterForm, FriendForm, KeenForm, BidForm, FiltersForm, StrengthForm
 from player.models import Appeal, Bid, Filter, Friend, Player, Strength
-from qwikgame.constants import STRENGTH
 from qwikgame.hourbits import Hours24x7
 from api.models import Mark
 from service.locate import Locate

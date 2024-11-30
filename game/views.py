@@ -6,7 +6,7 @@ from django.views import View
 from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match, Review
 from player.models import Player, Strength
-from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST, MATCH_STATUS, STRENGTH
+from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST, MATCH_STATUS
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry

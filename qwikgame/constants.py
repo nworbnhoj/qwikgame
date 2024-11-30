@@ -1,21 +1,12 @@
 import logging, pytz
 from datetime import datetime, timedelta
 
-
 ENDIAN = 'big'
 
 MATCH_STATUS = {
     'A': 'active',
     'C': 'complete',
     'X': 'cancelled',
-}
-
-STRENGTH = {
-    'W': 'much-weaker',
-    'w': 'weaker',
-    'm': 'matched',
-    's': 'stronger',
-    'S': 'much-stonger',
 }
 
 WEEK_DAYS = [

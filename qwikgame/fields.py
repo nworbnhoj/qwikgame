@@ -1,6 +1,6 @@
 import logging
-from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, TypedChoiceField
-from qwikgame.constants import STRENGTH, WEEK_DAYS
+from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, TypedChoiceField, TypedMultipleChoiceField
+from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInput, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput

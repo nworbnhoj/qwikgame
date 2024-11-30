@@ -160,9 +160,11 @@ class BidView(AppealsView):
             appeal = appeal,
             rival = self.user.player,
         ).first()
+        player = self.user.player
         self._context |= {
             'rival': appeal.player,
-            'player_id': self.user.player.facet(),
+            'strength': player.strength_str(appeal.game, appeal.player),
+            'player_id': player.facet(),
             'bid': bid,
         }
         return self._context

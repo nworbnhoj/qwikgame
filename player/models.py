@@ -1,4 +1,4 @@
-import logging, statistics
+import logging, math, statistics
 import hashlib, pytz
 from django.db import models
 from pytz import datetime
@@ -208,13 +208,15 @@ class Player(models.Model):
     # and then the links combined into the result for the chain.
     # chain-strength is the sum of link-stengths (ie stronger + weaker = matched)
     # chain-disparity is the sum of link-disparity (ie cumulative disparity in long chains)
-    def _chain(self, players):
-        strength, discrepancy = 0, 0
+    def _chain(self, qs, players):
+        strength, discrepancy = None, None
         for i in range(0,len(players)-1):
             p1 = players[i]
             p2 = players[i+1]
-            s1 = Strength.objects.filter(player=p1, rival=p2).first()
-            s2 = Strength.objects.filter(player=p2, rival=p1).first()
+            s1 = qs.filter(player=p1, rival=p2).first()
+            s2 = qs.filter(player=p2, rival=p1).first()
+            if (s1 or s2) and strength == None:
+                strength, discrepancy = 0, 0
             if s1 and s2:
                 s1 = Strength.INT[s1.relative]
                 s2 = Strength.INT[s2.relative] * -1
@@ -224,10 +226,10 @@ class Player(models.Model):
                 strength += Strength.INT[s1.relative]
                 discrepancy += 0.5
             elif s2:
-                strength += Strength.INT[s2.relative] * -1
+                strength += (Strength.INT[s2.relative] * -1)
                 discrepancy += 0.5
             else:
-                strength = None
+                continue
         logger.info(f'{p1} < {strength} > {p2}     {discrepancy}')
         return strength, discrepancy
 
@@ -243,10 +245,13 @@ class Player(models.Model):
     def strength_estimate(self, game, rival):
         qs = Strength.objects.filter(game=game)
         # direct strength between player & rival
-        strength, discrepancy = self._chain([self, rival])
-        if strength and discrepancy == 0:
-            return strength, discrepancy
-        sample = [strength]
+        strength, discrepancy = self._chain(qs, [self, rival])
+        if strength is None:
+            sample = []
+        else:
+            if math.isclose(discrepancy, 0):
+                return strength, discrepancy
+            sample = [strength]
         # indirect strength via single common rivals
         p_rivals = qs.filter(player=self).values_list('rival', flat=True)
         p_rivals |= qs.filter(rival=self).values_list('rival', flat=True)
@@ -254,14 +259,14 @@ class Player(models.Model):
         r_rivals |= qs.filter(rival=rival).values_list('rival', flat=True)
         common_rivals = set(p_rivals).intersection(set(r_rivals))
         for common in common_rivals:
-            s, d = self._chain([self, common, rival])
-            sample.append(s)
-            discrepancy += d
+            s, d = self._chain(qs, [self, common, rival])
+            if s is not None and d is not None:
+                sample.append(s)
+                discrepancy = d if discrepancy is None else discrepancy + d
         if len(sample) == 0:
             return None, None
         elif len(sample) == 1:
             return sample[0], discrepancy
-        sample = [s for s in sample if s is not None]
         mean_strength = statistics.mean(sample)
         normalised_discrepancy = discrepancy / len(sample)
         return mean_strength, normalised_discrepancy

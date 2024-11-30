@@ -317,6 +317,11 @@ class Player(models.Model):
 
 
 class Strength(models.Model):
+    CONFIDENCE = {
+        'a': '',
+        'b': 'probably',
+        'c': 'maybe',
+    }
     INT = {'W':-2, 'w':-1, 'm':0, 's':1, 'S':2}
     SCALE = {
         'W': 'much-weaker',
@@ -499,7 +504,8 @@ class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
-    strength = models.CharField(max_length=1, choices=Strength.SCALE)
+    strength = models.CharField(max_length=1, choices=Strength.SCALE, default='m')
+    str_conf = models.CharField(max_length=1, choices=Strength.CONFIDENCE, default='z')
 
     def __str__(self):
         return "{} {} {}".format(self.rival, self.appeal.game, self.appeal.venue)

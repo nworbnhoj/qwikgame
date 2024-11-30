@@ -634,6 +634,9 @@ class Bid(models.Model):
         # TODO notify rival
         super().save(*args, **kwargs)
 
+    def strength_str(self):
+        return Strength.description(self.strength, self.str_conf)
+
     def venue(self):
         return self.appeal.venue
 

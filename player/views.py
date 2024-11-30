@@ -208,13 +208,14 @@ class BidView(AppealsView):
             except:
                 logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
-        bid = Bid(
+        strength, confidence = appeal.player.strength_est(appeal.game, player)
+        bid = Bid.objects.create(
             appeal=context['accept'],
-            hours=context['hour'],
+            hours=context['hour'].as_bytes(),
             rival=player,
-            strength='m',
-            )
-        bid.save()
+            strength=strength,
+            str_conf=confidence,
+        )
         bid.log_event('bid')
         # mark this Appeal seen by this Player only
         appeal.meta['seen'] = [player.pk]

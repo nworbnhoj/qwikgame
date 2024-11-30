@@ -1,8 +1,8 @@
-import logging
+import logging, statistics
 import hashlib, pytz
 from django.db import models
 from pytz import datetime
-from qwikgame.constants import ENDIAN, STRENGTH, WEEK_DAYS
+from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 from game.models import Match, Review
@@ -199,6 +199,72 @@ class Player(models.Model):
             self.email_hash = Player.hash(self.user.email)
         super().save(*args, **kwargs)
 
+    # Estimate the relative Game strength between Self & Rival via a single chain of Strengths
+    # param [players] a chain of strength relationships 
+    # return (strength, discrepancy)
+    # strength (mean) [-2.0 .. 2.0] representing much-weaker .. much-sronger
+    # discrepancy (mean) [0 .. 4.0] of Player strength estimates used in estimate
+    # The strength & disparity of each link in the chain is computed individually
+    # and then the links combined into the result for the chain.
+    # chain-strength is the sum of link-stengths (ie stronger + weaker = matched)
+    # chain-disparity is the sum of link-disparity (ie cumulative disparity in long chains)
+    def _chain(self, players):
+        strength, discrepancy = 0, 0
+        for i in range(0,len(players)-1):
+            p1 = players[i]
+            p2 = players[i+1]
+            s1 = Strength.objects.filter(player=p1, rival=p2).first()
+            s2 = Strength.objects.filter(player=p2, rival=p1).first()
+            if s1 and s2:
+                s1 = Strength.INT[s1.relative]
+                s2 = Strength.INT[s2.relative] * -1
+                strength += (s1 + s2) / 2
+                discrepancy += abs(s1 - s2)
+            elif s1:
+                strength += Strength.INT[s1.relative]
+                discrepancy += 0.5
+            elif s2:
+                strength += Strength.INT[s2.relative] * -1
+                discrepancy += 0.5
+            else:
+                strength = None
+        logger.info(f'{p1} < {strength} > {p2}     {discrepancy}')
+        return strength, discrepancy
+
+    # Estimate the relative Game strength between Self and Rival with the Strength network
+    # return (strength, discrepancy)
+    # strength (mean) [-2.0 .. 2.0] representing much-weaker .. much-sronger
+    # discrepancy (mean) [0 .. 4.0] of Player strength estimates used in estimate
+    # First consider the direct Strength estimate made by Playerand Rival of each other.
+    # If in agreement (discrepancy == 0) then return
+    # Otherwise consider Strength estimates between Player & common-rivals & Rival
+    # The implied strength & discrepancy via each common-rival is estimated and
+    # mean-strength and normalised discrepancy calculated across the sample. 
+    def strength_estimate(self, game, rival):
+        qs = Strength.objects.filter(game=game)
+        # direct strength between player & rival
+        strength, discrepancy = self._chain([self, rival])
+        if strength and discrepancy == 0:
+            return strength, discrepancy
+        sample = [strength]
+        # indirect strength via single common rivals
+        p_rivals = qs.filter(player=self).values_list('rival', flat=True)
+        p_rivals |= qs.filter(rival=self).values_list('rival', flat=True)
+        r_rivals = qs.filter(player=rival).values_list('rival', flat=True)
+        r_rivals |= qs.filter(rival=rival).values_list('rival', flat=True)
+        common_rivals = set(p_rivals).intersection(set(r_rivals))
+        for common in common_rivals:
+            s, d = self._chain([self, common, rival])
+            sample.append(s)
+            discrepancy += d
+        if len(sample) == 0:
+            return None, None
+        elif len(sample) == 1:
+            return sample[0], discrepancy
+        sample = [s for s in sample if s is not None]
+        mean_strength = statistics.mean(sample)
+        normalised_discrepancy = discrepancy / len(sample)
+        return mean_strength, normalised_discrepancy
     def venue_choices(self, count=10):
         qs = self.venue_suggestions(count)
         qs = qs.order_by('name')
@@ -251,6 +317,7 @@ class Player(models.Model):
 
 
 class Strength(models.Model):
+    INT = {'W':-2, 'w':-1, 'm':0, 's':1, 'S':2}
     SCALE = {
         'W': 'much-weaker',
         'w': 'weaker',

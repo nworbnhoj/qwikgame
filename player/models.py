@@ -232,6 +232,16 @@ class Player(models.Model):
                 continue
         logger.info(f'{p1} < {strength} > {p2}     {discrepancy}')
         return strength, discrepancy
+    
+    # Strength and Confidence keys describing the relative Game strength between Self and Rival
+    def strength_est(self, game, rival):
+        strength, discrepancy = self.strength_estimate(game, rival)
+        confidence = Strength.confidence(discrepancy)
+        if strength is not None:
+            strength = Strength.KEY[round(strength) + 2]
+        else:
+            strength = 'z'
+        return strength, confidence
 
     # Estimate the relative Game strength between Self and Rival with the Strength network
     # return (strength, discrepancy)
@@ -270,6 +280,12 @@ class Player(models.Model):
         mean_strength = statistics.mean(sample)
         normalised_discrepancy = discrepancy / len(sample)
         return mean_strength, normalised_discrepancy
+    
+    # A string describing the relative Game strength between Self and Rival
+    # return [unknown strength] | [_|probably|maybe][much-weaker|weaker|matched|stronger|much-stronger]
+    def strength_str(self, game, rival):
+        return Strength.description(*self.strength_est(game, rival))
+
     def venue_choices(self, count=10):
         qs = self.venue_suggestions(count)
         qs = qs.order_by('name')
@@ -326,6 +342,7 @@ class Strength(models.Model):
         'a': '',
         'b': 'probably',
         'c': 'maybe',
+        'z': 'unknown',
     }
     INT = {'W':-2, 'w':-1, 'm':0, 's':1, 'S':2}
     SCALE = {
@@ -336,6 +353,8 @@ class Strength(models.Model):
         'S': 'much-stonger',
         'z': 'unknown',
     }
+    KEY = list(SCALE.keys())
+
     date = models.DateTimeField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='basis')
@@ -354,6 +373,26 @@ class Strength(models.Model):
     @property
     def relative_str(self):
         return Strength.SCALE.get(self.relative, 'unknown')
+
+    @classmethod
+    def confidence(klass, discrepancy):
+        if discrepancy == None or discrepancy > 2.0:
+            return 'z'
+        elif discrepancy > 1.0:
+            return 'c'
+        elif discrepancy > 0.5:
+            return 'b'
+        else:
+            return 'a'
+
+    # A string describing the relative Game strength between Self and Rival
+    # return [unknown strength] | [_|probably|maybe][much-weaker|weaker|matched|stronger|much-stronger]
+    @classmethod
+    def description(klass, strength='z', confidence='z'):
+        if strength == 'z' or confidence == 'z':
+            return 'unknown strength'
+        return f'{Strength.CONFIDENCE[confidence]} {Strength.SCALE[strength]}'
+
 class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)

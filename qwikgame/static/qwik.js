@@ -530,7 +530,6 @@ function setDayFields(hours24x7, now_weekday, now_hour){
         sub_text.innerText = WEEKDAY[now_weekday + offset];
       }
     }
-    console.log(weekday+'    '+offset+'    '+hours24x7+'    '+now_weekday+'    '+now_hour)
     day.querySelectorAll(".hour_grid input").forEach(function(input) {
       hr = parseInt(input.parentElement.innerText);
       if (Number.isInteger(weekday)){

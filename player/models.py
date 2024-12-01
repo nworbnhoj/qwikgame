@@ -282,6 +282,7 @@ class Player(models.Model):
             return sample[0], discrepancy
         mean_strength = statistics.mean(sample)
         normalised_discrepancy = discrepancy / len(sample)
+        # TODO extend to consider longer chains dominated by matched Strengths
         return mean_strength, normalised_discrepancy
     
     # A string describing the relative Game strength between Self and Rival

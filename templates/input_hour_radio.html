@@ -1,4 +1,4 @@
-<!-- qwikgame/templates/input_hours.html -->
+<!-- qwikgame/templates/input_hour_radio.html -->
 {% with id=widget.attrs.id %}
   <div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="by_hour {{ widget.attrs.class }}"{% else %}class="by_hour"{% endif %} {% for name, value in widget.attrs.items %} {{ name }}="{{ value|stringformat:'s' }}"{% endfor %}>
     <div class="radio_block hour_grid">

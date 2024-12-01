@@ -3,48 +3,40 @@ from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, Mult
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.widgets import ActionMultiple, MultiWidget
-from qwikgame.widgets import ActionMultiple, DayInput, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput
+from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput
 
 logger = logging.getLogger(__file__)
 
 
-class DayField(MultiValueField):
+class DayMultiField(TypedMultipleChoiceField):
+    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
+    use_fieldset = False
 
-    def __init__(self, hours=[*range(24)], offsetday=None, weekday=None, **kwargs):
-        self.hours = hours
-        self.weekday = weekday
-        super().__init__(
-            error_messages={
-                'incomplete': 'incomplete',
-                'invalid': 'required',
-                'required': 'required',
-            },
-            fields=(
-                [BooleanField(label=hr, required=False)
-                for hr in range(24)]
-            ),
-            require_all_fields=False,
+    def __init__(
+            self,
+            hours_enable=[*range(24)],
+            hours_show=[*range(24)],
+            offsetday=None,
+            weekday=None,
             **kwargs
+        ):
+        self.widget = DayInputMulti(
+            hours_enable=hours_enable,
+            hours_show=hours_show,
         )
-        attrs = {}
         if offsetday:
-            attrs |= {'data-offsetday': offsetday }
+            self.widget.set_data_attr('offsetday', offsetday)
         if weekday:
-            attrs |= {'data-weekday': weekday }
-        self.widget=DayInput(hours=hours, attrs=attrs)
-        
-
-    def compress(self, data_list):
-        bools=[False] * 24
-        for hr in self.hours:
-            bools[hr] = data_list[hr]
-        return Hours24(bools)
+            self.widget.set_data_attr('weekday', weekday)
+        super().__init__(
+            choices = DayMultiField.CHOICES,
+            coerce=int,
+            empty_value=0,
+            **kwargs)
 
 
 class DayRadioField(TypedChoiceField):
     CHOICES = [(str(hr),str(hr)) for hr in range(24)]
-    template_name='input_hour_radio.html'
-    option_template_name = 'input_hour.html'
 
     def __init__(self, **kwargs):
         self.widget = DayInputRadio()
@@ -124,17 +116,16 @@ class SelectRangeField(RangeField):
 
 class WeekField(MultiValueField):
 
-    def __init__(self, hours=[*range(24)], **kwargs):
-        self.hours=hours
-        self.widget=WeekInput(hours=hours)
+    def __init__(self, hours_enable=[*range(24)], hours_show=[*range(24)], **kwargs):
+        self.widget=WeekInput( hours_enable=hours_enable, hours_show=hours_show)
         super().__init__(
-            error_messages={
-                'incomplete': 'incomplete',
-                'invalid': 'required',
-                'required': 'required',
-            },
             fields=(
-                [DayField(label=name, hours=hours, required=False, weekday=day) 
+                [DayMultiField(
+                    hours_enable=hours_enable,
+                    hours_show=hours_show,
+                    label=name,
+                    required=False,
+                    weekday=day) 
                 for day, name in enumerate(WEEK_DAYS)]
             ),
             require_all_fields=False,
@@ -143,4 +134,11 @@ class WeekField(MultiValueField):
         )
 
     def compress(self, data_list):
-        return Hours24x7(data_list)
+        days = []
+        for data in data_list:
+            hours24 = Hours24()
+            if isinstance(data, list):
+                for hr in data:
+                    hours24.set_hour(hr)
+            days.append(hours24)
+        return Hours24x7(days)

@@ -6,8 +6,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Appeal, Bid, Filter, Friend, Player, Precis, Strength
 from venue.models import Venue
-
-from qwikgame.fields import ActionMultiple, DayField, DayRadioField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -91,10 +90,9 @@ class BidForm(QwikForm):
         form = klass(data=request_post)
         context = { 'bid_form': form }
         if form.is_valid():
-            hours24 = Hours24().set_hour(form.cleaned_data['hour'])
             context |= {
                 'accept': appeal,
-                'hour': hours24.as_bytes(),
+                'hour':  Hours24().set_hour(form.cleaned_data['hour']),
             }
         return context
 
@@ -160,7 +158,8 @@ class FilterForm(QwikForm):
     hours = WeekField(
         help_text='Only see invitations at specific times in your week.',
         label='Time',
-        hours=[*range(6,21)],
+        hours_enable=[*range(6,21)],
+        hours_show=[*range(6,21)],
         required=True,
     )
     lat = DecimalField(
@@ -383,21 +382,23 @@ class KeenForm(QwikForm):
         widget=RadioSelect(attrs={"class": "down hidden"})
     )
     place = ChoiceField()    # placeholder for dynamic assignment below
-    today = DayField(
+    today = DayMultiField(
         help_text='When are you keen to play?',
+        hours_enable=[*range(6,22)],
+        hours_show=[*range(6,22)],
         label='TODAY',
-        hours=[*range(6,21)],
         offsetday='0',
         required=False,
         template_name='field.html',
     )
-    tomorrow = DayField(
+    tomorrow = DayMultiField(
         help_text='When are you keen to play?',
+        hours_enable=[*range(6,22)],
+        hours_show=[*range(6,22)],
         label='TOMORROW',
-        hours=[*range(6,21)],
         offsetday='1',
         required=False,
-        template_name='field.html'
+        template_name='field.html',
     )
     friends = MultipleActionField(
         action='invite:',
@@ -522,12 +523,18 @@ class KeenForm(QwikForm):
         form.personalise(player)
         if form.is_valid():
             try:
+                today = Hours24()
+                tomorrow = Hours24()
+                for hr in form.cleaned_data['today']:
+                    today.set_hour(hr)
+                for hr in form.cleaned_data['tomorrow']:
+                    tomorrow.set_hour(hr)
                 friends = form.cleaned_data['friends']
                 context = {
                     'friends': { Player.objects.get(pk=f) for f in friends },
                     'game': form.cleaned_data['game'],
-                    'today': form.cleaned_data['today'],
-                    'tomorrow': form.cleaned_data['tomorrow'],
+                    'today': today,
+                    'tomorrow': tomorrow,
                     'player_id': form.cleaned_data['placeid'],
                     }
                 place_id = form.cleaned_data.get('place')

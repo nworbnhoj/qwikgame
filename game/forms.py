@@ -8,7 +8,7 @@ from qwikgame.fields import ActionMultiple, MultipleActionField
 from qwikgame.constants import WEEK_DAYS
 from venue.models import Venue
 from qwikgame.forms import QwikForm
-from qwikgame.fields import ActionMultiple, DayField, RangeField, SelectRangeField, MultipleActionField, WeekField
+from qwikgame.fields import ActionMultiple, RangeField, SelectRangeField, MultipleActionField, WeekField
 from qwikgame.log import Entry
 from qwikgame.widgets import IconSelectMultiple
 

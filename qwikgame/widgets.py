@@ -11,49 +11,52 @@ DAY_NONE = bytes(3)
 WEEK_ALL = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
 WEEK_NONE = bytes(21)
 
+
 class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down hidden"}
     use_fieldset=False
 
 
-class DayInput(MultiWidget):
+class DayInputMulti(CheckboxSelectMultiple):
+    option_template_name = 'input_hour.html'
     template_name='input_day.html'
-    use_fieldset=False
+    use_fieldset = False
 
-    def __init__(self, attrs={}, label='', hours=[*range(24)], multi=True):
-        self.label=label
-        self.hours=hours
-        widgets = []
-        for hr in range(24):            
-            hour_input = HourInput(
-                attrs={'class': 'hidden'},
-                input_type = 'checkbox' if multi else 'radio',
-                label=hr
-            )
-            widgets.append(hour_input)
-        for hr in hours:
-            widgets[hr].attrs['class'] = ''
-        super().__init__(
-            attrs = attrs,
-            widgets=(widgets)
-        )
-        if not multi:
-            self.widgets_names = [''] * len(widgets)
-        self.show_hours(hours)
+    def __init__(self, attrs=None, choices=(), hours_enable=[*range(24)], hours_show=[*range(24)], label=''):
+        self.data_attrs = {}
+        self.hours_enable = hours_enable
+        self.hours_show = hours_show
+        self.label = label
+        super().__init__(attrs, choices)
 
-    def decompress(self, hours24=DAY_NONE):
-        return Hours24(hours24).as_bools()
+    def set_data_attr(self, key, value):
+        logger.warn(self.data_attrs)
+        logger.warn(f'{key} -:- {value}')
+        self.data_attrs[f'data-{key}'] = value
+
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(name, value, label, selected, index, subindex, attrs)
+        val = int(option['value'])
+        if not val in self.hours_show:
+            option['attrs']["class"] = 'hidden'
+        if not val in self.hours_enable:
+            option['attrs']['disabled'] = 'disabled'
+        return option
 
     def get_context(self, name, value, attrs):
+        attrs |= self.data_attrs
         context = super().get_context(name, value, attrs)
         context['widget']['label'] = self.label
         return context
 
-    def show_hours(self, hours):
-        for hr in range(0,23):
-            self.widgets[hr].attrs['class'] = 'hidden'
-        for hr in hours:
-            self.widgets[hr].attrs['class'] = ''
+    def set_hours_enable(self, hours):
+        self.hours_enable = hours;
+
+    def set_hours_show(self, hours):
+        self.hours_show = hours;
+
 
 
 class HourInput(CheckboxInput):
@@ -153,18 +156,29 @@ class TabInput(MultiWidget):
 
 
 class WeekInput(MultiWidget):
+    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
     template_name='input_week.html'
     use_fieldset=False
 
-    def __init__(self, hours=[*range(24)], **kwargs):
-        self.hours = hours
-        super().__init__(
-            widgets=[DayInput(
-                label=name,
-                hours=hours,
-                attrs={'data-weekday':day})
-            for day, name in enumerate(WEEK_DAYS)]
-        )
+    def __init__(
+            self,
+            hours_enable=[*range(24)],
+            hours_show=[*range(24)],
+            **kwargs
+        ):
+        widgets = [DayInputMulti(
+                choices = WeekInput.CHOICES,
+                hours_enable=hours_enable,
+                hours_show=hours_show,
+                label = weekday,
+            )
+            for weekday in WEEK_DAYS
+        ]
+        wd = 0
+        for widget in widgets:
+            widget.set_data_attr('weekday', wd)
+            wd += 1
+        super().__init__( widgets = widgets)
 
     def decompress(self, hours168=WEEK_NONE):
         return Hours24x7(hours168).as_days7()

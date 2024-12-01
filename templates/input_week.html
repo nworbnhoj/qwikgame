@@ -11,7 +11,7 @@
 {% for widget in widget.subwidgets %}
     {% include 'label_widget.html' %}
     {{ widget.errors }}
-{% include widget.template_name %}
+    {% include widget.template_name %}
 {% endfor %}
 {% endspaceless %}
 </div>

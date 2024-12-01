@@ -350,9 +350,9 @@ class Strength(models.Model):
         'w': 'weaker',
         'm': 'matched',
         's': 'stronger',
-        'S': 'much-stonger',
-        'z': 'unknown',
+        'S': 'much-stonger'
     }
+    SCALEZ = SCALE | {'z': 'unknown' }
     KEY = list(SCALE.keys())
 
     date = models.DateTimeField()
@@ -372,7 +372,7 @@ class Strength(models.Model):
 
     @property
     def relative_str(self):
-        return Strength.SCALE.get(self.relative, 'unknown')
+        return Strength.SCALEZ.get(self.relative, 'unknown')
 
     @classmethod
     def confidence(klass, discrepancy):
@@ -391,7 +391,7 @@ class Strength(models.Model):
     def description(klass, strength='z', confidence='z'):
         if strength == 'z' or confidence == 'z':
             return 'unknown strength'
-        return f'{Strength.CONFIDENCE[confidence]} {Strength.SCALE[strength]}'
+        return f'{Strength.CONFIDENCE[confidence]} {Strength.SCALEZ[strength]}'
 
 class Appeal(models.Model):
     date = models.DateField()
@@ -548,7 +548,7 @@ class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
-    strength = models.CharField(max_length=1, choices=Strength.SCALE, default='m')
+    strength = models.CharField(max_length=1, choices=Strength.SCALEZ, default='m')
     str_conf = models.CharField(max_length=1, choices=Strength.CONFIDENCE, default='z')
 
     def __str__(self):

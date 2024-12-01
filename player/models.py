@@ -230,7 +230,7 @@ class Player(models.Model):
                 discrepancy += 0.5
             else:
                 continue
-        logger.info(f'{p1} < {strength} > {p2}     {discrepancy}')
+        logger.info(f'{players} {strength} {discrepancy}')
         return strength, discrepancy
     
     # Strength and Confidence keys describing the relative Game strength between Self and Rival
@@ -253,9 +253,11 @@ class Player(models.Model):
     # The implied strength & discrepancy via each common-rival is estimated and
     # mean-strength and normalised discrepancy calculated across the sample. 
     def strength_estimate(self, game, rival):
-        qs = Strength.objects.filter(game=game)
-        # direct strength between player & rival
-        strength, discrepancy = self._chain(qs, [self, rival])
+        qs_game = Strength.objects.filter(game=game).all()
+        qs_self = qs_game.filter(player=self).all()
+        qs_rival = qs_game.filter(player=rival).all()
+        qs_mutual = qs_self | qs_rival
+        strength, discrepancy = self._chain(qs_mutual, [self, rival])
         if strength is None:
             sample = []
         else:
@@ -263,13 +265,14 @@ class Player(models.Model):
                 return strength, discrepancy
             sample = [strength]
         # indirect strength via single common rivals
-        p_rivals = qs.filter(player=self).values_list('rival', flat=True)
-        p_rivals |= qs.filter(rival=self).values_list('rival', flat=True)
-        r_rivals = qs.filter(player=rival).values_list('rival', flat=True)
-        r_rivals |= qs.filter(rival=rival).values_list('rival', flat=True)
+        p_rivals = qs_self.values_list('rival', flat=True)
+        p_rivals |= qs_game.filter(rival=self).values_list('rival', flat=True)
+        r_rivals = qs_rival.values_list('rival', flat=True)
+        r_rivals |= qs_game.filter(rival=rival).values_list('rival', flat=True)
         common_rivals = set(p_rivals).intersection(set(r_rivals))
+        qs_common = qs_mutual | qs_game.filter(player__pk__in=common_rivals)
         for common in common_rivals:
-            s, d = self._chain(qs, [self, common, rival])
+            s, d = self._chain(qs_common, [self, common, rival])
             if s is not None and d is not None:
                 sample.append(s)
                 discrepancy = d if discrepancy is None else discrepancy + d

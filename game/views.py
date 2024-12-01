@@ -231,9 +231,9 @@ class ReviewView(ReviewsView):
                 player = player,
                 rival = rival,
                 defaults = {
-                    date: review.match.date,
-                    relative: context['strength'],
-                    weight: 3
+                    'date': review.match.date,
+                    'relative': context['strength'],
+                    'weight': 3
                 }
             )
             review.log_event('review')

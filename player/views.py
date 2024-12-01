@@ -707,9 +707,9 @@ class FriendStrengthView(FriendsView):
                 player = player,
                 rival = friend.rival,
                 defaults = {
-                    date: datetime.now(pytz.utc),
-                    relative: context['strength'],
-                    weight: 3
+                    'date': datetime.now(pytz.utc),
+                    'relative': context['strength'],
+                    'weight': 3
                 }
             )
             if created:

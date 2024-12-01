@@ -633,7 +633,7 @@ function showNextSibling(event) {
 }
 
 function showInfo(event) {
-  event.currentTarget.querySelector('div.info_text').classList.toggle('hidden');
+  event.currentTarget.parentElement.querySelector('div.info_text').classList.toggle('hidden');
 }
 
 function showAvailableEdit(event) {

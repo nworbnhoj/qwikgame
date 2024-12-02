@@ -137,6 +137,9 @@ class Hours24():
     def is_all(self):
         return self.bits == DAY_ALL
 
+    def is_hour(self, hour):
+        return self & Hours24().set_hour(hour)
+
     def is_none(self):
         return self.bits == DAY_NONE
 
@@ -158,6 +161,10 @@ class Hours24():
 
     def set_hour(self, hr):
         self.bits = (self.as_int() | (1 << (23-hr))).to_bytes(3, ENDIAN)
+        return self
+
+    def unset_hour(self, hr):
+        self.bits = (self.as_int() & ~(1 << (23-hr))).to_bytes(3, ENDIAN)
         return self
 
 

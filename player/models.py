@@ -435,6 +435,23 @@ class Appeal(models.Model):
     def hour_list(self):
         return self.hours24.as_list()
 
+    def hour_withdraw(self, hour):
+        hours24 = self.hours24
+        if hours24.is_hour(hour):
+            self.hours = hours24.unset_hour(hour).as_bytes()
+            entry = Entry(
+                icon = self.player.icon,
+                id = self.player.facet(),
+                klass= 'event',
+                name = self.player.name(),
+                text = f'withdrew {hour}h'
+            )
+            self.log_entry(entry)
+            hour_bytes = Hours24().set_hour(hour).as_bytes()
+            for bid in Bid.objects.filter(appeal=self, hours=hour_bytes):
+                bid.withdraw()
+            self.meta['seen'] = []
+
     @property
     def last_hour(self):
         return self.hours24.last_hour()
@@ -632,6 +649,12 @@ class Bid(models.Model):
             case _:
                 logger.warn(f'unknown template: {template}')
         self.appeal.log_entry(entry)
+
+    def withdraw(self):
+        self.log_event('withdraw')
+        self.appeal.meta['seen'] = []
+        self.delete()
+
 
     def save(self, *args, **kwargs):
         # TODO handle duplicate or partial-duplicate invitations

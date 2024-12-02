@@ -83,7 +83,6 @@ class AcceptView(AppealsView):
             }
         return self._context
 
-
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         appeal = self._context.get('appeal')
@@ -131,6 +130,7 @@ class AcceptView(AppealsView):
                 match = Match.from_bid(bid)
                 bid.appeal.delete()
                 match.log_event('scheduled')
+                match.clear_conflicts()
                 return HttpResponseRedirect(f'/game/match/{match.id}/')
             decline = context.get('decline')
             if decline:
@@ -198,13 +198,11 @@ class BidView(AppealsView):
                 cancel_pk = context.get('CANCEL')
                 logger.warn(cancel_pk)
                 bid = Bid.objects.get(pk=cancel_pk)
+                appeal_pk = bid.appeal.pk
+                bid.withdraw()                
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]
                 appeal.save()
-                logger.info(f'Cancelling Bid: {bid}')
-                bid.log_event('withdraw')
-                appeal_pk = bid.appeal.pk
-                bid.delete()
             except:
                 logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')

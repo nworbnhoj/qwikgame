@@ -1,6 +1,5 @@
 import logging
 from django.db import models
-
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, MATCH_STATUS
 from qwikgame.log import Entry
 
@@ -59,6 +58,20 @@ class Match(models.Model):
         match.competitors.add(bid.appeal.player, bid.rival)
         match.save()
         return match
+
+    def clear_conflicts(self):
+        from player.models import Bid, Appeal
+        for bid in Bid.objects.filter(
+                appeal__date=self.date,
+                rival__in=self.competitors.all(),
+            ):
+            bid.withdraw()
+        for appeal in Appeal.objects.filter(
+                player__in=self.competitors.all(),
+                date=self.date.date()
+            ):
+            appeal.hour_withdraw(self.date.hour)
+
 
 
 

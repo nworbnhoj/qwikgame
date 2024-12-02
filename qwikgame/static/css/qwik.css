@@ -15,8 +15,10 @@ blockquote, q { quotes: "" "" }
 .btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550;  gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 1.25em 1.5em 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis;}
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
+.btn:active:has(input:disabled) {box-shadow: none; transform: none;}
 .btn:has(input:checked) { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:has(input.hidden) { display: none }
+.btn:hover:has(input:disabled) { background-color: inherit; border-color: inherit;}.
 
 div.field .btn.reveal:has(input) ~ div { display: none; }
 div.field .btn.reveal:has(input:checked) ~ div { display: flex; }

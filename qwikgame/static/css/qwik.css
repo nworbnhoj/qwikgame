@@ -87,7 +87,7 @@ label.btn.reveal { display: inline-block; }
 .head_txt { order: 20 }
 .hidden { display: none }
 
-.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; width: 100% }
+.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; padding: 1em; width: 100% }
 .item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
 .item div.note { width: 100% }
 .item div.notes { flex: 1 1 0; overflow:hidden; text-overflow: ellipsis;}
@@ -124,7 +124,7 @@ div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 
-
+div.appeal_item { display: grid; grid-auto-flow: column; grid-template-rows: 1fr 1fr 1fr }
 div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
 div.chat_bubble .name { font-weight: bold; }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }

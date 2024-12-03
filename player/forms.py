@@ -525,10 +525,12 @@ class KeenForm(QwikForm):
             try:
                 today = Hours24()
                 tomorrow = Hours24()
-                for hr in form.cleaned_data['today']:
-                    today.set_hour(hr)
-                for hr in form.cleaned_data['tomorrow']:
-                    tomorrow.set_hour(hr)
+                if isinstance(form.cleaned_data['today'], list):
+                    for hr in form.cleaned_data['today']:
+                        today.set_hour(hr)
+                if isinstance(form.cleaned_data['tomorrow'], list):
+                    for hr in form.cleaned_data['tomorrow']:
+                        tomorrow.set_hour(hr)
                 friends = form.cleaned_data['friends']
                 context = {
                     'friends': { Player.objects.get(pk=f) for f in friends },

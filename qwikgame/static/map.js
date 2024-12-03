@@ -237,7 +237,7 @@ function searchChangeHandler(places){
     });
     mark.marker = MARKER;
     SEARCH_MARKERS.push(MARKER);
-    setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER)
+    setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
       BOUNDS.union(place.geometry.viewport);
@@ -368,7 +368,7 @@ function markerFromPlaceId(placeId){
       var label_origin = new google.maps.Point(13,15)
       mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
       mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
-      setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER)
+      setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER, ONPRESS_PLACE_MARKER)
     } else {
       console.log(status);
     }
@@ -824,20 +824,28 @@ function endowMark(key, mark){
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
-    setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER)
+    setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
   } else {  // region Mark
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
-    setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER)
+    setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER, ONPRESS_REGION_MARKER)
   }
   return mark;
 }
 
-function setMarkListeners(mark, template, onclick, onhover){
+var onpress_timeout_id = 0;
+var onpress_detected = false;
+
+function setMarkListeners(mark, template, onclick, onhover, onpress){
   google.maps.event.addListener(mark.marker, 'click', () => {
+    if (onpress_detected){
+      onpress_detected = false;
+      return;
+    }
+
     switch (onclick){
       case 'center':
         qwikMap.setZoom(qwikMap.getZoom()+1);
@@ -866,6 +874,29 @@ function setMarkListeners(mark, template, onclick, onhover){
         console.log('error: invalid ONHOVER: '+onclick)
     }
   });
+  if (onpress){
+    google.maps.event.addListener(mark.marker, 'mousedown', () => {
+      onpress_timeout_id = setTimeout(check, 500);
+      function check() {
+        onpress_detected = true;
+        switch (onpress){
+          case 'info':
+              showMarkInfo(mark, template);
+            break;
+          case 'noop':
+            break;
+          default: 
+            console.log('error: invalid ONLONGPRESS: '+onlongpress)
+        }
+      }
+    });
+    google.maps.event.addListener(mark.marker, 'mouseup', () => {
+      clearTimeout(onpress_timeout_id);
+    });
+    google.maps.event.addListener(mark.marker, 'mouseout', () => {
+      clearTimeout(onpress_timeout_id);
+    });
+  }
 }
 
 

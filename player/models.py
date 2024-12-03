@@ -1,6 +1,7 @@
 import logging, math, statistics
 import hashlib, pytz
 from django.db import models
+from django.utils.timezone import now
 from pytz import datetime
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
@@ -398,6 +399,7 @@ class Strength(models.Model):
         return f'{Strength.CONFIDENCE[confidence]} {Strength.SCALEZ[strength]}'
 
 class Appeal(models.Model):
+    created = models.DateTimeField(default=now, editable=False)
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=DAY_NONE)
@@ -414,6 +416,9 @@ class Appeal(models.Model):
 
     def __str__(self):
         return "{} {} {} {}".format(self.player, self.game, self.venue, self.date)
+
+    def created_str(self):
+        return self.created.strftime("%Y-%m-%d %H:%M:%S%z")
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

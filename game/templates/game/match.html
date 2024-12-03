@@ -77,8 +77,9 @@
                         <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
-                        <p class='bold'>{{ entry.name }}</p>
-                        <p>{{ entry.text }}</p>
+                        <span class="name">{{ entry.name }}</span>
+                        <time datetime="{{ entry.created }}"></time>
+                        <span class="text">{{ entry.text }}</span>
                     </div>
                 </div>
     {% endif %}
@@ -120,8 +121,9 @@
                         <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                     </div>
                     <div class="chat_bubble">
-                        <p class='bold'>{{ entry.name }}</p>
-                        <p>{{ entry.text }}</p>
+                        <span class="name">{{ entry.name }}</span>
+                        <time datetime="{{ entry.created }}"></time>
+                        <span class="text">{{ entry.text }}</span>
                     </div>
                 </div>
     {% endif %}

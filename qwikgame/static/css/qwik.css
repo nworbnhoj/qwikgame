@@ -125,8 +125,9 @@ div.banner.xancelled { background-color: yellow; }
 .btn.auto { height: auto; width: 100%; }
 
 div.appeal_item { display: grid; grid-auto-flow: column; grid-template-rows: 1fr 1fr 1fr }
-div.chat_bubble { align-items: flex-start; background-color: #eeeeee; flex-direction: column; justify-content: space-between; padding: 0.3em }
+div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto;  padding: 0.3em; }
 div.chat_bubble .name { font-weight: bold; }
+div.chat_bubble .text { grid-column: 1/-1; }
 div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item .name { font-weight: bold; }
@@ -262,7 +263,7 @@ span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
 span.qwik { color: #dfa622 }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
-time { color: #999999 }
+time { color: #999999; text-align: right; }
 
 @keyframes l46 {
   0%  {background-position: 0 0      ,100% 0,100% 100%,0 100%}

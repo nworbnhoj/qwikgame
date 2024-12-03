@@ -69,8 +69,9 @@
                     <i class="fa-solid {{ entry.icon }} fa-2x"></i>
                 </div>
                 <div class="chat_bubble">
-                    <p><span class="name">{{ entry.name }}</span></p>
-                    <p>{{ entry.text }}</p>
+                    <span class="name">{{ entry.name }}</span>
+                    <time datetime="{{ entry.created }}"></time>
+                    <span class="text">{{ entry.text }}</span>
                 </div>
             </div>
 {% endfor %}

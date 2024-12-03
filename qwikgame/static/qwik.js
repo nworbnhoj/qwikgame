@@ -849,6 +849,10 @@ window.onpageshow = function(event) {
 
 window.onload = function() {
   updateAllHour();
+  document.querySelectorAll('time').forEach($e => {
+    const date = new Date($e.dateTime);
+    $e.innerHTML = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit",  hour12: false });
+  });
   document.addEventListener('click', closeStuff);
   document.querySelectorAll('div.drop').forEach(function(button) {
     button.onclick = drop;

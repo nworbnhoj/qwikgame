@@ -16,14 +16,7 @@ blockquote, q { quotes: "" "" }
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) {box-shadow: none; transform: none;}
-.btn:has(input:checked) { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:has(input.hidden) { display: none }
-.btn:hover:has(input:disabled) { background-color: inherit; border-color: inherit;}.
-
-div.field .btn.reveal:has(input) ~ div { display: none; }
-div.field .btn.reveal:has(input:checked) ~ div { display: flex; }
-label.btn.reveal { display: inline-block; }
-/*form:has(input:checked[value='noshow']) { background-color: red }*/
 
 .btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333;  }
 .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
@@ -36,8 +29,9 @@ label.btn.reveal { display: inline-block; }
 .btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }
 .btn.secondary:active { background-color: #c6d2e6; border-color: #c6d2e6 }
 .btn.secondary:disabled { border-color: #cccccc; color: #999999 }
-.btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
+.btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed; box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }
+.btn.secondary:hover:has(input:disabled) { background-color: #ffffff;}
 
 .btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
@@ -61,6 +55,10 @@ label.btn.reveal { display: inline-block; }
 .btn.special2:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1.5em;}
+
+div.field .btn.reveal:has(input) ~ div { display: none; }
+div.field .btn.reveal:has(input:checked) ~ div { display: flex; }
+label.btn.reveal { display: inline-block; }
 
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }

@@ -16,25 +16,19 @@
         <div id="detail" class="detail">
             <div class="detail_head">
                 <div class="icon round badge">{{ review.match.venue_hour_str }}h</div>
-                <div class="pole notes">
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
-                        </span>
-                        <p class="line">{{ review.match.game.name }}</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-calendar fa-1x"></i>
-                        </span>
-                        <p>{{ review.match.venue_date_str }}, {{ review.match.venue_hour_str }}h</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-location-dot fa-1x"></i>
-                        </span>
-                        <p>{{ mreview.atch.venue }}</p>
-                    </div>
+                <div class="head">
+                    <span class="icon">
+                        <i class="{{ review.match.game.icon }} fa-1x"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fa-solid fa-calendar fa-1x"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fa-solid fa-location-dot fa-1x"></i>
+                    </span>
+                    <p class="line">{{ review.match.game.name }}</p>
+                    <p class="line">{{ review.match.venue_date_str }}, {{ review.match.venue_hour_str }}h</p>
+                    <p class="line"><a href="{% url 'venue' venue=review.match.venue.pk %}">{{ review.match.venue.place_str }}</a></p>
                 </div>
                 <div class="drop_down icon head_more todo">
                     <div class="btn drop" data-down="false">

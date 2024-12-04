@@ -16,26 +16,20 @@
         <div id="detail" class="detail">
             <div class="detail_head">
                 <div class="icon round badge">{{ match.venue_hour_str }}h</div>
-                <div class="pole notes">
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-face-sad-tear fa-1x"></i>
-                        </span>
-                        <p class="line">{{ match.game.name }}</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-calendar fa-1x"></i>
-                        </span>
-                        <p>{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-location-dot fa-1x"></i>
-                        </span>
-                        <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>
-                    </div>
-                </div>
+            <div class="head">
+                <span class="icon">
+                    <i class="{{ match.game.icon }} fa-1x"></i>
+                </span>
+                <span class="icon">
+                    <i class="fa-solid fa-calendar fa-1x"></i>
+                </span>
+                <span class="icon">
+                    <i class="fa-solid fa-location-dot fa-1x"></i>
+                </span>
+                <p class="line">{{ match.game.name }}</p>
+                <p class="line">{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
+                <p class="line"><a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a></p>
+            </div>
                 <div class="drop_down icon head_more">
                     <div class="btn drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>

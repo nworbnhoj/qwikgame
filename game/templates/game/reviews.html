@@ -56,25 +56,19 @@
 {% if rev.pk == review.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="pole notes">
-                    <div class="note">
-                        <span class="icon">
-                            <i class="{{ rev.match.game.icon }} fa-1x"></i>
-                        </span>
-                        <p class="line">{{ rev.match.game }}</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-calendar fa-1x"></i>
-                        </span>
-                        <p>{{ rev.match.venue_date_str }} {{ rev.match.venue_hour_str }}h</p>
-                    </div>
-                    <div class="note">
-                        <span class="icon">
-                            <i class="fa-solid fa-location-dot fa-1x"></i>
-                        </span>
-                        <p>{{ rev.match.venue}}</p>
-                    </div>
+                <div class="appeal_item">
+                    <span class="icon">
+                        <i class="{{ rev.match.game.icon }} fa-1x"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fa-solid fa-calendar fa-1x"></i>
+                    </span>
+                    <span class="icon">
+                        <i class="fa-solid fa-location-dot fa-1x"></i>
+                    </span>
+                    <p class="line">{{ rev.match.game }}</p>
+                    <p class="line">{{ rev.match.venue_date_str }} {{ rev.match.venue_hour_str }}h<</p>
+                    <p class="line">{{ rev.match.venue.place_str }}</p>
                 </div>
             </a>
 {% endfor %}

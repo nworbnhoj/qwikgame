@@ -18,25 +18,19 @@
             <div class="icon">
                 <i class="fa-solid fa-paper-plane fa-2x"></i>
             </div>
-            <div class="pole notes">
-                <div class="note">
-                    <span class="icon">
-                        <i class="{{ appeal.game.icon }} fa-1x"></i>
-                    </span>
-                    <p class="line">{{ appeal.game.name }}</p>
-                </div>
-                <div class="note">
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <p>{{ appeal.date }}, {{ appeal.hours24 }}h</p>
-                </div>
-                <div class="note">
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <a href="{% url 'venue' venue=appeal.venue.pk %}">{{ appeal.venue.place_str }}</a>
-                </div>
+            <div class="head">
+                <span class="icon">
+                    <i class="{{ appeal.game.icon }} fa-1x"></i>
+                </span>
+                <span class="icon">
+                    <i class="fa-solid fa-calendar fa-1x"></i>
+                </span>
+                <span class="icon">
+                    <i class="fa-solid fa-location-dot fa-1x"></i>
+                </span>
+                <p class="line">{{ appeal.game.name }}</p>
+                <p class="line">{{ appeal.date }}, {{ appeal.hours24 }}h</p>
+                <p class="line"><a href="{% url 'venue' venue=appeal.venue.pk %}">{{ appeal.venue.place_str }}</a></p>
             </div>
             <div class="drop_down icon head_more">
                 <div class="btn drop" data-down="false">

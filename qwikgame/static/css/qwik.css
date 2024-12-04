@@ -23,7 +23,7 @@ blockquote, q { quotes: "" "" }
 div.field .btn.reveal:has(input) ~ div { display: none; }
 div.field .btn.reveal:has(input:checked) ~ div { display: flex; }
 label.btn.reveal { display: inline-block; }
-
+/*form:has(input:checked[value='noshow']) { background-color: red }*/
 
 .btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333;  }
 .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
@@ -124,7 +124,7 @@ div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 
-div.appeal_item { display: grid; grid-auto-flow: column; grid-template-rows: 1fr 1fr 1fr }
+div.appeal_item { display: grid; grid-auto-flow: column; grid-template-columns: 2em auto 2em; grid-template-rows: 1fr 1fr 1fr; justify-items: start; width: 100% }
 div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto;  padding: 0.3em; }
 div.chat_bubble .name { font-weight: bold; }
 div.chat_bubble .text { grid-column: 1/-1; }
@@ -164,6 +164,7 @@ div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
+div.head { display: grid; grid-auto-flow: column; grid-template-columns: 2em auto; grid-template-rows: 1fr 1fr 1fr; justify-items: start; width: 100% }
 div.hidden { display: none }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
@@ -177,7 +178,7 @@ div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
 div.icon_bar_reserve { height: 4em }
 div.info { position: relative }
-div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; top: 150%; width: 20em; z-index: 2 }
+div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
@@ -256,7 +257,7 @@ p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
 p.caption { color: #777777; font-size: small }
 p.large { color: #666666; font-size: large }
-p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden	; text-overflow: ellipsis; word-wrap: break-word; }
+p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100% }
 p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }

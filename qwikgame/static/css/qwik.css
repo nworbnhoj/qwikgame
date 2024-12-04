@@ -56,8 +56,11 @@ blockquote, q { quotes: "" "" }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1.5em;}
 
-div.field .btn.reveal:has(input) ~ div { display: none; }
-div.field .btn.reveal:has(input:checked) ~ div { display: flex; }
+.btn.reveal { border-color: #ffffff; }
+.btn.reveal > input { visibility: hidden; }
+.btn.reveal.check > input { visibility: visible; }
+.btn.reveal:has(input) ~ div.field { display: none; }
+.btn.reveal:has(input:checked) ~ div.field { display: flex; }
 label.btn.reveal { display: inline-block; }
 
 .btn.large { font-size: 1.13em; }

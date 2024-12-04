@@ -1,10 +1,12 @@
 <!-- qwikgame/templates/dropdown.html -->
+<div class="field">
 {% include 'field_label.html' %}
 {{ field.errors }}
-<div class="drop_down">
-    <div class="btn drop" data-down="false">
-        <div class="drop_up" data-action="{{ field.field.action }}">{{ language }}</div>
-        <div class="fat">v</div>
+    <div class="drop_down">
+        <div class="btn drop" data-down="false">
+            <div class="drop_up" data-action="{{ field.field.action }}">{{ language }}</div>
+            <div class="fat">v</div>
+        </div>
+{{ field }}
     </div>
-    {{ field }}
 </div>

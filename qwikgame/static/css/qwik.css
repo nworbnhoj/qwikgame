@@ -114,7 +114,7 @@ label.btn.reveal { display: inline-block; }
 .todo { display: none; border: 3px dotted SkyBlue }
 a.btn {position: relative;}
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
-div { align-items: center; display: flex; }
+div { align-items: start; display: flex; flex-direction: column; }
 div.banner {background-color: #ffffff; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.banner.active { background-color: #dfa622; }
 div.banner.complete { background-color: lightgrey; }
@@ -174,7 +174,7 @@ div.icon.medium { height: 3em; width: 3em }
 div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
-div.icon_bar_reserve { height: 4em }
+div.icon_bar_reserve { height: 4.4em }
 div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
@@ -190,10 +190,10 @@ div.log_entry.match {}
 div.option {align-items: center; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
-div.pillar { flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.pillar { align-items: center; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em; width: 100% }
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
-div.range_options { gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
+div.range_options { flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
 div.post { align-items: stretch; flex-direction: column; justify-content: start; width: 100% }

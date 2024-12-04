@@ -1,9 +1,11 @@
 <!-- qwikgame/templates/field.html -->
 {% if field.use_fieldset %}
+    <fieldset>
     {% if field.label %}
         {{ field.legend_tag }}
     {% endif %}
 {% else %}
+    <div class="field">
     {% if field.label %}
         {% include 'field_label.html' %}
     {% endif %}
@@ -19,4 +21,7 @@
 {{ field }}
 
 {% if field.use_fieldset %}
+    </fieldset>
+{% else %}
+    </div>
 {% endif %}

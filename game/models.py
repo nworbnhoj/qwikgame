@@ -150,6 +150,7 @@ class Match(models.Model):
 
 class Review(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    meta = models.JSONField(default=dict)
     player = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewer')
     rival = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewee')
 
@@ -171,6 +172,13 @@ class Review(models.Model):
             case _:
                 logger.warn(f'unknown template: {template}')
         self.match.log_entry(entry)
+
+    def mark_seen(self, player_pks=[]):
+        logger.warn("review.mark_seen()")
+        seen = set(self.meta.get('seen', []))
+        seen.update(player_pks)
+        self.meta['seen'] = list(seen)
+        return self
 
     def perish(self, dry_run=False):
         action = 'noop'

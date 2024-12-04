@@ -28,6 +28,7 @@ def match_review_init():
             for rival in match.competitors.exclude(pk=player.pk).all():
                 Review.objects.create(
                     match = match,
+                    meta = {'seen': []},
                     player=player,
                     rival=rival,
                 )

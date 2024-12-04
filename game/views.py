@@ -164,9 +164,14 @@ class ReviewsView(QwikView):
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('review', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
+        player = self.user.player
+        reviews = self._context['items'].order_by('match__date')
+        for review in reviews:
+            seen = player.pk in review.meta.get('seen', [])
+            review.seen = '' if seen else 'unseen'
         self._context |= {
             'review': self._context['item'],
-            'reviews': self._context['items'].order_by('match__date'),
+            'reviews': reviews,
             'player_id': self.user.player.facet(),
             'review_tab': 'selected',
             'target': 'review',
@@ -206,6 +211,9 @@ class ReviewView(ReviewsView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        review = self._context['review']
+        # mark this Review seen by this Player
+        review.mark_seen([self.user.player.pk]).save()
         context = self.context(request, *args, **kwargs)
         rivals = self._rivals(context.get('review'))
         request.session['rivals'] = rivals

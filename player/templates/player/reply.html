@@ -59,6 +59,8 @@
             </a>
         </div>
         <div class="post">
+            <form id='form' action="{% url 'accept' appeal=appeal.pk %}" method="post">
+{% csrf_token %}
 {% for entry in appeal.log %}
     {% if entry.id == player_id %}
                 <div class="log_entry align_end {{ entry.klass }}">
@@ -70,9 +72,45 @@
                 </div>
                 <div class="chat_bubble">
                     <span class="name">{{ entry.name }}</span>
-                    <time datetime="{{ entry.created }}"></time>
-                    <span class="text">{{ entry.text }}</span>
+                    <div>
+
+    {% if bids|key_exists:entry.pk %}
+                        <span>(
+        {% for _ in '12345'|make_list %} 
+                            <span class="color" style="display:inline-block; width:0.8em">
+            {% if forloop.counter <= bids|bid_conduct:entry.pk %}
+                                <i class="fa-solid fa-star fa-1x"></i>
+            {% else %}
+                                <i class="fa-regular fa-star fa-1x"></i>
+            {% endif %}
+                            </span>
+        {% endfor %}
+                        , {{ bids|bid_strength:entry.pk }})  
+                        </span>
+    {% endif %}
+                        <time datetime="{{ entry.created }}"></time>
+                    </div>
+                <span class="text">{{ entry.text }}</span>
+
+
                 </div>
+    {% if bids|get_item:entry.pk %}
+                <div class="drop_down icon">
+                    <div class="btn todo" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
+                    </div>
+                    <div class="down hidden">
+                        <label class="btn tertiary menu">
+                            <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
+                            decline
+                        </label>
+                    </div>
+                </div>
+                <label class="btn primary round">
+                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
+                    <i class="fa-solid fa-right-long fa-xl"></i>
+                </label>
+    {% endif %}            
             </div>
 {% endfor %}
         </div>
@@ -145,51 +183,8 @@
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="post">
-                <form id='form' action="{% url 'accept' appeal=appeal.pk %}" method="post">
-{% csrf_token %}
-{% for bid in bids %}
-                    <div class="chat_item align_start">
-                        <div class="btn special2">
-                            <i class="fa-solid {{ bid.rival.icon }} fa-2x"></i>
-                        </div>
-                        <div class="chat_bubble">
-                            <p><span class="name">{{ bid.name }}</span> (
-{% for _ in '12345'|make_list %} 
-                    <span class="color">
-{% if forloop.counter <= bid.conduct_stars %}
-                        <i class="fa-solid fa-star fa-1x"></i>
-{% else %}
-                        <i class="fa-regular fa-star fa-1x"></i>
-{% endif %}
-                    </span>
-{% endfor %}
-                
-                            , {{ bid.strength_str }})</p>
-                            <p>{{ bid.game }} at {{ bid.hour_str }}h</p>
-                        </div>
-                        <div class="drop_down icon">
-                            <div class="btn todo" data-down="false">
-                                <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
-                            </div>
-                            <div class="down hidden">
-                                <label class="btn tertiary menu">
-                                    <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
-                                    decline
-                                </label>
-                            </div>
-                        </div>
-                        <label class="btn primary round">
-                            <input hidden type="submit" name='accept' value='{{ bid.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
-                            <i class="fa-solid fa-right-long fa-xl"></i>
-                        </label>
-                    </div>
-{% empty %}
-                <p>Awaiting Players to accept</p>
-{% endfor %}
-                </form>
-            </div>
+            <p>Awaiting Players to accept</p>
+            </form>
         </div>
     </div>
 {% endblock %}

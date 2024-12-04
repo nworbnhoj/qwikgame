@@ -570,6 +570,29 @@ class Friend(models.Model):
         return 'fa-face-smile'
 
 
+from django.template.defaulttags import register
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
+@register.filter
+def empty(dictionary):
+    return bool(dictionary)
+
+@register.filter
+def key_exists(dictionary, key):
+    return key in dictionary
+
+@register.filter
+def bid_strength(dictionary, key):
+    return dictionary.get(key).strength_str()
+
+@register.filter
+def bid_conduct(dictionary, key):
+    return dictionary.get(key).conduct_stars()
+
+
 class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
@@ -630,6 +653,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = person.name,
+                    pk = str(self.pk),
                     text = f'accepted {self.hours24().as_str()}h'
                 )
             case 'decline':

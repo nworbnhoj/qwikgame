@@ -76,6 +76,7 @@ class AcceptView(AppealsView):
                 bid.hour_str = bid.hours24().as_str()
                 bid.name = player.name_rival(bid.rival)
                 bid.conduct_stars = bid.rival.conduct_stars 
+            bids = {str(bid.pk): bid for bid in bids}
             self._context |= {
                 'player_id': player.facet(),
                 'bids': bids,
@@ -123,30 +124,32 @@ class AcceptView(AppealsView):
                 logger.exception('failed to cancel appeal: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/appeal/')
         try:
-            accept = context.get('accept')
-            if accept:
-                bid = Bid.objects.get(pk=accept)
+            accept_pk = context.get('accept')
+            if accept_pk:
+                bid = Bid.objects.get(pk=accept_pk)
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
                 bid.appeal.delete()
                 match.log_event('scheduled')
                 match.clear_conflicts()
                 return HttpResponseRedirect(f'/game/match/{match.id}/')
-            decline = context.get('decline')
-            if decline:
-                bid = Bid.objects.get(pk=decline_id)
+            decline_pk = context.get('decline')
+            if decline_pk:
+                bid = Bid.objects.get(pk=decline_pk)
                 bid.log_event('decline')
                 bid.delete()
-            appeal = self._context.get('appeal')
-            # mark this Appeal seen by this Player only
-            appeal.meta['seen'] = [player.pk]
-            appeal.save()
-            mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
-            if mark:
-                mark.save()
+            appeal = Appeal.objects.filter(pk=kwargs['appeal']).first()
+            if appeal:
+                # mark this Appeal seen by this Player only
+                appeal.meta['seen'] = [player.pk]
+                appeal.save()
+                mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+                if mark:
+                    mark.save()
+            return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
         except:
             logger.exception(f'failed to process Bid: {context}')
-        return HttpResponseRedirect(f'/player/appeal/accept/{bid.appeal.id}/')
+        return HttpResponseRedirect(f'/player/appeal/')
 
 
 class BidView(AppealsView):

@@ -30,8 +30,6 @@ class DayInputMulti(CheckboxSelectMultiple):
         super().__init__(attrs, choices)
 
     def set_data_attr(self, key, value):
-        logger.warn(self.data_attrs)
-        logger.warn(f'{key} -:- {value}')
         self.data_attrs[f'data-{key}'] = value
 
     def create_option(

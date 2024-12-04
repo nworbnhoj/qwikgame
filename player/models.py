@@ -231,7 +231,7 @@ class Player(models.Model):
                 discrepancy += 0.5
             else:
                 continue
-        logger.info(f'{players} {strength} {discrepancy}')
+        logger.debug(f'{players} {strength} {discrepancy}')
         return strength, discrepancy
     
     # Strength and Confidence keys describing the relative Game strength between Self and Rival

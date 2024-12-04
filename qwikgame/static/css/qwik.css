@@ -9,7 +9,7 @@ blockquote, q { quotes: "" "" }
 @font-face { font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
 @font-face { font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
 .align_center { align-self: center }
-.align_end { align-self: flex-end }
+.align_end { justify-content: end; }
 .align_start { align-self: flex-start }
 
 .btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550;  gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 1.25em 1.5em 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis;}
@@ -185,7 +185,7 @@ div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; p
 div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
 div.list_bar { align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
+div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; max-width: 66%; padding: 0.3em }
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}

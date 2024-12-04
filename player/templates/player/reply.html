@@ -66,9 +66,8 @@
                 </div>
                 <div class="chat_bubble">
                     <span class="name">{{ entry.name }}</span>
-                    <div>
-
     {% if bids|key_exists:entry.pk %}
+                    <div>
                         <span>(
         {% for _ in '12345'|make_list %} 
                             <span class="color" style="display:inline-block; width:0.8em">
@@ -81,12 +80,12 @@
         {% endfor %}
                         , {{ bids|bid_strength:entry.pk }})  
                         </span>
-    {% endif %}
                         <time datetime="{{ entry.created }}"></time>
                     </div>
-                <span class="text">{{ entry.text }}</span>
-
-
+    {% else %}
+                    <time datetime="{{ entry.created }}"></time>
+    {% endif %}                        
+                    <span class="text">{{ entry.text }}</span>
                 </div>
     {% if bids|get_item:entry.pk %}
                 <div class="drop_down icon">

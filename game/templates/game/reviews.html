@@ -52,7 +52,7 @@
         <hr>
         <div class="post group">
 {% for rev in reviews %}
-            <a class="btn item {{ rev.seen }}" href="{% url target review=rev.pk %}">
+            <a class="btn secondary item {{ rev.seen }}" href="{% url target review=rev.pk %}">
 {% if rev.pk == review.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}

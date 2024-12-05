@@ -2,7 +2,7 @@
 <div class="label">
     {{ field.label_tag }}
 {% if field.field.url %}
-    <a href='{{ field.field.url }}'>{{ field.field.sub_text }}</a>
+    <a href="{% url field.field.url %}">{{ field.field.sub_text }}</a>
 {% elif field.field.sub_text %}
     <span class='sub_text'>{{ field.field.sub_text }}</span>
 {% endif %}

@@ -297,11 +297,13 @@ class FriendForm(QwikForm):
         label = "FRIEND'S EMAIL ADDRESS",
         max_length=255,
         required = True,
+        template_name = 'field.html',
     )
     name = CharField(
         label = 'NAME',
         max_length=32,
         required=False,
+        template_name = 'field.html',
     )
 
     @classmethod

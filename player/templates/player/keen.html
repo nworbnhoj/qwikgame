@@ -65,10 +65,11 @@
 {% csrf_token %}
 {{ keen_form }}
                     <div class="pillar">
-                        <label class="btn primary push_down">
+                        <label id="appeal_submit" class="btn primary push_down">
                             <input hidden type="submit">
                             <i class="fa-solid fa-paper-plane fa-xl"></i>
-                            <span>Invite</span>
+                            <span class="appeal_all">Invite</span>
+                            <span hidden class="appeal_friends">Invite Friends Only</span>
                         </label>
                     </div>
                 </form>

@@ -402,8 +402,8 @@ class KeenForm(QwikForm):
     )
     friends = MultipleActionField(
         action='invite:',
-        help_text='Invite your friends to play this qwikgame.',
-        label='FRIENDS',
+        # help_text='Invite your friends to play this qwikgame.',
+        label=' ',
         required=False,
     )
     lat = DecimalField(
@@ -464,8 +464,10 @@ class KeenForm(QwikForm):
 
     def personalise(self, player):
         self.fields['friends'].choices = player.friend_choices()
-        self.fields['friends'].sub_text = 'Add Friends'
-        self.fields['friends'].url = 'friends'
+        self.fields['friends'].reveal = 'Invite Friends Only?'
+        self.fields['friends'].reveal_css_classes = 'btn check'
+        # self.fields['friends'].sub_text = 'Add Friends'
+        # self.fields['friends'].url = 'friend'
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(12).order_by('name').all()[:12]

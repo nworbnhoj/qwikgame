@@ -25,7 +25,6 @@
 
 
 {% block list %}
-    <div id="list_bar" class="list_bar post">
         <div class="list_head">
             <h1>Feed ({{ appeals_length }})</h1>
             <a class="btn secondary" href="{% url 'filters' %}">
@@ -79,7 +78,7 @@
             All
             <span>▲</span>
 {% if filtered %}
-            <a href="{% url 'filters' %}">filtered</a>
+            <a class="push_right" href="{% url 'filters' %}">filtered</a>
 {% endif %}
         </h2>
         <div class="post group">
@@ -114,7 +113,6 @@
             </a>
 {% endfor %}
         </div>
-    </div>
 {% endblock %}
 
 

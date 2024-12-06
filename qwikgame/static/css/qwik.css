@@ -40,7 +40,7 @@ blockquote, q { quotes: "" "" }
 .btn.tertiary:has(input:checked) {}
 .btn.tertiary:has(input:disabled) {}
 
-.btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; width: 100%}
+.btn.special1 { background-color: #ffffff; border-color: #f5a600; color: #f5a600; font-weight: bold; }
 .btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  z-index: 10; }
 .btn.special1:hover { background-color: #f5a600; border-color: #f5a600; color: #ffffff }
 .btn.special1:active { background-color: #e09900; border-color: #e09900;  color: #ffffff }
@@ -79,7 +79,7 @@ label.btn.reveal { display: inline-block; }
 
 
 .color { color: #dfa622 }
-.cta_desktop { padding: 1em 0 3em 0; width: 100% }
+.cta_desktop { padding: 1em; width: 100% }
 .disabled { border-color: #aaaaaa; color: #aaaaaa }
 .errorlist { color: red; }
 .head_back { order: 40 }
@@ -178,16 +178,16 @@ div.icon.info { border-width: 0.3em; border-radius: 50%; padding: 0.3em }
 div.icon.medium { height: 3em; width: 3em }
 div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
-div.icon_bar { background-color: white; border: 0px solid black; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100% }
-div.icon_bar_reserve { height: 4.4em }
+div.icon_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
+div.icon_bar_reserve { height: 4em }
 div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.label { align-items: center; display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
-div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
-div.list_bar { align-items: start; display: flex; flex: 0 1 auto; justify-content: start; width: 31.25%; }
-div.list_head { align-items: center; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
+div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
+div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em }
 div.log_entry.chat {}
 div.log_entry.event {}
@@ -227,6 +227,7 @@ fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color:
 fieldset div { display:block; padding: 1em}
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: left; }
+h2.show_group { padding: 0 0.3em 0 0.3em; }
 h2.show_group a { color: blue; justify-content: space-between; text-decoration: underline; }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }

@@ -19,20 +19,20 @@
                 <i class="fa-solid fa-user-group fa-2x"></i>
             </div>
 {% if friend %}
-            <div class="pole notes">
-                <div class="note">
-                    <span class="icon">
-                        <i class="fa-solid user-group fa-1x"></i>
-                    </span>
-                    <p class="line">{{ friend.name }}</p>
+                <div class='head'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ friend.icon }} fa-1x"></i>
+                        </span>
+                        {{ friend.name }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-regular fa-envelope"></i>
+                        </span>
+                        {{ friend.email }}
+                    </p>
                 </div>
-                <div class="note">
-                    <span class="icon">
-                        <i class="fa-solid fa-email fa-1x"></i>
-                    </span>
-                    <p>{{ friend.email }}</p>
-                </div>
-            </div>
             <div class="drop_down icon head_more">
                 <div class="btn drop" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>

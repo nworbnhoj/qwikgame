@@ -16,19 +16,25 @@
         <div id="detail" class="detail">
             <div class="detail_head">
                 <div class="icon round badge">{{ review.match.venue_hour_str }}h</div>
-                <div class="head">
-                    <span class="icon">
-                        <i class="fa-solid {{ review.match.game.icon }} fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <p class="line">{{ review.match.game.name }}</p>
-                    <p class="line">{{ review.match.venue_date_str }}, {{ review.match.venue_hour_str }}h</p>
-                    <p class="line"><a href="{% url 'venue' venue=review.match.venue.pk %}">{{ review.match.venue.place_str }}</a></p>
+                <div class='head'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ review.match.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ review.match.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ review.match.venue_date_str }} {{ review.match.venue_hour_str }}h
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ review.match.venue.place_str }}
+                    </p>
                 </div>
                 <div class="drop_down icon head_more todo">
                     <div class="btn drop" data-down="false">

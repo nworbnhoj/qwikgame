@@ -167,7 +167,7 @@ div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
-div.head { display: grid; grid-auto-flow: column; grid-template-columns: 2em auto; grid-template-rows: 1fr 1fr 1fr; justify-items: start; width: 100% }
+div.head {  display: flex; flex: auto; flex-direction: column; width: 75%  }
 
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
@@ -263,7 +263,7 @@ p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
 p.caption { color: #777777; font-size: small }
 p.large { color: #666666; font-size: large }
-p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100% }
+p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }

@@ -16,20 +16,26 @@
         <div id="detail" class="detail">
             <div class="detail_head">
                 <div class="icon round badge">{{ match.venue_hour_str }}h</div>
-            <div class="head">
-                <span class="icon">
-                    <i class="fa-solid {{ match.game.icon }} fa-1x"></i>
-                </span>
-                <span class="icon">
-                    <i class="fa-solid fa-calendar fa-1x"></i>
-                </span>
-                <span class="icon">
-                    <i class="fa-solid fa-location-dot fa-1x"></i>
-                </span>
-                <p class="line">{{ match.game.name }}</p>
-                <p class="line">{{ match.venue_date_str }}, {{ match.venue_hour_str }}h</p>
-                <p class="line"><a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a></p>
-            </div>
+                <div class='head'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ match.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ match.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ match.venue_date_str }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ match.venue }}
+                    </p>
+                </div>
                 <div class="drop_down icon head_more">
                     <div class="btn drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>

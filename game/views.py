@@ -119,6 +119,7 @@ class MatchView(MatchesView):
         if form and not form.is_valid():
             return render(request, self.template_name, context)
         player = self.user.player
+        match = Match.objects.get(pk=match_pk)
         if 'CANCEL' in context:
             try:
                 cancel_pk = context.get('CANCEL')
@@ -143,12 +144,10 @@ class MatchView(MatchesView):
                     name = person.name,
                     text = txt,
                 )
+                match.meta['seen'] = [player.pk]
                 match.log_entry(entry)
             except:
                 logger.exception(f'failed chat entry: {match_pk} {context}')
-        # mark this Match seen by this Player only
-        match.meta['seen'] = [player.pk]
-        match.save()
         context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/game/match/{match_pk}/')
 

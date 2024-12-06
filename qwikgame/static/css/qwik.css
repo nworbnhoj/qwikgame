@@ -194,10 +194,10 @@ div.log_entry.event {}
 div.log_entry.match {}
 div.option {align-items: center; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
-div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
+div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { display: flex; flex: auto; flex-direction: row; justify-content: start; padding: 1em; width: 100% }
-div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.pole { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }

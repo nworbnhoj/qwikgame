@@ -66,7 +66,7 @@ label.btn.reveal { display: inline-block; }
 
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
-.btn.small { font-size: 0.88em; height: 1.2em;}
+.btn.small { font-size: 0.88em; min-height: 2em;}
 .btn.square { aspect-ratio: 1 / 1; }
 .btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }
 
@@ -154,14 +154,14 @@ div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
 div.down label:has(input:checked) { color: #dfa622 }
-div.drop_down { flex-direction: column; position: relative; }
+div.drop_down { display: flex; flex-direction: column; position: relative; right:0.3em;}
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
 div.drop { justify-content: space-between; width: 100% }
 div.drop_up {}
 div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
-div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
+div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 2em 0 0.5em 0; width: 100% }
 div.field.naked { padding: 0 }
 div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
@@ -192,7 +192,7 @@ div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
-div.option {align-items: center; justify-content: space-between; }
+div.option { display: flex; align-items: center; flex-direction: row; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
@@ -211,6 +211,7 @@ div.slider:before { background-color: #fff; bottom: 0.2em; content: ""; height: 
 div.slider.round { border-radius: 34px; }
 div.slider.round:before { border-radius: 50%; }
 div.splash { align-items: center; display: flex; height: 100%; justify-content:center; }
+div.stars { display: flex;  padding: 1em; }
 div.tab_area div.areas { width: 100%;}
 div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }
@@ -249,7 +250,7 @@ input.disabled { background-color: #eeeeee; color: #999999 }
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em; width:100% }
-label.option { align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
+label.option { display: flex; align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
 label.option div.btn { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }

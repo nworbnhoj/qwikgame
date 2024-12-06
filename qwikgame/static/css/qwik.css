@@ -89,8 +89,9 @@ label.btn.reveal { display: inline-block; }
 .head_txt { order: 20 }
 .hidden { display: none }
 
-.item { align-items: center; display: flex; flex-direction: row; font-size: 1em; gap: 0.1em; height: auto; justify-content: center; padding: 1em; width: 100% }
-.item div.badges { align-items: flex-end; flex: 0 0 auto; width: 20%}
+.item { align-items: start; display:flex; flex-flow: row wrap; justify-content: start; padding:0.3em 0.3em 0.9em 0em; }
+.item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; flex-direction: column; height: 100%; width: 20%}
+.item .lines { display: flex; flex: auto; flex-direction: column; width: 75% }
 .item div.note { width: 100% }
 .item div.notes { flex: 1 1 0; overflow:hidden; text-overflow: ellipsis;}
 .item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
@@ -100,6 +101,7 @@ label.btn.reveal { display: inline-block; }
 
 .invisible { visibility: hidden }
 .loader::after {
+  align-self: center;
   position: absolute;
   content: "";  
   width: 2em;
@@ -126,7 +128,6 @@ div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 
-div.appeal_item { display: grid; grid-auto-flow: column; grid-template-columns: 2em auto 2em; grid-template-rows: 1fr 1fr 1fr; justify-items: start; width: 100% }
 div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto;  padding: 0.3em; }
 div.chat_bubble .name { font-weight: bold; }
 div.chat_bubble .text { grid-column: 1/-1; }

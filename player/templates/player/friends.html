@@ -47,23 +47,21 @@
 {% if fri.pk == friend.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="post notes">
-                    <div class="note">
+                <div class='lines'>
+                    <p class="line">
                         <span class="icon">
                             <i class="fa-solid {{ fri.icon }} fa-1x"></i>
                         </span>
-                        <p class="line">{{ fri.name }}</p>
-                    </div>
-                    <div class="note">
+                        {{ fri.name }}
+                    </p>
+                    <p class="line">
                         <span class="icon">
-                            <i class="fa-solid fa-email fa-1x"></i>
+                            <i class="fa-regular fa-envelope"></i>
                         </span>
-                        <p>{{ fri.email }}</p>
-                    </div>
+                        {{ fri.email }}
+                    </p>
                 </div>
-                <div class="pole badges">
-                    <div class="icon round badge"></div>
-                </div>
+                <div class="badges"></div>
             </a>
 {% empty %}
            <p>No friends :-(</p>

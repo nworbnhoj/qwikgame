@@ -47,19 +47,27 @@
 {% if app.pk == appeal.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="appeal_item">
-                    <span class="icon">
-                        <i class="fa-solid {{ app.game.icon }} fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <p class="line">{{ app.game }}</p>
-                    <p class="line">{{ app.date }}, {{ app.hours24 }}h</p>
-                    <p class="line">{{ app.venue.place_str }}</p>
+                <div class='lines'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ app.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ app.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ app.date }}, {{ app.hours24 }}h
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ app.venue.place_str }}
+                    </p>
+                </div>
+                <div class="badges">                        
                     <time datetime="{{ app.created_str }}" ></time>
                 </div>
             </a>
@@ -80,20 +88,27 @@
 {% if app.pk == appeal.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="appeal_item">
-                    <span class="icon">
-                        <i class="fa-solid {{ app.game.icon }} fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <p class="line">{{ app.game }}</p>
-                    <p class="line">{{ app.date }}, {{ app.hours24 }}h</p>
-                    <p class="line">{{ app.venue.place_str }}</p>
-                    
+                <div class='lines'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ app.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ app.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ app.date }}, {{ app.hours24 }}h
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ app.venue.place_str }}
+                    </p>
+                </div>
+                <div class="badges">                        
                     <time datetime="{{ app.created_str }}" ></time>
                 </div>
             </a>

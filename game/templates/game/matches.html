@@ -59,19 +59,27 @@
 {% if mat.pk == match.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="appeal_item">
-                    <span class="icon">
-                        <i class="fa-solid {{ mat.game.icon }} fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <p class="line">{{ mat.game }}</p>
-                    <p class="line">{{ mat.venue_date_str }}</p>
-                    <p class="line">{{ mat.venue }}</p>
+                <div class='lines'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ mat.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ mat.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ mat.venue_date_str }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ mat.venue }}
+                    </p>
+                </div>
+                <div class="badges">                        
                     <div class="icon round badge">{{ mat.venue_hour_str }}h</div>
                 </div>
             </a>
@@ -89,20 +97,27 @@
 {% if mat.pk == match.pk %}
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
-                <div class="appeal_item">
-                    <span class="icon">
-                        <i class="fa-solid {{ mat.game.icon }} fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-calendar fa-1x"></i>
-                    </span>
-                    <span class="icon">
-                        <i class="fa-solid fa-location-dot fa-1x"></i>
-                    </span>
-                    <p class="line">{{ mat.game }}</p>
-                    <p class="line">{{ mat.venue_date_str }} {{ mat.venue_hour_str }}h</p>
-                    <p class="line">{{ mat.venue }}</p>
+                <div class='lines'>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid {{ mat.game.icon }} fa-1x"></i>
+                        </span>
+                        {{ mat.game }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-calendar fa-1x"></i>
+                        </span>
+                        {{ mat.venue_date_str }}
+                    </p>
+                    <p class="line">
+                        <span class="icon">
+                            <i class="fa-solid fa-location-dot fa-1x"></i>
+                        </span>
+                        {{ mat.venue }}
+                    </p>
                 </div>
+                <div class="badges"></div>
             </a>
 {% empty %}
             <p>No history yet!</p>

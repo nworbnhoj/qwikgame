@@ -656,6 +656,16 @@ class Bid(models.Model):
                     name = person.name,
                     text = f'declined {self.hours24().as_str()}h with {rival.name}'
                 )
+            case 'expired':
+                person = self.rival.user.person
+                entry = Entry(
+                    icon = person.icon,
+                    id = self.rival.facet(),
+                    klass= 'event rival',
+                    name = person.name,
+                    pk = str(self.pk),
+                    text = f'bid expired'
+                )
             case 'withdraw':
                 person = self.rival.user.person
                 entry = Entry(
@@ -673,6 +683,26 @@ class Bid(models.Model):
         self.log_event('withdraw')
         self.appeal.meta['seen'] = []
         self.delete()
+
+
+    # Deletes the Bid if the Bid hours has passed.
+    def perish(self, dry_run=False):
+        action = 'noop'
+        now = self.venue().now()
+        if now > self.datetime():
+            if not dry_run:
+                self.log_event('expired')
+                self.delete()
+            action = 'expired'
+        logger.debug('Bid{} {: <9} {} @ {} {}'.format(
+                ' (dry-run)' if dry_run else '',
+                action,
+                self.datetime().strftime('%a %X'),
+                now.strftime('%a %X'),
+                self.venue().name
+            )
+        )
+        return action
 
 
     def save(self, *args, **kwargs):

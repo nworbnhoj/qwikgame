@@ -165,6 +165,7 @@ STATICFILES_DIRS = [
 
 CRONJOBS = [
     ('1 * * * *', 'player.cron.appeal_perish', '>> /var/log/django_cron.log'),
+    ('10 * * * *', 'player.cron.bid_perish', '>> /var/log/django_cron.log'),
     ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron.log'),
     ('30 23 * * *', 'game.cron.match_perish', '>> /var/log/django_cron.log'),
     ('31 23 * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron.log'),

@@ -1,5 +1,5 @@
 import datetime, logging
-from player.models import Appeal
+from player.models import Appeal, Bid
 
 
 logger = logging.getLogger(__file__)
@@ -12,3 +12,12 @@ def appeal_perish():
 		action = appeal.perish()
 		stats[action] = stats.get(action, 0) + 1
 	logging.info(f'CRON: appeal_perish() {stats}')
+
+
+# Intended to be run hourly as a cron job
+def bid_perish():
+	stats = {}
+	for bid in Bid.objects.all():
+		action = bid.perish()
+		stats[action] = stats.get(action, 0) + 1
+	logging.info(f'CRON: bid_perish() {stats}')

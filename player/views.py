@@ -111,11 +111,8 @@ class AcceptView(AppealsView):
                 game = appeal.game
                 venue = appeal.venue
                 appeal.meta['seen'] = [player.pk]
-                # mark this Appeal seen by this Player only
-                appeal.meta['seen'] = [player.pk]
-                appeal.save()
+                appeal.log_event('cancelled')
                 logger.info(f'Cancelling Appeal: {appeal}')
-                appeal.delete()
                 # update the Mark size
                 mark = Mark.objects.filter(game=game, place=venue).first()
                 if mark:
@@ -129,7 +126,6 @@ class AcceptView(AppealsView):
                 bid = Bid.objects.get(pk=accept_pk)
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
-                bid.appeal.delete()
                 match.log_event('scheduled')
                 match.clear_conflicts()
                 return HttpResponseRedirect(f'/game/match/{match.id}/')

@@ -477,11 +477,13 @@ class Appeal(models.Model):
                     self.venue.datetime(self.date).strftime("%b %d"),
                     self.hours24.as_str()
                 )
+            case 'cancelled':
+                entry['text'] = "Cancelled Invitation"
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
 
-    # Deletes the Appeal when all hours have passed.
+    # Deletes the Appeal at the end of the day.
     def perish(self, dry_run=False):
         action = 'noop'
         now = self.venue.now()
@@ -489,15 +491,6 @@ class Appeal(models.Model):
             if not dry_run:
                 self.delete()
             action = 'expired'
-        elif now.date() == self.date:
-            hour = now.hour
-            past =  [False for h in range(0, hour+1)]
-            future = [True for h in range(hour+1, 24)]
-            hours24 = Hours24(self.hours) & Hours24(past + future)
-            if hours24.is_none():
-                if not dry_run:
-                    self.delete()
-                action = 'expired'
         logger.debug('Appeal{} {: <9} {} @ {} {}'.format(
                 ' (dry-run)' if dry_run else '',
                 action,

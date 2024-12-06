@@ -1,9 +1,9 @@
 <!-- qwikgame/player/templates/player/conduct_stars_snippet.html -->
 
-    <div >
+    <div class="plank" >
 {% for _ in '12345'|make_list %} 
         <div class="icon color">
-{% if forloop.counter <= rival.conduct_stars %}
+{% if forloop.counter <= player.conduct_stars %}
             <i class="fa-solid fa-star fa-1x"></i>
 {% else %}
             <i class="fa-regular fa-star fa-1x"></i>

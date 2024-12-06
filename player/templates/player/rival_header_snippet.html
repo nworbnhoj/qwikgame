@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="pillar align_center">    
-{% include 'player/conduct_stars_snippet.html' %}
+{% with rival as player %}
+    {% include 'player/conduct_stars_snippet.html' %}
+{% endwith %}
             <div>
                 <p>{{ strength }}</p>
             </div>

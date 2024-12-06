@@ -66,7 +66,7 @@ label.btn.reveal { display: inline-block; }
 
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
-.btn.small { font-size: 0.88em; min-height: 2em;}
+.btn.small { font-size: 0.88em; height: 1.2em;}
 .btn.square { aspect-ratio: 1 / 1; }
 .btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }
 
@@ -118,7 +118,7 @@ label.btn.reveal { display: inline-block; }
 .todo { display: none; border: 3px dotted SkyBlue }
 a.btn {position: relative;}
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
-div { align-items: start; display: flex; flex-direction: column; }
+div { }
 div.banner {background-color: #ffffff; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.banner.active { background-color: #dfa622; }
 div.banner.complete { background-color: lightgrey; }
@@ -130,10 +130,10 @@ div.appeal_item { display: grid; grid-auto-flow: column; grid-template-columns: 
 div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto;  padding: 0.3em; }
 div.chat_bubble .name { font-weight: bold; }
 div.chat_bubble .text { grid-column: 1/-1; }
-div.chat_input { flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
+div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item .name { font-weight: bold; }
-div.content { align-items: stretch; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
+div.content { align-items: stretch; display:flex; flex-direction: row; justify-content: stretch; max-width: 1200px; width: 100% }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
 div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
@@ -145,11 +145,11 @@ div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
 div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
 div.detail_body { }
 div.detail_form { }
-div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid #888888; flex-direction: column; gap: 0.5em; left: 0; opacity: 1.0; padding: 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
-div.down div { justify-content: space-between; width:100% }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
+div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
 div.down label:has(input:checked) { color: #dfa622 }
@@ -167,7 +167,7 @@ div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
 div.head { display: grid; grid-auto-flow: column; grid-template-columns: 2em auto; grid-template-rows: 1fr 1fr 1fr; justify-items: start; width: 100% }
-div.hidden { display: none }
+
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
@@ -183,24 +183,24 @@ div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
-div.label { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
+div.label { align-items: center; display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
 div.list { align-items: stretch; border: 0.1em solid black; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 0 1em 1em 1em; width: 100% }
-div.list_bar { align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
-div.list_head { align-items: center; border: 0.1em solid black; border-width: 0 0 0.1em 0; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.log_entry { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; max-width: 66%; padding: 0.3em }
+div.list_bar { align-items: start; display: flex; flex: 0 1 auto; justify-content: start; width: 31.25%; }
+div.list_head { align-items: center; border: 0.1em solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; height: 4em; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
+div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em }
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
 div.option {align-items: center; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
-div.pillar { align-items: center; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
-div.plank { flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em; width: 100% }
+div.pillar { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.plank { display: flex; flex: auto; flex-direction: row; justify-content: start; padding: 1em; width: 100% }
 div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
-div.range_options { flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
+div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
-div.post { align-items: stretch; flex-direction: column; justify-content: start; width: 100% }
+div.post { align-items: stretch; display: flex; flex-direction: column; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
@@ -220,7 +220,8 @@ div.qwikgame { align-items: center; display: flex; flex-direction: row; font-siz
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
-fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em }
+div.hidden { display: none }
+fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 fieldset div { display:block; padding: 1em}
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; width: 100% }

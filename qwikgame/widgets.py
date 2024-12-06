@@ -83,6 +83,7 @@ class DayInputRadio(RadioSelect):
 
     def __init__(self, attrs=None, choices=()):
         super().__init__(attrs, choices)
+        self.use_fieldset=False
 
     def set_data_attr(self, key, value):
         self.data_attrs[f'data-{key}', value]

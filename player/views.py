@@ -63,7 +63,7 @@ class AppealsView(QwikView):
 
 class AcceptView(AppealsView):
     accept_form_class = AcceptForm
-    template_name = 'player/reply.html'
+    template_name = 'player/accept.html'
 
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)

@@ -128,7 +128,7 @@ div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 
-div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto;  padding: 0.3em; }
+div.chat_bubble { display: grid; background-color: #eeeeee;  column-gap: 1em; grid-template-columns: auto auto; grid-template-rows: 2em auto; max-width: 66%;  padding: 0.3em; }
 div.chat_bubble .name { font-weight: bold; }
 div.chat_bubble .text { grid-column: 1/-1; }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }

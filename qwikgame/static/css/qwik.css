@@ -89,7 +89,7 @@ label.btn.reveal { display: inline-block; }
 .head_txt { order: 20 }
 .hidden { display: none }
 
-.item { align-items: start; display:flex; flex-flow: row wrap; justify-content: start; padding:0.3em 0.3em 0.9em 0em; }
+.item { align-items: start; display:flex; flex-flow: row wrap; justify-content: center; padding:0.3em 0.3em 0.9em 0em; }
 .item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; flex-direction: column; height: 100%; width: 20%}
 .item .lines { display: flex; flex: auto; flex-direction: column; width: 75% }
 .item div.note { width: 100% }

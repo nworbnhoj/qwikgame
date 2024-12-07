@@ -143,7 +143,7 @@ div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
 div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
 div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
 div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
-div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em }
+div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em; width: 68.75% }
 div.detail_body { }
 div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
@@ -167,7 +167,7 @@ div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
-div.head {  display: flex; flex: auto; flex-direction: column; width: 75%  }
+div.head {  display: flex; flex: auto; flex-direction: column; width: 50%  }
 
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }

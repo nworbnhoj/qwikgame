@@ -127,7 +127,7 @@ class AcceptView(AppealsView):
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
                 match.log_event('scheduled')
-                match.clear_conflicts()
+                match.clear_conflicts(appeal)
                 return HttpResponseRedirect(f'/game/match/{match.id}/')
             decline_pk = context.get('decline')
             if decline_pk:

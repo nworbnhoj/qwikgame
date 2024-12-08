@@ -59,7 +59,7 @@ class Match(models.Model):
         match.save()
         return match
 
-    def clear_conflicts(self):
+    def clear_conflicts(self, scheduled_appeal):
         from player.models import Bid, Appeal
         for bid in Bid.objects.filter(
                 appeal__date=self.date,
@@ -69,11 +69,8 @@ class Match(models.Model):
         for appeal in Appeal.objects.filter(
                 player__in=self.competitors.all(),
                 date=self.date.date()
-            ):
+            ).exclude(scheduled_appeal):
             appeal.hour_withdraw(self.date.hour)
-
-
-
 
     def icons(self):
         from player.models import Player

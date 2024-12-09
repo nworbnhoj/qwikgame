@@ -15,7 +15,7 @@
 {% block detail %}
         <div id="detail" class="detail">
             <div class="detail_head">
-                <div class="icon round badge">{{ review.match.venue_hour_str }}h</div>
+                <div class="icon round badge">{{ review.match.hour_str }}</div>
                 <div class='head'>
                     <p class="line">
                         <span class="icon">
@@ -27,7 +27,7 @@
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        {{ review.match.venue_date_str }} {{ review.match.venue_hour_str }}h
+                        {{ review.match.datetime_str }}
                     </p>
                     <p class="line">
                         <span class="icon">

@@ -15,7 +15,7 @@
 {% block detail %}
         <div id="detail" class="detail">
             <div class="detail_head">
-                <div class="icon round badge">{{ match.venue_hour_str }}h</div>
+                <div class="icon round badge">{{ match.hour_str }}</div>
                 <div class='head'>
                     <p class="line">
                         <span class="icon">
@@ -27,7 +27,7 @@
                         <span class="icon">
                             <i class="fa-solid fa-calendar fa-1x"></i>
                         </span>
-                        {{ match.venue_date_str }}
+                        {{ match.date_str }}
                     </p>
                     <p class="line">
                         <span class="icon">
@@ -58,7 +58,7 @@
             </div>
             <div class="banner {{ banner_class }}">
                 <p>{{ banner_txt }}</p>
-                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.venue_date_str }}, {{ match.venue_hour_str }}h, <span class="todo">Pesho</span></p>
+                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.datetime_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center">
 {% for icon in rival_icons %}

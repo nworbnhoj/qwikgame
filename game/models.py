@@ -43,7 +43,7 @@ class Match(models.Model):
 
     def __str__(self):
         names = [player.name() for player in self.competitors.all()]
-        return f'{self.game} {names} {self.date.strftime("%Y-%m-%d %H")}h {self.venue}'
+        return f'{self.game} {names} {self.datetime_str()} {self.venue}'
 
     @classmethod
     def from_bid(cls, bid):
@@ -71,6 +71,15 @@ class Match(models.Model):
                 date=self.date.date()
             ).exclude(scheduled_appeal):
             appeal.hour_withdraw(self.date.hour)
+
+    def date_str(self):
+        return self.date.strftime('%d %b %Y')
+
+    def datetime_str(self):
+        return self.date.strftime('%d %b %Y, %Hh')
+
+    def hour_str(self):
+        return self.date.strftime('%Hh')
 
     def icons(self):
         from player.models import Player

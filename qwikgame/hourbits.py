@@ -135,14 +135,14 @@ class Hours24():
         return ' '.join(hour_blocks)
 
     def as_str(self):
-        raw = match self.as_str_raw():
+        raw = self.as_str_raw()
         match raw:
-        case '--':
-            return ''
-        case '24':
-            return '24hrs'
-        case _:
-            return f'{raw}h'
+            case '--':
+                return ''
+            case '24':
+                return '24hrs'
+            case _:
+                return f'{raw}h'
 
 
     def is_all(self):
@@ -269,12 +269,12 @@ class Hours24x7():
         return ' '.join(day_blocks)
 
     def as_str(self):
-        raw = match self.as_str_raw():
+        raw = self.as_str_raw()
         match raw:
-        case '':
-            return '--'
-        case _:
-            return raw
+            case '':
+                return '--'
+            case _:
+                return raw
 
     def as_days7(self):
         return [bytes(self.bits[i: i+3]) for i in range(0, 21, 3)]

@@ -134,8 +134,8 @@ class Hours24():
                 hour_blocks=['']
         return ' '.join(hour_blocks)
 
-    def as_str(self):
-        raw = self.as_str_raw()
+    def as_str(self, hours=range(0,23), day_all=DAY_ALL):
+        raw = self.as_str_raw(hours, day_all)
         match raw:
             case '--':
                 return ''
@@ -268,8 +268,8 @@ class Hours24x7():
                 day_blocks.append(day_block)
         return ' '.join(day_blocks)
 
-    def as_str(self):
-        raw = self.as_str_raw()
+    def as_str(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
+        raw = self.as_str_raw(hours, week_all, day_all)
         match raw:
             case '':
                 return '--'

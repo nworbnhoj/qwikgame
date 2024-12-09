@@ -110,11 +110,11 @@ class Hours24():
     def as_list(self):
         return [i for i in range(0,23) if self.as_int() >> (23-i) & 1]
 
-    def as_str(self, hours=range(0,23), day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0,23), day_all=DAY_ALL):
         if self.bits == DAY_NONE:
             return ''
         if self.bits == day_all:
-            return '24hrs'
+            return '24'
         day = self.as_bools()
         start, end = None, None
         r_start, r_end = hours[0], hours[-1]
@@ -133,6 +133,17 @@ class Hours24():
             if start == r_start and end == r_end:
                 hour_blocks=['']
         return ' '.join(hour_blocks)
+
+    def as_str(self):
+        raw = match self.as_str_raw():
+        match raw:
+        case '--':
+            return ''
+        case '24':
+            return '24hrs'
+        case _:
+            return f'{raw}h'
+
 
     def is_all(self):
         return self.bits == DAY_ALL
@@ -241,21 +252,29 @@ class Hours24x7():
     def as_bytes(self):
         return self.bits
 
-    def as_str(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
         if self.bits == WEEK_NONE:
-            return '--'
+            return ''
         if self.bits == week_all:
             return '24x7'
         r_start, r_end = hours[0], hours[-1]
         day_blocks=[]
         for d, bytes3 in enumerate(self.as_days7()):
-            hours_str = Hours24(bytes3).as_str(day_all=day_all)
+            hours_str = Hours24(bytes3).as_str_raw(day_all=day_all)
             if len(hours_str) > 0:
                 day_block = WEEK_DAYS[d][:3].casefold().capitalize()
-                if hours_str != '24hrs':
+                if hours_str != '24':
                     day_block += f'({hours_str})'
                 day_blocks.append(day_block)
         return ' '.join(day_blocks)
+
+    def as_str(self):
+        raw = match self.as_str_raw():
+        match raw:
+        case '':
+            return '--'
+        case _:
+            return raw
 
     def as_days7(self):
         return [bytes(self.bits[i: i+3]) for i in range(0, 21, 3)]

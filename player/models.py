@@ -471,7 +471,7 @@ class Appeal(models.Model):
         )
         match template:
             case 'appeal':
-                entry['text'] = "Proposed {} at {}, {}, {}h".format(
+                entry['text'] = "Proposed {} at {}, {}, {}".format(
                     self.game,
                     self.venue,
                     self.venue.datetime(self.date).strftime("%b %d"),
@@ -634,7 +634,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = f'accepted {self.hours24().as_str()}h with {rival.name}'
+                    text = f'accepted {self.hours24().as_str()} with {rival.name}'
                 )
             case 'bid':
                 person = self.rival.user.person
@@ -644,7 +644,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = person.name,
                     pk = str(self.pk),
-                    text = f'accepted {self.hours24().as_str()}h'
+                    text = f'accepted {self.hours24().as_str()}'
                 )
             case 'decline':
                 player = self.appeal.player
@@ -654,7 +654,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
-                    text = f'declined {self.hours24().as_str()}h with {rival.name}'
+                    text = f'declined {self.hours24().as_str()} with {rival.name}'
                 )
             case 'expired':
                 person = self.rival.user.person
@@ -673,7 +673,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = rival.name,
-                    text = f'withdrew {self.hours24().as_str()}h'
+                    text = f'withdrew {self.hours24().as_str()}'
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

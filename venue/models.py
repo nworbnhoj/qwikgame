@@ -1,7 +1,7 @@
 import logging, pytz, sys
 from django.db import models
 from pytz import datetime, timezone
-from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SIZE, SOUTH, WEEKDAY, WEST
+from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SOUTH, WEEKDAY, WEST
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
 # from api.models import Mark
@@ -176,7 +176,7 @@ class Region(Place):
             ).first()
         return None
 
-    def place(self):
+    def place_args(self):
         kwargs = { COUNTRY: self.country }
         if self.admin1:
             kwargs[ADMIN1] = self.admin1

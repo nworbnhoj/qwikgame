@@ -3,18 +3,20 @@ from django.db import models
 from django.db.models import Sum
 from venue.models import Region, Venue
 from player.models import Filter, Player
-from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, SIZE
+from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, NUM_PLAYER, NUM_VENUE
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
 
 class Mark(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE, blank=True, null=True)
+    num_player = models.PositiveIntegerField(default=0)
+    num_venue = models.PositiveIntegerField(default=0)
     place = models.ForeignKey('venue.Place', on_delete=models.CASCADE)
-    size = models.PositiveIntegerField(default=0)
 
     def save(self, **kwargs):
-        self.update_size()
+        self.update_num_player()
+        self.update_num_venue()
         super().save(**kwargs)
         logger.debug(f'Mark save: {self}')
         # recursively add parent-Marks if required
@@ -41,7 +43,7 @@ class Mark(models.Model):
 
         return '{} [{}] {}'.format(
             self.game,
-            self.size,
+            self.num_player,
             self.place.name,
             )
 
@@ -93,6 +95,19 @@ class Mark(models.Model):
     def place_filter(place):
         return {k: v for k, v in place.items() if v is not None}    
 
+    def children(self):
+        place = self.place
+        if place.is_venue:
+            return None
+        mark_qs = Mark.objects.filter(place__country=place.country)
+        if place.admin1:
+            mark_qs = mark_qs.filter(place__admin1=place.admin1)
+        if place.locality:
+            mark_qs = mark_qs.filter(place__locality=place.locality)
+        if self.game:
+            mark_qs = mark_qs.filter(game=self.game)
+        return mark_qs.distinct()
+
     def key(self):
         key = self.place.country
         if self.place.admin1:
@@ -104,17 +119,33 @@ class Mark(models.Model):
         return key
 
     def mark(self):
-        mark = { SIZE: self.size }
+        mark = { NUM_PLAYER: self.num_player }
         if self.game:
             mark |= { GAME: self.game.code }
         if self.place.is_venue:
             mark |= self.place.venue.mark()
         elif self.place.is_region:
             mark |= self.place.region.mark()
+            mark |= { NUM_VENUE: self.num_venue }
         else:
             logger.warn('Mark not venue or region:'.format(self.id))
             return None
         return mark;
+
+    def non_game_mark(self):
+        if not self.game:
+            return self
+        place = self.place
+        mark_qs = Mark.objects.filter(game__isnull=True, place__country=place.country)
+        if place.admin1:
+            mark_qs = mark_qs.filter(place__admin1=place.admin1)
+        else:
+            mark_qs = mark_qs.filter(place__admin1__isnull=True)
+        if place.locality:
+            mark_qs = mark_qs.filter(place__locality=place.locality)
+        else:
+            mark_qs = mark_qs.filter(place__locality__isnull=True)
+        return mark_qs.first()
 
     def parent(self):
         mark_qs = Mark.objects.filter(game=self.game, place__country=self.place.country)
@@ -139,9 +170,37 @@ class Mark(models.Model):
             place[LOCALITY] = self.locality
         return place
 
-    # TODO call update_size() on add/delete Filter and add Match
-    def update_size(self):
-        old_size = self.size
+
+    def update_num_venue(self):
+        old_num_venue = self.num_venue
+        place = self.place
+        if place.is_region:
+            venue_qs = Venue.objects.filter(country=place.country)
+            if place.admin1:
+                venue_qs = venue_qs.filter(admin1=place.admin1)
+            if place.locality:
+                venue_qs = venue_qs.filter(locality=place.locality)
+            if self.game:
+                venue_qs = venue_qs.filter(games__in=[self.game.pk])
+            self.num_venue = venue_qs.distinct().count()
+        if self.num_venue != old_num_venue:
+            logger.info(f'Mark update num_venue: {self}')
+            # update the num_venue of the parent region Mark
+            parent = self.parent()
+            if parent:
+                parent.save()
+            # update the num_venue of the non-game Mark
+            if self.game:
+                mark = self.non_game_mark()
+                if mark:
+                    mark.save()
+                else:
+                    logger.warn(f'failed to update non-game Mark: {self}')
+    
+
+    # TODO call update_num_player() on add/delete Filter and add Match
+    def update_num_player(self):
+        old_num_player = self.num_player
         place = self.place
         if place.is_venue:
             appeal_qs = Player.objects.filter(appeal__venue=place)
@@ -154,34 +213,19 @@ class Mark(models.Model):
                 filter_qs = filter_qs.filter(filter__game=self.game)
                 match_qs = match_qs.filter(match__game=self.game)
             player_qs = appeal_qs | bid_qs | filter_qs | match_qs
-            self.size = player_qs.distinct().count()
+            self.num_player = player_qs.distinct().count()
         elif place.is_region:
-            venue_qs = Venue.objects.filter(country=place.country)
-            if place.admin1:
-                venue_qs = venue_qs.filter(admin1=place.admin1)
-            if place.locality:
-                venue_qs = venue_qs.filter(locality=place.locality)
-            if self.game:
-                venue_qs = venue_qs.filter(games__in=[self.game.pk])
-            self.size = venue_qs.distinct().count()
-        if self.size != old_size:
-            logger.info(f'Mark update size: {self}')
-            # update the size of the parent region Mark
+            aggregate = self.children().aggregate(Sum('num_player'))
+            self.num_player = aggregate.get('num_player__sum', 0)
+        if self.num_player != old_num_player:
+            logger.info(f'Mark update num_player: {self}')
+            # update the num_player of the parent region Mark
             parent = self.parent()
             if parent:
                 parent.save()
-            # update the size of the non-game Mark
+            # update the num_player of the non-game Mark
             if self.game:
-                mark_qs = Mark.objects.filter(game__isnull=True, place__country=place.country)
-                if place.admin1:
-                    mark_qs = mark_qs.filter(place__admin1=place.admin1)
-                else:
-                    mark_qs = mark_qs.filter(place__admin1__isnull=True)
-                if place.locality:
-                    mark_qs = mark_qs.filter(place__locality=place.locality)
-                else:
-                    mark_qs = mark_qs.filter(place__locality__isnull=True)
-                mark = mark_qs.first()
+                mark = self.non_game_mark()
                 if mark:
                     mark.save()
                 else:

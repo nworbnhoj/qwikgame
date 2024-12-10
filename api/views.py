@@ -131,7 +131,7 @@ class VenueMarksJson(QwikView):
         if len(regions) == 0:
             closest = {}
         elif len(regions) == 1:
-            for k,v in regions[0].place().items():
+            for k,v in regions[0].place_args().items():
                 response[k] = v
         else:
             closest = None
@@ -143,7 +143,7 @@ class VenueMarksJson(QwikView):
                 if distance < min_distance:
                     min_distance = distance
                     closest = region
-            for k,v in closest.place().items():
+            for k,v in closest.place_args().items():
                 response[k] = v
 
         json_response = JsonResponse(response)

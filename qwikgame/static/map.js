@@ -275,7 +275,7 @@ function showMarkInfo(mark, template){
   switch (template){
     case 'region':
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
-      FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+      FRAG.getElementById("map_mark_info_size").textContent = mark.num_venue.toString();
       var pixelOffset = new google.maps.Size(0,-30)
       break;
     case 'place':
@@ -290,7 +290,7 @@ function showMarkInfo(mark, template){
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
       FRAG.getElementById("map_mark_info_address").textContent = mark.address;
       FRAG.getElementById("map_mark_info_open").textContent = mark.open;
-      FRAG.getElementById("map_mark_info_size").textContent = mark.size.toString();
+      FRAG.getElementById("map_mark_info_size").textContent = mark.num_player.toString();
       var pixelOffset = new google.maps.Size(0,-40)
       break;
   }
@@ -503,7 +503,7 @@ function updateMapRegion(){
   // SORT REGIONS from largest to smallest
   const KEYS = Array.from(OBSERVABLE.keys());
   KEYS.sort(function(a,b){
-    return OBSERVABLE.get(b).size - OBSERVABLE.get(a).size
+    return OBSERVABLE.get(b).num_player - OBSERVABLE.get(a).num_player
   });
   
   // clear MAP_REGION and replace with sorted OBSERVABLE (Map retains insertion order)
@@ -818,17 +818,16 @@ function endowMark(key, mark){
   mark.marker = new google.maps.Marker(OPTIONS);
   
   const K = key.split('|');
-  size = mark.size.toString();
   var onclick = 'noop';
   if(K.length === 4){  // venue Mark
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
-    mark.marker.setLabel({text:size, className:'qg_style_mark_label venue'});
+    mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
     setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
   } else {  // region Mark
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
-    mark.marker.setLabel({text:size, className:'qg_style_mark_label region', fontSize: 'large'});
+    mark.marker.setLabel({text:mark.num_venue.toString(), className:'qg_style_mark_label region', fontSize: 'large'});
     mark.bounds = markBounds(mark);
     mark.area = degArea(mark.bounds);
     setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER, ONPRESS_REGION_MARKER)
@@ -845,7 +844,6 @@ function setMarkListeners(mark, template, onclick, onhover, onpress){
       onpress_detected = false;
       return;
     }
-
     switch (onclick){
       case 'center':
         qwikMap.setZoom(qwikMap.getZoom()+1);

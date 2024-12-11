@@ -85,7 +85,6 @@
         <div class="post form">
 {% if bid %}
             <div class="pillar">
-                <p>Awaiting Players to accept</p>
                 <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
 {% csrf_token %}
                     <label class="btn tertiary">

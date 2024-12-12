@@ -72,12 +72,18 @@ class Match(models.Model):
             ).exclude(scheduled_appeal):
             appeal.hour_withdraw(self.date.hour)
 
+    def competitor_names(self):
+        return [player.name() for player in self.competitors.all()]
+
+    @property
     def date_str(self):
         return self.date.strftime('%d %b %Y')
 
+    @property
     def datetime_str(self):
         return self.date.strftime('%d %b %Y, %Hh')
 
+    @property
     def hour_str(self):
         return self.date.strftime('%Hh')
 

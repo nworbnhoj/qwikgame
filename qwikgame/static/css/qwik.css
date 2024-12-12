@@ -8,6 +8,17 @@ blockquote:before, blockquote:after, q:before, q:after { content: "" }
 blockquote, q { quotes: "" "" }
 @font-face { font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
 @font-face { font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
+
+/* Over-ride std checkbox */
+input[type=checkbox] { display:none; }
+label:has( input[type=checkbox])::before { content: ''; border: 1px solid #ddd; color: #f3f3f3; display: inline-block;  height: 1.2em; line-height: 1em;  margin: 0.5em; text-align: center; vertical-align: middle; width: 1.2em; }
+label:has( input[type=checkbox]:checked)::before { background-color: #2b78e4; content: "\2713"; }
+
+/* Over-ride std radio */
+input[type=radio] { display:none; }
+label:has( input[type=radio])::before { content: ''; border: 1px solid #ddd; border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; text-align: center; width: 1.2em;  margin-right: 10px;  vertical-align: middle; }
+label:has( input[type=radio]:checked)::before { content: "\2022";  background-color: #2b78e4; content: "\2713"; }
+
 .align_center { align-self: center }
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }
@@ -17,6 +28,9 @@ blockquote, q { quotes: "" "" }
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) {box-shadow: none; transform: none;}
 .btn:has(input.hidden) { display: none }
+
+/* hide custom checkbox behaviour for label.btn (used extensively) */
+label.btn:has( input[type=checkbox])::before { content: none; }
 
 .btn.primary { background-color: #f5a600; border-color: #f5a600; color: #333333;  }
 .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
@@ -55,14 +69,6 @@ blockquote, q { quotes: "" "" }
 .btn.special2:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1.5em;}
-
-.btn.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
-.btn.reveal > input { display: none; }
-.btn.reveal.check > input { display: inline-block; }
-.btn.reveal:active { box-shadow: none; transform: none;  }
-.btn.reveal:has(input) ~ div.field { display: none; }
-.btn.reveal:has(input:checked) ~ div.field { display: flex; }
-label.btn.reveal { display: inline-block; }
 
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
@@ -155,6 +161,8 @@ div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
 div.down label:has(input:checked) { color: #dfa622 }
+div.down label:has( input[type=checkbox])::before { content: none; }
+div.down label:has( input[type=radio])::before { content: none; }
 div.drop_down { display: flex; flex-direction: column; position: relative; right:0.3em;}
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
@@ -255,6 +263,12 @@ label.option { display: flex; align-items: stretch; gap: 1em; padding: 0.3em 0 0
 label.option div.btn { height: 1em }
 label.option input[type=checkbox] { display: none }
 label.option:has(input:checked) { color: #dfa622 }
+label.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
+label.reveal > input { display: none; }
+label.reveal:active { box-shadow: none; transform: none;  }
+label.reveal:has(input) ~ div.field { display: none; }
+label.reveal:has(input:checked) ~ div.field { display: flex; }
+label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }

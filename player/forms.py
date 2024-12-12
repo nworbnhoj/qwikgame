@@ -467,7 +467,6 @@ class KeenForm(QwikForm):
     def personalise(self, player):
         self.fields['friends'].choices = player.friend_choices()
         self.fields['friends'].reveal = 'Invite Friends Only?'
-        self.fields['friends'].reveal_css_classes = 'btn check'
         if not self.fields['friends'].choices:
             self.fields['friends'].sub_text = "You don't have any added friends yet. Please add them from the Friends tab"
         self.fields['today'].sub_text = ' '

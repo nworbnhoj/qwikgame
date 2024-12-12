@@ -543,11 +543,16 @@ class Filter(models.Model):
 
 
 class Friend(models.Model):
-    email = models.EmailField(max_length=255, verbose_name="email address", unique=True)
+    email = models.EmailField(max_length=255, verbose_name="email address")
     name = models.CharField(max_length=32, blank=True)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='usher')
     strengths = models.ManyToManyField('player.Strength')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['email', 'player'], name='unique_friend')
+        ]
 
     def __str__(self):
         return "{} knows {}".format(self.player, self.rival)

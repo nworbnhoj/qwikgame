@@ -286,7 +286,7 @@ span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
 span.qwik { color: #dfa622 }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
-time { color: #999999; text-align: right; }
+time { color: #999999; font-size: small; text-align: right; }
 
 @keyframes l46 {
   0%  {background-position: 0 0      ,100% 0,100% 100%,0 100%}

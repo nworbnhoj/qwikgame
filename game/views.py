@@ -37,6 +37,7 @@ class MatchesView(QwikView):
             match.seen = '' if seen else 'unseen'
         self._context['matches'] = matches
         self._context |= {
+            'cta_disabled': '' if matches_future else 'disabled',
             'match': self._context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
@@ -169,6 +170,7 @@ class ReviewsView(QwikView):
             seen = player.pk in review.meta.get('seen', [])
             review.seen = '' if seen else 'unseen'
         self._context |= {
+            'cta_disabled': '' if reviews else 'disabled',
             'review': self._context['item'],
             'reviews': reviews,
             'player_id': self.user.player.facet(),

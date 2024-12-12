@@ -7,7 +7,8 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-    <a class="btn special1 mobile" href="">
+    <a class="btn special1 mobile" href="{% url 'review' %}">
+        <input {{ cta_disabled }} type="hidden" name="">
     <i class="fa-solid fa-thumbs-up fa-3x"></i>
     </a>
 {% endif %}
@@ -16,7 +17,8 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-    <a class="btn special1" href="">
+    <a class="btn special1" href="{% url 'review' %}">
+        <input {{ cta_disabled }} type="hidden" name="">
         <i class="fa-solid fa-thumbs-up fa-xl"></i>
         <p>Review</p>
     </a>

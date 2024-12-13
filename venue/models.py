@@ -1,6 +1,5 @@
-import logging, pytz, sys
+import datetime, logging, pytz, sys
 from django.db import models
-from pytz import datetime, timezone
 from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SOUTH, WEEKDAY, WEST
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
@@ -255,9 +254,7 @@ class Venue(Place):
 
     # returns an aware datetime based in the venue timezone
     def datetime(self, date, time=datetime.time(hour=0)):
-        naive = datetime.datetime.combine(date, time)
-        aware = self.tzinfo().localize(naive)
-        return aware
+        return datetime.datetime.combine(date, time, self.tzinfo)
 
     def mark(self):
         return {
@@ -273,7 +270,7 @@ class Venue(Place):
         }
 
     def now(self):
-        return datetime.datetime.now(pytz.timezone(self.tz))
+        return datetime.datetime.now(self.tzinfo)
 
     def open_7int_str(self):
         open = self.open_week.as_7int()
@@ -298,5 +295,6 @@ class Venue(Place):
         ).first()
 
 
+    @property
     def tzinfo(self):
-        return timezone(self.tz)
+        return pytz.timezone(self.tz)

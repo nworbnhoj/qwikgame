@@ -1,5 +1,5 @@
-import logging, pytz
-from datetime import datetime, timedelta
+import logging
+from datetime import datetime, timedelta, timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -26,7 +26,7 @@ class MatchesView(QwikView):
         super().context(request, *args, **kwargs)
         player = self.user.player
         matches = self._context['items']
-        now = datetime.now(pytz.utc) + DELAY_MATCHS_LIST
+        now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now)
         for match in matches_future:
             seen = player.pk in match.meta.get('seen', [])
@@ -72,7 +72,7 @@ class MatchView(MatchesView):
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
                     break
-            now = datetime.now(pytz.utc)
+            now = datetime.now(timezone.utc)
             if match.status == 'A':
                 if now > match.date + DELAY_MATCH_BANNER:
                     match.status = 'C'

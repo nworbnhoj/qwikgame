@@ -1,4 +1,4 @@
-import logging, pytz
+import logging
 from datetime import datetime, timedelta
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -665,7 +665,7 @@ class FriendView(FriendsView):
                 player = player,
                 rival = friend.rival,
                 defaults = {
-                    'date': datetime.now(pytz.utc),
+                    'date': datetime.now(timezone.utc),
                     'relative': context['strength'],
                     'weight': 3
                 }
@@ -713,7 +713,7 @@ class FriendStrengthView(FriendsView):
                 player = player,
                 rival = friend.rival,
                 defaults = {
-                    'date': datetime.now(pytz.utc),
+                    'date': datetime.now(timezone.utc),
                     'relative': context['strength'],
                     'weight': 3
                 }

@@ -157,7 +157,7 @@ class Match(models.Model):
         return self._venue_time().strftime("%H")
 
     def _venue_time(self):
-        return self.date.astimezone(self.venue.tzinfo())
+        return self.date.astimezone(self.venue.tzinfo)
 
 
 class Review(models.Model):

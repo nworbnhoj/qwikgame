@@ -1,4 +1,4 @@
-import logging,pytz
+import logging
 from datetime import datetime, timedelta
 from game.models import Match, Review
 
@@ -9,7 +9,7 @@ logger = logging.getLogger(__file__)
 # Intended to be run daily as a cron job
 def match_perish():
     stats = {}
-    now = datetime.now(pytz.utc)
+    now = datetime.now(timezone.utc)
     matches = Match.objects.filter(status='C').all()
     for match in matches:
         action = match.perish()
@@ -21,7 +21,7 @@ def match_perish():
 # Intended to be run hourly as a cron job
 def match_review_init():
     stats = {}
-    now = datetime.now(pytz.utc)
+    now = datetime.now(timezone.utc)
     matches = Match.objects.filter(status='A', date__lte=now).all()
     for match in matches:
         for player in match.competitors.all():

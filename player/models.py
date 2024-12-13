@@ -1,8 +1,6 @@
-import logging, math, numbers, statistics
-import hashlib, pytz
+import datetime, hashlib, logging, math, numbers, statistics
 from django.db import models
 from django.utils.timezone import now
-from pytz import datetime
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
@@ -514,8 +512,9 @@ class Appeal(models.Model):
     def set_hours(self, hours24):
         self.hours = hours24.as_bytes()
 
+    @property
     def tzinfo(self):
-        return self.venue.tzinfo()
+        return self.venue.tzinfo
 
 
 class Filter(models.Model):

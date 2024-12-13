@@ -1,4 +1,4 @@
-import logging, pytz
+import logging
 from datetime import datetime, timedelta
 
 ENDIAN = 'big'

@@ -11,12 +11,12 @@ blockquote, q { quotes: "" "" }
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display:none; }
-label:has( input[type=checkbox])::before { content: none; border: 1px solid #ddd; color: #f3f3f3; display: inline-block;  height: 1.2em; line-height: 1em;  margin: 0.5em; text-align: center; vertical-align: middle; width: 1.2em; }
+label:has( input[type=checkbox])::before { content: ''; border: 1px solid #ddd; color: #f3f3f3; display: inline-block;  height: 1.2em; line-height: 1em;  margin: 0.5em; text-align: center; vertical-align: middle; width: 1.2em; }
 label:has( input[type=checkbox]:checked)::before { background-color: #2b78e4; content: "\2713"; }
 
 /* Over-ride std radio */
 input[type=radio] { display:none; }
-label:has( input[type=radio])::before { content: none; border: 1px solid #ddd; border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; text-align: center; width: 1.2em;  margin-right: 10px;  vertical-align: middle; }
+label:has( input[type=radio])::before { content: ''; border: 1px solid #ddd; border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; text-align: center; width: 1.2em;  margin-right: 10px;  vertical-align: middle; }
 label:has( input[type=radio]:checked)::before { content: "\2022";  background-color: #2b78e4; content: "\2713"; }
 
 .align_center { align-self: center }

@@ -96,6 +96,7 @@ class AcceptView(AppealsView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player
+        appeal = Appeal.objects.filter(pk=kwargs['appeal']).first()
         context = self.accept_form_class.post(
             request.POST,
             player,

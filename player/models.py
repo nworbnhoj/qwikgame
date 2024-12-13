@@ -1,4 +1,4 @@
-import logging, math, statistics
+import logging, math, numbers, statistics
 import hashlib, pytz
 from django.db import models
 from django.utils.timezone import now
@@ -228,6 +228,10 @@ class Player(models.Model):
                 discrepancy += 0.5
             else:
                 continue
+        if isinstance(strength, numbers.Real) and isinstance(discrepancy, numbers.Real):
+            divisor = len(players) - 1
+            strength = strength / divisor
+            discrepancy = discrepancy / divisor 
         logger.debug(f'{players} {strength} {discrepancy}')
         return strength, discrepancy
     

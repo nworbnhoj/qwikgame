@@ -179,7 +179,7 @@ class Review(models.Model):
                     id = self.player.facet(),
                     klass= 'reviewed',
                     name = person.name,
-                    text = f'reviewed {self.rival}'
+                    text = f'reviewed the Match'
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

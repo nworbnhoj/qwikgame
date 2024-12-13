@@ -602,8 +602,9 @@ class Bid(models.Model):
         return self.hours is not None
 
     # returns the accepted datetime in venue timezone - or None otherwise
+    @property
     def datetime(self):
-        accepted_hour = self._hour()
+        accepted_hour = self._hour
         if accepted_hour is None:
             return None
         time = datetime.time(hour=accepted_hour)
@@ -612,11 +613,10 @@ class Bid(models.Model):
     def game(self):
         return self.appeal.game
 
+    @property
     def _hour(self):
         if self.accepted():
-            for hr, include in enumerate(self.hours24().as_bools()):
-                if include:
-                    return hr
+            return self.hours24().last_hour()
         return None
 
     def hours24(self):

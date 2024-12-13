@@ -43,7 +43,7 @@ class Match(models.Model):
 
     def __str__(self):
         names = [player.name() for player in self.competitors.all()]
-        return f'{self.game} {names} {self.datetime_str()} {self.venue}'
+        return f'{self.game} {names} {self.datetime_str} {self.venue}'
 
     @classmethod
     def from_bid(cls, bid):

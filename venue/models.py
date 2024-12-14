@@ -1,4 +1,5 @@
-import datetime, logging, pytz, sys
+import datetime, logging, sys
+from dateutil import zoneinfo, tz
 from django.db import models
 from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SOUTH, WEEKDAY, WEST
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
@@ -7,7 +8,8 @@ from service.locate import Locate
 
 logger = logging.getLogger(__file__)
 
-TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
+TZS = zoneinfo.get_zonefile_instance().zones
+TIMEZONES = tuple(zip(TZS, TZS))
 
 
 class Manager(models.Model):
@@ -294,7 +296,6 @@ class Venue(Place):
             locality=self.locality
         ).first()
 
-
     @property
     def tzinfo(self):
-        return pytz.timezone(self.tz)
+        return tz.gettz(self.tz)

@@ -8,6 +8,11 @@ class MatchAdmin(admin.ModelAdmin):
     list_filter = [ 'game', 'date', 'venue__country', 'venue__admin1', 'venue__locality', 'venue', 'competitors' ]
     ordering = ['date', 'game']
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'player', 'rival', 'match']
+    list_filter = ['player', 'rival', 'match']
+
+
 admin.site.register(Game)
 admin.site.register(Match, MatchAdmin)
-admin.site.register(Review)
+admin.site.register(Review, ReviewAdmin)

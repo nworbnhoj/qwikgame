@@ -9,7 +9,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 
 class VenueAdmin(admin.ModelAdmin):
-    list_display = ['name', 'open_week']
+    list_display = ['pk', 'name', 'open_week', 'tz']
     list_filter = ['games', 'country', 'admin1', 'locality']
     ordering = ['name']
 

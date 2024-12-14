@@ -5,17 +5,18 @@ from .models import Appeal, Bid, Filter, Friend, Player, Precis, Strength
 
 
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'hour_dips']
+    list_display = ['pk', 'player', 'game', 'date', 'hour_dips', 'venue']
     list_filter = ['game', 'venue__country', 'venue__admin1', 'venue__locality', 'venue']
     ordering = ['game']
 
 class BidAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'pk']
+    list_display = ['pk', 'rival', '_hour', 'strength', 'appeal']
     list_filter = ['appeal__game', 'appeal__venue__country', 'appeal__venue__admin1', 'appeal__venue__locality', 'appeal__venue']
     ordering = ['appeal__game']
 
 class FilterAdmin(admin.ModelAdmin):
-    list_filter = ['active', 'place', 'game']
+    list_display = ['pk', 'active', 'player', 'place', 'game']
+    list_filter = ['active', 'player', 'place', 'game']
     ordering = ['game']
 
 class FriendAdmin(admin.ModelAdmin):

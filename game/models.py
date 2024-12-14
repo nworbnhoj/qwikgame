@@ -77,15 +77,19 @@ class Match(models.Model):
 
     @property
     def date_str(self):
-        return self.date.strftime('%d %b %Y')
+        return self.datetime_aware.strftime('%d %b %Y')
 
     @property
+    def datetime_aware(self):
+        return self.date.astimezone(self.venue.tzinfo)
+    
+    @property
     def datetime_str(self):
-        return self.date.strftime('%d %b %Y, %Hh')
+        return self.datetime_aware.strftime('%d %b %Y, %Hh')
 
     @property
     def hour_str(self):
-        return self.date.strftime('%Hh')
+        return self.datetime_aware.strftime('%Hh')
 
     def icons(self):
         from player.models import Player

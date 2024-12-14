@@ -429,7 +429,9 @@ class KeenView(AppealsView):
             venue.games.add(game)
             logger.info(f'Venue Game add: {game}')
             venue.save()
-            mark = Mark(game=game, place=place, size=1)
+            # TODO consider delay adding Mark until Match completed as Venue/Game combination
+            # TODO Venue Manager to set and restrict Games at Venue
+            mark = Mark(game=game, place=place, num_player=1)
             mark.save()
             logger.info(f'Mark new {mark}')
         appeal_pk = None

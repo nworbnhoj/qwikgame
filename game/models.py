@@ -69,7 +69,7 @@ class Match(models.Model):
         for appeal in Appeal.objects.filter(
                 player__in=self.competitors.all(),
                 date=self.date.date()
-            ).exclude(scheduled_appeal):
+            ).exclude(pk=scheduled_appeal.pk):
             appeal.hour_withdraw(self.date.hour)
 
     def competitor_names(self):

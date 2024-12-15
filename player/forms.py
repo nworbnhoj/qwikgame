@@ -72,8 +72,11 @@ class BidForm(QwikForm):
     def get(klass, appeal):
         form = klass()
         form.fields['hour'].widget.set_hours_show(appeal.hour_list())
-        next_hour = appeal.venue.now().hour + 1
-        form.fields['hour'].widget.set_hours_enable(list(range(next_hour, 24)))
+        active_hours = []
+        if appeal.status == 'A':
+            next_hour = appeal.venue.now().hour + 1
+            active_hours = list(range(next_hour, 24))
+        form.fields['hour'].widget.set_hours_enable(active_hours)
         return { 'bid_form': form }
 
     # Initializes an BidForm for an 'appeal'.

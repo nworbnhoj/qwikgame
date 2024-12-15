@@ -109,6 +109,7 @@ class AcceptView(AppealsView):
             try:
                 cancel_pk = context.get('CANCEL')
                 appeal = Appeal.objects.get(pk=cancel_pk)
+                appeal.status = 'X'
                 game = appeal.game
                 venue = appeal.venue
                 appeal.meta['seen'] = [player.pk]
@@ -124,6 +125,8 @@ class AcceptView(AppealsView):
         try:
             accept_pk = context.get('accept')
             if accept_pk:
+                appeal.status = 'D'
+                appeal.save()
                 bid = Bid.objects.get(pk=accept_pk)
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
@@ -206,22 +209,24 @@ class BidView(AppealsView):
             except:
                 logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
-        strength, confidence = appeal.player.strength_est(appeal.game, player)
-        bid = Bid.objects.create(
-            appeal=context['accept'],
-            hours=context['hour'].as_bytes(),
-            rival=player,
-            strength=strength,
-            str_conf=confidence,
-        )
-        bid.log_event('bid')
-        # mark this Appeal seen by this Player only
+        if appeal.status == 'A':
+            strength, confidence = appeal.player.strength_est(appeal.game, player)
+            bid = Bid.objects.create(
+                appeal=context['accept'],
+                hours=context['hour'].as_bytes(),
+                rival=player,
+                strength=strength,
+                str_conf=confidence,
+            )
+            bid.log_event('bid')
         appeal.meta['seen'] = [player.pk]
-        appeal.save()
-        # update the Mark size
-        mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
-        if mark:
-            mark.save()
+            # mark this Appeal seen by this Player only
+            appeal.meta['seen'] = [player.pk]
+            appeal.save()
+            # update the Mark size
+            mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+            if mark:
+                mark.save()
         return HttpResponseRedirect(f'/player/appeal/{appeal.id}/')
 
 

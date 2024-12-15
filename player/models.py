@@ -398,6 +398,13 @@ class Strength(models.Model):
         return f'{Strength.CONFIDENCE[confidence]} {Strength.SCALEZ[strength]}'
 
 class Appeal(models.Model):
+
+    STATUS = {
+        'A': 'active',
+        'D': 'dormant',
+        'X': 'cancelled',
+    }
+
     created = models.DateTimeField(default=now, editable=False)
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
@@ -406,6 +413,7 @@ class Appeal(models.Model):
     meta = models.JSONField(default=dict)
     rivals = models.ManyToManyField('self', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, choices=STATUS, default='A')
     venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
 
     class Meta:

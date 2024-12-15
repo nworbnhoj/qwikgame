@@ -49,7 +49,7 @@ class Match(models.Model):
     def from_bid(cls, bid):
         appeal = bid.appeal
         match = cls(
-            date = bid.datetime(),
+            date = bid.datetime,
             game = bid.appeal.game,
             log = bid.appeal.log.copy(),
             venue = bid.appeal.venue,

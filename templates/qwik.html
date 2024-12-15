@@ -21,8 +21,10 @@
 </head>
 
 <body>
+    <div id="alert_body_start" class="alert"></div>
     {% block icon_bar %}
     <div id="icon_bar" class="icon_bar">
+        <div id="alert_icon_start" class="alert"></div>
         <p class="fat">
             <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'home' %}">
         </p>
@@ -60,14 +62,18 @@
             <i class="fa-solid {{ person_icon }} fa-2x"></i>
             <span class="fat">{% block name %}{{ person_name }}{% endblock %}</span>
         </a>
+        <div id="alert_icon_end" class="alert"></div>
     </div>
     <div id="icon_bar_reserve" class="icon_bar_reserve"></div>
     {% endblock icon_bar %}
     {% block content %}
     <div id="content" class="content">
+        <div id="alert_content_start" class="alert"></div>
         {% block list_bar %}LIST_BAR{% endblock list_bar %}
         {% block detail %}DETAIL{% endblock detail %}
+        <div id="alert_content_end" class="alert"></div>
     </div>
     {% endblock content %}
+    <div id="alert_body_end" class="alert"></div>
 </body>
 </html>

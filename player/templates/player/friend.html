@@ -14,7 +14,9 @@
 
 {% block detail %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="detail_head">
+            <div id="alert_detail_head" class="alert"></div>
             <div class="icon selected">
                 <i class="fa-solid fa-user-group fa-2x"></i>
             </div>
@@ -55,6 +57,7 @@
 {% endif %}
         </div>
         <div class="post form">
+            <div id="alert_form_start" class="alert"></div>
 {% if friend %}
             <form id="form" action="{% url target friend=friend.pk %}" method="post">
 {% else %}
@@ -75,13 +78,16 @@
 {% csrf_token %}
 {{ strength_form }}
                 <div class="pillar">
+                    <div id="alert_form_submit" class="alert"></div>
                     <label class="btn secondary push_down">
                         <input hidden name="ADD" type="submit">
                         Submit
                     </label>
                 </div>
             </form>
+            <div id="alert_form_end" class="alert"></div>
         </div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endblock %}
 

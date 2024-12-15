@@ -27,7 +27,9 @@
 
 
 {% block list %}
+        <div id="alert_list_start" class="alert"></div>
         <div class="list_bar_head">
+            <div id="alert_list_head" class="alert"></div>
             <h1>Matches</h1> 
             <div class="drop_down todo">
                 <div class="btn drop" data-down="false">
@@ -50,6 +52,7 @@
                 </div>
             </div>
         </div>
+        <div id="alert_list_group1" class="alert"></div>
         <h2 class="show_group">
             Upcomming
             <span>▲</span>
@@ -88,6 +91,7 @@
            <p>No pending Matches</p>
 {% endfor %}
         </div>
+        <div id="alert_list_group2" class="alert"></div>
         <h2 class="show_group">
             History
             <span>▲</span>
@@ -124,12 +128,14 @@
             <p>No history yet!</p>
 {% endfor %}
         </div>
+        <div id="alert_list_end" class="alert"></div>
 {% endblock %}
 
 
 {% block detail %}
 {% if big_screen %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
                 No pending Matches<br>Keen to play?
@@ -139,6 +145,7 @@
                 Invite
             </a>
         <div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endif %}
 {% endblock detail %}

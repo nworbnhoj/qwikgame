@@ -14,7 +14,9 @@
 
 {% block detail %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="detail_head">
+            <div id="alert_detail_head" class="alert"></div>
             <div class="icon selected">
                 <i class="fa-solid fa-filter fa-2x"></i>
             </div>
@@ -29,10 +31,12 @@
 
         <div class="post">
             <div class="post form">
+                <div id="alert_form_start" class="alert"></div>
                 <form action="{% url 'filters' %}" method="post">
 {% csrf_token %}
 {{ filters_form }}
                     <div class="grid_2_col">
+                        <div id="alert_form_submit" class="alert"></div>
                         <label class="btn tertiary push_down">
                             <input hidden name="DELETE" type="submit"
                             onclick="return confirm('Delete these Filters?')">
@@ -44,7 +48,9 @@
                         </label>
                     </div>
                 </form>
+                <div id="alert_form_end" class="alert"></div>
             </div>
         </div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endblock detail %}

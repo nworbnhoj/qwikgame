@@ -51,7 +51,9 @@
 
 {% block detail %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="detail_head">
+            <div id="alert_detail_head" class="alert"></div>
             <div class="icon selected">
                 <i class="fa-solid fa-paper-plane fa-2x"></i>
             </div>
@@ -61,10 +63,12 @@
         </div>
         <div class="post">
             <div class="post form">
+                <div id="alert_form_start" class="alert"></div>
                 <form action="{% url 'keen' %}" method="post">
 {% csrf_token %}
 {{ keen_form }}
                     <div class="pillar">
+                        <div id="alert_forrm_submit" class="alert"></div>
                         <label id="appeal_submit" class="btn primary push_down">
                             <input hidden type="submit">
                             <i class="fa-solid fa-paper-plane fa-xl"></i>
@@ -73,8 +77,10 @@
                         </label>
                     </div>
                 </form>
+                <div id="alert_form_end" class="alert"></div>
             </div>
         </div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 
 {% include 'map.html' %}

@@ -27,7 +27,9 @@
 
 
 {% block list %}
+        <div id="alert_list_start" class="alert"></div>
         <div class="list_bar_head">
+            <div id="alert_list_head" class="alert"></div>
             <h1>Match Reviews</h1> 
             <div class="drop_down todo">
                 <div class="btn drop" data-down="false">
@@ -81,12 +83,14 @@
             </a>
 {% endfor %}
         </div>
+        <div id="alert_list_end" class="alert"></div>
 {% endblock %}
 
 
 {% block detail %}
 {% if big_screen %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
                 All Match reviews complete - thank you<br>Keen to play?
@@ -96,6 +100,7 @@
                 Invite
             </a>
         <div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endif %}
 {% endblock detail %}

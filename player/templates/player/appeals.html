@@ -25,13 +25,16 @@
 
 
 {% block list %}
+        <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
+            <div id="alert_list_head" class="alert"></div>
             <h1>Feed ({{ appeals_length }})</h1>
             <a class="btn secondary" href="{% url 'filters' %}">
                 <i class="fa-solid fa-filter fa-1x"></i>
                 Filter
             </a>
         </div>
+        <div id="alert_list_group1" class="alert"></div>
         <h2 class="show_group">
             Participating
             <span>▲</span>
@@ -74,6 +77,7 @@
             <p>No accepted invitations!</p>
 {% endfor %}
         </div>
+        <div id="alert_list_group2" class="alert"></div>
         <h2 class="show_group">
             All
             <span>▲</span>
@@ -113,12 +117,14 @@
             </a>
 {% endfor %}
         </div>
+        <div id="alert_list_end" class="alert"></div>
 {% endblock %}
 
 
 {% block detail %}
 {% if big_screen %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
                 Open an Invitation<br>or send a new one!
@@ -128,6 +134,7 @@
                 Invite
             </a>
         <div>
+        <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endif %}
 {% endblock detail %}

@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import timezone
 from game.models import Match, Review
 
 

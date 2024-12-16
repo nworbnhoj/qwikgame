@@ -1,9 +1,8 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils import timezone
 from game.models import Game, Match
 from player.forms import AcceptForm, FilterForm, FriendForm, KeenForm, BidForm, FiltersForm, StrengthForm
 from player.models import Appeal, Bid, Filter, Friend, Player, Strength

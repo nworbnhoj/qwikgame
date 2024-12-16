@@ -1,7 +1,6 @@
 import datetime, logging
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
-from django.utils import timezone
 from game.models import Game, Match
 from person.models import Person
 from player.models import Appeal, Bid, Filter, Friend, Player, Precis, Strength

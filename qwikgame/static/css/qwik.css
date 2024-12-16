@@ -71,6 +71,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1.5em;}
 
+.btn.hour { height: 3em; width: 3em; }
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
 .btn.small { font-size: 0.88em; min-height: 2em;}

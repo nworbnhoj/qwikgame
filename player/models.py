@@ -43,19 +43,19 @@ class Player(models.Model):
         if filters:
             appeal_qs = Appeal.objects.filter(player=self)            
             for f in filters:
+                qs = Appeal.objects
                 if f.game:
-                    appeal_qs |= Appeal.objects.filter(game=f.game)
+                    qs = qs.filter(game=f.game)
                 if f.place:
                     if f.place.is_venue:
-                        appeal_qs |= Appeal.objects.filter(venue=f.place)
+                        qs = qs.filter(venue=f.place)
                         # TODO hours intersection
                     elif f.place.is_region:
-                        qs = Appeal.objects
                         qs = qs.filter(venue__lat__lte=f.place.region.north)
                         qs = qs.filter(venue__lat__gte=f.place.region.south)
                         qs = qs.filter(venue__lng__lte=f.place.region.east)
                         qs = qs.filter(venue__lng__gte=f.place.region.west)
-                        appeal_qs |= qs
+                appeal_qs |= qs
         else:
             appeal_qs = Appeal.objects.all()
         # TODO include direct invites

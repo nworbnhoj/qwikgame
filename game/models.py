@@ -76,7 +76,7 @@ class Match(models.Model):
         for bid in Bid.objects.filter(
                 appeal__date=self.date,
                 rival__in=self.competitors.all(),
-            ):
+            ).exclude(appeal=scheduled_appeal):
             bid.withdraw()
         for appeal in Appeal.objects.filter(
                 player__in=self.competitors.all(),

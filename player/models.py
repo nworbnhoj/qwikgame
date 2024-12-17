@@ -28,6 +28,12 @@ class Player(models.Model):
     def hash(cls, text):
         return hashlib.md5(text.encode()).hexdigest()
 
+    def alert(self, type, expires=None):
+        return self.user.person.alert(type=type, expires=expires)
+
+    def alert_del(self, type):
+        return self.user.person.alert_del(type=type)
+
     # return a list of Appeals sorted by urgency:
     # - matching Player Filters,
     # - or by direct invitation,
@@ -411,7 +417,7 @@ class Appeal(models.Model):
     hours = models.BinaryField(default=DAY_NONE)
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
-    rivals = models.ManyToManyField('self', through='Bid')
+    rivals = models.ManyToManyField(Player, related_name='rivals', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS, default='A')
     venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
@@ -492,6 +498,10 @@ class Appeal(models.Model):
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
+
+    # returns an aware datetime for midnight on the day of this Appeal
+    def midnight(self):
+        return self.datetime(datetime.time(hour=23, minute=59, second=59))
 
     # Deletes the Appeal at the end of the day.
     def perish(self, dry_run=False):

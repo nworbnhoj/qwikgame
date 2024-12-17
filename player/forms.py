@@ -208,7 +208,7 @@ class FilterForm(QwikForm):
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
     @classmethod
-    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, place='map'):
+    def get(klass, player, game=None, hours=WEEK_NONE, strength=None, place='map', places=[]):
         form = klass(
                 initial = {
                     'game': game,
@@ -218,8 +218,6 @@ class FilterForm(QwikForm):
                 },
             )
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
-        places = player.place_suggestions(12)[:12]
-        logger.warn(places)
         choices = [('ANY','Anywhere'), ('show-map', 'Select from map'), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'] = ChoiceField(
@@ -245,9 +243,9 @@ class FilterForm(QwikForm):
     # Processes a FilterForm for 'player'.
     # Returns a context dict game, venue|placeid, hours
     @classmethod
-    def post(klass, request_post, player):
+    def post(klass, request_post, place_choices):
         form = klass(data=request_post)
-        form.fields['place'].choices += player.place_choices()
+        form.fields['place'].choices = [('placeid', '')] + place_choices
         context = { 'filter_form': form }
         if form.is_valid():
             context = {

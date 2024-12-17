@@ -245,7 +245,8 @@ class FilterForm(QwikForm):
     @classmethod
     def post(klass, request_post, place_choices):
         form = klass(data=request_post)
-        form.fields['place'].choices = [('placeid', '')] + place_choices
+        choices = [('ANY','Anywhere'), ('placeid', '')] + place_choices
+        form.fields['place'].choices = choices
         context = { 'filter_form': form }
         if form.is_valid():
             context = {

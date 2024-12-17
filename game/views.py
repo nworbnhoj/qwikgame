@@ -25,6 +25,7 @@ class MatchesView(QwikView):
             kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         player = self.user.player
+        player.alert_del(type='match')
         matches = self._context['items']
         now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now)
@@ -125,6 +126,7 @@ class MatchView(MatchesView):
             try:
                 cancel_pk = context.get('CANCEL')
                 match = Match.objects.get(pk=cancel_pk)
+                match.alert(player)
                 logger.info(f'Cancelling Match: {match}')
                 match.status = 'X'
                 # mark this Match seen by this Player only
@@ -138,6 +140,7 @@ class MatchView(MatchesView):
             try:
                 person = player.user.person
                 match = Match.objects.get(pk=match_pk)
+                match.alert(player)
                 entry = Entry(
                     icon = person.icon,
                     id = player.facet(),
@@ -165,6 +168,7 @@ class ReviewsView(QwikView):
             kwargs['pk'] = kwargs.get('review', kwargs['items'].first().pk)
         super().context(request, *args, **kwargs)
         player = self.user.player
+        player.alert_del(type='review')
         reviews = self._context['items'].order_by('match__date')
         for review in reviews:
             seen = player.pk in review.meta.get('seen', [])

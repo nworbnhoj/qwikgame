@@ -22,6 +22,7 @@ class AppealsView(QwikView):
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
+        player.alert_del(type='appeal')
         appeals = player.appeals()
         kwargs['items'] = appeals
         if kwargs['items'].first():
@@ -111,6 +112,7 @@ class AcceptView(AppealsView):
                 appeal.status = 'X'
                 game = appeal.game
                 venue = appeal.venue
+                appeal.alert(player)
                 appeal.meta['seen'] = [player.pk]
                 appeal.log_event('cancelled')
                 logger.info(f'Cancelling Appeal: {appeal}')
@@ -125,19 +127,21 @@ class AcceptView(AppealsView):
             accept_pk = context.get('accept')
             if accept_pk:
                 appeal.status = 'D'
+                appeal.alert(player)
                 appeal.save()
                 bid = Bid.objects.get(pk=accept_pk)
                 bid.log_event('accept')
                 match = Match.from_bid(bid)
+                match.alert(player)
                 match.log_event('scheduled')
                 match.clear_conflicts(appeal)
                 return HttpResponseRedirect(f'/game/match/{match.id}/')
             decline_pk = context.get('decline')
             if decline_pk:
                 bid = Bid.objects.get(pk=decline_pk)
+                bid.rival.alert('appeal')
                 bid.log_event('decline')
                 bid.delete()
-            appeal = Appeal.objects.filter(pk=kwargs['appeal']).first()
             if appeal:
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]
@@ -198,10 +202,10 @@ class BidView(AppealsView):
         if 'CANCEL' in context:
             try:
                 cancel_pk = context.get('CANCEL')
-                logger.warn(cancel_pk)
                 bid = Bid.objects.get(pk=cancel_pk)
                 appeal_pk = bid.appeal.pk
-                bid.withdraw()                
+                bid.withdraw()
+                appeal.player.alert('appeal')
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]
                 appeal.save()
@@ -218,7 +222,7 @@ class BidView(AppealsView):
                 str_conf=confidence,
             )
             bid.log_event('bid')
-        appeal.meta['seen'] = [player.pk]
+            appeal.player.alert('appeal')
             # mark this Appeal seen by this Player only
             appeal.meta['seen'] = [player.pk]
             appeal.save()
@@ -519,8 +523,10 @@ class RivalView(AppealsView):
 class FriendsView(QwikView):
     template_name = 'player/friends.html'
 
-    def context(self, request, *args, **kwargs):        
-        kwargs['items'] = Friend.objects.filter(player=self.user.player).order_by('name')
+    def context(self, request, *args, **kwargs):
+        player = self.user.player
+        player.alert_del(type='friend')
+        kwargs['items'] = Friend.objects.filter(player=player).order_by('name')
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend')
         super().context(request, *args, **kwargs)

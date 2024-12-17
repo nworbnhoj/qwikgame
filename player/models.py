@@ -430,6 +430,15 @@ class Appeal(models.Model):
     def __str__(self):
         return "{} {} {} {}".format(self.player, self.game, self.venue, self.date)
 
+    def alert(self, player):
+        recipients = list(self.rivals.all())
+        recipients.append(self.player)
+        recipients.remove(player)
+        for pk in recipients:
+            player=Player.objects.filter(pk=pk).first()
+            if player:
+                player.user.person.alert(type='appeal', expires=self.midnight())
+
     def created_str(self):
         return self.created.strftime("%Y-%m-%d %H:%M:%S%z")
 

@@ -1,4 +1,4 @@
-import logging
+import datetime, logging
 from django.db import models
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, MATCH_STATUS
 from qwikgame.log import Entry
@@ -58,6 +58,18 @@ class Match(models.Model):
         match.competitors.add(bid.appeal.player, bid.rival)
         match.save()
         return match
+
+    def alert(self, player):
+        from player.models import Player
+        recipients = list(self.competitors.all())
+        recipients.remove(player)
+        for recipient in recipients:
+            player = Player.objects.filter(pk=recipient.pk).first()
+            if player:
+                player.alert(
+                    type='match',
+                    expires=self.date + datetime.timedelta(days=1) 
+                )
 
     def clear_conflicts(self, scheduled_appeal):
         from player.models import Bid, Appeal

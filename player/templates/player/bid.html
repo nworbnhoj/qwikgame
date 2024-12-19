@@ -70,6 +70,24 @@
                     <time datetime="{{ entry.created }}"></time>
                     <span class="text">{{ entry.text }}</span>
                 </div>
+    {% if bid %}
+        {% if entry.pk == bid.pk %}
+                <div class="drop_down icon head_more">
+                    <div class="btn drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <form id="form" action="{% url 'bid' appeal.pk %}" method="post">
+            {% csrf_token %}
+                            <label class="btn tertiary">
+                                <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                                cancel
+                            </label>
+                        </form>
+                    </div>
+                </div>
+        {% endif %}
+    {% endif %}
             </div>
 {% endfor %}
         </div>
@@ -88,14 +106,6 @@
         <div class="post form">
 {% if bid %}
             <div class="pillar">
-                <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
-{% csrf_token %}
-                    <label class="btn tertiary">
-                        <input hidden form="form" type="submit" name='CANCEL' value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
-                         cancel
-                    </label>
-                </form>
-                <div id="alert_form_end" class="alert"></div>
                 <div class="nextup">
                     <p>Awaiting Confirmation</p>
                 </div>

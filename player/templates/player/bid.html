@@ -103,18 +103,19 @@
             </div>
             <div class="detail_chat_post"></div>
         </div>
-        <div class="post form">
-{% if bid %}
-            <div class="pillar">
-                <div class="nextup">
-                    <p>Awaiting Confirmation</p>
-                </div>
+{% if appeal.status == 'A' %}
+    {% if bid %}
+        <div class="pillar">
+            <div class="nextup">
+                <p>Awaiting Confirmation</p>
             </div>
-{% else %}
+        </div>
+    {% else %}
+        <div class="post form">
             <div id="alert_form_start" class="alert"></div>
             <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
-{% csrf_token %}
-{{ bid_form }}
+    {% csrf_token %}
+    {{ bid_form }}
             <div class="paver">
                 <div id="alert_form_submit" class="alert"></div>
                 <label class="btn primary push_down">
@@ -124,8 +125,21 @@
             </div>
             </form>
             <div id="alert_form_end" class="alert"></div>
-{% endif %}
         </div>
+    {% endif %}
+{% elif appeal.status == 'D' %}
+        <div class="pillar">
+            <div class="nextup">
+                <p>A Match has been confirmed for this Invitation</p>
+            </div>
+        </div>
+{% elif appeal.status == 'X' %}
+        <div class="pillar">
+            <div class="nextup">
+                <p>This Invitation has been cancelled</p>
+            </div>
+        </div>
+{% endif %}
         <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endblock %}

@@ -180,8 +180,7 @@ div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
 div.head {  display: flex; flex: auto; flex-direction: column; width: 50%  }
-
-div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: center; width: 100% }
+div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }

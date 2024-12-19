@@ -203,7 +203,7 @@ div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
-div.nextup { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; margin: 6em 0 0 0 ; padding: 1em }
+div.nextup { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; margin: 4em 0 0 0 ; padding: 1em }
 div.option { display: flex; align-items: center; flex-direction: row; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }

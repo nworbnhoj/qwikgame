@@ -599,7 +599,7 @@ from django.template.defaulttags import register
 
 @register.filter
 def get_item(dictionary, key):
-    return dictionary.get(key)
+    return dictionary.get(str(key))
 
 @register.filter
 def empty(dictionary):
@@ -607,15 +607,15 @@ def empty(dictionary):
 
 @register.filter
 def key_exists(dictionary, key):
-    return key in dictionary
+    return str(key) in dictionary
 
 @register.filter
 def bid_strength(dictionary, key):
-    return dictionary.get(key).strength_str()
+    return dictionary.get(str(key)).strength_str()
 
 @register.filter
 def bid_conduct(dictionary, key):
-    return dictionary.get(key).conduct_stars()
+    return dictionary.get(str(key)).conduct_stars()
 
 
 class Bid(models.Model):
@@ -669,6 +669,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
+                    pk = self.pk,
                     text = f'Confirmed for {self.hours24().as_str()} with {rival.name}'
                 )
             case 'bid':
@@ -678,7 +679,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = person.name,
-                    pk = str(self.pk),
+                    pk = self.pk,
                     text = f'Accepted for {self.hours24().as_str()}'
                 )
             case 'decline':
@@ -689,6 +690,7 @@ class Bid(models.Model):
                     id = player.facet(),
                     klass= 'event',
                     name = person.name,
+                    pk = self.pk,
                     text = f'declined {self.hours24().as_str()} with {rival.name}'
                 )
             case 'expired':
@@ -698,7 +700,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = person.name,
-                    pk = str(self.pk),
+                    pk = self.pk,
                     text = f'bid expired'
                 )
             case 'withdraw':
@@ -708,6 +710,7 @@ class Bid(models.Model):
                     id = self.rival.facet(),
                     klass= 'event rival',
                     name = rival.name,
+                    pk = self.pk,
                     text = f'withdrew {self.hours24().as_str()}'
                 )
             case _:

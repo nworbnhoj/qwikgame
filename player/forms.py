@@ -54,7 +54,7 @@ class AcceptForm(QwikForm):
 class BidForm(QwikForm):
     hour = DayRadioField(
         help_text='When are you keen to play?',
-        label='Pick Time to play',
+        label='PICK TIME TO PLAY',
         required=True,
         template_name='field.html',
     )
@@ -155,7 +155,7 @@ class FilterForm(QwikForm):
     game = ChoiceField(
         choices = {'ANY':'Any Game'} | Game.choices(),
         help_text='Only see invitations for a particular Game.',
-        label = 'Game',
+        label = 'GAME',
         required=True,
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"}),
@@ -163,7 +163,7 @@ class FilterForm(QwikForm):
     place = ChoiceField()    # placeholder for dynamic assignment below
     hours = WeekField(
         help_text='Only see invitations at specific times in your week.',
-        label='Time',
+        label='TIME',
         hours_enable=[*range(6,21)],
         hours_show=[*range(6,21)],
         required=True,
@@ -266,7 +266,7 @@ class FilterForm(QwikForm):
 
 class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
-        label='no active filters',
+        label='NO ACTIVE FILTERS',
         required=False,
         widget=CheckboxSelectMultiple,
     )
@@ -277,7 +277,7 @@ class FiltersForm(QwikForm):
         active = [ str(filter.id) for filter in filters.filter(active=True) ]
         choices = { str(filter.id) : filter for filter in filters}
         self.fields['filters'].choices = choices
-        self.fields['filters'].label = '{} active filters'.format(len(active))
+        self.fields['filters'].label = '{} ACTIVE FILTERS'.format(len(active))
         self.fields['filters'].initial = active
         # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
 
@@ -410,7 +410,7 @@ class KeenForm(QwikForm):
     friends = MultipleActionField(
         action='invite:',
         # help_text='Invite your friends to play this qwikgame.',
-        label=' ',
+        label='FRIENDS',
         required=False,
     )
     lat = DecimalField(

@@ -130,8 +130,9 @@ class AcceptView(AppealsView):
                 appeal.alert(player)
                 appeal.save()
                 bid = Bid.objects.get(pk=accept_pk)
-                bid.log_event('accept')
                 match = Match.from_bid(bid)
+                bid.log_event('accept')
+                bid.delete()
                 match.alert(player)
                 match.log_event('scheduled')
                 match.clear_conflicts(appeal)
@@ -203,7 +204,8 @@ class BidView(AppealsView):
                 cancel_pk = context.get('CANCEL')
                 bid = Bid.objects.get(pk=cancel_pk)
                 appeal_pk = bid.appeal.pk
-                bid.withdraw()
+                bid.log_event('withdraw')
+                bid.delete()
                 appeal.player.alert('appeal')
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]

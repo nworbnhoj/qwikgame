@@ -93,20 +93,32 @@ class Mark(models.Model):
 
     @staticmethod
     def place_filter(place):
-        return {k: v for k, v in place.items() if v is not None}    
+        return {k: v for k, v in place.items() if v is not None}
 
     def children(self):
         place = self.place
         if place.is_venue:
             return None
-        mark_qs = Mark.objects.filter(place__country=place.country)
+        mark_qs = self.descendents()
+        if place.locality:
+            return mark_qs
+        if place.admin1:
+            return mark_qs.exclude(place__venue__isnull=True)
+        return mark_qs.exclude(place__locality__isnull=False)
+
+    def descendents(self):
+        place = self.place
+        if place.is_venue:
+            return None
+        mark_qs = Mark.objects.exclude(pk=self.pk)
+        mark_qs = mark_qs.filter(place__country=place.country)
         if place.admin1:
             mark_qs = mark_qs.filter(place__admin1=place.admin1)
         if place.locality:
             mark_qs = mark_qs.filter(place__locality=place.locality)
         if self.game:
             mark_qs = mark_qs.filter(game=self.game)
-        return mark_qs.distinct()
+        return mark_qs
 
     def key(self):
         key = self.place.country
@@ -215,8 +227,8 @@ class Mark(models.Model):
             player_qs = appeal_qs | bid_qs | filter_qs | match_qs
             self.num_player = player_qs.distinct().count()
         elif place.is_region:
-            aggregate = self.children().aggregate(Sum('num_player'))
-            self.num_player = aggregate.get('num_player__sum', 0)
+            aggregate = self.children().aggregate(Sum('num_player')).get('num_player__sum')
+            self.num_player = aggregate if aggregate else 0
         if self.num_player != old_num_player:
             logger.info(f'Mark update num_player: {self}')
             # update the num_player of the parent region Mark

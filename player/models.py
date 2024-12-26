@@ -735,7 +735,7 @@ class Bid(models.Model):
         logger.debug('Bid{} {: <9} {} @ {} {}'.format(
                 ' (dry-run)' if dry_run else '',
                 action,
-                self.datetime().strftime('%a %X'),
+                self.datetime.strftime('%a %X'),
                 now.strftime('%a %X'),
                 self.venue().name
             )

@@ -1,12 +1,15 @@
 import logging, sys
 from django.db import models
 from django.db.models import Sum
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from venue.models import Region, Venue
 from player.models import Filter, Player
 from qwikgame.constants import ADMIN1, COUNTRY, GAME, LAT, LNG, LOCALITY, NAME, NUM_PLAYER, NUM_VENUE
 from service.locate import Locate
 
 logger = logging.getLogger(__file__)
+
 
 class Mark(models.Model):
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE, blank=True, null=True)
@@ -18,26 +21,7 @@ class Mark(models.Model):
         self.update_num_player()
         self.update_num_venue()
         super().save(**kwargs)
-        logger.debug(f'Mark save: {self}')
-        # recursively add parent-Marks if required
-        try:
-            parent = None
-            if self.place.is_venue:
-                parent = self.place.venue.region
-            elif self.place.is_region:
-                parent = self.place.region.parent
-            if parent and not Mark.objects.filter(
-                game__isnull=True,
-                place = parent).exists():
-                Mark(place = parent.place_ptr).save()
-            if parent and not Mark.objects.filter(
-                place = parent,
-                game = self.game).exists():
-                Mark(
-                    game = self.game,
-                    place = parent.place_ptr).save()
-        except:
-            logger.exception('failed to create parent Mark')
+        logger.debug(f'Mark save: {self}')       
 
     def __str__(self):
         if self.place.is_venue:
@@ -76,24 +60,6 @@ class Mark(models.Model):
             for game in venue.games.all():
                 Mark.objects.get_or_create(game=game, place=venue)
                 progress += '.'
-                locality = venue.region
-                if locality:
-                    Mark.objects.get_or_create(game=game, place=locality)
-                    progress += '.'
-                    admin1 = locality.parent
-                    if admin1:
-                        Mark.objects.get_or_create(game=game, place=admin1)
-                        progress += '.'
-                        country = admin1.parent
-                        if country:
-                            Mark.objects.get_or_create(game=game, place=country)
-                            progress += '.'
-                        else:
-                            logger.warn(f'missing admin1 country: {admin1}')
-                    else:
-                        logger.warn(f'missing locality admin1: {locality}')
-                else:
-                    logger.warn(f'missing venue region: {venue}')
             sys.stdout.write(progress)
             sys.stdout.flush()
         sys.stdout.write('\n')
@@ -250,3 +216,24 @@ class Mark(models.Model):
                 else:
                     logger.warn(f'failed to update non-game Mark: {self}')
     
+@receiver(post_save, sender=Mark, dispatch_uid="create_parent_mark")
+def update_parent_mark(sender, instance, **kwargs):
+        try:
+            parent = None
+            if instance.place.is_venue:
+                parent = instance.place.venue.region
+            elif instance.place.is_region:
+                parent = instance.place.region.parent
+            if parent:
+                mark, created = Mark.objects.get_or_create(game=instance.game, place=parent)
+                if created:
+                    logger.info(f'Mark created parent {mark}')
+                else:
+                    mark.save()
+                mark, created = Mark.objects.get_or_create(game__isnull=True, place=parent)
+                if created:
+                    logger.info(f'Mark created parent {mark}')
+                else:
+                    mark.save()
+        except:
+            logger.exception('failed to created parent Mark')

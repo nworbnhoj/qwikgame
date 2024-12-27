@@ -503,7 +503,17 @@ function updateMapRegion(){
   // SORT REGIONS from largest to smallest
   const KEYS = Array.from(OBSERVABLE.keys());
   KEYS.sort(function(a,b){
-    return OBSERVABLE.get(b).num_player - OBSERVABLE.get(a).num_player
+    if (QWIK_MARKS.has(a) & QWIK_MARKS.has(b)) {
+      const A = QWIK_MARKS.get(a).num_player;
+      const B = QWIK_MARKS.get(b).num_player;
+      if (A==B){
+        if (a.includes(b)) { return 0.1; }
+        if (b.includes(a)) { return -0.1; }    
+      } else {
+        return B - A;
+      }
+    }
+    return 0;
   });
   
   // clear MAP_REGION and replace with sorted OBSERVABLE (Map retains insertion order)
@@ -723,6 +733,7 @@ function receiveMarks(json){
       if(json.game !== GAME){ return; }
       const MAP = qwikMap;
       const NEW_MARKS = new Map(Object.entries(json.marks));
+      console.log("received "+NEW_MARKS.size+" marks for "+REGION);
       for(let [key, mark] of NEW_MARKS){
         addToRegion(key, QWIK_REGION);
         addToRegion(key, MAP_REGION);
@@ -730,7 +741,7 @@ function receiveMarks(json){
           addMark(key, mark);
         }
       }
-      console.log("received "+NEW_MARKS.size+" marks for "+REGION);
+      updateMapRegion()
       const VISIBLE = showMarks();
       fetchSubKeys(VISIBLE, GAME);    // prepare for possible zoom-in
       break;

@@ -40,11 +40,18 @@ class Mark(models.Model):
             logger.exception('failed to create parent Mark')
 
     def __str__(self):
-
-        return '{} [{}] {}'.format(
-            self.game,
-            self.num_player,
-            self.place.name,
+        if self.place.is_venue:
+            return "{} {} players @ {}".format(
+                self.num_player,
+                self.game if self.game else '',
+                self.place.name,
+            )
+        else:
+            return "{} {} players @ {} venues in {}".format(
+                self.num_player,
+                self.game if self.game else '',
+                self.num_venue,
+                self.place.name,
             )
 
     @classmethod

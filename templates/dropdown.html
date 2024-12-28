@@ -1,7 +1,7 @@
 <!-- qwikgame/templates/dropdown.html -->
 {% if field.field.reveal %}
     <label class="{{ field.field.reveal_css_classes }} reveal">
-        <input type="checkbox"  >
+        <input name="reveal_{{field.name}}" type="checkbox"  >
         {{ field.field.reveal }}
     </label>
 {% endif %}

@@ -34,16 +34,19 @@ class Player(models.Model):
     def alert_del(self, type):
         return self.user.person.alert_del(type=type)
 
-    # return a list of Appeals sorted by urgency:
+    # return a list of all visible Appeals:
     # - matching Player Filters,
-    # - or by direct invitation,
+    # - or as an invitee,
     # - excluding Blocked Players. 
     def appeals(self):
+        # include app appeals created by this Player
+        appeal_qs = Appeal.objects.filter(player=self)
+        # include all open Appeals as default or apply filters
+        open_appeals_qs = Appeal.objects.filter(invitees=None)
         filters = Filter.objects.filter(player=self, active=True)
-        if filters:
-            appeal_qs = Appeal.objects.filter(player=self)            
+        if filters:      
             for f in filters:
-                qs = Appeal.objects
+                qs = open_appeals_qs
                 if f.game:
                     qs = qs.filter(game=f.game)
                 if f.place:
@@ -57,8 +60,9 @@ class Player(models.Model):
                         qs = qs.filter(venue__lng__gte=f.place.region.west)
                 appeal_qs |= qs
         else:
-            appeal_qs = Appeal.objects.all()
-        # TODO include direct invites
+            appeal_qs |= open_appeals_qs.all()
+        # include all Appeals as an invitee
+        appeal_qs |= Appeal.objects.filter(invitees__in=[self])
         # TODO exclude Blocked Players
         return appeal_qs.order_by('pk').distinct()
 

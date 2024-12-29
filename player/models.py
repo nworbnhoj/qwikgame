@@ -445,18 +445,22 @@ class Appeal(models.Model):
                 player.user.person.alert(type='appeal', expires=self.midnight())
 
     def cancel(self):
-        self.status = 'X'
-        game = appeal.game
-        venue = appeal.venue
-        self.alert(self.player)
-        self.meta['seen'] = [self.player.pk]
-        self.log_event('cancelled')
         logger.info(f'Cancelling Appeal: {self}')
+        if Bid.objects.filter(appeal=self).count() == 0:
+            self.delete()
+        else:
+            self.status = 'X'
+            self.alert(self.player)
+            self.meta['seen'] = [self.player.pk]
+            self.log_event('cancelled')
         try:
             from api.models import Mark
             Mark.objects.get(game=self.game, place=self.venue).save()
         except:
             logger.exception(f'failed to update Mark for {self.game} at {self.venue}')
+        if self.status == 'X':
+            return self
+        return
 
     def created_str(self):
         return self.created.strftime("%Y-%m-%d %H:%M:%S%z")

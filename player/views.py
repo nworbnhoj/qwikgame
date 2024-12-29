@@ -107,8 +107,10 @@ class AcceptView(AppealsView):
             return render(request, self.template_name, context)
         if 'CANCEL' in context:
             if context.get('CANCEL') == appeal.pk:    # sanity check
-                appeal.cancel()
-            return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
+                appeal = appeal.cancel()
+                if appeal:
+                    return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
+            return HttpResponseRedirect(f'/player/appeal/')
         try:
             accept_pk = context.get('accept')
             if accept_pk:

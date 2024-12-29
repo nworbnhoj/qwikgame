@@ -485,6 +485,10 @@ class Appeal(models.Model):
             self.meta['seen'] = []
 
     @property
+    def is_open(self):
+        return self.invitees.count() == 0
+
+    @property
     def last_hour(self):
         return self.hours24.last_hour()
 
@@ -507,6 +511,9 @@ class Appeal(models.Model):
                     self.venue.datetime(self.date).strftime("%b %d"),
                     self.hours24.as_str()
                 )
+                if not self.is_open:
+                    friends = ', '.join(friend.name() for friend in self.invitees.all())
+                    entry['text'] += f" with {friends}"
             case 'cancelled':
                 entry['text'] = "Cancelled Invitation"
             case _:

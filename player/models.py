@@ -444,6 +444,20 @@ class Appeal(models.Model):
             if player:
                 player.user.person.alert(type='appeal', expires=self.midnight())
 
+    def cancel(self):
+        self.status = 'X'
+        game = appeal.game
+        venue = appeal.venue
+        self.alert(self.player)
+        self.meta['seen'] = [self.player.pk]
+        self.log_event('cancelled')
+        logger.info(f'Cancelling Appeal: {self}')
+        try:
+            from api.models import Mark
+            Mark.objects.get(game=self.game, place=self.venue).save()
+        except:
+            logger.exception(f'failed to update Mark for {self.game} at {self.venue}')
+
     def created_str(self):
         return self.created.strftime("%Y-%m-%d %H:%M:%S%z")
 

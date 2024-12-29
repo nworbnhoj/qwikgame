@@ -106,23 +106,9 @@ class AcceptView(AppealsView):
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         if 'CANCEL' in context:
-            try:
-                cancel_pk = context.get('CANCEL')
-                appeal = Appeal.objects.get(pk=cancel_pk)
-                appeal.status = 'X'
-                game = appeal.game
-                venue = appeal.venue
-                appeal.alert(player)
-                appeal.meta['seen'] = [player.pk]
-                appeal.log_event('cancelled')
-                logger.info(f'Cancelling Appeal: {appeal}')
-                # update the Mark size
-                mark = Mark.objects.filter(game=game, place=venue).first()
-                if mark:
-                    mark.save()
-            except:
-                logger.exception('failed to cancel appeal: {} : {}'.format(player, cancel_pk))
-            return HttpResponseRedirect(f'/player/appeal/')
+            if context.get('CANCEL') == appeal.pk:    # sanity check
+                appeal.cancel()
+            return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
         try:
             accept_pk = context.get('accept')
             if accept_pk:

@@ -539,9 +539,11 @@ class KeenForm(QwikForm):
                 if isinstance(form.cleaned_data['tomorrow'], list):
                     for hr in form.cleaned_data['tomorrow']:
                         tomorrow.set_hour(hr)
-                friends = form.cleaned_data['friends']
+                friends = []
+                if 'reveal_friends' in request_post:
+                    friends = form.cleaned_data['friends']
                 context = {
-                    'friends': { Player.objects.get(pk=f) for f in friends },
+                    'friends': [ Player.objects.get(pk=f) for f in friends ],
                     'game': form.cleaned_data['game'],
                     'today': today,
                     'tomorrow': tomorrow,

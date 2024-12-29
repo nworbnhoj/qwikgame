@@ -415,6 +415,7 @@ class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=DAY_NONE)
+    invitees = models.ManyToManyField(Player, related_name='invitees')
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
     rivals = models.ManyToManyField(Player, related_name='rivals', through='Bid')

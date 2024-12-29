@@ -446,6 +446,7 @@ class KeenView(AppealsView):
             mark = Mark(game=game, place=place, num_player=1)
             mark.save()
             logger.info(f'Mark new {mark}')
+        invitees = context.get('friends', [])
         appeal_pk = None
         # create/update/delete today appeal
         today=venue.now()
@@ -459,11 +460,19 @@ class KeenView(AppealsView):
         if valid_hours.is_none():
             appeal.delete()
             logger.info(f"no valid hours for {context['today']} {today} at {venue}")
-        elif appeal.hours24 != context['today']:
-            appeal.set_hours(valid_hours)
-            logger.info(f'update Appeal: {appeal}')
+        else:
+            if appeal.hours24 != context['today']:
+                appeal.set_hours(valid_hours)
+                appeal.perish()
+            appeal.invitees.clear()
+            for friend in invitees:
+                appeal.invitees.add(friend)
+            appeal.save()
+            if created:
+                logger.info(f'created Appeal: {appeal}')
+            else:
+                logger.info(f'updated Appeal: {appeal}')
             appeal.log_event('appeal')
-            appeal.perish()
             appeal_pk = appeal.pk
         # create/update/delete tomorrow appeal
         tomorrow = today + timedelta(days=1)
@@ -477,11 +486,19 @@ class KeenView(AppealsView):
         if valid_hours.is_none():
             appeal.delete()
             logger.info(f"no valid hours for {context['today']} {tomorrow} at {venue}")
-        elif appeal.hours24 != context['tomorrow']:
-            appeal.set_hours(valid_hours)
-            logger.info(f'update Appeal: {appeal}')
+        else:
+            if appeal.hours24 != context['tomorrow']:
+                appeal.set_hours(valid_hours)
+                appeal.perish()
+            appeal.invitees.clear()
+            for friend in invitees:
+                appeal.invitees.add(friend)
+            appeal.save()
+            if created:
+                logger.info(f'created Appeal: {appeal}')
+            else:
+                logger.info(f'updated Appeal: {appeal}')
             appeal.log_event('appeal')
-            appeal.perish()
             if not appeal_pk:
                 appeal_pk = appeal.pk
         # update the Mark size

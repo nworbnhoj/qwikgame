@@ -450,10 +450,11 @@ class Appeal(models.Model):
     def accept(self, bid_pk):
         try:
             bid = Bid.objects.get(pk=bid_pk)
-            match = Match.from_bid(bid)
-            self.status = 'D'
-            self.alert(self.player)
+            appeal = bid.appeal
+            appeal.status = 'D'
+            appeal.alert(self.player)
             bid.log_event('accept')
+            match = Match.from_bid(bid)
             bid.delete()
             match.alert(self.player)
             match.log_event('scheduled')

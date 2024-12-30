@@ -435,10 +435,13 @@ class Appeal(models.Model):
     def __str__(self):
         return "{} {} {} {}".format(self.player, self.game, self.venue, self.date)
 
-    def alert(self, player):
+    # Alert player and rivals of change to this Appeal
+    # ( optionally omitting the Player causing the change )
+    def alert(self, omit_player):
         recipients = list(self.rivals.all())
-        recipients.append(self.player)
-        recipients.remove(player)
+        if omit_player != self.player:
+            recipients.append(self.player)
+            recipients.remove(omit_player)
         for pk in recipients:
             player=Player.objects.filter(pk=pk).first()
             if player:

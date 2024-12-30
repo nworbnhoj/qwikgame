@@ -36,19 +36,22 @@
                         {{ match.venue }}
                     </p>
                 </div>
-                <div class="drop_down icon head_more">
-                    <div class="btn drop" data-down="false">
-                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
-                    </div>
-                    <div class="down hidden">
+                <form action="{% url 'match' match=match.pk %}" method="post">
+{% csrf_token %}
+                    <div class="drop_down icon head_more">
+                        <div class="btn drop" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                        </div>
+                        <div class="down hidden">
 {% if match.status == 'A' %}
-                        <label class="btn tertiary">
-                            <input hidden form="form" name="CANCEL" type="button" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
-                            cancel
-                        </label>
+                            <label class="btn tertiary">
+                                <input hidden name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
+                                cancel
+                            </label>
 {% endif %}
+                        </div>
                     </div>
-                </div>
+                </form>
                 <a class="btn special2 head_back" href="{% url 'match' match=prev %}">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
                 </a>

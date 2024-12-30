@@ -112,19 +112,12 @@ class AcceptView(AppealsView):
                     return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
             return HttpResponseRedirect(f'/player/appeal/')
         try:
-            accept_pk = context.get('accept')
-            if accept_pk:
-                appeal.status = 'D'
-                appeal.alert(player)
-                appeal.save()
-                bid = Bid.objects.get(pk=accept_pk)
-                match = Match.from_bid(bid)
-                bid.log_event('accept')
-                bid.delete()
-                match.alert(player)
-                match.log_event('scheduled')
-                match.clear_conflicts(appeal)
-                return HttpResponseRedirect(f'/game/match/{match.id}/')
+            bid_pk = context.get('accept')
+            if bid_pk:
+                match = appeal.accept(bid_pk)
+                if match:
+                    return HttpResponseRedirect(f'/game/match/{match.id}/')
+            return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')
             decline_pk = context.get('decline')
             if decline_pk:
                 bid = Bid.objects.get(pk=decline_pk)

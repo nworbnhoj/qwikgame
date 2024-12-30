@@ -444,6 +444,22 @@ class Appeal(models.Model):
             if player:
                 player.user.person.alert(type='appeal', expires=self.midnight())
 
+    def accept(self, bid_pk):
+        try:
+            bid = Bid.objects.get(pk=bid_pk)
+            match = Match.from_bid(bid)
+            self.status = 'D'
+            self.alert(self.player)
+            bid.log_event('accept')
+            bid.delete()
+            match.alert(self.player)
+            match.log_event('scheduled')
+            match.clear_conflicts(self)
+            return match
+        except:
+            logger.exception(f'failed to accept Bid: {bid_pk}')
+        return None
+
     def cancel(self):
         logger.info(f'Cancelling Appeal: {self}')
         if Bid.objects.filter(appeal=self).count() == 0:

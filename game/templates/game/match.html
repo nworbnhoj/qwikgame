@@ -146,7 +146,7 @@
             <form id="form" action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}
                 <div class="chat_input">
-                    <div class="button">
+                    <div class="button" onclick="return alert('☺ emogi coming soon ☺')">
                         <i class="fa-regular fa-face-smile fa-xl"></i>
                     </div>
                     {{ match_form }}

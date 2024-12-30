@@ -192,12 +192,11 @@ class BidView(AppealsView):
                 cancel_pk = context.get('CANCEL')
                 bid = Bid.objects.get(pk=cancel_pk)
                 appeal_pk = bid.appeal.pk
-                bid.log_event('withdraw')
-                bid.delete()
                 appeal.player.alert('appeal')
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]
-                appeal.save()
+                bid.log_event('withdraw')
+                bid.delete()
             except:
                 logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/player/appeal/{appeal.pk}/')

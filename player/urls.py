@@ -9,6 +9,7 @@ urlpatterns = [
     path("appeal/filters/", FiltersView.as_view(), name='filters'),
     path("appeal/<int:appeal>/", BidView.as_view(), name='bid'),
     path("appeal/keen/", KeenView.as_view(), name='keen'),
+    path("appeal/keen/<str:game>/", KeenView.as_view(), name='keen'),
     path("appeal/accept/<int:appeal>/", AcceptView.as_view(), name='accept'),
     path("friend/", FriendsView.as_view(), name='friend'),
     path("friend/add/", FriendView.as_view(), name='friend_add'),

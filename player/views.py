@@ -21,13 +21,13 @@ class AppealsView(QwikView):
     template_name = 'player/appeals.html'
 
     def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='appeal')
         appeals = player.appeals()
         kwargs['items'] = appeals
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal')
-        super().context(request, *args, **kwargs)
         participate = player.appeal_participate()
         participate_list = list(participate)
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
@@ -381,8 +381,10 @@ class KeenView(AppealsView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        player = self.user.player
-        context |= self.keen_form_class.get(player)
+        context |= self.keen_form_class.get(
+            player = self.user.player,
+            game = kwargs.get('game'),
+        )
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):

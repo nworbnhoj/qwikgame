@@ -25,9 +25,9 @@
     {% block icon_bar %}
     <div id="icon_bar" class="icon_bar">
         <div id="alert_icon_start" class="alert"></div>
-        <p class="fat">
-            <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'home' %}">
-        </p>
+        <a href="{% url 'welcome' %}">
+            <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" >
+        </a>
         <div class="flex_space"></div>
         <a class="btn special2 {{ appeals_tab }}" href="{% url 'appeal' %}">
             <i class="fa-solid fa-house fa-2x"></i>

@@ -5,13 +5,20 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views import View
+from game.models import Game
 
 
 logger = logging.getLogger(__file__)
 
 
 class BaseView(View):
-    _context = {}
+    _context = {
+            'alert_appeal': 'hidden',
+            'alert_match': 'hidden',
+            'alert_review': 'hidden',
+            'alert_friend': 'hidden',
+            'alert_account': 'hidden',
+        }
 
     def get(self, request, *args, **kwargs):
         self.request_init(request)
@@ -26,7 +33,7 @@ class BaseView(View):
 
     def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
-        self._context = {
+        self._context |= {
             'big_screen': not small,
             'small_screen': small,
         }
@@ -58,7 +65,7 @@ class QwikView(BaseView):
         self.is_manager = hasattr(self.user, "manager")
 
     def context(self, request, *args, **kwargs):
-        context = super().context(request, *args, **kwargs)
+        super().context(request, *args, **kwargs)
         items = kwargs.get('items')
         if items and items.first():
             item_pk = kwargs.get('pk')
@@ -99,7 +106,14 @@ class QwikView(BaseView):
 
 class WelcomeView(BaseView):
 
+    def context(self, request, *args, **kwargs):
+        super().context(request, *args, **kwargs)
+        self._context |= { 'games': list(Game.objects.all()) }
+        return self._context
+
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        return render(request, "welcome.html", self._context)
+        context = self.context(request, *args, **kwargs)
+        return render(request, "welcome.html", context)
+
 

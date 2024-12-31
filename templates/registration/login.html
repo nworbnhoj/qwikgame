@@ -1,49 +1,55 @@
 <!-- templates/registration/login.html -->
 {% extends "qwik.html" %}
+{% load static %}
 
 
 {% block icon_bar %}
 {% if user.is_authenticated %}
     {{ block.super }}
 {% else %}
-    <div class="plank">
-        <h1>qwikgame</h1>
-        <h1>Authenticate</h1>
-        <h1></h1>
+    <div class="pillar">
+        <div class="qwikgame">
+            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
+        </div>
     </div>
 {% endif %}
 {% endblock icon_bar %}
 
 
-
 {% block list_bar %}{% endblock list_bar %}
 
 
-{% block detail %}
+{% block content %}
+    <div class="pillar">
+        <h2>Welcome to qwikgame</h2>
+        <p class="fat">
+            <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
+        </p>
 {% if user.is_authenticated %}
-    <div class="paver">
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <div class="pillar">
-                <label class="btn secondary push_down">
-                    <input type="submit" hidden>
-                    Log Out
-                </label>
-            </div>
-        </form>
-    </div>
+        <div class="paver push_down">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <div class="pillar">
+                    <label class="btn secondary push_down">
+                        <input type="submit" hidden>
+                        Log Out
+                    </label>
+                </div>
+            </form>
+        </div>
 {% else %}
-    <div class="paver">
-        <form method="post">
-          {% csrf_token %}
-          {{ form }}
-            <div class="pillar">
-                <label class="btn secondary push_down">
-                    <input type="submit" hidden>
-                    Log In
-                </label>
-            </div>
-        </form>
-    </div>
+        <div class="paver push_down">
+            <form action="{% url 'login' %}" method="post">
+              {% csrf_token %}
+              {{ form }}
+                <div class="pillar">
+                    <label class="btn primary push_down">
+                        <input type="submit" hidden>
+                        Log In
+                    </label>
+                </div>
+            </form>
+        </div>
 {% endif %}
-{% endblock detail %}
+    </div>
+{% endblock content %}

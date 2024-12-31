@@ -30,7 +30,13 @@
             <a class="btn secondary public_class" href="{% url 'public' %}">Public Profile</a>
             <a class="btn secondary private_class" href="{% url 'private' %}">Private Settings</a>
             <a class="btn secondary privacy_class" href="{% url 'privacy' %}">Privacy</a>
-            <a class="btn secondary" href="{% url 'login' %}">Log Out</a>
+            <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+                <label class="btn secondary">
+                    <input hidden name="logout" type="submit">
+                    Logout
+                </label>
+            </form>
             <div id="alert_list_end" class="alert"></div>
         </div>
 {% endblock %}

@@ -42,6 +42,7 @@ CORS_ORIGINS_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'api.apps.ApiConfig',
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
@@ -59,8 +60,8 @@ INSTALLED_APPS = [
     'django_crontab',
 ]
 
-LOGIN_REDIRECT_URL = "/player/"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "appeal"
+LOGOUT_REDIRECT_URL = "welcome"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

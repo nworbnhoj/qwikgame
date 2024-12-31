@@ -1,15 +1,16 @@
 <!-- qwikgame/templates/welcome.html -->
 {% extends "qwik.html" %}
+{% load static %}
 
 
 {% block icon_bar %}
 {% if user.is_authenticated %}
     {{ block.super }}
 {% else %}
-    <div class="plank">
-        <h1>qwikgame</h1>
-        <h1>Welcome</h1>
-        <p><a href="{% url 'login' %}">login</a></p>
+    <div class="pillar">
+        <div class="qwikgame">
+            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
+        </div>
     </div>
 {% endif %}
 {% endblock icon_bar %}
@@ -18,4 +19,31 @@
 {% block list_bar %}{% endblock list_bar %}
 
 
-{% block detail %}{% endblock %}
+{% block content %}
+    <div class="pillar">
+        <h2>Welcome to qwikgame</h2>
+        <p class="fat">
+            <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
+        </p>
+        <h2>What is your favourite game?</h2>
+        <div class="paver push_down">
+    {% for game in games %}
+            <a class="btn secondary" href="{% url 'keen' game=game.pk %}">
+                <i class="fa-solid {{ game.icon }} fa-xl"></i>
+                {{ game.name }}
+            </a>
+    {% endfor %}
+         </div>
+    {% if user.is_authenticated %}
+        <div class="paver push_down">
+            <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+                <label class="btn tertiary">
+                    <input hidden name="logout" type="submit">
+                    logout
+                </label>
+            </form>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}

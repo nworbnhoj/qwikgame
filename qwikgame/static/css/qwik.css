@@ -124,13 +124,14 @@ label.btn:has( input[type=radio])::before { content: none; }
 .push_right { margin-left: auto }
 .round { border-radius: 50%; padding: 0.3em;}
 .selected { color: #dfa622 }
+.stripes { background: repeating-linear-gradient(45deg, #f5a600, #f5a600 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
 div { }
-div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; padding: 1em }
+div.alert { align-items: center; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; background-color: #ffffff; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
 div.banner.active { background-color: #dfa622; }
 div.banner.complete { background-color: lightgrey; }

@@ -67,6 +67,7 @@ class QwikView(BaseView):
     def context(self, request, *args, **kwargs):
         super().context(request, *args, **kwargs)
         items = kwargs.get('items')
+        self._context['item'] = None
         if items and items.first():
             item_pk = kwargs.get('pk')
             if item_pk:
@@ -88,8 +89,6 @@ class QwikView(BaseView):
                 'next': next_pk,
                 'prev': prev_pk,
             }
-        else:
-            self._context['item'] = None
         person = self.user.person
         player = self.user.player
         self._context |= {

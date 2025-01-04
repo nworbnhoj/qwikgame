@@ -99,9 +99,9 @@ class Player(models.Model):
 
     # return a float [0.0,1.0] representing the fracton of good Player conduct reviews
     def conduct_rep(self):
-        c0 = self.conduct[0]
-        c1 = self.conduct[1]
-        c2 = self.conduct[2]
+        c0 = int.from_bytes(self.conduct[0], ENDIAN)
+        c1 = int.from_bytes(self.conduct[1], ENDIAN)
+        c2 = int.from_bytes(self.conduct[2], ENDIAN)
         max = int.from_bytes(b'\xff', ENDIAN)
         conduct = (c0 + 2*c1 + 3*c2) / (6*max)
         return conduct

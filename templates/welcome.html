@@ -26,15 +26,13 @@
             <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
         </p>
         <h2>What is your favourite game?</h2>
-        <div class="paver push_down">
-    {% for game in games %}
-            <a class="btn secondary" href="{% url 'keen' game=game.pk %}">
-                <i class="fa-solid {{ game.icon }} fa-xl"></i>
-                {{ game.name }}
-            </a>
-    {% endfor %}
-         </div>
     {% if user.is_authenticated %}
+        <div class="paver push_down">
+            <a class="btn secondary" href="{% url 'keen' %}">
+                <i class="fa-solid fa-paper-plane fa-xl"></i>
+                Invite
+            </a>
+        </div>
         <div class="paver push_down">
             <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
@@ -44,6 +42,12 @@
                 </label>
             </form>
         </div>
+    {% else %}
+        <div class="paver push_down">
+            <a class="btn secondary" href="{% url 'login' %}">
+                login
+            </a>
+         </div>
     {% endif %}
 </div>
 {% endblock content %}

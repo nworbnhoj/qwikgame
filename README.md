@@ -1,30 +1,30 @@
 # qwikgame
 
+qwikgame is a system to help people find a rival to play their favorite (real-world) game at a convenient time and place. Players are able to rate each others ability to enable qwikgame to estimate the relative strength between new rivals. Care has been taken to provide a range privacy options for players. Players are able to add and maintain information about suitable venues to play a range of games from Chess to Squash.
 
-qwikgame is a system to help people find a rival to play their favorite (real-world) game at a convenient time and place. Players are able to rate each other for both behaviour and ability which enables the system to refine estimates of ability between new rivals. Care has been taken to provide a range privacy options for players. Players are able to add and maintain information about suitable venues to play a range of games from Chess to Squash.
 
 ## qwikgame.org
 
 You can use qwikgame for free at [qwikgame.org](https://qwikgame.org)
 
-> When you are **keen** for a game, invitations are sent to all people interested in playing at your chosen venue. Each **invitation** includes your relative **ability** and your **reputation**. One or more people may **accept** your invitation. You should accept ✓ one rival and reject ⨯ the others. You and your chosen rival will now see the Match as **confirmed** and meet on time at the venue.
+> When you are **keen** for a game, you can invite other **players** to a **match** at your preferred **venue** and a range of times. Alternatively you can browse invitations from other **players** and accept one of their available times. Each **invitation** includes your qwikgame **reputation** and estimates of the relative strength of the other **players**. Once a **match** is confirmed, you are able to chat with your rival before meeting on time at the **venue**.
 >
->After the game please revisit qwikgame.org to rate your rivals **ability** as stronger, weaker or well matched. Choose **well matched** when you had an enjoyable challenging match, regardless of who actually 'won'. You should also give your rival the 👍 if they were nice to be around, regardless of who was the stronger player.
+>After a Match, you should rate your rivals **ability** as stronger, weaker or well matched. **well matched** indicates an enjoyable challenging match, regardless of who actually 'won'. YOu may also bolster the reputation of your rival by recognising good sportsmanship, regardless of who was the stronger player.
 
 
 ## Deployment  
 
-After configuring your favorite web server ([nginx](https://nginx.org) is recommended)
-- pull the qwikgame files wit `git pull origin master`
-- change the file ownership to the appropriate user `chown -r www-data:www-data *`
-- edit `/class/Qwik.php` if required to set `const SUBDOMAIN  = 'www';`
-
+Typical setup might involve:
+- linux on a virtual server
+- nginx and lets-encrypt webserver
+- psql database
+- python3, django and gunicorn
 
 ## Development
 
-qwikgame is currently developed with html, css, php, json, javascript and xml data files. [Behat](http://behat.org/) is used for testing.
+qwikgame is written in html, css, python3, json, javascript, django and psql.
 
-In qwikgame parlace; **matches** are played between **rival** **players** at **venues**.
+In qwikgame parlace; **Matches** are played between **Rival** **Players** at **Venues**.
 
 ### users
 

@@ -67,9 +67,9 @@ class Person(models.Model):
 
     def alert_del(self, id=None, type=None):
         if id:
-            self.alerts = [a for a in self.alerts if a['id'] != id]
+            self.alerts = [a for a in self.alerts if a.get('id') != id]
         if type:
-            self.alerts = [a for a in self.alerts if a['type'] != type]
+            self.alerts = [a for a in self.alerts if a.get('type') != type]
         self.save()
         return
 
@@ -77,31 +77,31 @@ class Person(models.Model):
     def alert_get(self, priority=None, repeats=None, type=None):
         filtered = self.alerts
         if priority:
-            filtered = [a for a in filtered if a['priority'] == priority]
+            filtered = [a for a in filtered if a.get('priority') == priority]
         if repeats:
-            filtered = [a for a in filtered if a['repeats'] == repeats]
+            filtered = [a for a in filtered if a.get('repeats') == repeats]
         if type:
-            filtered = [a for a in filtered if a['type'] == type]
+            filtered = [a for a in filtered if a.get('type') == type]
         return filtered
 
     def alert_get_ge(self, expires=None, priority=None, repeats=None):
         filtered = self.alerts
         if expires:
-            filtered = [a for a in filtered if a['expires'] >= expires]
+            filtered = [a for a in filtered if a.get('expires') >= expires]
         if priority:
-            filtered = [a for a in filtered if a['priority'] <= priority]
+            filtered = [a for a in filtered if a.get('priority') <= priority]
         if repeats:
-            filtered = [a for a in filtered if a['repeats'] >= repeats]
+            filtered = [a for a in filtered if a.get('repeats') >= repeats]
         return filtered
 
     def alert_get_le(self, expires=None, priority=None, repeats=None):
         filtered = self.alerts
         if expires:
-            filtered = [a for a in filtered if a['expires'] <= expires]
+            filtered = [a for a in filtered if a.get('expires') <= expires]
         if priority:
-            filtered = [a for a in filtered if a['priority'] >= priority]
+            filtered = [a for a in filtered if a.get('priority') >= priority]
         if repeats:
-            filtered = [a for a in filtered if a['repeats'] <= repeats]
+            filtered = [a for a in filtered if a.get('repeats') <= repeats]
         return filtered
 
     def alert_show(self, type):

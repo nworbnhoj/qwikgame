@@ -13,11 +13,11 @@ logger = logging.getLogger(__file__)
 
 class BaseView(View):
     _context = {
-            'alert_appeal': 'hidden',
-            'alert_match': 'hidden',
-            'alert_review': 'hidden',
-            'alert_friend': 'hidden',
-            'alert_account': 'hidden',
+            'account_alert': 'hidden',
+            'appeal_alert': 'hidden',
+            'friend_alert': 'hidden',
+            'match_alert': 'hidden',
+            'review_alert': 'hidden',
         }
 
     def get(self, request, *args, **kwargs):
@@ -95,11 +95,11 @@ class QwikView(BaseView):
             'items': items,
             'person_icon': self.user.person.icon,
             'person_name': self.user.person.name,
-            'alert_appeal': person.alert_show('appeal'),
-            'alert_match': person.alert_show('match'),
-            'alert_review': person.alert_show('review'),
-            'alert_friend': person.alert_show('friend'),
-            'alert_account': person.alert_show('acount'),
+            'appeal_alert': person.alert_show('appeal'),
+            'match_alert': person.alert_show('match'),
+            'review_alert': person.alert_show('review'),
+            'friend_alert': person.alert_show('friend'),
+            'account_alert': person.alert_show('acount'),
         }
         return self._context
 

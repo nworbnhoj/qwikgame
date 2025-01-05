@@ -32,28 +32,28 @@
         <a class="btn special2 {{ appeals_tab }}" href="{% url 'appeal' %}">
             <i class="fa-solid fa-house fa-2x"></i>
             <span class="fat">Invitations</span>
-            <div {{ alert_appeal }} class="dot"></div>
+            <div {{ appeal_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ schedule_tab }}" href="{% url 'matches' %}">
             <i class="fa-solid fa-calendar-days fa-2x"></i>
             <span class="fat">Matches</span>
-            <div {{ alert_match }} class="dot"></div>
+            <div {{ match_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>
             <span class="fat">Reviews</span>
-            <div {{ alert_review }} class="dot"></div>
+            <div {{ review_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ friend_tab }}" href="{% url 'friend' %}">
             <i class="fa-solid fa-user-group fa-2x"></i>
             <span class="fat">Friends</span>
-            <div {{ alert_friend }} class="dot"></div>
+            <div {{ friend_alert }} class="dot"></div>
         </a>
         <div class="flex_space hide768"></div>
         <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
             <i class="fa-solid {{ person_icon }} fa-2x"></i>
             <span class="fat">{% block name %}{{ person_name }}{% endblock %}</span>
-            <div {{ alert_account }} class="dot"></div>
+            <div {{ account_alert }} class="dot"></div>
         </a>
         <div id="alert_icon_end" class="alert"></div>
     </div>

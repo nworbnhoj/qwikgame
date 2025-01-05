@@ -42,7 +42,6 @@ CORS_ORIGINS_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
-    'accounts',
     'api.apps.ApiConfig',
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',

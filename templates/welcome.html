@@ -43,11 +43,29 @@
             </form>
         </div>
     {% else %}
-        <div class="paver push_down">
-            <a class="btn secondary" href="{% url 'login' %}">
-                login
-            </a>
-         </div>
+        <fieldset>
+            <legend>cookie approach</legend>
+            <div class="grid_2_col">
+                <a class="btn secondary" href="{% url 'password_reset' %}">
+                    signup
+                </a>
+                <a class="btn secondary" href="{% url 'password_reset' %}">
+                    login
+                </a>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>password approach</legend>
+            <div class="grid_2_col">
+                <a class="btn secondary" href="{% url 'signup' %}">
+                    signup
+                </a>
+                <a class="btn secondary" href="{% url 'login' %}">
+                    login
+                </a>
+            </div>
+        </frameset>
+
     {% endif %}
 </div>
 {% endblock content %}

@@ -27,7 +27,7 @@ class AppealsView(QwikView):
         kwargs['items'] = appeals
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('appeal')
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         participate = player.appeal_participate()
         participate_list = list(participate)
         participate_list.sort(key=lambda x: x.last_hour, reverse=True)
@@ -42,8 +42,8 @@ class AppealsView(QwikView):
         for appeal in appeals_list:
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
-        self._context |= {  
-            'appeal': self._context.get('item'),
+        context |= {  
+            'appeal': context.get('item'),
             'appeals': appeals_list[:100],
             'appeals_tab': 'selected',
             'appeals_length': len(appeals_list),
@@ -51,6 +51,7 @@ class AppealsView(QwikView):
             'player': player,
             'prospects': participate[:100],
         }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -66,9 +67,9 @@ class AcceptView(AppealsView):
     template_name = 'player/accept.html'
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         player = self.user.player
-        appeal = self._context.get('appeal')
+        appeal = context.get('appeal')
         if appeal:
             bids = Bid.objects.filter(appeal=appeal).exclude(hours=None)
             friends = Friend.objects.filter(player=player)
@@ -77,19 +78,20 @@ class AcceptView(AppealsView):
                 bid.name = player.name_rival(bid.rival)
                 bid.conduct_stars = bid.rival.conduct_stars 
             bids = {str(bid.pk): bid for bid in bids}
-            self._context |= {
+            context |= {
                 'player_id': player.facet(),
                 'bids': bids,
                 'target': 'bid',
             }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        appeal = self._context.get('appeal')
+        context = self.context(request, *args, **kwargs)
+        appeal = context.get('appeal')
         # mark this Appeal seen by this Player
         appeal.mark_seen([self.user.player.pk]).save()
-        context = self.context(request, *args, **kwargs)
         context |= self.accept_form_class.get()
         return render(request, self.template_name, context)
 
@@ -142,19 +144,20 @@ class BidView(AppealsView):
     template_name = 'player/bid.html'
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
-        appeal = self._context.get('appeal')
+        context = super().context(request, *args, **kwargs)
+        appeal = context.get('appeal')
         bid = Bid.objects.filter(
             appeal = appeal,
             rival = self.user.player,
         ).first()
         player = self.user.player
-        self._context |= {
+        context |= {
             'rival': appeal.player,
             'strength': player.strength_str(appeal.game, appeal.player),
             'player_id': player.facet(),
             'bid': bid,
         }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -220,9 +223,9 @@ class FilterView(AppealsView):
     template_name = 'player/filter.html'
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         is_admin = self.user.is_admin
-        self._context |= {
+        context |= {
             'onclick_place_marker': 'select' if is_admin else 'noop',
             'onclick_region_marker': 'select',
             'onclick_search_marker': 'select',
@@ -237,6 +240,7 @@ class FilterView(AppealsView):
             'onpress_venue_marker': 'info',
             'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -264,7 +268,7 @@ class FilterView(AppealsView):
         )
         form = context.get('filter_form')
         if form and not form.is_valid():
-            context |= super().context(request, *args, **kwargs)
+            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         game, place, venue = None, None, None
         placeid = context.get('placeid')
@@ -330,7 +334,6 @@ class FiltersView(AppealsView):
         if form and not form.is_valid():
             context |= super().context(request, *args, **kwargs)
             return render(request, self.template_name, context)
-        logger.warn(context)
         if 'ACTIVATE' in context:
             activate = context.get('ACTIVATE', [])
             logger.info(f'activating filters {activate}')
@@ -359,9 +362,9 @@ class KeenView(AppealsView):
     template_name = 'player/keen.html'
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         is_admin = self.user.is_admin
-        self._context |= {
+        context |= {
             'onclick_place_marker': 'select' if is_admin else 'noop',
             'onclick_region_marker': 'center',
             'onclick_search_marker': 'select',
@@ -376,6 +379,7 @@ class KeenView(AppealsView):
             'onpress_venue_marker': 'info',
             'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -396,7 +400,7 @@ class KeenView(AppealsView):
         )
         form = context.get('keen_form')
         if form and not form.is_valid():
-            context |= super().context(request, *args, **kwargs)
+            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         game, place, venue = None, None, None
         placeid = context.get('placeid')
@@ -532,14 +536,15 @@ class FriendsView(QwikView):
         kwargs['items'] = Friend.objects.filter(player=player).order_by('name')
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend')
-        super().context(request, *args, **kwargs)
-        self._context |= {
-            'friend': self._context.get('item'),
-            'friends': self._context.get('items'),
+        context = super().context(request, *args, **kwargs)
+        context |= {
+            'friend': context.get('item'),
+            'friends': context.get('items'),
             'friend_tab': 'selected',
             'player_id': self.user.player.facet(),
             'target': 'friend',
         }
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -556,6 +561,7 @@ class FriendAddView(FriendsView):
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -567,9 +573,9 @@ class FriendAddView(FriendsView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        context |= self.form_class.post(request.POST)
         form = context.get('form')
         if form and not form.is_valid():
+            context |= self.form_class.post(request.POST)
             return render(request, self.template_name, context)
         try:
             email = context['email']
@@ -596,7 +602,8 @@ class FriendView(FriendsView):
         context = super().context(request, *args, **kwargs)
         friend = context.get('friend')
         if friend:
-            self._context['strengths'] = friend.strengths.all()
+            context['strengths'] = friend.strengths.all()
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -689,7 +696,6 @@ class FriendView(FriendsView):
                 friend.strengths.add(strength)
         except:
             logger.exception(f'failed add strength: {context}')
-        context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
 
 
@@ -701,9 +707,8 @@ class FriendStrengthView(FriendsView):
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
-        self._context |= {
-            'strengths': context['friend'].strengths.all(),
-        }
+        context['strengths'] = context['friend'].strengths.all()
+        self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
@@ -717,6 +722,7 @@ class FriendStrengthView(FriendsView):
         context = self.form_class.post(request.POST)
         form = context.get('form')
         if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         friend_pk = kwargs.get('friend')
         try:
@@ -737,5 +743,4 @@ class FriendStrengthView(FriendsView):
                 friend.strengths.add(strength)
         except:
             logger.exception(f'failed add strength: {context}')
-        context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/player/friend/{friend_pk}/')

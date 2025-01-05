@@ -12,13 +12,6 @@ logger = logging.getLogger(__file__)
 
 
 class BaseView(View):
-    _context = {
-            'account_alert': 'hidden',
-            'appeal_alert': 'hidden',
-            'friend_alert': 'hidden',
-            'match_alert': 'hidden',
-            'review_alert': 'hidden',
-        }
 
     def get(self, request, *args, **kwargs):
         self.request_init(request)
@@ -33,11 +26,16 @@ class BaseView(View):
 
     def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
-        self._context |= {
+        context = {
+            'account_alert': 'hidden',
+            'appeal_alert': 'hidden',
+            'friend_alert': 'hidden',
+            'match_alert': 'hidden',
+            'review_alert': 'hidden',
             'big_screen': not small,
             'small_screen': small,
         }
-        return self._context
+        return context
 
     def small_screen(self, device):
         if device.is_landscape and device.width >= 768:
@@ -65,13 +63,13 @@ class QwikView(BaseView):
         self.is_manager = hasattr(self.user, "manager")
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         items = kwargs.get('items')
-        self._context['item'] = None
+        context['item'] = None
         if items and items.first():
             item_pk = kwargs.get('pk')
             if item_pk:
-                self._context['item'] = items.filter(pk=item_pk).first()
+                context['item'] = items.filter(pk=item_pk).first()
             else:
                 item_pk = items.first()
             prev_pk = items.last().pk
@@ -85,13 +83,13 @@ class QwikView(BaseView):
                     found = True
                 else:
                     prev_pk = i.pk
-            self._context |= {
+            context |= {
                 'next': next_pk,
                 'prev': prev_pk,
             }
         person = self.user.person
         player = self.user.player
-        self._context |= {
+        context |= {
             'items': items,
             'person_icon': self.user.person.icon,
             'person_name': self.user.person.name,
@@ -101,14 +99,14 @@ class QwikView(BaseView):
             'friend_alert': person.alert_show('friend'),
             'account_alert': person.alert_show('acount'),
         }
-        return self._context
+        return context
 
 class WelcomeView(BaseView):
 
     def context(self, request, *args, **kwargs):
-        super().context(request, *args, **kwargs)
-        self._context |= { 'games': list(Game.objects.all()) }
-        return self._context
+        context = super().context(request, *args, **kwargs)
+        context['games']: list(Game.objects.all())
+        return context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)

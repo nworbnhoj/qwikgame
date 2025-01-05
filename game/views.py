@@ -23,10 +23,10 @@ class MatchesView(QwikView):
         kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player]).order_by('date').reverse()
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='match')
-        matches = self._context['items']
+        matches = context['items']
         now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now)
         for match in matches_future:
@@ -36,16 +36,16 @@ class MatchesView(QwikView):
         for match in matches_past:
             seen = player.pk in match.meta.get('seen', [])
             match.seen = '' if seen else 'unseen'
-        self._context['matches'] = matches
-        self._context |= {
+        context['matches'] = matches
+        context |= {
             'cta_disabled': '' if matches_future else 'disabled',
-            'match': self._context['item'],
+            'match': context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
             'player_id': self.user.player.facet(),
             'target': 'match',
         }
-        return self._context
+        return context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
@@ -53,9 +53,10 @@ class MatchesView(QwikView):
         if context['small_screen']:
             return render(request, self.template_name, context)
         if not kwargs.get('match'):
-            first_match = self._context['matches'].first()
+            first_match = context['matches'].first()
             if first_match:
                 return HttpResponseRedirect(f'{request.path}{first_match.pk}/')
+            context['match_tab'] = 'selected'
             return render(request, self.template_name, context)
 
 
@@ -93,7 +94,7 @@ class MatchView(MatchesView):
             review = Review.objects.filter(match=match, player=player).first()
             icons = match.icons()
             icons.pop(player.pk, None)
-            self._context |= {
+            context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
                 'enable_chat': now < match.date + DELAY_MATCH_CHAT,
@@ -101,15 +102,15 @@ class MatchView(MatchesView):
                 'match_log_start': match_log_start,
                 'review': review,
                 'match_tab': 'selected',
-             }
-        return self._context
+            }
+        return context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        match = self._context['match']
+        context = self.context(request, *args, **kwargs)
+        match = context['match']
         # mark this Match seen by this Player
         match.mark_seen([self.user.player.pk]).save()
-        context = self.context(request, *args, **kwargs)
         context |= self.match_form_class.get()
         return render(request, self.template_name, context)
 
@@ -152,7 +153,6 @@ class MatchView(MatchesView):
                 match.log_entry(entry)
             except:
                 logger.exception(f'failed chat entry: {match_pk} {context}')
-        context |= self.context(request, *args, **kwargs)
         return HttpResponseRedirect(f'/game/match/{match_pk}/')
 
 
@@ -166,22 +166,22 @@ class ReviewsView(QwikView):
         kwargs['items'] = Review.objects.filter(player=self.user.player)
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('review', kwargs['items'].first().pk)
-        super().context(request, *args, **kwargs)
+        context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='review')
-        reviews = self._context['items'].order_by('match__date')
+        reviews = context['items'].order_by('match__date')
         for review in reviews:
             seen = player.pk in review.meta.get('seen', [])
             review.seen = '' if seen else 'unseen'
-        self._context |= {
+        context |= {
             'cta_disabled': '' if reviews else 'disabled',
-            'review': self._context['item'],
+            'review': context['item'],
             'reviews': reviews,
             'player_id': self.user.player.facet(),
             'review_tab': 'selected',
             'target': 'review',
         }
-        return self._context
+        return context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
@@ -189,7 +189,7 @@ class ReviewsView(QwikView):
         if context['small_screen']:
             return render(request, self.template_name, context)
         if not kwargs.get('review'):
-            first_review = self._context['reviews'].first()
+            first_review = context['reviews'].first()
             if first_review:
                 return HttpResponseRedirect(f'{request.path}{first_review.pk}/')
             return render(request, self.template_name, context)
@@ -202,10 +202,8 @@ class ReviewView(ReviewsView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         # TODO refine matches to unreviewed Matches
-        self._context |= {
-            'target': 'review',
-            }
-        return self._context
+        context['target']='review'
+        return context
 
     def _rivals(self, review):
         if review:
@@ -216,10 +214,10 @@ class ReviewView(ReviewsView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
-        review = self._context['review']
+        context = self.context(request, *args, **kwargs)
+        review = context['review']
         # mark this Review seen by this Player
         review.mark_seen([self.user.player.pk]).save()
-        context = self.context(request, *args, **kwargs)
         rivals = self._rivals(context.get('review'))
         request.session['rivals'] = rivals
         context |= self.review_form_class.get(rivals)

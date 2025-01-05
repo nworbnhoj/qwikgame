@@ -100,7 +100,7 @@ class MatchView(MatchesView):
                 'rival_icons': icons.values(),
                 'match_log_start': match_log_start,
                 'review': review,
-                'schedule_tab': 'selected',
+                'match_tab': 'selected',
              }
         return self._context
 

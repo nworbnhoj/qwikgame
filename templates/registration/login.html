@@ -38,15 +38,19 @@
             </form>
         </div>
 {% else %}
+        <h2>login</h2>
         <div class="paver push_down">
             <form action="{% url 'login' %}" method="post">
-              {% csrf_token %}
-              {{ form }}
-                <div class="pillar">
-                    <label class="btn primary push_down">
+                {% csrf_token %}
+                {{ form }}
+                <div class="grid_2_col push_down">
+                    <label class="btn primary">
                         <input type="submit" hidden>
                         Log In
                     </label>
+                    <a class="btn tertiary" href="{% url 'password_reset' %}">
+                        reset
+                    </a>
                 </div>
             </form>
         </div>

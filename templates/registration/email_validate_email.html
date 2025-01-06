@@ -1,0 +1,12 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}You're receiving this email because you requested access to your account at {{ site_name }}.{% endblocktranslate %}
+
+
+{% translate "Please click on the following link to access your account:" %}
+{% block reset_link %}
+{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+{% endblock %}
+
+{% translate "Welcome to qwikgame.org!" %}
+
+{% endautoescape %}

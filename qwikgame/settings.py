@@ -262,3 +262,6 @@ RESPONSIVE_MEDIA_QUERIES = {
     }
 }
 RESPONSIVE_VARIABLE_NAME = 'device'
+
+# Email Settings
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

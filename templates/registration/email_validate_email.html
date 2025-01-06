@@ -4,7 +4,7 @@
 
 {% translate "Please click on the following link to access your account:" %}
 {% block reset_link %}
-{{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'validate_email_handle' uidb64=uid token=token %}
 {% endblock %}
 
 {% translate "Welcome to qwikgame.org!" %}

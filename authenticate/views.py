@@ -1,17 +1,24 @@
-
+import logging
 from django import forms
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_not_required, login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView
+from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
+
+
+logger = logging.getLogger(__file__)
 
 
 @method_decorator(login_not_required, name="dispatch")
@@ -50,6 +57,35 @@ class EmailValidateView(FormView):
 class EmailValidateDoneView(TemplateView):
     template_name = "registration/email_validate_done.html"
     title = "Login details sent"
+
+
+HOUR_SECONDS = 60 * 60
+DAY_SECONDS = 24 * HOUR_SECONDS
+
+@method_decorator(login_not_required, name="dispatch")
+class EmailValidationHandleView(PasswordResetConfirmView):
+    fail_url = reverse_lazy('welcome')
+    session_time = 7 * DAY_SECONDS
+    success_url = reverse_lazy("appeal")
+    token_generator = default_token_generator
+
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        if "uidb64" not in kwargs or "token" not in kwargs:
+            raise ImproperlyConfigured(
+                "The URL path must contain 'uidb64' and 'token' parameters."
+            )
+        self.validlink = False
+        self.user = self.get_user(kwargs["uidb64"])
+        if self.user is not None:
+            token = kwargs["token"]
+            if self.token_generator.check_token(self.user, token):
+                self.validlink = True
+                self.request.session.set_expiry(self.session_time)
+                auth_login(self.request, self.user)
+                return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.fail_url)
 
 
 def index(request):

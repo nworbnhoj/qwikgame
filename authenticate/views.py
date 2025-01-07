@@ -26,7 +26,7 @@ class EmailValidateView(FormView):
     email_template_name = "registration/email_validate_email.html"
     extra_email_context = None
     form_class = PasswordResetForm
-    from_email = None
+    from_email = "accounts@qwikgame.org"
     html_email_template_name = None
     subject_template_name = "registration/email_validate_subject.txt"
     success_url = reverse_lazy("email_validate_done")

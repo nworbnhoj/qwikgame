@@ -264,4 +264,10 @@ RESPONSIVE_MEDIA_QUERIES = {
 RESPONSIVE_VARIABLE_NAME = 'device'
 
 # Email Settings
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = os.environ.get('EMAIL_HOST','error: set environ variable EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT','error: set environ variable EMAIL_PORT'),
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER','error: set environ variable EMAIL_HOST_USER'),
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD','error: set environ variable EMAIL_HOST_PASSWORD'),

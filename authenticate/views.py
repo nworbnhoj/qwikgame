@@ -1,7 +1,6 @@
 import logging
 from django import forms
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.decorators import login_not_required, login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import UserCreationForm
@@ -21,7 +20,6 @@ from django.views.generic.edit import FormView
 logger = logging.getLogger(__file__)
 
 
-@method_decorator(login_not_required, name="dispatch")
 class EmailValidateView(FormView):
     email_template_name = "registration/email_validate_email.html"
     extra_email_context = None
@@ -53,7 +51,6 @@ class EmailValidateView(FormView):
         return super().form_valid(form)
 
 
-@method_decorator(login_not_required, name="dispatch")
 class EmailValidateDoneView(TemplateView):
     template_name = "registration/email_validate_done.html"
     title = "Login details sent"
@@ -62,7 +59,6 @@ class EmailValidateDoneView(TemplateView):
 HOUR_SECONDS = 60 * 60
 DAY_SECONDS = 24 * HOUR_SECONDS
 
-@method_decorator(login_not_required, name="dispatch")
 class EmailValidationHandleView(PasswordResetConfirmView):
     fail_url = reverse_lazy('welcome')
     session_time = 7 * DAY_SECONDS

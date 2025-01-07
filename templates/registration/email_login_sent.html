@@ -1,0 +1,8 @@
+<!-- templates/registration/email_login_sent.html -->
+{% extends "registration/email_validate_sent.html" %}
+
+
+{% block instructions %}
+    <p>We’ve emailed you instructions to login to your account, if an account exists with the email you entered. You should receive them shortly.</p>
+    <p>If you don’t receive an email, please make sure you’ve entered the address you registered with, and check your spam folder.</p>
+{% endblock instructions %}

@@ -1,4 +1,4 @@
-<!-- templates/registration/email_validate_done.html -->
+<!-- templates/registration/email_validate_sent.html -->
 {% extends "qwik.html" %}
 {% load static %}
 
@@ -25,8 +25,7 @@
         <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
     </p>
     <div class="pillar push_down">
-        <p>We’ve emailed you instructions to login to your account, if an account exists with the email you entered. You should receive them shortly.</p>
-        <p>If you don’t receive an email, please make sure you’ve entered the address you registered with, and check your spam folder.</p>
+        {% block instructions %}{% endblock instructions %}
     </div>
   </div>
 {% endblock content %}

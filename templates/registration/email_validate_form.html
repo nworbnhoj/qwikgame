@@ -1,4 +1,4 @@
-<!-- templates/registration/email_validate.html -->
+<!-- templates/registration/email_validate_form.html -->
 {% extends "qwik.html" %}
 {% load static %}
 
@@ -24,23 +24,7 @@
     <p class="fat">
         <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
     </p>
-    <div class="pillar push_down">
-      <p>We can send instructions to setup or login to your qwikgame account.</p>
-    </div>
-    <form method="post">{% csrf_token %}
-      <div class="pillar push_down">
-  {{ form.email.errors }}
-        <label for="id_email">Email address</label>
-  {{ form.email }}
-      </div>
-      <div class="pillar push_down">
-          <label class="btn primary">
-              <input type="submit" hidden>
-              Send
-          </label>
-        </div>
-      </div>
-    </form>
+    {% block instructions %}{% endblock instructions %}
   </div>
 
 {% endblock content %}

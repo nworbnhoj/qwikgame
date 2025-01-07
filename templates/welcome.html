@@ -43,29 +43,14 @@
             </form>
         </div>
     {% else %}
-        <fieldset>
-            <legend>cookie approach</legend>
-            <div class="grid_2_col">
-                <a class="btn secondary" href="{% url 'validate' %}">
-                    signup
-                </a>
-                <a class="btn secondary" href="{% url 'validate' %}">
-                    login
-                </a>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>password approach</legend>
-            <div class="grid_2_col">
-                <a class="btn secondary" href="{% url 'signup' %}">
-                    signup
-                </a>
-                <a class="btn secondary" href="{% url 'login' %}">
-                    login
-                </a>
-            </div>
-        </frameset>
-
+        <div class="grid_2_col">
+            <a class="btn secondary" href="{% url 'register' %}">
+                signup
+            </a>
+            <a class="btn secondary" href="{% url 'login' %}">
+                login
+            </a>
+        </div>
     {% endif %}
 </div>
 {% endblock content %}

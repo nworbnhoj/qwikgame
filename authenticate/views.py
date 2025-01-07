@@ -53,7 +53,7 @@ class EmailValidateView(FormView):
 
 class EmailValidateDoneView(TemplateView):
     template_name = "registration/email_validate_done.html"
-    title = "Login details sent"
+    title = "Account details sent"
 
 
 HOUR_SECONDS = 60 * 60
@@ -84,11 +84,25 @@ class EmailValidationHandleView(PasswordResetConfirmView):
         return HttpResponseRedirect(self.fail_url)
 
 
-def index(request):
-    return HttpResponse("authentication form placeholder.")
+class LoginView(EmailValidateView):
+    subject_template_name = "registration/email_login_subject.txt"
+    success_url = reverse_lazy("login_sent")
+    template_name = "registration/login_form.html"
+    title = "Login"
 
 
-class SignUpView(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/signup.html"
+class LoginSentView(TemplateView):
+    template_name = "registration/email_login_sent.html"
+    title = "Login details sent"
+
+
+class RegisterView(EmailValidateView):
+    subject_template_name = "registration/email_register_subject.txt"
+    success_url = reverse_lazy("register_sent")
+    template_name = "registration/register_form.html"
+    title = "Register"
+    
+
+class RegisterSentView(TemplateView):
+    template_name = "registration/email_register_sent.html"
+    title = "Register details sent"

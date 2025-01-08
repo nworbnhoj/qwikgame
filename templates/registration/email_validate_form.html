@@ -3,28 +3,35 @@
 {% load static %}
 
 
+{% block css %}
+    {{ block.super }}
+    <style type="text/css">
+        a.tertiary { display: inline; padding: 0; }
+        h2 { font-size: x-large; }
+        input { width:100% }
+        p { font-size: small }
+    </style>
+{% endblock css %}
+
+
 {% block icon_bar %}
 {% if user.is_authenticated %}
     {{ block.super }}
-{% else %}
-    <div class="pillar">
-        <div class="qwikgame">
-            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
-        </div>
-    </div>
 {% endif %}
 {% endblock icon_bar %}
-
 
 {% block list_bar %}{% endblock list_bar %}
 
 {% block content %}
-  <div class="pillar">
-    <h2>Welcome to qwikgame</h2>
-    <p class="fat">
-        <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
-    </p>
-    {% block instructions %}{% endblock instructions %}
-  </div>
+<div class="pillar">
+    <fieldset style="text-align: center;">
+        <legend><img class="logo href" src="{% static 'img/qwik-logo.jpg' %}"></legend>
+        <div class="pillar">
+            <h2>Welcome to Qwikgame</h2>
+    {% block detail %}{% endblock detail %}
+        </div>
+    </fieldset>
+</div>
+
 
 {% endblock content %}

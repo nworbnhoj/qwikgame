@@ -3,28 +3,20 @@
 {% load static %}
 
 
-{% block instructions %}
-    <h2>Sign up</h2>
-    <div class="pillar push_down">
-      <p>We can send instructions to create your qwikgame account.</p>
-    </div>
-    <form method="post">{% csrf_token %}
-      <div class="pillar push_down">
+{% block detail %}
+    <p>Already have an account? <a class="btn tertiary" href="{% url 'login' %}">login</a></p>
+    <div class="post push_down">
+        <form method="post">
+  {% csrf_token %}
   {{ form.email.errors }}
-        <label for="id_email">Email address</label>
   {{ form.email }}
-      </div>
-      <div class="pillar push_down">
-          <label class="btn primary">
-              <input type="submit" hidden>
-              Send
-          </label>
-        </div>
-      </div>
-    </form>
-    <div class="pillar push_down">
-      <a class="btn tertiary" href="{% url 'login' %}">
-          login
-      </a>      
+            <p>We will send you a verification link to login</p>
+            <div class="pillar push_down">
+                <label class="btn primary">
+                    <input type="submit" hidden>
+                    Sign up
+                </label>
+            </div>
+        </form>
     </div>
-{% endblock instructions %}
+{% endblock detail %}

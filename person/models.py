@@ -43,7 +43,7 @@ class Alert(dict):
 
 class Person(models.Model):
     alerts = models.JSONField(encoder=DjangoJSONEncoder, default=list)
-    icon = models.CharField(max_length=16)
+    icon = models.CharField(max_length=16, default="fa-face-smile")
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32)

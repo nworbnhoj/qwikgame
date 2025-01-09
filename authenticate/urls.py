@@ -1,13 +1,13 @@
 from django.urls import path
 
-from .views import EmailValidationHandleView, LoginView, LoginSentView, RegisterView, RegisterSentView
-from . import views
+from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView
 
 urlpatterns = [
     # ex: /authenticate/
     path("login/", LoginView.as_view(), name="login"),
-    path("login/sent/", views.LoginSentView.as_view(), name="login_sent"),
+    path("login/sent/", LoginSentView.as_view(), name="login_sent"),
+    path("login/<uidb64>/<token>/", LoginHandleView.as_view(), name="login_handle"),
     path("register/", RegisterView.as_view(), name="register"),
-    path("register/sent/", views.RegisterSentView.as_view(), name="register_sent"),
-    path("validate/<uidb64>/<token>/", views.EmailValidationHandleView.as_view(), name="validate_email_handle"),
+    path("register/sent/", RegisterSentView.as_view(), name="register_sent"),
+    path("register/<uidb64>/<token>/", RegisterHandleView.as_view(), name="register_handle"),
 ]

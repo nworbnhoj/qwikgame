@@ -1,7 +1,9 @@
-import logging
+import logging, string
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.validators import ValidationError
 from django.forms import CharField, HiddenInput
+from django.utils.crypto import get_random_string
+from authenticate.models import User
 
 
 logger = logging.getLogger(__file__)
@@ -26,3 +28,26 @@ class EmailValidateForm(PasswordResetForm):
             logger.warn(f"honeypot filled with: [{honeypot}]")
             raise ValidationError("bot")
         return None
+
+
+class RegisterForm(EmailValidateForm):
+
+    def rnd_pwd(self):
+        return get_random_string(
+                20,
+                allowed_chars=string.ascii_uppercase + string.digits
+            )
+
+    def get_users(self, email):
+        logger.warn("get_users()")
+        """Override to create a preliminary user for this email"""
+        user, created = User.objects.get_or_create(email=email)
+        logger.warn(user)
+        if created:
+            user.set_password(self.rnd_pwd())
+            user.save(update_fields=['password'])
+            logger.info(f'Created User: {user.pk}')
+        else:
+            logger.warn(f'Register User aborted: {user.pk} exists')
+            return ()
+        return ( user, )

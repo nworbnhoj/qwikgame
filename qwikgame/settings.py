@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','error: set environ variable DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','error: set environ variable DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -106,12 +106,12 @@ WSGI_APPLICATION = 'qwikgame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DATABASE_ENGINE','error: set environ variable DATABASE_ENGINE'),
-        'NAME': os.environ.get('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER','error: set environ variable DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST','error: set environ variable DATABASE_HOST'),
-        'PORT': os.environ.get('DATABASE_PORT','error: set environ variable DATABASE_PORT'),
+        'ENGINE': os.getenv('DATABASE_ENGINE','error: set environ variable DATABASE_ENGINE'),
+        'NAME': os.getenv('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER','error: set environ variable DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST','error: set environ variable DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT','error: set environ variable DATABASE_PORT'),
     }
 }
 
@@ -266,8 +266,8 @@ RESPONSIVE_VARIABLE_NAME = 'device'
 # Email Settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = os.environ.get('EMAIL_HOST','error: set environ variable EMAIL_HOST')
-EMAIL_PORT = os.environ.get('EMAIL_PORT','error: set environ variable EMAIL_PORT'),
+EMAIL_HOST = os.getenv('EMAIL_HOST','error: set environ variable EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT','error: set environ variable EMAIL_PORT')
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER','error: set environ variable EMAIL_HOST_USER'),
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD','error: set environ variable EMAIL_HOST_PASSWORD'),
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER','error: set environ variable EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD','error: set environ variable EMAIL_HOST_PASSWORD')

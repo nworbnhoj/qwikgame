@@ -1,6 +1,6 @@
 import logging
 from django import forms
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import UserCreationForm
@@ -88,6 +88,7 @@ class EmailValidateHandleView(PasswordResetConfirmView):
                 if self.prep_user():
                     login(self.request, self.user)
                     return HttpResponseRedirect(self.get_success_url())
+        logout(self.request)
         return HttpResponseRedirect(self.fail_url)
 
 

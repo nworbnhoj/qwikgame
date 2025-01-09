@@ -1,3 +1,0 @@
-{% load i18n %}{% autoescape off %}
-{% blocktranslate %}Login details for {{ site_name }}{% endblocktranslate %}
-{% endautoescape %}

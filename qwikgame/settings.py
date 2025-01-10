@@ -1,7 +1,10 @@
-import django, logging
-
-import os
+import django, logging, os
+from dotenv import load_dotenv
 from pathlib import Path
+
+logger = logging.getLogger(__file__)
+if not load_dotenv():
+    logger.warn("Missing .env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,7 +109,7 @@ WSGI_APPLICATION = 'qwikgame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DATABASE_ENGINE','error: set environ variable DATABASE_NAME'),
         'NAME': os.getenv('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
         'USER': os.getenv('DATABASE_USER','error: set environ variable DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),
@@ -264,10 +267,9 @@ RESPONSIVE_MEDIA_QUERIES = {
 RESPONSIVE_VARIABLE_NAME = 'device'
 
 # Email Settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND','django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = os.getenv('EMAIL_HOST','error: set environ variable EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT','error: set environ variable EMAIL_PORT')
-EMAIL_USE_TLS = True
+EMAIL_PORT = os.getenv('EMAIL_PORT','587')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS','error: set environ variable EMAIL_USE_TLS') == "True"
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER','error: set environ variable EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD','error: set environ variable EMAIL_HOST_PASSWORD')

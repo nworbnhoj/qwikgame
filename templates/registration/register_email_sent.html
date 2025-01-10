@@ -1,8 +1,11 @@
 <!-- templates/registration/register_email_sent.html -->
-{% extends "registration/email_validate_sent.html" %}
+{% extends "registration/email_validate.html" %}
 
 
-{% block instructions %}
-    <p>We’ve emailed you instructions to create your account. You should receive them shortly.</p>
-    <p>If you don’t receive an email, please make sure you’ve entered the address correctly, and check your spam folder.</p>
-{% endblock instructions %}
+{% block detail %}
+    <div class="pillar">
+        <p>A registration link was sent to TODO EMAIL</p>
+        <p>You should receive it shortly.</p>
+        <p>If you don’t receive an email, please check your spam folder.</p>
+    </div>
+{% endblock detail %}

@@ -1,8 +1,11 @@
 <!-- templates/registration/login_email_sent.html -->
-{% extends "registration/email_validate_sent.html" %}
+{% extends "registration/email_validate.html" %}
 
 
-{% block instructions %}
-    <p>We’ve emailed you instructions to login to your account, if an account exists with the email you entered. You should receive them shortly.</p>
-    <p>If you don’t receive an email, please make sure you’ve entered the address you registered with, and check your spam folder.</p>
-{% endblock instructions %}
+{% block detail %}
+    <div class="pillar">
+        <p class="push_down">If the account exits, then an email has been sent to TODO EMAIL with a login link.</p>
+        <p class="push_down">You should receive it shortly.</p>
+        <p class="push_down">If you don’t receive an email, please check your spam folder.</p>
+    </div>
+{% endblock detail %}

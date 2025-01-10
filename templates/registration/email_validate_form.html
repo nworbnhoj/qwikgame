@@ -1,37 +1,22 @@
 <!-- templates/registration/email_validate_form.html -->
-{% extends "qwik.html" %}
+{% extends "registration/email_validate.html" %}
 {% load static %}
 
 
-{% block css %}
-    {{ block.super }}
-    <style type="text/css">
-        a.tertiary { display: inline; padding: 0; }
-        h2 { font-size: x-large; }
-        input { width:100% }
-        p { font-size: small }
-    </style>
-{% endblock css %}
-
-
-{% block icon_bar %}
-{% if user.is_authenticated %}
-    {{ block.super }}
-{% endif %}
-{% endblock icon_bar %}
-
-{% block list_bar %}{% endblock list_bar %}
-
-{% block content %}
-<div class="pillar">
-    <fieldset style="text-align: center;">
-        <legend><img class="logo href" src="{% static 'img/qwik-logo.jpg' %}"></legend>
-        <div class="pillar">
-            <h2>Welcome to Qwikgame</h2>
-    {% block detail %}{% endblock detail %}
-        </div>
-    </fieldset>
-</div>
-
-
-{% endblock content %}
+{% block detail %}
+    <div class="pillar push_down">
+        <form method="post">
+  {% csrf_token %}
+  {{ form.email.errors }}
+  {{ form.email }}
+  {{ form.password }}
+            <p>We will send you a verification link to login</p>
+            <div class="pillar push_down">
+                <label class="btn primary">
+                    <input type="submit" hidden>
+                    Submit
+                </label>
+            </div>
+        </form>
+    </div>
+{% endblock detail %}

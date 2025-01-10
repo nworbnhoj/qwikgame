@@ -1,5 +1,5 @@
 <!-- templates/registration/register_form.html -->
-{% extends "registration/email_validate_form.html" %}
+{% extends "registration/email_validate.html" %}
 {% load static %}
 
 
@@ -11,7 +11,7 @@
   {{ form.email.errors }}
   {{ form.email }}
   {{ form.password }}
-            <p>We will send you a verification link to login</p>
+            <p class="small">We will send you a verification link to login</p>
             <div class="pillar push_down">
                 <label class="btn primary">
                     <input type="submit" hidden>

@@ -3,7 +3,7 @@
 {% load static %}
 
 
-{% block icon_bar %}
+{% block tab_bar %}
 {% if user.is_authenticated %}
     {{ block.super }}
 {% else %}
@@ -13,7 +13,7 @@
         </div>
     </div>
 {% endif %}
-{% endblock icon_bar %}
+{% endblock tab_bar %}
 
 
 {% block list_bar %}{% endblock list_bar %}

@@ -511,7 +511,7 @@ function setAllWeek(button, checked) {
 // today is the current weekday at the Venue [0..6]
 function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_hour").forEach(function(day){
-    var open = false;
+    var open_day, open_hour = false, false;
     var weekday = now_weekday;
     var offset = undefined;
     if ('weekday' in day.dataset){
@@ -538,19 +538,20 @@ function setDayFields(hours24x7, now_weekday, now_hour){
           // hide hour buttons when venue is closed
           if (hours >> (23 - hr) & 1){
             input.classList.remove('hidden');
-            open = true;
+            open_day = true;
           } else {
             input.classList.add('hidden');
           }
         }
       }
-      if (Number.isInteger(offset)){
+      if (Number.isInteger(offset){
         // disable hour buttons when time is passed
         input.disabled = (offset == 0) && (hr <= now_hour)
+        open_hour = open_hour || !input.disabled;
       }
     });
     by_day = day.closest('.by_day')
-    if (open){
+    if (open_day && open_hour){
       by_day.querySelector('.on_day').classList.remove('hidden')
       by_day.querySelector('.no_day').classList.add('hidden')
     } else {

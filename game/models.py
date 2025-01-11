@@ -1,6 +1,6 @@
 import datetime, logging
 from django.db import models
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, MATCH_STATUS
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH
 from qwikgame.log import Entry
 
 logger = logging.getLogger(__file__)
@@ -30,11 +30,18 @@ class Game(models.Model):
 
 
 class Match(models.Model):
+
+    STATUS = {
+        'A': 'active',
+        'C': 'complete',
+        'X': 'cancelled',
+    }
+
     date = models.DateTimeField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
-    status = models.CharField(max_length=1, choices=MATCH_STATUS, default='A')
+    status = models.CharField(max_length=1, choices=STATUS, default='A')
     competitors = models.ManyToManyField("player.Player")
     venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
 

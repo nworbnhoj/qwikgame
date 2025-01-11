@@ -3,12 +3,6 @@ from datetime import datetime, timedelta
 
 ENDIAN = 'big'
 
-MATCH_STATUS = {
-    'A': 'active',
-    'C': 'complete',
-    'X': 'cancelled',
-}
-
 WEEK_DAYS = [
     'SUNDAY',
     'MONDAY',

@@ -411,8 +411,9 @@ class Appeal(models.Model):
 
     STATUS = {
         'A': 'active',
+        'C': 'cancelled',
         'D': 'dormant',
-        'X': 'cancelled',
+        'X': 'expired',
     }
 
     created = models.DateTimeField(default=now, editable=False)
@@ -569,6 +570,11 @@ class Appeal(models.Model):
         if now.date() > self.date:
             if not dry_run:
                 self.delete()
+            action = 'deleted'
+        if now.date() == self.date and now.hour >= self.hours24.last_hour():
+            if not dry_run:
+                self.status = 'X'
+                self.save()
             action = 'expired'
         logger.debug('Appeal{} {: <9} {} @ {} {}'.format(
                 ' (dry-run)' if dry_run else '',

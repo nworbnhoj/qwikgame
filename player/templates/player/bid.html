@@ -127,6 +127,12 @@
             <div id="alert_form_end" class="alert"></div>
         </div>
     {% endif %}
+{% elif appeal.status == 'C' %}
+        <div class="pillar">
+            <div class="nextup">
+                <p>This Invitation has been cancelled</p>
+            </div>
+        </div>
 {% elif appeal.status == 'D' %}
         <div class="pillar">
             <div class="nextup">
@@ -136,7 +142,7 @@
 {% elif appeal.status == 'X' %}
         <div class="pillar">
             <div class="nextup">
-                <p>This Invitation has been cancelled</p>
+                <p>This Invitation has expired</p>
             </div>
         </div>
 {% endif %}

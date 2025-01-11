@@ -9,21 +9,18 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/qwik.css' %}">
 {% endblock css %}
-    {% if small_screen %}
+{% if small_screen %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/small_screen.css' %}">
-    {% endif %}
+{% endif %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
-
 {% block script %}
     <script defer src="{% static 'qwik.js' %}"></script>
 {% endblock %}
-
     <title>{% block title %}QwikGame{% endblock %}</title>
 </head>
-
 <body>
     <div id="alert_body_start" class="alert"></div>
-    {% block tab_bar %}
+{% block tab_bar %}
     <div id="tab_bar" class="tab_bar">
         <div id="alert_icon_start" class="alert"></div>
         <a href="{% url 'welcome' %}">
@@ -59,15 +56,15 @@
         <div id="alert_icon_end" class="alert"></div>
     </div>
     <div id="tab_bar_reserve" class="tab_bar_reserve"></div>
-    {% endblock tab_bar %}
-    {% block content %}
+{% endblock tab_bar %}
+{% block content %}
     <div id="content" class="content">
         <div id="alert_content_start" class="alert"></div>
-        {% block list_bar %}LIST_BAR{% endblock list_bar %}
-        {% block detail %}DETAIL{% endblock detail %}
+    {% block list_bar %}LIST_BAR{% endblock list_bar %}
+    {% block detail %}DETAIL{% endblock detail %}
         <div id="alert_content_end" class="alert"></div>
     </div>
-    {% endblock content %}
+{% endblock content %}
     <div id="alert_body_end" class="alert"></div>
 </body>
 </html>

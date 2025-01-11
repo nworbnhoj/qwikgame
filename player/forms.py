@@ -75,6 +75,7 @@ class BidForm(QwikForm):
         if appeal.status == 'A':
             venue_now = appeal.venue.now()
             if venue_now.day > appeal.date.day:
+            if venue_now.day < appeal.date.day:
                 next_hour = 0
             else:
                 next_hour = venue_now.hour + 1

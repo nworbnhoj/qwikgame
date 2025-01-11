@@ -546,7 +546,7 @@ function setDayFields(hours24x7, now_weekday, now_hour){
       }
       if (Number.isInteger(offset)){
         // disable hour buttons when time is passed
-        input.disabled = (offset == 0) && (hr < now_hour)
+        input.disabled = (offset == 0) && (hr <= now_hour)
       }
     });
     by_day = day.closest('.by_day')

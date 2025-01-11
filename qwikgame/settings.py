@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'qwikgame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE','error: set environ variable DATABASE_NAME'),
+        'ENGINE': os.getenv('DATABASE_ENGINE','error: set environ variable DATABASE_ENGINE'),
         'NAME': os.getenv('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
         'USER': os.getenv('DATABASE_USER','error: set environ variable DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),

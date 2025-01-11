@@ -511,7 +511,8 @@ function setAllWeek(button, checked) {
 // today is the current weekday at the Venue [0..6]
 function setDayFields(hours24x7, now_weekday, now_hour){
   document.querySelectorAll(".by_hour").forEach(function(day){
-    var open_day, open_hour = false, false;
+    var open_day = false;
+    var open_hour = false;
     var weekday = now_weekday;
     var offset = undefined;
     if ('weekday' in day.dataset){
@@ -544,7 +545,7 @@ function setDayFields(hours24x7, now_weekday, now_hour){
           }
         }
       }
-      if (Number.isInteger(offset){
+      if (Number.isInteger(offset)){
         // disable hour buttons when time is passed
         input.disabled = (offset == 0) && (hr <= now_hour)
         open_hour = open_hour || !input.disabled;

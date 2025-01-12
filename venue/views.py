@@ -107,8 +107,8 @@ class VenuesView(QwikView):
             kwargs['pk'] = kwargs.get('venue')
         context = super().context(request, *args, **kwargs)
         context |= {
-            'venue': self._context.get('item'),
-            'venues': self._context.get('items'),
+            'venue': context.get('item'),
+            'venues': context.get('items'),
             'target': 'venue',
         }
         self._context = context

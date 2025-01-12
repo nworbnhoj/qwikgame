@@ -1,6 +1,7 @@
 import datetime, logging
 from django.db import models
 from django.utils.timezone import now
+from game.models import Match
 from player.models import Player, Strength
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry

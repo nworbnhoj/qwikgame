@@ -292,7 +292,7 @@ class FilterView(AppealsView):
             venue.games.add(game)
             logger.info(f'Venue add Game: {game}')
             venue.save()
-            mark = Mark(game=game, place=place, size=1)
+            mark = Mark(game=game, place=place)
             mark.save()
             logger.info(f'Mark new {mark}')
         try:

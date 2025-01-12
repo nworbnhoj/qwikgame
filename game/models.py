@@ -79,7 +79,7 @@ class Match(models.Model):
                 )
 
     def clear_conflicts(self, scheduled_appeal):
-        from player.models import Bid, Appeal
+        from appeal.models import Bid, Appeal
         for bid in Bid.objects.filter(
                 appeal__date=self.date,
                 rival__in=self.competitors.all(),

@@ -8,6 +8,7 @@ urlpatterns = [
     path('', WelcomeView.as_view(), name='welcome'),
     path('account/', include("person.urls")),
     path('admin/', admin.site.urls),
+    path('appeal/', include('appeal.urls')),
     path('api/', include('api.urls')),
     path('authenticate/', include('authenticate.urls')),
     path('authenticate/', include('django.contrib.auth.urls')),

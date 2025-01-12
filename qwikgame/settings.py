@@ -45,6 +45,7 @@ CORS_ORIGINS_WHITELIST = [
 # Application definition
 
 INSTALLED_APPS = [
+    'appeal.apps.AppealConfig',
     'api.apps.ApiConfig',
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
@@ -167,8 +168,8 @@ STATICFILES_DIRS = [
 ]
 
 CRONJOBS = [
-    ('1 * * * *', 'player.cron.appeal_perish', '>> /var/log/django_cron.log'),
-    ('10 * * * *', 'player.cron.bid_perish', '>> /var/log/django_cron.log'),
+    ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron.log'),
+    ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron.log'),
     ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron.log'),
     ('30 23 * * *', 'game.cron.match_perish', '>> /var/log/django_cron.log'),
     ('31 23 * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron.log'),

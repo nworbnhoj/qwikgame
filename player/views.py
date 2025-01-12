@@ -112,7 +112,7 @@ class FilterView(AppealsView):
                 mark.save()
         except:
             logger.exception("failed to add filter")
-        return HttpResponseRedirect("/player/appeal/filters")
+        return HttpResponseRedirect("/player/filters")
 
 
 class FiltersView(AppealsView):
@@ -145,7 +145,7 @@ class FiltersView(AppealsView):
                     filter.save()
                 except:
                     logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
-            return HttpResponseRedirect("/player/appeal/")
+            return HttpResponseRedirect("/appeal/")
         if 'DELETE' in context:
             delete = context.get('DELETE', [])
             logger.info(f'deleting filters {delete}')
@@ -156,7 +156,7 @@ class FiltersView(AppealsView):
                     junk.delete()
                 except:
                     logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
-        return HttpResponseRedirect("/player/appeal/filters")
+        return HttpResponseRedirect("/player/filters")
 
 
 class InvitationView(AppealsView):
@@ -175,7 +175,7 @@ class InvitationView(AppealsView):
         #     self.user.player,
         # )
         if len(context) == 0:
-            return HttpResponseRedirect("/player/appeal/")
+            return HttpResponseRedirect("/appeal/")
         context |= super().context(request, *args, **kwargs)
         return render(request, self.template_name, context)
 

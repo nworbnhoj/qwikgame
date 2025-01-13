@@ -108,9 +108,9 @@ class Hours24():
         return int.from_bytes(self.bits, ENDIAN)
 
     def as_list(self):
-        return [i for i in range(0,23) if self.as_int() >> (23-i) & 1]
+        return [i for i in range(0,24) if self.as_int() >> (23-i) & 1]
 
-    def as_str_raw(self, hours=range(0,23), day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0,24), day_all=DAY_ALL):
         if self.bits == DAY_NONE:
             return ''
         if self.bits == day_all:
@@ -134,7 +134,7 @@ class Hours24():
                 hour_blocks=['']
         return ' '.join(hour_blocks)
 
-    def as_str(self, hours=range(0,23), day_all=DAY_ALL):
+    def as_str(self, hours=range(0,24), day_all=DAY_ALL):
         raw = self.as_str_raw(hours, day_all)
         match raw:
             case '--':
@@ -252,7 +252,7 @@ class Hours24x7():
     def as_bytes(self):
         return self.bits
 
-    def as_str_raw(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0,24), week_all=WEEK_ALL, day_all=DAY_ALL):
         if self.bits == WEEK_NONE:
             return ''
         if self.bits == week_all:
@@ -268,7 +268,7 @@ class Hours24x7():
                 day_blocks.append(day_block)
         return ' '.join(day_blocks)
 
-    def as_str(self, hours=range(0,23), week_all=WEEK_ALL, day_all=DAY_ALL):
+    def as_str(self, hours=range(0,24), week_all=WEEK_ALL, day_all=DAY_ALL):
         raw = self.as_str_raw(hours, week_all, day_all)
         match raw:
             case '':

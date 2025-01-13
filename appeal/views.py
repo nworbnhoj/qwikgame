@@ -32,14 +32,14 @@ class AppealsView(QwikView):
         context = super().context(request, *args, **kwargs)
         participate = player.appeal_participate()
         participate_list = list(participate)
-        participate_list.sort(key=lambda x: x.last_hour, reverse=True)
+        participate_list.sort(key=lambda x: x.last_hour)
         participate_list.sort(key=lambda x: x.date)
         for appeal in participate_list:
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
         appeals = appeals.exclude(pk__in=participate)
         appeals_list = list(appeals)  
-        appeals_list.sort(key=lambda x: x.last_hour, reverse=True)
+        appeals_list.sort(key=lambda x: x.last_hour)
         appeals_list.sort(key=lambda x: x.date)
         for appeal in appeals_list:
             seen = player.pk in appeal.meta.get('seen', [])
@@ -51,7 +51,7 @@ class AppealsView(QwikView):
             'appeals_length': len(appeals_list),
             'filtered': Filter.objects.filter(player=player, active=True).exists(),
             'player': player,
-            'prospects': participate[:100],
+            'prospects': participate_list[:100],
         }
         self._context = context
         return self._context

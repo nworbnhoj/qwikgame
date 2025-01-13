@@ -82,7 +82,7 @@ class Hours24():
         integer = self.as_int()
         bools = []
         if integer > 0:
-            n = math.ceil(math.log2(integer))+1
+            n = math.ceil(math.log2(integer))
             for i in range(n):
                 bools.append(integer >> (n - i - 1) & 1 == 1)
         if len(bools) < 24:

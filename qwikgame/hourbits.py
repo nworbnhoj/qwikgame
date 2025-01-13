@@ -123,13 +123,13 @@ class Hours24():
             if h in hours:
                 if hour and start is None:
                     start = h
-                elif start and not hour:
+                elif start is not None and not hour:
                     end = h - 1
-                    hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
+                    hour_blocks.append(str(start) if start == end else f"{start}-{end}")
                     start = None
         if start is not None:
             end = r_end
-            hour_blocks.append(str(start) if start == end else "{}-{}".format(start, end))
+            hour_blocks.append(str(start) if start == end else f"{start}-{end}")
             if start == r_start and end == r_end:
                 hour_blocks=['']
         return ' '.join(hour_blocks)

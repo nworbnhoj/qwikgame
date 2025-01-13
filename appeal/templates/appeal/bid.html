@@ -59,20 +59,9 @@
 {% for entry in appeal.log %}
     {% if entry.id == player_id %}
             <div class="log_entry align_end {{ entry.klass }}">
-    {% else %}
-            <div class="log_entry align_start {{ entry.klass }}">
-                <div class="btn special2">
-                    <i class="fa-solid {{ entry.icon }} fa-2x"></i>
-                </div>
-    {% endif %}
-                <div class="chat_bubble">
-                    <span class="name">{{ entry.name }}</span>
-                    <time datetime="{{ entry.created }}"></time>
-                    <span class="text">{{ entry.text }}</span>
-                </div>
-    {% if bid %}
-        {% if entry.pk == bid.pk %}
-                <div class="drop_down icon head_more">
+        {% if bid %}
+            {% if entry.pk == bid.pk %}
+                <div class="drop_down icon">
                     <div class="btn drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
@@ -86,8 +75,19 @@
                         </form>
                     </div>
                 </div>
+            {% endif %}
         {% endif %}
+    {% else %}
+            <div class="log_entry align_start {{ entry.klass }}">
+                <div class="btn special2">
+                    <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                </div>
     {% endif %}
+                <div class="chat_bubble">
+                    <span class="name">{{ entry.name }}</span>
+                    <time datetime="{{ entry.created }}"></time>
+                    <span class="text">{{ entry.text }}</span>
+                </div>
             </div>
 {% endfor %}
         </div>

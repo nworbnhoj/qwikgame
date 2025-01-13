@@ -68,6 +68,23 @@
 {% for entry in appeal.log %}
     {% if entry.id == player_id %}
                 <div class="log_entry align_end {{ entry.klass }}">
+        {% if bids|get_item:entry.pk %}
+                    <div class="drop_down icon">
+                        <div class="btn todo" data-down="false">
+                            <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
+                        </div>
+                        <div class="down hidden">
+                            <label class="btn tertiary menu">
+                                <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
+                                decline
+                            </label>
+                        </div>
+                    </div>
+                    <label class="btn primary round">
+                        <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
+                        <i class="fa-solid fa-right-long fa-xl"></i>
+                    </label>
+        {% endif %}            
     {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
                 <div class="btn special2">
@@ -97,23 +114,6 @@
     {% endif %}                        
                     <span class="text">{{ entry.text }}</span>
                 </div>
-    {% if bids|get_item:entry.pk %}
-                <div class="drop_down icon">
-                    <div class="btn todo" data-down="false">
-                        <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
-                    </div>
-                    <div class="down hidden">
-                        <label class="btn tertiary menu">
-                            <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
-                            decline
-                        </label>
-                    </div>
-                </div>
-                <label class="btn primary round">
-                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
-                    <i class="fa-solid fa-right-long fa-xl"></i>
-                </label>
-    {% endif %}            
             </div>
 {% endfor %}
         </div>

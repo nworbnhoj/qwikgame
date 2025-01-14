@@ -1,11 +1,11 @@
-<!-- templates/registration/register_form.html -->
-{% extends "registration/email_validate.html" %}
+<!-- templates/authenticate/login_form.html -->
+{% extends "authenticate/email_validate.html" %}
 {% load static %}
 
 
 {% block detail %}
-    <p>Already have an account? <a class="btn tertiary" href="{% url 'login' %}">login</a></p>
-    <div class="post push_down">
+    <p>Need a new account? <a class="btn tertiary" href="{% url 'register' %}">signup</a></p>
+    <div class="pillar push_down">
         <form method="post">
   {% csrf_token %}
   {{ form.email.errors }}
@@ -15,7 +15,7 @@
             <div class="pillar push_down">
                 <label class="btn primary">
                     <input type="submit" hidden>
-                    Sign up
+                    Login
                 </label>
             </div>
         </form>

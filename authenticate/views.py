@@ -24,14 +24,14 @@ logger = logging.getLogger(__file__)
 
 
 class EmailValidateView(FormView):
-    email_template_name = "registration/email_validate_email.html"
+    email_template_name = "authenticate/email_validate_email.html"
     extra_email_context = None
     form_class = EmailValidateForm
     from_email = "accounts@qwikgame.org"
     html_email_template_name = None
-    subject_template_name = "registration/email_validate_subject.txt"
+    subject_template_name = "authenticate/email_validate_subject.txt"
     success_url = reverse_lazy("email_validate_done")
-    template_name = "registration/email_validate_form.html"
+    template_name = "authenticate/email_validate_form.html"
     title = "Email validate"
     token_generator = default_token_generator
 
@@ -55,7 +55,7 @@ class EmailValidateView(FormView):
 
 
 class EmailValidateDoneView(TemplateView):
-    template_name = "registration/email_validate_done.html"
+    template_name = "authenticate/email_validate_done.html"
     title = "Account details sent"
 
 
@@ -93,15 +93,15 @@ class EmailValidateHandleView(PasswordResetConfirmView):
 
 
 class LoginView(EmailValidateView):
-    email_template_name = "registration/login_email.html"
-    subject_template_name = "registration/login_email_subject.txt"
+    email_template_name = "authenticate/login_email.html"
+    subject_template_name = "authenticate/login_email_subject.txt"
     success_url = reverse_lazy("login_sent")
-    template_name = "registration/login_form.html"
+    template_name = "authenticate/login_form.html"
     title = "Login"
 
 
 class LoginSentView(TemplateView):
-    template_name = "registration/login_email_sent.html"
+    template_name = "authenticate/login_email_sent.html"
     title = "Login details sent"
 
 
@@ -112,16 +112,16 @@ class LoginHandleView(EmailValidateHandleView):
 
 
 class RegisterView(EmailValidateView):
-    email_template_name = "registration/register_email.html"
+    email_template_name = "authenticate/register_email.html"
     form_class = RegisterForm
-    subject_template_name = "registration/register_email_subject.txt"
+    subject_template_name = "authenticate/register_email_subject.txt"
     success_url = reverse_lazy("register_sent")
-    template_name = "registration/register_form.html"
+    template_name = "authenticate/register_form.html"
     title = "Register"
     
 
 class RegisterSentView(TemplateView):
-    template_name = "registration/register_email_sent.html"
+    template_name = "authenticate/register_email_sent.html"
     title = "Register details sent"
 
 

@@ -80,10 +80,6 @@
                             </label>
                         </div>
                     </div>
-                    <label class="btn primary round">
-                        <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
-                        <i class="fa-solid fa-right-long fa-xl"></i>
-                    </label>
         {% endif %}            
     {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
@@ -114,6 +110,12 @@
     {% endif %}                        
                     <span class="text">{{ entry.text }}</span>
                 </div>
+        {% if bids|get_item:entry.pk %}
+                <label class="btn primary round">
+                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
+                    <i class="fa-solid fa-right-long fa-xl"></i>
+                </label>
+        {% endif %}    
             </div>
 {% endfor %}
         </div>

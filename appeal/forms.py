@@ -1,4 +1,6 @@
 import datetime, logging
+from authenticate.forms import RegisterForm
+from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from game.models import Game, Match
@@ -101,6 +103,27 @@ class BidForm(QwikForm):
                 'hour':  Hours24().set_hour(form.cleaned_data['hour']),
             }
         return context
+
+
+class InviteForm(RegisterForm):
+
+    def __init__(self, to_email, email_context, *args, **kwargs):
+        data={ 'email': to_email }
+        super().__init__(data, *args, **kwargs)
+        self.email_context=email_context
+
+    def save(self, request):
+        super().save(
+            domain_override=None,
+            subject_template_name='appeal/invite_email_subject.txt',
+            email_template_name='appeal/invite_email_text.html',
+            use_https=False,
+            token_generator=default_token_generator,
+            from_email='accounts@qwikgame.org',
+            request=request,
+            html_email_template_name='appeal/invite_email_html.html',
+            extra_email_context=self.email_context,
+        )
 
 
 class KeenForm(QwikForm):
@@ -273,7 +296,7 @@ class KeenForm(QwikForm):
                     form.fields['friends'].reveal_checked = 'checked'
                     friends = form.cleaned_data['friends']
                 context = {
-                    'friends': [ Player.objects.get(pk=f) for f in friends ],
+                    'friends': [ Friend.objects.get(rival__email_hash=f) for f in friends ],
                     'game': form.cleaned_data['game'],
                     'today': today,
                     'tomorrow': tomorrow,

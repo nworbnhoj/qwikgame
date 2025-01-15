@@ -39,15 +39,10 @@ class RegisterForm(EmailValidateForm):
             )
 
     def get_users(self, email):
-        logger.warn("get_users()")
         """Override to create a preliminary user for this email"""
         user, created = User.objects.get_or_create(email=email)
-        logger.warn(user)
         if created:
             user.set_password(self.rnd_pwd())
             user.save(update_fields=['password'])
             logger.info(f'Created User: {user.pk}')
-        else:
-            logger.warn(f'Register User aborted: {user.pk} exists')
-            return ()
         return ( user, )

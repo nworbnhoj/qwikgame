@@ -17,7 +17,6 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from authenticate.forms import RegisterForm, EmailValidateForm
 from person.views import Person
-from player.views import Player
 
 
 logger = logging.getLogger(__file__)
@@ -131,14 +130,23 @@ class RegisterHandleView(EmailValidateHandleView):
         return super().dispatch(*args, **kwargs)
 
     def prep_user(self):
-        person, created = Person.objects.get_or_create(user=self.user)
-        if not created:
-            logger.warn(f'Register Person aborted: {person.pk} exists')
-            return False
-        logger.info(f'created Person: {person.pk}')
-        player, created = Player.objects.get_or_create(user=self.user)
-        if not created:
-            logger.warn(f'Register Player aborted: {player.pk} exists')
-            return False
-        logger.info(f'created Player: {player.pk}')
+        from player.views import Player
+        person, created = Person.objects.get_or_create(
+            user=self.user
+        )
+        person.user = self.user
+        person.save()
+        if created:
+            logger.info(f'created Person: {person.pk}')
+        else:
+            logger.info(f'linked existing Person to user: {person.pk}')
+        player, created = Player.objects.get_or_create(
+            email_hash=Player.hash(self.user.email)
+        )
+        if created:
+            logger.info(f'created Player: {player.pk}')
+        else:
+            logger.info(f'linked existing Player to user: {player.pk}')
+        player.user = self.user
+        player.save()
         return super().prep_user()

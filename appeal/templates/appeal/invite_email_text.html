@@ -1,0 +1,35 @@
+{% load i18n %}{% autoescape off %}
+
+{% blocktranslate %}You're receiving this email because {{ name }} at {{ site_name }} has invited you to play {{ game }} at {{venue }}.{% endblocktranslate %}
+
+{% translate "Welcome to qwikgame.org" %}
+
+Game: {{ game }}
+Date: {{ date }}
+Time: {{ time }}
+Venue: {{ venue }}
+
+{% blocktranslate %}
+Please click on the following link to accept the invitation:
+{% endblocktranslate %}
+{% block bid_link %}
+{{ protocol }}://{{ domain }}{% url 'bid' appeal=appeal.pk %}
+{% endblock %}
+
+
+{% blocktranslate %}
+To block email invitations from {{ name }}, please click :
+{% endblocktranslate %}
+{% block block_link %}
+{{ protocol }}://{{ domain }}{% url 'welcome' %}
+{% endblock %}
+
+
+{% blocktranslate %}
+To block email invitations from all Players at {{ site_name }}, please click :
+{% endblocktranslate %}
+{% block block_all_link %}
+{{ protocol }}://{{ domain }}{% url 'welcome' %}
+{% endblock %}
+
+{% endautoescape %}

@@ -1,7 +1,9 @@
 import logging
-from appeal.forms import AcceptForm, BidForm, KeenForm
+from appeal.forms import AcceptForm, BidForm, InviteForm, KeenForm
 from appeal.models import Appeal, Bid
+from authenticate.views import RegisterView
 from datetime import datetime, timedelta, timezone
+from django.contrib.sites.shortcuts import get_current_site
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -255,6 +257,31 @@ class KeenView(AppealsView):
         )
         return render(request, self.template_name, context)
 
+    def _invite(self, appeal, invitees, request):
+        appeal.invitees.clear()
+        for friend in invitees:
+            appeal.invitees.add(friend.rival)
+            if friend.rival.user is None:
+                current_site = get_current_site(request)
+                email_context={
+                    'appeal': appeal,
+                    'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
+                    'domain': current_site.domain,
+                    'game': appeal.game,
+                    'name': appeal.player.user.person.name,
+                    'protocol': 'https' if request.is_secure() else 'http',
+                    'site_name': current_site.name,
+                    'time': appeal.hours24.as_str(),
+                    'venue': appeal.venue,
+                }
+                form = InviteForm(friend.email, email_context)
+                logger.info(form.is_bound)
+                if form.is_valid():
+                    form.save(request)
+                else:
+                    logger.exception(f"Invalid InviteForm: {form}")
+        appeal.save()
+
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player 
@@ -314,10 +341,7 @@ class KeenView(AppealsView):
             if appeal.hours24 != context['today']:
                 appeal.set_hours(valid_hours)
                 appeal.perish()
-            appeal.invitees.clear()
-            for friend in invitees:
-                appeal.invitees.add(friend)
-            appeal.save()
+            self._invite(appeal, invitees, request)
             if created:
                 logger.info(f'created Appeal: {appeal}')
             else:
@@ -340,10 +364,7 @@ class KeenView(AppealsView):
             if appeal.hours24 != context['tomorrow']:
                 appeal.set_hours(valid_hours)
                 appeal.perish()
-            appeal.invitees.clear()
-            for friend in invitees:
-                appeal.invitees.add(friend)
-            appeal.save()
+            self._invite(appeal, invitees, request)
             if created:
                 logger.info(f'created Appeal: {appeal}')
             else:

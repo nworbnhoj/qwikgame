@@ -15,7 +15,7 @@ label:has( input[type=radio]:checked)::before { content: "\2022";  background-co
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }
 
-.btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550;  gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; overflow: hidden; padding: 1.25em 1.5em 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis;}
+.btn { align-items: center; border: 1px solid; border-radius: 0.3em; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550;  gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; padding: 0.3em; text-decoration: none; text-overflow: ellipsis;}
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) {box-shadow: none; transform: none;}
@@ -40,7 +40,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.secondary:hover:has(input:disabled) { background-color: #ffffff;}
 
-.btn.tertiary { background-color: #ffffff; border-color: #ffffff; color: #2b78e4; text-decoration: underline; }
+.btn.tertiary { align-content: center; background-color: #ffffff; border-color: #ffffff; color: #2b78e4; display: block; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
 .btn.tertiary:hover { background-color: #ffffff; border-color: #ffffff; font-weight: bold; }
 .btn.tertiary:active { background-color: #c6d2e6; border-color: #c6d2e6; }
@@ -153,7 +153,7 @@ div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
 div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
@@ -177,12 +177,13 @@ div.head {  display: flex; flex: auto; flex-direction: column; width: 50%  }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
-div.icon { border: 0px solid black; display: flex; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
+div.icon { align-content: center; border: 0px solid black; display: block; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon.badge { border: 0.2em solid #dfa622; color: #dfa622; border-radius: 50%; height: 2.5em; padding: 0.3em; width: 2.5em; }
 div.icon.info { border-width: 0.3em; border-radius: 50%; padding: 0.3em }
 div.icon.medium { height: 3em; width: 3em }
 div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
+div.icon .btn.drop { justify-content: center; }
 div.tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
 div.tab_bar_reserve { height: 4em }
 div.info { position: relative }
@@ -194,6 +195,7 @@ div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex:
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
 div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em }
+div.log_entry .icon { flex: 0 0 3em; }
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
@@ -229,7 +231,7 @@ div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
 div.hidden { display: none }
-fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 1em 0; padding: 2em; width: 100%; }
+fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 3em 0; padding: 2em; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 fieldset div { display:block; padding: 1em}
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; width: 100% }

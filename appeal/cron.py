@@ -1,5 +1,5 @@
 import datetime, logging
-from player.models import Appeal, Bid
+from appeal.models import Appeal, Bid
 
 
 logger = logging.getLogger(__file__)

@@ -317,6 +317,7 @@ class PrecisForm(QwikForm):
             widget=TabInput(widgets))
         self.fields['precis'].help_text = "Let rivals know why they want to play you."
         self.fields['precis'].initial = initial
+        self.fields['precis'].required = False
 
 
     # Initializes a PublicForm with 'request_post' for 'player'.

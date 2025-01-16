@@ -154,7 +154,7 @@ class Appeal(models.Model):
                     self.hours24.as_str()
                 )
                 if not self.is_open:
-                    friends = ', '.join(friend.name() for friend in self.invitees.all())
+                    friends = ', '.join(friend.name_best() for friend in self.invitees.all())
                     entry['text'] += f" with {friends}"
             case 'cancelled':
                 entry['text'] = "Cancelled Invitation"

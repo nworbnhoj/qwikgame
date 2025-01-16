@@ -460,6 +460,13 @@ class Friend(models.Model):
             return icon
         return 'fa-face-smile'
 
+    def name_best(self):
+        if self.name:
+            return self.name
+        if rival.user and rival.user.person and rival.user.person.name:
+            return rival.user.person.name
+        return self.email.split('@')[0]
+
 
 from django.template.defaulttags import register
 

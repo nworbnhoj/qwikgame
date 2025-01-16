@@ -2,7 +2,7 @@ import datetime, logging
 from django.db import models
 from django.utils.timezone import now
 from game.models import Match
-from player.models import Player, Strength
+from player.models import Friend, Player, Strength
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 
@@ -23,7 +23,7 @@ class Appeal(models.Model):
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
     hours = models.BinaryField(default=DAY_NONE)
-    invitees = models.ManyToManyField(Player, related_name='invitees')
+    invitees = models.ManyToManyField(Friend, related_name='invitees')
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
     rivals = models.ManyToManyField(Player, related_name='rivals', through='Bid')

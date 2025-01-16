@@ -260,7 +260,7 @@ class KeenView(AppealsView):
     def _invite(self, appeal, invitees, request):
         appeal.invitees.clear()
         for friend in invitees:
-            appeal.invitees.add(friend.rival)
+            appeal.invitees.add(friend)
             if friend.rival.user is None:
                 current_site = get_current_site(request)
                 email_context={

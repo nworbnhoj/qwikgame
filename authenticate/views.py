@@ -73,7 +73,7 @@ class EmailValidateHandleView(PasswordResetConfirmView):
 
     @method_decorator(sensitive_post_parameters())
     @method_decorator(never_cache)
-    def dispatch(self, *args, **kwargs):
+    def dispatch(self, request, *args, **kwargs):
         if "uidb64" not in kwargs or "token" not in kwargs:
             raise ImproperlyConfigured(
                 "The URL path must contain 'uidb64' and 'token' parameters."
@@ -86,7 +86,8 @@ class EmailValidateHandleView(PasswordResetConfirmView):
                 self.validlink = True
                 if self.prep_user():
                     login(self.request, self.user)
-                    return HttpResponseRedirect(self.get_success_url())
+                    url = request.GET.get('next', self.get_success_url())
+                    return HttpResponseRedirect(url)
         logout(self.request)
         return HttpResponseRedirect(self.fail_url)
 

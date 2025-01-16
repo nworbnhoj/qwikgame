@@ -80,11 +80,7 @@ class Hours24():
 
     def as_bools(self):
         integer = self.as_int()
-        bools = []
-        if integer > 0:
-            n = math.ceil(math.log2(integer))
-            for i in range(n):
-                bools.append(integer >> (n - i - 1) & 1 == 1)
+        bools = [digit=='1' for digit in bin(integer)[2:]]
         if len(bools) < 24:
             pad = [False] * (24 - len(bools))
             return pad + bools

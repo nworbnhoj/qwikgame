@@ -28,27 +28,33 @@ In qwikgame parlace; **Matches** are played between **Rival** **Players** at **V
 
 ### users
 
-Each registered **player** has a single xml file in the `/player` directory.
+qwikgame user roles are represented by a number of class structures:
+- **User**: represents a validated email address - and controls access to system admin functions
+- **Person**: represents the person who validated the **User** email address - and records preferences such as screen name/icon, language, and various privacy aspects.
+- **Player**: represents a **User** who plays Games with other Players - and is the basis for recording Friends, Conduct and relative Game Strength
+- **Manager**: represents a **User** with responsibility for bookings at a Venue.
 
-A player registers by nominating a favorite game and venue, and an email address. The player is effectively registering that they are available to play Squash at the Milawa Courts (for example) and wish to be alerted when some-one else is keen to play. An email registration confirmation contains a link to the players home page and a cookie is set to maintain the user-login beyond a single session. If the user manually logs-out then another email can be requested with a new login link (ie traditional user passwords are replaced by persistent sessions and a simple password-reset email process). 
+Player registration involves the validation of an email address and the creation of **User**, **Person**, and **Player** objects in the system. Registration cascades to login - affected as a session on the device with a lengthy timeout. The session can be manually terminated (ie logout) as required.
 
-The internal player ID (pid) is chosen by taking the sha256 hash of the email address. 
-This has a number of advantages:
-- The player ID will be unique because the email address will be unique
-- Qwikgame can accept and use a sha256 hash to store anonymous player data
-- A new email address can be linked to existing anonymous player data
+Manager registration similarly involves the validation of an email address and the creation of **User**, **Person**, and **Manager** objects in the system. A **User** can be associated with both **Player** and **Manager** objects.
 
-A player _must_ nominate:
+User login involves the re-validation of an email address and re-establishment of a session on a device. Login may be required when a session is logged out, timed-out, or a session is required on a different device.
 
-- at least one favorite game/venue/time combination when they are available to play
-- an email address as a unique ID and for notifications
+A **Person** can choose to block any other **Person** on the system. This causes these two **Persons** to be _mutually_ invisible to each other.
 
-A player may _optionally_ nominate:
+A **Player** can add a Friend with an email address. If the email address has NOT yet been registered with qwikgame, then a new unregistered **Player** object is created (without the associated **User** or **Person** objects). Unregistered **Player** objects play an important role in holding the relative Game Strengths against other registered **Players**. Note that multiple registered **Players** may independently add a Friend with the same email address. These Friend objects will all be associated with a single **Player** object.
 
-- one or more email addresses of known rivals and their relative ability
-- an estimate of their own ability for one or more games in one or more geographic regions
-- a nickname visible to other players
-- a link to a social media page
+When a **Players** invites an unregistered **Player** Friend to a Match, then an email is sent to the Friend. All three links in the invitation email will validate the Friend's email address, and create the associated **User** and **Person** objects as above. In addition:
+    - the _accept_ link will redirect the new **Player** directly to the Bid form so that they may accept the invitation.
+    - the _block_ link will establish a _block_ between the two **Person** objects. The session will last only long enough to complete the transaction.
+    - the _block_all_ link will establish a _block_ between the new **Person** object and a special **Person** "wildcard" object. The session will last only long enough to complete the transaction.
+
+When a **User** deletes their qwikgame account then the **Player** effectively returns to unregistered status (almost) :
+    - the **User** object will be deleted, with the associated email address
+    - the **Person** object will be deleted with all associated preferences including _blocked_ **Persons**
+    - the **Player** object will be retained, to maintain the important relative Game Strength relationships. All associated Bid, Appeal, Match and Friend objects will be deleted.
+    - The **Player** conduct record will be retained along with a hash of the email address - so that on re-registration the conduct record will persist.
+    - Any Friend objects in other **Player** accounts will persist, and as such, it is possible for the departed email address to receive invitation emails. Unwanted invitation emails can be blocked as for any unregistered email (as above)
 
 ### venues
 

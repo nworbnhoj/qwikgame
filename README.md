@@ -44,17 +44,17 @@ A **Person** can choose to block any other **Person** on the system. This causes
 
 A **Player** can add a Friend with an email address. If the email address has NOT yet been registered with qwikgame, then a new unregistered **Player** object is created (without the associated **User** or **Person** objects). Unregistered **Player** objects play an important role in holding the relative Game Strengths against other registered **Players**. Note that multiple registered **Players** may independently add a Friend with the same email address. These Friend objects will all be associated with a single **Player** object.
 
-When a **Players** invites an unregistered **Player** Friend to a Match, then an email is sent to the Friend. All three links in the invitation email will validate the Friend's email address, and create the associated **User** and **Person** objects as above. In addition:
-    - the _accept_ link will redirect the new **Player** directly to the Bid form so that they may accept the invitation.
-    - the _block_ link will establish a _block_ between the two **Person** objects. The session will last only long enough to complete the transaction.
-    - the _block_all_ link will establish a _block_ between the new **Person** object and a special **Person** "wildcard" object. The session will last only long enough to complete the transaction.
+When a **Player** invites an unregistered **Player** Friend to a Match, then an email is sent to the Friend. All three links in the invitation email will validate the Friend's email address, and create the associated **User** and **Person** objects as above. In addition:
+  - the _accept_ link will redirect the new **Player** directly to the Bid form so that they may accept the invitation.
+  - the _block_ link will establish a _block_ between the two **Person** objects. The session will last only long enough to complete the transaction.
+  - the _block_all_ link will establish a _block_ between the new **Person** object and a special **Person** "wildcard" object. The session will last only long enough to complete the transaction.
 
 When a **User** deletes their qwikgame account then the **Player** effectively returns to unregistered status (almost) :
-    - the **User** object will be deleted, with the associated email address
-    - the **Person** object will be deleted with all associated preferences including _blocked_ **Persons**
-    - the **Player** object will be retained, to maintain the important relative Game Strength relationships. All associated Bid, Appeal, Match and Friend objects will be deleted.
-    - The **Player** conduct record will be retained along with a hash of the email address - so that on re-registration the conduct record will persist.
-    - Any Friend objects in other **Player** accounts will persist, and as such, it is possible for the departed email address to receive invitation emails. Unwanted invitation emails can be blocked as for any unregistered email (as above)
+  - the **User** object will be deleted, with the associated email address
+  - the **Person** object will be deleted with all associated preferences including _blocked_ **Persons**
+  - the **Player** object will be retained, to maintain the important relative Game Strength relationships. All associated Bid, Appeal, Match and Friend objects will be deleted.
+  - The **Player** conduct record will be retained along with a hash of the email address - so that on re-registration the conduct record will persist.
+  - Any Friend objects in other **Player** accounts will persist, and as such, it is possible for the departed email address to receive invitation emails. Unwanted invitation emails can be blocked as for any unregistered email (as above)
 
 ### venues
 

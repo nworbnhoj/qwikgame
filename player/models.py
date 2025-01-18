@@ -63,7 +63,8 @@ class Player(models.Model):
             appeal_qs |= open_appeals_qs.all()
         # include all Appeals as an invitee
         appeal_qs |= Appeal.objects.filter(invitees__rival__in=[self])
-        # TODO exclude Blocked Players
+        # exclude blocked Persons
+        appeal_qs.exclude(player__user__person__in=self.user.person.blocked())
         return appeal_qs.order_by('pk').distinct()
 
     def appeal_participate(self):

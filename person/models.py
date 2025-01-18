@@ -108,6 +108,11 @@ class Person(models.Model):
     def alert_show(self, type):
         return '' if self.alert_get(type=type) else 'hidden'
 
+    def blocked(self):
+        blocker = self.block.all()
+        blockee = Person.objects.filter(block__in=[self]).all()
+        return list(blocker | blockee)
+
 
 class Block(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='blocker')

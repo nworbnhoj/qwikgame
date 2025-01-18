@@ -5,7 +5,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Precis, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -14,54 +14,6 @@ from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
-
-class BlockedForm(QwikForm):
-    blocked = MultipleActionField(
-        action='unblock:',
-        help_text='When you block a player, neither of you will see the other on qwikgame.',
-        label='LIST OF BLOCKED PLAYERS',
-        required=False,
-    )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['blocked'].widget.option_template_name='option_delete.html'
-        
-    # Initializes a PrivateForm for 'player'.
-    # Returns a context dict including 'player_form'
-    @classmethod
-    def get(klass, player):
-        form = klass()
-        form.fields['blocked'].choices = klass.blocked_choices(player)
-        return {
-            'blocked_form': form,
-        }
-
-    # Initializes a PrivateForm for 'player'.
-    # Returns a context dict including 'player_form'
-    @classmethod
-    def post(klass, request_post, player):
-        context = {}
-        user_id = player.user.id
-        form = klass(data=request_post)
-        form.fields['blocked'].choices = klass.blocked_choices(player)
-        if form.is_valid():
-            for unblock in form.cleaned_data['blocked']:
-                player.blocked.remove(unblock)
-            player.save()
-        else:
-            context = {  
-                'blocked_form': form,
-            }
-        return context
-
-    @classmethod
-    def blocked_choices(klass, player):
-        choices={}
-        for blocked in player.blocked.all():
-            choices[blocked.email_hash] = "{} ({})".format(blocked.name(), blocked.facet())
-        return choices
-    
 
 class FilterForm(QwikForm):
     game = ChoiceField(

@@ -3,9 +3,9 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
 from person.models import Person
-from person.forms import PrivateForm, PublicForm
+from person.forms import BlockedForm, PrivateForm, PublicForm
 from player.models import Player, Precis
-from player.forms import BlockedForm, PrecisForm
+from player.forms import PrecisForm
 from qwikgame.views import QwikView
 
 
@@ -40,8 +40,10 @@ class PrivateView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = self.private_form_class.get(self.user.person)
+        context |= self.blocked_form_class.get(self.user.person)
         if self.is_player:
-            context = context | self.blocked_form_class.get(self.user.player)
+            player = self.user.player
+            context = context | {}
         if self.is_manager:
             manager = self.user.manager
             context = context | {}
@@ -55,8 +57,7 @@ class PrivateView(QwikView):
     def post(self, request, *args, **kwargs):
         super().post(request)
         context = self.private_form_class.post(request.POST, self.user.person)
-        if self.is_player:
-            context = context | self.blocked_form_class.post(request.POST, self.user.player)
+        context |= self.blocked_form_class.post(request.POST, self.user.person)
         if len(context) == 0:
             return HttpResponseRedirect("/account/private/")
         context = context | super().context(request)

@@ -1,12 +1,56 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, Select, URLField
 from person.models import LANGUAGE, Person, Social
+from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 
 class DeleteWidget(CheckboxSelectMultiple):
     option_template_name="input_delete.html"
 
 
+class BlockedForm(QwikForm):
+    blocked = MultipleActionField(
+        action='unblock:',
+        help_text='When you block a person, neither of you will see the other on qwikgame.',
+        label='LIST OF BLOCKED PEOPLE',
+        required=False,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['blocked'].widget.option_template_name='option_delete.html'
+        
+    @classmethod
+    def get(klass, person):
+        form = klass()
+        form.fields['blocked'].choices = klass.blocked_choices(person)
+        return {
+            'blocked_form': form,
+        }
+
+    @classmethod
+    def post(klass, request_post, person):
+        context = {}
+        user_id = person.user.id
+        form = klass(data=request_post)
+        form.fields['blocked'].choices = klass.blocked_choices(person)
+        if form.is_valid():
+            for unblock in form.cleaned_data['blocked']:
+                person.block.remove(unblock)
+            person.save()
+        else:
+            context = {  
+                'blocked_form': form,
+            }
+        return context
+
+    @classmethod
+    def blocked_choices(klass, person):
+        choices={}
+        for block in person.block.all():
+            choices[block.pk] = block.name
+        return choices
+    
 
 class PrivateForm(QwikForm):
     notify_email = BooleanField(

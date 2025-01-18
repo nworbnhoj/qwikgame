@@ -13,7 +13,7 @@ class FriendAdmin(admin.ModelAdmin):
     ordering = ['player']
 
 class PlayerAdmin(admin.ModelAdmin):
-    fields = ['user', 'email_hash', 'games', 'blocked']
+    fields = ['user', 'email_hash', 'games']
     fieldsets = []
     filter_horizontal = []
     list_display = ['__str__', 'conduct_stars', 'conduct_dips']

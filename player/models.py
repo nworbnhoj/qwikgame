@@ -16,7 +16,6 @@ MASK_24 = ((1 << 24) - 1)   # binary 000000001111111111111111111111111111111
 
 
 class Player(models.Model):
-    blocked = models.ManyToManyField('self', blank=True)
     # conduct is a bitfield representing a timeseries of good/bad Player reviews
     conduct = models.BinaryField(default=INIT_CONDUCT)
     email_hash = models.CharField(max_length=32, primary_key=True)

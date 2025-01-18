@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
 from person.models import Person
-from person.forms import BlockedForm, PrivateForm, PublicForm
+from person.forms import UnblockForm, PrivateForm, PublicForm
 from player.models import Player, Precis
 from player.forms import PrecisForm
 from qwikgame.views import QwikView
@@ -34,7 +34,7 @@ class PrivacyView(QwikView):
 
 class PrivateView(QwikView):
     private_form_class = PrivateForm
-    blocked_form_class = BlockedForm
+    blocked_form_class = UnblockForm
     template_name = "person/private.html"
 
     def get(self, request, *args, **kwargs):

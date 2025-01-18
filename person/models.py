@@ -43,6 +43,7 @@ class Alert(dict):
 
 class Person(models.Model):
     alerts = models.JSONField(encoder=DjangoJSONEncoder, default=list)
+    block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
     icon = models.CharField(max_length=16, default="fa-face-smile")
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
@@ -106,6 +107,11 @@ class Person(models.Model):
 
     def alert_show(self, type):
         return '' if self.alert_get(type=type) else 'hidden'
+
+
+class Block(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='blocker')
+    blocked = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='blockee')
 
 
 class Social(models.Model):

@@ -22,16 +22,14 @@
     </a>
 </p>
 
+<hr>
+
 <p>
     <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> email invitations from {{ name }}.
 </p>
 
-<hr>
-
-<h2>TODO</h2>
-
 <p>
-<a href="{{ protocol }}://{{ domain }}{% url 'welcome' %}">block ALL</a> email invitations from {{ site_name }}.
+    <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}">block ALL</a> email invitations from {{ site_name }}.
 </p>
 
 {% endblock detail %}

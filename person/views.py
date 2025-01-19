@@ -1,4 +1,6 @@
+import logging
 from django.contrib.auth import logout
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -8,6 +10,9 @@ from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
 from player.models import Player, Precis
 from player.forms import PrecisForm
 from qwikgame.views import QwikView
+
+
+logger = logging.getLogger(__file__)
 
 
 class AccountView(QwikView):
@@ -43,6 +48,22 @@ class BlockView(QwikView):
             context = { 'blocked_player': block_player }
             return render(request, 'person/block_done.html', context)
         return HttpResponseRedirect("/appeal")
+
+
+class NotifyEmailView(QwikView):
+    # notify_email_off_class = NotifyEmailForm
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        self.user.notify_email = kwargs.get('notify', 1) != 0
+        self.user.save()
+        self.user.person.notify_email = kwargs.get('notify', 1) != 0
+        self.user.person.save()
+        # currently NotifyEmailForm.get() is only used to block unwelcome email
+        # invitations to unregistered Players, so logout immediately
+        logout(self.request)
+        context = {'site_name': get_current_site(request).name }
+        return render(request, 'person/notify_email_done.html', context )
 
 
 class PrivacyView(QwikView):

@@ -261,7 +261,8 @@ class KeenView(AppealsView):
         appeal.invitees.clear()
         for friend in invitees:
             appeal.invitees.add(friend)
-            if friend.rival.user is None:
+            invitee = friend.rival
+            if invitee.user is None or invitee.user.person.notify_email:
                 current_site = get_current_site(request)
                 email_context={
                     'appeal': appeal,
@@ -280,6 +281,8 @@ class KeenView(AppealsView):
                     form.save(request)
                 else:
                     logger.exception(f"Invalid InviteForm: {form}")
+            else:
+                logger.info(f'avoided invitation email to: {invitee}')
         appeal.save()
 
     def post(self, request, *args, **kwargs):

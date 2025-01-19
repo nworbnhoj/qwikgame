@@ -15,20 +15,20 @@
 <p>{{ game }}<br>{{ date }}<br>{{ time }}<br>{{ venue }}</p>
 
 <p>
-<a class="btn primary" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
+    <a class="btn primary" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
     	{% blocktranslate %}
             Visit {{ site_name }} to accept invitation
         {% endblocktranslate %}
     </a>
 </p>
 
+<p>
+    <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> email invitations from {{ name }}.
+</p>
+
 <hr>
 
 <h2>TODO</h2>
-
-<p>
-<a href="{{ protocol }}://{{ domain }}{% url 'welcome' %}">block</a> email invitations from {{ name }}.
-</p>
 
 <p>
 <a href="{{ protocol }}://{{ domain }}{% url 'welcome' %}">block ALL</a> email invitations from {{ site_name }}.

@@ -1,9 +1,10 @@
+from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
-from person.models import Person
-from person.forms import UnblockForm, PrivateForm, PublicForm
+from person.models import Block, Person
+from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
 from player.models import Player, Precis
 from player.forms import PrecisForm
 from qwikgame.views import QwikView
@@ -21,6 +22,27 @@ class AccountView(QwikView):
             return render(request, "person/account.html", context)
         else:
             return HttpResponseRedirect("/account/public/")
+
+
+class BlockView(QwikView):
+    block_form_class = BlockForm
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        block_pk = kwargs.get('block')
+        block_person = Person.objects.filter(pk=block_pk).first()
+        if block_person:
+            Block.objects.get_or_create(
+                person=self.user.person,
+                blocked=block_person,
+            )
+            # currently BlockForm.get() is only used to block unwelcome email
+            # invitations to unregistered Players, so logout immediately
+            logout(self.request)
+            block_player = block_person.user.player
+            context = { 'blocked_player': block_player }
+            return render(request, 'person/block_done.html', context)
+        return HttpResponseRedirect("/appeal")
 
 
 class PrivacyView(QwikView):

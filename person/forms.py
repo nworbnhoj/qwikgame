@@ -1,11 +1,30 @@
 from django import forms
-from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, Select, URLField
+from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, Select, URLField
 from person.models import LANGUAGE, Person, Social
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 
 class DeleteWidget(CheckboxSelectMultiple):
     option_template_name="input_delete.html"
+
+class BlockForm(QwikForm):
+    block = IntegerField(
+        label='Person to block',
+        required=True,
+        )
+
+    @classmethod
+    def get(klass):
+        return { 'block_form': klass() }
+
+
+    @classmethod
+    def post(klass, request_post):
+        form = klass(data=request_post)
+        context = { 'filter_form': form }
+        if form.is_valid():
+            context['block'] = form.cleaned_data['block']
+        return context
     
 
 class PrivateForm(QwikForm):

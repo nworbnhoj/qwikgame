@@ -1,0 +1,17 @@
+<!-- templates/person/block_done.html -->
+{% extends "public.html" %}
+{% load static %}
+
+{% block detail %}
+
+<p>Thank you for letting us know.</p>
+
+<p>Invitations from {{ blocked_player.name }} have been blocked.</p>
+
+<p>Have a great day.</p>
+
+<hr>
+
+<p class="small">( blocked Player ID {{ blocked_player.pk }} )</p>
+
+{% endblock detail %}

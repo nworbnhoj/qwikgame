@@ -70,21 +70,23 @@ class AcceptView(AppealsView):
     accept_form_class = AcceptForm
     template_name = 'appeal/accept.html'
 
+    def _bids(self, appeal, player):
+        bids = Bid.objects.filter(appeal=appeal).exclude(hours=None)
+        friends = Friend.objects.filter(player=player)
+        for bid in bids:
+            bid.hour_str = bid.hours24().as_str()
+            bid.name = player.name_rival(bid.rival)
+            bid.conduct_stars = bid.rival.conduct_stars 
+        return {str(bid.pk): bid for bid in bids}
+
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         appeal = context.get('appeal')
         if appeal:
-            bids = Bid.objects.filter(appeal=appeal).exclude(hours=None)
-            friends = Friend.objects.filter(player=player)
-            for bid in bids:
-                bid.hour_str = bid.hours24().as_str()
-                bid.name = player.name_rival(bid.rival)
-                bid.conduct_stars = bid.rival.conduct_stars 
-            bids = {str(bid.pk): bid for bid in bids}
             context |= {
                 'player_id': player.facet(),
-                'bids': bids,
+                'bids': self._bids(appeal, player),
                 'target': 'bid',
             }
         self._context = context

@@ -82,11 +82,13 @@ class AcceptView(AppealsView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
+        person = self.user.person
         appeal = context.get('appeal')
         if appeal:
             context |= {
                 'player_id': player.facet(),
                 'bids': self._bids(appeal, player),
+                'log': appeal.log_filter(person.blocked()),
                 'target': 'bid',
             }
         self._context = context
@@ -157,7 +159,9 @@ class BidView(AppealsView):
             rival = self.user.player,
         ).first()
         player = self.user.player
+        person = self.user.person
         context |= {
+            'log': appeal.log_filter(person.blocked()),
             'rival': appeal.player,
             'strength': player.strength_str(appeal.game, appeal.player),
             'player_id': player.facet(),

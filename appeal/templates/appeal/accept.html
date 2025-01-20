@@ -65,7 +65,7 @@
             <div id="alert_form_start" class="alert"></div>
             <form id='form' action="{% url 'accept' appeal=appeal.pk %}" method="post">
 {% csrf_token %}
-{% for entry in appeal.log %}
+{% for entry in log %}
     {% if entry.id == player_id %}
                 <div class="log_entry align_end {{ entry.klass }}">
         {% if bids|get_item:entry.pk %}

@@ -138,6 +138,16 @@ class Appeal(models.Model):
         self.log.append(entry)
         self.save()
 
+    def log_filter(self, block=None, include=None):
+        log = self.log
+        if block:
+            block = [p.user.player.facet() for p in block]
+            log = [e for e in log if e.get('id') not in block]
+        if include:
+            include = [p.user.player.facet() for p in include]
+            log = [e for e in log if e.get('id') in include]
+        return log
+
     def log_event(self, template):
         entry = Entry(
             icon = self.player.user.person.icon,

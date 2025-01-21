@@ -93,7 +93,8 @@ class EmailValidateHandleView(PasswordResetConfirmView):
 
 
 class LoginView(EmailValidateView):
-    email_template_name = "authenticate/login_email.html"
+    email_template_name = "authenticate/login_email_text.html"
+    html_email_template_name = "authenticate/login_email_html.html"
     subject_template_name = "authenticate/login_email_subject.txt"
     success_url = reverse_lazy("login_sent")
     template_name = "authenticate/login_form.html"

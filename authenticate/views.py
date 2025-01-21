@@ -113,7 +113,8 @@ class LoginHandleView(EmailValidateHandleView):
 
 
 class RegisterView(EmailValidateView):
-    email_template_name = "authenticate/register_email.html"
+    email_template_name = "authenticate/register_email_text.html"
+    html_email_template_name = "authenticate/register_email_html.html"
     form_class = RegisterForm
     subject_template_name = "authenticate/register_email_subject.txt"
     success_url = reverse_lazy("register_sent")

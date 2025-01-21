@@ -1,35 +1,31 @@
-{% load i18n %}{% autoescape off %}
-
-{% blocktranslate %}You're receiving this email because {{ name }} at {{ site_name }} has invited you to play {{ game }} at {{venue }}.{% endblocktranslate %}
+{% load static %}{% load i18n %}
+{% autoescape off %}
 
 {% translate "Welcome to qwikgame.org" %}
 
-Game: {{ game }}
-Date: {{ date }}
-Time: {{ time }}
-Venue: {{ venue }}
+{% blocktranslate %}
+You're receiving this email because {{ name }} at {{ site_name }} has invited you to play {{ game }} at {{venue }}.
+{% endblocktranslate %}
+
+{% translate "Game" %}: {{ game }}
+{% translate "Date %}: {{ date }}
+{% translate "Time %}: {{ time }}
+{% translate "Venue %}: {{ venue }}
 
 {% blocktranslate %}
 Please click on the following link to accept the invitation:
 {% endblocktranslate %}
-{% block bid_link %}
-{{ protocol }}://{{ domain }}{% url 'bid' appeal=appeal.pk %}
-{% endblock %}
-
+{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}
 
 {% blocktranslate %}
 To block email invitations from {{ name }}, please click :
 {% endblocktranslate %}
-{% block block_link %}
-{{ protocol }}://{{ domain }}{% url 'welcome' %}
-{% endblock %}
-
+{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}
 
 {% blocktranslate %}
 To block email invitations from all Players at {{ site_name }}, please click :
 {% endblocktranslate %}
-{% block block_all_link %}
-{{ protocol }}://{{ domain }}{% url 'welcome' %}
-{% endblock %}
+{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}
+
 
 {% endautoescape %}

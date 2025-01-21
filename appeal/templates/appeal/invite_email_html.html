@@ -1,38 +1,40 @@
-<!-- templates/authenticate/email_validate.html -->
-{% extends "authenticate/email_validate.html" %}
+<!-- templates/appeal/invite_email_html.html -->
+{% extends "email.html" %}
 {% load static %}{% load i18n %}
-{% autoescape off %}
 
-{% block tab_bar %}{% endblock tab_bar %}
-{% block list_bar %}{% endblock list_bar %}
 
 {% block detail %}
 
-<p>
-{% blocktranslate %}You're receiving this email because <b>{{ name }}</b> at {{ site_name }} has invited you to play <b>{{ game }}</b> at <b>{{venue }}</b>.{% endblocktranslate %}
-</p>
-
-<p>{{ game }}<br>{{ date }}<br>{{ time }}<br>{{ venue }}</p>
-
-<p>
-    <a class="btn primary" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
-    	{% blocktranslate %}
-            Visit {{ site_name }} to accept invitation
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {% blocktranslate %}
+            You're receiving this email because <b>{{ name }}</b> at {{ site_name }} has invited you to play <b>{{ game }}</b> at <b>{{venue }}</b>.
         {% endblocktranslate %}
-    </a>
-</p>
+    </p>
 
-<hr>
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {{ game }}<br>
+        {{ date }}<br>
+        {{ time }}<br>
+        {{ venue }}
+    </p>
 
-<p>
-    <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> email invitations from {{ name }}.
-</p>
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        <a class="btn primary" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
+        	{% blocktranslate %}
+                Visit {{ site_name }} to accept invitation
+            {% endblocktranslate %}
+        </a>
+    </p>
 
-<p>
-    <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}">block ALL</a> email invitations from {{ site_name }}.
-</p>
+    <hr>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> email invitations from {{ name }}.
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}">block ALL</a> email invitations from {{ site_name }}.
+    </p>
 
 {% endblock detail %}
 
-
-{% endautoescape %}

@@ -136,7 +136,7 @@ class Hours24():
             case '--':
                 return ''
             case '24':
-                return '24hrs'
+                return 'All day (24hrs)'
             case _:
                 return f'{raw}h'
 

@@ -19,7 +19,7 @@
     </p>
 
     <p style="margin: 0em; padding: 0.3em; text-align: center;">
-        <a class="btn primary" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
+        <a style="align-items: center; background-color: #f5a600; border: 1px solid; border-color: #f5a600; border-radius: 0.3em; color: #333333; cursor: pointer; display: inline-block; font-weight: 550;  gap: 0.3em;  margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; width: 6e;" href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'bid' appeal=appeal.pk %}">
         	{% blocktranslate %}
                 Visit {{ site_name }} to accept invitation
             {% endblocktranslate %}

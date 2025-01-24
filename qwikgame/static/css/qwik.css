@@ -66,6 +66,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.hour { height: 3em; width: 3em; }
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
+.btn.naked { border-width: 0; }
 .btn.small { font-size: 0.88em; min-height: 2em;}
 .btn.square { aspect-ratio: 1 / 1; }
 .btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }

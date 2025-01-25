@@ -3,39 +3,39 @@
     "short_name": "qwikgame",
     "description": "What is your favourite game?",
     "icons": [{
-            "src": "img/qwik.icon.24x24.png",
+            "src": "img/qwik-logo.24x24.png",
             "sizes": "24x24",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.48x48.png",
+            "src": "img/qwik-logo.48x48.png",
             "sizes": "48x48",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.120x120.png",
+            "src": "img/qwik-logo.120x120.png",
             "sizes": "120x120",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.152x152.png",
+            "src": "img/qwik-logo.152x152.png",
             "sizes": "152x152",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.167x167.png",
+            "src": "img/qwik-logo.167x167.png",
             "sizes": "167x167",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.180x180.png",
+            "src": "img/qwik-logo.180x180.png",
             "sizes": "180x180",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.200x250.png",
+            "src": "img/qwik-logo.200x250.png",
             "sizes": "200x250",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.192x192.png",
+            "src": "img/qwik-logo.192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },{
-            "src": "img/qwik.icon.512x512.png",
+            "src": "img/qwik-logo.512x512.png",
             "sizes": "512x512",
             "type": "image/png"
     }],

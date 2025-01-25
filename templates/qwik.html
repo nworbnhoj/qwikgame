@@ -15,6 +15,7 @@
 {% endif %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 {% block script %}
+    <script defer src="{% static 'service_worker.js' %}"></script>
     <script defer src="{% static 'qwik.js' %}"></script>
 {% endblock %}
     <title>{% block title %}QwikGame{% endblock %}</title>

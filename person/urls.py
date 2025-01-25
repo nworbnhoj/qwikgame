@@ -1,5 +1,5 @@
 from django.urls import include, path
-from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, UpgradeView
+from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, TermsView, UpgradeView
 
 urlpatterns = [
     path("", AccountView.as_view(), name='account'),
@@ -15,5 +15,6 @@ urlpatterns = [
     path("privacy/", PrivacyView.as_view(), name='privacy'),
     path("private/", PrivateView.as_view(), name='private'),
     path("public/", PublicView.as_view(), name='public'),
+    path("terms/", TermsView.as_view(), name='terms'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
 ]

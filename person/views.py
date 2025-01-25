@@ -135,6 +135,15 @@ class PublicView(QwikView):
         return render(request, self.template_name, context)
 
 
+class TermsView(QwikView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = super().context(request)
+        context |= { 'account_tab': 'selected' }
+        return render(request, "person/terms.html", context)
+
+
 class UpgradeView(QwikView):
 
     def get(self, request, *args, **kwargs):

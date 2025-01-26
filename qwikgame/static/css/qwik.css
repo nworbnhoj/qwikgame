@@ -122,7 +122,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .todo { display: none; border: 3px dotted SkyBlue }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
-body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans }
+body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
 div { }
 div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; background-color: #ffffff; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }

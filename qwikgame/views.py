@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.templatetags.static import static
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView
@@ -111,8 +112,19 @@ class ServiceWorkerView(TemplateView):
 
     def get_context_data(self, **kwargs):
         return {
-            'js_url': static('qwik.js'),
+            'favicon_url': static('img/favicon.ico'),
+            'logo_url': static('img/qwik-logo.png'),
+            'logo_152_url': static('img/qwik-logo.152x152.png'),
+            'logo_192_url': static('img/qwik-logo.192x192.png'),
+            'logo_512_url': static('img/qwik-logo.512x512.png'),
+            'manifest_url': static('manifest.json'),
+            'map.js_url': static('map.js'),
+            'qwik.css_url': static('css/qwik.css'),
+            'qwik.js_url': static('qwik.js'),
+            'welcome_url': reverse('welcome'),
         }
+
+
 class WelcomeView(BaseView):
 
     def context(self, request, *args, **kwargs):

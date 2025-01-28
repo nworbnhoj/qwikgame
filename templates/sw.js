@@ -18,6 +18,31 @@ if (workbox) {
 } else {
   console.log(`Warning: Workbox didn't load 😬`);
 }
+
+
+const appShell = [
+    '{{ favicon.ico }}',
+    '{{ logo_url }}',
+    '{{ logo_152_url }}',
+    '{{ logo_192_url }}',
+    '{{ logo_512_url }}',
+    '{{ manifest_url }}',
+    '{{ map.js_url }}',
+    // '{{ offline_url }}',
+    '{{ qwik.css_url }}',
+    '{{ qwik.js_url }}',
+    // '{{ version }}',
+    '{{ welcome_url }}',
+].map((partialUrl) => `${location.protocol}//${location.host}${partialUrl}`);
+
+// Precache the shell.
+workbox.precaching.precacheAndRoute(appShell.map(url => ({
+    url,
+    revision: null,
+})));
+
+// Serve the app shell from the cache.
+workbox.routing.registerRoute(({url}) => appShell.includes(url), new workbox.strategies.CacheOnly());
 console.log("serviceWorker loaded.");
 
 

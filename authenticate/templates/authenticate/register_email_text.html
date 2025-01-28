@@ -9,6 +9,6 @@ You're receiving this email because you requested an account at {{ site_name }}.
 
 {% translate "Please click on the following link to access your account:" %}
 
-{{ protocol }}://{{ domain }}{% url 'login_handle' uidb64=uid token=token %}?next={% url 'appeal' %}
+{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'appeal' %}
 
 {% endautoescape %}

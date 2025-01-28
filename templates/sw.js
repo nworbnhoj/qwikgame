@@ -8,6 +8,16 @@ self.addEventListener('install', (event) => {
 });
 
 
+///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////// WORKBOX
+
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox-sw.js');
+
+if (workbox) {
+  console.log(`Workbox loaded 🎉`);
+} else {
+  console.log(`Warning: Workbox didn't load 😬`);
+}
 console.log("serviceWorker loaded.");
 
 

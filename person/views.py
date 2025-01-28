@@ -7,8 +7,7 @@ from django.views import View
 from authenticate.models import User
 from person.models import Block, Person
 from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
-from player.models import Player, Precis
-from player.forms import PrecisForm
+from player.models import Player
 from qwikgame.views import QwikView
 
 
@@ -109,14 +108,13 @@ class PrivateView(QwikView):
 
 class PublicView(QwikView):
     public_form_class = PublicForm
-    precis_form_class = PrecisForm
     template_name = "person/public.html"
 
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = self.public_form_class.get(self.user.person)
         if self.is_player:
-            context = context | self.precis_form_class.get(self.user.player)
+            context = context | {}
         if self.is_manager:
             manager = self.user.manager
             context = context | {}
@@ -128,7 +126,7 @@ class PublicView(QwikView):
         super().post(request)
         context = self.public_form_class.post(request.POST, self.user.person)
         if self.is_player:
-            context = context | self.precis_form_class.post(request.POST, self.user.player)
+            context = context | {}
         if len(context) == 0:
             return HttpResponseRedirect("/account/public/")
         context = context | super().context(request)

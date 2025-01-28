@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from .models import Filter, Friend, Player, Precis, Strength
+from .models import Filter, Friend, Player, Strength
 
 class FilterAdmin(admin.ModelAdmin):
     list_display = ['pk', 'active', 'player', 'place', 'game']
@@ -34,5 +34,4 @@ class StrengthAdmin(admin.ModelAdmin):
 admin.site.register(Filter, FilterAdmin)
 admin.site.register(Friend, FriendAdmin)
 admin.site.register(Player, PlayerAdmin)
-admin.site.register(Precis)
 admin.site.register(Strength, StrengthAdmin)

@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from game.models import Game, Match
 from person.models import Person
-from player.models import Filter, Friend, Player, Precis, Strength
+from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
@@ -241,68 +241,6 @@ class StrengthForm(QwikForm):
                     context['DELETE_STRENGTH'] = int(delete)
                 except:
                     logger.warn(f'failed to convert DELETE_STRENGTH: {delete}')
-        return context
-
-
-class PrecisForm(QwikForm):
-
-    def __init__(self, *args, **kwargs):
-        precis = kwargs.pop('precis')
-        super(PrecisForm, self).__init__(*args, **kwargs)
-        fields, widgets, initial = {}, {}, []
-        for p in precis:
-            name = p.game.code
-            widget = Textarea(
-                attrs = {
-                    'label': p.game.name,
-                    'placeholder': "Let rivals know why they want to play you.",
-                },
-            )
-            widgets[p.game.code] = widget
-            fields[p.game.code] = CharField(label=p.game.name, required=False)
-            initial.append(p.text)
-        self.fields['precis'] = MultiTabField(
-            fields,
-            label='ABOUT',
-            require_all_fields=False,
-            template_name = 'field.html',
-            widget=TabInput(widgets))
-        self.fields['precis'].help_text = "Let rivals know why they want to play you."
-        self.fields['precis'].initial = initial
-        self.fields['precis'].required = False
-
-
-    # Initializes a PublicForm with 'request_post' for 'player'.
-    # Returns a context dict including 'precis_form' 'precis' & 'reputation'
-    @classmethod
-    def get(klass, player):
-        return {
-            'player': player,
-            'precis_form': PrecisForm(
-                precis = Precis.objects.filter(player__user__id=player.user.id)
-            ),
-        }
-
-    # Initializes a PublicForm for 'player'.
-    # Returns a context dict including 'precis_form' 'precis' & 'reputation'
-    @classmethod
-    def post(klass, request_post, player):
-        context = {}
-        user_id = player.user.id
-        precis_form = PrecisForm(
-            data=request_post, 
-            precis=Precis.objects.filter(player__user__id=player.user.id)
-        )
-        if precis_form.is_valid():
-            for game_code, text in precis_form.cleaned_data['precis'].items():
-                precis = Precis.objects.get(game=game_code, player=player)
-                precis.text = text
-                precis.save()
-        else:
-            context = {
-                'player': player,
-                'precis_form': precis_form,
-            }
         return context
 
 

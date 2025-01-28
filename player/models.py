@@ -491,15 +491,3 @@ def bid_strength(dictionary, key):
 def bid_conduct(dictionary, key):
     return dictionary.get(str(key)).conduct_stars()
 
-
-class Precis(models.Model):
-    game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    text = models.CharField(max_length=512, blank=True)
-
-    class Meta:
-        verbose_name_plural = 'precis'
-
-    def __str__(self):
-        return "{}:{}".format(self.player, self.game)
-

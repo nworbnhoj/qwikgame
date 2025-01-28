@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from game.models import Game, Match
 from person.models import Person
-from player.models import Filter, Friend, Player, Precis, Strength
+from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
 from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm

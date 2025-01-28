@@ -27,6 +27,7 @@ class EmailValidateView(FormView):
     extra_email_context = None
     form_class = EmailValidateForm
     from_email = "accounts@qwikgame.org"
+    to_email = None
     html_email_template_name = None
     subject_template_name = "authenticate/email_validate_subject.txt"
     success_url = reverse_lazy("email_validate_done")
@@ -54,6 +55,7 @@ class EmailValidateView(FormView):
             "extra_email_context": self.extra_email_context,
         }
         form.save(**opts)
+        self.to_email = form.cleaned_data['email']
         return super().form_valid(form)
 
 

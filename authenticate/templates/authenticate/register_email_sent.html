@@ -4,8 +4,14 @@
 
 {% block detail %}
     <div class="pillar">
-        <p>A registration link was sent to TODO EMAIL</p>
-        <p>You should receive it shortly.</p>
-        <p>If you don’t receive an email, please check your spam folder.</p>
+        <p class="push_down">
+            An email has been sent to {{request.GET.to_email}} with a registration link.
+        </p>
+        <p class="push_down">
+            You should receive it shortly.
+        </p>
+        <p class="push_down">
+            If you don’t receive an email, please check your spam folder.
+        </p>
     </div>
 {% endblock detail %}

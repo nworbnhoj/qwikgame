@@ -38,6 +38,10 @@ class EmailValidateView(FormView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
+    def get_success_url(self):
+        url = super().get_success_url()
+        return f'{url}?to_email={self.to_email}'
+
     def form_valid(self, form):
         opts = {
             "use_https": self.request.is_secure(),

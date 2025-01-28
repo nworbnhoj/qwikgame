@@ -1,6 +1,20 @@
 const MSqC = {lat: -36.4497, lng: 146.4300};
 const Sofia = {lat: 42.6977, lng: 23.3217};
 
+///////////////// Service Worker functions ///////////////////
+
+// Registering Service Worker
+if('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log("serviceWorker registered.");
+        }, function(err) {
+          console.log("WARNING: serviceWorker registration failed.");
+        });
+    });
+};
+
+
 ///////////////// DOM Ready functions ///////////////////
 
 // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick

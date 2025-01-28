@@ -3,8 +3,10 @@ from authenticate.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.templatetags.static import static
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.generic import TemplateView
 from game.models import Game
 
 
@@ -101,6 +103,16 @@ class QwikView(BaseView):
         }
         return context
 
+
+class ServiceWorkerView(TemplateView):
+    template_name = 'sw.js'
+    content_type = 'application/javascript'
+    name = 'sw.js'
+
+    def get_context_data(self, **kwargs):
+        return {
+            'js_url': static('qwik.js'),
+        }
 class WelcomeView(BaseView):
 
     def context(self, request, *args, **kwargs):

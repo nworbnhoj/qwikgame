@@ -69,7 +69,7 @@
                         <form id="form" action="{% url 'bid' appeal.pk %}" method="post">
             {% csrf_token %}
                             <label class="btn tertiary">
-                                <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Bid?')">
+                                <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Offer?')">
                                 cancel
                             </label>
                         </form>

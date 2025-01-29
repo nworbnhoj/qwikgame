@@ -275,7 +275,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = person.name,
                     pk = self.pk,
-                    text = f'Accepted for {self.hours24().as_str()}'
+                    text = f'Offered {self.hours24().as_str()}'
                 )
             case 'decline':
                 player = self.appeal.player

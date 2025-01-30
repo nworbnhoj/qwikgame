@@ -190,15 +190,10 @@
             </div>
             </form>
             <div id="alert_form_end" class="alert"></div>
-            <div class="nextup">
-{% if appeal.status == 'A' %}
-                <p>Waiting for replies from Players</p>
-{% elif appeal.status == 'D' %}
-                <p>A Match has been confirmed for this Invitation</p>
-{% elif appeal.status == 'A' %}
-                <p>This Invitation has been cancelled</p>
-{% endif %}
-
+            <div class="pillar">
+                <div class="nextup">
+                    <p>{{ next_up }}</p>
+                </div>
             </div>
         </div>
         <div id="alert_detail_end" class="alert"></div>

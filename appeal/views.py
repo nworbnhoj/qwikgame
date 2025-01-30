@@ -20,6 +20,22 @@ from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
+# NEXT_UP key is Appeal.status + Player_role 
+NEXT_UP = {
+    'A': '',
+    'AB': 'Awaiting Confirmation',
+    'AO': 'Waiting for replies from Players',
+    'C': 'This Invitation has been cancelled',
+    'CB': 'This Invitation has been cancelled',
+    'CO': 'This Invitation has been cancelled',
+    'D': 'A Match has been confirmed for this Invitation',
+    'DB': 'Awaiting Confirmation',
+    'DO': 'A Match has been confirmed for this Invitation',
+    'X': 'This Invitation has expired',
+    'XB': 'This Invitation has expired',
+    'XO': 'This Invitation has expired',
+}
+
 
 class AppealsView(QwikView):
     template_name = 'appeal/appeals.html'
@@ -84,8 +100,10 @@ class AcceptView(AppealsView):
         player = self.user.player
         person = self.user.person
         appeal = context.get('appeal')
+        next_up = appeal.status + 'O'
         if appeal:
             context |= {
+                'next_up': NEXT_UP[next_up],
                 'player_id': player.facet(),
                 'bids': self._bids(appeal, player),
                 'log': appeal.log_filter(person.blocked()),
@@ -160,8 +178,10 @@ class BidView(AppealsView):
         ).first()
         player = self.user.player
         person = self.user.person
+        next_up = appeal.status + ('B' if bid else '')
         context |= {
             'log': appeal.log_filter(person.blocked()),
+            'next_up': NEXT_UP[next_up],
             'rival': appeal.player,
             'strength': player.strength_str(appeal.game, appeal.player),
             'player_id': player.facet(),

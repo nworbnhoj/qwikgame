@@ -103,14 +103,12 @@
             </div>
             <div class="detail_chat_post"></div>
         </div>
-{% if appeal.status == 'A' %}
-    {% if bid %}
         <div class="pillar">
             <div class="nextup">
-                <p>Awaiting Confirmation</p>
+                <p>{{ next_up }}</p>
             </div>
         </div>
-    {% else %}
+{% if not bid %}
         <div class="post form">
             <div id="alert_form_start" class="alert"></div>
             <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
@@ -125,25 +123,6 @@
             </div>
             </form>
             <div id="alert_form_end" class="alert"></div>
-        </div>
-    {% endif %}
-{% elif appeal.status == 'C' %}
-        <div class="pillar">
-            <div class="nextup">
-                <p>This Invitation has been cancelled</p>
-            </div>
-        </div>
-{% elif appeal.status == 'D' %}
-        <div class="pillar">
-            <div class="nextup">
-                <p>A Match has been confirmed for this Invitation</p>
-            </div>
-        </div>
-{% elif appeal.status == 'X' %}
-        <div class="pillar">
-            <div class="nextup">
-                <p>This Invitation has expired</p>
-            </div>
         </div>
 {% endif %}
         <div id="alert_detail_end" class="alert"></div>

@@ -186,7 +186,6 @@ div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon .btn.drop { justify-content: center; }
 div.tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
-div.tab_bar_reserve { height: 4em }
 div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }

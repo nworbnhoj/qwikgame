@@ -1,4 +1,4 @@
-import logging
+import logging, random
 from datetime import datetime, timedelta
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -6,6 +6,40 @@ from django.db import models
 
 logger = logging.getLogger(__file__)
 
+ICONS = [
+    'fa-face-smile',
+    'fa-face-smile-wink',
+    'fa-face-smile-beam',
+    'fa-face-rolling-eyes',
+    'fa-face-meh-blank',
+    'fa-face-laugh-wink',
+    'fa-face-laugh-beam',
+    'fa-face-laugh',
+    'fa-face-laugh-wink',
+    'fa-face-laugh-beam',
+    'fa-face-grin-wink',
+    'fa-face-grin-wide',
+    'fa-face-grin-stars',
+    'fa-face-grin-beam',
+    'fa-face-grin',
+    'fa-hand-peace',
+    'fa-person-walkin',
+    'fa-person-swimming',
+    'fa-person-snowboarding',
+    'fa-person-skiing-nordic',
+    'fa-person-skiing',
+    'fa-person-skating',
+    'fa-person-running',
+    'fa-person-hiking',
+    'fa-person-falling',
+    'fa-person-drowning',
+    'fa-person-biking',
+    'fa-user-secret',
+    'fa-user',
+]
+
+def rnd_icon():
+    return random.choice(ICONS)
 
 LANGUAGE = [
     # ('bg', 'български'),
@@ -44,7 +78,7 @@ class Alert(dict):
 class Person(models.Model):
     alerts = models.JSONField(encoder=DjangoJSONEncoder, default=list)
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
-    icon = models.CharField(max_length=16, default="fa-face-smile")
+    icon = models.CharField(max_length=32, default=rnd_icon)
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")

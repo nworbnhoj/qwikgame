@@ -131,9 +131,10 @@ class Player(models.Model):
 
     def name(self):
         if self.user is not None:
-            return self.user.person.name
-        else:
-            return self.facet()
+            if self.user.person is not None:
+                if self.user.person.name:
+                    return self.user.person.name
+        return self.facet()
 
     # returns the name of a Rival, using Friend.name if exists
     def name_rival(self, rival):

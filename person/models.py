@@ -47,7 +47,7 @@ class Person(models.Model):
     icon = models.CharField(max_length=16, default="fa-face-smile")
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, default="my qwikname")
     notify_email = models.BooleanField(default=True)
     notify_web = models.BooleanField(default=False)
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)

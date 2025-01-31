@@ -94,7 +94,7 @@ class PublicForm(QwikForm):
         template_name='field.html',
     )
     name = CharField(
-        label='NAME OR NICK',
+        label='QWIK NAME',
         max_length=32,
         required=False,
         template_name='field.html',

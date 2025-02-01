@@ -63,11 +63,12 @@ INSTALLED_APPS = [
     'django_crontab',
 ]
 
+# Custom User Model
+AUTH_USER_MODEL = "authenticate.User"
+LOGIN_URL = "/authenticate/login"
 LOGIN_REDIRECT_URL = "appeal"
 LOGOUT_REDIRECT_URL = "welcome"
-
-# Set the registration/login link validity for 1 hour.
-PASSWORD_RESET_TIMEOUT = 60 * 60
+PASSWORD_RESET_TIMEOUT = 60 * 60 # registration/login link validity seconds
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,9 +124,7 @@ DATABASES = {
 }
 
 
-# Custom User Model
 
-AUTH_USER_MODEL = "authenticate.User"
 
 
 # Password validation

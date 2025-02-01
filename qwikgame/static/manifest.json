@@ -1,7 +1,9 @@
 {
-    "name": "qwik game org",
-    "short_name": "qwikgame",
+    "background_color": "#FFFFFF",
+    "categories": "games fitness sports",
     "description": "What is your favourite game?",
+    "dir": "ltr",
+    "display": "standalone",
     "icons": [{
             "src": "img/qwik-logo.24x24.png",
             "sizes": "24x24",
@@ -28,7 +30,7 @@
             "type": "image/png"
         },{
             "src": "img/qwik-logo.200x250.png",
-            "sizes": "200x250",
+            "sizes": "250x200",
             "type": "image/png"
         },{
             "src": "img/qwik-logo.192x192.png",
@@ -39,11 +41,10 @@
             "sizes": "512x512",
             "type": "image/png"
     }],
-    "start_url": "/appeal",
-    "display": "standalone",
+    "lang": "en-US",
+    "name": "qwik game org",
+    "short_name": "qwikgame",
+    "start_url": "/",
     "theme_color": "#F5A600",
-    "background_color": "#FFFFFF",
-    "categories": "games fitness sports",
-    "orientation": "portrait-primary",
-    "scope": "/"   
+    "orientation": "portrait-primary"
 }

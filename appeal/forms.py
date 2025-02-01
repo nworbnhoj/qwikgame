@@ -89,7 +89,6 @@ class BidForm(QwikForm):
     @classmethod
     def post(klass, request_post, appeal):
         if 'CANCEL' in request_post:
-            logger.warn('here')
             cancel = request_post['CANCEL']
             try:
                 return {'CANCEL' : int(cancel) }

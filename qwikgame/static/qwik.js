@@ -361,7 +361,7 @@ function dropDownUpdate(drop_down){
     drop_up_txt = drop_up_txt.trim();
     drop_up.innerText = drop_up_txt;
   } else {
-    console.log("failed to get drop_up for drop_down: "+drop_down.outerHTML);
+    console.log("failed to get drop_up for drop_down");
   }
 }
 

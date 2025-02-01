@@ -40,7 +40,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.secondary:hover:has(input:disabled) { background-color: #ffffff;}
 
-.btn.tertiary { align-content: center; background-color: #ffffff; border-color: #ffffff; color: #2b78e4; display: block; padding: 0.3em; text-decoration: underline; }
+.btn.tertiary { align-content: center; background-color: #ffffff; border-color: #ffffff; color: #2b78e4; display: block; min-height: 2em; padding: 0.3em; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
 .btn.tertiary:hover { background-color: #ffffff; border-color: #ffffff; font-weight: bold; }
 .btn.tertiary:active { background-color: #c6d2e6; border-color: #c6d2e6; }

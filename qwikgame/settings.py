@@ -66,6 +66,9 @@ INSTALLED_APPS = [
 LOGIN_REDIRECT_URL = "appeal"
 LOGOUT_REDIRECT_URL = "welcome"
 
+# Set the registration/login link validity for 1 hour.
+PASSWORD_RESET_TIMEOUT = 60 * 60
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

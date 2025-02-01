@@ -33,7 +33,7 @@ class EmailValidateView(FormView):
     success_url = reverse_lazy("email_validate_done")
     template_name = "authenticate/email_validate_form.html"
     title = "Email validate"
-    token_generator = default_token_generator
+    token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
 
     @method_decorator(csrf_protect)
     def dispatch(self, *args, **kwargs):
@@ -71,7 +71,7 @@ class EmailValidateHandleView(PasswordResetConfirmView):
     fail_url = reverse_lazy('welcome')
     session_time = 7 * DAY_SECONDS
     success_url = reverse_lazy("appeal")
-    token_generator = default_token_generator
+    token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
 
     def prep_user(self):
         self.request.session.set_expiry(self.session_time)

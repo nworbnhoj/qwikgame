@@ -26,8 +26,22 @@ class EmailValidateForm(PasswordResetForm):
         honeypot = self.cleaned_data['password']
         if len(honeypot) > 0:
             logger.warn(f"honeypot filled with: [{honeypot}]")
-            raise ValidationError("bot")
+            raise ValidationError("Password incorrect")
         return None
+
+
+class LoginForm(EmailValidateForm):
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        try:
+            user = User.objects.get(email=email)
+            if user.has_usable_password():
+                return email
+            else:
+                raise ValidationError(f'The account is disabled for {email}')
+        except User.DoesNotExist:
+            raise ValidationError(f'There is no account for {email}')
 
 
 class RegisterForm(EmailValidateForm):

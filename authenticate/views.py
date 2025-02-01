@@ -15,7 +15,7 @@ from django.views.generic import CreateView
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
-from authenticate.forms import RegisterForm, EmailValidateForm
+from authenticate.forms import RegisterForm, LoginForm
 from person.views import Person
 
 
@@ -25,7 +25,7 @@ logger = logging.getLogger(__file__)
 class EmailValidateView(FormView):
     email_template_name = "authenticate/email_validate_email.html"
     extra_email_context = None
-    form_class = EmailValidateForm
+    form_class = LoginForm
     from_email = "accounts@qwikgame.org"
     to_email = None
     html_email_template_name = None

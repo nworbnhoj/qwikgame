@@ -66,8 +66,8 @@ INSTALLED_APPS = [
 # Custom User Model
 AUTH_USER_MODEL = "authenticate.User"
 LOGIN_URL = "/authenticate/login"
-LOGIN_REDIRECT_URL = "appeal"
-LOGOUT_REDIRECT_URL = "welcome"
+LOGIN_REDIRECT_URL = "/appeal"
+LOGOUT_REDIRECT_URL = "/"
 PASSWORD_RESET_TIMEOUT = 60 * 60 # registration/login link validity seconds
 
 MIDDLEWARE = [

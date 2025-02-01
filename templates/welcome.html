@@ -28,12 +28,6 @@
         <h2>What is your favourite game?</h2>
     {% if user.is_authenticated %}
         <div class="paver push_down">
-            <a class="btn secondary" href="{% url 'keen' %}">
-                <i class="fa-solid fa-paper-plane fa-xl"></i>
-                Invite
-            </a>
-        </div>
-        <div class="paver push_down">
             <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}
                 <label class="btn tertiary">

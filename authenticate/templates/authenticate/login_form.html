@@ -4,7 +4,7 @@
 
 
 {% block detail %}
-    <p>Need a new account? <a class="btn tertiary" href="{% url 'register' %}">signup</a></p>
+    <p>Need a new account? <a href="{% url 'register' %}">signup</a></p>
     <div class="pillar push_down">
         <form method="post">
   {% csrf_token %}

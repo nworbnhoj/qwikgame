@@ -4,7 +4,7 @@
 
 
 {% block detail %}
-    <p>Already have an account? <a class="btn tertiary" href="{% url 'login' %}">login</a></p>
+    <p>Already have an account? <a href="{% url 'login' %}">login</a></p>
     <div class="post push_down">
         <form method="post">
   {% csrf_token %}

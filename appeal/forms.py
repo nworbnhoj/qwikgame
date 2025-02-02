@@ -197,7 +197,7 @@ class KeenForm(QwikForm):
                 msg = 'Please select at least one hour in today or tomorrow.'
                 self.add_error('today', msg)
                 self.add_error('tomorrow', msg)
-        if not cleaned_data.get('place'):
+        if cleaned_data.get('place') == 'placeid':
             if not cleaned_data.get('placeid'):
                 self.add_error(
                     "place",

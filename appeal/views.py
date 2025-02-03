@@ -180,6 +180,7 @@ class BidView(AppealsView):
         person = self.user.person
         next_up = appeal.status + ('B' if bid else '')
         context |= {
+            'appeal': appeal,
             'log': appeal.log_filter(person.blocked()),
             'next_up': NEXT_UP[next_up],
             'rival': appeal.player,

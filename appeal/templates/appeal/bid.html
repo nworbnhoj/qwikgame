@@ -103,11 +103,6 @@
             </div>
             <div class="detail_chat_post"></div>
         </div>
-        <div class="pillar">
-            <div class="nextup">
-                <p>{{ next_up }}</p>
-            </div>
-        </div>
 {% if not bid %}
         <div class="post form">
             <div id="alert_form_start" class="alert"></div>
@@ -116,15 +111,22 @@
     {{ bid_form }}
             <div class="paver">
                 <div id="alert_form_submit" class="alert"></div>
+    {% if appeal.status == 'A' %}
                 <label class="btn primary push_down">
                     <input hidden form="form" type="submit" name='accept'>
                     Offer
                 </label>
+    {% endif %}
             </div>
             </form>
             <div id="alert_form_end" class="alert"></div>
         </div>
 {% endif %}
+        <div class="pillar">
+            <div class="nextup">
+                <p>{{ next_up }}</p>
+            </div>
+        </div>
         <div id="alert_detail_end" class="alert"></div>
     </div>
 {% endblock %}

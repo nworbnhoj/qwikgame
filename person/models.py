@@ -1,4 +1,4 @@
-import logging, random
+import logging, hashlib, random
 from datetime import datetime, timedelta
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -85,6 +85,10 @@ class Person(models.Model):
     notify_email = models.BooleanField(default=True)
     notify_web = models.BooleanField(default=False)
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
+    
+    @classmethod
+    def hash(cls, text):
+        return hashlib.md5(text.encode()).hexdigest()
 
     def __str__(self):
     	return self.name

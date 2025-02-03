@@ -241,7 +241,7 @@ class FriendAddView(FriendsView):
             return render(request, self.template_name, context)
         try:
             email = context['email']
-            email_hash = Player.hash(email)
+            email_hash = Person.hash(email)
             rival, created = Player.objects.get_or_create(email_hash = email_hash)
             friend = Friend.objects.create(
                 email = email,
@@ -314,7 +314,7 @@ class FriendView(FriendsView):
                 friend = Friend.objects.get(pk=friend_pk)
                 if email != friend.email:
                     friend.email = email
-                    email_hash = Player.hash(email)
+                    email_hash = Person.hash(email)
                     strengths = friend.strengths.all()
                     rival, created = Player.objects.get_or_create(email_hash = email_hash)
                     friend.rival = rival
@@ -330,7 +330,7 @@ class FriendView(FriendsView):
                 logger.exception(f'failed modify friend: {context}')
         else:    # creating a new friend
             try:
-                email_hash = Player.hash(email)
+                email_hash = Person.hash(email)
                 rival, created = Player.objects.get_or_create(email_hash = email_hash)
                 friend = Friend.objects.create(
                     email = email,

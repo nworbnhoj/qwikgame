@@ -1,4 +1,4 @@
-import datetime, hashlib, logging, math, numbers, statistics
+import datetime, logging, math, numbers, statistics
 from django.db import models
 from django.utils.timezone import now
 from qwikgame.constants import ENDIAN, WEEK_DAYS
@@ -22,10 +22,6 @@ class Player(models.Model):
     friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE, blank=True, null=True)
-
-    @classmethod
-    def hash(cls, text):
-        return hashlib.md5(text.encode()).hexdigest()
 
     def alert(self, type, expires=None):
         return self.user.person.alert(type=type, expires=expires)
@@ -206,7 +202,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):
         if self.user is not None:
-            self.email_hash = Player.hash(self.user.email)
+            self.email_hash = Person.hash(self.user.email)
         super().save(*args, **kwargs)
 
     # Estimate the relative Game strength between Self & Rival via a single chain of Strengths

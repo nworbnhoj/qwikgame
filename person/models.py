@@ -151,6 +151,8 @@ class Person(models.Model):
         blockee = Person.objects.filter(block__in=[self]).all()
         return list(blocker | blockee)
 
+    def facet(self):
+        return Person.hash(self.user.email)[:3].upper()
 
 class Block(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='blocker')

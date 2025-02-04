@@ -125,19 +125,12 @@ class Player(models.Model):
     def matches(self):
         return Match.objects.filter(competitors__in=[self])
 
-    def name(self):
-        if self.user is not None:
-            if self.user.person is not None:
-                if self.user.person.name:
-                    return self.user.person.name
-        return self.facet()
-
     # returns the name of a Rival, using Friend.name if exists
     def name_rival(self, rival):
         friend = Friend.objects.filter(player=self, rival=rival).first()
         if friend:
             return friend.name
-        return rival.name()
+        return rival.qwikname
 
     def place_choices(self, count=12):
         places = self.place_suggestions(count)
@@ -155,6 +148,13 @@ class Player(models.Model):
         places = list(places)[:count]
         places.sort(key=lambda x: x.name)
         return places
+
+    @property
+    def qwikname(self):
+        if self.user is not None:
+            if self.user.person is not None:
+                return self.user.person.qwikname
+        return self.facet()
 
     # returns the favorite locality in region_favorites()
     # step thru region_favorites and select the first country, and then the
@@ -462,7 +462,7 @@ class Friend(models.Model):
         if self.name:
             return self.name
         if rival.user and rival.user.person and rival.user.person.name:
-            return rival.user.person.name
+            return rival.user.person.qwikname
         return self.email.split('@')[0]
 
 

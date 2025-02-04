@@ -91,7 +91,7 @@ class Person(models.Model):
         return hashlib.md5(text.encode()).hexdigest()
 
     def __str__(self):
-    	return self.name
+    	return self.qwikname
 
     def alert(self,
             type,
@@ -153,6 +153,13 @@ class Person(models.Model):
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
+
+    @property
+    def qwikname(self):
+        if self.name:
+            return self.name
+        return self.facet()
+
 
 class Block(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='blocker')

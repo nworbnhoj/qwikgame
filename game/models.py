@@ -49,7 +49,7 @@ class Match(models.Model):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        names = [player.name() for player in self.competitors.all()]
+        names = [player.qwikname for player in self.competitors.all()]
         return f'{self.game} {names} {self.datetime_str} {self.venue}'
 
     @classmethod
@@ -92,7 +92,7 @@ class Match(models.Model):
             appeal.hour_withdraw(self.date.hour)
 
     def competitor_names(self):
-        return [player.name() for player in self.competitors.all()]
+        return [player.qwikname for player in self.competitors.all()]
 
     @property
     def date_str(self):
@@ -134,7 +134,7 @@ class Match(models.Model):
                     icon = person.icon,
                     id = player.facet(),
                     klass= 'scheduled',
-                    name = person.name,
+                    name = person.qwikname,
                     text = f'scheduled'
                 )
             case 'match_perished':
@@ -201,7 +201,7 @@ class Review(models.Model):
                     icon = person.icon,
                     id = self.player.facet(),
                     klass= 'reviewed',
-                    name = person.name,
+                    name = person.qwikname,
                     text = f'reviewed the Match'
                 )
             case _:

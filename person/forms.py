@@ -132,7 +132,7 @@ class PublicForm(QwikForm):
             'public_form': klass(
                     initial = {
                         'icon': person.icon,
-                        'name': person.name,
+                        'name': person.qwikname,
                     },
                     social_urls = klass.social_urls(person.user.id),
                 ),

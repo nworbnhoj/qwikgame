@@ -117,7 +117,7 @@ class Appeal(models.Model):
                 icon = self.player.icon,
                 id = self.player.facet(),
                 klass= 'event',
-                name = self.player.name(),
+                name = self.player.qwikname,
                 text = f'withdrew {hour}h'
             )
             self.log_entry(entry)

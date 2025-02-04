@@ -146,7 +146,7 @@ class MatchView(MatchesView):
                     icon = person.icon,
                     id = player.facet(),
                     klass = 'chat',
-                    name = person.name,
+                    name = person.qwikname,
                     text = txt,
                 )
                 match.meta['seen'] = [player.pk]

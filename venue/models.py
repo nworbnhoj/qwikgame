@@ -16,7 +16,7 @@ class Manager(models.Model):
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.person.name
+        return self.user.person.qwikname
 
 
 class Place(models.Model):

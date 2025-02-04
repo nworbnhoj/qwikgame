@@ -296,7 +296,7 @@ class KeenView(AppealsView):
                     'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
                     'domain': current_site.domain,
                     'game': appeal.game,
-                    'name': appeal.player.user.person.name,
+                    'name': appeal.player.qwikname,
                     'protocol': 'https' if request.is_secure() else 'http',
                     'site_name': current_site.name,
                     'time': appeal.hours24.as_str(),

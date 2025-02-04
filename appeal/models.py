@@ -153,7 +153,7 @@ class Appeal(models.Model):
             icon = self.player.user.person.icon,
             id = self.player.facet(),
             klass= 'event',
-            name=self.player.user.person.name,
+            name=self.player.qwikname,
         )
         match template:
             case 'appeal':
@@ -263,9 +263,9 @@ class Bid(models.Model):
                     icon = person.icon,
                     id = player.facet(),
                     klass= 'event',
-                    name = person.name,
+                    name = person.qwikname,
                     pk = self.pk,
-                    text = f'Confirmed for {self.hours24().as_str()} with {rival.name}'
+                    text = f'Confirmed for {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'bid':
                 person = self.rival.user.person
@@ -273,7 +273,7 @@ class Bid(models.Model):
                     icon = person.icon,
                     id = self.rival.facet(),
                     klass= 'event rival',
-                    name = person.name,
+                    name = person.qwikname,
                     pk = self.pk,
                     text = f'Offered {self.hours24().as_str()}'
                 )
@@ -284,9 +284,9 @@ class Bid(models.Model):
                     icon = person.icon,
                     id = player.facet(),
                     klass= 'event',
-                    name = person.name,
+                    name = person.qwikname,
                     pk = self.pk,
-                    text = f'declined {self.hours24().as_str()} with {rival.name}'
+                    text = f'declined {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'expired':
                 person = self.rival.user.person
@@ -294,7 +294,7 @@ class Bid(models.Model):
                     icon = person.icon,
                     id = self.rival.facet(),
                     klass= 'event rival',
-                    name = person.name,
+                    name = person.qwikname,
                     pk = self.pk,
                     text = f'bid expired'
                 )
@@ -304,7 +304,7 @@ class Bid(models.Model):
                     icon = rival.icon,
                     id = self.rival.facet(),
                     klass= 'event rival',
-                    name = rival.name,
+                    name = rival.qwikname,
                     pk = self.pk,
                     text = f'withdrew {self.hours24().as_str()}'
                 )

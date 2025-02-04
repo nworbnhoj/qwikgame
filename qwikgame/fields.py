@@ -68,6 +68,8 @@ class MultiTabField(MultiValueField):
 
 
 class RadioDataSelect(RadioSelect):
+    data_attr = {}
+
     def __init__(self, *args, **kwargs):
         self.data_attr = kwargs.pop("data_attr", [])
         super().__init__(*args, **kwargs)

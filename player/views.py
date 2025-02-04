@@ -51,7 +51,8 @@ class FilterView(AppealsView):
         context = self.context(request, *args, **kwargs)
         player = self.user.player
         places = player.place_suggestions(12)[:12]
-        request.session['place_choices'] = [(p.placeid, p.name) for p in places]
+        # TODO serialize places to avoid place_suggestions() call in POST
+        # request.session['places'] = places
         context |= self.filter_form_class.get(
             player,
             game='ANY',
@@ -67,7 +68,8 @@ class FilterView(AppealsView):
         player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
-            request.session.get('place_choices', [])
+            player.place_suggestions(12)[:12],
+            # request.session.get('places', [])
         )
         form = context.get('filter_form')
         if form and not form.is_valid():

@@ -6,6 +6,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
+from person.models import Person
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import Hours24x7

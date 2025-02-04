@@ -16,7 +16,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from authenticate.forms import RegisterForm, LoginForm
-from person.views import Person
+from person.models import Person
 
 
 logger = logging.getLogger(__file__)

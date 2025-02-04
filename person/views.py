@@ -70,7 +70,10 @@ class PrivacyView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = super().context(request)
-        context |= { 'account_tab': 'selected' }
+        context |= { 
+            'account_tab': 'selected',
+            'privacy_checked': 'checked',
+        }
         return render(request, "person/privacy.html", context)
 
 
@@ -93,7 +96,10 @@ class PrivateView(QwikView):
             'email': request.user.email,
         }
         context = context | super().context(request)
-        context |= { 'account_tab': 'selected' }
+        context |= {
+            'account_tab': 'selected',
+            'private_checked': 'checked',
+        }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -119,7 +125,10 @@ class PublicView(QwikView):
             manager = self.user.manager
             context = context | {}
         context = context | super().context(request)
-        context |= { 'account_tab': 'selected' }
+        context |= {
+            'account_tab': 'selected',
+            'public_checked': 'checked',
+        }
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -138,7 +147,10 @@ class TermsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = super().context(request)
-        context |= { 'account_tab': 'selected' }
+        context |= {
+            'account_tab': 'selected',
+            'terms_checked': 'checked',
+        }
         return render(request, "person/terms.html", context)
 
 

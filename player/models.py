@@ -5,6 +5,7 @@ from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 from game.models import Match, Review
+from person.models import Person
 from venue.models import Venue, Region
 
 

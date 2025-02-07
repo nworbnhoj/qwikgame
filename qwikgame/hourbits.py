@@ -299,7 +299,11 @@ class Hours24x7():
     def set_date(self, hours24, date):
         div, mod = divmod(date.isoweekday(), 7)
         offset = 3 * mod
-        self.bits[offset:offset+3:] = hours24.bits
+        self.bits = b''.join([
+            self.bits[0:offset:],
+            hours24.bits,
+            self.bits[offset+3::],
+        ])
 
     def set_period(self, first_day, first_hour, last_day, last_hour, on=True):
         first = first_day * 24 + first_hour

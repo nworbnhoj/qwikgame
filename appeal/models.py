@@ -22,7 +22,7 @@ class Appeal(models.Model):
     created = models.DateTimeField(default=now, editable=False)
     date = models.DateField()
     game = models.ForeignKey('game.Game', on_delete=models.CASCADE)
-    hours = models.BinaryField(default=DAY_NONE)
+    hours = models.BinaryField(default=WEEK_NONE)
     invitees = models.ManyToManyField(Friend, related_name='invitees')
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
@@ -98,7 +98,11 @@ class Appeal(models.Model):
 
     @property
     def hours24(self):
-        return Hours24(self.hours)
+        return self.hours24x7.get_date(self.date)
+
+    @property
+    def hours24x7(self):
+        return Hours24x7(self.hours)
 
     def hour_choices(self):
         return self.hours24.as_choices()
@@ -112,7 +116,7 @@ class Appeal(models.Model):
     def hour_withdraw(self, hour):
         hours24 = self.hours24
         if hours24.is_hour(hour):
-            self.hours = hours24.unset_hour(hour).as_bytes()
+            self.set_hours(hours24.unset_hour(hour))
             entry = Entry(
                 icon = self.player.icon,
                 id = self.player.facet(),
@@ -206,7 +210,9 @@ class Appeal(models.Model):
         return self
 
     def set_hours(self, hours24):
-        self.hours = hours24.as_bytes()
+        hours24x7 = Hours24x7(WEEK_NONE)
+        hours24x7.set_date(hours24, self.date)
+        self.hours = hours24x7.as_bytes()
 
     @property
     def tzinfo(self):

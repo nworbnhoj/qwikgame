@@ -22,7 +22,7 @@ class Locate:
             response.raise_for_status()
             result = response.json()
         except:
-            logger.exception("Google geocoding: {}?{}\n{}".format(url, param, response))
+            logger.exception("Google geocoding: {}?{}".format(url, param))
         return result
 
 
@@ -50,8 +50,9 @@ class Locate:
             geodetails.key,
             geodetails.url
         )
-        if 'result' in geo:
-            return geo['result']
+        if geo:
+            if 'result' in geo:
+                return geo['result']
         logger.warn('no result from geodetails: {geo}')
         return None
 

@@ -1,8 +1,9 @@
 import datetime, logging, math, numbers, statistics
 from django.db import models
+from django.db.models import Lookup
 from django.utils.timezone import now
 from qwikgame.constants import ENDIAN, WEEK_DAYS
-from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
+from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_ALL, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 from game.models import Match, Review
 from person.models import Person
@@ -49,12 +50,14 @@ class Player(models.Model):
                 if f.place:
                     if f.place.is_venue:
                         qs = qs.filter(venue=f.place)
-                        # TODO hours intersection
                     elif f.place.is_region:
                         qs = qs.filter(venue__lat__lte=f.place.region.north)
                         qs = qs.filter(venue__lat__gte=f.place.region.south)
                         qs = qs.filter(venue__lng__lte=f.place.region.east)
                         qs = qs.filter(venue__lng__gte=f.place.region.west)
+                hours = f.hours24x7
+                if not hours.is_week_all:
+                    qs = qs.filter(hours__h24x7=hours.as_bytes())
                 appeal_qs |= qs
         else:
             appeal_qs |= open_appeals_qs.all()
@@ -414,7 +417,7 @@ class Filter(models.Model):
     game = models.ForeignKey('game.Game', null=True, on_delete=models.CASCADE)
     place = models.ForeignKey('venue.Place', null=True, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, null=True, on_delete=models.CASCADE)
-    hours = models.BinaryField(default=WEEK_NONE)
+    hours = models.BinaryField(default=WEEK_ALL)
 
     class Meta:
         constraints = [
@@ -430,6 +433,7 @@ class Filter(models.Model):
                 'Any Time' if week_str == '24x7' else week_str,
                 )
 
+    @property
     def hours24x7(self):
         return Hours24x7(self.hours)
 
@@ -489,3 +493,18 @@ def bid_strength(dictionary, key):
 def bid_conduct(dictionary, key):
     return dictionary.get(str(key)).conduct_stars()
 
+
+@models.BinaryField.register_lookup
+class BitwiseIntersect(Lookup): 
+    # return true if there is a common hour-bit in two bytea[3x7]
+    lookup_name = "h24x7"
+
+    def as_sql(self, compiler, connection):
+        lhs, lhs_params = self.process_lhs(compiler, connection)
+        rhs, rhs_params = self.process_rhs(compiler, connection)
+        params = lhs_params + rhs_params
+        # compute a bitwise AND between the two 24x7 hours and compare to 0
+        # strangely sql does not support bytea & bytea
+        # https://stackoverflow.com/questions/8316164/convert-hex-in-text-representation-to-decimal-number/8335376#8335376
+        # the 3x7=21 bytes are output as 42 text hex (\x0011223344...) and the leading '\' removed, then cast to 128 bits  
+        return "right(%s::text, 43)::bit(168) & right(%s::text, 43)::bit(168) <> x'00'::bit(168)" % (lhs, rhs), params

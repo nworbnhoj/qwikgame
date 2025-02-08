@@ -290,9 +290,19 @@ class Hours24x7():
         offset = 3 * day
         return Hours24(self.bits[offset: offset+3])
 
+    @property
+    def is_none(self):
+        return self.bits == WEEK_NONE
+
+    @property
+    def is_some(self):
+        return self.bits != WEEK_NONE
+
+    @property
     def is_qwik_all(self):
         return self.bits == WEEK_QWIK
 
+    @property
     def is_week_all(self):
         return self.bits == WEEK_ALL
 

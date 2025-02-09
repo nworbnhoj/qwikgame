@@ -24,7 +24,14 @@ class FilterForm(QwikForm):
         template_name='dropdown.html',
         widget=RadioSelect(attrs={"class": "down hidden"}),
     )
-    place = ChoiceField()    # placeholder for dynamic assignment below
+    place = ChoiceField(
+        help_text='Only see invitations for a particular Venue.',
+        label='PLACE',
+        template_name='dropdown.html',
+        widget=RadioDataSelect(
+            attrs={"class": "down hidden"},
+        )
+    )
     hours = WeekField(
         help_text='Only see invitations at specific times in your week.',
         label='TIME',
@@ -69,6 +76,13 @@ class FilterForm(QwikForm):
             raise ValidationError("You must select at least one hour in the week.")
         return hours
 
+    def _place_data_attr(self, places):
+        return {
+            'hours': ['','',''] + [p.open_7int_str() if p.is_venue else open for p in places],
+            'now_weekday': ['','',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
+            'now_hour': ['','',''] + [p.now().hour if p.is_venue else '' for p in places],
+        }
+
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
     @classmethod
@@ -84,20 +98,8 @@ class FilterForm(QwikForm):
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
         choices = [('ANY','Anywhere'), ('show-map', 'Select from map'), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
-        form.fields['place'] = ChoiceField(
-            choices = choices,
-            help_text='Only see invitations for a particular Venue.',
-            label='PLACE',
-            template_name='dropdown.html',
-            widget=RadioDataSelect(
-                attrs={"class": "down hidden"},
-                data_attr={
-                    'hours': ['','',''] + [p.open_7int_str() if p.is_venue else open for p in places],
-                    'now_weekday': ['','',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
-                    'now_hour': ['','',''] + [p.now().hour if p.is_venue else '' for p in places],
-                }
-            )
-        )
+        form.fields['place'].choices = choices
+        form.fields['place'].widget.data_attr = form._place_data_attr(places)
         region = player.region_favorite()
         if region:
             form.fields['lat'].initial = region.lat
@@ -107,10 +109,12 @@ class FilterForm(QwikForm):
     # Processes a FilterForm for 'player'.
     # Returns a context dict game, venue|placeid, hours
     @classmethod
-    def post(klass, request_post, place_choices):
+    def post(klass, request_post, places):
         form = klass(data=request_post)
-        choices = [('ANY','Anywhere'), ('placeid', '')] + place_choices
+        choices = [('ANY','Anywhere'), ('placeid', '')]
+        choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
+        form.fields['place'].widget.data_attr = form._place_data_attr(places)
         context = { 'filter_form': form }
         if form.is_valid():
             context = {

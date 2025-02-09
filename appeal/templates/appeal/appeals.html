@@ -18,7 +18,7 @@
 {% if big_screen %}
     <a class="btn special1" href="{% url 'keen' %}">
         <i class="fa-solid fa-paper-plane fa-xl"></i>
-        <p>Invite</p>
+        <p class='caption'>Invite</p>
     </a>
 {% endif %}
 {% endblock %}
@@ -115,6 +115,15 @@
                     <time datetime="{{ app.created_str }}" ></time>
                 </div>
             </a>
+{% empty %}
+        <div class="pillar">
+            <p>Unfortunately no Invitations match your Filters.</p>
+            <p>Try deactivating a Filter or send out your own Invitation.</p>
+            <a class="btn special1 push_down" href="{% url 'keen' %}">
+                <i class="fa-solid fa-paper-plane fa-xl"></i>
+                Invite
+            </a>
+        </div>
 {% endfor %}
         </div>
         <div id="alert_list_end" class="alert"></div>

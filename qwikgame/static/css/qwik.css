@@ -274,11 +274,11 @@ label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 
 legend { padding: 1em; }
-p { margin: 0em; padding: 0.3em; text-align: left }
+p { margin: 0em 0em 2em 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
-p.caption { color: #777777; font-size: small }
+p.caption { color: #777777; font-size: small; margin: 0em; }
 p.large { color: #666666; font-size: large }
-p.line { line-height: 1.6em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }

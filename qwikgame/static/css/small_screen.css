@@ -12,6 +12,5 @@ h3 { font-size: 1.03em }
 img.logo { display: none }
 label { font-size: 1.07em }
 label.toggle:has(input[name="list"]) { color: inherit }
-p.caption { font-size: 0.94em }
 p.fat { display: none }
 p.name { font-size: 1.07em }

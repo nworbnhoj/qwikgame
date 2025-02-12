@@ -173,8 +173,8 @@ CRONJOBS = [
     ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron.log'),
     ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron.log'),
     ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron.log'),
-    ('30 23 * * *', 'game.cron.match_perish', '>> /var/log/django_cron.log'),
-    ('31 23 * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron.log'),
+    ('50 * * * *', 'game.cron.match_perish', '>> /var/log/django_cron.log'),
+    ('51 * * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron.log'),
 ]
 
 

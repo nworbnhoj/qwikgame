@@ -15,7 +15,7 @@ def match_perish():
         action = match.perish()
         stats[action] = stats.get(action, 0) + 1
         match.save()
-    logging.info(f'CRON: match_perish() {stats}')
+    logger.info(f'CRON: match_perish() {stats}')
 
 
 # Intended to be run hourly as a cron job
@@ -38,7 +38,7 @@ def match_review_init():
         match.status = 'C'
         match.save()
     stats['match'] = matches.count()
-    logging.info(f'CRON: match_review_init() {stats}')
+    logger.info(f'CRON: match_review_init() {stats}')
 
 
 # Intended to be run hourly as a cron job
@@ -47,4 +47,4 @@ def match_review_perish():
     for review in Review.objects.all():
         action = review.perish()
         stats[action] = stats.get(action, 0) + 1
-    logging.info(f'CRON: match_review_perish() {stats}')
+    logger.info(f'CRON: match_review_perish() {stats}')

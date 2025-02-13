@@ -40,10 +40,13 @@
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                 </div>
                 <div class="down hidden">
-                    <label class="btn tertiary">
-                        <input hidden form="form" name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
-                        delete
-                    </label>
+                    <form id="menu_form " action="{% url 'friend_add' %}" method="post">
+{% csrf_token %}
+                        <label class="btn tertiary">
+                            <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
+                            delete
+                        </label>
+                    </form>
                 </div>
             </div>
             <a class="btn special2 head_back" href="{% url target friend=prev %}">

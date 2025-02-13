@@ -9,7 +9,8 @@ from game.models import Game, Match
 from person.models import Person
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
-from qwikgame.hourbits import Hours24x7
+from qwikgame.hourbits import Hours24
+from qwikgame.forms import MenuForm
 from api.models import Mark
 from service.locate import Locate
 from venue.models import Place, Region, Venue
@@ -260,6 +261,7 @@ class FriendAddView(FriendsView):
 
 class FriendView(FriendsView):
     friend_form_class = FriendForm
+    menu_form_class = MenuForm
     strength_form_class = StrengthForm
     template_name = 'player/friend.html'
 
@@ -282,6 +284,19 @@ class FriendView(FriendsView):
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
+        player = self.user.player
+        context = self.menu_form_class.post(request.POST)
+        menu_form = context.get('menu_form')
+        if menu_form and menu_form.is_valid():
+            if 'DELETE' in context:
+                try:
+                    delete_pk = int(context['DELETE'])
+                    junk = Friend.objects.get(pk=delete_pk)
+                    logger.info(f'Deleting friend: {junk}')
+                    junk.delete()
+                except:
+                    logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
+                return HttpResponseRedirect(f'/player/friend/')
         context = self.friend_form_class.post(request.POST)
         context |= self.strength_form_class.post(request.POST)
         friend_form = context.get('friend_form')
@@ -290,17 +305,9 @@ class FriendView(FriendsView):
         strength_form = context.get('strength_form')
         if strength_form and not strength_friend_form.is_valid():
             return render(request, self.template_name, context)
-        player = self.user.player
+
         friend_pk = kwargs.get('friend')
-        if 'DELETE' in context:
-            try:
-                delete_pk = context.get('DELETE')
-                junk = Friend.objects.get(pk=delete_pk)
-                logger.info(f'Deleting friend: {junk}')
-                junk.delete()
-            except:
-                logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
-            return HttpResponseRedirect(f'/player/friend/')
+        
         if 'DELETE_STRENGTH' in context:
             try:
                 delete_pk = context.get('DELETE_STRENGTH')

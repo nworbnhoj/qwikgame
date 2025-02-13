@@ -1,3 +1,11 @@
+import logging
 from django.db import models
 
-# Create your models here.
+
+logger = logging.getLogger(__file__)
+
+
+class Feedback(models.Model):
+
+    date = models.DateTimeField()
+    text = models.TextField()

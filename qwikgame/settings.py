@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'authenticate.apps.AuthenticateConfig',
     'game.apps.GameConfig',
+    'feedback.apps.FeedbackConfig',
     'person.apps.PersonConfig',
     'player.apps.PlayerConfig',
     'service.apps.ServiceConfig',

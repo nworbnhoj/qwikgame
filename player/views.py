@@ -300,12 +300,13 @@ class FriendView(FriendsView):
         context = self.friend_form_class.post(request.POST)
         context |= self.strength_form_class.post(request.POST)
         friend_form = context.get('friend_form')
-        if friend_form and not friend_form.is_valid():
-            return render(request, self.template_name, context)
         strength_form = context.get('strength_form')
-        if strength_form and not strength_friend_form.is_valid():
-            return render(request, self.template_name, context)
-
+        if friend_form and strength_form:
+            if not friend_form.is_valid() or not strength_form.is_valid():
+                context |= self.context(request, *args, **kwargs)
+                return render(request, self.template_name, context)
+        else:
+            logger.error('failed to post FriendForm or StrengthForm')
         friend_pk = kwargs.get('friend')
         
         if 'DELETE_STRENGTH' in context:

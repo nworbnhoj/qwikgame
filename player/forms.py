@@ -194,7 +194,7 @@ class FriendForm(QwikForm):
         form = klass(data=request_post)
         context = {'friend_form': form}
         if form.is_valid():
-            context={
+            context |= {
                 'email': form.cleaned_data['email'],
                 'name': form.cleaned_data['name']
             }
@@ -229,7 +229,7 @@ class StrengthForm(QwikForm):
         form = klass(data=request_post)
         context = {'strength_form': form}
         if form.is_valid():
-            context={
+            context |= {
                 'game': form.cleaned_data['game'],
                 'strength': form.cleaned_data['strength']
             }

@@ -62,9 +62,9 @@
         <div class="post form">
             <div id="alert_form_start" class="alert"></div>
 {% if friend %}
-            <form id="form" action="{% url target friend=friend.pk %}" method="post">
+            <form id="form" action="{% url target friend=friend.pk %}" method="post" novalidate>
 {% else %}
-            <form id="form" action="{% url 'friend_add' %}" method="post">
+            <form id="form" action="{% url 'friend_add' %}" method="post" novalidate>
 {% endif %}
 {% csrf_token %}
 {{ friend_form }}

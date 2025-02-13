@@ -141,7 +141,7 @@ class FiltersView(AppealsView):
             return render(request, self.template_name, context)
         if 'ACTIVATE' in context:
             activate = context.get('ACTIVATE', [])
-            logger.info(f'activating filters {activate}')
+            logger.debug(f'activating filters {activate}')
             for filter in Filter.objects.filter(player=player):
                 try:
                     filter.active = str(filter.id) in activate

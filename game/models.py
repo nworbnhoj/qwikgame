@@ -157,7 +157,7 @@ class Match(models.Model):
                 self.log_clear()
                 self.log_event('match_perished')
                 self.save()
-            logger.info(f'match perished {dry}: {self}')
+            logger.debug(f'match perished {dry}: {self}')
             return 'chat'
         return 'noop'
 
@@ -209,7 +209,6 @@ class Review(models.Model):
         self.match.log_entry(entry)
 
     def mark_seen(self, player_pks=[]):
-        logger.warn("review.mark_seen()")
         seen = set(self.meta.get('seen', []))
         seen.update(player_pks)
         self.meta['seen'] = list(seen)

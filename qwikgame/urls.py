@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('authenticate/', include('authenticate.urls')),
     path('game/', include('game.urls')),
+    path("feedback/", include("feedback.urls")),
     path('player/', include('player.urls')),
     # The service worker cannot be in /static because its scope will be limited to /static.
     path('sw.js', ServiceWorkerView.as_view(), name='sw'),

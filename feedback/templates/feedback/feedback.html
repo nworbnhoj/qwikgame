@@ -1,0 +1,38 @@
+<!-- qwikgame/feedback/templates/feedback/feedback.html -->
+{% extends "feedback/feedback_list.html" %}
+
+
+{% block title %}Feedback{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
+        <div class="detail_head">
+            <div id="alert_detail_head" class="alert"></div>
+            
+            <div class='head'>
+                <p class="line">{{ feedback.date }}</p>
+            </div>
+            <a class="btn special2 head_back" href="/feedback/{{ prev }}/">
+                <i class="fa-solid fa-chevron-left fa-2x"></i>
+            </a>
+            <a class="btn special2 head_fwd" href="/feedback/{{ next }}/">
+                <i class="fa-solid fa-chevron-right fa-2x"></i>
+            </a>
+        </div>
+        <div class="post">
+            <div id="alert_detail_banner" class="alert"></div>
+            <p>{{ feedback.date }}</p>
+            <p>{{ feedback.text }}</p>
+        </div>
+        <div id="alert_detail_end" class="alert"></div>
+    </div>
+{% endblock %}

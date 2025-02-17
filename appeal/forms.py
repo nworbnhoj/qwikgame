@@ -295,7 +295,13 @@ class KeenForm(QwikForm):
                     form.fields['friends'].reveal_checked = 'checked'
                     friends = form.cleaned_data['friends']
                 context = {
-                    'friends': [ Friend.objects.get(rival__email_hash=f) for f in friends ],
+                    'friends': [
+                        Friend.objects.get(
+                            player=player,
+                            rival__email_hash=f
+                        )
+                        for f in friends
+                    ],
                     'game': form.cleaned_data['game'],
                     'today': today,
                     'tomorrow': tomorrow,

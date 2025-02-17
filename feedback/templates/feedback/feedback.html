@@ -20,6 +20,7 @@
             
             <div class='head'>
                 <p class="line">{{ feedback.date }}</p>
+                <p class="line">{{ feedback.path }}</p>
             </div>
             <a class="btn special2 head_back" href="/feedback/{{ prev }}/">
                 <i class="fa-solid fa-chevron-left fa-2x"></i>
@@ -30,7 +31,6 @@
         </div>
         <div class="post">
             <div id="alert_detail_banner" class="alert"></div>
-            <p>{{ feedback.date }}</p>
             <p>{{ feedback.text }}</p>
         </div>
         <div id="alert_detail_end" class="alert"></div>

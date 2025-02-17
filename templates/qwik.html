@@ -75,7 +75,7 @@
     </label>
     <div id='feedback' class='post field'>
         <div id="feedback_form_start" class="alert"></div>
-        <form id='feedback_form' action="{% url 'feedback' %}" method='post'>
+        <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
 {% csrf_token %}
 {{ feedback_form }}
             <div class="pillar">

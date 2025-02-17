@@ -38,10 +38,12 @@ class FeedbackListView(QwikView):
         super().post(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         context |= self.feedback_form_class.post(request.POST)
+        next = request.GET.get('next')
         form = context.get('feedback_form')
         if form and not form.is_valid():
             return HttpResponseRedirect(f'/feedback/')
         feedback = Feedback.objects.create(
+        	path=next,
         	text=context['text'],
         )
         return HttpResponseRedirect(f'/feedback/{feedback.id}/')

@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/qwik.css' %}">
     <style>
         #feedback { margin: 0.3em; max-width: 600px;}
+        #footer { display: flex; flex-direction: column; flex-grow: 1; font-size: small; justify-content: end; }
     </style>
 {% endblock css %}
 {% if small_screen %}
@@ -87,7 +88,7 @@
         </form>
         <div id="alert_form_end" class="alert"></div>
     </div>
-    <div id="footer" style="display: flex; flex-direction: column; flex-grow: 1; font-size: small; justify-content: end; margin: 10em auto 0px;"><p style="text-align: center;">
+    <div id="footer"><p style="text-align: center;">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.
     </div>
     <div id="alert_body_end" class="alert"></div>

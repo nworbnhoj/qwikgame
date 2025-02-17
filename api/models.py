@@ -169,7 +169,7 @@ class Mark(models.Model):
                 venue_qs = venue_qs.filter(games__in=[self.game.pk])
             self.num_venue = venue_qs.distinct().count()
         if self.num_venue != old_num_venue:
-            logger.info(f'Mark update num_venue: {self}')
+            logger.debug(f'Mark update num_venue: {self}')
             # update the num_venue of the parent region Mark
             parent = self.parent()
             if parent:
@@ -203,7 +203,7 @@ class Mark(models.Model):
             aggregate = self.children().aggregate(Sum('num_player')).get('num_player__sum')
             self.num_player = aggregate if aggregate else 0
         if self.num_player != old_num_player:
-            logger.info(f'Mark update num_player: {self}')
+            logger.debug(f'Mark update num_player: {self}')
             # update the num_player of the parent region Mark
             parent = self.parent()
             if parent:

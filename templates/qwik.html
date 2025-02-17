@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/qwik.css' %}">
+    <style>
+        #feedback { margin: 0.3em; max-width: 600px;}
+    </style>
 {% endblock css %}
 {% if small_screen %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/small_screen.css' %}">
@@ -65,6 +68,25 @@
         <div id="alert_content_end" class="alert"></div>
     </div>
 {% endblock content %}
+    <label class="btn tertiary reveal" style=" margin: 10em auto 0px;">
+        <input name="reveal_feedback" type="checkbox">
+        Feedback
+    </label>
+    <div id='feedback' class='post field'>
+        <div id="feedback_form_start" class="alert"></div>
+        <form id='feedback_form' action="{% url 'feedback' %}" method='post'>
+{% csrf_token %}
+{{ feedback_form }}
+            <div class="pillar">
+                <div id="fedback_form_submit" class="alert"></div>
+                <label id="feedback_submit" class="btn primary push_down">
+                    <input hidden type="submit">
+                    Submit
+                </label>
+            </div>
+        </form>
+        <div id="alert_form_end" class="alert"></div>
+    </div>
     <div id="footer" style="display: flex; flex-direction: column; flex-grow: 1; font-size: small; justify-content: end; margin: 10em auto 0px;"><p style="text-align: center;">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.
     </div>

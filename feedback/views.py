@@ -1,6 +1,7 @@
 import logging
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from feedback.forms import FeedbackForm
 from feedback.models import Feedback
 from qwikgame.views import QwikView
 
@@ -9,6 +10,7 @@ logger = logging.getLogger(__file__)
 
 
 class FeedbackListView(QwikView):
+    feedback_form_class = FeedbackForm
     template_name = 'feedback/feedback_list.html'
 
     def context(self, request, *args, **kwargs):
@@ -31,6 +33,18 @@ class FeedbackListView(QwikView):
         feedback = context.get('feedback')
         if not feedback: 
             return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        context |= self.feedback_form_class.post(request.POST)
+        form = context.get('feedback_form')
+        if form and not form.is_valid():
+            return HttpResponseRedirect(f'/feedback/')
+        feedback = Feedback.objects.create(
+        	text=context['text'],
+        )
+        return HttpResponseRedirect(f'/feedback/{feedback.id}/')
 
 
 class FeedbackView(FeedbackListView):

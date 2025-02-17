@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import TemplateView
+from feedback.forms import FeedbackForm
 from game.models import Game
 
 
@@ -51,6 +52,7 @@ class BaseView(View):
 
 
 class QwikView(BaseView):
+    feedback_form_class = FeedbackForm
     is_player = False
     is_manager = False
     user = None
@@ -102,6 +104,7 @@ class QwikView(BaseView):
             'friend_alert': person.alert_show('friend'),
             'account_alert': person.alert_show('acount'),
         }
+        context |= self.feedback_form_class.get()
         return context
 
 

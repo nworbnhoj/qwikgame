@@ -7,5 +7,5 @@ logger = logging.getLogger(__file__)
 
 class Feedback(models.Model):
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
     text = models.TextField()

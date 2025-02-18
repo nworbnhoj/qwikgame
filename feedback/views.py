@@ -43,6 +43,7 @@ class FeedbackListView(QwikView):
         if form and not form.is_valid():
             return HttpResponseRedirect(f'/feedback/')
         feedback = Feedback.objects.create(
+            commit=subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip(),
             path=next,
             text=context['text'],
             type=context['type'],

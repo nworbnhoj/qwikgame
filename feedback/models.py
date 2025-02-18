@@ -17,6 +17,7 @@ class Feedback(models.Model):
         'O': 'Other',
     }
 
+    commit = models.CharField(editable=False, max_length=40)
     date = models.DateTimeField(auto_now_add=True, editable=False)
     path = models.CharField(editable=False, max_length=128)
     text = models.TextField()

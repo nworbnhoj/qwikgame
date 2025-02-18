@@ -19,6 +19,7 @@ class Feedback(models.Model):
 
     commit = models.CharField(editable=False, max_length=40)
     date = models.DateTimeField(auto_now_add=True, editable=False)
+    issue = models.PositiveIntegerField(blank=True, null=True)
     path = models.CharField(editable=False, max_length=128)
     text = models.TextField()
     type = models.CharField(max_length=1, choices=TYPE, default='_')

@@ -34,7 +34,17 @@
             <div id="alert_detail_banner" class="alert"></div>
             <p>{{ feedback.text }}</p>
             <hr>
-            <p>Version: <a href="https://github.com/nworbnhoj/qwikgame/commit/{{ feedback.commit }}">{{ feedback.version }}</a></p>
+            <p>
+                Version: <a href="https://github.com/nworbnhoj/qwikgame/commit/{{ feedback.commit }}" target="_blank">{{ feedback.version }}</a>
+            </p>
+            <p>
+                Issue:
+    {% if feedback.issue %}
+                 <a href="https://github.com/nworbnhoj/qwikgame/issues/{{ feedback.issue }}" target="_blank">#{{ feedback.issue }}</a>
+    {% else %}
+                 None (<a href="https://github.com/nworbnhoj/qwikgame/issues" target="_blank">create issue</a>)
+    {% endif %}
+            </p>
         </div>
         <div id="alert_detail_end" class="alert"></div>
     </div>

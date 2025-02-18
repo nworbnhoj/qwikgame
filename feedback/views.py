@@ -1,4 +1,4 @@
-import logging
+import logging, subprocess
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from feedback.forms import FeedbackForm
@@ -45,6 +45,7 @@ class FeedbackListView(QwikView):
         feedback = Feedback.objects.create(
         	path=next,
         	text=context['text'],
+        	version=subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
         )
         return HttpResponseRedirect(f'/feedback/{feedback.id}/')
 

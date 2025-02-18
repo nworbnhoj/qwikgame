@@ -10,7 +10,7 @@ class FeedbackForm(ModelForm):
 
     class Meta:
         model = Feedback
-        fields = ['text']
+        fields = ['type', 'text']
 
     @classmethod
     def get(klass):

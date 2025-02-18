@@ -24,3 +24,7 @@ class Feedback(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=1, choices=TYPE, default='_')
     version = models.CharField(editable=False, max_length=32)
+
+    @property
+    def type_str(self):
+    	return Feedback.TYPE[self.type]

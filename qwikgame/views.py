@@ -16,6 +16,7 @@ logger = logging.getLogger(__file__)
 
 
 class BaseView(View):
+    feedback_form_class = FeedbackForm
 
     def get(self, request, *args, **kwargs):
         self.request_init(request)
@@ -39,6 +40,7 @@ class BaseView(View):
             'big_screen': not small,
             'small_screen': small,
         }
+        context |= self.feedback_form_class.get()
         return context
 
     def small_screen(self, device):
@@ -52,7 +54,6 @@ class BaseView(View):
 
 
 class QwikView(BaseView):
-    feedback_form_class = FeedbackForm
     is_player = False
     is_manager = False
     user = None
@@ -104,7 +105,6 @@ class QwikView(BaseView):
             'friend_alert': person.alert_show('friend'),
             'account_alert': person.alert_show('acount'),
         }
-        context |= self.feedback_form_class.get()
         return context
 
 

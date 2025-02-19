@@ -1,31 +1,18 @@
 <!-- templates/authenticate/email_validate_sent.html -->
-{% extends "qwik.html" %}
+{% extends "authenticate/auth.html" %}
 {% load static %}
 
 
-{% block tab_bar %}
-{% if user.is_authenticated %}
-    {{ block.super }}
-{% else %}
+{% block detail %}
     <div class="pillar">
-        <div class="qwikgame">
-            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
-        </div>
+        <p class="push_down">
+            An email has been sent to {{request.GET.to_email}} with a validation link.
+        </p>
+        <p class="push_down">
+            You should receive it shortly.
+        </p>
+        <p class="push_down">
+            If you don’t receive an email, please check your spam folder.
+        </p>
     </div>
-{% endif %}
-{% endblock tab_bar %}
-
-
-{% block list_bar %}{% endblock list_bar %}
-
-{% block content %}
-  <div class="pillar">
-    <h2>Welcome to qwikgame</h2>
-    <p class="fat">
-        <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
-    </p>
-    <div class="pillar push_down">
-        {% block instructions %}{% endblock instructions %}
-    </div>
-  </div>
-{% endblock content %}
+{% endblock detail %}

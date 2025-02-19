@@ -59,9 +59,9 @@ class FeedbackView(FeedbackListView):
         context = super().context(request, *args, **kwargs)
         pk = kwargs.get('feedback')
         if pk:
-	        context |= {
-	            'feedback': Feedback.objects.filter(pk=pk).first()
-	        }
+            context |= {
+                'feedback': Feedback.objects.filter(pk=pk).first()
+            }
         self._context = context
         return self._context
 

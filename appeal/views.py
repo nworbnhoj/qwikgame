@@ -303,7 +303,6 @@ class KeenView(AppealsView):
                     'venue': appeal.venue,
                 }
                 form = InviteForm(friend.email, email_context)
-                logger.info(form.is_bound)
                 if form.is_valid():
                     form.save(request)
                 else:

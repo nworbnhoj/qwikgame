@@ -42,7 +42,6 @@ class MatchesView(QwikView):
             'match': context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
-            'player_id': self.user.player.facet(),
             'target': 'match',
         }
         return context
@@ -144,7 +143,7 @@ class MatchView(MatchesView):
                 match.alert(player)
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass = 'chat',
                     name = person.qwikname,
                     text = txt,
@@ -177,7 +176,6 @@ class ReviewsView(QwikView):
             'cta_disabled': '' if reviews else 'disabled',
             'review': context['item'],
             'reviews': reviews,
-            'player_id': self.user.player.facet(),
             'review_tab': 'selected',
             'target': 'review',
         }

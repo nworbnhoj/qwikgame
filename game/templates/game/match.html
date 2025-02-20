@@ -71,7 +71,7 @@
             <div class="post group hidden">
 {% for entry in match.log %}
     {% if forloop.counter < match_log_start %}
-        {% if entry.id == player_id %}
+        {% if entry.id == player.pk %}
                 <div class="log_entry align_end {{ entry.klass }}">
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
@@ -115,7 +115,7 @@
             <div class="post">
 {% for entry in match.log %}
     {% if forloop.counter > match_log_start %}
-        {% if entry.id == player_id %}
+        {% if entry.id == player.pk %}
                 <div class="log_entry align_end {{ entry.klass }}">
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">

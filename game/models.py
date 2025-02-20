@@ -132,7 +132,7 @@ class Match(models.Model):
                 person = player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass= 'scheduled',
                     name = person.qwikname,
                     text = f'scheduled'
@@ -199,7 +199,7 @@ class Review(models.Model):
                 person = self.player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = self.player.facet(),
+                    id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,
                     text = f'reviewed the Match'

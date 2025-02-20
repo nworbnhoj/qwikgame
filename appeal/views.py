@@ -104,7 +104,6 @@ class AcceptView(AppealsView):
         if appeal:
             context |= {
                 'next_up': NEXT_UP[next_up],
-                'player_id': player.facet(),
                 'bids': self._bids(appeal, player),
                 'log': appeal.log_filter(person.blocked()),
                 'target': 'bid',
@@ -185,7 +184,6 @@ class BidView(AppealsView):
             'next_up': NEXT_UP[next_up],
             'rival': appeal.player,
             'strength': player.strength_str(appeal.game, appeal.player),
-            'player_id': player.facet(),
             'bid': bid,
         }
         self._context = context

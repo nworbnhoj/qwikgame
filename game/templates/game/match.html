@@ -76,7 +76,9 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
                     <div class="btn special2">
-                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                        <a href="{{ request.path }}{{ entry.id }}/">
+                            <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                        </a>
                     </div>
         {% endif %}
                     <div class="chat_bubble">
@@ -120,7 +122,9 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
                     <div class="btn special2">
-                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                        <a href="{{ request.path }}{{ entry.id }}/">
+                            <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                        </a>
                     </div>
         {% endif %}
                     <div class="chat_bubble">

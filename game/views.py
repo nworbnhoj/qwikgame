@@ -250,4 +250,37 @@ class ReviewView(ReviewsView):
         except:
             logger.exception(f'failed opinion: {review} {context}')
         return HttpResponseRedirect(f'/game/match/review/')
-        
+
+
+class RivalView(MatchesView):
+    template_name = 'player/stats.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        match = context.get('match')
+        player = self.user.player
+        rivals = match.rivals(player)
+        rival = Player.objects.filter(pk=rivals[0]).first()
+        if rival:
+            player = self.user.player
+            person = self.user.person
+            stats = rival.stats()
+            context |= {
+                'back': '/'.join((request.path).split('/')[:-2]),
+                'games': stats.get('games', {}),
+                'periods': stats.get('periods', {}),
+                'places': stats.get('places', {}),
+                'rival': rival,
+                'strength': player.strength_str(match.game, rival),
+            }
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        back = kwargs.get('back', '/')
+        rival = context.get('rival')
+        if not rival:
+            return HttpResponseRedirect(back)
+        return render(request, self.template_name, context)

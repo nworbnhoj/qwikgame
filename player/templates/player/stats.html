@@ -1,0 +1,28 @@
+<!-- qwikgame/player/templates/player/stats.html -->
+{% extends "appeal/appeals.html" %}
+
+
+{% block title %}Rival{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
+    {% include 'player/rival_hat_snippet.html' %}
+    {% include 'player/rival_header_snippet.html' %}
+    {% include 'player/rival_stats_snippet.html' %}
+        <div class='plank'>
+            <a class="btn secondary" href="{{ back }}/">Back</a>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="alert_detail_end" class="alert"></div>
+    </div>
+{% endblock %}

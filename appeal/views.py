@@ -409,3 +409,33 @@ class KeenView(AppealsView):
             return HttpResponseRedirect(f'/appeal/')
 
 
+class RivalView(AppealsView):
+    template_name = 'player/stats.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        rival = Player.objects.filter(pk=kwargs.get('rival')).first()
+        if rival:
+            player = self.user.player
+            person = self.user.person
+            appeal = context.get('appeal')
+            stats = rival.stats()
+            context |= {
+                'back': '/'.join((request.path).split('/')[:-2]),
+                'games': stats.get('games', {}),
+                'periods': stats.get('periods', {}),
+                'places': stats.get('places', {}),
+                'rival': rival,
+                'strength': player.strength_str(appeal.game, rival),
+            }
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        back = kwargs.get('back', '/')
+        rival = context.get('rival')
+        if not rival:
+            return HttpResponseRedirect(back)
+        return render(request, self.template_name, context)

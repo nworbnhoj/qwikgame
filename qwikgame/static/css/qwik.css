@@ -205,7 +205,7 @@ div.option { display: flex; align-items: center; flex-direction: row; justify-co
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { align-items: center; display: flex; flex-direction: column; justify-content: start; padding: 1em }
-div.plank { display: flex; flex: auto; flex-direction: row; justify-content: start; padding: 1em; width: 100% }
+div.plank { display: flex; flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1em; width: 100% }
 div.pole { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
@@ -285,6 +285,10 @@ span.icon { border-width: 0px; display: inline-block; text-align: center; width:
 span.qwik { color: #dfa622 }
 textarea { border: 1px solid black; padding: 1em; width: 100% }
 time { color: #999999; font-size: small; text-align: right; }
+ul.leaders { line-height: 2em; list-style: none; max-width: 40em; overflow-x: hidden; padding: 0; width: 100%; }
+ul.leaders li:before { float: left; width: 0; white-space: nowrap; content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";} 
+ul.leaders span:first-child { background: white; padding-right: 0.33em; }
+ul.leaders span + span { background: white; float: right; padding-left: 0.33em; }
 
 @keyframes l46 {
   0%  {background-position: 0 0      ,100% 0,100% 100%,0 100%}

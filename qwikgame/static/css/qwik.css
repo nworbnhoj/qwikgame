@@ -279,11 +279,12 @@ p.bold { font-weight: bold }
 p.large { color: #666666; font-size: large }
 p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
+select { display: block; width: 100% }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
 span.qwik { color: #dfa622 }
-textarea { border: 1px solid black; padding: 1em; width: 100% }
+textarea { border: 1px solid black; display: block}
 time { color: #999999; font-size: small; text-align: right; }
 
 @keyframes l46 {

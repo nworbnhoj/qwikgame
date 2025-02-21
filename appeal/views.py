@@ -39,7 +39,7 @@ NEXT_UP = {
 
 
 class AppealsView(QwikView):
-    template_name = 'appeal/appeals.html'
+    appeals_template = 'appeal/appeals.html'
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
@@ -78,14 +78,12 @@ class AppealsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        appeal = context.get('appeal')
-        if not appeal: 
-            return render(request, self.template_name, context)
+        return render(request, self.appeals_template, context)
 
 
 class AcceptView(AppealsView):
     accept_form_class = AcceptForm
-    template_name = 'appeal/accept.html'
+    accept_template = 'appeal/accept.html'
 
     def _bids(self, appeal, player):
         bids = Bid.objects.filter(appeal=appeal).exclude(hours=None)
@@ -101,8 +99,8 @@ class AcceptView(AppealsView):
         player = self.user.player
         person = self.user.person
         appeal = context.get('appeal')
-        next_up = appeal.status + 'O'
         if appeal:
+            next_up = appeal.status + 'O'
             context |= {
                 'next_up': NEXT_UP[next_up],
                 'bids': self._bids(appeal, player),
@@ -116,15 +114,19 @@ class AcceptView(AppealsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         appeal = context.get('appeal')
+        if not appeal:
+            return HttpResponseRedirect(f'/appeal/')
         # mark this Appeal seen by this Player
         appeal.mark_seen([self.user.player.pk]).save()
         context |= self.accept_form_class.get()
-        return render(request, self.template_name, context)
+        return render(request, self.accept_template, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player
         appeal = Appeal.objects.filter(pk=kwargs['appeal']).first()
+        if not appeal:
+            return HttpResponseRedirect(f'/appeal/')
         context = self.accept_form_class.post(
             request.POST,
             player,
@@ -132,7 +134,7 @@ class AcceptView(AppealsView):
         form = context.get('accept_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
-            return render(request, self.template_name, context)
+            return render(request, self.accept_template, context)
         if 'CANCEL' in context:
             if context.get('CANCEL') == appeal.pk:    # sanity check
                 appeal = appeal.cancel()
@@ -167,26 +169,27 @@ class AcceptView(AppealsView):
 
 class BidView(AppealsView):
     bid_form_class = BidForm
-    template_name = 'appeal/bid.html'
+    bid_template = 'appeal/bid.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         appeal = context.get('appeal')
-        bid = Bid.objects.filter(
-            appeal = appeal,
-            rival = self.user.player,
-        ).first()
-        player = self.user.player
-        person = self.user.person
-        next_up = appeal.status + ('B' if bid else '')
-        context |= {
-            'appeal': appeal,
-            'log': appeal.log_filter(person.blocked()),
-            'next_up': NEXT_UP[next_up],
-            'rival': appeal.player,
-            'strength': player.strength_str(appeal.game, appeal.player),
-            'bid': bid,
-        }
+        if appeal:
+            bid = Bid.objects.filter(
+                appeal = appeal,
+                rival = self.user.player,
+            ).first()
+            player = self.user.player
+            person = self.user.person
+            next_up = appeal.status + ('B' if bid else '')
+            context |= {
+                'appeal': appeal,
+                'log': appeal.log_filter(person.blocked()),
+                'next_up': NEXT_UP[next_up],
+                'rival': appeal.player,
+                'strength': player.strength_str(appeal.game, appeal.player),
+                'bid': bid,
+            }
         self._context = context
         return self._context
 
@@ -194,25 +197,29 @@ class BidView(AppealsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         appeal = context.get('appeal')
+        if not appeal:
+            return HttpResponseRedirect(f'/appeal/')
         # redirect if this Player owns the Appeal
         if appeal.player == self.user.player:
             return HttpResponseRedirect(f'/appeal/accept/{appeal.id}/')
         appeal.mark_seen([self.user.player.pk]).save()
         context |= self.bid_form_class.get(appeal)
-        return render(request, self.template_name, context)
+        return render(request, self.bid_template, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         player = self.user.player
         appeal = context.get('appeal')
+        if not appeal:
+            return HttpResponseRedirect(f'/appeal/')
         context |= self.bid_form_class.post(
             request.POST,
             appeal,
         )
         form = context.get('bid_form')
         if form and not form.is_valid():
-            return render(request, self.template_name, context)
+            return render(request, self.bid_template, context)
         if 'CANCEL' in context:
             try:
                 cancel_pk = context.get('CANCEL')
@@ -251,7 +258,7 @@ class BidView(AppealsView):
 
 class KeenView(AppealsView):
     keen_form_class = KeenForm
-    template_name = 'appeal/keen.html'
+    keen_template = 'appeal/keen.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -281,7 +288,7 @@ class KeenView(AppealsView):
             player = self.user.player,
             game = kwargs.get('game'),
         )
-        return render(request, self.template_name, context)
+        return render(request, self.keen_template, context)
 
     def _invite(self, appeal, invitees, request):
         appeal.invitees.clear()
@@ -320,7 +327,7 @@ class KeenView(AppealsView):
         form = context.get('keen_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
-            return render(request, self.template_name, context)
+            return render(request, self.keen_template, context)
         game, place, venue = None, None, None
         placeid = context.get('placeid')
         if placeid:
@@ -412,7 +419,7 @@ class KeenView(AppealsView):
 
 class RivalView(AppealsView):
     menu_form_class = MenuForm
-    template_name = 'player/stats.html'
+    stats_template = 'player/stats.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -420,7 +427,6 @@ class RivalView(AppealsView):
         if rival:
             player = self.user.player
             person = self.user.person
-            appeal = context.get('appeal')
             stats = rival.stats()
             context |= {
                 'back': '/'.join((request.path).split('/')[:-2]),
@@ -428,8 +434,10 @@ class RivalView(AppealsView):
                 'periods': stats.get('periods', {}),
                 'places': stats.get('places', {}),
                 'rival': rival,
-                'strength': player.strength_str(appeal.game, rival),
             }
+            appeal = context.get('appeal')
+            if appeal:
+                context['strength'] = player.strength_str(appeal.game, rival)
         self._context = context
         return self._context
 
@@ -440,7 +448,7 @@ class RivalView(AppealsView):
         rival = context.get('rival')
         if not rival:
             return HttpResponseRedirect(back)
-        return render(request, self.template_name, context)
+        return render(request, self.stats_template, context)
 
 
     def post(self, request, *args, **kwargs):

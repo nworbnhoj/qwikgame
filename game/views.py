@@ -18,7 +18,7 @@ logger = logging.getLogger(__file__)
 
 
 class MatchesView(QwikView):
-    template_name = 'game/matches.html'
+    matches_template = 'game/matches.html'
 
     def context(self, request, *args, **kwargs):
         kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player]).order_by('date').reverse()
@@ -53,18 +53,18 @@ class MatchesView(QwikView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         if context['small_screen']:
-            return render(request, self.template_name, context)
+            return render(request, self.matches_template, context)
         if not kwargs.get('match'):
             first_match = context['matches'].first()
             if first_match:
                 return HttpResponseRedirect(f'{request.path}{first_match.pk}/')
             context['match_tab'] = 'selected'
-            return render(request, self.template_name, context)
+            return render(request, self.matches_template, context)
 
 
 class MatchView(MatchesView):
     match_form_class = MatchForm
-    template_name = 'game/match.html'
+    match_template = 'game/match.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -110,10 +110,12 @@ class MatchView(MatchesView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         match = context['match']
+        if not match:
+            return HttpResponseRedirect(f'/game/match/')
         # mark this Match seen by this Player
         match.mark_seen([self.user.player.pk]).save()
         context |= self.match_form_class.get()
-        return render(request, self.template_name, context)
+        return render(request, self.match_template, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
@@ -121,9 +123,11 @@ class MatchView(MatchesView):
         context = self.match_form_class.post(request.POST)
         form = context.get('chat_form')
         if form and not form.is_valid():
-            return render(request, self.template_name, context)
+            return render(request, self.match_template, context)
         player = self.user.player
         match = Match.objects.get(pk=match_pk)
+        if not match:
+            return HttpResponseRedirect(f'/game/match/')
         if 'CANCEL' in context:
             try:
                 cancel_pk = context.get('CANCEL')
@@ -158,7 +162,7 @@ class MatchView(MatchesView):
 
 
 class ReviewsView(QwikView):
-    template_name = 'game/reviews.html'
+    reviews_template = 'game/reviews.html'
 
     def _reviews(self):
         return Review.objects.filter(player=self.user.player)
@@ -187,17 +191,17 @@ class ReviewsView(QwikView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         if context['small_screen']:
-            return render(request, self.template_name, context)
+            return render(request, self.reviews_template, context)
         if not kwargs.get('review'):
             first_review = context['reviews'].first()
             if first_review:
                 return HttpResponseRedirect(f'{request.path}{first_review.pk}/')
-            return render(request, self.template_name, context)
+            return render(request, self.reviews_template, context)
 
 
 class ReviewView(ReviewsView):
     review_form_class = ReviewForm
-    template_name = 'game/review.html'
+    review_template = 'game/review.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -216,12 +220,14 @@ class ReviewView(ReviewsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         review = context['review']
+        if not review:
+            return HttpResponseRedirect(f'/game/match/review/')
         # mark this Review seen by this Player
         review.mark_seen([self.user.player.pk]).save()
         rivals = self._rivals(context.get('review'))
         request.session['rivals'] = rivals
         context |= self.review_form_class.get(rivals)
-        return render(request, self.template_name, context)
+        return render(request, self.review_template, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
@@ -230,9 +236,11 @@ class ReviewView(ReviewsView):
         form = context.get('review_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
-            return render(request, self.template_name, context)
+            return render(request, self.review_template, context)
+        review = Review.objects.get(pk=kwargs['review'])
+        if not review:
+            return HttpResponseRedirect(f'/game/match/review/')
         try:
-            review = Review.objects.get(pk=kwargs['review'])
             player = self.user.player
             rival = Player.objects.get(pk=context['rival'])
             rival.conduct_add(context['conduct_good'])
@@ -256,26 +264,27 @@ class ReviewView(ReviewsView):
 
 class RivalView(MatchesView):
     menu_form_class = MenuForm
-    template_name = 'player/stats.html'
+    stats_template = 'player/stats.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         match = context.get('match')
-        player = self.user.player
-        rivals = match.rivals(player)
-        rival = Player.objects.filter(pk=rivals[0]).first()
-        if rival:
+        if match:
             player = self.user.player
-            person = self.user.person
-            stats = rival.stats()
-            context |= {
-                'back': '/'.join((request.path).split('/')[:-2]),
-                'games': stats.get('games', {}),
-                'periods': stats.get('periods', {}),
-                'places': stats.get('places', {}),
-                'rival': rival,
-                'strength': player.strength_str(match.game, rival),
-            }
+            rivals = match.rivals(player)
+            rival = Player.objects.filter(pk=rivals[0]).first()
+            if rival:
+                player = self.user.player
+                person = self.user.person
+                stats = rival.stats()
+                context |= {
+                    'back': '/'.join((request.path).split('/')[:-2]),
+                    'games': stats.get('games', {}),
+                    'periods': stats.get('periods', {}),
+                    'places': stats.get('places', {}),
+                    'rival': rival,
+                    'strength': player.strength_str(match.game, rival),
+                }
         self._context = context
         return self._context
 
@@ -286,7 +295,7 @@ class RivalView(MatchesView):
         rival = context.get('rival')
         if not rival:
             return HttpResponseRedirect(back)
-        return render(request, self.template_name, context)
+        return render(request, self.stats_template, context)
 
 
     def post(self, request, *args, **kwargs):

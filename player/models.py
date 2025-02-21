@@ -1,7 +1,9 @@
-import datetime, logging, math, numbers, statistics
+import logging, math, numbers, statistics
+from datetime import datetime, timedelta, timezone
 from django.db import models
 from django.db.models import Lookup
 from django.utils.timezone import now
+from game.models import Game, Match
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_ALL, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
@@ -152,6 +154,29 @@ class Player(models.Model):
         places = list(places)[:count]
         places.sort(key=lambda x: x.name)
         return places
+
+    def stats(self):
+        stats = {}
+        match_qs = Match.objects.filter(competitors__in=[self])
+        games = {}
+        for pk in match_qs.distinct('game').values_list('game', flat=True):
+            name = Game.objects.get(pk=pk).name
+            games[name] = match_qs.filter(game=pk).count
+        stats['games'] = games
+        now = datetime.now(timezone.utc)
+        periods = {
+            'Total': match_qs.count(),
+            'This Week': match_qs.filter(date__gte=now-timedelta(days=7)).count(),
+            'This Month': match_qs.filter(date__gte=now-timedelta(days=30)).count(),
+            'This Year': match_qs.filter(date__gte=now-timedelta(days=365)).count(),
+        }
+        stats['periods'] = periods
+        places = {
+            'countries': match_qs.distinct('venue__country').count(),
+            'venues': match_qs.distinct('venue').count(),
+        }
+        stats['places'] = places
+        return stats
 
     @property
     def qwikname(self):

@@ -7,6 +7,7 @@ from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match, Review
 from player.models import Player, Strength
 from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST
+from qwikgame.forms import MenuForm
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry
@@ -42,7 +43,6 @@ class MatchesView(QwikView):
             'match': context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
-            'player_id': self.user.player.facet(),
             'target': 'match',
         }
         return context
@@ -144,7 +144,7 @@ class MatchView(MatchesView):
                 match.alert(player)
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass = 'chat',
                     name = person.qwikname,
                     text = txt,
@@ -177,7 +177,6 @@ class ReviewsView(QwikView):
             'cta_disabled': '' if reviews else 'disabled',
             'review': context['item'],
             'reviews': reviews,
-            'player_id': self.user.player.facet(),
             'review_tab': 'selected',
             'target': 'review',
         }
@@ -252,4 +251,55 @@ class ReviewView(ReviewsView):
         except:
             logger.exception(f'failed opinion: {review} {context}')
         return HttpResponseRedirect(f'/game/match/review/')
-        
+
+
+class RivalView(MatchesView):
+    menu_form_class = MenuForm
+    template_name = 'player/stats.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        match = context.get('match')
+        player = self.user.player
+        rivals = match.rivals(player)
+        rival = Player.objects.filter(pk=rivals[0]).first()
+        if rival:
+            player = self.user.player
+            person = self.user.person
+            stats = rival.stats()
+            context |= {
+                'back': '/'.join((request.path).split('/')[:-2]),
+                'games': stats.get('games', {}),
+                'periods': stats.get('periods', {}),
+                'places': stats.get('places', {}),
+                'rival': rival,
+                'strength': player.strength_str(match.game, rival),
+            }
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        back = kwargs.get('back', '/')
+        rival = context.get('rival')
+        if not rival:
+            return HttpResponseRedirect(back)
+        return render(request, self.template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.menu_form_class.post(request.POST)
+        menu_form = context.get('menu_form')
+        if menu_form and menu_form.is_valid():
+            if 'BLOCK' in context:
+                try:
+                    rival_pk = context['BLOCK']
+                    rival = Player.objects.get(pk=rival_pk)
+                    self.user.person.block_rival(rival.user.person)
+                    logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')
+                except:
+                    logger.exception("Block failed: {player} blocked {rival_pk}")
+        back = '/'.join((request.path).split('/')[:-2])
+        return HttpResponseRedirect(back)

@@ -119,7 +119,7 @@ class Appeal(models.Model):
             self.set_hours(hours24.unset_hour(hour))
             entry = Entry(
                 icon = self.player.icon,
-                id = self.player.facet(),
+                id = self.player.pk,
                 klass= 'event',
                 name = self.player.qwikname,
                 text = f'withdrew {hour}h'
@@ -155,7 +155,7 @@ class Appeal(models.Model):
     def log_event(self, template):
         entry = Entry(
             icon = self.player.user.person.icon,
-            id = self.player.facet(),
+            id = self.player.pk,
             klass= 'event',
             name=self.player.qwikname,
         )
@@ -267,7 +267,7 @@ class Bid(models.Model):
                 person = player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
                     pk = self.pk,
@@ -277,7 +277,7 @@ class Bid(models.Model):
                 person = self.rival.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = self.rival.facet(),
+                    id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
                     pk = self.pk,
@@ -288,7 +288,7 @@ class Bid(models.Model):
                 person = player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
                     pk = self.pk,
@@ -298,7 +298,7 @@ class Bid(models.Model):
                 person = self.rival.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = self.rival.facet(),
+                    id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
                     pk = self.pk,
@@ -308,7 +308,7 @@ class Bid(models.Model):
                 person = self.rival.user.person
                 entry = Entry(
                     icon = rival.icon,
-                    id = self.rival.facet(),
+                    id = self.rival.pk,
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,

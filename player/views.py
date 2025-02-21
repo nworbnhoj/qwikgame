@@ -207,7 +207,6 @@ class FriendsView(QwikView):
             'friend': context.get('item'),
             'friends': context.get('items'),
             'friend_tab': 'selected',
-            'player_id': self.user.player.facet(),
             'target': 'friend',
         }
         self._context = context

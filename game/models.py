@@ -132,7 +132,7 @@ class Match(models.Model):
                 person = player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = player.facet(),
+                    id = player.pk,
                     klass= 'scheduled',
                     name = person.qwikname,
                     text = f'scheduled'
@@ -169,7 +169,8 @@ class Match(models.Model):
 
     def rivals(self, player):
         competitors = list(self.competitors.values_list('pk', flat=True))
-        return competitors.remove(player.pk)
+        competitors.remove(player.pk)
+        return competitors
 
     # format venue_time on server, rather than in template (user timezone)
     def venue_date_str(self):
@@ -199,7 +200,7 @@ class Review(models.Model):
                 person = self.player.user.person
                 entry = Entry(
                     icon = person.icon,
-                    id = self.player.facet(),
+                    id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,
                     text = f'reviewed the Match'

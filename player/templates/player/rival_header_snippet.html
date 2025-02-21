@@ -1,7 +1,9 @@
 <!-- qwikgame/player/templates/player/rival_header_snippet.html -->
     <div class="pillar">
-        <div class="icon">
-            <i class="fa-solid {{ rival.icon }} fa-3x"></i>
+        <div class="btn special2">
+            <a href="{{ request.path }}{{ rival.pk }}/">
+                <i class="fa-solid {{ rival.icon }} fa-3x"></i>
+            </a>
         </div>
         <p>{{ rival.qwikname }}</p>  
         <p>{{ strength }}</p>

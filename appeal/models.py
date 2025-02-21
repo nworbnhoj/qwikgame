@@ -145,10 +145,10 @@ class Appeal(models.Model):
     def log_filter(self, block=None, include=None):
         log = self.log
         if block:
-            block = [p.user.player.facet() for p in block]
+            block = [p.user.player.pk for p in block]
             log = [e for e in log if e.get('id') not in block]
         if include:
-            include = [p.user.player.facet() for p in include]
+            include = [p.user.player.pk for p in include]
             log = [e for e in log if e.get('id') in include]
         return log
 

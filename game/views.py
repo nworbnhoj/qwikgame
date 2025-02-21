@@ -43,6 +43,7 @@ class MatchesView(QwikView):
             'match': context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
+            'match_tab': 'selected',
             'player': player,
             'target': 'match',
         }
@@ -102,7 +103,6 @@ class MatchView(MatchesView):
                 'rival_icons': icons.values(),
                 'match_log_start': match_log_start,
                 'review': review,
-                'match_tab': 'selected',
             }
         return context
 

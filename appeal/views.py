@@ -11,6 +11,7 @@ from game.models import Game, Match
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import Hours24x7
+from qwikgame.forms import MenuForm
 from api.models import Mark
 from service.locate import Locate
 from venue.models import Place, Region, Venue
@@ -410,6 +411,7 @@ class KeenView(AppealsView):
 
 
 class RivalView(AppealsView):
+    menu_form_class = MenuForm
     template_name = 'player/stats.html'
 
     def context(self, request, *args, **kwargs):
@@ -439,3 +441,21 @@ class RivalView(AppealsView):
         if not rival:
             return HttpResponseRedirect(back)
         return render(request, self.template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.menu_form_class.post(request.POST)
+        menu_form = context.get('menu_form')
+        if menu_form and menu_form.is_valid():
+            if 'BLOCK' in context:
+                try:
+                    rival_pk = context['BLOCK']
+                    rival = Player.objects.get(pk=rival_pk)
+                    self.user.person.block_rival(rival.user.person)
+                    logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')
+                except:
+                    logger.exception("Block failed: {player} blocked {rival_pk}")
+        back = '/'.join((request.path).split('/')[:-2])
+        logger.warn(back)
+        return HttpResponseRedirect(back)

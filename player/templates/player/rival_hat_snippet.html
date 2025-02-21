@@ -15,6 +15,14 @@
             <div class="btn special2 drop" data-down="false">
                 <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
             </div>
-            <div class="down hidden"></div>
+                <div class="down hidden">
+                    <form id="menu_form " action="{{ request.path }}" method="post">
+{% csrf_token %}
+                        <label class="btn tertiary">
+                            <input hidden name="BLOCK" type="submit" value='{{ rival.pk }}' onclick="return confirm('Block this Player?')">
+                            block
+                        </label>
+                    </form>
+                </div>
         </div>
     </div>

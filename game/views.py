@@ -7,6 +7,7 @@ from game.forms import MatchForm, ReviewForm
 from game.models import Game, Match, Review
 from player.models import Player, Strength
 from qwikgame.constants import DELAY_MATCH_BANNER, DELAY_MATCH_CHAT, DELAY_MATCHS_LIST
+from qwikgame.forms import MenuForm
 from qwikgame.views import QwikView
 from venue.models import Venue
 from qwikgame.log import Entry
@@ -253,6 +254,7 @@ class ReviewView(ReviewsView):
 
 
 class RivalView(MatchesView):
+    menu_form_class = MenuForm
     template_name = 'player/stats.html'
 
     def context(self, request, *args, **kwargs):
@@ -284,3 +286,20 @@ class RivalView(MatchesView):
         if not rival:
             return HttpResponseRedirect(back)
         return render(request, self.template_name, context)
+
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.menu_form_class.post(request.POST)
+        menu_form = context.get('menu_form')
+        if menu_form and menu_form.is_valid():
+            if 'BLOCK' in context:
+                try:
+                    rival_pk = context['BLOCK']
+                    rival = Player.objects.get(pk=rival_pk)
+                    self.user.person.block_rival(rival.user.person)
+                    logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')
+                except:
+                    logger.exception("Block failed: {player} blocked {rival_pk}")
+        back = '/'.join((request.path).split('/')[:-2])
+        return HttpResponseRedirect(back)

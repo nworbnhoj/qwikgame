@@ -43,6 +43,7 @@ class MatchesView(QwikView):
             'match': context['item'],
             'matches_future': matches_future,
             'matches_past': matches_past,
+            'player': player,
             'target': 'match',
         }
         return context

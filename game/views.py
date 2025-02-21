@@ -29,11 +29,11 @@ class MatchesView(QwikView):
         player.alert_del(type='match')
         matches = context['items']
         now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
-        matches_future = matches.filter(date__gt=now)
+        matches_future = matches.filter(date__gt=now).order_by('date')
         for match in matches_future:
             seen = player.pk in match.meta.get('seen', [])
             match.seen = '' if seen else 'unseen'
-        matches_past = matches.filter(date__lte=now)
+        matches_past = matches.filter(date__lte=now).order_by('date')
         for match in matches_past:
             seen = player.pk in match.meta.get('seen', [])
             match.seen = '' if seen else 'unseen'

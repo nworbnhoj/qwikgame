@@ -38,11 +38,11 @@
         </div>
     {% else %}
         <div class="grid_2_col">
-            <a class="btn secondary" href="{% url 'register' %}">
-                signup
-            </a>
             <a class="btn secondary" href="{% url 'login' %}">
                 login
+            </a>
+            <a class="btn primary" href="{% url 'register' %}">
+                signup
             </a>
         </div>
     {% endif %}

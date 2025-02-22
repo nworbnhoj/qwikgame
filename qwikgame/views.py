@@ -1,4 +1,4 @@
-import logging
+import logging, subprocess
 from authenticate.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -125,6 +125,7 @@ class ServiceWorkerView(TemplateView):
             'qwik.css_url': static('css/qwik.css'),
             'qwik.js_url': static('qwik.js'),
             'welcome_url': reverse('welcome'),
+            'version': subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
         }
 
 

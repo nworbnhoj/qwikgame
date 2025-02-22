@@ -22,18 +22,20 @@ if (workbox) {
 
 
 const appShell = [
-    '{{ favicon.ico }}',
+    '{{ css_all_min_url }}',
+    '{{ css_map_url }}',
+    '{{ css_qwik_url }}',
+    '{{ css_reset_url }}',
+    '{{ css_small_screen_url }}',
+    '{{ favicon_url }}',
+    '{{ js_map_url }}',
+    '{{ js_qwik_url }}',
     '{{ logo_url }}',
     '{{ logo_152_url }}',
     '{{ logo_192_url }}',
     '{{ logo_512_url }}',
     '{{ manifest_url }}',
-    '{{ map.js_url }}',
     // '{{ offline_url }}',
-    '{{ qwik.css_url }}',
-    '{{ qwik.js_url }}',
-    // '{{ version }}',
-    '{{ welcome_url }}',
 ].map((partialUrl) => `${location.protocol}//${location.host}${partialUrl}`);
 
 // Precache the shell.

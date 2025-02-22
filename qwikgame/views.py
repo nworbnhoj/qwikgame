@@ -115,16 +115,19 @@ class ServiceWorkerView(TemplateView):
 
     def get_context_data(self, **kwargs):
         return {
+            'css_all_min_url': static('css/all.min.css'),
+            'css_map_url': static('css/map.css'),
+            'css_qwik_url': static('css/qwik.css'),
+            'css_reset_url': static('css/reset.css'),
+            'css_small_screen_url': static('css/small_screen.css'),
             'favicon_url': static('img/favicon.ico'),
+            'js_map_url': static('map.js'),
+            'js_qwik_url': static('qwik.js'),
             'logo_url': static('img/qwik-logo.png'),
             'logo_152_url': static('img/qwik-logo.152x152.png'),
             'logo_192_url': static('img/qwik-logo.192x192.png'),
             'logo_512_url': static('img/qwik-logo.512x512.png'),
             'manifest_url': static('manifest.json'),
-            'map.js_url': static('map.js'),
-            'qwik.css_url': static('css/qwik.css'),
-            'qwik.js_url': static('qwik.js'),
-            'welcome_url': reverse('welcome'),
             'version': subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
         }
 

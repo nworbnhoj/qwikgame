@@ -28,6 +28,8 @@ const appShell = [
     '{{ css_reset_url }}',
     '{{ css_small_screen_url }}',
     '{{ favicon_url }}',
+    '{{ font_fa_url }}',
+    '{{ font_notosans_url }}',
     '{{ js_map_url }}',
     '{{ js_qwik_url }}',
     '{{ logo_url }}',

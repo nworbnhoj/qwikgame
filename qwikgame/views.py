@@ -121,6 +121,8 @@ class ServiceWorkerView(TemplateView):
             'css_reset_url': static('css/reset.css'),
             'css_small_screen_url': static('css/small_screen.css'),
             'favicon_url': static('img/favicon.ico'),
+            'font_fa_url': static('font/fa-solid-900.woff2'),
+            'font_notosans_url': static('font/NotoSans-Regular.ttf'),
             'js_map_url': static('map.js'),
             'js_qwik_url': static('qwik.js'),
             'logo_url': static('img/qwik-logo.png'),

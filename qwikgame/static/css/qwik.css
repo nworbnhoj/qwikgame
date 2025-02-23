@@ -32,7 +32,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.primary:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999 }
 
 .btn.secondary { background-color: #ffffff; border-color: #333333; color: #333333; }
-.btn.secondary:active { background-color: #c6d2e6; border-color: #c6d2e6 }
+.btn.secondary:active { background-color: #ffffff; border-color: #c6d2e6 }
 .btn.secondary:disabled { border-color: #cccccc; color: #999999 }
 .btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed; box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn.secondary:has(input:disabled) { border-color: #cccccc; color: #999999 }

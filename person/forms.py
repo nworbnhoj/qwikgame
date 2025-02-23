@@ -173,10 +173,6 @@ class UnblockForm(QwikForm):
         label='LIST OF BLOCKED PEOPLE',
         required=False,
     )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['blocked'].widget.option_template_name='option_delete.html'
         
     @classmethod
     def get(klass, person):

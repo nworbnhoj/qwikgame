@@ -42,7 +42,7 @@ class Player(models.Model):
         # include app appeals created by this Player
         appeal_qs = Appeal.objects.filter(player=self)
         # include all open Appeals as default or apply filters
-        open_appeals_qs = Appeal.objects.filter(invitees=None)
+        open_appeals_qs = Appeal.objects.filter(invitees=None, status='A')
         filters = Filter.objects.filter(player=self, active=True)
         if filters:      
             for f in filters:
@@ -65,6 +65,8 @@ class Player(models.Model):
             appeal_qs |= open_appeals_qs.all()
         # include all Appeals as an invitee
         appeal_qs |= Appeal.objects.filter(invitees__rival__in=[self])
+        # include Dormant Appeals on which this Player has Bid
+        appeal_qs |= Appeal.objects.filter(status='D', rivals__in=[self])
         # exclude blocked Persons
         appeal_qs.exclude(player__user__person__in=self.user.person.blocked())
         appeal_qs = appeal_qs.exclude(player__user__person__in=self.user.person.blocked())

@@ -237,7 +237,7 @@ div.upgrade { border: 1px solid black; padding: 1em }
 div.hidden { display: none }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 3em 0; padding: 2em; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
-fieldset div { display:block; padding: 1em}
+fieldset div { display:block; }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: left; }
 h2.show_group { padding: 0 0.3em 0 0.3em; }
@@ -262,9 +262,10 @@ input.disabled { background-color: #eeeeee; color: #999999 }
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid #eeeeee; padding: 1em; width:100% }
-label.option { display: flex; align-items: stretch; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
+label.option { display: flex; align-items: center; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
 label.option div.btn { height: 1em }
-label.option input[type=checkbox] { display: none }
+label.option:has( input[type=checkbox])::before { content: none; }
+label.option:has( input[type=checkbox]:checked) { display: none; }
 label.option:has(input:checked) { color: #dfa622 }
 label.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
 label.reveal > input { display: none; }

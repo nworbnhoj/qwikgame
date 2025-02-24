@@ -52,13 +52,7 @@ class MatchesView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        if context['small_screen']:
-            return render(request, self.matches_template, context)
-        if not kwargs.get('match'):
-            first_match = context['matches'].first()
-            if first_match:
-                return HttpResponseRedirect(f'{request.path}{first_match.pk}/')
-            context['match_tab'] = 'selected'
+        if not kwargs.get('item'):
             return render(request, self.matches_template, context)
 
 
@@ -190,12 +184,7 @@ class ReviewsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        if context['small_screen']:
-            return render(request, self.reviews_template, context)
-        if not kwargs.get('review'):
-            first_review = context['reviews'].first()
-            if first_review:
-                return HttpResponseRedirect(f'{request.path}{first_review.pk}/')
+        if not kwargs.get('item'):
             return render(request, self.reviews_template, context)
 
 

@@ -194,7 +194,7 @@ class RivalView(AppealsView):
 
 
 class FriendsView(QwikView):
-    template_name = 'player/friends.html'
+    friends_template = 'player/friends.html'
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
@@ -215,9 +215,8 @@ class FriendsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        friend = kwargs.get('item')
-        if not friend: 
-            return render(request, self.template_name, context)
+        if not kwargs.get('item'):
+            return render(request, self.friends_template, context)
 
 
 class FriendAddView(FriendsView):
@@ -276,6 +275,8 @@ class FriendView(FriendsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         friend = context.get('friend')
+        if not friend:
+            return HttpResponseRedirect(f'/player/friend/')
         strength = friend.strengths.first() if friend else None
         context |= self.friend_form_class.get(friend)
         context |= self.strength_form_class.get(strength)
@@ -388,6 +389,9 @@ class FriendStrengthView(FriendsView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
+        friend = context.get('friend')
+        if not friend:
+            return HttpResponseRedirect(f'/player/friend/')
         context |= self.form_class.get()
         return render(request, self.template_name, context)
 

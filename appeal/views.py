@@ -78,7 +78,8 @@ class AppealsView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        return render(request, self.appeals_template, context)
+        if not kwargs.get('item'):
+            return render(request, self.appeals_template, context)
 
 
 class AcceptView(AppealsView):

@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block refresh %}
+    <meta http-equiv="refresh" content="60" >
+{% endblock refresh %}
     <link rel="manifest" href="{% static 'manifest.json' %}" />
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
@@ -55,7 +58,7 @@
             <span class="fat">Friends</span>
             <div {{ friend_alert }} class="dot"></div>
         </a>
-        <div class="flex_space hide768"></div>
+        <div class="flex_space"></div>
         <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
             <i class="fa-solid {{ person_icon }} fa-2x"></i>
             <span class="fat">{% block name %}{{ qwikname }}{% endblock %}</span>

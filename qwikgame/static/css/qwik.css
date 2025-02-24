@@ -142,7 +142,6 @@ div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0
 div.chat_input div:not([class]) { flex-grow: 1; }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item .name { font-weight: bold; }
-div.content { align-items: stretch; display:flex; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
 div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
@@ -189,7 +188,6 @@ div.icon.medium { height: 3em; width: 3em }
 div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon .btn.drop { justify-content: center; }
-div.tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
 div.info { position: relative }
 div.info .info_text { background-color: white; border: 1px solid black; border-radius: 0.3em; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -0.2em; text-align: right; top: 150%; width: 20em; z-index: 2 }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 0; margin-left: -0.8em; border-style: solid }

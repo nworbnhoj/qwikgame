@@ -137,8 +137,12 @@
     <div id="detail" class="detail">
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
-            <div class="push_down">
+            <div class="push_down">                
+    {% if matches_future.all %}
+                Select a Match to Chat.
+    {% else %}
                 No pending Matches<br>Keen to play?
+    {% endif %}
             </div>
             <a class="btn special1 push_down" href="{% url 'keen' %}">
                 <i class="fa-solid fa-paper-plane fa-xl"></i>

@@ -1,6 +1,12 @@
 <!-- qwikgame/person/templates/person/private.html -->
 {% extends "person/account.html" %}
+{% load static %}
 
+
+{% block script %}
+    {{ block.super }}
+    <script defer src="{% static 'private.js' %}"></script>
+{% endblock %}
 
 {% block private_class %}selected{% endblock %}
 

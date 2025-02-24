@@ -52,7 +52,6 @@
                 </div>
             </div>
         </div>
-        <hr>
         <div class="post group">
 {% for rev in reviews %}
             <a class="btn secondary item {{ rev.seen }}" href="{% url target review=rev.pk %}">
@@ -93,7 +92,11 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
+    {% if reviews.all %}
+                Select a Match to Review.
+    {% else %}
                 All Match reviews complete - thank you<br>Keen to play?
+    {% endif %}
             </div>
             <a class="btn special1 push_down" href="{% url 'keen' %}">
                 <i class="fa-solid fa-paper-plane fa-xl"></i>

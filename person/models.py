@@ -173,5 +173,10 @@ class Social(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     url = models.URLField(max_length=255)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['person', 'url'], name='unique_social')
+        ]
+
     def __str__(self):
         return self.url

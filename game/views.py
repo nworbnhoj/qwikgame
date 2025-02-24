@@ -27,7 +27,7 @@ class MatchesView(QwikView):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='match')
-        matches = context['items']
+        matches = context.get('items', Match.objects.none())
         now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now).order_by('date')
         for match in matches_future:
@@ -40,7 +40,7 @@ class MatchesView(QwikView):
         context['matches'] = matches
         context |= {
             'cta_disabled': '' if matches_future else 'disabled',
-            'match': context['item'],
+            'match': context.get('item'),
             'matches_future': matches_future,
             'matches_past': matches_past,
             'match_tab': 'selected',
@@ -109,7 +109,7 @@ class MatchView(MatchesView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        match = context['match']
+        match = context.get('match')
         if not match:
             return HttpResponseRedirect(f'/game/match/')
         # mark this Match seen by this Player
@@ -174,13 +174,13 @@ class ReviewsView(QwikView):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='review')
-        reviews = context['items'].order_by('match__date')
+        reviews = context.get('items', Review.objects.none()).order_by('match__date')
         for review in reviews:
             seen = player.pk in review.meta.get('seen', [])
             review.seen = '' if seen else 'unseen'
         context |= {
             'cta_disabled': '' if reviews else 'disabled',
-            'review': context['item'],
+            'review': context.get('item'),
             'reviews': reviews,
             'review_tab': 'selected',
             'target': 'review',
@@ -219,7 +219,7 @@ class ReviewView(ReviewsView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        review = context['review']
+        review = context.get('review')
         if not review:
             return HttpResponseRedirect(f'/game/match/review/')
         # mark this Review seen by this Player
@@ -242,8 +242,8 @@ class ReviewView(ReviewsView):
             return HttpResponseRedirect(f'/game/match/review/')
         try:
             player = self.user.player
-            rival = Player.objects.get(pk=context['rival'])
-            rival.conduct_add(context['conduct_good'])
+            rival = Player.objects.get(pk=context.get('rival'))
+            rival.conduct_add(context.get('conduct_good', True))
             rival.save()
             Strength.objects.update_or_create(
                 game = review.match.game,
@@ -251,7 +251,7 @@ class ReviewView(ReviewsView):
                 rival = rival,
                 defaults = {
                     'date': review.match.date,
-                    'relative': context['strength'],
+                    'relative': context.get('strength', 'm'),
                     'weight': 3
                 }
             )
@@ -305,7 +305,7 @@ class RivalView(MatchesView):
         if menu_form and menu_form.is_valid():
             if 'BLOCK' in context:
                 try:
-                    rival_pk = context['BLOCK']
+                    rival_pk = context.get('BLOCK')
                     rival = Player.objects.get(pk=rival_pk)
                     self.user.person.block_rival(rival.user.person)
                     logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')

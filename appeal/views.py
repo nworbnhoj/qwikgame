@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
-from qwikgame.hourbits import Hours24x7
+from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm
 from api.models import Mark
 from service.locate import Locate
@@ -236,8 +236,8 @@ class BidView(AppealsView):
         if appeal.status == 'A':
             strength, confidence = appeal.player.strength_est(appeal.game, player)
             bid = Bid.objects.create(
-                appeal=context['accept'],
-                hours=context['hour'].as_bytes(),
+                appeal=context.get('accept'),
+                hours=context.get('hour', DAY_NONE).as_bytes(),
                 rival=player,
                 strength=strength,
                 str_conf=confidence,
@@ -368,12 +368,13 @@ class KeenView(AppealsView):
             player=player,
             venue=venue,
         )
-        valid_hours = venue.open_date(today) & context['today']
+        today_hours = context.get('today', DAY_NONE)
+        valid_hours = venue.open_date(today) & today_hours
         if valid_hours.is_none():
             appeal.delete()
-            logger.info(f"no valid hours for {context['today']} {today} at {venue}")
+            logger.info(f"no valid hours for {today_hours} {today} at {venue}")
         else:
-            if appeal.hours24 != context['today']:
+            if appeal.hours24 != today_hours:
                 appeal.set_hours(valid_hours)
                 appeal.perish()
             self._invite(appeal, invitees, request)
@@ -391,12 +392,13 @@ class KeenView(AppealsView):
             player=player,
             venue=venue,
         )
-        valid_hours = venue.open_date(tomorrow) & context['tomorrow']
+        tomorrow_hours = context.get('tomorrow', DAY_NONE)
+        valid_hours = venue.open_date(tomorrow) & tomorrow_hours
         if valid_hours.is_none():
             appeal.delete()
-            logger.info(f"no valid hours for {context['today']} {tomorrow} at {venue}")
+            logger.info(f"no valid hours for {tomorrow_hours} {tomorrow} at {venue}")
         else:
-            if appeal.hours24 != context['tomorrow']:
+            if appeal.hours24 != tomorrow_hours:
                 appeal.set_hours(valid_hours)
                 appeal.perish()
             self._invite(appeal, invitees, request)
@@ -458,7 +460,7 @@ class RivalView(AppealsView):
         if menu_form and menu_form.is_valid():
             if 'BLOCK' in context:
                 try:
-                    rival_pk = context['BLOCK']
+                    rival_pk = context.get('BLOCK')
                     rival = Player.objects.get(pk=rival_pk)
                     self.user.person.block_rival(rival.user.person)
                     logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')

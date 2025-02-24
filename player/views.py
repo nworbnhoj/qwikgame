@@ -106,7 +106,7 @@ class FilterView(AppealsView):
                 player=self.user.player,
                 game=game,
                 place=place)
-            filter_hours = Hours24x7(context['hours'])
+            filter_hours = Hours24x7(context.get('hours', WEEK_NONE))
             new_filter[0].set_hours(filter_hours)
             new_filter[0].save()
             logger.info(f'Filter new: {new_filter[0]}')
@@ -243,12 +243,12 @@ class FriendAddView(FriendsView):
             context |= self.form_class.post(request.POST)
             return render(request, self.template_name, context)
         try:
-            email = context['email']
+            email = context.get('email','not@valid')
             email_hash = Person.hash(email)
             rival, created = Player.objects.get_or_create(email_hash = email_hash)
             friend = Friend.objects.create(
                 email = email,
-                name = context['name'],
+                name = context.get('name',email.split('@')[0]),
                 player = self.user.player,
                 rival = rival,
             )
@@ -289,7 +289,7 @@ class FriendView(FriendsView):
         if menu_form and menu_form.is_valid():
             if 'DELETE' in context:
                 try:
-                    delete_pk = int(context['DELETE'])
+                    delete_pk = int(context.get('DELETE',-1))
                     junk = Friend.objects.get(pk=delete_pk)
                     logger.info(f'Deleting friend: {junk}')
                     junk.delete()
@@ -344,7 +344,7 @@ class FriendView(FriendsView):
                 rival, created = Player.objects.get_or_create(email_hash = email_hash)
                 friend = Friend.objects.create(
                     email = email,
-                    name = context['name'],
+                    name = context.get('name',email.split('@')[0]),
                     player = player,
                     rival = rival,
                 )
@@ -353,14 +353,14 @@ class FriendView(FriendsView):
                 logger.exception(f'failed add friend: {context}')
         try:    # 
             friend = Friend.objects.get(pk=friend_pk)
-            game = Game.objects.get(pk=context['game'])
+            game = Game.objects.get(pk=context.get('game','squ'))
             strength, created = Strength.objects.update_or_create(
                 game = game,
                 player = player,
                 rival = friend.rival,
                 defaults = {
                     'date': datetime.now(timezone.utc),
-                    'relative': context['strength'],
+                    'relative': context.get('strength','m'),
                     'weight': 3
                 }
             )
@@ -379,7 +379,9 @@ class FriendStrengthView(FriendsView):
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
-        context['strengths'] = context['friend'].strengths.all()
+        friend = context.get('friend')
+        if friend:
+            context['strengths'] = friend.strengths.all()
         self._context = context
         return self._context
 
@@ -400,14 +402,14 @@ class FriendStrengthView(FriendsView):
         try:
             player = self.user.player
             friend = Friend.objects.get(pk=friend_pk)
-            game = Game.objects.get(pk=context['game'])
+            game = Game.objects.get(pk=context.get('game', 'squ'))
             strength, created = Strength.objects.update_or_create(
                 game = game,
                 player = player,
                 rival = friend.rival,
                 defaults = {
                     'date': datetime.now(timezone.utc),
-                    'relative': context['strength'],
+                    'relative': context.get('strength','m'),
                     'weight': 3
                 }
             )

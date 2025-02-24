@@ -23,7 +23,7 @@ class MatchesView(QwikView):
     def context(self, request, *args, **kwargs):
         kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player]).order_by('date').reverse()
         if kwargs['items'].first():
-            kwargs['pk'] = kwargs.get('match', kwargs['items'].first().pk)
+            kwargs['pk'] = kwargs.get('match')
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='match')
@@ -170,7 +170,7 @@ class ReviewsView(QwikView):
     def context(self, request, *args, **kwargs):
         kwargs['items'] = Review.objects.filter(player=self.user.player)
         if kwargs['items'].first():
-            kwargs['pk'] = kwargs.get('review', kwargs['items'].first().pk)
+            kwargs['pk'] = kwargs.get('review')
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='review')

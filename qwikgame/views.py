@@ -27,7 +27,9 @@ class BaseView(View):
         return None
 
     def request_init(self, request):
-        pass
+        if User.objects.filter(pk=request.user.id).exists():
+            self.user = User.objects.get(pk=request.user.id)
+        return None
 
     def context(self, request, *args, **kwargs):
         small = self.small_screen(request.device)
@@ -64,12 +66,15 @@ class QwikView(BaseView):
 
     def request_init(self, request):
         super().request_init(request)
-        self.user = User.objects.get(pk=request.user.id)
-        self.is_player = hasattr(self.user, "player")
-        self.is_manager = hasattr(self.user, "manager")
+        if hasattr(self, 'user'):   
+            self.is_player = hasattr(self.user, "player")
+            self.is_manager = hasattr(self.user, "manager")
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
+        if not hasattr(self, 'user'):
+            return {}
+        person = self.user.person
         items = kwargs.get('items')
         context['item'] = None
         if items and items.first():
@@ -93,12 +98,10 @@ class QwikView(BaseView):
                 'next': next_pk,
                 'prev': prev_pk,
             }
-        person = self.user.person
-        player = self.user.player
         context |= {
             'items': items,
-            'person_icon': self.user.person.icon,
-            'qwikname': self.user.person.qwikname,
+            'person_icon': person.icon,
+            'qwikname': person.qwikname,
             'appeal_alert': person.alert_show('appeal'),
             'match_alert': person.alert_show('match'),
             'review_alert': person.alert_show('review'),
@@ -139,6 +142,9 @@ class WelcomeView(BaseView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         context['games']: list(Game.objects.all())
+        if hasattr(self, 'user'):   
+            context['person_icon'] = self.user.person.icon
+            context['qwikname'] = self.user.person.qwikname
         return context
 
     def get(self, request, *args, **kwargs):

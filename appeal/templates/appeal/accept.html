@@ -40,25 +40,27 @@
                     {{ appeal.venue.place_str }}
                 </p>
             </div>
-            <div class="drop_down head_more">
-                <div class="btn special2 drop" data-down="false">
-                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+            <div class="context_menu">
+                <div class="drop_down head_more">
+                    <div class="btn special2 drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+    {% if player == appeal.player %}
+                        <label class="btn tertiary">
+                            <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
+                            cancel
+                        </label>
+    {% endif %}
+                    </div>
                 </div>
-                <div class="down hidden">
-{% if player == appeal.player %}
-                    <label class="btn tertiary">
-                        <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
-                        cancel
-                    </label>
-{% endif %}
-                </div>
+                <a class="btn special2 head_back" href="{% url 'bid' appeal=prev %}">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </a>
+                <a class="btn special2 head_fwd" href="{% url 'bid' appeal=next %}">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </a>
             </div>
-            <a class="btn special2 head_back" href="{% url 'bid' appeal=prev %}">
-                <i class="fa-solid fa-chevron-left fa-2x"></i>
-            </a>
-            <a class="btn special2 head_fwd" href="{% url 'bid' appeal=next %}">
-                <i class="fa-solid fa-chevron-right fa-2x"></i>
-            </a>
         </div>
         <div class="post">
             <div id="alert_banner_start" class="alert"></div>

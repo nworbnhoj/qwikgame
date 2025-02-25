@@ -21,43 +21,45 @@
                 <i class="fa-solid fa-user-group fa-2x"></i>
             </div>
 {% if friend %}
-                <div class='head'>
-                    <p class="line">
-                        <span class="icon">
-                            <i class="fa-solid {{ friend.icon }} fa-1x"></i>
-                        </span>
-                        {{ friend.name }}
-                    </p>
-                    <p class="line">
-                        <span class="icon">
-                            <i class="fa-regular fa-envelope"></i>
-                        </span>
-                        {{ friend.email }}
-                    </p>
-                </div>
-            <div class="drop_down head_more">
-                <div class="btn special2 drop" data-down="false">
-                    <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
-                </div>
-                <div class="down hidden">
-                    <form id="menu_form " action="{% url 'friend_add' %}" method="post">
-{% csrf_token %}
-                        <label class="btn tertiary">
-                            <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
-                            delete
-                        </label>
-                    </form>
-                </div>
+            <div class='head'>
+                <p class="line">
+                    <span class="icon">
+                        <i class="fa-solid {{ friend.icon }} fa-1x"></i>
+                    </span>
+                    {{ friend.name }}
+                </p>
+                <p class="line">
+                    <span class="icon">
+                        <i class="fa-regular fa-envelope"></i>
+                    </span>
+                    {{ friend.email }}
+                </p>
             </div>
-            <a class="btn special2 head_back" href="{% url target friend=prev %}">
-                <i class="fa-solid fa-chevron-left fa-2x"></i>
-            </a>
-            <a class="btn special2 head_fwd" href="{% url target friend=next %}">
-                <i class="fa-solid fa-chevron-right fa-2x"></i>
-            </a>
-{% else %}
-            <h1>Add Friend</h1>
-{% endif %}
+            <div class="context_menu">
+                <div class="drop_down head_more">
+                    <div class="btn special2 drop" data-down="false">
+                        <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
+                    </div>
+                    <div class="down hidden">
+                        <form id="menu_form " action="{% url 'friend_add' %}" method="post">
+    {% csrf_token %}
+                            <label class="btn tertiary">
+                                <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
+                                delete
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <a class="btn special2 head_back" href="{% url target friend=prev %}">
+                    <i class="fa-solid fa-chevron-left fa-2x"></i>
+                </a>
+                <a class="btn special2 head_fwd" href="{% url target friend=next %}">
+                    <i class="fa-solid fa-chevron-right fa-2x"></i>
+                </a>
+    {% else %}
+                <h1>Add Friend</h1>
+    {% endif %}
+            </div>
         </div>
         <div class="post form">
             <div id="alert_form_start" class="alert"></div>

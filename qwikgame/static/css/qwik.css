@@ -142,6 +142,7 @@ div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0
 div.chat_input div:not([class]) { flex-grow: 1; }
 div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
 div.chat_item .name { font-weight: bold; }
+div.context_menu { align-items: center ; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10em}
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
 div.day.mon { grid-column: 1 / 1; grid-row: 1 / 1 }
@@ -153,7 +154,7 @@ div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
 div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1em; padding: 0 1em 10em 1em; width: 68.75% }
 div.detail_body { }
 div.detail_form { }
-div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; gap: 1em; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
 div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
@@ -177,7 +178,7 @@ div.form { gap: 1em }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; padding: 1em 0 0 0; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
-div.head {  display: flex; flex: auto; flex-direction: column; width: 50%  }
+div.head {  display: flex; flex: auto; flex-direction: column; padding: 0 1em 0 1em; width: 50%  }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 100% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }

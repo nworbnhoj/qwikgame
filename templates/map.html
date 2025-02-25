@@ -6,21 +6,21 @@
   <template id="infowindow_mark_region">
     <div>
       <div class="map_mark_info_head">
-        <p id="map_mark_info_name"></p>
+        <p class="line" id="map_mark_info_name"></p>
       </div>
       <div class="map_mark_info_body">
-        <p><span id='map_mark_info_size'></span> Venues</p>
+        <p class="line"><span id='map_mark_info_size'></span> Venues</p>
       </div>
     </div>
   </template>
   <template id="infowindow_mark_place">
     <div>
       <div class="map_mark_info_head">
-        <p id="map_mark_info_name"></p>
+        <p class="line" id="map_mark_info_name"></p>
       </div>
       <div class="map_mark_info_body">
-        <p id="map_mark_info_status"></p>
-        <p><a id='map_mark_info_search' href='' target='_blank'>search</a></p>
+        <p class="line" id="map_mark_info_status"></p>
+        <p class="line"><a id='map_mark_info_search' href='' target='_blank'>search</a></p>
         <!-- <p><a id='map_mark_info_website' href='' target='_blank'>website</a></p> -->
         <!-- <p><a id='map_mark_info_create' onclick=''>create new venue</a></p> -->
       </div>
@@ -29,15 +29,15 @@
   <template id="infowindow_mark_venue">
     <div>
       <div class="map_mark_info_head">
-        <p id="map_mark_info_name"></p>
+        <p class="line" id="map_mark_info_name"></p>
       </div>
       <div class="map_mark_info_body">
-        <p id="map_mark_info_address"></p>
+        <p class="line" id="map_mark_info_address"></p>
         <!-- <button onclick=" navigator.clipboard.writeText('{{ venue.address }}');">
           <i class="fa-regular fa-copy fa-lg"></i>
         </button> -->
-        <p><span id='map_mark_info_size'></span> Players</p>
-        <p id="map_mark_info_open"></p>
+        <p class="line"><span id='map_mark_info_size'></span> Players</p>
+        <p class="line" id="map_mark_info_open"></p>
       </div>
     </div>
   </template>

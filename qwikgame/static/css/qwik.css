@@ -157,18 +157,18 @@ div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; width: 100%; z-index: 10 }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; z-index: 10 }
 div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
 div.down label:has(input:checked) { color: #dfa622 }
 div.down label:has( input[type=checkbox])::before { content: none; }
 div.down label:has( input[type=radio])::before { content: none; }
-div.drop_down { display: flex; flex-direction: column; position: relative; right:0.3em;}
+div.drop_down { display: flex; flex: 1 1 auto; flex-direction: column; position: relative; right:0.3em;}
 div.drop_down:has(div.down:empty) { display: none; }
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
-div.drop { justify-content: space-between; width: 100% }
+div.drop { width: 100% }
 div.drop_up {}
 div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }

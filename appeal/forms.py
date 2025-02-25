@@ -7,7 +7,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -227,15 +227,14 @@ class KeenForm(QwikForm):
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(12).order_by('name').all()[:12]
-        choices = [('show-map', 'Select from map'), ('placeid', '')]
+        choices = [(None, ''), ('show-map', 'Select from map'), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,
             label='VENUE',
             required = True,
-            template_name='dropdown.html', 
-            widget=RadioDataSelect(
-                attrs={"class": "down hidden"},
+            template_name='field.html', 
+            widget=DataSelect(
                 data_attr={
                     'hours': ['',''] + [v.open_7int_str() for v in venues],
                     'now_weekday': ['',''] + [v.now().isoweekday() % 7 for v in venues],

@@ -92,33 +92,6 @@ function venuesMap() {
 }
 
 
-
-/******************************************************************************
- * Relocates the Map Element (contains global qwikMap) as the last element in
- * the Form Field containing the supplied element.
- *
- * element DOM Element indicating the field to locate the Map within
- * @global qwikMap google.maps.Map
- * @return null
- *
- * https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
- *****************************************************************************/
-function positionMapBelowField(element){
-  if(element){
-    try {
-      const MAP_ELEMENT = document.getElementById("map");
-      const ID = element.id
-      const FIELD_ID = ID.slice(0,ID.lastIndexOf('_'))
-      const FIELD = document.getElementById(FIELD_ID)
-      FIELD.parentElement.appendChild(MAP_ELEMENT);
-    } catch (error) {
-      console.log("Warning: failed to relocate map - missing map|form|game");
-      return null;
-    }
-  }
-}
-
-
 /******************************************************************************
  * Make the Map Element (containing global qwikMap) visible/invisible
  *
@@ -168,7 +141,7 @@ function game(){
   try {
     const MAP_ELEMENT = document.getElementById("map");
     const FORM = MAP_ELEMENT.closest("form");
-    const GAME = FORM.querySelector("[name=game]:checked").value;
+    const GAME = FORM.querySelector("[name=game]").value;
     return GAME;
   }
   catch (error) {
@@ -383,14 +356,12 @@ function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
     setPlaceOption(placeid)
   } else {
     // rename the temporary placeid option in the place drop-down field
-    let input = PLACE_SELECT.querySelector("[value='placeid']");
-    let label =  input.parentElement;
-    label.textContent = name; // removes inner <input>
-    label.appendChild(input) // re-add inner <input>
-    input.setAttribute('data-placeid', placeid);
-    input.setAttribute('data-hours', hours);
-    input.setAttribute('data-now_weekday', weekday);
-    input.setAttribute('data-now_hour', hour);
+    let option = PLACE_SELECT.querySelector("[value='placeid']");
+    option.textContent = name;
+    option.setAttribute('data-placeid', placeid);
+    option.setAttribute('data-hours', hours);
+    option.setAttribute('data-now_weekday', weekday);
+    option.setAttribute('data-now_hour', hour);
     setPlaceOption('placeid')
     // populate the placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');
@@ -401,16 +372,7 @@ function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
 
 function setPlaceOption(placeid='placeid'){
   const PLACE_SELECT = document.getElementById('id_place');
-  INPUT = PLACE_SELECT.querySelector("[value='"+placeid+"']");
-  if (INPUT){
-    INPUT.dispatchEvent(new MouseEvent("click", {
-      "view": window,
-      "bubbles": true,
-      "cancelable": false
-    }));
-  } else {
-    console.log("failed to find input[value='placeid']")
-  }
+  PLACE_SELECT.value = placeid
   showMap(false);
 }
 

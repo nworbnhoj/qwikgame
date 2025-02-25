@@ -58,8 +58,8 @@ div#map {
 	align-items: center;
 	display: none;
 	height: 30em;
-	position:absolute;
-/*	top:1.8em;*/
+	position:relative;
+	top:-3.5em;
     width: 100%;
 	z-index: 4
 }

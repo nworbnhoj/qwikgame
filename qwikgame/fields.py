@@ -1,11 +1,30 @@
 import logging
-from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, TypedChoiceField, TypedMultipleChoiceField
+from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, Select, TypedChoiceField, TypedMultipleChoiceField
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.widgets import ActionMultiple, MultiWidget
 from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput
 
 logger = logging.getLogger(__file__)
+
+
+class DataSelect(Select):
+    data_attr = {}
+
+    def __init__(self, *args, **kwargs):
+        self.data_attr = kwargs.pop("data_attr", {})
+        super().__init__(*args, **kwargs)
+
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(
+            name, value, label, selected, index, subindex=subindex, attrs=attrs
+        )
+        for key, data in self.data_attr.items():
+            if index < len(data):
+                option["attrs"]['data-'+key] = data[index]
+        return option
 
 
 class DayMultiField(TypedMultipleChoiceField):
@@ -65,25 +84,6 @@ class MultiTabField(MultiValueField):
         for i in range(len(self.field_keys)):
             result[self.field_keys[i]] = data_list[i]
         return result
-
-
-class RadioDataSelect(RadioSelect):
-    data_attr = {}
-
-    def __init__(self, *args, **kwargs):
-        self.data_attr = kwargs.pop("data_attr", {})
-        super().__init__(*args, **kwargs)
-
-    def create_option(
-        self, name, value, label, selected, index, subindex=None, attrs=None
-    ):
-        option = super().create_option(
-            name, value, label, selected, index, subindex=subindex, attrs=attrs
-        )
-        for key, data in self.data_attr.items():
-            if index < len(data):
-                option["attrs"]['data-'+key] = data[index]
-        return option
 
 
 class RangeField(ChoiceField):

@@ -5,7 +5,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, RadioDataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -26,10 +26,8 @@ class FilterForm(QwikForm):
     place = ChoiceField(
         help_text='Only see invitations for a particular Venue.',
         label='PLACE',
-        template_name='dropdown.html',
-        widget=RadioDataSelect(
-            attrs={"class": "down hidden"},
-        )
+        template_name='field.html',
+        widget=DataSelect,
     )
     hours = WeekField(
         help_text='Only see invitations at specific times in your week.',

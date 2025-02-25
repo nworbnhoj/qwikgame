@@ -1,9 +1,15 @@
 docReady(event => {
     initPage();
-    const MAP_OPTION = document.querySelector("[name='place'][value='show-map']");
-    MAP_OPTION.addEventListener('input', changeMapRadio);
-    MAP_OPTION.addEventListener('deselect', changeMapRadio);
-    positionMapBelowField(MAP_OPTION);
+    try {
+      const PLACE_SELECT = document.getElementById('id_place');
+      PLACE_SELECT.addEventListener('change', changePlace);
+      const PLACE_FIELD = PLACE_SELECT.parentElement
+      const MAP_ELEMENT = document.getElementById("map");
+      PLACE_FIELD.appendChild(MAP_ELEMENT);
+    } catch (error) {
+      console.log("Warning: failed to relocate map - missing map|form|game");
+      return null;
+    }
 });
 
 
@@ -14,13 +20,8 @@ function initPage(){
     // document.getElementById('name').focus();
 }
 
-
-function changeMapRadio(event){
-  if(event.target.checked){
-    showMap(this.value === 'show-map');
-  } else {
-    showMap(false)
-  }
+function changePlace(event){
+  showMap(event.target.value === 'show-map');
 }
 
 

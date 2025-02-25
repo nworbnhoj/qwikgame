@@ -127,11 +127,10 @@ class InviteForm(RegisterForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        choices = Game.choices(),
+        choices = {None: ''} | Game.choices(),
         label = 'GAME',
         required = True,
-        template_name='dropdown.html', 
-        widget=RadioSelect(attrs={"class": "down hidden"})
+        template_name='field.html',
     )
     place = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(

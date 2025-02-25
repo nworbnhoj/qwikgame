@@ -21,8 +21,7 @@ class FilterForm(QwikForm):
         help_text='Only see invitations for a particular Game.',
         label = 'GAME',
         required=True,
-        template_name='dropdown.html',
-        widget=RadioSelect(attrs={"class": "down hidden"}),
+        template_name='field.html',
     )
     place = ChoiceField(
         help_text='Only see invitations for a particular Venue.',
@@ -206,8 +205,7 @@ class StrengthForm(QwikForm):
         choices = Game.choices(),
         label = 'GAME',
         required = True,
-        template_name='dropdown.html', 
-        widget=RadioSelect(attrs={"class": "down hidden"})
+        template_name='field.html',
     )
     strength = SelectRangeField(
         choices = Strength.SCALE,

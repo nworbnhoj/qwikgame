@@ -29,8 +29,7 @@ class GoogleSearchForm(QwikForm):
         help_text = 'Specify the Game for these Qwikgame Venues',
         label = 'GAME',
         required = True,
-        template_name='dropdown.html', 
-        widget=RadioSelect(attrs={"class": "down hidden"})
+        template_name='field.html',
     )
 
     @classmethod

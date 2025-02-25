@@ -237,15 +237,15 @@ div.hidden { display: none }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 3em 0; padding: 2em; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 fieldset div { display:block; }
-h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; width: 100% }
-h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: left; }
+h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
+h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; overflow: hidden;  text-align: left; }
 h2.show_group { padding: 0 0.3em 0 0.3em; }
 h2.show_group a { color: blue; justify-content: space-between; text-decoration: underline; }
-h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; text-align: left; margin: 1.5em 0 0.8em 0; }
+h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; overflow: hidden; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
-h4 { font-size: x-large; text-align: center; }
-h5 { color: black; text-align: left }
-h6 { color: black; text-align: center; font-size: 1.3em; margin: 0.3em }
+h4 { font-size: x-large; overflow: hidden; text-align: center; }
+h5 { color: black; overflow: hidden; text-align: left }
+h6 { color: black; overflow: hidden; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: block; height: 3em; padding: 0.1em }

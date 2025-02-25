@@ -43,12 +43,9 @@ const appShell = [
 // Precache the shell.
 workbox.precaching.precacheAndRoute(appShell.map(url => ({
     url,
-    revision: null,
+    revision: VERSION,
 })));
 
 // Serve the app shell from the cache.
 workbox.routing.registerRoute(({url}) => appShell.includes(url), new workbox.strategies.CacheOnly());
 console.log("serviceWorker loaded.");
-
-
-

@@ -1,0 +1,31 @@
+<!-- templates/game/cancelled_match_alert_email_html.html -->
+{% extends "email_html.html" %}
+{% load static %}{% load i18n %}
+
+{% block title %}Qwik Alert{% endblock title %}
+
+{% block detail %}
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {% blocktranslate %}
+            You're receiving this email because your {{ site_name }} of <b>{{ game }}</b> at <b>{{venue }}</b> has been CANCELLED.
+        {% endblocktranslate %}
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {{ game }}<br>
+        {{ date }}<br>
+        {{ time }}<br>
+        {{ venue }}
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        <a style="align-items: center; background-color: #f5a600; border: 1px solid; border-color: #f5a600; border-radius: 0.3em; color: #333333; cursor: pointer; display: inline-block; font-weight: 550;  gap: 0.3em;  margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; width: 6e;" href="{{ protocol }}://{{ domain }}{% url 'match' match=match.pk %} %}">
+        	{% blocktranslate %}
+                Visit {{ site_name }} to chat
+            {% endblocktranslate %}
+        </a>
+    </p>
+
+{% endblock detail %}
+

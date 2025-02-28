@@ -71,7 +71,7 @@
                 <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.datetime_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center">
-% for rival in rivals %}
+{% for rival in rivals %}
                 <div class="btn special2">
                     <a href="{{ request.path }}{{ rival.pk }}/">
                         <i class="fa-solid {{ rival.icon }} fa-3x"></i>

@@ -253,7 +253,7 @@ class ReviewView(ReviewsView):
 
 class RivalView(MatchesView):
     menu_form_class = MenuForm
-    stats_template = 'player/stats.html'
+    stats_template = 'match/rival.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)

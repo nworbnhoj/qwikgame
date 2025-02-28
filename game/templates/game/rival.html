@@ -1,0 +1,17 @@
+<!-- qwikgame/game/templates/game/rival.html -->
+{% extends "game/matches.html" %}
+
+
+{% block title %}Rival{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    {% include 'player/profile_snippet.html' %}
+{% endblock %}

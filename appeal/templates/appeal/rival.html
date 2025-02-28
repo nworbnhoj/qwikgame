@@ -1,0 +1,17 @@
+<!-- qwikgame/appeal/templates/appeal/rival.html -->
+{% extends "appeal/appeals.html" %}
+
+
+{% block title %}Rival{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    {% include 'player/profile_snippet.html' %}
+{% endblock %}

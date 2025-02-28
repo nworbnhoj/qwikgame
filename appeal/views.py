@@ -422,7 +422,7 @@ class KeenView(AppealsView):
 
 class RivalView(AppealsView):
     menu_form_class = MenuForm
-    stats_template = 'player/stats.html'
+    stats_template = 'appeal/rival.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)

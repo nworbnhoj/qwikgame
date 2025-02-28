@@ -15,7 +15,7 @@
     <style>
         #content { align-items: stretch; display:flex; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
 
-        #feedback { border: 1px dashed #f5a600; margin: 0.3em; max-width: 600px; padding: 1em;}
+        #feedback { align-items: center; border: 1px dashed #f5a600; margin: 0.3em 0.3em 4em 0.3em; max-width: 1200px; padding: 0em 3em; }
         #filler { display: flex; flex-direction: column; flex-grow: 1; }
         #footer { display: flex; flex-direction: column; font-size: small; justify-content: end; }
         #tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
@@ -79,24 +79,26 @@
     </div>
 {% endblock content %}
     <div id="filler"></div>
-    <label class="btn tertiary reveal">
-        <input name="reveal_feedback" type="checkbox">
-        Feedback
-    </label>
     <div id='feedback' class='post field'>
-        <div id="feedback_form_start" class="alert"></div>
-        <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
-{% csrf_token %}
-{{ feedback_form }}
-            <div class="pillar">
-                <div id="fedback_form_submit" class="alert"></div>
-                <label id="feedback_submit" class="btn primary push_down">
-                    <input hidden type="submit">
-                    Submit
-                </label>
-            </div>
-        </form>
-        <div id="alert_form_end" class="alert"></div>
+        <label class="btn tertiary reveal">
+            <input name="reveal_feedback" type="checkbox">
+            Feedback
+        </label>
+        <div class='post field'>
+            <div id="feedback_form_start" class="alert"></div>
+            <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
+    {% csrf_token %}
+    {{ feedback_form }}
+                <div class="pillar">
+                    <div id="fedback_form_submit" class="alert"></div>
+                    <label id="feedback_submit" class="btn primary push_down">
+                        <input hidden type="submit">
+                        Submit
+                    </label>
+                </div>
+            </form>
+            <div id="feedback_form_end" class="alert"></div>
+        </div>
     </div>
     <div id="footer"><p style="text-align: center;">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.

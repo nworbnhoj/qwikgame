@@ -275,8 +275,6 @@ class FriendView(FriendsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         friend = context.get('friend')
-        if not friend:
-            return HttpResponseRedirect(f'/player/friend/')
         strength = friend.strengths.first() if friend else None
         context |= self.friend_form_class.get(friend)
         context |= self.strength_form_class.get(strength)

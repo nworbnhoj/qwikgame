@@ -47,8 +47,7 @@ class PrivateForm(QwikForm):
     language = ChoiceField(
         choices = dict(LANGUAGE), 
         label='LANGUAGE', 
-        template_name='dropdown.html', 
-        widget=forms.RadioSelect(attrs={"class": "down hidden"})
+        template_name='field.html', 
     )
 
     def __init__(self, *args, **kwargs):

@@ -88,13 +88,13 @@ class MatchView(MatchesView):
                     banner_txt = 'unknown status'
                     banner_class = ''
             review = Review.objects.filter(match=match, player=player).first()
-            icons = match.icons()
-            icons.pop(player.pk, None)
+            rivals = list(match.competitors.all())
+            rivals.remove(player)
             context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
                 'enable_chat': now < match.date + DELAY_MATCH_CHAT,
-                'rival_icons': icons.values(),
+                'rivals': rivals,
                 'match_log_start': match_log_start,
                 'review': review,
             }

@@ -351,22 +351,24 @@ function markerFromPlaceId(placeId){
 
 function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
   const PLACE_SELECT = document.getElementById('id_place');
-  const EXISTS = PLACE_SELECT.querySelector("[value='"+placeid+"']")
-  if (EXISTS){
-    setPlaceOption(placeid)
+  let option = PLACE_SELECT.querySelector("[value='"+placeid+"']")
+  if (option){
+    PLACE_SELECT.value = placeid
   } else {
-    // rename the temporary placeid option in the place drop-down field
-    let option = PLACE_SELECT.querySelector("[value='placeid']");
+    PLACE_SELECT.value = "placeid"
+    // populate the (hidden) placeid input with the new placeid
+    const PLACEID_INPUT = document.getElementById('id_placeid');
+    PLACEID_INPUT.value = placeid;
+    // configure the temporary placeid option in the place drop-down field
+    option = PLACE_SELECT.querySelector("[value='placeid']");
     option.textContent = name;
     option.setAttribute('data-placeid', placeid);
     option.setAttribute('data-hours', hours);
     option.setAttribute('data-now_weekday', weekday);
     option.setAttribute('data-now_hour', hour);
-    setPlaceOption('placeid')
-    // populate the placeid input with the new placeid
-    const PLACEID_INPUT = document.getElementById('id_placeid');
-    PLACEID_INPUT.value = placeid;
   }
+  handlePlaceChange(option)
+  showMap(false);
 }
 
 

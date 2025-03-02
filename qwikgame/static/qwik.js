@@ -967,11 +967,10 @@ window.onload = function() {
   document.querySelectorAll("form:has( .by_day)").forEach(function(form){
     const PLACE_SELECT = document.getElementById('id_place');
     if (PLACE_SELECT){
-      PLACE_SELECT.querySelectorAll("input[type='radio']").forEach(function(radio) {
-        radio.addEventListener("change", () => {
-          handlePlaceChange(radio);
+        PLACE_SELECT.addEventListener("change", function(e) {
+          place = this.options[this.selectedIndex]
+          handlePlaceChange(place);
         });
-      });
     }
   });
 }

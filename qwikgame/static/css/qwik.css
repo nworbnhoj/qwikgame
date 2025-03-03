@@ -158,7 +158,7 @@ div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; z-index: 10 }
+div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; left: 0; margin: 0.3em; min-width: 100%; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; z-index: 10 }
 div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }

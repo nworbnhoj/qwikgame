@@ -2,6 +2,13 @@
 {% extends "person/account.html" %}
 {% load static %}
 
+{% block css %}
+    {% block super %}
+    <style type="text/css">
+            div.drop { justify-content: space-between; }
+    </style>
+{% endblock css %}
+
 
 {% block script %}
     {{ block.super }}

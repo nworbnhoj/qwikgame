@@ -268,7 +268,7 @@ class Venue(Place):
             NAME: self.name,
             OPEN: self.open_week.as_str(),
             PLACEID: self.placeid,
-            WEEKDAY: self.now().weekday(),
+            WEEKDAY: self.now().isoweekday() %7,
         }
 
     def now(self):

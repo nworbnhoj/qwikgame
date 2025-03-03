@@ -171,11 +171,11 @@ STATICFILES_DIRS = [
 ]
 
 CRONJOBS = [
-    ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron.log'),
-    ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron.log'),
-    ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron.log'),
-    ('50 * * * *', 'game.cron.match_perish', '>> /var/log/django_cron.log'),
-    ('51 * * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron.log'),
+    ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron_alpha.log'),
+    ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron_alpha.log'),
+    ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron_alpha.log'),
+    ('50 * * * *', 'game.cron.match_perish', '>> /var/log/django_cron_alpha.log'),
+    ('51 * * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron_alpha.log'),
 ]
 
 
@@ -192,7 +192,7 @@ LOGGING = {
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
-            "filename": "/var/log/django.log",
+            "filename": "/var/log/django_alpha.log",
             "formatter": "app",
         },
     },

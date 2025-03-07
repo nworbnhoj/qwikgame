@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block css %}
-    {% block super %}
+    {{ block.super }}
     <style type="text/css">
             div.drop { justify-content: space-between; }
     </style>
-{% endblock %}
+{% endblock css %}
 
 
 {% block script %}

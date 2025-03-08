@@ -122,7 +122,8 @@ class Player(models.Model):
         return self.email_hash[:3].upper()
 
     def friend_choices(self):
-        return { f.rival.email_hash: f.name for f in Friend.objects.filter(player=self)}
+        friends = Friend.objects.filter(player=self).order_by('name')
+        return { f.rival.email_hash: f.name for f in friends }
 
     @property
     def icon(self):

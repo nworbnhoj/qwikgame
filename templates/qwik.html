@@ -14,11 +14,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/qwik.css' %}">
     <style>
         #content { align-items: stretch; display:flex; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
-
-        #feedback { align-items: center; border: 1px dashed #f5a600; margin: 0.3em 0.3em 4em 0.3em; max-width: 1200px; padding: 0em 3em; }
+        #feedback { align-items: center; border: 1px dashed #f5a600; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: 1200px; padding: 0em 3em; }
         #filler { display: flex; flex-direction: column; flex-grow: 1; }
         #footer { display: flex; flex-direction: column; font-size: small; justify-content: end; }
         #tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
+        #feedback:has(input:checked) { max-height: 40em; }
+        label.reveal { margin: 1em 0 0 0; }
         select.feedback { background-color: #ffffff; border: 1px dashed #f5a600; margin: 1em 0em 2em 0em; }
         textarea { border: 1px dashed #f5a600; margin: 1em 0 0 0 ; width: 99%; }
     </style>

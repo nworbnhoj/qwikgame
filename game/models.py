@@ -125,26 +125,23 @@ class Match(models.Model):
         self.log.append(entry)
         self.save()
 
-    def log_event(self, template):
+    def log_event(self, template, instigator=None):
+        user = instigator.user if instigator else None
+        person = user.person if user else None
+        player = user.player if user else None
+        entry = Entry(
+            icon = person.icon if person else 'fa-face-smile',
+            id = player.pk if player else '',
+            klass='system',
+            name = person.qwikname if person else 'system',
+        )
         match template:
             case 'scheduled':
-                player = self.competitors.first()
-                person = player.user.person
-                entry = Entry(
-                    icon = person.icon,
-                    id = player.pk,
-                    klass= 'scheduled',
-                    name = person.qwikname,
-                    text = f'scheduled'
-                )
+                entry['klass'] = 'scheduled'
+                entry['text'] = 'match scheduled'
             case 'match_perished':
-                entry = Entry(
-                    icon = 'fa-face-smile',
-                    id = '',
-                    klass='system',
-                    name = 'system',
-                    text=f'match chat perished'
-                )
+                entry['klass'] = 'system'
+                entry['text'] = 'match chat perished'
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)

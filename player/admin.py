@@ -22,7 +22,7 @@ class PlayerAdmin(admin.ModelAdmin):
     ordering = ['user']
 
 class StrengthAdmin(admin.ModelAdmin):
-    fields = ['game', 'player', 'rival', 'relative', 'date', 'weight']
+    fields = ['game', 'rival', 'relative', 'player', 'date', 'weight']
     fieldsets = []
     filter_horizontal = []
     list_display = ['game', 'player', 'rival', 'relative']

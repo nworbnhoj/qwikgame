@@ -5,7 +5,7 @@ from api.models import Mark
 from game.models import Game
 from player.models import Filter
 from venue.models import Region, Venue
-from qwikgame.constants import ADMIN1, AVOIDABLE, COUNTRY, ERRORS, GAME, LAT, LNG, LOCALITY, MARKS, POS, REGION, STATUS
+from qwikgame.constants import ADMIN1, AVOIDABLE, COUNTRY, ERRORS, GAME, LAT, LNG, LOCALITY, MARKS, MSG, POS, REGION, STATUS
 from qwikgame.views import QwikView
 
 logger = logging.getLogger(__file__)

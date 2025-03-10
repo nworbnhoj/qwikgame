@@ -58,17 +58,17 @@ class VenueMarksJson(QwikView):
                 regions = region_objects.all()
             else:
                 logger.warn('region missing country')
-            logger.info(f'API venue_marks request: {region}')
+            logger.debug(f'API venue_marks request: {region}')
         elif pos:
             lat, lng = pos[LAT], pos[LNG]
-            logger.info(f'API venue_marks request: ({lat} {lng})')
+            logger.debug(f'API venue_marks request: ({lat} {lng})')
             regions = Region.objects.filter(
                 east__gte=lng,
                 north__gte=lat,
                 south__lte=lat,
                 west__lte=lng,
                 )
-            logger.info(f'Regions for ({lat} {lng}): {[ r.name for r in regions]}')
+            logger.debug(f'Regions for ({lat} {lng}): {[ r.name for r in regions]}')
         else:
             msg = 'failed to obtain marks (missing both region and lat-lng)'
             logger.warn(msg)

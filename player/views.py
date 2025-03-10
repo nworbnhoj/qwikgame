@@ -290,7 +290,7 @@ class FriendView(FriendsView):
                 try:
                     delete_pk = int(context.get('DELETE',-1))
                     junk = Friend.objects.get(pk=delete_pk)
-                    logger.info(f'Deleting friend: {junk}')
+                    logger.debug(f'Deleting friend: {junk}')
                     junk.delete()
                 except:
                     logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))

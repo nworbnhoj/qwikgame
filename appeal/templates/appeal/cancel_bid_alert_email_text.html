@@ -1,0 +1,15 @@
+{% load i18n %}{% autoescape off %}
+
+{% translate "Qwik Alert" %}
+
+{% blocktranslate %}
+	You're receiving this email because {{ name }} has withdrawn their Bid on your Qwikgame of {{ game }} at {{venue }}.
+{% endblocktranslate %}
+
+{% translate "To review please go to:" %}
+http://{{ domain }}{% url 'accept' appeal=appeal.pk %}
+
+{% translate "To change email notification settings, please go to:" %}
+http://{{ domain }}{% url 'private' %}
+
+{% endautoescape %}

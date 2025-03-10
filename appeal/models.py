@@ -255,6 +255,12 @@ class Bid(models.Model):
         self.alert('bid_new', instigator, self.appeal.player)
         self.appeal.meta['seen'] = [instigator.pk]
         self.log_event('bid')
+
+    def cancel(self, instigator):
+        logger.info(f'Cancelling Bid: {self}')
+        self.alert('bid_cancel', instigator, self.appeal.player)
+        self.appeal.meta['seen'] = [instigator.pk]
+        self.log_event('withdraw')
     # returns the accepted datetime in venue timezone - or None otherwise
     @property
     def datetime(self):

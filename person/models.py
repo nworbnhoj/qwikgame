@@ -1,5 +1,7 @@
 import logging, hashlib, random
 from datetime import datetime, timedelta
+from django.core.mail import EmailMultiAlternatives
+from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 
@@ -157,6 +159,30 @@ class Person(models.Model):
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
+
+    def send_mail(
+        self,
+        subject_template_name,
+        email_template_name,
+        context,
+        html_email_template_name=None,
+    ):
+        logger.info('Person.send_mail()')
+        if self.notify_email:
+            try:
+                subject = loader.render_to_string(subject_template_name, context)
+                # Email subject *must not* contain newlines
+                subject = "".join(subject.splitlines())
+                email_message = EmailMultiAlternatives(
+                    subject,
+                    loader.render_to_string(email_template_name, context),
+                    'accounts@qwikgame.org',
+                    [self.user.email]
+                )
+                return email_message.send()
+            except Exception:
+                logger.exception( "Failed to send email to %s", self )
+        return None
 
     @property
     def qwikname(self):

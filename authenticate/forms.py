@@ -3,6 +3,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.core.validators import ValidationError
 from django.forms import CharField, HiddenInput
 from django.utils.crypto import get_random_string
+from django.utils.safestring import mark_safe
 from authenticate.models import User
 
 
@@ -41,7 +42,7 @@ class LoginForm(EmailValidateForm):
             else:
                 raise ValidationError(f'The account is disabled for {email}')
         except User.DoesNotExist:
-            raise ValidationError(f'There is no account for {email}')
+            raise ValidationError((mark_safe(f"There is no account for this email.<br>Would you like to <a href='/authenticate/register/'>register</a>?")))
 
 
 class RegisterForm(EmailValidateForm):

@@ -103,6 +103,7 @@ class Person(models.Model):
         if self.notify_email:
             match type:
                 case 'bid_cancel':
+                    pass
                     # self.send_mail(
                     #     'appeal/cancel_bid_alert_email_subject.txt',
                     #     'appeal/cancel_bid_alert_email_text.html',

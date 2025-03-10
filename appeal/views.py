@@ -152,8 +152,7 @@ class AcceptView(AppealsView):
             decline_pk = context.get('decline')
             if decline_pk:
                 bid = Bid.objects.get(pk=decline_pk)
-                bid.rival.alert('appeal')
-                bid.log_event('decline')
+                bid.decline(player)
                 bid.delete()
             if appeal:
                 # mark this Appeal seen by this Player only

@@ -1,0 +1,3 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Bid declined on {{ game }} at {{ venue }}{% endblocktranslate %}
+{% endautoescape %}

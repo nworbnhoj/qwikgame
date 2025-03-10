@@ -1,0 +1,15 @@
+{% load i18n %}{% autoescape off %}
+
+{% translate "Qwik Alert" %}
+
+{% blocktranslate %}
+	You're receiving this email because {{ name }} has declined your Bid on {{ game }} at {{venue }}.
+{% endblocktranslate %}
+
+{% translate "To review please go to:" %}
+http://{{ domain }}{% url 'bid' appeal=appeal.pk %}
+
+{% translate "To change email notification settings, please go to:" %}
+http://{{ domain }}{% url 'private' %}
+
+{% endautoescape %}

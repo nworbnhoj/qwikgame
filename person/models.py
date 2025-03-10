@@ -109,6 +109,13 @@ class Person(models.Model):
                     #     context,
                     #     'appeal/cancel_bid_alert_email_html.html',
                     # )
+                case 'bid_decline':
+                    self.send_mail(
+                        'appeal/decline_bid_alert_email_subject.txt',
+                        'appeal/decline_bid_alert_email_text.html',
+                        context,
+                        'appeal/decline_bid_alert_email_html.html',
+                    )
                 case 'bid_new':
                     self.send_mail(
                         'appeal/new_bid_alert_email_subject.txt',

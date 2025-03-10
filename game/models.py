@@ -89,6 +89,12 @@ class Match(models.Model):
                     context=context,
                 )
 
+    def announce(self, instigator):
+        logger.info(f'Announcing Match: {self}')
+        self.alert('match_new', instigator)
+        self.status = 'A'
+        self.meta['seen'] = [instigator.pk]
+        self.log_event('scheduled', instigator)
     def clear_conflicts(self, scheduled_appeal):
         from appeal.models import Bid, Appeal
         for bid in Bid.objects.filter(

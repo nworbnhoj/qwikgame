@@ -60,8 +60,7 @@ class Appeal(models.Model):
             bid.log_event('accept')
             match = Match.from_bid(bid)
             bid.delete()
-            match.alert(self.player)
-            match.log_event('scheduled', self.player)
+            match.announce(self.player)
             match.clear_conflicts(self)
             return match
         except:

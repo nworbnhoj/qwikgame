@@ -163,22 +163,18 @@ class Match(models.Model):
         entry = Entry(
             icon = person.icon if person else 'fa-face-smile',
             id = player.pk if player else '',
-            klass='system',
+            klass = template,
             name = person.qwikname if person else 'system',
             text = text,
         )
         match template:
             case 'cancelled':
-                entry['klass'] = 'cancelled'
                 entry['text'] = 'match cancelled'
             case 'chat':
-                entry['klass'] = 'chat'
                 entry['text'] = text
             case 'scheduled':
-                entry['klass'] = 'scheduled'
                 entry['text'] = 'match scheduled'
-            case 'match_perished':
-                entry['klass'] = 'system'
+            case 'perished':
                 entry['text'] = 'match chat perished'
             case _:
                 logger.warn(f'unknown template: {template}')
@@ -190,7 +186,7 @@ class Match(models.Model):
             dry = 'dry_run' if dry_run else ''
             if not dry_run:
                 self.log_clear()
-                self.log_event('match_perished')
+                self.log_event('perished')
                 self.save()
             logger.debug(f'match perished {dry}: {self}')
             return 'chat'

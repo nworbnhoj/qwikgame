@@ -3,13 +3,13 @@
 {% translate "Qwik Alert" %}
 
 {% blocktranslate %}
-	You're receiving this email because your Qwikgame of <b>{{ game }}</b> at <b>{{venue }}</b> has been Confirmed.
+	You're receiving this email because your Qwikgame of {{ game }} at {{venue }} has been Confirmed.
 {% endblocktranslate %}
 
 {% translate "To chat please go to:" %}
-{{ protocol }}://{{ domain }}{% url 'match' match=match.pk %}
+http://{{ domain }}{% url 'match' match=match.pk %}
 
 {% translate "To change email notification settings, please go to:" %}
-{{ protocol }}://{{ domain }}{% url 'private' %}
+http://{{ domain }}{% url 'private' %}
 
 {% endautoescape %}

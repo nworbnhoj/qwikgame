@@ -126,12 +126,7 @@ class MatchView(MatchesView):
             try:
                 cancel_pk = context.get('CANCEL')
                 match = Match.objects.get(pk=cancel_pk)
-                match.alert(player)
-                logger.info(f'Cancelling Match: {match}')
-                match.status = 'X'
-                # mark this Match seen by this Player only
-                match.meta['seen'] = [player.pk]
-                match.save()
+                match.cancel(player)
             except:
                 logger.exception('failed to cancel match: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/game/match/{cancel_pk}/')

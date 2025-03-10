@@ -95,6 +95,14 @@ class Match(models.Model):
         self.status = 'A'
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
+
+    def cancel(self, instigator):
+        logger.info(f'Cancelling Match: {self}')
+        self.alert('match_cancel', instigator)
+        self.status = 'X'
+        self.meta['seen'] = [instigator.pk]
+        self.log_event('cancelled', instigator)
+
     def clear_conflicts(self, scheduled_appeal):
         from appeal.models import Bid, Appeal
         for bid in Bid.objects.filter(
@@ -153,6 +161,9 @@ class Match(models.Model):
             name = person.qwikname if person else 'system',
         )
         match template:
+            case 'cancelled':
+                entry['klass'] = 'cancelled'
+                entry['text'] = 'match cancelled'
             case 'scheduled':
                 entry['klass'] = 'scheduled'
                 entry['text'] = 'match scheduled'

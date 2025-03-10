@@ -100,6 +100,24 @@ class Person(models.Model):
             expires=datetime.now() + timedelta(days=1),
             context={},
         ):
+        if self.notify_email:
+            match type:
+                case 'match_new':
+                    self.send_mail(
+                        'game/new_match_alert_email_subject.txt',
+                        'game/new_match_alert_email_text.html',
+                        context,
+                        'game/new_match_alert_email_html.html',
+                    )
+                case 'match_cancel':
+                    self.send_mail(
+                        'game/cancel_match_alert_email_subject.txt',
+                        'game/cancel_match_alert_email_text.html',
+                        context,
+                        'game/cancel_match_alert_email_html.html',
+                    )
+                case _:
+                    logger.warn(f'unknown alert: {type}')
         alert = Alert(
             expires=expires,
             type=type,
@@ -179,6 +197,10 @@ class Person(models.Model):
                     'accounts@qwikgame.org',
                     [self.user.email]
                 )
+                # if html_email_template_name is not None:
+                #     logger.info(html_email_template_name)
+                #     html_email = loader.render_to_string(html_email_template_name, context)
+                #     email_message.attach_alternative(html_email, "text/html")
                 return email_message.send()
             except Exception:
                 logger.exception( "Failed to send email to %s", self )

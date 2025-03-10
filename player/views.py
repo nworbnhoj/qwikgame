@@ -9,7 +9,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
-from qwikgame.hourbits import Hours24
+from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.forms import MenuForm
 from api.models import Mark
 from service.locate import Locate

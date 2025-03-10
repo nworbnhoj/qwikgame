@@ -67,12 +67,13 @@ class Match(models.Model):
         match.save()
         return match
 
-    def alert(self, type, instigator):
+    def alert(self, type, instigator, text=''):
         context = {
             'date': self.date.strftime("%Y-%m-%d %A"),
             'game': self.game,
             'domain': FQDN,
             'match': self,
+            'text': text,
             'time': self.date.strftime("%Hh"),
             'venue': self.venue,
         }
@@ -102,6 +103,11 @@ class Match(models.Model):
         self.status = 'X'
         self.meta['seen'] = [instigator.pk]
         self.log_event('cancelled', instigator)
+
+    def chat(self, instigator, text):
+        self.alert('match_chat', instigator, text)
+        self.meta['seen'] = [instigator.pk]
+        self.log_event('chat', instigator, text)
 
     def clear_conflicts(self, scheduled_appeal):
         from appeal.models import Bid, Appeal
@@ -150,7 +156,7 @@ class Match(models.Model):
         self.log.append(entry)
         self.save()
 
-    def log_event(self, template, instigator=None):
+    def log_event(self, template, instigator=None, text=''):
         user = instigator.user if instigator else None
         person = user.person if user else None
         player = user.player if user else None
@@ -159,11 +165,15 @@ class Match(models.Model):
             id = player.pk if player else '',
             klass='system',
             name = person.qwikname if person else 'system',
+            text = text,
         )
         match template:
             case 'cancelled':
                 entry['klass'] = 'cancelled'
                 entry['text'] = 'match cancelled'
+            case 'chat':
+                entry['klass'] = 'chat'
+                entry['text'] = text
             case 'scheduled':
                 entry['klass'] = 'scheduled'
                 entry['text'] = 'match scheduled'

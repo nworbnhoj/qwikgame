@@ -1,0 +1,19 @@
+{% load i18n %}{% autoescape off %}
+
+{% translate "Qwik Alert" %}
+
+{% blocktranslate %}
+	You're receiving this email because your Qwikgame of {{ game }} at {{venue }} received a chat message.
+{% endblocktranslate %}
+
+{% blocktranslate %}
+	{{ name }} said: {{ text }}
+{% endblocktranslate %}
+
+{% translate "To chat please go to:" %}
+http://{{ domain }}{% url 'match' match=match.pk %}
+
+{% translate "To change email notification settings, please go to:" %}
+http://{{ domain }}{% url 'private' %}
+
+{% endautoescape %}

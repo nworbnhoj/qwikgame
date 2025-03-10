@@ -102,6 +102,14 @@ class Person(models.Model):
         ):
         if self.notify_email:
             match type:
+                case 'match_chat':
+                    pass
+                    # self.send_mail(
+                    #     'game/chat_match_alert_email_subject.txt',
+                    #     'game/chat_match_alert_email_text.html',
+                    #     context,
+                    #     'game/chat_match_alert_email_html.html',
+                    # )
                 case 'match_new':
                     self.send_mail(
                         'game/new_match_alert_email_subject.txt',

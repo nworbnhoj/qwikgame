@@ -135,16 +135,7 @@ class MatchView(MatchesView):
             try:
                 person = player.user.person
                 match = Match.objects.get(pk=match_pk)
-                match.alert(player)
-                entry = Entry(
-                    icon = person.icon,
-                    id = player.pk,
-                    klass = 'chat',
-                    name = person.qwikname,
-                    text = txt,
-                )
-                match.meta['seen'] = [player.pk]
-                match.log_entry(entry)
+                match.chat(player, txt)
             except:
                 logger.exception(f'failed chat entry: {match_pk} {context}')
         return HttpResponseRedirect(f'/game/match/{match_pk}/')

@@ -5,6 +5,7 @@ from game.models import Match
 from player.models import Friend, Player, Strength
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
+from qwikgame.settings import FQDN
 
 
 logger = logging.getLogger(__file__)
@@ -231,6 +232,23 @@ class Bid(models.Model):
     def accepted(self):
         return self.hours is not None
 
+    def alert(self, type, instigator, recipient):
+        datetime = self.datetime
+        context = {
+            'appeal': self.appeal,
+            'date': datetime.strftime("%Y-%m-%d %A"),
+            'game': self.game(),
+            'domain': FQDN,
+            'name': instigator.qwikname,
+            'recipient': recipient,
+            'time': datetime.strftime("%Hh"),
+            'venue': self.venue(),
+        }
+        recipient.alert(
+            type,
+            expires = self.appeal.last_hour,
+            context = context,            
+        )
     # returns the accepted datetime in venue timezone - or None otherwise
     @property
     def datetime(self):

@@ -102,6 +102,13 @@ class Person(models.Model):
         ):
         if self.notify_email:
             match type:
+                case 'bid_new':
+                    self.send_mail(
+                        'appeal/new_bid_alert_email_subject.txt',
+                        'appeal/new_bid_alert_email_text.html',
+                        context,
+                        'appeal/new_bid_alert_email_html.html',
+                    )
                 case 'match_chat':
                     pass
                     # self.send_mail(

@@ -243,11 +243,8 @@ class BidView(AppealsView):
                 strength=strength,
                 str_conf=confidence,
             )
-            bid.log_event('bid')
-            appeal.player.alert('appeal')
-            # mark this Appeal seen by this Player only
-            appeal.meta['seen'] = [player.pk]
-            appeal.save()
+            appeal.bid(player, bid)
+            bid.announce(player)
             # update the Mark size
             mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
             if mark:

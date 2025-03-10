@@ -249,6 +249,12 @@ class Bid(models.Model):
             expires = self.appeal.last_hour,
             context = context,            
         )
+
+    def announce(self, instigator):
+        logger.info(f'Announcing Bid: {self}')
+        self.alert('bid_new', instigator, self.appeal.player)
+        self.appeal.meta['seen'] = [instigator.pk]
+        self.log_event('bid')
     # returns the accepted datetime in venue timezone - or None otherwise
     @property
     def datetime(self):

@@ -1,4 +1,4 @@
-import django, logging, os
+import django, logging, os, socket
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -18,6 +18,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','error: set environ variable DJANGO_S
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+FQDN = socket.getfqdn()
 
 ALLOWED_HOSTS = [
     'localhost',

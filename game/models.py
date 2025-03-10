@@ -2,6 +2,7 @@ import datetime, logging
 from django.db import models
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH
 from qwikgame.log import Entry
+from qwikgame.settings import FQDN
 
 logger = logging.getLogger(__file__)
 
@@ -66,16 +67,26 @@ class Match(models.Model):
         match.save()
         return match
 
-    def alert(self, player):
+    def alert(self, type, instigator):
+        context = {
+            'date': self.date.strftime("%Y-%m-%d %A"),
+            'game': self.game,
+            'domain': FQDN,
+            'match': self,
+            'time': self.date.strftime("%Hh"),
+            'venue': self.venue,
+        }
         from player.models import Player
         recipients = list(self.competitors.all())
-        recipients.remove(player)
+        recipients.remove(instigator)
         for recipient in recipients:
-            player = Player.objects.filter(pk=recipient.pk).first()
-            if player:
-                player.alert(
-                    type='match',
-                    expires=self.date + datetime.timedelta(days=1) 
+            rival = Player.objects.filter(pk=recipient.pk).first()
+            if rival:
+                context['name'] = rival.name_rival(instigator)
+                rival.alert(
+                    type=type,
+                    expires=self.date + datetime.timedelta(days=1),
+                    context=context,
                 )
 
     def clear_conflicts(self, scheduled_appeal):

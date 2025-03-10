@@ -27,8 +27,8 @@ class Player(models.Model):
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE, blank=True, null=True)
 
-    def alert(self, type, expires=None):
-        return self.user.person.alert(type=type, expires=expires)
+    def alert(self, type, expires=None, context={}):
+        return self.user.person.alert(type=type, expires=expires, context=context)
 
     def alert_del(self, type):
         return self.user.person.alert_del(type=type)

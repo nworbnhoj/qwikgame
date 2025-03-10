@@ -96,6 +96,7 @@ class Person(models.Model):
     def alert(self,
             type,
             expires=datetime.now() + timedelta(days=1),
+            context={},
         ):
         alert = Alert(
             expires=expires,

@@ -283,7 +283,7 @@ p.bold { font-weight: bold }
 p.large { color: #666666; font-size: large }
 p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
-select { display: block; font-size: 1.13em; height: 3em; width: 100% }
+select { background-color: #ffffff; display: block; font-size: 1.13em; height: 3em; width: 100% }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from django.contrib.auth.views import LogoutView
-from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView
+from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView, TokenInvalidView,
 
 urlpatterns = [
     # ex: /authenticate/
@@ -12,4 +12,5 @@ urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("register/sent/", RegisterSentView.as_view(), name="register_sent"),
     path("register/<uidb64>/<token>/", RegisterHandleView.as_view(), name="register_handle"),
+    path("void/", TokenInvalidView.as_view(), name="token_invalid"),
 ]

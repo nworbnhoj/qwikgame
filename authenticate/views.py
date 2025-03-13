@@ -72,6 +72,7 @@ class EmailValidateHandleView(PasswordResetConfirmView):
     session_time = 7 * DAY_SECONDS
     success_url = reverse_lazy("appeal")
     token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
+    token_invalid_url = reverse_lazy('token_invalid')
 
     def prep_user(self):
         self.request.session.set_expiry(self.session_time)
@@ -94,6 +95,9 @@ class EmailValidateHandleView(PasswordResetConfirmView):
                     login(self.request, self.user)
                     url = request.GET.get('next', self.get_success_url())
                     return HttpResponseRedirect(url)
+            else:
+                logout(self.request)
+                return HttpResponseRedirect(self.token_invalid_url)
         logout(self.request)
         return HttpResponseRedirect(self.fail_url)
 
@@ -159,3 +163,8 @@ class RegisterHandleView(EmailValidateHandleView):
         player.user = self.user
         player.save()
         return super().prep_user()
+
+
+class TokenInvalidView(TemplateView):
+    template_name = "authenticate/token_invalid.html"
+    title = "Invalid token"

@@ -1,0 +1,18 @@
+<!-- templates/authenticate/token_invalid.html -->
+{% extends "authenticate/auth.html" %}
+{% load static %}
+
+
+{% block detail %}
+    <div class="pillar">
+        <p class="push_down">
+            Sorry that didn't work.
+        </p>
+        <p class="push_down">
+            The security token in that link has expired, or is invalid for some reason.
+        </p>
+        <p class="push_down">
+            Please generate a fresh token by returning to the <a href="{% url 'welcome' %}">Login / Registration</a> page.
+        </p>
+    </div>
+{% endblock detail %}

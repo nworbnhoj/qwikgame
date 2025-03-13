@@ -1,7 +1,7 @@
 from django.urls import path
 
 from django.contrib.auth.views import LogoutView
-from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView, TokenInvalidView,
+from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView, TokenInvalidView
 
 urlpatterns = [
     # ex: /authenticate/

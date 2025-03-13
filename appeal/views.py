@@ -238,7 +238,6 @@ class BidView(AppealsView):
                 strength=strength,
                 str_conf=confidence,
             )
-            appeal.bid(player, bid)
             bid.announce(player)
             # update the Mark size
             mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()

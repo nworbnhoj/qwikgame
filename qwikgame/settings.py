@@ -71,7 +71,8 @@ AUTH_USER_MODEL = "authenticate.User"
 LOGIN_URL = "/authenticate/login"
 LOGIN_REDIRECT_URL = "/appeal"
 LOGOUT_REDIRECT_URL = "/"
-PASSWORD_RESET_TIMEOUT = 60 * 60 # registration/login link validity seconds
+# timeout seconds for login / registration / invitation links
+PASSWORD_RESET_TIMEOUT = 60 * 60 * 24 * 2
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

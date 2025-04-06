@@ -27,6 +27,12 @@
         </p>
         <h2>What is your favourite game?</h2>
     {% if user.is_authenticated %}
+        <div class="pillar push_down">
+            <label  id="install_app" class="btn secondary">
+                <input name="install_app" type="checkbox">
+                Get the App
+            </label>
+        </div>
         <div class="paver push_down">
             <form action="{% url 'logout' %}" method="post">
         {% csrf_token %}

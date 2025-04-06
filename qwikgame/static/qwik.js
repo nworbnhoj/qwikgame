@@ -15,6 +15,35 @@ if('serviceWorker' in navigator) {
 };
 
 
+///////////////// App Install functions ///////////////////
+
+let installPrompt = null;
+const INSTALL_BUTTON = document.getElementById("install_app");
+if (INSTALL_BUTTON){
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+  });
+
+  INSTALL_BUTTON.addEventListener("click", async () => {
+    if (installPrompt) {
+      const RESULT = await installPrompt.prompt();
+      console.log(`Install prompt was: ${RESULT.outcome}`);
+      disableInAppInstallPrompt();
+    }
+  });
+
+  window.addEventListener("appinstalled", () => {
+    disableInAppInstallPrompt();
+  });
+
+  function disableInAppInstallPrompt() {
+    installPrompt = null;
+    INSTALL_BUTTON.classList.add("hidden");
+  }
+}
+
+
 ///////////////// DOM Ready functions ///////////////////
 
 // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick

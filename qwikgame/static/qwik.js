@@ -42,6 +42,12 @@ if (INSTALL_BUTTON){
           INSTALL_BUTTON.classList.add('hidden')
           FIREFOX.classList.remove('hidden')
         }
+    } else {
+        const UNSUPPORTED = document.getElementById("unsupported_install_app");
+        if (UNSUPPORTED){
+          INSTALL_BUTTON.classList.add('hidden')
+          UNSUPPORTED.classList.remove('hidden')
+        }      
     }
   });
 

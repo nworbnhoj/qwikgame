@@ -30,6 +30,12 @@ if (INSTALL_BUTTON){
       const RESULT = await installPrompt.prompt();
       console.log(`Install prompt was: ${RESULT.outcome}`);
       disableInAppInstallPrompt();
+    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        const IOS = document.getElementById("ios_install_app");
+        if (IOS){
+          INSTALL_BUTTON.classList.add('hidden')
+          IOS.classList.remove('hidden')
+        }
     }
   });
 

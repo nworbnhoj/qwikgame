@@ -36,6 +36,12 @@ if (INSTALL_BUTTON){
           INSTALL_BUTTON.classList.add('hidden')
           IOS.classList.remove('hidden')
         }
+    } else if (/Firefox/i.test(navigator.userAgent)) {
+        const FIREFOX = document.getElementById("firefox_install_app");
+        if (FIREFOX){
+          INSTALL_BUTTON.classList.add('hidden')
+          FIREFOX.classList.remove('hidden')
+        }
     }
   });
 

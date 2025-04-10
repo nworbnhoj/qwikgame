@@ -138,12 +138,12 @@ class Alert(models.Model):
         'W':'web',
     }
     TYPE = {
-        0x20: 'new_bid',
-        0x21: 'cancel_bid',
-        0x22: 'decline_bid',
-        0x30: 'new_match',
-        0x31: 'cancel_match',
-        0x32: 'chat_match',
+        'a': 'new_bid',
+        'b': 'cancel_bid',
+        'c': 'decline_bid',
+        'f': 'new_match',
+        'g': 'cancel_match',
+        'h': 'chat_match',
     }
     context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
     expires = models.DateField()

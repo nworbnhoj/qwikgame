@@ -169,6 +169,7 @@ class Alert(models.Model):
         0x31: 'cancel_match',
         0x32: 'chat_match',
     }
+    context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
     expires = models.DateField()
     mode = models.CharField(max_length=1, choices=MODE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)

@@ -81,53 +81,16 @@ class Person(models.Model):
             context={},
         ):
         if self.notify_email:
-            match type:
-                case 'bid_cancel':
-                    pass
-                    # self.send_mail(
-                    #     'appeal/cancel_bid_alert_email_subject.txt',
-                    #     'appeal/cancel_bid_alert_email_text.html',
-                    #     context,
-                    #     'appeal/cancel_bid_alert_email_html.html',
-                    # )
-                case 'bid_decline':
-                    self.send_mail(
-                        'appeal/decline_bid_alert_email_subject.txt',
-                        'appeal/decline_bid_alert_email_text.html',
-                        context,
-                        'appeal/decline_bid_alert_email_html.html',
-                    )
-                case 'bid_new':
-                    self.send_mail(
-                        'appeal/new_bid_alert_email_subject.txt',
-                        'appeal/new_bid_alert_email_text.html',
-                        context,
-                        'appeal/new_bid_alert_email_html.html',
-                    )
-                case 'match_chat':
-                    pass
-                    # self.send_mail(
-                    #     'game/chat_match_alert_email_subject.txt',
-                    #     'game/chat_match_alert_email_text.html',
-                    #     context,
-                    #     'game/chat_match_alert_email_html.html',
-                    # )
-                case 'match_new':
-                    self.send_mail(
-                        'game/new_match_alert_email_subject.txt',
-                        'game/new_match_alert_email_text.html',
-                        context,
-                        'game/new_match_alert_email_html.html',
-                    )
-                case 'match_cancel':
-                    self.send_mail(
-                        'game/cancel_match_alert_email_subject.txt',
-                        'game/cancel_match_alert_email_text.html',
-                        context,
-                        'game/cancel_match_alert_email_html.html',
-                    )
-                case _:
-                    logger.warn(f'unknown alert: {type}')
+            try:
+                alert_type = Alert.TYPE[type]
+                self.send_mail(
+                    f'person/{alert_type}_alert_email_subject.txt',
+                    f'person/{alert_type}_alert_email_text.html',
+                    context,
+                    f'person/{alert_type}_alert_email_html.html',
+                )
+            except:
+                logger.exception(f'failed to find email template for Alert type: {type}')
 
     def alert_del(self, id=None, type=None):
         Alert.objects.filter(id=id, person=self, type=type).delete()
@@ -192,12 +155,20 @@ class Person(models.Model):
 
 
 class Alert(models.Model):
+    TYPE = {
+        0x20: 'new_bid',
+        0x21: 'cancel_bid',
+        0x22: 'decline_bid',
+        0x30: 'new_match',
+        0x31: 'cancel_match',
+        0x32: 'chat_match',
+    }
     expires = models.DateField()
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     priority = models.CharField(max_length=1)
     repeats = models.PositiveSmallIntegerField(default=0)
     text = models.CharField(max_length=256)
-    type = models.CharField(max_length=1)
+    type = models.CharField(max_length=1, choices=TYPE)
 
 
 class Block(models.Model):

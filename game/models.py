@@ -92,20 +92,20 @@ class Match(models.Model):
 
     def announce(self, instigator):
         logger.info(f'Announcing Match: {self}')
-        self.alert('match_new', instigator)
+        self.alert(0x30, instigator)
         self.status = 'A'
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
 
     def cancel(self, instigator):
         logger.info(f'Cancelling Match: {self}')
-        self.alert('match_cancel', instigator)
+        self.alert(0x31, instigator)
         self.status = 'X'
         self.meta['seen'] = [instigator.pk]
         self.log_event('cancelled', instigator)
 
     def chat(self, instigator, text):
-        self.alert('match_chat', instigator, text)
+        self.alert(0x32, instigator, text)
         self.meta['seen'] = [instigator.pk]
         self.log_event('chat', instigator, text)
 

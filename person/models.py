@@ -155,6 +155,12 @@ class Person(models.Model):
 
 
 class Alert(models.Model):
+    MODE = {
+        'A':'App',
+        'E':'Email',
+        'S':'SMS',
+        'W':'web',
+    }
     TYPE = {
         0x20: 'new_bid',
         0x21: 'cancel_bid',
@@ -164,6 +170,7 @@ class Alert(models.Model):
         0x32: 'chat_match',
     }
     expires = models.DateField()
+    mode = models.CharField(max_length=1, choices=MODE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     priority = models.CharField(max_length=1)
     repeats = models.PositiveSmallIntegerField(default=0)

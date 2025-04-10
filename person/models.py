@@ -56,29 +56,9 @@ LANGUAGE = [
 ]
 
 
-class Alert(dict):
 
-    def __init__(self,
-        expires=None,
-        pk=None,
-        priority=None,
-        repeats=0,
-        text='',
-        type='',
-    ):
-        dict.__init__(self,
-            id=datetime.now().timestamp(),
-            expires=expires,
-            pk=pk,
-            priority=priority,
-            repeats=repeats,
-            text=text,
-            type=type,
-        )
-  
 
 class Person(models.Model):
-    alerts = models.JSONField(encoder=DjangoJSONEncoder, default=list)
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
     icon = models.CharField(max_length=32, default=rnd_icon)
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
@@ -148,51 +128,19 @@ class Person(models.Model):
                     )
                 case _:
                     logger.warn(f'unknown alert: {type}')
-        alert = Alert(
-            expires=expires,
-            type=type,
-        )
-        self.alerts.append(alert)
-        self.save()
 
     def alert_del(self, id=None, type=None):
-        if id:
-            self.alerts = [a for a in self.alerts if a.get('id') != id]
-        if type:
-            self.alerts = [a for a in self.alerts if a.get('type') != type]
-        self.save()
+        Alert.objects.filter(id=id, person=self, type=type).delete()
         return
 
-
     def alert_get(self, priority=None, repeats=None, type=None):
-        filtered = self.alerts
-        if priority:
-            filtered = [a for a in filtered if a.get('priority') == priority]
-        if repeats:
-            filtered = [a for a in filtered if a.get('repeats') == repeats]
-        if type:
-            filtered = [a for a in filtered if a.get('type') == type]
-        return filtered
+        return Alert.objects.filter(person=self, priority=priority, repeats=repeats, type=type)
 
     def alert_get_ge(self, expires=None, priority=None, repeats=None):
-        filtered = self.alerts
-        if expires:
-            filtered = [a for a in filtered if a.get('expires') >= expires]
-        if priority:
-            filtered = [a for a in filtered if a.get('priority') <= priority]
-        if repeats:
-            filtered = [a for a in filtered if a.get('repeats') >= repeats]
-        return filtered
-
+        return Alert.objects.filter(person=self, expires_ge=expires, priority_le=priority, repeats_ge=repeats)
+    
     def alert_get_le(self, expires=None, priority=None, repeats=None):
-        filtered = self.alerts
-        if expires:
-            filtered = [a for a in filtered if a.get('expires') <= expires]
-        if priority:
-            filtered = [a for a in filtered if a.get('priority') >= priority]
-        if repeats:
-            filtered = [a for a in filtered if a.get('repeats') <= repeats]
-        return filtered
+        return Alert.objects.filter(person=self, expires_le=expires, priority_ge=priority, repeats_le=repeats)
 
     def alert_show(self, type):
         return '' if self.alert_get(type=type) else 'hidden'
@@ -241,6 +189,15 @@ class Person(models.Model):
         if self.name:
             return self.name
         return self.facet()
+
+
+class Alert(models.Model):
+    expires = models.DateField()
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    priority = models.CharField(max_length=1)
+    repeats = models.PositiveSmallIntegerField(default=0)
+    text = models.CharField(max_length=256)
+    type = models.CharField(max_length=1)
 
 
 class Block(models.Model):

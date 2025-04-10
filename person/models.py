@@ -80,17 +80,21 @@ class Person(models.Model):
             expires=datetime.now() + timedelta(days=1),
             context={},
         ):
-        if self.notify_email:
-            try:
-                alert_type = Alert.TYPE[type]
-                self.send_mail(
-                    f'person/{alert_type}_alert_email_subject.txt',
-                    f'person/{alert_type}_alert_email_text.html',
-                    context,
-                    f'person/{alert_type}_alert_email_html.html',
-                )
-            except:
-                logger.exception(f'failed to find email template for Alert type: {type}')
+        alert = Alert (
+            context = context,
+            expires = expires,
+            mode = 'E',
+            person = self,
+            priority = 'A',
+            repeats = 0,
+            text = '',
+            type = type,
+        )
+        if type in  self.notify_email:
+            alert.mode = 'E'
+            alert.context['to_email'] = self.user.email
+            if not alert.dispatch():
+                alert.save()
 
     def alert_del(self, id=None, type=None):
         Alert.objects.filter(id=id, person=self, type=type).delete()
@@ -118,34 +122,6 @@ class Person(models.Model):
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
-
-    def send_mail(
-        self,
-        subject_template_name,
-        email_template_name,
-        context,
-        html_email_template_name=None,
-    ):
-        logger.info('Person.send_mail()')
-        if self.notify_email:
-            try:
-                subject = loader.render_to_string(subject_template_name, context)
-                # Email subject *must not* contain newlines
-                subject = "".join(subject.splitlines())
-                email_message = EmailMultiAlternatives(
-                    subject,
-                    loader.render_to_string(email_template_name, context),
-                    'accounts@qwikgame.org',
-                    [self.user.email]
-                )
-                # if html_email_template_name is not None:
-                #     logger.info(html_email_template_name)
-                #     html_email = loader.render_to_string(html_email_template_name, context)
-                #     email_message.attach_alternative(html_email, "text/html")
-                return email_message.send()
-            except Exception:
-                logger.exception( "Failed to send email to %s", self )
-        return None
 
     @property
     def qwikname(self):
@@ -177,6 +153,39 @@ class Alert(models.Model):
     repeats = models.PositiveSmallIntegerField(default=0)
     text = models.CharField(max_length=256)
     type = models.CharField(max_length=1, choices=TYPE)
+
+    def dispatch(self):
+        match self.mode:
+            case 'E':
+                return self.send_mail()
+            case _:
+                logger.warn(f'unimplemented Alert mode: {self.mode}')
+
+    def send_mail(self):
+        logger.info(f'Alert.send_mail(): {self.pk}')
+        try:
+            alert_type = Alert.TYPE[self.type]
+            subject_template_name = f'person/{alert_type}_alert_email_subject.txt',
+            email_template_name = f'person/{alert_type}_alert_email_text.html',
+            html_email_template_name = f'person/{alert_type}_alert_email_html.html',
+            subject = loader.render_to_string(subject_template_name, context)
+            # Email subject *must not* contain newlines
+            subject = "".join(subject.splitlines())
+            email_message = EmailMultiAlternatives(
+                subject,
+                loader.render_to_string(email_template_name, context),
+                'accounts@qwikgame.org',
+                [self.context.get('to_email')]
+            )
+            # if html_email_template_name is not None:
+            #     logger.info(html_email_template_name)
+            #     html_email = loader.render_to_string(html_email_template_name, context)
+            #     email_message.attach_alternative(html_email, "text/html")
+            return email_message.send()
+        except Exception:
+            logger.exception( f'Failed to send Alert email: {self}' )
+            return False
+        return True
 
 
 class Block(models.Model):

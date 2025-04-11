@@ -56,7 +56,7 @@ LANGUAGE = [
 ]
 
 NOTIFY_EMAIL_DEFAULT = 'acfg'
-NOTIFY_WEB_DEFAULT = ''
+NOTIFY_PUSH_DEFAULT = ''
 
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
@@ -65,7 +65,7 @@ class Person(models.Model):
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")
     notify_email = models.CharField(max_length=64, default='acfg')
-    notify_web = models.CharField(max_length=64, default='')
+    notify_push = models.CharField(max_length=64, default='')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
     
     @classmethod
@@ -132,10 +132,8 @@ class Person(models.Model):
 
 class Alert(models.Model):
     MODE = {
-        'A':'App',
         'E':'Email',
-        'S':'SMS',
-        'W':'web',
+        'P':'Push',
     }
     TYPE = {
         'a': 'new_bid',

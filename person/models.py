@@ -168,18 +168,18 @@ class Alert(models.Model):
             subject_template_name = f'person/{alert_type}_alert_email_subject.txt',
             email_template_name = f'person/{alert_type}_alert_email_text.html',
             html_email_template_name = f'person/{alert_type}_alert_email_html.html',
-            subject = loader.render_to_string(subject_template_name, context)
+            subject = loader.render_to_string(subject_template_name, self.context)
             # Email subject *must not* contain newlines
             subject = "".join(subject.splitlines())
             email_message = EmailMultiAlternatives(
                 subject,
-                loader.render_to_string(email_template_name, context),
+                loader.render_to_string(email_template_name, self.context),
                 'accounts@qwikgame.org',
                 [self.context.get('to_email')]
             )
             # if html_email_template_name is not None:
             #     logger.info(html_email_template_name)
-            #     html_email = loader.render_to_string(html_email_template_name, context)
+            #     html_email = loader.render_to_string(html_email_template_name, self.context)
             #     email_message.attach_alternative(html_email, "text/html")
             return email_message.send()
         except Exception:

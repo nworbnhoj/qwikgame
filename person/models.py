@@ -55,8 +55,8 @@ LANGUAGE = [
     # ('jp', '日本語'),
 ]
 
-
-
+NOTIFY_EMAIL_DEFAULT = 'acfg'
+NOTIFY_WEB_DEFAULT = ''
 
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')

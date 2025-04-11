@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, Select, URLField
-from person.models import LANGUAGE, Person, Social
+from person.models import LANGUAGE, NOTIFY_EMAIL_DEFAULT, NOTIFY_WEB_DEFAULT, Person, Social
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 
@@ -60,8 +60,8 @@ class PrivateForm(QwikForm):
         return {
             'private_form': klass(
                 initial = {
-                    'notify_email': person.notify_email,
-                    'notify_web': person.notify_web,
+                    'notify_email': bool(person.notify_email),
+                    'notify_web': bool(person.notify_web),
                     'location_auto': person.location_auto,
                     'language': person.language,
                 },
@@ -75,8 +75,8 @@ class PrivateForm(QwikForm):
         context = {}
         private_form = klass(data=request_post)
         if private_form.is_valid():
-            person.notify_email = private_form.cleaned_data["notify_email"]
-            person.notify_web = private_form.cleaned_data["notify_web"]
+            person.notify_email = NOTIFY_EMAIL_DEFAULT if private_form.cleaned_data["notify_email"] else ''
+            person.notify_web = NOTIFY_WEB_DEFAULT if private_form.cleaned_data["notify_web"] else ''
             person.location_auto = private_form.cleaned_data["location_auto"]
             person.language = private_form.cleaned_data["language"]
             person.save()

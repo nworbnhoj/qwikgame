@@ -217,9 +217,9 @@ class Player(models.Model):
         venues = self.venue_favorites(count)
         regions = {}
         for venue in venues:
-            locality = Region.objects.get(country=venue.country, admin1=venue.admin1, locality=venue.locality).first()
-            admin1 = Region.objects.get(country=venue.country, admin1=venue.admin1, locality__isnull=True).first()
-            country = Region.objects.get(country=venue.country, admin1__isnull=True, locality__isnull=True).first()
+            locality = Region.objects.filter(country=venue.country, admin1=venue.admin1, locality=venue.locality).first()
+            admin1 = Region.objects.filter(country=venue.country, admin1=venue.admin1, locality__isnull=True).first()
+            country = Region.objects.filter(country=venue.country, admin1__isnull=True, locality__isnull=True).first()
             regions[locality] = regions.get(locality, 0) + 1
             regions[admin1] = regions.get(admin1, 0) + 1
             regions[country] = regions.get(country, 0) + 1

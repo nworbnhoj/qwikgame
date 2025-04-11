@@ -64,8 +64,8 @@ class Person(models.Model):
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")
-    notify_email = models.BooleanField(default=True)
-    notify_web = models.BooleanField(default=False)
+    notify_email = models.CharField(max_length=64, default='acfg')
+    notify_web = models.CharField(max_length=64, default='')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
     
     @classmethod

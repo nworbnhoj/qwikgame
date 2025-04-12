@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_crontab',
+    'webpush',
 ]
 
 # Custom User Model
@@ -148,6 +149,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# https://web-push-codelab.glitch.me/
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY":  os.getenv('VAPID_PUBLIC_KEY','error: set environ variable VAPID_PUBLIC_KEY'),
+   "VAPID_PRIVATE_KEY":  os.getenv('VAPID_PRIVATE_KEY','error: set environ variable VAPID_PRIVATE_KEY'),
+   "VAPID_ADMIN_EMAIL":  os.getenv('VAPID_ADMIN_EMAIL','error: set environ variable VAPID_ADMIN_EMAIL'),
+}
 
 
 # Internationalization

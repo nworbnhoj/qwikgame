@@ -13,7 +13,7 @@ echo " ====== SETUP PYTHON ======"
 python3 -m venv venv
 source venv/bin/activate
 python3 -m pip install --upgrade pip setuptools wheel
-python3 -m pip install django django-crontab dotenv gunicorn pipreqs psycopg2-binary python-dateutil requests
+python3 -m pip install django django-crontab django-webpush dotenv gunicorn pipreqs psycopg2-binary python-dateutil requests
 
 echo " ====== SETUP POSTGRESQL ======"
 systemctl start postgresql

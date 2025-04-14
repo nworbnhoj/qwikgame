@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% blocktranslate %}
+	{{ name }} has cancelled the Qwikgame of {{ game }} at {{venue }}.
+{% endblocktranslate %}

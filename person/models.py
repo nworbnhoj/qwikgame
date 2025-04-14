@@ -4,6 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
+from webpush import send_user_notification
 
 
 logger = logging.getLogger(__file__)
@@ -56,7 +57,7 @@ LANGUAGE = [
 ]
 
 NOTIFY_EMAIL_DEFAULT = 'acfg'
-NOTIFY_PUSH_DEFAULT = ''
+NOTIFY_PUSH_DEFAULT = 'abcfgh'
 
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
@@ -91,8 +92,14 @@ class Person(models.Model):
             type = type,
         )
         if type in  self.notify_email:
+            alert.pk = None
             alert.mode = 'E'
             alert.context['to_email'] = self.user.email
+            if not alert.dispatch():
+                alert.save()
+        if type in  self.notify_push:
+            alert.pk = None
+            alert.mode = 'P'
             if not alert.dispatch():
                 alert.save()
 
@@ -155,11 +162,32 @@ class Alert(models.Model):
     def dispatch(self):
         match self.mode:
             case 'E':
-                return self.send_mail()
+                return self._email()
+            case 'P':
+                return self._push()
             case _:
                 logger.warn(f'unimplemented Alert mode: {self.mode}')
 
-    def send_mail(self):
+    def _push(self):
+        logger.info(f'Alert._push(): {self.pk}')
+        try:
+            alert_type = Alert.TYPE[self.type]
+            head_template_name = f'person/{alert_type}_alert_notify_head.txt',
+            body_template_name = f'person/{alert_type}_alert_notify_body.txt',
+            payload = {
+                'head': loader.render_to_string(head_template_name, self.context),
+                'body': loader.render_to_string(body_template_name, self.context),
+            }
+            send_user_notification(
+                user = self.person.user,
+                payload = payload,
+                ttl = 1000,
+            )
+        except Exception:
+            logger.exception( f'Failed to send Alert Notification: {self}' )
+        return True
+
+    def _email(self):
         logger.info(f'Alert.send_mail(): {self.pk}')
         try:
             alert_type = Alert.TYPE[self.type]

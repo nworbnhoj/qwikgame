@@ -1,0 +1,19 @@
+<!-- qwikgame/templates/input_checkbox.html -->
+<div class="post field">
+    <div class="label">
+        {{ field.label }}
+        <label class="switch push_right" for="webpush-subscribe-button">
+            <!-- The rendered webpush_button is hidden here, and linked by private.js updateNotifyPush() to the visible UI -->
+            <div class="hidden">
+                <button id="webpush-subscribe-button" data-url="/account/webpush/save_information"></button>
+                <div id="webpush-message" hidden=""></div>
+            </div>
+            {{ field }}
+            <div class="slider round"></div>
+        </label>
+        <div class="btn secondary small round info {% if field.help_text|length == 0 %}invisible{% endif %}" data-visible="false">
+            <i class="fa-solid fa-info fa-1x"></i>
+            <div id="id_{{ field.name }}_info" class="info_text hidden">{{ field.help_text}}</div>
+        </div>
+    </div>
+</div>

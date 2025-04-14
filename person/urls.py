@@ -17,4 +17,5 @@ urlpatterns = [
     path("public/", PublicView.as_view(), name='public'),
     path("terms/", TermsView.as_view(), name='terms'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
+    path('webpush/', include('webpush.urls')),
 ]

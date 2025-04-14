@@ -31,12 +31,7 @@ class PrivateForm(QwikForm):
     notify_email = BooleanField(
         label='Email notifications',
         required=False,
-        template_name="input_checkbox.html"
-    )
-    notify_push = BooleanField(
-        label='Web / App notifications',
-        required=False,
-        template_name="input_checkbox.html"
+        template_name='input_checkbox.html'
     )
     location_auto = BooleanField(
         help_text="This will make finding a Venue nearby faster.",
@@ -61,7 +56,6 @@ class PrivateForm(QwikForm):
             'private_form': klass(
                 initial = {
                     'notify_email': bool(person.notify_email),
-                    'notify_push': bool(person.notify_push),
                     'location_auto': person.location_auto,
                     'language': person.language,
                 },

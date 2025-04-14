@@ -1,6 +1,7 @@
 <!-- qwikgame/person/templates/person/private.html -->
 {% extends "person/account.html" %}
 {% load static %}
+{% load webpush_notifications %}
 
 {% block css %}
     {{ block.super }}
@@ -12,6 +13,7 @@
 
 {% block script %}
     {{ block.super }}
+    {% webpush_header %}
     <script defer src="{% static 'private.js' %}"></script>
 {% endblock %}
 
@@ -47,6 +49,19 @@
                                 <div class="btn secondary small round push_right info" data-visible="false">
                                     <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
                                     <div class="info_text hidden">Qwikgame can notify you about Match events</div>
+                                </div>
+                            </div>
+                            <div class="label">
+                                Web / App notifications
+                                <label class="switch push_right" for="webpush-subscribe-button">
+                                    <!-- The webpush_button is hidden here, and linked by private.js updateNotifyPush() to the visible UI -->
+                                    <div class='hidden'>{% webpush_button %}</div>
+                                    <input id="id_notify_push" type="checkbox" name="notify_push" >
+                                    <div class="slider round"></div>
+                                </label>
+                                <div class="btn secondary small round info" data-visible="false">
+                                    <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
+                                    <div id="id_notify_info"  class="info_text hidden"></div>
                                 </div>
                             </div>
 {% csrf_token %}

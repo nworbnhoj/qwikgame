@@ -677,10 +677,14 @@ function showGroup(event) {
   button.lastElementChild.classList.toggle('flip');
 }
 
-function showLoader(input) {
+function showLoader(input, timeout=20000) {
   label = input.closest('label')
   label.classList.add("loader");
-  setTimeout(() => label.classList.remove("loader"), 20000);
+  setTimeout(() => unLoader(label), timeout);
+}
+
+function unLoader(label){
+  label.classList.remove("loader")
 }
 
 function showNextParentSibling(event) {

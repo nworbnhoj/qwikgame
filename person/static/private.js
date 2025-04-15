@@ -5,6 +5,11 @@ docReady(event => {
   // document.getElementById('webpush-subscribe-button').addEventListener('click', autoSubmit, false);
   // document.getElementById('id_location_auto').addEventListener('click', autoSubmit, false);
   // document.getElementById('id_language').addEventListener('change', autoSubmit, false);
+  document.querySelectorAll("#webpush-subscribe-button").forEach(function(input) {
+    input.addEventListener("click", () => {
+      showLoader(input, 4000);
+    });
+  });
 });
 
 
@@ -37,4 +42,5 @@ function updateNotifyPush() {
   const msg_txt = document.getElementById('webpush-message').innerText;
   const push_info = document.getElementById('id_notify_push_info');
   push_info.innerText = msg_txt ? msg_txt : 'click to enable push notifications';
+  unLoader(push_checkbox.closest('label'))
 }

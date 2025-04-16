@@ -247,7 +247,8 @@ class Bid(models.Model):
         recipient.alert(
             type,
             expires = self.appeal.last_hour,
-            context = context,            
+            context = context,
+            url = f'/appeal/{self.appeal.pk}/',
         )
 
     def announce(self, instigator):

@@ -7,6 +7,7 @@ from game.models import Game, Match
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_ALL, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
+from qwikgame.settings import FQDN
 from game.models import Match, Review
 from person.models import Person
 from venue.models import Venue, Region
@@ -27,8 +28,8 @@ class Player(models.Model):
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE, blank=True, null=True)
 
-    def alert(self, type, expires=None, context={}):
-        return self.user.person.alert(type=type, expires=expires, context=context)
+    def alert(self, type, expires=None, context={}, url=FQDN):
+        return self.user.person.alert(type=type, expires=expires, context=context, url=url)
 
     def alert_del(self, type):
         return self.user.person.alert_del(type=type)

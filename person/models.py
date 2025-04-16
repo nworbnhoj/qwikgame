@@ -1,6 +1,7 @@
 import logging, hashlib, random
 from datetime import datetime, timedelta
 from django.core.mail import EmailMultiAlternatives
+from qwikgame.settings import FQDN
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -80,6 +81,7 @@ class Person(models.Model):
             type,
             expires=datetime.now() + timedelta(days=1),
             context={},
+            url=FQDN,
         ):
         alert = Alert (
             context = context,
@@ -88,8 +90,8 @@ class Person(models.Model):
             person = self,
             priority = 'A',
             repeats = 0,
-            text = '',
             type = type,
+            url=url,
         )
         if type in  self.notify_email:
             alert.pk = None
@@ -151,13 +153,13 @@ class Alert(models.Model):
         'h': 'chat_match',
     }
     context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
-    expires = models.DateField()
+    expires = models.DateTimeField()
     mode = models.CharField(max_length=1, choices=MODE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     priority = models.CharField(max_length=1)
     repeats = models.PositiveSmallIntegerField(default=0)
-    text = models.CharField(max_length=256)
     type = models.CharField(max_length=1, choices=TYPE)
+    url = models.CharField(max_length=256)
 
     def dispatch(self):
         match self.mode:
@@ -175,8 +177,10 @@ class Alert(models.Model):
             head_template_name = f'person/{alert_type}_alert_notify_head.txt',
             body_template_name = f'person/{alert_type}_alert_notify_body.txt',
             payload = {
-                'head': loader.render_to_string(head_template_name, self.context),
+
                 'body': loader.render_to_string(body_template_name, self.context),
+                'head': loader.render_to_string(head_template_name, self.context),
+                'url': self.url,
             }
             send_user_notification(
                 user = self.person.user,

@@ -103,6 +103,8 @@ class AcceptView(AppealsView):
         if appeal:
             next_up = appeal.status + 'O'
             context |= {
+                'notify_off': person.alert_str(False, 'bid'),
+                'notify_on': person.alert_str(True, 'bid'),
                 'next_up': NEXT_UP[next_up],
                 'bids': self._bids(appeal, player),
                 'log': appeal.log_filter(person.blocked()),
@@ -186,6 +188,8 @@ class BidView(AppealsView):
                 'appeal': appeal,
                 'log': appeal.log_filter(person.blocked()),
                 'next_up': NEXT_UP[next_up],
+                'notify_off': person.alert_str(False, 'bid'),
+                'notify_on': person.alert_str(True, 'bid'),
                 'rival': appeal.player,
                 'strength': player.strength_str(appeal.game, appeal.player),
                 'bid': bid,

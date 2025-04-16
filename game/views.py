@@ -63,6 +63,7 @@ class MatchView(MatchesView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
+        person = self.user.person
         match = context.get('match')
         if match:
             match_log_start = -1
@@ -94,6 +95,8 @@ class MatchView(MatchesView):
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
                 'enable_chat': now < match.date + DELAY_MATCH_CHAT,
+                'notify_off': person.alert_str(False, 'match'),
+                'notify_on': person.alert_str(True, 'match'),
                 'rivals': rivals,
                 'match_log_start': match_log_start,
                 'review': review,

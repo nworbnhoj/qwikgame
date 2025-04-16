@@ -161,6 +161,13 @@ class Alert(models.Model):
     type = models.CharField(max_length=1, choices=TYPE)
     url = models.CharField(max_length=256)
 
+    @property
+    def ttl(self):
+        tzinfo = self.expires.tzinfo
+        now = datetime.now(tzinfo)
+        remaining =  self.expires - now
+        return max(0, int(remaining.total_seconds()))
+
     def dispatch(self):
         match self.mode:
             case 'E':
@@ -183,9 +190,9 @@ class Alert(models.Model):
                 'url': self.url,
             }
             send_user_notification(
-                user = self.person.user,
                 payload = payload,
-                ttl = 1000,
+                ttl = self.ttl,
+                user = self.person.user,
             )
         except Exception:
             logger.exception( f'Failed to send Alert Notification: {self}' )

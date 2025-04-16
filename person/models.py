@@ -60,6 +60,95 @@ LANGUAGE = [
 NOTIFY_EMAIL_DEFAULT = 'acfg'
 NOTIFY_PUSH_DEFAULT = 'abcfgh'
 
+
+
+class Alert(models.Model):
+    MODE = {
+        'E':'Email',
+        'P':'Push',
+    }
+    TYPE = {
+        'a': 'new_bid',
+        'b': 'cancel_bid',
+        'c': 'decline_bid',
+        'f': 'new_match',
+        'g': 'cancel_match',
+        'h': 'chat_match',
+    }
+    context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
+    expires = models.DateTimeField()
+    mode = models.CharField(max_length=1, choices=MODE)
+    person = models.ForeignKey('Person', on_delete=models.CASCADE)
+    priority = models.CharField(max_length=1)
+    repeats = models.PositiveSmallIntegerField(default=0)
+    type = models.CharField(max_length=1, choices=TYPE)
+    url = models.CharField(max_length=256)
+
+    @property
+    def ttl(self):
+        tzinfo = self.expires.tzinfo
+        now = datetime.now(tzinfo)
+        remaining =  self.expires - now
+        return max(0, int(remaining.total_seconds()))
+
+    def dispatch(self):
+        match self.mode:
+            case 'E':
+                return self._email()
+            case 'P':
+                return self._push()
+            case _:
+                logger.warn(f'unimplemented Alert mode: {self.mode}')
+
+    def _push(self):
+        logger.info(f'Alert._push(): {self.pk}')
+        try:
+            alert_type = Alert.TYPE[self.type]
+            head_template_name = f'person/{alert_type}_alert_notify_head.txt',
+            body_template_name = f'person/{alert_type}_alert_notify_body.txt',
+            payload = {
+
+                'body': loader.render_to_string(body_template_name, self.context),
+                'head': loader.render_to_string(head_template_name, self.context),
+                'icon': 'icon',
+                'url': self.url,
+            }
+            send_user_notification(
+                payload = payload,
+                ttl = self.ttl,
+                user = self.person.user,
+            )
+        except Exception:
+            logger.exception( f'Failed to send Alert Notification: {self}' )
+        return True
+
+    def _email(self):
+        logger.info(f'Alert.send_mail(): {self.pk}')
+        try:
+            alert_type = Alert.TYPE[self.type]
+            subject_template_name = f'person/{alert_type}_alert_email_subject.txt',
+            email_template_name = f'person/{alert_type}_alert_email_text.html',
+            html_email_template_name = f'person/{alert_type}_alert_email_html.html',
+            subject = loader.render_to_string(subject_template_name, self.context)
+            # Email subject *must not* contain newlines
+            subject = "".join(subject.splitlines())
+            email_message = EmailMultiAlternatives(
+                subject,
+                loader.render_to_string(email_template_name, self.context),
+                'accounts@qwikgame.org',
+                [self.context.get('to_email')]
+            )
+            # if html_email_template_name is not None:
+            #     logger.info(html_email_template_name)
+            #     html_email = loader.render_to_string(html_email_template_name, self.context)
+            #     email_message.attach_alternative(html_email, "text/html")
+            return email_message.send()
+        except Exception:
+            logger.exception( f'Failed to send Alert email: {self}' )
+            return False
+        return True
+
+
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
     icon = models.CharField(max_length=32, default=rnd_icon)
@@ -137,93 +226,6 @@ class Person(models.Model):
         if self.name:
             return self.name
         return self.facet()
-
-
-class Alert(models.Model):
-    MODE = {
-        'E':'Email',
-        'P':'Push',
-    }
-    TYPE = {
-        'a': 'new_bid',
-        'b': 'cancel_bid',
-        'c': 'decline_bid',
-        'f': 'new_match',
-        'g': 'cancel_match',
-        'h': 'chat_match',
-    }
-    context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
-    expires = models.DateTimeField()
-    mode = models.CharField(max_length=1, choices=MODE)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    priority = models.CharField(max_length=1)
-    repeats = models.PositiveSmallIntegerField(default=0)
-    type = models.CharField(max_length=1, choices=TYPE)
-    url = models.CharField(max_length=256)
-
-    @property
-    def ttl(self):
-        tzinfo = self.expires.tzinfo
-        now = datetime.now(tzinfo)
-        remaining =  self.expires - now
-        return max(0, int(remaining.total_seconds()))
-
-    def dispatch(self):
-        match self.mode:
-            case 'E':
-                return self._email()
-            case 'P':
-                return self._push()
-            case _:
-                logger.warn(f'unimplemented Alert mode: {self.mode}')
-
-    def _push(self):
-        logger.info(f'Alert._push(): {self.pk}')
-        try:
-            alert_type = Alert.TYPE[self.type]
-            head_template_name = f'person/{alert_type}_alert_notify_head.txt',
-            body_template_name = f'person/{alert_type}_alert_notify_body.txt',
-            payload = {
-
-                'body': loader.render_to_string(body_template_name, self.context),
-                'head': loader.render_to_string(head_template_name, self.context),
-                'icon': 'icon',
-                'url': self.url,
-            }
-            send_user_notification(
-                payload = payload,
-                ttl = self.ttl,
-                user = self.person.user,
-            )
-        except Exception:
-            logger.exception( f'Failed to send Alert Notification: {self}' )
-        return True
-
-    def _email(self):
-        logger.info(f'Alert.send_mail(): {self.pk}')
-        try:
-            alert_type = Alert.TYPE[self.type]
-            subject_template_name = f'person/{alert_type}_alert_email_subject.txt',
-            email_template_name = f'person/{alert_type}_alert_email_text.html',
-            html_email_template_name = f'person/{alert_type}_alert_email_html.html',
-            subject = loader.render_to_string(subject_template_name, self.context)
-            # Email subject *must not* contain newlines
-            subject = "".join(subject.splitlines())
-            email_message = EmailMultiAlternatives(
-                subject,
-                loader.render_to_string(email_template_name, self.context),
-                'accounts@qwikgame.org',
-                [self.context.get('to_email')]
-            )
-            # if html_email_template_name is not None:
-            #     logger.info(html_email_template_name)
-            #     html_email = loader.render_to_string(html_email_template_name, self.context)
-            #     email_message.attach_alternative(html_email, "text/html")
-            return email_message.send()
-        except Exception:
-            logger.exception( f'Failed to send Alert email: {self}' )
-            return False
-        return True
 
 
 class Block(models.Model):

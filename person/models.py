@@ -91,6 +91,14 @@ class Alert(models.Model):
         remaining =  self.expires - now
         return max(0, int(remaining.total_seconds()))
 
+    @classmethod
+    def str(self, on=True, keys='', type='_', route='all'):
+        if on:
+            list = [v.split('_')[0] for k,v in Alert.TYPE.items() if  k in keys and type in v ]
+        else:
+            list = [v.split('_')[0] for k,v in Alert.TYPE.items() if k not in keys and type in v ]
+        return ' '.join(list)
+
     def dispatch(self):
         match self.mode:
             case 'E':
@@ -220,6 +228,17 @@ class Person(models.Model):
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
+
+    def alert_str(self, on=True, type='_', route='all'):
+        keys = ''
+        match route:
+            case 'all':
+                keys = self.notify_email + self.notify_push
+            case 'email':
+                keys = self.notify_email
+            case 'push':
+                keys = self.notify_push
+        return Alert.str(on, keys, type, route)
 
     @property
     def qwikname(self):

@@ -57,8 +57,8 @@ LANGUAGE = [
     # ('jp', '日本語'),
 ]
 
-NOTIFY_EMAIL_DEFAULT = 'acfg'
-NOTIFY_PUSH_DEFAULT = 'abcfgh'
+ALERT_EMAIL_DEFAULT = 'acfg'
+ALERT_PUSH_DEFAULT = 'abcfgh'
 
 
 

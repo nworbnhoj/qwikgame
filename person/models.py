@@ -187,6 +187,7 @@ class Alert(models.Model):
 
                 'body': loader.render_to_string(body_template_name, self.context),
                 'head': loader.render_to_string(head_template_name, self.context),
+                'icon': 'icon',
                 'url': self.url,
             }
             send_user_notification(

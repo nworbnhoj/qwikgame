@@ -1,4 +1,5 @@
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, TermsView, UpgradeView
 
 urlpatterns = [
@@ -17,5 +18,6 @@ urlpatterns = [
     path("public/", PublicView.as_view(), name='public'),
     path("terms/", TermsView.as_view(), name='terms'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
+    path('webpush/icon/', RedirectView.as_view(url='/static/img/qwik-icon.48x48.png')),
     path('webpush/', include('webpush.urls')),
 ]

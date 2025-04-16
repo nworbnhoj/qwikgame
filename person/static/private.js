@@ -39,8 +39,8 @@ function updateNotifyPush() {
   const push_checkbox = document.getElementById('id_notify_push');
   push_checkbox.disabled = !('serviceWorker' in navigator && 'PushManager' in window && "Notification" in window);
   push_checkbox.checked = granted && subscribed;
-  const msg_txt = document.getElementById('webpush-message').innerText;
-  const push_info = document.getElementById('id_notify_push_info');
-  push_info.innerText = msg_txt ? msg_txt : 'click to enable push notifications';
+  // const msg_txt = document.getElementById('webpush-message').innerText;
+  // const push_info = document.getElementById('id_notify_push_info');
+  // push_info.innerText = msg_txt ? msg_txt : 'click to enable push notifications';
   unLoader(push_checkbox.closest('label'))
 }

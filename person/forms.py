@@ -34,7 +34,6 @@ class PrivateForm(QwikForm):
         template_name='input_checkbox.html'
     )
     notify_push = BooleanField(
-        help_text="Click to enable in Push Notifications ",
         label='Web / App notifications',
         required=False,
         template_name='input_webpush.html'
@@ -58,16 +57,17 @@ class PrivateForm(QwikForm):
     # Returns a context dict including 'private_form'
     @classmethod
     def get(klass, person):
-        return {
-            'private_form': klass(
-                initial = {
-                    'notify_email': bool(person.notify_email),
-                    'notify_push': bool(person.notify_push),
-                    'location_auto': person.location_auto,
-                    'language': person.language,
-                },
-            ),
-        }
+        form = klass(
+            initial = {
+                'notify_email': bool(person.notify_email),
+                'notify_push': bool(person.notify_push),
+                'location_auto': person.location_auto,
+                'language': person.language,
+            },
+        )
+        form.fields['notify_email'].help_text = f"Receive Email for Bid ({Alert.str(True, ALERT_EMAIL_DEFAULT, 'bid', 'email')}) and Match ({Alert.str(True, ALERT_EMAIL_DEFAULT, 'match', 'email')})"
+        form.fields['notify_push'].help_text = f"See App Notifications for Bid ({Alert.str(True, ALERT_PUSH_DEFAULT, 'bid', 'push')}) and Match ({Alert.str(True, ALERT_PUSH_DEFAULT, 'match', 'push')})"
+        return {'private_form': form }
 
     # Initializes a PrivateForm with 'request_post' for 'person'.
     # Returns a context dict including 'private_form' if form is not valid

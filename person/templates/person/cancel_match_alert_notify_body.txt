@@ -1,5 +1,5 @@
 {% load i18n %}
 
 {% blocktranslate %}
-	{{ name }} has cancelled the Qwikgame of {{ game }} at {{venue }}.
+	{{ name }} has cancelled the {{ game }} Match at {{venue }}.
 {% endblocktranslate %}

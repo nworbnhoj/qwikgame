@@ -53,11 +53,16 @@
                             </div>
 {% csrf_token %}
 {{ private_form }}
+                        </div>
+                    </form>
+                    <form id="unblock_form" action="{% url 'private' %}" method="post">
+                        <div class="post">
+{% csrf_token %}
 {{ blocked_form }}
                             <div class="pillar">
-                                <label class="btn primary push_down">
-                                    <input hidden type="submit">
-                                    Save
+                                <label class="btn primary">
+                                    <input hidden type="submit" form="unblock_form" name="unblock">
+                                    UnBlock
                                 </label>
                             </div>
                         </div>

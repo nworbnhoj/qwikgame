@@ -167,11 +167,10 @@ class PublicForm(QwikForm):
 
 
 class UnblockForm(QwikForm):
-    blocked = MultipleActionField(
-        action='unblock:',
+    blocked = MultipleChoiceField(
         help_text='When you block a person, neither of you will see the other on qwikgame.',
-        label='LIST OF BLOCKED PEOPLE',
-        required=False,
+        label='PEOPLE YOU HAVE BLOCKED',
+        widget=CheckboxSelectMultiple,
     )
         
     @classmethod

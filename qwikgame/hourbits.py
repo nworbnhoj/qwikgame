@@ -147,8 +147,13 @@ class Hours24():
     def is_hour(self, hour):
         return self & Hours24().set_hour(hour)
 
+    @property
     def is_none(self):
         return self.bits == DAY_NONE
+
+    @property
+    def is_some(self):
+        return self.bits != DAY_NONE
 
     # returns the hour (index) of the least significant bit
     def last_hour(self):

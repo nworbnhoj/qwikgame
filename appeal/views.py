@@ -366,7 +366,7 @@ class KeenView(AppealsView):
         )
         today_hours = context.get('today', DAY_NONE)
         valid_hours = venue.open_date(today) & today_hours
-        if valid_hours.is_none():
+        if valid_hours.is_none:
             appeal.delete()
             logger.info(f"no valid hours for {today_hours} {today} at {venue}")
         else:
@@ -390,7 +390,7 @@ class KeenView(AppealsView):
         )
         tomorrow_hours = context.get('tomorrow', DAY_NONE)
         valid_hours = venue.open_date(tomorrow) & tomorrow_hours
-        if valid_hours.is_none():
+        if valid_hours.is_none:
             appeal.delete()
             logger.info(f"no valid hours for {tomorrow_hours} {tomorrow} at {venue}")
         else:

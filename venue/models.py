@@ -1,7 +1,7 @@
 import datetime, logging, sys
 from dateutil import zoneinfo, tz
 from django.db import models
-from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PLACEID, SOUTH, WEEKDAY, WEST
+from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PHONE, PLACEID, SOUTH, URL, WEEKDAY, WEST
 from qwikgame.hourbits import Hours24x7, WEEK_NONE
 from service.locate import Locate
 # from api.models import Mark
@@ -267,7 +267,9 @@ class Venue(Place):
             LNG: self.lng,
             NAME: self.name,
             OPEN: self.open_week.as_str(),
+            PHONE: self.phone,
             PLACEID: self.placeid,
+            URL: self.url,
             WEEKDAY: self.now().isoweekday() %7,
         }
 

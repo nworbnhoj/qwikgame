@@ -349,7 +349,7 @@ function markerFromPlaceId(placeId){
 }
 
 
-function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
+function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour='', phone='', url=''){
   const PLACE_SELECT = document.getElementById('id_place');
   let option = PLACE_SELECT.querySelector("[value='"+placeid+"']")
   if (option){
@@ -366,8 +366,11 @@ function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour=''){
     option.setAttribute('data-hours', hours);
     option.setAttribute('data-now_weekday', weekday);
     option.setAttribute('data-now_hour', hour);
+    option.setAttribute('data-phone', phone);
+    option.setAttribute('data-url', url);
   }
   handlePlaceChange(option)
+  PLACE_SELECT.dispatchEvent(new Event('change'));
   showMap(false);
 }
 
@@ -825,7 +828,7 @@ function setMarkListeners(mark, template, onclick, onhover, onpress){
         qwikMap.setCenter(mark.center);
         break;
       case 'select':
-         setPlace(mark.placeid, mark.name, mark.hours, mark.weekday, mark.hour);
+         setPlace(mark.placeid, mark.name, mark.hours, mark.weekday, mark.hour, mark.phone, mark.url);
          break;
       case 'info':
           showMarkInfo(mark, template);

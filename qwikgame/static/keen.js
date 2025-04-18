@@ -47,6 +47,21 @@ function initPage(){
 
 function changePlace(event){
   showMap(event.target.value === 'show-map');
+  // insert Venue availability prompt
+  const PLACE_SELECT = document.getElementById('id_place')
+  const SELECTED_OPTION = PLACE_SELECT.querySelector('option:checked')
+  const PHONE = SELECTED_OPTION.dataset.phone;
+  const URL = SELECTED_OPTION.dataset.url
+  const LINK = "<a href='" + URL + "' target='_blank'>" + URL + "</a>";
+  const PROMPT = "Check Venue availability: " + PHONE + " " + LINK;
+  const PROMPT_ELEMENT_ID = "id_availability_prompt"
+  let promptElement = document.getElementById(PROMPT_ELEMENT_ID)
+  if (!promptElement){
+    promptElement = document.createElement("p");
+    promptElement.id = PROMPT_ELEMENT_ID
+    PLACE_SELECT.insertAdjacentElement('afterend', promptElement)
+  }
+  promptElement.innerHTML = PROMPT
 }
 
 

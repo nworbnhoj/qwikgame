@@ -97,6 +97,7 @@ class Match(models.Model):
         self.status = 'A'
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
+        self.log_event('book_prompt', instigator)
 
     def cancel(self, instigator):
         logger.info(f'Cancelling Match: {self}')
@@ -169,6 +170,10 @@ class Match(models.Model):
             text = text,
         )
         match template:
+            case 'book_prompt':
+                entry['name'] = 'system'
+                # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
+                entry['text'] = f'{person.qwikname} please contact venue to ensure availability on {self.datetime_str}:<br> {self.venue.phone} {self.venue.url}'
             case 'cancelled':
                 entry['text'] = 'match cancelled'
             case 'chat':

@@ -31,8 +31,8 @@ def bid_perish():
 # murmur maintains a minimum # Appeals as test/demonstrations
 # Intended to be run hourly as a cron job
 def murmur():
-    MIN_APPEAL = 50
-    MAX_FAIL = 10
+    APPEAL_MIN = 50
+    FAIL_MAX = 10
     CROWD = [
         'demo01@qwikgame.org',
         'demo02@qwikgame.org',
@@ -45,25 +45,22 @@ def murmur():
         'demo09@qwikgame.org',
         'demo10@qwikgame.org',
     ]
-    GAME_PKS = list(Game.objects.values_list('pk', flat=True))
+    CROWD_PKS = list(User.objects.filter(email__in=CROWD).values_list('pk', flat=True))
+    if len(CROWD_PKS) == 0:
+        logger.warn(f'CRON: murmur missing demo users')
+        return;
     VENUE_PKS = list(Venue.objects.values_list('pk', flat=True))
     QWIK_DAY = Hours24(DAY_QWIK)
-    fail = 0
-    success = 0
-    while Appeal.objects.count() <= MIN_APPEAL and fail < MAX_FAIL:
-        demo = random.choice(CROWD)
-        user = User.objects.filter(email=demo).first()
-        if not user:
-            logger.warn(f'missing user: {demo}')
-            fail += 1
-            continue
-        player = user.player
+    fail_count, appeal_count = 0, 0
+    # generate Appeals ##################################
+    while Appeal.objects.count() <= APPEAL_MIN and fail_count < FAIL_MAX:
+        player = User.objects.get(pk=random.choice(CROWD_PKS)).player
         venue = Venue.objects.get(pk=random.choice(VENUE_PKS))
         date=venue.now() + datetime.timedelta(days=random.choice([0,1]))
         hours24 = Hours24(random.randint(0, DAY_MAX_INT)) & QWIK_DAY
         valid_hours = venue.open_date(date) & hours24
         if valid_hours.is_none:
-            fail += 1
+            fail_count += 1
             continue
         else:
             appeal, _created = Appeal.objects.get_or_create(
@@ -76,9 +73,9 @@ def murmur():
             appeal.save()
             appeal.perish()
             if appeal.status == 'A':
-                success += 1
-    logger.info(f'CRON: murmur created {success} Appeals')
-    if fail >= MAX_FAIL:
+                appeal_count += 1
+    logger.info(f'CRON: murmur created {appeal_count} Appeals')
+    if fail_count >= FAIL_MAX:
         logger.warn(f'CRON: murmur failed')
 
         

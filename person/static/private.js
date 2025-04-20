@@ -2,7 +2,6 @@ docReady(event => {
   initPage();
   document.getElementById('id_notify_email').addEventListener('click', autoSubmit, false);
   document.getElementById('id_notify_push').addEventListener('click', autoSubmit, false);
-  document.getElementById('webpush-subscribe-button').addEventListener('click', autoSubmit, false);
   document.getElementById('id_location_auto').addEventListener('click', autoSubmit, false);
   document.getElementById('id_language').addEventListener('change', autoSubmit, false);
   document.querySelectorAll("#webpush-subscribe-button").forEach(function(input) {

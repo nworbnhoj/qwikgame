@@ -33,6 +33,7 @@ def bid_perish():
 # Intended to be run hourly as a cron job
 def murmur():
     APPEAL_MIN = 50
+    BID_RATE = 0.06    # chance of Bid on each Appeal
     FAIL_MAX = 10
     CROWD = [
         'demo01@qwikgame.org',
@@ -82,27 +83,27 @@ def murmur():
         player__user__pk__in=CROWD_PKS, 
         status='A'
     )
-    # create a few bids proportionate to the number of Appeals
-    BID_NEW = max(1, int(appeals.count() / 10))
-    for appeal in appeals[:BID_NEW].iterator():
-        bidder = User.objects.get(pk=random.choice(CROWD_PKS)).player
-        if not bidder == appeal.player:
-            if not Bid.objects.filter(appeal=appeal, rival=bidder).exists():
-                hours24 = Hours24()
-                hours24.set_hour(random.choice(appeal.hours24.as_list()))
-                bid = Bid.objects.create(
-                    appeal=appeal,
-                    hours=hours24.as_bytes(),
-                    rival=bidder,
-                    strength='z',
-                    str_conf='z',
-                )
-                bid.log_event('bid')
-                bid_count += 1
-                continue
-        fail_count += 1
-        if fail_count > FAIL_MAX:
-            break;
+    # randomly Bid on Appeals with probability BID_RATE
+    for appeal in appeals.iterator():
+        if random.random() < BID_RATE:
+            bidder = User.objects.get(pk=random.choice(CROWD_PKS)).player
+            if not bidder == appeal.player:
+                if not Bid.objects.filter(appeal=appeal, rival=bidder).exists():
+                    hours24 = Hours24()
+                    hours24.set_hour(random.choice(appeal.hours24.as_list()))
+                    bid = Bid.objects.create(
+                        appeal=appeal,
+                        hours=hours24.as_bytes(),
+                        rival=bidder,
+                        strength='z',
+                        str_conf='z',
+                    )
+                    bid.log_event('bid')
+                    bid_count += 1
+                    continue
+            fail_count += 1
+            if fail_count > FAIL_MAX:
+                break;
     logger.info(f'CRON: murmur created {bid_count} Bids')
     if fail_count >= FAIL_MAX:
         logger.warn(f'CRON: murmur failed')

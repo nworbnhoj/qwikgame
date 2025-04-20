@@ -30,24 +30,13 @@ def bid_perish():
 
 # murmur maintains a minimum # Appeals as test/demonstrations
 # and Bids randomly on those Appeals
+# Murmur Appeals and Bids are ALL between Players demo\d\d@qwikgame.org
 # Intended to be run hourly as a cron job
 def murmur():
     APPEAL_MIN = 50
     BID_RATE = 0.06    # chance of Bid on each Appeal
     FAIL_MAX = 10
-    CROWD = [
-        'demo01@qwikgame.org',
-        'demo02@qwikgame.org',
-        'demo03@qwikgame.org',
-        'demo04@qwikgame.org',
-        'demo05@qwikgame.org',
-        'demo06@qwikgame.org',
-        'demo07@qwikgame.org',
-        'demo08@qwikgame.org',
-        'demo09@qwikgame.org',
-        'demo10@qwikgame.org',
-    ]
-    CROWD_PKS = list(User.objects.filter(email__in=CROWD).values_list('pk', flat=True))
+    CROWD_PKS = list(User.objects.filter(email__regex="demo\\d\\d@qwikgame.org").values_list('pk', flat=True))
     if len(CROWD_PKS) == 0:
         logger.warn(f'CRON: murmur missing demo users')
         return;

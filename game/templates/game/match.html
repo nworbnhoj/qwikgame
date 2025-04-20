@@ -72,11 +72,9 @@
             </div>
             <div class="icon align_center">
 {% for rival in rivals %}
-                <div class="btn special2">
-                    <a href="{{ request.path }}{{ rival.pk }}/">
-                        <i class="fa-solid {{ rival.icon }} fa-3x"></i>
-                    </a>
-                </div>
+                <a  class="btn special2"href="{{ request.path }}{{ rival.pk }}/">
+                    <i class="fa-solid {{ rival.icon }} fa-3x"></i>
+                </a>
 {% endfor %}
             </div>
             <div class="post group hidden">
@@ -86,11 +84,9 @@
                 <div class="log_entry align_end {{ entry.klass }}">
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
-                    <div class="btn special2">
-                        <a href="{{ request.path }}{{ entry.id }}/">
-                            <i class="fa-solid {{ entry.icon }} fa-2x"></i>
-                        </a>
-                    </div>
+                    <a class="btn special2" href="{{ request.path }}{{ entry.id }}/">
+                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                    </a>
         {% endif %}
                     <div class="chat_bubble">
                         <span class="name">{{ entry.name }}</span>
@@ -132,11 +128,9 @@
                 <div class="log_entry align_end {{ entry.klass }}">
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
-                    <div class="btn special2">
-                        <a href="{{ request.path }}{{ entry.id }}/">
-                            <i class="fa-solid {{ entry.icon }} fa-2x"></i>
-                        </a>
-                    </div>
+                    <a class="btn special2" href="{{ request.path }}{{ entry.id }}/">
+                        <i class="fa-solid {{ entry.icon }} fa-2x"></i>
+                    </a>
         {% endif %}
                     <div class="chat_bubble">
                         <span class="name">{{ entry.name }}</span>

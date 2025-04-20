@@ -34,12 +34,13 @@ class Place(models.Model):
         ]
 
     def __str__(self):
-        return "{}, {}, {}, {}".format(
-            self.name,
-            self.locality,
-            self.admin1,
-            self.country,
-        )
+        str = self.name
+        if self.locality:
+            str += ', ' + self.locality
+        if self.admin1:
+            str += ', ' + self.admin1
+        str += ', ' + self.country
+        return str
 
     @property
     def is_region(self):

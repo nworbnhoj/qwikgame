@@ -32,9 +32,13 @@ def bid_perish():
 # and Bids randomly on those Appeals
 # Murmur Appeals and Bids are ALL between Players demo\d\d@qwikgame.org
 # Intended to be run hourly as a cron job
-def murmur():
-    APPEAL_MIN = 50
-    BID_RATE = 0.06    # chance of Bid on each Appeal
+# CRONJOBS = [('11 * * * *', 'appeal.cron.murmur', [30, 0.08], '>> /var/log/django_cron_alpha.log')]
+# parameters
+# appeal_min: Maintain this minimum number of Appeals on qwikgame
+# bid_rate: Bid on each murmer Appeal with this probability on each run [0.0 .. 1.0] 
+def murmur(appeal_min=50, bid_rate=0.06):
+    appeal_min = 50
+    bid_rate = 0.06    # chance of Bid on each Appeal
     FAIL_MAX = 10
     CROWD_PKS = list(User.objects.filter(email__regex="demo\\d\\d@qwikgame.org").values_list('pk', flat=True))
     if len(CROWD_PKS) == 0:
@@ -44,7 +48,7 @@ def murmur():
     QWIK_DAY = Hours24(DAY_QWIK)
     fail_count, appeal_count = 0, 0
     # generate Appeals ##################################
-    while Appeal.objects.count() <= APPEAL_MIN and fail_count < FAIL_MAX:
+    while Appeal.objects.count() <= appeal_min and fail_count < FAIL_MAX:
         player = User.objects.get(pk=random.choice(CROWD_PKS)).player
         venue = Venue.objects.get(pk=random.choice(VENUE_PKS))
         date=venue.now() + datetime.timedelta(days=random.choice([0,1]))
@@ -73,9 +77,9 @@ def murmur():
         player__user__pk__in=CROWD_PKS, 
         status='A'
     )
-    # randomly Bid on Appeals with probability BID_RATE
+    # randomly Bid on Appeals with probability bid_rate
     for appeal in appeals.iterator():
-        if random.random() < BID_RATE:
+        if random.random() < bid_rate:
             bidder = User.objects.get(pk=random.choice(CROWD_PKS)).player
             if not bidder == appeal.player:
                 if not Bid.objects.filter(appeal=appeal, rival=bidder).exists():

@@ -27,7 +27,7 @@ ICONS = [
     'fa-face-grin-beam',
     'fa-face-grin',
     'fa-hand-peace',
-    'fa-person-walkin',
+    'fa-person-walking',
     'fa-person-swimming',
     'fa-person-snowboarding',
     'fa-person-skiing-nordic',

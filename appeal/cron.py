@@ -63,6 +63,7 @@ def murmur():
             appeal.set_hours(valid_hours)
             appeal.save()
             appeal.perish()
+            appeal.log_event('appeal')
             if appeal.status == 'A':
                 appeal_count += 1
     logger.info(f'CRON: murmur created {appeal_count} Appeals')

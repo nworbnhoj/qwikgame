@@ -92,7 +92,7 @@
                 <div class="chat_bubble">
                     <span class="name">{{ entry.name }}</span>
     {% if bids|key_exists:entry.pk %}
-                    <div>
+                    <div class='ellipsis'>
                         <span>(
         {% for _ in '12345'|make_list %} 
                             <span class="color" style="display:inline-block; width:0.8em">

@@ -78,12 +78,12 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .btn.tiny { height: 1em; width: 1em; }
 
-.btn.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #dfa622; height: 3em; padding: 0.3em; width: 3em; }
+.btn.replicate { background-color: #eeeeee; border-radius: 50%; border-width: 0; color: #5fa600; height: 3em; padding: 0.3em; width: 3em; }
 .btn.sml { height: 1.5em; width: 1.5em; }
 .btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 
 
-.color { color: #dfa622 }
+.color { color: #f5a600 }
 .cta_desktop { padding: 1em; width: 100% }
 .disabled { border-color: #aaaaaa; color: #aaaaaa }
 .errorlist { color: red; }
@@ -104,7 +104,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
 .item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 .item.unseen { border-left-color: #f5a600; border-left-width: 0.5em; font-weight: bold }
-.item.unseen div.icon { color: #dfa622 }
+.item.unseen div.icon { color: #5fa600 }
 
 .invisible { visibility: hidden }
 .loader::after {
@@ -122,7 +122,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
 .round { border-radius: 50%; padding: 0.3em;}
-.selected { color: #dfa622 }
+.selected { color: #5fa600 }
 .stripes { background: repeating-linear-gradient(45deg, #f5a600, #f5a600 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
@@ -132,7 +132,7 @@ body { align-items: center; display: flex; flex-direction: column; font-family: 
 div { }
 div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; background-color: #ffffff; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center }
-div.banner.active { background-color: #dfa622; }
+div.banner.active { background-color: #5fa600; }
 div.banner.complete { background-color: lightgrey; }
 div.banner.xancelled { background-color: yellow; }
 
@@ -164,7 +164,7 @@ div.down { align-items: start; background-color: white; border: 1px solid #88888
 div.down div { justify-content: space-between; padding: 0.3em; width:100% }
 div.down div.link { justify-content: end; width: auto }
 div.down label { align-items: stretch; gap: 1em; justify-content: space-between; padding: 0.3em 0 0.3em 0; text-align: center }
-div.down label:has(input:checked) { color: #dfa622 }
+div.down label:has(input:checked) { color: #5fa600 }
 div.down label:has( input[type=checkbox])::before { content: none; }
 div.down label:has( input[type=radio])::before { content: none; }
 div.drop_down { display: flex; flex: 1 1 auto; flex-direction: column; position: relative; right:0.3em;}
@@ -186,7 +186,7 @@ div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-content: center; border: 0px solid black; display: block; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
-div.icon.badge { border: 0.2em solid #dfa622; color: #dfa622; border-radius: 50%; height: 2.5em; padding: 0.3em; width: 2.5em; }
+div.icon.badge { border: 0.2em solid #5fa600; color: #5fa600; border-radius: 50%; height: 2.5em; padding: 0.3em; width: 2.5em; }
 div.icon.info { border-width: 0.3em; border-radius: 50%; padding: 0.3em }
 div.icon.medium { height: 3em; width: 3em }
 div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
@@ -268,7 +268,7 @@ label.option { display: flex; align-items: center; gap: 1em; padding: 0.3em 0 0.
 label.option div.btn { height: 1em }
 label.option:has( input[type=checkbox])::before { content: none; }
 label.option:has( input[type=checkbox]:checked) { display: none; }
-label.option:has(input:checked) { color: #dfa622 }
+label.option:has(input:checked) { color: #5fa600 }
 label.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
 label.reveal > input { display: none; }
 label.reveal:active { box-shadow: none; transform: none;  }
@@ -292,7 +292,7 @@ span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
 span.on { color: lightseagreen; }
 span.off { color: indianred; }
-span.qwik { color: #dfa622 }
+span.qwik { color: #5fa600 }
 textarea { border: 1px solid black; display: block}
 time { color: #999999; font-size: small; text-align: right; }
 ul.leaders { line-height: 2em; list-style: none; max-width: 40em; overflow-x: hidden; padding: 0; width: 100%; }

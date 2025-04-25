@@ -77,7 +77,8 @@ class Player(models.Model):
         from appeal.models import Appeal
         as_appealer = Appeal.objects.filter(player=self)
         as_bidder = Appeal.objects.filter(bid__rival=self)
-        return (as_appealer | as_bidder).distinct()
+        as_invitee = Appeal.objects.filter(invitees__rival__in=[self])
+        return (as_appealer | as_bidder | as_invitee).distinct()
 
 
     # add a Player conduct review to the least significant bit

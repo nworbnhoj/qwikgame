@@ -90,31 +90,35 @@
                     </a>
     {% endif %}
                 <div class="chat_bubble">
-                    <span class="name">{{ entry.name }}</span>
-    {% if bids|key_exists:entry.pk %}
-                    <div class='ellipsis'>
-                        <span>(
-        {% for _ in '12345'|make_list %} 
-                            <span class="color" style="display:inline-block; width:0.8em">
-            {% if forloop.counter <= bids|bid_conduct:entry.pk %}
-                                <i class="fa-solid fa-star fa-1x"></i>
-            {% else %}
-                                <i class="fa-regular fa-star fa-1x"></i>
-            {% endif %}
+                    <div class="row">
+                        <span class="name">{{ entry.name }}</span>
+        {% if bids|key_exists:entry.pk %}
+                        <div class='ellipsis'>
+                            <span>
+            {% for _ in '12345'|make_list %} 
+                                <span class="color" style="display:inline-block; width:0.8em">
+                {% if forloop.counter <= bids|bid_conduct:entry.pk %}
+                                    <i class="fa-solid fa-star fa-1x"></i>
+                {% else %}
+                                    <i class="fa-regular fa-star fa-1x"></i>
+                {% endif %}
+                                </span>
+            {% endfor %}
+                            , {{ bids|bid_strength:entry.pk }}
                             </span>
-        {% endfor %}
-                        , {{ bids|bid_strength:entry.pk }})  
-                        </span>
+                        </div>
+        {% endif %}
+                     </div>
+                     <div class="row">      
+                        <span class="text">{{ entry.text }}</span>
+                     </div>
+                     <div class="row">      
                         <time datetime="{{ entry.created }}"></time>
                     </div>
-    {% else %}
-                    <time datetime="{{ entry.created }}"></time>
-    {% endif %}                        
-                    <span class="text">{{ entry.text }}</span>
                 </div>
         {% if bids|get_item:entry.pk %}
                 <label class="btn primary round">
-                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat sesion will be opened with your rival. Continue?')">
+                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat session will be opened with your rival. Continue?')">
                     <i class="fa-solid fa-right-long fa-xl"></i>
                 </label>
         {% endif %}    

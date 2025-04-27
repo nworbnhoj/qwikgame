@@ -32,7 +32,7 @@ def bid_perish():
 # and Bids randomly on those Appeals
 # Murmur Appeals and Bids are ALL between Players demo\d\d@qwikgame.org
 # Intended to be run hourly as a cron job
-# CRONJOBS = [('11 * * * *', 'appeal.cron.murmur', [30, 0.08], '>> /var/log/django_cron_alpha.log')]
+# CRONJOBS = [('11 * * * *', 'appeal.cron.murmur', [], {'appeal_min':30, 'bid_rate':0.08}, '>> /var/log/django_cron_alpha.log')]
 # parameters
 # appeal_min: Maintain this minimum number of Appeals on qwikgame
 # bid_rate: Bid on each murmer Appeal with this probability on each run [0.0 .. 1.0] 

@@ -173,7 +173,7 @@ class Match(models.Model):
             case 'book_prompt':
                 entry['name'] = 'system'
                 # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
-                entry['text'] = f'{person.qwikname} please contact venue to ensure availability on {self.datetime_str}:<br> {self.venue.phone} {self.venue.url}'
+                entry['text'] = f'{person.qwikname} please contact venue to ensure availability on {self.datetime_str}: {self.venue.phone} {self.venue.url}'
             case 'cancelled':
                 entry['text'] = 'match cancelled'
             case 'chat':

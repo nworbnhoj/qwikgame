@@ -23,6 +23,7 @@ if (INSTALL_BUTTON){
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
+    INSTALL_BUTTON.classList.remove('hidden')
   });
 
   INSTALL_BUTTON.addEventListener("click", async () => {

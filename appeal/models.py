@@ -257,19 +257,19 @@ class Bid(models.Model):
 
     def announce(self, instigator):
         logger.info(f'Announcing Bid: {self}')
-        self.alert('a', instigator, self.appeal.player)
+        self.alert('k', instigator, self.appeal.player)
         self.appeal.meta['seen'] = [instigator.pk]
         self.log_event('bid')
 
     def cancel(self, instigator):
         logger.info(f'Cancelling Bid: {self}')
-        self.alert('b', instigator, self.appeal.player)
+        self.alert('l', instigator, self.appeal.player)
         self.appeal.meta['seen'] = [instigator.pk]
         self.log_event('withdraw')
 
     def decline(self, instigator):
         logger.info(f'Declining Bid: {self}')
-        self.alert('c', instigator, self.rival)
+        self.alert('m', instigator, self.rival)
         self.appeal.meta['seen'] = [instigator.pk]
         self.log_event('decline')
 

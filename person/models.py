@@ -57,8 +57,8 @@ LANGUAGE = [
     # ('jp', '日本語'),
 ]
 
-ALERT_EMAIL_DEFAULT = 'acfg'
-ALERT_PUSH_DEFAULT = 'abcfgh'
+ALERT_EMAIL_DEFAULT = 'kmpq'
+ALERT_PUSH_DEFAULT = 'klmpqr'
 
 
 
@@ -68,12 +68,12 @@ class Alert(models.Model):
         'P':'Push',
     }
     TYPE = {
-        'a': 'new_bid',
-        'b': 'cancel_bid',
-        'c': 'decline_bid',
-        'f': 'new_match',
-        'g': 'cancel_match',
-        'h': 'chat_match',
+        'k': 'new_bid',
+        'l': 'cancel_bid',
+        'm': 'decline_bid',
+        'p': 'new_match',
+        'q': 'cancel_match',
+        'r': 'chat_match',
     }
     context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
     expires = models.DateTimeField()
@@ -163,7 +163,7 @@ class Person(models.Model):
     language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")
-    notify_email = models.CharField(max_length=64, default='acfg')
+    notify_email = models.CharField(max_length=64, default='kmpq')
     notify_push = models.CharField(max_length=64, default='')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE)
     

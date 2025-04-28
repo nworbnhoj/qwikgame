@@ -136,7 +136,11 @@ class Appeal(models.Model):
 
     @property
     def last_hour(self):
-        return self.hours24.last_hour()
+        hour = self.hours24.last_hour()
+        return datetime.datetime.combine(
+            self.date,
+            datetime.time(hour=hour),
+        )
 
     def log_entry(self, entry):
         self.log.append(entry)

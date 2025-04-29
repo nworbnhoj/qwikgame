@@ -1,5 +1,5 @@
 import logging
-from appeal.forms import AcceptForm, BidForm, InviteForm, KeenForm
+from appeal.forms import AcceptForm, BidForm, KeenForm
 from appeal.models import Appeal, Bid
 from authenticate.views import RegisterView
 from datetime import datetime, timedelta, timezone
@@ -8,7 +8,7 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
-from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
+from player.forms import FilterForm, FriendForm, FiltersForm, InviteForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm

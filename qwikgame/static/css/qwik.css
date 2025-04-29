@@ -71,9 +71,8 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
 .btn.naked { border-width: 0; }
-.btn.small { font-size: 0.88em; min-height: 2em;}
+.btn.small { font-size: 0.88em; width: 1em;}
 .btn.square { aspect-ratio: 1 / 1; }
-.btn.round { aspect-ratio: 1 / 1; border-radius: 50%; }
 
 .btn.thin { height: 2em; margin: 0.1em; padding: 0.3em }
 .btn.tiny { height: 1em; width: 1em; }
@@ -223,10 +222,8 @@ div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }
-div.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s }
-div.slider:before { background-color: #fff; bottom: 0.2em; content: ""; height: 1.6em; left: 0.2em; position: absolute; transition: .4s; width: 1.6em }
-div.slider.round { border-radius: 34px; }
-div.slider.round:before { border-radius: 50%; }
+div.slider { background-color: #ccc; border-radius: 2.5em; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; width: 5.6em; }
+div.slider:before { aspect-ratio: 1/1; background-color: #fff; border-radius: 50%; bottom: 0.2em; content: ""; left: 0.2em; position: absolute; transition: .4s; width: 2.2em }
 div.splash { align-items: center; display: flex; height: 100%; justify-content:center; }
 div.stars { display: flex;  padding: 1em; }
 div.tab_area div.areas { width: 100%;}
@@ -259,7 +256,7 @@ input[type=checkbox] { margin: 0em 1em 0em 1em; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit }
 input:checked + .slider { background-color: #66bb6a; }
-input:checked + .slider:before { transform: translateX(2em); }
+input:checked + .slider:before { transform: translateX(3em); }
 input[type=range] { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
 input.btn {position: relative;}
 input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
@@ -278,7 +275,7 @@ label.reveal:active { box-shadow: none; transform: none;  }
 label.reveal:has(input) ~ div.field { display: none; }
 label.reveal:has(input:checked) ~ div.field { display: flex; }
 label.reveal { display: inline-block; }
-label.switch { display: inline-block; height: 2em; position: relative; width: 4em }
+label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 

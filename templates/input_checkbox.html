@@ -4,7 +4,7 @@
         {{ field.label }}
         <label class="switch push_right" for="id_{{ field.name }}">
             {{ field }}
-            <div class="slider round"></div>
+            <div class="slider"></div>
         </label>
         <div class="btn secondary small round info {% if field.help_text|length == 0 %}invisible{% endif %}" data-visible="false">
             <i class="fa-solid fa-info fa-1x"></i>

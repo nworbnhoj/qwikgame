@@ -1,4 +1,4 @@
-<!-- qwikgame/templates/input_checkbox.html -->
+<!-- qwikgame/templates/input_webpush.html -->
 <div class="post field">
     <div class="label">
         {{ field.label }}
@@ -9,7 +9,7 @@
                 <div id="webpush-message" hidden=""></div>
             </div>
             {{ field }}
-            <div class="slider round"></div>
+            <div class="slider"></div>
         </label>
         <div class="btn secondary small round info {% if field.help_text|length == 0 %}invisible{% endif %}" data-visible="false">
             <i class="fa-solid fa-info fa-1x"></i>

@@ -52,7 +52,7 @@ class AppealsView(QwikView):
         context = super().context(request, *args, **kwargs)
         participate = player.appeal_participate()
         participate_list = list(participate)
-        participate_list.sort(key=lambda x: x.last_hour)
+        participate_list.sort(key=lambda x: x.last_hour.hour)
         participate_list.sort(key=lambda x: x.date)
         for appeal in participate_list:
             seen = player.pk in appeal.meta.get('seen', [])

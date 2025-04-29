@@ -57,8 +57,8 @@ LANGUAGE = [
     # ('jp', '日本語'),
 ]
 
-ALERT_EMAIL_DEFAULT = 'kmpq'
-ALERT_PUSH_DEFAULT = 'klmpqr'
+ALERT_EMAIL_DEFAULT = 'bkmpq'
+ALERT_PUSH_DEFAULT = 'bklmpqr'
 
 
 

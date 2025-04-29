@@ -493,6 +493,26 @@ class Friend(models.Model):
             return icon
         return 'fa-face-smile'
 
+    def alert(self,
+        type,
+        expires=datetime.now() + timedelta(days=2),
+        context={},
+        url=FQDN,
+        request=None,
+    ):
+        user = self.rival.user
+        if user and user.player:
+            user.player.alert(type, expires, context, url)
+        else:
+            from player.forms import InviteForm
+            form = InviteForm(self.email, context)
+            if form.is_valid():
+                form.save(request)
+            else:
+                logger.exception(f"Invalid InviteForm: {form}")
+
+
+
     def name_best(self):
         if self.name:
             return self.name

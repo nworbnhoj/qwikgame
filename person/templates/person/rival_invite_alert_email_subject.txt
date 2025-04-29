@@ -1,0 +1,3 @@
+{% load i18n %}{% autoescape off %}
+{% blocktranslate %}Invitation to {{ game }} with {{ name }} at {{ venue }}{% endblocktranslate %}
+{% endautoescape %}

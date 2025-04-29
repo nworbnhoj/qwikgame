@@ -8,10 +8,11 @@ from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, Ch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
-from player.forms import FilterForm, FriendForm, FiltersForm, InviteForm, StrengthForm
+from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm
+from qwikgame.settings import FQDN
 from api.models import Mark
 from service.locate import Locate
 from venue.models import Place, Region, Venue
@@ -290,27 +291,19 @@ class KeenView(AppealsView):
         appeal.invitees.clear()
         for friend in invitees:
             appeal.invitees.add(friend)
-            invitee = friend.rival
-            if invitee.user is None or invitee.user.person.notify_email:
-                current_site = get_current_site(request)
-                email_context={
-                    'appeal': appeal,
-                    'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
-                    'domain': current_site.domain,
-                    'game': appeal.game,
-                    'name': appeal.player.qwikname,
-                    'protocol': 'https' if request.is_secure() else 'http',
-                    'site_name': current_site.name,
-                    'time': appeal.hours24.as_str(),
-                    'venue': appeal.venue,
-                }
-                form = InviteForm(friend.email, email_context)
-                if form.is_valid():
-                    form.save(request)
-                else:
-                    logger.exception(f"Invalid InviteForm: {form}")
-            else:
-                logger.info(f'avoided invitation email to: {invitee}')
+            current_site = get_current_site(request)
+            context={
+                'appeal': appeal,
+                'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
+                'domain': current_site.domain,
+                'game': appeal.game,
+                'name': appeal.player.qwikname,
+                'protocol': 'https' if request.is_secure() else 'http',
+                'site_name': current_site.name,
+                'time': appeal.hours24.as_str(),
+                'venue': appeal.venue,
+            }
+            friend.alert('b', appeal.hours24.last_hour(),  context, FQDN, request)
         appeal.save()
 
     def post(self, request, *args, **kwargs):

@@ -68,6 +68,8 @@ class Alert(models.Model):
         'P':'Push',
     }
     TYPE = {
+        'a': 'woo_invite',
+        'b': 'rival_invite',
         'k': 'new_bid',
         'l': 'cancel_bid',
         'm': 'decline_bid',

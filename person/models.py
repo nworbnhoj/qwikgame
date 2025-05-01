@@ -5,6 +5,7 @@ from qwikgame.settings import FQDN
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
+from pywebpush import WebPushException
 from webpush import send_user_notification
 
 
@@ -128,6 +129,9 @@ class Alert(models.Model):
                 ttl = self.ttl,
                 user = self.person.user,
             )
+        except WebPushException as e:
+            eol = e.message.find('\n')
+            logger.warn(f'Player {self.person.pk}: {e.message[:eol]}')
         except Exception:
             logger.exception( f'Failed to send Alert Notification: {self}' )
         return True

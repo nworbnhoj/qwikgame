@@ -303,7 +303,7 @@ class KeenView(AppealsView):
                 'time': appeal.hours24.as_str(),
                 'venue': appeal.venue,
             }
-            friend.alert('b', appeal.hours24.last_hour(),  context, FQDN, request)
+            friend.alert('b', appeal.last_hour,  context, FQDN, request)
         appeal.save()
 
     def post(self, request, *args, **kwargs):

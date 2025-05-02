@@ -20,6 +20,7 @@ Typical setup might involve:
 - psql database
 - python3, django and gunicorn
 
+
 ## Development
 
 qwikgame is written in html, css, python3, json, javascript, django and psql.

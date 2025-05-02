@@ -184,7 +184,7 @@ class Person(models.Model):
             type,
             expires=datetime.now() + timedelta(days=1),
             context={},
-            url=FQDN,
+            url='',
         ):
         alert = Alert (
             context = context,

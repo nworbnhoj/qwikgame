@@ -1,6 +1,7 @@
 import datetime, logging, random
 from appeal.models import Appeal, Bid
 from authenticate.models import User
+from django.db.models import Count
 from game.models import Game
 from player.models import Player
 from venue.models import Venue
@@ -37,14 +38,14 @@ def bid_perish():
 # appeal_min: Maintain this minimum number of Appeals on qwikgame
 # bid_rate: Bid on each murmer Appeal with this probability on each run [0.0 .. 1.0] 
 def murmur(appeal_min=50, bid_rate=0.06):
-    appeal_min = 50
-    bid_rate = 0.06    # chance of Bid on each Appeal
     FAIL_MAX = 10
     CROWD_PKS = list(User.objects.filter(email__regex="demo\\d\\d@qwikgame.org").values_list('pk', flat=True))
     if len(CROWD_PKS) == 0:
         logger.warn(f'CRON: murmur missing demo users')
         return;
-    VENUE_PKS = list(Venue.objects.values_list('pk', flat=True))
+    venues =  Venue.objects.annotate(match_count=Count('match'))
+    maiden_venues=venues.filter(match_count__exact=0)
+    VENUE_PKS = list(maiden_venues.values_list('pk', flat=True))
     QWIK_DAY = Hours24(DAY_QWIK)
     fail_count, appeal_count = 0, 0
     # generate Appeals ##################################

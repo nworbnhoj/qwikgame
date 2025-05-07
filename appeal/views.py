@@ -369,10 +369,11 @@ class KeenView(AppealsView):
                 appeal.perish()
             self._invite(appeal, invitees, request)
             if created:
+                appeal.log_event('appeal')
                 logger.info(f'created Appeal: {appeal}')
             else:
+                appeal.log_event('reappeal')
                 logger.info(f'updated Appeal: {appeal}')
-            appeal.log_event('appeal')
             appeal_pk = appeal.pk
         # create/update/delete tomorrow appeal
         tomorrow = today + timedelta(days=1)
@@ -393,10 +394,11 @@ class KeenView(AppealsView):
                 appeal.perish()
             self._invite(appeal, invitees, request)
             if created:
+                appeal.log_event('appeal')
                 logger.info(f'created Appeal: {appeal}')
             else:
+                appeal.log_event('reappeal')
                 logger.info(f'updated Appeal: {appeal}')
-            appeal.log_event('appeal')
             if not appeal_pk:
                 appeal_pk = appeal.pk
         # update the Mark size

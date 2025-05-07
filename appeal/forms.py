@@ -69,8 +69,10 @@ class BidForm(QwikForm):
     # Returns a context dict including 'rspv_form'
     @classmethod
     def get(klass, appeal):
-        form = klass()
-        form.fields['hour'].widget.set_hours_show(appeal.hour_list())
+        hours = appeal.hour_list()
+        initial = {'hour' : hours[0]} if len(hours) == 1 else {}
+        form = klass(initial=initial)
+        form.fields['hour'].widget.set_hours_show(hours)
         next_hour = 24
         if appeal.status == 'A':
             venue_now = appeal.venue.now()

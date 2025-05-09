@@ -157,6 +157,8 @@ class Hours24():
 
     # returns the hour (index) of the least significant bit
     def last_hour(self):
+        if self.is_none:
+            return None
         i = self.as_int()
         lsb = (i & -i) # least significant bit
         return 23-(lsb.bit_length()-1)

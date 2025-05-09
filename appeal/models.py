@@ -136,7 +136,7 @@ class Appeal(models.Model):
 
     @property
     def last_hour(self):
-        hour = self.hours24.last_hour()
+        hour = self.hours24.last_hour() or 0
         return datetime.datetime.combine(
             self.date,
             datetime.time(hour=hour),
@@ -194,11 +194,13 @@ class Appeal(models.Model):
             if not dry_run:
                 self.delete()
             action = 'deleted'
-        if now.date() == self.date and now.hour >= self.hours24.last_hour():
-            if not dry_run:
-                self.status = 'X'
-                self.save()
-            action = 'expired'
+        if now.date() == self.date:
+            last_hour = self.hours24.last_hour()
+            if not last_hour or now.hour >= last_hour:
+                if not dry_run:
+                    self.status = 'X'
+                    self.save()
+                action = 'expired'
         logger.debug('Appeal{} {: <9} {} @ {} {}'.format(
                 ' (dry-run)' if dry_run else '',
                 action,

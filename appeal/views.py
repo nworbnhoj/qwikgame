@@ -244,6 +244,11 @@ class BidView(AppealsView):
                 str_conf=confidence,
             )
             bid.announce(player)
+            # Fast-forward to Match if only a single invitee
+            if appeal.invitees.all().count() == 1:
+                match = appeal.accept(bid.pk)
+                if match:
+                    return HttpResponseRedirect(f'/game/match/{match.id}/')
             # update the Mark size
             mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
             if mark:

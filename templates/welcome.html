@@ -2,14 +2,26 @@
 {% extends "qwik.html" %}
 {% load static %}
 
+{% block css %}
+    {{ block.super }}
+    <style type="text/css">
+        #content {  flex-direction: column; }
+        #how { font-size: 1.5em; line-height: 1.4em; justify-content: center; padding: 1em 4em; }
+        #join { border-radius:2em; padding: 1em 5em}
+        #tab_bar { border-width: 0; justify-content: space-between }
+    </style>
+
+{% endblock css %}
+
 
 {% block tab_bar %}
 {% if user.is_authenticated %}
     {{ block.super }}
 {% else %}
-    <div class="pillar">
-        <div class="qwikgame">
-            <span class="fat"><span class="qwik">QWIK</span>GAME</span>
+    <div id="tab_bar" class="tab_bar">
+        {% include 'logo_snippet.html' %}
+        <div class="pillar">
+            {% include 'authenticate_snippet.html' %}
         </div>
     </div>
 {% endif %}
@@ -20,15 +32,22 @@
 
 
 {% block content %}
-    <div class="pillar">
-        <h2>Welcome to qwikgame</h2>
-        <p class="fat">
-            <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" data-href="{% url 'welcome' %}">
-        </p>
-        <h2>What is your favourite game?</h2>
-    {% if user.is_authenticated %}
+    <div id="content" class="content">
+        <div id="alert_content_start" class="alert"></div>
+        <h5 class="push_down wall">
+            <span class='brick'>find <span class='qwik'>PARTNERS.</span></span>
+            <span class='brick'>SCHEDULE <span class='qwik'>GAMES.</span></span>
+            <span class='brick'>PLAY <span class='qwik'>MORE.</span></span>
+        </h5>
+        <div id='how' class='wall'>
+            <span class='brick'>Pick any Match Invitation from the Feed.</span>
+            <span class='brick'>Post your own Match Invitation.</span>
+            <span class='brick'>Organize a QWIKGAME for today or tomorrow.</span>
+            <span class='brick'>It’s Free!</span>
+        </div>
         <div class="pillar push_down">
-            <label  id="install_app" class="btn secondary hidden">
+    {% if user.is_authenticated %}
+            <label  id="install_app" class="btn primary hidden">
                 <input name="install_app" type="checkbox">
                 Get the App
             </label>
@@ -48,25 +67,11 @@
                 <p>This browser does not appear to support Progressive Web Apps.</p>
                 <p>You could try a Chrome browser in the meantime!</p>
             </div>
-        </div>
-        <div class="paver push_down">
-            <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-                <label class="btn tertiary">
-                    <input hidden name="logout" type="submit">
-                    logout
-                </label>
-            </form>
-        </div>
     {% else %}
-        <div class="grid_2_col">
-            <a class="btn secondary" href="{% url 'login' %}">
-                login
-            </a>
-            <a class="btn primary" href="{% url 'register' %}">
-                signup
-            </a>
-        </div>
+            <a id='join' class="btn primary" href="{% url 'login' %}">join Us!</a>
     {% endif %}
+        </div>
+        <div id="alert_content_end" class="alert"></div>
+    </div>
 </div>
 {% endblock content %}

@@ -126,6 +126,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .stripes { background: repeating-linear-gradient(45deg, #f5a600, #f5a600 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
+.wall { display: flex; flex-direction: row; flex-wrap: wrap; }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
@@ -207,6 +208,7 @@ div.log_entry .icon { flex: 0 0 3em; }
 div.log_entry.chat {}
 div.log_entry.event {}
 div.log_entry.match {}
+div.logo { font-size: 2em; font-family: AstroSpace; font-weight: bold; padding: 0.1em; }
 div.nextup { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; margin: 4em 0 0 0 ; padding: 1em }
 div.option { display: flex; align-items: center; flex-direction: row; justify-content: space-between; }
 div.options { align-items: stretch; background-color: white; border: 1px solid #bbbbbb; border-radius: 0.3em; flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
@@ -247,7 +249,7 @@ h2.show_group a { color: blue; justify-content: space-between; text-decoration: 
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; overflow: hidden; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h4 { font-size: x-large; overflow: hidden; text-align: center; }
-h5 { color: black; overflow: hidden; text-align: left }
+h5 { align-items: center; color: black; font-size: 60px; font-family: AstroSpace; justify-content: center; line-height: 1.4em; padding: 0 1em; }
 h6 { color: black; overflow: hidden; text-align: center; font-size: 1.3em; margin: 0.3em }
 h6.disabled { color: #999999 }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
@@ -287,6 +289,7 @@ p.large { color: #666666; font-size: large }
 p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
 select { background-color: #ffffff; display: block; font-size: 1.13em; height: 3em; width: 100% }
+span.brick { display: inline-block; padding: 0 0.3em; white-space: nowrap; width: auto; }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }

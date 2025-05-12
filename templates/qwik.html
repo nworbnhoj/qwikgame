@@ -17,7 +17,7 @@
         #feedback { align-items: center; border: 1px dashed #f5a600; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: 1200px; padding: 0em 3em; }
         #filler { display: flex; flex-direction: column; flex-grow: 1; }
         #footer { display: flex; flex-direction: column; font-size: small; justify-content: end; }
-        #tab_bar { background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
+        #tab_bar { align-items: center; background-color: white; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index:100; }
         #feedback:has(input:checked) { max-height: 40em; }
         label.reveal { margin: 1em 0 0 0; }
         select.feedback { background-color: #ffffff; border: 1px dashed #f5a600; margin: 1em 0em 2em 0em; }
@@ -38,7 +38,7 @@
 {% block tab_bar %}
     <div id="tab_bar" class="tab_bar">
         <div id="alert_icon_start" class="alert"></div>
-        <a href="{% url 'welcome' %}">
+        <a id='logo_tab' href="{% url 'welcome' %}">
             <img class="logo href" src="{% static 'img/qwik-logo.jpg' %}" >
         </a>
         <div class="flex_space"></div>

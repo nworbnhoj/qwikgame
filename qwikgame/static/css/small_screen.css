@@ -13,3 +13,5 @@ label { font-size: 1.07em }
 label.toggle:has(input[name="list"]) { color: inherit }
 p.fat { display: none }
 p.name { font-size: 1.07em }
+
+#logo_tab { display: none }

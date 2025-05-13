@@ -248,7 +248,8 @@ h2.show_group { padding: 0 0.3em 0 0.3em; }
 h2.show_group a { color: blue; justify-content: space-between; text-decoration: underline; }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; overflow: hidden; text-align: left; margin: 1.5em 0 0.8em 0; }
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
-h4 { font-size: x-large; overflow: hidden; text-align: center; }
+h4 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: space-between; gap: 2em; margin: 2em 0 1em 0; overflow: hidden; text-align: left; margin: 1.5em 0 0.8em 0; }
+h4 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h5 { align-items: center; color: black; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; padding: 0 1em; }
 h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }

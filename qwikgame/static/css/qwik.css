@@ -250,8 +250,7 @@ h3 { align-items: center; color: black; display: flex; flex-direction: row; font
 h3 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h4 { font-size: x-large; overflow: hidden; text-align: center; }
 h5 { align-items: center; color: black; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; padding: 0 1em; }
-h6 { color: black; overflow: hidden; text-align: center; font-size: 1.3em; margin: 0.3em }
-h6.disabled { color: #999999 }
+h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
 img.logo { display: block; height: 2.54em; padding: 0.1em }
 input[type=checkbox] { margin: 0em 1em 0em 1em; }

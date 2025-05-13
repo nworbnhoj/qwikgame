@@ -126,7 +126,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .stripes { background: repeating-linear-gradient(45deg, #f5a600, #f5a600 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
-.wall { display: flex; flex-direction: row; flex-wrap: wrap; }
+.wall { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }

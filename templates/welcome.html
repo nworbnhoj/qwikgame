@@ -9,6 +9,8 @@
         #how { font-size: 1.27em; line-height: 1.4em; justify-content: center; padding: 1em 4em; }
         #join { border-radius:2em; padding: 1em 5em}
         #tab_bar { border-width: 0; height: 6em; justify-content: space-between }
+        div.feature { background-color: lightgrey; margin: 1em; width: 15em; }
+        div.feature div { background-color: white; height: 5em; margin:  1em;}
     </style>
 
 {% endblock css %}
@@ -49,7 +51,7 @@
     {% if user.is_authenticated %}
             <label  id="install_app" class="btn primary hidden">
                 <input name="install_app" type="checkbox">
-                Get the App
+                Get Free App
             </label>
             <div id="ios_install_app" class="piller push_down hidden">
                 <p>To install this app on your iPhone or iPad:</p>
@@ -71,9 +73,59 @@
             <a id='join' class="btn primary" href="{% url 'login' %}">join Us!</a>
     {% endif %}
         </div>
+        <div class="wall push_down">
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+            <div class="feature">
+                <h1>Title</h1>
+                <h2>Subtitle</h2>
+                <div class="">
+                    description
+                </div>
+            </div>
+        </div>
         <div id="alert_content_end" class="alert"></div>
     </div>
-</div>
 {% endblock content %}
 
 {% block feedback %}{% endblock feedback %}

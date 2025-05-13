@@ -53,10 +53,10 @@
             </div>
         </div>
         <div id="alert_list_group1" class="alert"></div>
-        <h2 class="show_group">
+        <h3 class="show_group">
             Upcoming
             <span>▲</span>
-        </h2>
+        </h3>
         <div class="post group">
 {% for mat in matches_future %}
             <a class="btn secondary item {{ mat.seen }}" href="{% url target match=mat.pk %}">
@@ -92,10 +92,10 @@
 {% endfor %}
         </div>
         <div id="alert_list_group2" class="alert"></div>
-        <h2 class="show_group">
+        <h3 class="show_group">
             History
             <span>▲</span>
-        </h2>
+        </h3>
         <div class="post group">
 {% for mat in matches_past %}
             <a class="btn secondary item {{ mat.seen }}" href="{% url target match=mat.pk %}">

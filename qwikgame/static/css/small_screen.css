@@ -8,7 +8,7 @@ div.list_bar { flex: 1 1 auto }
 div.slide_labels { font-size: 0.94em }
 h1 { font-size: 1.14em }
 h2 { font-size: 1.07em }
-h3 { font-size: 1.03em }
+h3 { font-size: 1.07em }
 h4 { font-size: 1.03em }
 label { font-size: 1.07em }
 label.toggle:has(input[name="list"]) { color: inherit }

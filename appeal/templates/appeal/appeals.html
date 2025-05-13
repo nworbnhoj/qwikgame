@@ -35,10 +35,10 @@
             </a>
         </div>
         <div id="alert_list_group1" class="alert"></div>
-        <h2 class="show_group">
+        <h3 class="show_group">
             Participating
             <span>▲</span>
-        </h2>
+        </h3>
         <div class="post group">
 {% for app in prospects %}
 {% if app.player == player %}
@@ -78,13 +78,13 @@
 {% endfor %}
         </div>
         <div id="alert_list_group2" class="alert"></div>
-        <h2 class="show_group">
+        <h3 class="show_group">
             All
             <span>▲</span>
 {% if filtered %}
             <a class="push_right" href="{% url 'filters' %}">filtered</a>
 {% endif %}
-        </h2>
+        </h3>
         <div class="post group">
 {% for app in appeals %}
             <a class="btn secondary item {{ app.seen }}" href="{% url 'bid' app.pk %}">

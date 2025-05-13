@@ -6,12 +6,13 @@
     {{ block.super }}
     <style type="text/css">
         #content {  flex-direction: column; margin-top: 6em; }
-        #join { border-radius:2em; padding: 1em 5em}
         #tab_bar { border-width: 0; height: 6em; justify-content: space-between }
-        div.feature { background-color: lightgrey; margin: 1em; width: 15em; }
-        div.feature p { margin: 0; }
-        img.feature { background-color: white; height: 7em; margin:  1em; width: 13em; }
-        p.wall { font-size: 1.27em; line-height: 1.4em; justify-content: center; padding: 1em 4em; }
+        a.btn.primary.super { border-radius:2em; margin: 6em; padding: 1em 5em}
+        div.card { background-color: lightgrey; margin: 1em; width: 15em; }
+        div.card p { margin: 0; }
+        h2 { font-weight: bold;  }
+        img.card { background-color: white; height: 7em; margin:  1em; width: 13em; }
+        p.wall { font-size: 1.27em; line-height: 1.4em; margin: 0; padding: 1em 4em; }
     </style>
 
 {% endblock css %}
@@ -48,7 +49,7 @@
             <span class='brick'>Organize a QWIKGAME for today or tomorrow.</span>
             <span class='brick'>It’s Free!</span>
         </p>
-        <div class="pillar push_down">
+        <div class="pillar">
     {% if user.is_authenticated %}
             <label  id="install_app" class="btn primary hidden">
                 <input name="install_app" type="checkbox">
@@ -71,44 +72,44 @@
                 <p>You could try a Chrome browser in the meantime!</p>
             </div>
     {% else %}
-            <a id='join' class="btn primary" href="{% url 'register' %}">join Us!</a>
+            <a id='join' class="btn primary super" href="{% url 'register' %}">join Us!</a>
     {% endif %}
         </div>
-        <div class="wall push_down">
-            <div class="feature">
+        <div class="wall">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
-            <div class="feature">
+            <div class="card">
                 <h2>Title</h2>
                 <p>Subtitle</p>
-                <img class="feature" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
             </div>
         </div>
         <div id="alert_content_end" class="alert"></div>

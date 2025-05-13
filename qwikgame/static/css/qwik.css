@@ -242,7 +242,7 @@ div.hidden { display: none }
 fieldset { background-color: inherit; border: 1px solid #cccccc; display: flex; flex-direction: column; margin: 1em 0 3em 0; padding: 2em; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 fieldset div { display:block; }
-h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
+h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; margin-top: 2em; padding: 0 1em; }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; overflow: hidden;  text-align: left; }
 h3.show_group { padding: 0 0.3em 0 0.3em; }

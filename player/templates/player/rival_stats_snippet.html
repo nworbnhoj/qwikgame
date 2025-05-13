@@ -1,18 +1,18 @@
 <!-- qwikgame/player/templates/player/rival_stats_snippet.html -->
     <div class="pillar">
-        <h1>MATCHES</h1>
+        <h2>MATCHES</h2>
         <ul class=leaders>
     {% for period, count in periods.items %}
             <li><span>{{ period }}</span><span>{{ count }}</span></li>
     {% endfor %}
         </ul>
-        <h1>GAMES</h1>
+        <h2>GAMES</h2>
         <ul class=leaders>
     {% for game, count in games.items %}
             <li><span>{{ game }}</span><span>{{ count }}</span></li>
     {% endfor %}
         </ul>
-        <h1>VENUES</h1>
+        <h2>VENUES</h2>
         <ul class=leaders>
     {% for place, count in places.items %}
             <li><span>{{ place }}</span><span>{{ count }}</span></li>

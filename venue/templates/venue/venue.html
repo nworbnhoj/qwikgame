@@ -19,7 +19,7 @@
                 <i class="fa-solid fa-archway fa-2x"></i>
             </div>
 {% if venue %}
-            <h1>{{ venue.name }}</h1>
+            <h2>{{ venue.name }}</h2>
             <div class="drop_down head_more">
                 <div class="btn drop" data-down="false">
                     <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
@@ -34,12 +34,12 @@
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
 {% else %}
-            <h1>Add Venue</h1>
+            <h2>Add Venue</h2>
 {% endif %}
         </div>
         <div class="pole">
-            <h1>{{ venue.name }}<h1>
-                <h1>ADDRESS</h1>
+            <h2>{{ venue.name }}</h2>
+                <h2>ADDRESS</h2>
                 <p>
                     <a href='https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ venue.placeid }}'  target='_blank' rel='noopener'>
                         <i class="fa-solid fa-location-dot fa-lg"></i>
@@ -49,21 +49,21 @@
                         <i class="fa-regular fa-copy fa-lg"></i>
                     </button>
                 </p>
-                <h1>WEBSITE</h1>
+                <h2>WEBSITE</h2>
                 <p><a href='{{ venue.url }}' target='_blank' rel='noopener'>website</a>
-                <h1>PHONE</h1>
+                <h2>PHONE</h2>
                 <p>{{ venue.phone }}</p>
-                <h1>OPEN HOURS</h1>
+                <h2>OPEN HOURS</h2>
                 <p>{{ venue.open_week }}</p>
-                <h1>TIMEZONE</h1>
+                <h2>TIMEZONE</h2>
                 <p>{{ venue.tz }}</p>
-                <h1>NOTE</h1>
+                <h2>NOTE</h2>
                 <p>{{ venue.note }}</p>
-                <h1>MANAGERS</h1>
+                <h2>MANAGERS</h2>
 {% for manager in venue.managers.all %}
                 <p>{{ manager }}</p>
 {% endfor %}
-                <h1>GAMES</h1>
+                <h2>GAMES</h2>
 {% for game in venue.games.all %}
                 <p>{{ game }}</p>
 {% endfor %}

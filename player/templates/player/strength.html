@@ -50,12 +50,12 @@
         <div class="post">
 {% for strength in strengths %}        
         <div class="grid_3_col">
-            <h1>{{ strength.game }}</h1>
-            <h1>{{ strength.relative_str }}</h1>
+            <h2>{{ strength.game }}</h2>
+            <h2>{{ strength.relative_str }}</h2>
             <div class="btn tertiary">delete</div>
         </div>
 {% empty %}
-        <h1>Important!</h1>
+        <h2>Important!</h2>
         <p> Please take a little time to let qwikgame know how strong your Friend is. This will help qwikgame make better Matches for you, and your friend, and other qwikgame Players who know either of you. </p>
 {% endfor %}            
         </div>
@@ -76,7 +76,7 @@
         <div id="KEEN" class="post hidden">
         <hr><hr>
             <div class="post detail_body">
-                <h1>GAME</h1>
+                <h2>GAME</h2>
                 <h4>STRENGTH</h4>
                 <div class="slide_labels">
                     <div class="slide_label">Much Weaker</div>

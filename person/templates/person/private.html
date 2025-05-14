@@ -6,7 +6,8 @@
 {% block css %}
     {{ block.super }}
     <style type="text/css">
-            div.drop { justify-content: space-between; }
+        #install_app { margin-top: 2em; }
+        div.drop { justify-content: space-between; }
     </style>
 {% endblock css %}
 
@@ -32,6 +33,9 @@
         <div id="PRIVATE" class="post">
             <div class="detail_head">
                 <h2>PRIVATE SETTINGS</h2> 
+            </div>
+            <div class="pillar">
+                {% include 'app_snippet.html' %}
             </div>
             <div class="post detail_body">
                 <div class="post form">

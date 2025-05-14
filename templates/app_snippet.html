@@ -1,0 +1,23 @@
+<!-- qwikgame/templates/app_snippet.html -->
+{% load static %}
+
+<label  id="install_app" class="btn primary hidden">
+    <input name="install_app" type="checkbox">
+    Get Free App
+</label>
+<div id="ios_install_app" class="piller push_down hidden">
+    <p>To install this app on your iPhone or iPad:</p>
+    <ol>
+        <li>Tap the <strong>Share</strong> button in Safari.</li>
+        <li>Scroll down and select <strong>Add to Home Screen</strong>.</li>
+        <li>Follow the on-screen instructions.</li>
+    </ol>
+</div>
+<div id="firefox_install_app" class="piller push_down hidden">
+    <p>Firefox is <a href='https://connect.mozilla.org/t5/discussions/how-can-firefox-create-the-best-support-for-web-apps-on-the/m-p/60561/highlight/true#M21220' target=_blank>working</a> to support Progressive Web Apps.</p>
+    <p>You could try a Chrome browser in the meantime!</p>
+</div>
+<div id="unsupported_install_app" class="piller push_down hidden">
+    <p>This browser does not appear to support Progressive Web Apps.</p>
+    <p>You could try a Chrome browser in the meantime!</p>
+</div>

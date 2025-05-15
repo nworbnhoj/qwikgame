@@ -204,7 +204,7 @@ div.label { align-items: center; display: flex; flex: auto; flex-direction: row;
 div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.log_entry { border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em }
+div.log_entry { align-items: center; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em }
 div.log_entry .icon { flex: 0 0 3em; }
 div.log_entry.chat {}
 div.log_entry.event {}

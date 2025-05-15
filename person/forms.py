@@ -29,12 +29,12 @@ class BlockForm(QwikForm):
 
 class PrivateForm(QwikForm):
     notify_email = BooleanField(
-        label='Email notifications',
+        label='EMAIL NOTIFICATIONS',
         required=False,
         template_name='input_checkbox.html'
     )
     notify_push = BooleanField(
-        label='Web / App notifications',
+        label='WEB / APP NOTIFICATIONS',
         required=False,
         template_name='input_webpush.html'
     )

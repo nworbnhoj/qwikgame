@@ -2,6 +2,14 @@
 {% extends "qwik.html" %}
 {% load static %}
 
+
+{% block refresh %}
+    {% if user.is_authenticated %}
+    <meta http-equiv="refresh" content="5; url='/appeal'" />
+    {% endif %}
+{% endblock refresh %}
+
+
 {% block css %}
     {{ block.super }}
     <style type="text/css">

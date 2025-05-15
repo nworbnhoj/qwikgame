@@ -2,10 +2,10 @@
 {% load static %}
 
 <div class="grid_2_col">
-    <a class="btn secondary" href="{% url 'login' %}">
-        Log IN
-    </a>
-    <a class="btn primary" href="{% url 'register' %}">
-        Sign UP
-    </a>
+{% if user.is_authenticated %}
+    <a class="btn secondary" href="{% url 'appeal' %}">Log IN</a>
+{% else %}
+    <a class="btn secondary" href="{% url 'login' %}">Log IN</a>
+{% endif %}        
+    <a class="btn primary" href="{% url 'register' %}">Sign UP</a>
 </div>

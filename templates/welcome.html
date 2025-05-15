@@ -16,13 +16,12 @@
         #content {  flex-direction: column; margin-top: 6em; }
         #tab_bar { border-width: 0; height: 6em; justify-content: space-between }
         a.btn.primary.super { border-radius:2em; margin: 6em; padding: 1em 5em}
-        div.card { background-color: lightgrey; margin: 1em; width: 15em; }
-        div.card p { margin: 0; }
-        h2 { font-weight: bold;  }
-        img.card { background-color: white; height: 7em; margin:  1em; width: 13em; }
+        div.card { background-color: lightgrey; margin: 0em; width: 12em; }
+        div.card p { height: 9em; margin: 0; }
+        h2 { font-weight: bold; margin: 0; padding: 0.3em; }
+        img.card { height: 9em; padding: 0.3em;  width: 12em; }
         p.wall { font-size: 1.27em; line-height: 1.4em; margin: 0; padding: 1em 4em; }
     </style>
-
 {% endblock css %}
 
 
@@ -58,40 +57,38 @@
         </div>
         <div class="wall">
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Send Invitation</h2>
+                <p>Post your own Match invitation to the Feed. Let Players know where and when you want to play.  Multiple Players might respond to your appeal with their preferred hour. </p>
+                <img class="card" alt="feature" src="{% static 'img/feature_keen.png' %}" >
             </div>
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Pick Invitation from the Feed</h2>
+                <p>Dive into an ocean of Match Invitations. Pick any that you like and reply by selecting an hour. Reply to as many Invitations as you like!</p>
+                <img class="card" alt="feature" src="{% static 'img/feature_feed.png' %}" >
             </div>
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Confirm a match</h2>
+                <p>Confirm your match with the Player that you choose! You can choose a Rival with well matched strength for a great game. </p>
+                <img class="card" alt="feature" src="{% static 'img/feature_confirm.png' %}" >
             </div>
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Chat with your Rival</h2>
+                <p>Chat in private with your Rival once you have Confirmed the match. </p>
+                <img class="card" alt="feature" src="{% static 'img/feature_chat.png' %}" >
             </div>
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Add Friends </h2>
+                <p>Add your friends to QWIKGAME and invite them privately for a game. </p>
+                <img class="card" alt="feature" src="{% static 'img/feature_invite.png' %}" >
             </div>
             <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
+                <h2>Review the Match</h2>
+                <p>Help to build the Skill and Reputation Profile of your Rival. This will help QWIKGAME find your next great Match.</p>
+                <img class="card" alt="feature" src="{% static 'img/feature_review.png' %}" >
             </div>
-            <div class="card">
-                <h2>Title</h2>
-                <p>Subtitle</p>
-                <img class="card" alt="feature" src="{% static 'img/qwik-logo.jpg' %}" >
-            </div>
+        </div>
+        <div class="pillar">
+            <a id='join' class="btn primary super" href="{% url 'register' %}">Let's Play!</a>
         </div>
         <div id="alert_content_end" class="alert"></div>
     </div>

@@ -125,7 +125,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .stripes { background: repeating-linear-gradient(45deg, #f5a600, #f5a600 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted SkyBlue }
-.wall { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+.wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1em; justify-content: center; }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
 body { align-items: center; display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
@@ -289,7 +289,7 @@ p.large { color: #666666; font-size: large }
 p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: #666666; font-size: small }
 select { background-color: #ffffff; display: block; font-size: 1.13em; height: 3em; width: 100% }
-span.brick { display: inline-block; padding: 0 0.3em; white-space: nowrap; width: auto; }
+span.brick { display: inline-block; white-space: nowrap; width: auto; }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }

@@ -76,7 +76,7 @@ class PlacesBulkView(QwikView):
                             venue.games.add(game)
                             logger.info(f'Venue add Game: {game}')
                             venue.save()
-                            mark = Mark(game=game, place=venue, size=1)
+                            mark = Mark(game=game, place=venue)
                             mark.save()
                             logger.info(f'Mark new {mark}')
                     places = self.__new_places(request.session['place_choices'])

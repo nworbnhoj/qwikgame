@@ -76,6 +76,11 @@ class BidForm(QwikForm):
     def clean_hour(self):
         hour = self.cleaned_data["hour"]
         if not hour:
+            # if there was only a single hour to select, then select it automatically
+            options = self.fields['hour'].widget.hours_show
+            if len(options) == 1:
+                hour =options[0]
+        if not hour:
             raise ValidationError("You must select an hour.")
         return hour
 

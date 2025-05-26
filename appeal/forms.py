@@ -55,22 +55,14 @@ class BidForm(QwikForm):
     hour = DayRadioField(
         help_text='When are you keen to play?',
         label='WHAT TIME WORKS FOR YOU?',
-        required=True,
+        required=False,
         template_name='field.html',
     )
 
-    def clean_hour(self):
-        hour = self.cleaned_data["hour"]
-        if not hour:
-            raise ValidationError("You must select at least one hour.")
-        return hour
-
-    # Initializes an BidForm for an 'appeal'.
-    # Returns a context dict including 'rspv_form'
-    @classmethod
-    def get(klass, appeal):
-        form = klass()
-        form.fields['hour'].widget.set_hours_show(appeal.hour_list())
+    def __init__(self, *args, **kwargs):
+        appeal = kwargs.pop('appeal')
+        super().__init__(*args, **kwargs)
+        self.fields['hour'].widget.set_hours_show(appeal.hour_list())
         next_hour = 24
         if appeal.status == 'A':
             venue_now = appeal.venue.now()
@@ -79,11 +71,14 @@ class BidForm(QwikForm):
             else:
                 next_hour = venue_now.hour + 1
         valid_hours = list(range(next_hour, 24))
-        form.fields['hour'].widget.set_hours_enable(valid_hours)
-        return { 'bid_form': form }
+        self.fields['hour'].widget.set_hours_enable(valid_hours)
 
-    # Initializes an BidForm for an 'appeal'.
-    # Returns a context dict including 'bid_form'
+    def clean_hour(self):
+        hour = self.cleaned_data["hour"]
+        if not hour:
+            raise ValidationError("You must select an hour.")
+        return hour
+
     @classmethod
     def post(klass, request_post, appeal):
         if 'CANCEL' in request_post:
@@ -92,7 +87,7 @@ class BidForm(QwikForm):
                 return {'CANCEL' : int(cancel) }
             except:
                 logger.warn(f'failed to convert CANCEL: {cancel}')
-        form = klass(data=request_post)
+        form = klass(appeal=appeal, data=request_post)
         context = { 'bid_form': form }
         if form.is_valid():
             context |= {

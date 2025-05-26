@@ -208,7 +208,7 @@ class BidView(AppealsView):
         if appeal.player == self.user.player:
             return HttpResponseRedirect(f'/appeal/accept/{appeal.id}/')
         appeal.mark_seen([self.user.player.pk]).save()
-        context |= self.bid_form_class.get(appeal)
+        context['bid_form'] = self.bid_form_class(appeal=appeal)
         return render(request, self.bid_template, context)
 
     def post(self, request, *args, **kwargs):

@@ -51,6 +51,7 @@ DELAY_MATCH_PERISH_CHAT = timedelta(days=7)
 DELAY_MATCHS_LIST = timedelta(minutes=10)
 DELAY_REVIEW_PERISH = timedelta(days=7)
 
+SYSTEM_ICON = 'fa-lightbulb'
 
 COUNTRIES = {
     'AF': "Afghanistan",

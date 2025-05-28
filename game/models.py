@@ -1,6 +1,6 @@
 import datetime, logging
 from django.db import models
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_ICON
 from qwikgame.log import Entry
 from qwikgame.settings import FQDN
 
@@ -172,6 +172,7 @@ class Match(models.Model):
         match template:
             case 'book_prompt':
                 entry['name'] = 'system'
+                entry['icon'] = SYSTEM_ICON
                 # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
                 entry['text'] = f'{person.qwikname} please contact venue to ensure availability on {self.datetime_str}: {self.venue.phone} {self.venue.url}'
             case 'cancelled':

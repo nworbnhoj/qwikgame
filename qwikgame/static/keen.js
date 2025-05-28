@@ -15,18 +15,18 @@ docReady(event => {
 
 winReady(event => {
   // https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible
-  respondToVisibility = function(element, callback) {
+  respondToResize = function(element, callback) {
     var options = { root: document.documentElement }
-    var observer = new IntersectionObserver((entries, observer) => {
+    var observer = new ResizeObserver((entries, observer) => {
       entries.forEach(entry => {
-        callback(entry.intersectionRatio > 0);
+        callback(entry.contentRect.width > 0);
       });
     }, options);
     observer.observe(element);
   }
 
   const friends_field = document.getElementById("id_friends").closest("div.field")
-  respondToVisibility(friends_field, visible => {
+  respondToResize(friends_field, visible => {
     const submit = document.getElementById("appeal_submit");
     if(visible) {
       submit.querySelector(".appeal_all").hidden = true;

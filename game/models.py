@@ -1,6 +1,6 @@
 import datetime, logging
 from django.db import models
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_ICON
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_ICON, SYSTEM_NAME
 from qwikgame.log import Entry
 from qwikgame.settings import FQDN
 
@@ -63,7 +63,9 @@ class Match(models.Model):
             venue = bid.appeal.venue,
         )
         match.save()
-        match.competitors.add(bid.appeal.player, bid.rival)
+        # important to add bid.appeal.player first to ensure lowest pk
+        match.competitors.add(bid.appeal.player)
+        match.competitors.add(bid.rival)
         match.save()
         return match
 
@@ -97,7 +99,7 @@ class Match(models.Model):
         self.status = 'A'
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
-        self.log_event('book_prompt', instigator)
+        self.log_event('book_prompt')
 
     def cancel(self, instigator):
         logger.info(f'Cancelling Match: {self}')
@@ -149,6 +151,9 @@ class Match(models.Model):
         players = Player.objects.filter(pk__in=pks)
         return {p.pk:p.icon for p in players}
 
+    def init_player(self):
+        # return the competitor with the first pk
+        return self.competitors.order_by('pk').first()
 
     def log_clear(self):
         self.log = []
@@ -163,18 +168,16 @@ class Match(models.Model):
         person = user.person if user else None
         player = user.player if user else None
         entry = Entry(
-            icon = person.icon if person else 'fa-face-smile',
+            icon = person.icon if person else SYSTEM_ICON,
             id = player.pk if player else '',
             klass = template,
-            name = person.qwikname if person else 'system',
+            name = person.qwikname if person else SYSTEM_NAME,
             text = text,
         )
         match template:
             case 'book_prompt':
-                entry['name'] = 'system'
-                entry['icon'] = SYSTEM_ICON
                 # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
-                entry['text'] = f'{person.qwikname} please contact venue to ensure availability on {self.datetime_str}: {self.venue.phone} {self.venue.url}'
+                entry['text'] = f'{self.init_player().qwikname} please contact venue to ensure availability on {self.datetime_str}: {self.venue.phone} {self.venue.url}'
             case 'cancelled':
                 entry['text'] = 'match cancelled'
             case 'chat':

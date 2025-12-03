@@ -30,6 +30,13 @@ function venuesMap() {
     const LAT = parseFloat(document.getElementById('id_lat').value);
     const LNG = parseFloat(document.getElementById('id_lng').value);
     const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
+    const EAST = parseFloat(document.getElementById('id_east').value);
+    const NORTH = parseFloat(document.getElementById('id_north').value);
+    const SOUTH = parseFloat(document.getElementById('id_south').value);
+    const WEST = parseFloat(document.getElementById('id_west').value);
+    const NE = (!isNaN(NORTH) && !isNaN(EAST)) ? google.maps.LatLng(NORTH, EAST) : false;
+    const SW = (!isNaN(SOUTH) && !isNaN(WEST)) ? google.maps.LatLng(SOUTH, WEST) : false;
+    const BOUNDS = (NE && SW) ? google.maps.LatLngBounds(SW, NE) : false ;
     const GOOGLE_MAP_OPTIONS = {
       fullscreenControl: true,
       // fullscreenControlOptions: {
@@ -45,7 +52,11 @@ function venuesMap() {
     qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
     const MAP = qwikMap;
     const INFOWINDOW = qwikInfowindow;
-    MAP.setCenter(CENTER);
+    if (BOUNDS){
+      MAP.fitBounds(BOUNDS);
+    } else {
+      MAP.setCenter(CENTER);
+    }
     const GAME_OPTIONS = document.querySelectorAll("input[name=game]");
     addListeners(GAME_OPTIONS, 'input', changeGame);
 

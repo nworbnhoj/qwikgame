@@ -150,6 +150,38 @@ class KeenForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
+    east = DecimalField(
+        decimal_places=6,
+        initial=180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    north = DecimalField(
+        decimal_places=6,
+        initial=80.0,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    south = DecimalField(
+        decimal_places=6,
+        initial=-80,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    west = DecimalField(
+        decimal_places=6,
+        initial=-180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
     placeid = CharField(
         required=False,
         widget=HiddenInput(),
@@ -225,6 +257,10 @@ class KeenForm(QwikForm):
         if region:
             self.fields['lat'].initial = region.lat
             self.fields['lng'].initial = region.lng
+            self.fields['east'].initial = region.east
+            self.fields['north'].initial = region.north
+            self.fields['south'].initial = region.south
+            self.fields['west'].initial = region.west
 
     # Initializes an KeenForm for 'player'.
     # Returns a context dict including 'keen_form'

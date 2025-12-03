@@ -182,6 +182,13 @@ class KeenForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
+    zoom = IntegerField(
+        initial=10,
+        max_value=20,
+        min_value=0,
+        required=False,
+        widget=HiddenInput(),
+    )
     placeid = CharField(
         required=False,
         widget=HiddenInput(),

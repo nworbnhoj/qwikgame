@@ -37,6 +37,7 @@ function venuesMap() {
     const NE = (!isNaN(NORTH) && !isNaN(EAST)) ? google.maps.LatLng(NORTH, EAST) : false;
     const SW = (!isNaN(SOUTH) && !isNaN(WEST)) ? google.maps.LatLng(SOUTH, WEST) : false;
     const BOUNDS = (NE && SW) ? google.maps.LatLngBounds(SW, NE) : false ;
+    const ZOOM = parseFloat(document.getElementById('id_zoom').value);
     const GOOGLE_MAP_OPTIONS = {
       fullscreenControl: true,
       // fullscreenControlOptions: {
@@ -45,7 +46,7 @@ function venuesMap() {
       mapTypeID: 'ROADMAP',
       mapTypeControl: false,
       streetViewControl: false,
-      zoom: 10,
+      zoom: isNaN(ZOOM) ? 10 : ZOOM,
       zoomControl: true
     };
     qwikMap = new google.maps.Map(MAP_ELEMENT, GOOGLE_MAP_OPTIONS);

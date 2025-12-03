@@ -137,8 +137,8 @@ class KeenForm(QwikForm):
     lat = DecimalField(
         decimal_places=6,
         initial=-36.449786,
-        max_value=180.0,
-        min_value=-180.0,
+        max_value=90.0,
+        min_value=-90.0,
         required=False,
         widget=HiddenInput(),
     )

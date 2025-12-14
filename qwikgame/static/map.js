@@ -34,9 +34,7 @@ function venuesMap() {
     const NORTH = parseFloat(document.getElementById('id_north').value);
     const SOUTH = parseFloat(document.getElementById('id_south').value);
     const WEST = parseFloat(document.getElementById('id_west').value);
-    const NE = (!isNaN(NORTH) && !isNaN(EAST)) ? google.maps.LatLng(NORTH, EAST) : false;
-    const SW = (!isNaN(SOUTH) && !isNaN(WEST)) ? google.maps.LatLng(SOUTH, WEST) : false;
-    const BOUNDS = (NE && SW) ? google.maps.LatLngBounds(SW, NE) : false ;
+    const BOUNDS = gBounds(gLatLng(SOUTH, WEST), gLatLng(NORTH, EAST));
     const ZOOM = parseFloat(document.getElementById('id_zoom').value);
     const GOOGLE_MAP_OPTIONS = {
       fullscreenControl: true,

@@ -1,6 +1,7 @@
 from django.urls import include, path
 
 from venue.views import PlacesBulkView, VenueView
+from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
     # ex: /

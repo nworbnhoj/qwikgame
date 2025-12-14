@@ -1,6 +1,7 @@
 from django.urls import path
 
 from feedback.views import FeedbackView, FeedbackListView
+from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
     path("", FeedbackListView.as_view(), name='feedback'),

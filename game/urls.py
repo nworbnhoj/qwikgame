@@ -1,5 +1,6 @@
 from django.urls import include, path
 from game.views import MatchView, MatchesView, ReviewView, ReviewsView, RivalView
+from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
     path("match/", MatchesView.as_view(), name='matches'),

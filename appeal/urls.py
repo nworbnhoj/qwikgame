@@ -1,6 +1,7 @@
 from django.urls import include, path
 
 from appeal.views import AcceptView, BidView, AppealsView, KeenView, BidView, RivalView
+from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
     path("", AppealsView.as_view(), name='appeal'),

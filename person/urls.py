@@ -1,6 +1,7 @@
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, TermsView, UpgradeView
+from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
     path("", AccountView.as_view(), name='account'),

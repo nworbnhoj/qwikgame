@@ -3,6 +3,8 @@ from django.urls import path
 from django.contrib.auth.views import LogoutView
 from authenticate.views import LoginView, LoginSentView, LoginHandleView, RegisterView, RegisterSentView, RegisterHandleView, TokenInvalidView
 
+from qwikgame.views import ServiceWorkerView
+
 urlpatterns = [
     # ex: /authenticate/
     path("login/", LoginView.as_view(), name="login"),

@@ -20,4 +20,5 @@ urlpatterns = [
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),
     path('webpush/icon/', RedirectView.as_view(url='/static/img/qwik-icon.48x48.png')),
     path('webpush/', include('webpush.urls')),
+    path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

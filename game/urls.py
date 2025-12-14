@@ -7,4 +7,5 @@ urlpatterns = [
     path("match/<int:match>/<rival>/", RivalView.as_view()),
     path("match/review/", ReviewsView.as_view(), name='review'),
     path("match/review/<int:review>/", ReviewView.as_view(), name='review'),
+    path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

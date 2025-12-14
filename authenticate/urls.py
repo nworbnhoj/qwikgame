@@ -13,4 +13,5 @@ urlpatterns = [
     path("register/sent/", RegisterSentView.as_view(), name="register_sent"),
     path("register/<uidb64>/<token>/", RegisterHandleView.as_view(), name="register_handle"),
     path("void/", TokenInvalidView.as_view(), name="token_invalid"),
+    path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

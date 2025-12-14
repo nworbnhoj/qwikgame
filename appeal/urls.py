@@ -10,4 +10,5 @@ urlpatterns = [
     path("keen/<str:game>/", KeenView.as_view(), name='keen'),
     path("accept/<int:appeal>/", AcceptView.as_view(), name='accept'),
     path("accept/<int:appeal>/<rival>/", RivalView.as_view()),
+    path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

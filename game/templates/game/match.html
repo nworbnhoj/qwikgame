@@ -46,7 +46,7 @@
                         <div class="btn special2 drop" data-down="false">
                             <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                         </div>
-                        <div class="down hidden">
+                        <div class="down right hidden">
     {% if match.status == 'A' %}
                             <form action="{% url 'match' match=match.pk %}" method="post">
         {% csrf_token %}

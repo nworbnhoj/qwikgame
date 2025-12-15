@@ -22,7 +22,7 @@ class GoogleSearchForm(QwikForm):
         label = 'REGION',
         required = True,
         template_name='dropdown.html', 
-        widget=RadioSelect(attrs={"class": "down hidden"})
+        widget=RadioSelect(attrs={"class": "down left hidden"})
     )
     game = ChoiceField(
         choices = Game.choices(),

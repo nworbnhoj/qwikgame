@@ -13,7 +13,7 @@ WEEK_NONE = bytes(21)
 
 
 class ActionMultiple(CheckboxSelectMultiple):
-    attrs = {"class": "down hidden"}
+    attrs = {"class": "down left hidden"}
     use_fieldset=False
 
 

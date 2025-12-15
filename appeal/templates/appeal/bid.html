@@ -45,7 +45,7 @@
                     <div class="btn special2 drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
-                    <div class="down hidden"></div>
+                    <div class="down right hidden"></div>
                 </div>
                 <a class="btn special2 head_back" href="/appeal/{{ prev }}/">
                     <i class="fa-solid fa-chevron-left fa-2x"></i>
@@ -67,7 +67,7 @@
                     <div class="btn drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
-                    <div class="down hidden">
+                    <div class="down left hidden">
                         <form id="form" action="{% url 'bid' appeal.pk %}" method="post">
             {% csrf_token %}
                             <label class="btn tertiary">

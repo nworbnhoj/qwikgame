@@ -45,7 +45,7 @@
                     <div class="btn special2 drop" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
-                    <div class="down hidden">
+                    <div class="down right hidden">
     {% if player == appeal.player %}
                         <label class="btn tertiary">
                             <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
@@ -75,7 +75,7 @@
                         <div class="btn todo" data-down="false">
                             <i class="fa-solid fa-ellipsis-vertical fa-xl"></i>
                         </div>
-                        <div class="down hidden">
+                        <div class="down left hidden">
                             <label class="btn tertiary menu">
                                 <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
                                 decline
@@ -135,7 +135,7 @@
                     <div class="btn drop todo" data-down="false">
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
-                    <div class="down hidden">
+                    <div class="down left hidden">
                         <div class="btn tertiary menu">more 1</div>
                         <div class="btn tertiary menu">more 2</div>
                         <div class="btn tertiary menu">more 3</div>

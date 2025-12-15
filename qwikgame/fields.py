@@ -68,7 +68,7 @@ class MultipleActionField(MultipleChoiceField):
     def __init__(self, action='delete:', *args, **kwargs):
         self.action = action
         super().__init__(*args, **kwargs)
-        self.widget.attrs={"class": "down hidden"}
+        self.widget.attrs={"class": "down left hidden"}
         self.template_name='dropdown.html'
 
 

@@ -364,10 +364,12 @@ function nFormatter(num, digits) {
 
 function closeStuff(event) {
   let target = event.target;
-  if (!(target.classList.contains('info') || target.parentElement.classList.contains('info'))){
-    document.querySelectorAll('.info_text').forEach(function(info) {
+  if (target){
+    if (!(target.classList.contains('info') || target.parentElement.classList.contains('info'))){
+      document.querySelectorAll('.info_text').forEach(function(info) {
         info.classList.add('hidden');
-    })
+      })
+    }
   }
   document.querySelectorAll('.down').forEach(function(dropdown) {
     if (!dropdown.parentElement.contains(event.target)) {

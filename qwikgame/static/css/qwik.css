@@ -171,7 +171,7 @@ div.down label { align-items: stretch; gap: 1em; justify-content: space-between;
 div.down label:has(input:checked) { color: #f5a600 }
 div.down label:has( input[type=checkbox])::before { content: none; }
 div.down label:has( input[type=radio])::before { content: none; }
-div.drop_down { display: flex; flex: 1 1 auto; flex-direction: column; position: relative; right:0.3em;}
+div.drop_down { display: flex; flex-direction: column; position: relative; right:0.3em;}
 div.drop_down:has(div.down:empty) { display: none; }
 div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }

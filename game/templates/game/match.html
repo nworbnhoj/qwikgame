@@ -68,7 +68,8 @@
             </div>
             <div class="banner {{ banner_class }}">
                 <p>{{ banner_txt }}</p>
-                <p>{{ match.game }}, <a href="{% url 'venue' venue=match.venue.pk %}">{{ match.venue.place_str }}</a>, {{ match.datetime_str }}, <span class="todo">Pesho</span></p>
+                <p>{{ match.game }}, <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ match.venue.placeid }}" target="_blank">{{ match.venue.place_str }}</a>,
+                {{ match.datetime_str }}, <span class="todo">Pesho</span></p>
             </div>
             <div class="icon align_center">
 {% for rival in rivals %}

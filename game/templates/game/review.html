@@ -36,7 +36,7 @@
                         <span class="icon">
                             <i class="fa-solid fa-location-dot fa-1x"></i>
                         </span>
-                        {{ review.match.venue.place_str }}
+                        <a href="https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ review.match.venue.placeid }}" target="_blank">{{ review.match.venue.place_str }}</a>
                     </p>
                 </div>
                 <div class="context_menu">

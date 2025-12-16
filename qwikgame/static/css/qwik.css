@@ -140,13 +140,11 @@ div.banner.xancelled { background-color: yellow; }
 
 div.chat_bubble { display: flex; background-color: #eeeeee; border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
 div.chat_bubble .row {display: flex; flex-direction: row; gap: 1em; justify-content: space-between; } 
-div.chat_bubble .name { font-weight: bold; }
+div.chat_bubble .name {color: #f5a600; font-weight: bold; }
 div.chat_bubble .text {  }
 div.chat_bubble time {  margin-left: auto }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }
 div.chat_input div:not([class]) { flex-grow: 1; }
-div.chat_item { border: 0 solid black; flex: auto; flex-direction: row; gap: 0.3em; justify-content: flex-start; margin: 0em; max-width: 66%; padding: 0.3em }
-div.chat_item .name { color: #f5a600; font-weight: bold; }
 div.context_menu { align-items: center ; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10em}
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2em; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }

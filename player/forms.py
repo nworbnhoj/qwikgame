@@ -11,6 +11,7 @@ from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiT
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
+from qwikgame.settings import EMAIL_ALERT_USER
 from qwikgame.utils import str_to_hours24
 from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
@@ -214,7 +215,7 @@ class InviteForm(RegisterForm):
             email_template_name='person/woo_invite_email_text.html',
             use_https=False,
             token_generator=default_token_generator,
-            from_email='accounts@qwikgame.org',
+            from_email=EMAIL_ALERT_USER,
             request=request,
             html_email_template_name='person/woo_invite_email_html.html',
             extra_email_context=self.email_context,

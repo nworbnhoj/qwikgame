@@ -29,6 +29,9 @@ The following envonment variables are required:
 - EMAIL_USE_TLS          # default True
 - EMAIL_ACCOUNT_USER     # e.g.    accounts@qwikgame.org
 - EMAIL_ACCOUNT_PASSWORD
+- EMAIL_ALERT_USER       # e.g.    alerts@qwikgame.org
+- EMAIL_ALERT_PASSWORD
+
 
 ## Development
 

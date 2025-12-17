@@ -288,3 +288,5 @@ EMAIL_PORT = os.getenv('EMAIL_PORT','587')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS','error: set environ variable EMAIL_USE_TLS') == "True"
 EMAIL_ACCOUNT_USER = os.getenv('EMAIL_ACCOUNT_USER','error: set environ variable EMAIL_ACCOUNT_USER')
 EMAIL_ACCOUNT_PASSWORD = os.getenv('EMAIL_ACCOUNT_PASSWORD','error: set environ variable EMAIL_ACCOUNT_PASSWORD')
+EMAIL_ALERT_USER = os.getenv('EMAIL_ALERT_USER','error: set environ variable EMAIL_ALERT_USER')
+EMAIL_ALERT_PASSWORD = os.getenv('EMAIL_ALERT_PASSWORD','error: set environ variable EMAIL_ALERT_PASSWORD')

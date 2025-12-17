@@ -20,6 +20,15 @@ Typical setup might involve:
 - psql database
 - python3, django and gunicorn
 
+### Environment Variables
+
+The following envonment variables are required:
+- EMAIL_BACKEND          # default django.core.mail.backends.console.EmailBackend
+- EMAIL_HOST             # e.g.    mail.com
+- EMAIL_PORT             # default 587
+- EMAIL_USE_TLS          # default True
+- EMAIL_ACCOUNT_USER     # e.g.    accounts@qwikgame.org
+- EMAIL_ACCOUNT_PASSWORD
 
 ## Development
 

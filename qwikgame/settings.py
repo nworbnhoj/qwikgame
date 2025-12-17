@@ -286,5 +286,5 @@ EMAIL_BACKEND = os.getenv('EMAIL_BACKEND','django.core.mail.backends.console.Ema
 EMAIL_HOST = os.getenv('EMAIL_HOST','error: set environ variable EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT','587')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS','error: set environ variable EMAIL_USE_TLS') == "True"
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER','error: set environ variable EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD','error: set environ variable EMAIL_HOST_PASSWORD')
+EMAIL_ACCOUNT_USER = os.getenv('EMAIL_ACCOUNT_USER','error: set environ variable EMAIL_ACCOUNT_USER')
+EMAIL_ACCOUNT_PASSWORD = os.getenv('EMAIL_ACCOUNT_PASSWORD','error: set environ variable EMAIL_ACCOUNT_PASSWORD')

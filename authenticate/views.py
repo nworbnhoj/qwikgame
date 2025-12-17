@@ -17,6 +17,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from authenticate.forms import RegisterForm, LoginForm
 from person.models import Person
+from qwikgame.settings import EMAIL_ACCOUNT_USER
 
 
 logger = logging.getLogger(__file__)
@@ -26,7 +27,7 @@ class EmailValidateView(FormView):
     email_template_name = "authenticate/email_validate_email.html"
     extra_email_context = None
     form_class = LoginForm
-    from_email = "accounts@qwikgame.org"
+    from_email = EMAIL_ACCOUNT_USER
     to_email = None
     html_email_template_name = None
     subject_template_name = "authenticate/email_validate_subject.txt"

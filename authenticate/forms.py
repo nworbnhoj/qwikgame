@@ -1,5 +1,6 @@
 import logging, string
 from django.contrib.auth.forms import PasswordResetForm
+from django.core.mail import EmailMultiAlternatives
 from django.core.validators import ValidationError
 from django.forms import CharField, HiddenInput
 from django.utils.crypto import get_random_string
@@ -8,6 +9,12 @@ from authenticate.models import User
 
 
 logger = logging.getLogger(__file__)
+
+class AccountEmail(EmailMultiAlternatives):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.username = EMAIL_ACCOUNT_USER
+        self.password = EMAIL_ACCOUNT_PASSWORD
 
 
 class EmailValidateForm(PasswordResetForm):
@@ -29,6 +36,36 @@ class EmailValidateForm(PasswordResetForm):
             logger.warn(f"honeypot filled with: [{honeypot}]")
             raise ValidationError("Password incorrect")
         return None
+
+    # over-ride with an exact copy of super, but replacing EmailMultiAlternatives
+    def send_mail(
+        self,
+        subject_template_name,
+        email_template_name,
+        context,
+        from_email,
+        to_email,
+        html_email_template_name=None,
+    ):
+        """
+        Send a django.core.mail.EmailMultiAlternatives to `to_email`.
+        """
+        subject = loader.render_to_string(subject_template_name, context)
+        # Email subject *must not* contain newlines
+        subject = "".join(subject.splitlines())
+        body = loader.render_to_string(email_template_name, context)
+
+        email_message = AccountEmail(subject, body, from_email, [to_email])
+        if html_email_template_name is not None:
+            html_email = loader.render_to_string(html_email_template_name, context)
+            email_message.attach_alternative(html_email, "text/html")
+
+        try:
+            email_message.send()
+        except Exception:
+            logger.exception(
+                "Failed to send password reset email to %s", context["user"].pk
+            )
 
 
 class LoginForm(EmailValidateForm):

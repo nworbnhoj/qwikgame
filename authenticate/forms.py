@@ -1,11 +1,13 @@
 import logging, string
 from django.contrib.auth.forms import PasswordResetForm
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.validators import ValidationError
 from django.forms import CharField, HiddenInput
+from django.template import loader
 from django.utils.crypto import get_random_string
 from django.utils.safestring import mark_safe
 from authenticate.models import User
+from qwikgame.settings import EMAIL_ACCOUNT_USER, EMAIL_ACCOUNT_PASSWORD
 
 
 logger = logging.getLogger(__file__)
@@ -13,8 +15,11 @@ logger = logging.getLogger(__file__)
 class AccountEmail(EmailMultiAlternatives):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.username = EMAIL_ACCOUNT_USER
-        self.password = EMAIL_ACCOUNT_PASSWORD
+        self.connection = get_connection(
+            fail_silently=False,
+            username = EMAIL_ACCOUNT_USER,
+            password = EMAIL_ACCOUNT_PASSWORD,
+        )
 
 
 class EmailValidateForm(PasswordResetForm):

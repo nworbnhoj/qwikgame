@@ -1,6 +1,6 @@
 import logging, hashlib, random
 from datetime import datetime, timedelta
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, get_connection
 from qwikgame.settings import FQDN, EMAIL_ALERT_USER, EMAIL_ALERT_PASSWORD
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
@@ -65,8 +65,11 @@ ALERT_PUSH_DEFAULT = 'bklmpqr'
 class AlertEmail(EmailMultiAlternatives):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.username = EMAIL_ALERT_USER
-        self.password = EMAIL_ALERT_PASSWORD
+        self.connection = get_connection(
+            fail_silently=False,
+            username = EMAIL_ALERT_USER,
+            password = EMAIL_ALERT_PASSWORD,
+        )
 
 
 class Alert(models.Model):

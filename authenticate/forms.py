@@ -7,7 +7,7 @@ from django.template import loader
 from django.utils.crypto import get_random_string
 from django.utils.safestring import mark_safe
 from authenticate.models import User
-from qwikgame.settings import EMAIL_ACCOUNT_USER, EMAIL_ACCOUNT_PASSWORD
+from qwikgame.settings import EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_PASSWORD, EMAIL_ACCOUNT_USER
 
 
 logger = logging.getLogger(__file__)

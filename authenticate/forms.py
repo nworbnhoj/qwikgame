@@ -20,6 +20,7 @@ class AccountEmail(EmailMultiAlternatives):
             username = EMAIL_ACCOUNT_USER,
             password = EMAIL_ACCOUNT_PASSWORD,
         )
+        self.from_email = "{}<{}>".format(EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_USER);
 
 
 class EmailValidateForm(PasswordResetForm):

@@ -70,6 +70,7 @@ class AlertEmail(EmailMultiAlternatives):
             username = EMAIL_ALERT_USER,
             password = EMAIL_ALERT_PASSWORD,
         )
+        self.from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER);
 
 
 class Alert(models.Model):

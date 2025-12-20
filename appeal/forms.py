@@ -242,7 +242,7 @@ class KeenForm(QwikForm):
             self.fields['friends'].sub_text = "You don't have any added friends yet. Please add them from the Friends tab"
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
-        venues = player.venue_suggestions(12).order_by('name').all()[:12]
+        venues = player.venue_suggestions(20).order_by('name').all()[:20]
         choices = [(None, ''), ('show-map', 'Select from map'), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
@@ -252,6 +252,7 @@ class KeenForm(QwikForm):
             template_name='field.html', 
             widget=DataSelect(
                 data_attr={
+                    'games': ['','',''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
                     'hours': ['','',''] + [v.open_7int_str() for v in venues],
                     'now_weekday': ['','',''] + [v.now().isoweekday() % 7 for v in venues],
                     'now_hour': ['','',''] + [v.now().hour for v in venues],

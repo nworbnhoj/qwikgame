@@ -177,7 +177,7 @@ class Appeal(models.Model):
             case 'cancelled':
                 entry['text'] = "Cancelled Invitation"
             case 'reappeal':
-                entry['text'] = f"Updated hours: {self.venue.datetime(self.date).strftime("%b %d")}"
+                entry['text'] = f"Updated hours: {self.venue.datetime(self.date).strftime('%b %d')}"
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)

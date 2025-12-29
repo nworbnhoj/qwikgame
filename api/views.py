@@ -12,7 +12,7 @@ logger = logging.getLogger(__file__)
 
 SUMMARY_THRESHOLD = 100;
 
-class DefaultJson(QwikView):
+class QwikJson(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().get(request)

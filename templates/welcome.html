@@ -1,97 +1,292 @@
 <!-- qwikgame/templates/welcome.html -->
-{% extends "qwik.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.</title>
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+    <script src="https://kit.fontawesome.com/8ee8f0aad3.js" crossorigin="anonymous"></script>
+</head>
+<body>
 
-
-{% block refresh %}
-    {% if user.is_authenticated %}
-    <meta http-equiv="refresh" content="5; url='/appeal'" />
-    {% endif %}
-{% endblock refresh %}
-
-
-{% block css %}
-    {{ block.super }}
-    <style type="text/css">
-        #content {  flex-direction: column; margin-top: 6em; }
-        #tab_bar { border-width: 0; height: 6em; justify-content: space-between }
-        a.btn.primary.super { border-radius:2em; margin: 6em; padding: 1em 5em}
-        div.card { aspect-ratio: 4/3; background-color: lightgrey; margin: 0em;  max-width: 20em; width: 100%; }
-        div.card p { height: 7em; margin: 0; }
-        h2 { font-weight: bold; margin: 0; padding: 0.3em; }
-        img.card { padding: 0.3em;  width: 100%; }
-        p.wall { font-size: 1.27em; line-height: 1.4em; margin: 0; padding: 1em 4em; }
-    </style>
-{% endblock css %}
-
-
-{% block tab_bar %}
-    <div id="tab_bar" class="tab_bar">
-        {% include 'logo_snippet.html' %}
-        <div class="pillar">
-            {% include 'authenticate_snippet.html' %}
+    <header>
+        <div class="container flex">
+            <a class="logo" href="https://qwikgame.org">
+                <img src="{% static 'img/logo.png' %}" data-href="{% url 'welcome' %}" height="50px" alt="QWIKGAME Logo Smileys">
+            </a>
+            <nav class="nav">
+                <ul class="nav_list">
+                    <li class="nav_item"><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
+                    <li class="nav_item"><a href="{% url 'register' %}" class="nav_link nav_link-button">Sign up</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>  
+
+    <section class="hero container flex">
+        <div class="hero_text">
+            <h1>FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE.</h1>
+            <p>You play squash, tennis or paddel? Or may be chess, darts or pool? But you can't find partners? This is <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME! Now finding partners and arranging games is fast and easy. With QWIKGAME you have all match invitations in one place. Just pick one or post your own.</p>     
+            <a href="{% url 'register' %}">
+                <button class="CTA_button_Orange">Organize A Match For Free!</button>
+            </a>
+        </div>
+        <div class="hero_image">
+            <img src="{% static 'img/welcome_feed.png' %}">
+        </div>
+    </section>
+
+    <section class="gridcontainer">
+        <div class="card">
+            <img src="{% static 'img/welcome_bdm.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Badminton</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="  {% static 'img/welcome_tts.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Table Tennis</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="{% static 'img/welcome_drt.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Darts</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="{% static 'img/welcome_squ.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Squash</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="{% static 'img/welcome_chs.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Chess</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="{% static 'img/welcome_tns.png' %}"loading="lazy" alt="logo" class="image">
+            <h5>Tennis</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>
+        <div class="card">
+            <img src="{% static 'img/welcome_more.png' %}" loading="lazy" alt="logo" class="image">
+            <h5>And more...</h5>
+            <a href="{% url 'register' %}">
+                <button class="card_button">Find partner</button>
+            </a>
+        </div>        
+    </section>
+    
+    <main class="keentoplay">
+        <h2>KEEN TO PLAY?</h2>
+        <section class="keentoplay_section1">
+            <div class="container">
+                <div class="flex">
+                    <div class="keentoplay_image1">
+                        <img src="{% static 'img/welcome_feed_double.png' %}" alt="QWIKGAME Feed Image" loading="lazy">
+                    </div>
+                    <div class="keentoplay_text1">
+                        <h3>Try the Feed Invitations</h2>
+                        <p>Other Players are looking for partners too!  Meet them in <span style="color: #f5a600; font-weight: 600;">QWIKGAME</span>. Scroll the <span style="color: #f5a600; font-weight: 600;">QWIK</span>Feed and pick an invitation ... or post your own!</p>
+                        <a href="{% url 'register' %}">
+                            <button class="CTA_button_Orange">Find Partner</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="keentoplay_section2">
+            <div class="container">
+                <div class="flex">
+                    <div class="keentoplay_text1">
+                        <h3>Post new Match Invitation</h2>
+                        <p>You don't find a suitable invitation in the QWIKFeed? Send invitation on your terms. Pick the game, the timeframe and the place. Confirm a match with a Rival of your preference. You choose! </p>
+                        <a href="{% url 'register' %}">
+                            <button class="CTA_button_Orange">Organize A Match</button>
+                        </a>
+                    </div>
+                    <div class="keentoplay_image2">
+                        <img src="{% static 'img/welcome_feed_double.png' %}" alt="QWIKGAME Feed Image" loading="lazy">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <section class="StrongSection">
+    <div class="container">
+        <h2 class="h2_StrongSection"> SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!</h2>
+        <a href="{% url 'register' %}">
+            <button class="CTA_button_White">Organize A Game Now</button>
+        </a>
     </div>
-{% endblock tab_bar %}
+    </section>
 
-
-{% block list_bar %}{% endblock list_bar %}
-
-
-{% block content %}
-    <div id="content" class="content">
-        <div id="alert_content_start" class="alert"></div>
-        <h1 class="wall">
-            <span class='brick'>FIND <span class='qwik'>PARTNERS.</span></span>
-            <span class='brick'>SCHEDULE <span class='qwik'>GAMES.</span></span>
-            <span class='brick'>PLAY <span class='qwik'>MORE.</span></span>
-        </h1>
-        <p class='wall'>
-            <span class='brick'>Pick any Match Invitation from the Feed.</span>
-            <span class='brick'>Post your own Match Invitation.</span>
-            <span class='brick'>Organize a QWIKGAME for today or tomorrow.</span>
-            <span class='brick'>It’s Free!</span>
-        </p>
-        <div class="pillar">
-            <a id='join' class="btn primary super" href="{% url 'register' %}">join Us!</a>
+    <section class="features">
+        <div class="feature_item">
+            <i class="fa-solid fa-rss"></i>
+            <h4>Accept Feed Invitation</h4>
         </div>
-        <div class="wall">
-            <div class="card">
-                <h2>Send Invitation</h2>
-                <p>Post your own Match invitation to the Feed. Let Players know where and when you want to play.  Multiple Players might respond to your appeal with their preferred hour. </p>
-                <img class="card" alt="feature" src="{% static 'img/feature_keen.png' %}" >
-            </div>
-            <div class="card">
-                <h2>Pick Invitation from the Feed</h2>
-                <p>Dive into an ocean of Match Invitations. Pick any that you like and reply by selecting an hour. Reply to as many Invitations as you like!</p>
-                <img class="card" alt="feature" src="{% static 'img/feature_feed.png' %}" >
-            </div>
-            <div class="card">
-                <h2>Confirm a match</h2>
-                <p>Confirm your match with the Player that you choose! You can choose a Rival with well matched strength for a great game. </p>
-                <img class="card" alt="feature" src="{% static 'img/feature_confirm.png' %}" >
-            </div>
-            <div class="card">
-                <h2>Chat with your Rival</h2>
-                <p>Chat in private with your Rival once you have Confirmed the match. </p>
-                <img class="card" alt="feature" src="{% static 'img/feature_chat.png' %}" >
-            </div>
-            <div class="card">
-                <h2>Add Friends </h2>
-                <p>Add your friends to QWIKGAME and invite them privately for a game. </p>
-                <img class="card" alt="feature" src="{% static 'img/feature_invite.png' %}" >
-            </div>
-            <div class="card">
-                <h2>Review the Match</h2>
-                <p>Help to build the Skill and Reputation Profile of your Rival. This will help QWIKGAME find your next great Match.</p>
-                <img class="card" alt="feature" src="{% static 'img/feature_review.png' %}" >
-            </div>
+        <div class="feature_item">
+            <i class="fa-solid fa-paper-plane"></i>
+            <h4>Post New Invitation</h4>
         </div>
-        <div class="pillar">
-            <a id='join' class="btn primary super" href="{% url 'register' %}">Let's Play!</a>
+        <div class="feature_item">
+            <i class="fa-solid fa-user-group"></i>
+            <h4>Invite Friends Only</h4>
         </div>
-        <div id="alert_content_end" class="alert"></div>
-    </div>
-{% endblock content %}
+        <div class="feature_item">
+            <i class="fa-solid fa-comments"></i>
+            <h4>Chat With Your Rival</h4>
+        </div>
+        <div class="feature_item">
+            <i class="fa-solid fa-thumbs-up"></i>
+            <h4>Leave A Review</h4>
+        </div>
+        <div class="feature_item">
+            <i class="fa-brands fa-wpexplorer"></i>
+            <h4>Try New Games</h4>
+        </div>
+    </section> 
 
-{% block feedback %}{% endblock feedback %}
+    <section class="StrongSection">
+        <div class="container">
+            <h2 class="h2_StrongSection"> FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS EASY.</h2>
+            <a href="{% url 'register' %}">
+                <button class="CTA_button_White">Find Your Partner</button>
+            </a>
+        </div>
+    </section>
+
+    <section class="sectionPWA">
+        <div class="container">
+            <h2>BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP.</h2>
+            <p>Save QWIKGAME app on your Home screen in seconds.
+            <div class="list">
+                <ul class="fa-ul">
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>No download process. No installation. No payment. Remove anytime</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>No app store needed</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Accessible from any device with a web browser</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Requires minimal storage</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Better performance in regions with limited internet connection</li>
+                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Compatible with all platforms: iOS, Android, Windows phone, Linux, etc</li>
+                </ul>
+            </div>
+            <a href="####">
+                <button class="CTA_button_Orange">Save QWIKGAME on your Home Screen</button>
+            </a>
+        </div>   
+    </section>
+
+    <section class="StrongSection">
+        <div class="container">
+            <h2 class="h2_StrongSection"> ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE</h2>
+            <a href="{% url 'register' %}">
+                <button class="CTA_button_White">Organize A Game Now</button>
+            </a>
+        </div>
+    </section>
+
+    <article class="FAQs">
+    
+        <h2>FREQUENTLY ASKED QUESTIONS</h2>
+        <div class="questions">
+            <button type="button" class="collapsible">What is <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME?</button>
+                <div class="content">
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME is an app which facilitates finding partners and arranging 2-player games.</p>
+                </div>
+
+            <button type="button" class="collapsible">For which games can I find partners on <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME?</button>
+                <div class="content">
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME focuses on 2-player games only with abmitious plans for multi-player games in the future. Currently we have the most popular 2-player games like tennis, squash, table tennis, badminton, racquetball, but also chess, darts, backgammon, billiards and more.</p>
+                </div>
+
+            <button type="button" class="collapsible">Is <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME paid?</button>
+                <div class="content">
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME is free of charge.</p>
+                </div>
+
+            <button type="button" class="collapsible">Is <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME available in my country?</button>
+                <div class="content">
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME works anywhere in the world.</p>
+                </div>
+            <button type="button" class="collapsible">How do I find partner and schedule a match with <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME?</button>
+                <div class="content">
+                    <p>To find a partner and organize a match start by sending an invitation for a match. Select the game, venue and a timeframe. It is recommended to call the venue and check if there are available playgrounds for your preferred timeframe. Your Match Invitation will be visible in the QWIKFeed to other Players. Multiple Players may respond to your Invitation. You get to choose the best offer and confirm the match.
+                    You can also reply to an existing invitation from the <span style="color: #f5a600; font-weight: 600;">QWIK</span>Feed by placing an offer for a particular hour from the given timeframe.</p>
+                </div>
+
+            <button type="button" class="collapsible">How many invitations can I send?</button>
+                <div class="content">
+                    <p>You can post as many invitations as you wish every day and for any game, venue or timeframe.</p>
+                </div>
+
+            <button type="button" class="collapsible">What is <span style="color: #f5a600; font-weight: 600;">QWIK</span>Feed?</button>
+                <div class="content">
+                    <p>You can find all current invitations in our <span style="color: #f5a600; font-weight: 600;">QWIK</span>Feed. It is contantly updated with new invitations sent by Players.</p>
+                </div>
+
+            <button type="button" class="collapsible">Who books the court/playground?</button>
+                <div class="content">
+                    <p>The Player who send the initial match invitation is responsible to call and book a court/playground once the match is confirmed. The Player is also recommended to call and check the venue availability before sending the invitation.</p>
+                </div>
+
+            <button type="button" class="collapsible">Why can't I find <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME in the PlayStore and AppStore?</button>
+                <div class="content">
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME is a Progressive Web App. It's the new generation of apps. No need to download nor install anything. Just save <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME on your Home screen. <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME PWA works on all operating systems and an Internet Browser is the only requirement.</p>
+                </div>
+        </div>
+
+    </article>
+
+    <script class="script_FAQs">
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+    </script>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="flex">
+                <div class="column1">
+                    <img class="logo_footer"; src="{% static 'img/logo.png' %}">
+                </div>
+                <div class="column2">
+                    <a href="https://forum.qwikgame.org/" class="footer_link" target="_blank">QWIKForum</a>
+                </div>
+            </div>
+        </div>
+        <div id="footer_license"><p style="text-align: center;">
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.
+        </div>
+    </footer>
+
+</body>
+</html>

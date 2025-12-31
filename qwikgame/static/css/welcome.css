@@ -1,0 +1,139 @@
+
+
+/************COMMON***************/
+
+*{box-sizing: border-box; margin: 0; padding: 0;}
+
+img{max-width: 100%;} /*makes all images responsive*/
+
+.container {margin: 0 auto; max-width: 1200px; width: 80%;}
+.flex {align-items: center; display: flex; justify-content: space-between; gap: 3em;}
+
+h1 {font-size: 4rem; margin-bottom: 0.5em;}
+h2 {font-size: 3rem; margin-top: 3em; text-align: center; text-decoration: uppercase;}
+h3 {font-size: 2.5rem; margin-bottom: 0.5em;}
+h4 {font-size: 2rem; margin: 1em;}
+h5 {font-size: 1.5rem;}
+p {font-size: 1.25rem; margin-top: 1em;}
+
+.CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
+.CTA_button_Orange:hover {scale: 1.1;}
+
+
+
+/***************HEADER***************/
+
+header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 230)97%); padding: 1em 0;}
+.hero {padding: 1em 0;}
+.hero_text {width: 60%;}
+.hero_image {align-self: center; max-width: 37%;}
+.nav_list {display: flex; gap: 2em; list-style: none; margin: 0; padding: 0; }
+.nav_link {color: black; text-decoration: none; text-transform: uppercase;}
+.nav_link-button {background: #f5a600; border-radius: 3em; padding: 0.5em 1.5em; }
+
+
+/************GridCardContainer***************/
+
+.card {align-items: center; backdrop-filter: blur (30px); background: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.5); border-radius: 0.5rem; color: rgb(23, 23, 23); display: flex; flex-direction: column; justify-content: center; padding: 1em; /*background needs to have some degree of transparency to have the blur effect working*/}
+.card:hover {background: rgba(255,255,255,0.5); border: 2px solid rgba(255,255,255,1); scale: 1.09; transition: 0.2s ease;}
+.card_button{background: rgb(255, 255, 255); border: 1px solid white; border-radius: 0.5em; color: #262626; font-size: 1rem; font-weight: 600; margin-top: 2em; padding: 0.8em 2.4em; transition: 0.1s ease; }
+.card_button:hover{background-color: #f5a600; border: 1px solid #f5a600; color: white; cursor: pointer;}
+.gridcontainer {background-color: #f5a600; display: grid; gap: 2em; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); justify-content: center; padding: 5em 5em; /*1fr seems to be 1fr from the SCREEN and if there is a margin btw the screen and the end of the gridcontainer, then the grid boxes still go OVER the end of the grid container. So we have no margin, 1fr is regarding the entire screen, not the Parent Container*/}
+.image {border: 3px solid white; border-radius: 3rem; height: 150px; width: 150px; margin-top: 1em; margin-bottom: 2em; padding: 0.5em;}
+.image:hover {scale: 1.2;}
+
+
+/***************************KEEN TO PLAY***************************/
+
+.keentoplay_section1 {margin-top: 3em;}
+.keentoplay_image1, .keentoplay_image2 {max-width: 50%;}
+.keentoplay_text1, .keentoplay_text2 {width: 50%;}
+
+
+/***************************STRONG SECTION 1***************************/
+
+.CTA_button_White {background-color: #ffffff; border: none; border-radius: 3rem; color: rgb(20, 20, 20); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-bottom: 2em; margin-top: 1em; padding: 1em 3em;}
+.h2_StrongSection {color: rgb(50, 50, 50); font-size: 2.5rem; padding-top: 0em;}
+.StrongSection {background-color: #f5a600; margin-bottom: 3em; margin-top: 3em; padding: 1em; text-align: center;}
+
+
+/***************************6 FEATURES ***************************/
+
+.fa-solid, .fa-brands {color: #f5a600; font-size: 5em;}
+.features {display: grid; gap: 2em; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); justify-content: center; margin: 7em; padding: 3em; }
+.feature_item {align-items: center; background-color: rgb(241, 241, 241); border-radius: 24px; display: flex; flex-direction: column; padding: 2.5em;}
+
+
+/***************************PWA ***************************/
+
+.fa-li {color: green;}
+.fa-ul {text-align: left; font-size: 1.5rem;}
+.list {align-items: center; display: flex; flex-direction: column; line-height: 1.5; padding: 8em 0em;}
+.sectionPWA {padding-bottom: 5em; text-align: center; }
+
+/***************************FAQ***************************/
+
+.collapsible {background-color: white; border-color: #8a8a8a; border-radius: 1rem; border-width: 0.01rem; color: rgb(0, 0, 0); cursor: pointer; font-size: 1rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
+.active, .collapsible:hover {/*background-color: #f5a600;*/scale: 1.05;}
+.content {display: none; font-size: 1.25rem; overflow: hidden; padding-bottom: 2rem; padding-left: 2rem;  text-align: left; width: 90%;}
+.questions {display: flex; flex-direction: column; gap: 1em; margin: 5em auto; width: 50%;}
+
+/***************************FOOTER ***************************/
+
+.column1 {background-color: white; border: none; border-radius: 1rem; padding: 3em; text-align: center; width: 50%;}
+.column2 {align-items: center;}
+.footer {background-color: #f5a600; margin-top: 5em; padding-top: 5em;}
+.footer_link {text-decoration: none;}
+.logo_footer {max-width: 80%;}
+#footer_license{background-color: #f5a600; padding-top: 1em; }
+
+
+@media(max-width: 600px){
+
+h1 {margin-top: 1em; font-size: 2rem;}
+h2 {font-size: 1.5rem;}
+h3 {font-size: 1.25rem;margin-top: 4em;}
+h4, h5 {font-size: 1rem;}
+p {font-size: 0.9rem;}
+
+.card_button {padding: 0.8em 2.4em;}
+.CTA_button_Orange {font-size: 1.25rem; padding: 1em 1.5em; }
+.CTA_button_White {font-size: 1.25rem; padding: 1em 1.5em; }
+.fa-solid, .fa-brands {font-size: 2em; }
+.fa-ul {font-size: 1rem;}
+.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1em; padding: 2em; margin: 0;}
+.feature_item {display: flex; flex-direction: row; justify-content: space-evenly; padding: 0;}
+.flex {display: flex; flex-direction: column; justify-content: space-between; gap: 1em;}
+.footer_socialmedia {display: flex; justify-content: space-evenly;}
+.gridcontainer {padding: 2em 2em;}
+.h2_StrongSection {font-size: 1.5rem;}
+.hero_text {text-align: center; width: 100%;}
+.hero_image {max-width: 100%;}
+.keentoplay_image1, .keentoplay_image2 {max-width: 100%;}
+.keentoplay_text1, .keentoplay_text2 {text-align: center; width: 100%; }
+.list {line-height: 1.5; padding: 3em 0em; }
+.logo_footer {max-width: 100%;}
+.questions {width: 90%;}
+
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+ 

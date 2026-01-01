@@ -23,10 +23,10 @@
         select.feedback { background-color: #ffffff; border: 1px dashed #f5a600; margin: 1em 0em 2em 0em; }
         textarea { border: 1px dashed #f5a600; margin: 1em 0 0 0 ; width: 99%; }
     </style>
-{% endblock css %}
 {% if small_screen %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/small_screen.css' %}">
 {% endif %}
+{% endblock css %}
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
 {% block script %}
     <script defer src="{% static 'qwik.js' %}"></script>
@@ -105,7 +105,7 @@
     </div>
 
 {% endblock feedback %}
-    <div id="footer"><p style="text-align: center;">
+    <div id="license"><p style="text-align: center;">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.
     </div>
     <div id="alert_body_end" class="alert"></div>

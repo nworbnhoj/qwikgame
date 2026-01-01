@@ -1,16 +1,19 @@
 <!-- qwikgame/templates/welcome.html -->
+{% extends "qwik.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.</title>
-    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
-    <script src="https://kit.fontawesome.com/8ee8f0aad3.js" crossorigin="anonymous"></script>
-</head>
-<body>
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+{% endblock css %}
+
+{% block script %}{% endblock script %}
+
+{% block title %}QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.{% endblock %}
+
+{% block tab_bar %}{% endblock tab_bar %}
+
+{% block content %}
     <header>
         <div class="container flex">
             <a class="logo" href="https://qwikgame.org">
@@ -214,7 +217,7 @@
 
             <button type="button" class="collapsible">For which games can I find partners on <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME?</button>
                 <div class="content">
-                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME focuses on 2-player games only with abmitious plans for multi-player games in the future. Currently we have the most popular 2-player games like tennis, squash, table tennis, badminton, racquetball, but also chess, darts, backgammon, billiards and more.</p>
+                    <p><span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME focuses on 2-player games only with ambitious plans for multi-player games in the future. Currently we have the most popular 2-player games like tennis, squash, table tennis, badminton, racquetball, but also chess, darts, backgammon, billiards and more.</p>
                 </div>
 
             <button type="button" class="collapsible">Is <span style="color: #f5a600; font-weight: 600;">QWIK</span>GAME paid?</button>
@@ -256,20 +259,20 @@
     </article>
 
     <script class="script_FAQs">
-var coll = document.getElementsByClassName("collapsible");
-var i;
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
     </script>
 
     <footer class="footer">
@@ -283,10 +286,8 @@ for (i = 0; i < coll.length; i++) {
                 </div>
             </div>
         </div>
-        <div id="footer_license"><p style="text-align: center;">
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; transform: scale(0.7);" src="{% static 'img/creativecommons.png' %}"></a><br>This work by <a xmlns:cc="http://creativecommons.org/ns#" href="https://qwikgame.org" property="cc:attributionName" rel="cc:attributionURL">qwikgame.org</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a></p>.
-        </div>
     </footer>
+{% endblock content %}
 
-</body>
-</html>
+
+{% block feedback %}{% endblock feedback %}

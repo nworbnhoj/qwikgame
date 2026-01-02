@@ -20,10 +20,14 @@ if('serviceWorker' in navigator) {
 let installPrompt = null;
 const INSTALL_BUTTON = document.getElementById("install_app");
 if (INSTALL_BUTTON){
+
+  showPWAFailMsg();
+
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
     INSTALL_BUTTON.classList.remove('hidden')
+    hidePWAFailMsg();
   });
 
   INSTALL_BUTTON.addEventListener("click", async () => {
@@ -31,24 +35,8 @@ if (INSTALL_BUTTON){
       const RESULT = await installPrompt.prompt();
       console.log(`Install prompt was: ${RESULT.outcome}`);
       disableInAppInstallPrompt();
-    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        const IOS = document.getElementById("ios_install_app");
-        if (IOS){
-          INSTALL_BUTTON.classList.add('hidden')
-          IOS.classList.remove('hidden')
-        }
-    } else if (/Firefox/i.test(navigator.userAgent)) {
-        const FIREFOX = document.getElementById("firefox_install_app");
-        if (FIREFOX){
-          INSTALL_BUTTON.classList.add('hidden')
-          FIREFOX.classList.remove('hidden')
-        }
     } else {
-        const UNSUPPORTED = document.getElementById("unsupported_install_app");
-        if (UNSUPPORTED){
-          INSTALL_BUTTON.classList.add('hidden')
-          UNSUPPORTED.classList.remove('hidden')
-        }      
+      showPWAFailMsg();
     }
   });
 
@@ -59,6 +47,39 @@ if (INSTALL_BUTTON){
   function disableInAppInstallPrompt() {
     installPrompt = null;
     INSTALL_BUTTON.classList.add("hidden");
+  }
+
+  function hidePWAFailMsg() {
+    const PWAFAIL = document.querySelectorAll("p.pwa_fail");
+    PWAFAIL.forEach((msg) => {
+      msg.classList.add('hidden');
+    }); 
+  }
+
+  function showPWAFailMsg() {
+    alert(navigator.userAgent)
+    if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
+      return;
+    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      const IOS = document.getElementById("ios_install_app");
+      if (IOS){
+        INSTALL_BUTTON.classList.add('hidden')
+        IOS.classList.remove('hidden')
+      }
+    } else if (/Firefox/i.test(navigator.userAgent)) {
+      alert('firefox')
+      const FIREFOX = document.getElementById("firefox_install_app");
+      if (FIREFOX){
+        INSTALL_BUTTON.classList.add('hidden')
+        FIREFOX.classList.remove('hidden')
+      }
+    } else {
+      const UNSUPPORTED = document.getElementById("unsupported_install_app");
+      if (UNSUPPORTED){
+        INSTALL_BUTTON.classList.add('hidden')
+        UNSUPPORTED.classList.remove('hidden')
+      }    
+    }
   }
 }
 

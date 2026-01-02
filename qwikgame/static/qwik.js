@@ -57,7 +57,6 @@ if (INSTALL_BUTTON){
   }
 
   function showPWAFailMsg() {
-    alert(navigator.userAgent)
     if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
       return;
     } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
@@ -67,7 +66,6 @@ if (INSTALL_BUTTON){
         IOS.classList.remove('hidden')
       }
     } else if (/Firefox/i.test(navigator.userAgent)) {
-      alert('firefox')
       const FIREFOX = document.getElementById("firefox_install_app");
       if (FIREFOX){
         INSTALL_BUTTON.classList.add('hidden')

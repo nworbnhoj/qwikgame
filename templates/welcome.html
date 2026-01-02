@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
 {% endblock css %}
 
-{% block script %}{% endblock script %}
-
 {% block title %}QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.{% endblock %}
 
 {% block tab_bar %}{% endblock tab_bar %}
@@ -191,9 +189,10 @@
                     <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Compatible with all platforms: iOS, Android, Windows phone, Linux, etc</li>
                 </ul>
             </div>
-            <a href="####">
-                <button class="CTA_button_Orange">Save QWIKGAME on your Home Screen</button>
-            </a>
+            <button id="install_app" class="CTA_button_Orange hidden">Save QWIKGAME on your Home Screen</button>
+            <p id="" class="hidden">Unfortunately IOS does not support PWA's</p>
+            <p id="" class="hidden">Firefox requires a <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/">PWA extension</a>.</p>
+            <p id="" class="hidden">Unfortunately this browser does not support PWA's</p>
         </div>   
     </section>
 

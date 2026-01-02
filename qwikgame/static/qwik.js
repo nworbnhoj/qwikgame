@@ -15,7 +15,7 @@ if('serviceWorker' in navigator) {
 };
 
 
-///////////////// App Install functions ///////////////////
+///////////////// PWA Install functions ///////////////////
 
 let installPrompt = null;
 const INSTALL_BUTTON = document.getElementById("install_app");

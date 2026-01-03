@@ -980,6 +980,19 @@ window.onload = function() {
   document.querySelectorAll('div.checkbox_wrap').forEach(function(div) {
     div.onclick = check;
   });
+  // store text input across page reload https://darekkay.com/blog/preserve-form-values/
+  document.querySelectorAll("input[type='text']").forEach(function(input) {
+    addEventListener("input", (event) => {
+      history.replaceState({ query: input.value }, "");
+    });
+  });
+  // recover text input across page reload https://darekkay.com/blog/preserve-form-values/
+  window.addEventListener("pageshow", () => {
+    const query = history.state?.query;
+    if (query) {
+      document.querySelector("input[type='text']").value = query;
+    };
+  });
   document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
     checkbox.oninput = enableInviteFriend;
   });

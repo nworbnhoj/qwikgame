@@ -189,7 +189,8 @@
                     <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Compatible with all platforms: iOS, Android, Windows phone, Linux, etc</li>
                 </ul>
             </div>
-            <button id="install_app" class="CTA_button_Orange hidden">Save QWIKGAME on your Home Screen</button>
+            <button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
+            <p id="app_installed" class="hidden">PWA is Installed. <a href="{% url 'login' %}">Switch to the App</a></p>
             <p id="ios_install_app" class="hidden pwa_fail">Unfortunately IOS does not support PWA's</p>
             <p id="firefox_install_app" class="hidden pwa_fail">Firefox requires a <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">PWA extension</a>.</p>
             <p id="unsupported_install_app" class="hidden pwa_fail">Unfortunately this browser does not support PWA's</p>

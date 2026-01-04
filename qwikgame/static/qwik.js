@@ -26,8 +26,9 @@ if (INSTALL_BUTTON){
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
-    INSTALL_BUTTON.classList.remove('hidden')
+    INSTALL_BUTTON.disabled = false;
     hidePWAFailMsg();
+    console.log("PWA installPrompt ready");
   });
 
   INSTALL_BUTTON.addEventListener("click", async () => {
@@ -37,16 +38,19 @@ if (INSTALL_BUTTON){
       disableInAppInstallPrompt();
     } else {
       showPWAFailMsg();
+      console.log("PWA installPrompt missing");
     }
   });
 
   window.addEventListener("appinstalled", () => {
     disableInAppInstallPrompt();
+    showInstalled();
+    console.log("PWA installed");
   });
 
   function disableInAppInstallPrompt() {
     installPrompt = null;
-    INSTALL_BUTTON.classList.add("hidden");
+    INSTALL_BUTTON.disabled = true;
   }
 
   function hidePWAFailMsg() {
@@ -56,25 +60,34 @@ if (INSTALL_BUTTON){
     }); 
   }
 
+  function showInstalled(){
+    const INSTALLED = document.getElementById("app_installed");
+    if (INSTALLED){
+      INSTALL_BUTTON.disabled = true
+      INSTALLED.classList.remove('hidden')
+    }
+
+  }
+
   function showPWAFailMsg() {
     if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
       return;
     } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       const IOS = document.getElementById("ios_install_app");
       if (IOS){
-        INSTALL_BUTTON.classList.add('hidden')
+        INSTALL_BUTTON.disabled = true
         IOS.classList.remove('hidden')
       }
     } else if (/Firefox/i.test(navigator.userAgent)) {
       const FIREFOX = document.getElementById("firefox_install_app");
       if (FIREFOX){
-        INSTALL_BUTTON.classList.add('hidden')
+        INSTALL_BUTTON.disabled = true
         FIREFOX.classList.remove('hidden')
       }
     } else {
       const UNSUPPORTED = document.getElementById("unsupported_install_app");
       if (UNSUPPORTED){
-        INSTALL_BUTTON.classList.add('hidden')
+        INSTALL_BUTTON.disabled = true
         UNSUPPORTED.classList.remove('hidden')
       }    
     }

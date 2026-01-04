@@ -17,7 +17,8 @@ h5 {font-size: 1.5rem;}
 p {font-size: 1.25rem; margin-top: 1em;}
 
 .CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
-.CTA_button_Orange:hover {scale: 1.1;}
+.CTA_button_Orange:disabled { background-color: white; border: 1px solid #f5a600;}
+.CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
 .fa-solid, .fa-brands {color: #f5a600;}
 .hidden {display: none;}
 

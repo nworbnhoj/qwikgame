@@ -1,7 +1,6 @@
 <!-- qwikgame/person/templates/person/private.html -->
 {% extends "person/account.html" %}
 {% load static %}
-{% load webpush_notifications %}
 
 {% block css %}
     {{ block.super }}
@@ -14,7 +13,6 @@
 
 {% block script %}
     {{ block.super }}
-    {% webpush_header %}
     <script defer src="{% static 'private.js' %}"></script>
 {% endblock %}
 

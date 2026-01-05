@@ -1,5 +1,7 @@
 const MSqC = {lat: -36.4497, lng: 146.4300};
 const Sofia = {lat: 42.6977, lng: 23.3217};
+const REFRESH_FAST = 60; // every minute
+const REFRESH_SLOW = 900; // every 15 minutes
 
 ///////////////// Service Worker functions ///////////////////
 
@@ -13,6 +15,7 @@ if('serviceWorker' in navigator) {
           registration.pushManager.getSubscription().then(subscription => {
             if (subscription) {
               console.log("WebPush subscribed");
+              setMetaRefresh(REFRESH_SLOW);
             } else {
               subscribe(registration);
               console.log("WebPush subscription underway");
@@ -20,9 +23,11 @@ if('serviceWorker' in navigator) {
           });
         } else {
           console.log("WebPush unauthorised");
+          setMetaRefresh(REFRESH_FAST);
         }
       } else {
         console.log("WebPush unsupported");
+        setMetaRefresh(REFRESH_FAST);
       }
     }, function(err) {
       console.log("WARNING: serviceWorker registration failed.");
@@ -195,6 +200,13 @@ function nextSibling(element, selector) {
   if (!sibling || sibling.matches(selector)) return sibling;
   return nextSibling(sibling, selector);
 };
+
+
+function setMetaRefresh(seconds) {
+  for (var refresh of document.querySelectorAll("meta[http-equiv='refresh'")) {
+    refresh.content = seconds;
+  }
+}
 
 
 // toggle the element visibility

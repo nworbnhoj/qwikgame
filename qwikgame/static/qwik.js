@@ -5,13 +5,29 @@ const Sofia = {lat: 42.6977, lng: 23.3217};
 
 // Registering Service Worker
 if('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
-          console.log("serviceWorker registered.");
-        }, function(err) {
-          console.log("WARNING: serviceWorker registration failed.");
-        });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log("serviceWorker registered");
+      if ('PushManager' in window) {
+        if (Notification.permission === 'granted') {
+          registration.pushManager.getSubscription().then(subscription => {
+            if (subscription) {
+              console.log("WebPush subscribed");
+            } else {
+              subscribe(registration);
+              console.log("WebPush subscription underway");
+            }
+          });
+        } else {
+          console.log("WebPush unauthorised");
+        }
+      } else {
+        console.log("WebPush unsupported");
+      }
+    }, function(err) {
+      console.log("WARNING: serviceWorker registration failed.");
     });
+  });
 };
 
 

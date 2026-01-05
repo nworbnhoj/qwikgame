@@ -5,7 +5,7 @@ const VERSION = "{{ version }}";
 
 /////////////////////////////////////////////////////////////////////// INSTALL
 self.addEventListener('install', (event) => {
- console.log("Service Worker installed.");
+ console.log("Qwik Service Worker installed.");
 });
 
 
@@ -52,4 +52,22 @@ workbox.precaching.precacheAndRoute(appShell.map(url => ({
 
 // Serve the app shell from the cache.
 workbox.routing.registerRoute(({url}) => appShell.includes(url), new workbox.strategies.CacheOnly());
-console.log("serviceWorker loaded.");
+
+
+
+/////////////////////////////////////////////////////////////////////// WEBPUSH
+
+// Reload url in all windowClients
+self.addEventListener("push", (event) => {
+  console.log("Push reload triggered");
+  event.waitUntil(
+    self.clients.matchAll({type: 'window'}).then(clients => {
+      clients.forEach(client => {
+        client.navigate(client.url);
+      });
+    })
+  )
+});
+
+
+console.log("Qwik Service Worker loaded.");

@@ -120,6 +120,7 @@ class Alert(models.Model):
                 return self._push()
             case _:
                 logger.warn(f'unimplemented Alert mode: {self.mode}')
+        return False;
 
     def _push(self):
         logger.info(f'Alert._push(): {self.pk}')
@@ -128,7 +129,6 @@ class Alert(models.Model):
             head_template_name = f'person/{alert_type}_alert_notify_head.txt',
             body_template_name = f'person/{alert_type}_alert_notify_body.txt',
             payload = {
-
                 'body': loader.render_to_string(body_template_name, self.context),
                 'head': loader.render_to_string(head_template_name, self.context),
                 'icon': 'icon',
@@ -142,8 +142,10 @@ class Alert(models.Model):
         except WebPushException as e:
             eol = e.message.find('\n')
             logger.warn(f'Player {self.person.pk}: {e.message[:eol]}')
+            return False;
         except Exception:
             logger.exception( f'Failed to send Alert Notification: {self}' )
+            return False;
         return True
 
     def _email(self):
@@ -166,11 +168,12 @@ class Alert(models.Model):
             #     logger.info(html_email_template_name)
             #     html_email = loader.render_to_string(html_email_template_name, self.context)
             #     email_message.attach_alternative(html_email, "text/html")
-            return email_message.send()
+            return email_message.send() > 0
         except Exception:
             logger.exception( f'Failed to send Alert email: {self}' )
-            return False
-        return True
+        return False
+
+    
 
 
 class Person(models.Model):

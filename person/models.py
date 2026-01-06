@@ -214,12 +214,14 @@ class Person(models.Model):
             alert.mode = 'E'
             alert.context['to_email'] = self.user.email
             if not alert.dispatch():
-                alert.save()
+        #        alert.save()
+                logger.warn("Alert discarded - TODO serialize, save & replay unsent Alerts");
         if type in  self.notify_push:
             alert.pk = None
             alert.mode = 'P'
             if not alert.dispatch():
-                alert.save()
+        #        alert.save()
+                logger.warn("Alert discarded - TODO serialize, save & replay unsent Alerts");
 
     def alert_del(self, id=None, type=None):
         Alert.objects.filter(id=id, person=self, type=type).delete()

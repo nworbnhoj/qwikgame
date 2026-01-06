@@ -1,0 +1,8 @@
+uploads/
+test.php
+/nbproject/private/
+vendor/
+lang/
+static/
+user/
+**/__pycache__/*

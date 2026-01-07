@@ -192,7 +192,7 @@ class Person(models.Model):
         return hashlib.md5(text.encode()).hexdigest()
 
     def __str__(self):
-    	return elf.qwikname
+    	return self.qwikname
 
     def alert(self,
             type,
@@ -202,7 +202,7 @@ class Person(models.Model):
         ):
         alert = Alert (
             # context = context when able to serialize context
-            context = dict,
+            context = {},
             expires = expires,
             mode = 'U',
             person = self,

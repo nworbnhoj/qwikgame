@@ -44,7 +44,7 @@ class AppealsView(QwikView):
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
-        player.alert_del(type='appeal')
+        player.alert_del(type='abklm')
         appeals = player.appeals()
         kwargs['items'] = appeals
         if kwargs['items'].first():

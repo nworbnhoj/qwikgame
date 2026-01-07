@@ -198,7 +198,7 @@ class FriendsView(QwikView):
 
     def context(self, request, *args, **kwargs):
         player = self.user.player
-        player.alert_del(type='friend')
+        player.alert_del(type='')
         kwargs['items'] = Friend.objects.filter(player=player).order_by('name')
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend')

@@ -26,7 +26,7 @@ class MatchesView(QwikView):
             kwargs['pk'] = kwargs.get('match')
         context = super().context(request, *args, **kwargs)
         player = self.user.player
-        player.alert_del(type='match')
+        player.alert_del(type='pqr')
         matches = context.get('items', Match.objects.none())
         now = datetime.now(timezone.utc) + DELAY_MATCHS_LIST
         matches_future = matches.filter(date__gt=now).order_by('-date')
@@ -156,7 +156,7 @@ class ReviewsView(QwikView):
             kwargs['pk'] = kwargs.get('review')
         context = super().context(request, *args, **kwargs)
         player = self.user.player
-        player.alert_del(type='review')
+        player.alert_del(type='')
         reviews = context.get('items', Review.objects.none()).order_by('match__date')
         for review in reviews:
             seen = player.pk in review.meta.get('seen', [])

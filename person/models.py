@@ -77,6 +77,7 @@ class Alert(models.Model):
     MODE = {
         'E':'Email',
         'P':'Push',
+        'U':'UI',
     }
     TYPE = {
         'a': 'woo_invite',
@@ -191,7 +192,7 @@ class Person(models.Model):
         return hashlib.md5(text.encode()).hexdigest()
 
     def __str__(self):
-    	return self.qwikname
+    	return elf.qwikname
 
     def alert(self,
             type,
@@ -200,15 +201,20 @@ class Person(models.Model):
             url='',
         ):
         alert = Alert (
-            context = context,
+            # context = context when able to serialize context
+            context = dict,
             expires = expires,
-            mode = 'E',
+            mode = 'U',
             person = self,
             priority = 'A',
             repeats = 0,
             type = type,
             url=url,
         )
+        # save UI Alert
+        alert.save()
+        # remove when able to serialize context
+        alert.context = context
         if type in  self.notify_email:
             alert.pk = None
             alert.mode = 'E'
@@ -225,7 +231,12 @@ class Person(models.Model):
 
     def alert_del(self, id=None, type=None):
         Alert.objects.filter(id=id, person=self, type=type).delete()
-        return
+        qs = Alert.objects.filter(person=self)
+        if id:
+            qs = qs.filter(id=id)
+        if type:
+            qs = qs.filter(type__in=type)
+        qs.delete()
 
     def alert_get(self, priority=None, repeats=None, type=None):
         return Alert.objects.filter(person=self, priority=priority, repeats=repeats, type=type)
@@ -236,8 +247,8 @@ class Person(models.Model):
     def alert_get_le(self, expires=None, priority=None, repeats=None):
         return Alert.objects.filter(person=self, expires_le=expires, priority_ge=priority, repeats_le=repeats)
 
-    def alert_show(self, type):
-        return '' if self.alert_get(type=type) else 'hidden'
+    def alert_show(self, type=None):
+        return '' if type and Alert.objects.filter(person=self, type__in=type) else 'hidden'
 
     def block_rival(self, rival):
         self.block.add(rival)

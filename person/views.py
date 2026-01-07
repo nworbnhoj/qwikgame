@@ -20,7 +20,7 @@ class AccountView(QwikView):
         super().get(request)
         context = super().context(request)
         player = self.user.player        
-        player.alert_del(type='account')
+        player.alert_del(type='')
         context |= { 'account_tab': 'selected' }
         if context['small_screen']:
             return render(request, "person/account.html", context)

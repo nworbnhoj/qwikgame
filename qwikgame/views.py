@@ -102,11 +102,11 @@ class QwikView(BaseView):
             'items': items,
             'person_icon': person.icon,
             'qwikname': person.qwikname,
-            'appeal_alert': person.alert_show('appeal'),
-            'match_alert': person.alert_show('match'),
-            'review_alert': person.alert_show('review'),
-            'friend_alert': person.alert_show('friend'),
-            'account_alert': person.alert_show('acount'),
+            'appeal_alert': person.alert_show('abklm'),
+            'match_alert': person.alert_show('pqr'),
+            'review_alert': person.alert_show(''),
+            'friend_alert': person.alert_show(''),
+            'account_alert': person.alert_show(''),
         }
         return context
 

@@ -2,7 +2,7 @@ import logging, subprocess
 from authenticate.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -150,6 +150,13 @@ class WelcomeView(BaseView):
             context['person_icon'] = self.user.person.icon
             context['qwikname'] = self.user.person.qwikname
         return context
+
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/appeal')
+        return super(WelcomeView, self).dispatch(request, *args, **kwargs)
+
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)

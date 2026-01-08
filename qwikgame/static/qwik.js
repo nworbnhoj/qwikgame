@@ -33,6 +33,13 @@ if('serviceWorker' in navigator) {
       console.log("WARNING: serviceWorker registration failed.");
     });
   });
+  window.addEventListener('focus', () => {
+      navigator.serviceWorker.getRegistration("/webpush/service-worker.js").then((registration) => {
+          if (registration) {
+              closeNotifications(registration);
+          }
+      });
+  });
 };
 
 
@@ -347,6 +354,20 @@ function xhrError() {
 
 
 ///////////////// Generic helper functions ///////////////////
+
+
+function closeNotifications(registration) {
+  registration.getNotifications().then((notifications) => {
+    for (notification in notifications) {
+      try {
+        notification.close();
+      } catch (e) {
+        console.info("failed to close notifications");
+        break;
+      }
+    }
+  });
+}
 
 
 // https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript/34064434#34064434

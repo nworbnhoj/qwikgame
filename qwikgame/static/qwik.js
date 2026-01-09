@@ -860,59 +860,10 @@ function toggle_disabled(toggle) {
   return toggle.firstElementChild.disabled;
 }
 
-// additional logic for all_day and all_week toggles when an hour is toggled
-function toggleHour(event) {
-  try {
-    let hour = event.currentTarget;
-    let by_day = hour.closest(".by_day")
-    if (by_day){
-      all_day = by_day.querySelector("label.toggle.all_day");
-      if (all_day){
-        if (toggle_checked(hour)) {
-          updateAllDay(all_day);
-        } else {
-          toggle_uncheck(all_day);
-          let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
-          if (all_week){
-            toggle_uncheck(all_week);
-          }
-        }
-      }
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
 
 function unreadRemove(event) {
   event.currentTarget.classList.remove('unread');
 }
-
-// update ALL all_day (and all_week) toggle to be consistent with the hour toggles 
-function updateAllHour() {
-    for (all_day of document.querySelectorAll("label.toggle.all_day")) {
-        updateAllDay(all_day)
-    }
-}
-
-// update an all_day (and all_week) toggle to be consistent with the hour toggles 
-function updateAllDay(all_day) {
-  try {
-    // check all_day if every hour is checked
-    let hrs = all_day.closest('.by_day').querySelector('div.radio_block').children;
-    for (hr of hrs) {
-      if (!toggle_disabled(hr) && !toggle_checked(hr)) {
-        return;
-      }
-    }
-    toggle_check(all_day);
-    let all_week = all_day.closest('div.field').querySelector("label.toggle.all_week");
-    updateAllWeek(all_week);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 
 function togglePreviousSibling(event) {
   let toggle = event.currentTarget;
@@ -937,7 +888,6 @@ window.onpageshow = function(event) {
 
 
 window.onload = function() {
-  updateAllHour();
   document.querySelectorAll('time').forEach($e => {
     const date = new Date($e.dateTime);
     $e.innerHTML = date.toLocaleTimeString([], { weekday: "short", hour: "2-digit", minute: "2-digit",  hour12: false });
@@ -1002,9 +952,6 @@ window.onload = function() {
   });
   document.querySelectorAll('div.unread').forEach(function(button) {
     button.onclick = unreadRemove;
-  });
-  document.querySelectorAll('label.toggle.hour').forEach(function(hour) {
-    hour.onclick = toggleHour;
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;

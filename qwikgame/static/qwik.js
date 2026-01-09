@@ -909,25 +909,6 @@ function toggleAllDay(event) {
   }
 }
 
-// additional logic for hour and all_day toggles when an all_week is toggled
-function toggleAllWeek(event) {
-  try {
-    let button = event.currentTarget;
-    var checked = button.firstElementChild.checked;
-    let detail = button.closest('div.field');
-    detail.querySelectorAll('.all_day').forEach(function(button) {
-      button.firstElementChild.checked = checked;
-    })
-    detail.querySelectorAll('div.hour_grid').forEach(function(radio_block) {
-      for (hour of radio_block.children) {
-        hour.firstElementChild.checked = checked;
-      }
-    })
-  } catch (e) {
-    console.log(e);
-  }
-}
-
 function unreadRemove(event) {
   event.currentTarget.classList.remove('unread');
 }
@@ -1071,9 +1052,6 @@ window.onload = function() {
   });
   document.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
     all_day.onclick = toggleAllDay;
-  });
-  document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
-    all_week.onclick = toggleAllWeek;
   });
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;

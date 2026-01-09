@@ -190,10 +190,31 @@
                 </ul>
             </div>
             <button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
-            <p id="app_installed" class="hidden">PWA is Installed. <a href="{% url 'login' %}">Switch to the App</a></p>
-            <p id="ios_install_app" class="hidden pwa_fail">Unfortunately IOS does not support PWA's</p>
-            <p id="firefox_install_app" class="hidden pwa_fail">Firefox requires a <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">PWA extension</a>.</p>
-            <p id="unsupported_install_app" class="hidden pwa_fail">Unfortunately this browser does not support PWA's</p>
+            <div class="instructions">
+                <p id="app_installed" class="hidden">PWA is Installed. <a href="{% url 'login' %}">Switch to the App</a></p>
+                <div id="ios_install_app" class="hidden pwa_fail">
+                    <ul>
+                        <li>Save QWIKGAME:</li>
+                    </ul>
+                    <ol>   
+                        <li>Open Safari</li>
+                        <li>Tap the Share button (box with an arrow)</li>
+                        <li>Select Add to Home Screen</li>
+                        <li>Tap Add
+                    </ol>
+                    <ul>  
+                        <li>Enable QWIKGAME push notifications:</li>
+                    </ul>
+                    <ol>
+                        <li>Go to Settings</li>
+                        <li>Open Notifications</li>
+                        <li>Select qwikgame</li>
+                        <li>Turn on Allow Notifications</li>
+                    </ol>
+                </div>
+                <p id="firefox_install_app" class="hidden pwa_fail">Firefox requires a <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">PWA extension</a>.</p>
+                <p id="unsupported_install_app" class="hidden pwa_fail">Unfortunately this browser does not support PWA's</p>
+            </div>
         </div>   
     </section>
 

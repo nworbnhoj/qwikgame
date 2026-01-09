@@ -6,7 +6,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
@@ -37,8 +37,10 @@ class EmailValidateView(FormView):
     token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
 
     @method_decorator(csrf_protect)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/appeal')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
         url = super().get_success_url()
@@ -82,6 +84,8 @@ class EmailValidateHandleView(PasswordResetConfirmView):
     @method_decorator(sensitive_post_parameters())
     @method_decorator(never_cache)
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/appeal')
         if "uidb64" not in kwargs or "token" not in kwargs:
             raise ImproperlyConfigured(
                 "The URL path must contain 'uidb64' and 'token' parameters."

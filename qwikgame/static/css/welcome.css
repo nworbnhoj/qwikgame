@@ -18,7 +18,7 @@ label {box-sizing: border-box;}
 ul{list-style: none; font-weight: 900;}
 
 .CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
-.CTA_button_Orange:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999 }
+.CTA_button_Orange:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999; cursor: default; }
 .CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
 .fa-solid, .fa-brands {color: #f5a600;}
 .hidden {display: none;}

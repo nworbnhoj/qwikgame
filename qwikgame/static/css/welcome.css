@@ -22,6 +22,7 @@ ul{list-style: none; font-weight: 900;}
 .CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
 .fa-solid, .fa-brands {color: #f5a600;}
 .hidden {display: none;}
+.qwik {color: #f5a600; font-weight: 600;}
 
 
 /***************HEADER***************/

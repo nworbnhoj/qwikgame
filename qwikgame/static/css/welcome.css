@@ -72,7 +72,7 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 .fa-li {color: green;}
 .fa-ul {text-align: left; font-size: 1.5rem;}
-.instructions {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; padding-bottom: 2rem; padding-left: 2rem; text-align: left; width: 90%; }
+.pwa-info {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; padding-bottom: 2rem; padding-left: 2rem; text-align: left; width: 90%; }
 .list {align-items: center; display: flex; flex-direction: column; line-height: 1.5; padding: 8em 0em;}
 .sectionPWA {padding-bottom: 5em; text-align: center; }
 

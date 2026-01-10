@@ -190,11 +190,11 @@
                 </ul>
             </div>
             <button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
-            <div class="instructions">
+            <div class="pwa-info">
                 <div id="app_installed" class="hidden">
                     <p>PWA is Installed. <a href="{% url 'login' %}">Switch to the App</a></p>
                 </div>
-                <div id="ios_install_app" class="hidden pwa_fail">
+                <div id="ios_install_app" class="hidden pwa-fail">
                     <ul>
                         <li>Save QWIKGAME:</li>
                     </ul>
@@ -214,10 +214,10 @@
                         <li>Turn on Allow Notifications</li>
                     </ol>
                 </div>
-                <div id="firefox_install_app" class="hidden pwa_fail">
+                <div id="firefox_install_app" class="hidden pwa-fail">
                     <p>Please install the <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">Progressive Web Apps for Firefox</a> extension to enable PWAs.</p>
                 </div>
-                <div id="unsupported_install_app" class="hidden pwa_fail">
+                <div id="unsupported_install_app" class="hidden pwa-fail">
                     <p>Unfortunately this browser does not support PWA's. <br>The Chrome family o browsers provide good PWA support.</p>
                 </div>
             </div>

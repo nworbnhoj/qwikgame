@@ -49,13 +49,13 @@ let installPrompt = null;
 const INSTALL_BUTTON = document.getElementById("install_app");
 if (INSTALL_BUTTON){
 
-  showPWAFailMsg();
+  showPWAInfo();
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
     INSTALL_BUTTON.disabled = false;
-    hidePWAFailMsg();
+    hidePWAInfo();
     console.log("PWA installPrompt ready");
   });
 
@@ -65,7 +65,7 @@ if (INSTALL_BUTTON){
       console.log(`Install prompt was: ${RESULT.outcome}`);
       disableInAppInstallPrompt();
     } else {
-      showPWAFailMsg();
+      showPWAInfo();
       console.log("PWA installPrompt missing");
     }
   });
@@ -81,8 +81,8 @@ if (INSTALL_BUTTON){
     INSTALL_BUTTON.disabled = true;
   }
 
-  function hidePWAFailMsg() {
-    const PWAFAIL = document.querySelectorAll("p.pwa_fail");
+  function hidePWAInfo() {
+    const PWAFAIL = document.querySelectorAll("p.pwa-fail");
     PWAFAIL.forEach((msg) => {
       msg.classList.add('hidden');
     }); 
@@ -97,7 +97,7 @@ if (INSTALL_BUTTON){
 
   }
 
-  function showPWAFailMsg() {
+  function showPWAInfo() {
     if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
       return;
     } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {

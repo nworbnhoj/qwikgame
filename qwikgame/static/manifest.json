@@ -1,6 +1,6 @@
 {
     "background_color": "#FFFFFF",
-    "categories": "games fitness sports",
+    "categories": ["games", "fitness", "sports"],
     "description": "What is your favourite game?",
     "dir": "ltr",
     "display": "standalone",
@@ -41,10 +41,58 @@
             "sizes": "512x512",
             "type": "image/png"
     }],
+    "id": "qwikgame",
     "lang": "en-US",
     "name": "qwik game org",
+    "scope": "/",
+    "screenshots": [{
+        "src": "/static/img/welcome_feed.webp",
+        "sizes": "474x1024",
+        "type": "image/webp"
+    }],
+    "shortcuts": [
+      {
+        "name": "Feed",
+        "url": "/appeal",
+        "description": "Rolling Feed of Players seeking Matches."
+      },{
+        "name": "Friends",
+        "url": "/player/friend",
+        "description": "Friends you like to play Games with."
+      },{
+        "name": "Match",
+        "url": "/game/match",
+        "description": "Scheduled Matches comming up."
+      },{
+        "name": "Review",
+        "url": "/game/match/review",
+        "description": "Review recent Matches."
+      },{
+        "name": "Account",
+        "url": "/account/public",
+        "description": "Your QWIKGAME account setting."
+      }
+    ],
     "short_name": "qwikgame",
     "start_url": "/",
+    "prefer_related_applications": true,
+    "related_applications": [{
+           "id": "qwikgame",
+           "platform": "webapp",
+           "url": "https://qwikgame.org/"
+        },{
+           "id": "qwikgame.beta",
+           "platform": "webapp",
+           "url": "https://beta.qwikgame.org/"
+        },{
+           "id": "qwikgame.alpha",
+           "platform": "webapp",
+           "url": "https://alpha.qwikgame.org/"
+    }],
+    "start_url": "/",
     "theme_color": "#F5A600",
+    "launch_handler": {
+      "client_mode": ["focus-existing"]
+    },
     "orientation": "portrait-primary"
 }

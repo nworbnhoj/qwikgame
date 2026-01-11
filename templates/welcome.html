@@ -192,7 +192,13 @@
             <button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
             <div class="pwa-info">
                 <div id="app_installed" class="hidden">
-                    <p>PWA is Installed. <a href="{% url 'login' %}">Switch to the App</a></p>
+                    <ul>
+                        <li>QWIKGAME is Installed:</li>
+                    </ul>
+                    <ol>   
+                        <li><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
+                        <li>Play a Game</li>
+                    </ol>                    
                 </div>
                 <div id="ios_install_app" class="hidden pwa-fail">
                     <ul>
@@ -215,10 +221,23 @@
                     </ol>
                 </div>
                 <div id="firefox_install_app" class="hidden pwa-fail">
-                    <p>Please install the <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">Progressive Web Apps for Firefox</a> extension to enable PWAs.</p>
+                    <ul>
+                        <li>Firefox Extension required:</li>
+                    </ul>
+                    <ol>
+                        <li>Please install the<br>
+                        <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">Progressive Web Apps for Firefox</a><br>
+                        extension to enable PWAs.</li>
+                    </ol>
                 </div>
                 <div id="unsupported_install_app" class="hidden pwa-fail">
-                    <p>Unfortunately this browser does not support PWA's. <br>The Chrome family o browsers provide good PWA support.</p>
+                    <ul>
+                        <li>Browser Support:</li>
+                    </ul>
+                    <ol>   
+                        <li>Unfortunately this browser does not support PWA's.</li>
+                        <li>The Chrome family of browsers provide good PWA support.</li>
+                    </ol>
                 </div>
             </div>
         </div>   

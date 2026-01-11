@@ -103,7 +103,7 @@ if (INSTALL_BUTTON){
     } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       const IOS = document.getElementById("ios_install_app");
       if (IOS){
-        INSTALL_BUTTON.disabled = true
+        INSTALL_BUTTON.classList.add('hidden')
         IOS.classList.remove('hidden')
       }
     } else if (/Firefox/i.test(navigator.userAgent)) {

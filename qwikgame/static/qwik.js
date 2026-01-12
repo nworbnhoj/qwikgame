@@ -123,9 +123,10 @@ if (INSTALL_BUTTON){
 
   // https://www.javaspring.net/blog/javascript-to-check-if-pwa-or-mobile-web/
   // Returns:
-  // installed_pwa: The app is installed on the user’s device (home screen) and
+  // active_pwa: The app is installed on the user’s device (home screen) and
   //     running in standalone, minimal-ui, or fullscreen mode (no browser
   //     chrome like address bars).
+  // installed_pwa: The app is installed but not the providing this session.
   // uninstalled_pwa: The app has PWA capabilities (manifest + service worker)
   //     but hasn’t been installed. It’s accessed via a browser, with standard
   //     browser UI.
@@ -133,19 +134,21 @@ if (INSTALL_BUTTON){
   //     worker). Runs as a regular website in a mobile browser.
   async function detectAppState() {
     // Check for installed PWA
-    const isInstalled = window.matchMedia('(display-mode: standalone)').matches || 
-                        window.matchMedia('(display-mode: minimal-ui)').matches || 
-                        window.matchMedia('(display-mode: fullscreen)').matches || 
-                        (typeof navigator !== 'undefined' && navigator.standalone);
-   
-    if (isInstalled) return 'installed_pwa';
+    const isActive = window.matchMedia('(display-mode: standalone)').matches || 
+                     window.matchMedia('(display-mode: minimal-ui)').matches || 
+                     window.matchMedia('(display-mode: fullscreen)').matches || 
+                     (typeof navigator !== 'undefined' && navigator.standalone);
+    if (isActive) return 'active_pwa';
+
+    // Check for an installed related App
+    const hasInstalledRelatedApps = !!(await navigator.getInstalledRelatedApps?.())?.length;
+    if (hasInstalledRelatedApps) return 'installed_pwa';
    
     // Check for uninstalled PWA (installable)
     const hasManifest = document.querySelector('link[rel="manifest"]') !== null;
     const hasServiceWorker = 'serviceWorker' in navigator && 
                             (await navigator.serviceWorker.getRegistration()) !== null;
-    const supportsBeforeInstallPrompt = 'beforeinstallprompt' in window;
-   
+    const supportsBeforeInstallPrompt = 'onbeforeinstallprompt' in window;
     if (hasManifest && hasServiceWorker && supportsBeforeInstallPrompt) {
       return 'uninstalled_pwa';
     }

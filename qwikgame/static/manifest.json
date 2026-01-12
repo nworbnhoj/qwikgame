@@ -4,6 +4,12 @@
     "description": "What is your favourite game?",
     "dir": "ltr",
     "display": "standalone",
+    "display_override": [
+      "window-controls-overlay",
+      "standalone",
+      "minimal-ui",
+      "browser"
+    ],
     "icons": [{
             "src": "img/qwik-icon.24x24.png",
             "sizes": "24x24",

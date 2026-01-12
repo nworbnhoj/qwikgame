@@ -81,7 +81,7 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /* https://www.codegenes.net/blog/show-hide-div-on-click-with-css/ */
 .toggle-input {border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
-.toggle-trigger {background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 1rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-size: 1rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
+.toggle-trigger {background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 1rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
 .toggle-trigger:hover {/*background-color: #f5a600;*/scale: 1.05;}
 .toggle-content {display: none; font-size: 1.25rem; overflow: hidden; padding-bottom: 2rem; padding-left: 2rem;  text-align: left; width: 90%;}
 .toggle-input:checked + .toggle-content {display: block;}

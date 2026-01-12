@@ -31,7 +31,7 @@ ul{list-style: none; font-weight: 400;}
 header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 230)97%); padding: 1em 0;}
 .hero {padding: 1em 0;}
 .hero_text {width: 60%;}
-.hero_image {align-self: center; max-width: 37%;}
+.hero_image {align-self: center; max-width: 37%; padding: 7rem 3rem 7rem 3rem; }
 .nav_list {display: flex; gap: 2em; list-style: none; margin: 0; padding: 0; }
 .nav_link {color: black; text-decoration: none; text-transform: uppercase;}
 .nav_link-button {background: #f5a600; border-radius: 3em; padding: 0.5em 1.5em; }

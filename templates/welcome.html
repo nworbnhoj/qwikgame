@@ -192,9 +192,7 @@
             <button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
             <div class="pwa-info">
                 <div id="app_installed" class="hidden">
-                    <ul>
-                        <li>QWIKGAME is Installed:</li>
-                    </ul>
+                    <h6>QWIKGAME is Installed:</h6>
                     <ol>   
                         <li><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
                         <li>Play a Game</li>
@@ -206,18 +204,14 @@
                     </label>
                     <input type="checkbox" id="pwa-ios" class="toggle-input">
                     <div class="toggle-content">
-                        <ul>
-                            <li>Save QWIKGAME:</li>
-                        </ul>
+                        <h6>Save QWIKGAME:</h6>
                         <ol>   
                             <li>Open Safari</li>
                             <li>Tap the Share button (box with an arrow)</li>
                             <li>Select Add to Home Screen</li>
                             <li>Tap Add
                         </ol>
-                        <ul>  
-                            <li>Enable QWIKGAME push notifications:</li>
-                        </ul>
+                        <h6>Enable QWIKGAME push notifications:</h6>
                         <ol>
                             <li>Go to Settings</li>
                             <li>Open Notifications</li>
@@ -227,9 +221,7 @@
                     </div>
                 </div>
                 <div id="firefox_install_app" class="hidden pwa-fail">
-                    <ul>
-                        <li>Firefox Extension required:</li>
-                    </ul>
+                    <h6>Firefox Extension required:</h6>
                     <ol>
                         <li>Please install the<br>
                         <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">Progressive Web Apps for Firefox</a><br>
@@ -237,9 +229,7 @@
                     </ol>
                 </div>
                 <div id="unsupported_install_app" class="hidden pwa-fail">
-                    <ul>
-                        <li>Browser Support:</li>
-                    </ul>
+                    <h6>Browser Support:</h6>
                     <ol>   
                         <li>Unfortunately this browser does not support PWA's.</li>
                         <li>The Chrome family of browsers provide good PWA support.</li>

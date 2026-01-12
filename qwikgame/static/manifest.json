@@ -48,22 +48,22 @@
     "screenshots": [{
         "form_factor": "narrow",
         "src": "/static/img/ss-feed.webp",
-        "sizes": "1080x1350",
+        "sizes": "1004x2119",
         "type": "image/webp"
     },{
         "form_factor": "narrow",
         "src": "/static/img/ss-home.webp",
-        "sizes": "1080x1350",
+        "sizes": "1004x2119",
         "type": "image/webp"
     },{
         "form_factor": "narrow",
         "src": "/static/img/ss-invite.webp",
-        "sizes": "1080x1350",
+        "sizes": "1004x2119",
         "type": "image/webp"
     },{
         "form_factor": "narrow",
         "src": "/static/img/ss-offer.webp",
-        "sizes": "1080x1350",
+        "sizes": "1246x2629",
         "type": "image/webp"
     }],
     "shortcuts": [

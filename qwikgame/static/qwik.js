@@ -51,29 +51,55 @@ if (INSTALL_BUTTON){
 
   showPWAInfo();
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    installPrompt = event;
-    INSTALL_BUTTON.disabled = false;
-    hidePWAInfo();
-    console.log("PWA installPrompt ready");
-  });
+  detectAppState().then(state => {
+    console.log('Current App State:', state); 
+    switch(state) {
 
-  INSTALL_BUTTON.addEventListener("click", async () => {
-    if (installPrompt) {
-      const RESULT = await installPrompt.prompt();
-      console.log(`Install prompt was: ${RESULT.outcome}`);
-      disableInAppInstallPrompt();
-    } else {
-      showPWAInfo();
-      console.log("PWA installPrompt missing");
+      case "active_pwa":
+        hidePWAInfo();
+        showInstalled()
+        break;
+
+      case "installed_pwa":
+        hidePWAInfo();
+        showInstalled()
+        break;
+
+      case "uninstalled_pwa":
+        window.addEventListener("beforeinstallprompt", (event) => {
+          event.preventDefault();
+          installPrompt = event;
+          INSTALL_BUTTON.disabled = false;
+          hidePWAInfo();
+          console.log("PWA installPrompt ready");
+        });
+        INSTALL_BUTTON.addEventListener("click", async () => {
+          if (installPrompt) {
+            const RESULT = await installPrompt.prompt();
+            console.log(`Install prompt was: ${RESULT.outcome}`);
+            disableInAppInstallPrompt();
+          } else {
+            showPWAInfo();
+            console.log("PWA installPrompt missing");
+          }
+        });
+        window.addEventListener("appinstalled", () => {
+          disableInAppInstallPrompt();
+          showInstalled();
+          console.log("PWA installed");
+          detectAppState().then(state => {
+            console.log('Current App State:', state); 
+          });
+        });
+        break;
+
+      case "standard_mobile_website":
+        // leave PWA info visible
+        break;
+
+      default:
+        // leave PWA info visible
     }
-  });
-
-  window.addEventListener("appinstalled", () => {
-    disableInAppInstallPrompt();
-    showInstalled();
-    console.log("PWA installed");
   });
 
   function disableInAppInstallPrompt() {

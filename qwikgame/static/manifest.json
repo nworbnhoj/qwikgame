@@ -46,8 +46,24 @@
     "name": "qwik game org",
     "scope": "/",
     "screenshots": [{
-        "src": "/static/img/welcome_feed.webp",
-        "sizes": "474x1024",
+        "form_factor": "narrow",
+        "src": "/static/img/ss-feed.webp",
+        "sizes": "1080x1350",
+        "type": "image/webp"
+    },{
+        "form_factor": "narrow",
+        "src": "/static/img/ss-home.webp",
+        "sizes": "1080x1350",
+        "type": "image/webp"
+    },{
+        "form_factor": "narrow",
+        "src": "/static/img/ss-invite.webp",
+        "sizes": "1080x1350",
+        "type": "image/webp"
+    },{
+        "form_factor": "narrow",
+        "src": "/static/img/ss-offer.webp",
+        "sizes": "1080x1350",
         "type": "image/webp"
     }],
     "shortcuts": [

@@ -70,23 +70,28 @@
       {
         "name": "Feed",
         "url": "/appeal",
-        "description": "Rolling Feed of Players seeking Matches."
+        "description": "Rolling Feed of Players seeking Matches.",
+        "icons": ["/static/img/icon-home.webp"],
       },{
         "name": "Friends",
         "url": "/player/friend",
-        "description": "Friends you like to play Games with."
+        "description": "Friends you like to play Games with.",
+        "icons": ["/static/img/icon-friend.webp"],
       },{
         "name": "Match",
         "url": "/game/match",
-        "description": "Scheduled Matches comming up."
+        "description": "Scheduled Matches comming up.",
+        "icons": ["/static/img/icon-match.webp"],
       },{
         "name": "Review",
         "url": "/game/match/review",
-        "description": "Review recent Matches."
+        "description": "Review recent Matches.",
+        "icons": ["/static/img/icon-review.webp"],
       },{
         "name": "Account",
         "url": "/account/public",
-        "description": "Your QWIKGAME account setting."
+        "description": "Your QWIKGAME account setting.",
+        "icons": ["/static/img/icon-account.webp"],
       }
     ],
     "short_name": "qwikgame",

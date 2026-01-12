@@ -132,15 +132,15 @@
     "related_applications": [{
            "id": "qwikgame",
            "platform": "webapp",
-           "url": "https://qwikgame.org/"
+           "url": "https://qwikgame.org/static/manifest.json"
         },{
-           "id": "qwikgame.beta",
+           "id": "qwikgame",
            "platform": "webapp",
-           "url": "https://beta.qwikgame.org/"
+           "url": "https://beta.qwikgame.org/static/manifest.json"
         },{
-           "id": "qwikgame.alpha",
+           "id": "qwikgame",
            "platform": "webapp",
-           "url": "https://alpha.qwikgame.org/"
+           "url": "https://alpha.qwikgame.org/static/manifest.json"
     }],
     "start_url": "/",
     "theme_color": "#F5A600",

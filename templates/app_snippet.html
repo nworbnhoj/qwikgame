@@ -1,23 +1,50 @@
 <!-- qwikgame/templates/app_snippet.html -->
 {% load static %}
 
-<label  id="install_app" class="btn primary hidden">
-    <input name="install_app" type="checkbox">
-    Get Free App
-</label>
-<div id="ios_install_app" class="piller push_down hidden">
-    <p>To install this app on your iPhone or iPad:</p>
-    <ol>
-        <li>Tap the <strong>Share</strong> button in Safari.</li>
-        <li>Scroll down and select <strong>Add to Home Screen</strong>.</li>
-        <li>Follow the on-screen instructions.</li>
-    </ol>
-</div>
-<div id="firefox_install_app" class="piller push_down hidden">
-    <p>Firefox is <a href='https://connect.mozilla.org/t5/discussions/how-can-firefox-create-the-best-support-for-web-apps-on-the/m-p/60561/highlight/true#M21220' target=_blank>working</a> to support Progressive Web Apps.</p>
-    <p>You could try a Chrome browser in the meantime!</p>
-</div>
-<div id="unsupported_install_app" class="piller push_down hidden">
-    <p>This browser does not appear to support Progressive Web Apps.</p>
-    <p>You could try a Chrome browser in the meantime!</p>
+<button id="install_app" class="CTA_button_Orange" disabled>Save QWIKGAME on your Home Screen</button>
+<div class="pwa-info">
+    <div id="app_installed" class="hidden">
+        <h6>QWIKGAME is Installed:</h6>
+        <ol>   
+            <li><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
+            <li>Play a Game</li>
+        </ol>                    
+    </div>
+    <div id="ios_install_app" class="hidden pwa-fail">
+        <label for="pwa-ios" class="toggle-trigger">
+            Save <span class="qwik" >QWIK</span>GAME on your iPhone & enable notifications
+        </label>
+        <input type="checkbox" id="pwa-ios" class="toggle-input">
+        <div class="toggle-content">
+            <h6>Save QWIKGAME:</h6>
+            <ol>   
+                <li>Open Safari</li>
+                <li>Tap the Share button (box with an arrow)</li>
+                <li>Select Add to Home Screen</li>
+                <li>Tap Add
+            </ol>
+            <h6>Enable QWIKGAME push notifications:</h6>
+            <ol>
+                <li>Go to Settings</li>
+                <li>Open Notifications</li>
+                <li>Select qwikgame</li>
+                <li>Turn on Allow Notifications</li>
+            </ol>
+        </div>
+    </div>
+    <div id="firefox_install_app" class="hidden pwa-fail">
+        <h6>Firefox Extension required:</h6>
+        <ol>
+            <li>Please install the<br>
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">Progressive Web Apps for Firefox</a><br>
+            extension to enable PWAs.</li>
+        </ol>
+    </div>
+    <div id="unsupported_install_app" class="hidden pwa-fail">
+        <h6>Browser Support:</h6>
+        <ol>   
+            <li>Unfortunately this browser does not support PWA's.</li>
+            <li>The Chrome family of browsers provide good PWA support.</li>
+        </ol>
+    </div>
 </div>

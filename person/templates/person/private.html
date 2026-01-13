@@ -5,8 +5,22 @@
 {% block css %}
     {{ block.super }}
     <style type="text/css">
-        #install_app { margin-top: 2em; }
         div.drop { justify-content: space-between; }
+
+        /* These lines are a stop-gap measure in-lieu of integrating welcome.css with qwik.css */
+        h6 {font-size: 1.25rem; font-weight: 900;}
+        .CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
+        .CTA_button_Orange:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999; cursor: default; }
+        .CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
+        .pwa-info {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; margin: 4rem; text-align: left; width: 90%; }
+
+        .toggle-input {border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+        .toggle-trigger {background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 1rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
+        .toggle-trigger:hover {/*background-color: #f5a600;*/scale: 1.05;}
+        .toggle-content {display: none; font-size: 1.25rem; overflow: hidden; margin: 2rem;  padding-bottom: 2rem; padding-left: 2rem;  text-align: left; width: 90%;}
+        .toggle-input:checked + .toggle-content {display: block;}
+        .toggle-input:checked - .toggle-trigger {/*background-color: #f5a600;*/scale: 1.05;}
+
     </style>
 {% endblock css %}
 

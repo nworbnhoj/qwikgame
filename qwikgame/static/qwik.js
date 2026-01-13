@@ -49,7 +49,33 @@ let installPrompt = null;
 const INSTALL_BUTTON = document.getElementById("install_app");
 if (INSTALL_BUTTON){
 
-  showPWAInfo();
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    INSTALL_BUTTON.disabled = false;
+    hidePWAInfo();
+    console.log("PWA installPrompt ready");
+  });
+
+  INSTALL_BUTTON.addEventListener("click", async () => {
+    if (installPrompt) {
+      const RESULT = await installPrompt.prompt();
+      console.log(`Install prompt was: ${RESULT.outcome}`);
+      disableInAppInstallPrompt();
+    } else {
+      showPWAInfo();
+      console.log("PWA installPrompt missing");
+    }
+  });
+  
+  window.addEventListener("appinstalled", () => {
+    disableInAppInstallPrompt();
+    showInstalled();
+    console.log("PWA installed");
+    detectAppState().then(state => {
+      console.log('Current App State:', state); 
+    });
+  });
 
   detectAppState().then(state => {
     console.log('Current App State:', state); 
@@ -66,39 +92,15 @@ if (INSTALL_BUTTON){
         break;
 
       case "uninstalled_pwa":
-        window.addEventListener("beforeinstallprompt", (event) => {
-          event.preventDefault();
-          installPrompt = event;
-          INSTALL_BUTTON.disabled = false;
-          hidePWAInfo();
-          console.log("PWA installPrompt ready");
-        });
-        INSTALL_BUTTON.addEventListener("click", async () => {
-          if (installPrompt) {
-            const RESULT = await installPrompt.prompt();
-            console.log(`Install prompt was: ${RESULT.outcome}`);
-            disableInAppInstallPrompt();
-          } else {
-            showPWAInfo();
-            console.log("PWA installPrompt missing");
-          }
-        });
-        window.addEventListener("appinstalled", () => {
-          disableInAppInstallPrompt();
-          showInstalled();
-          console.log("PWA installed");
-          detectAppState().then(state => {
-            console.log('Current App State:', state); 
-          });
-        });
+        showPWAInfo();
         break;
 
       case "standard_mobile_website":
-        // leave PWA info visible
+        showPWAInfo();
         break;
 
       default:
-        // leave PWA info visible
+        showPWAInfo();
     }
   });
 

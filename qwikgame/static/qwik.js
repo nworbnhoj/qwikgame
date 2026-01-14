@@ -1,5 +1,6 @@
 const MSqC = {lat: -36.4497, lng: 146.4300};
 const Sofia = {lat: 42.6977, lng: 23.3217};
+const CHIME = "/static/chime.mp3"
 const REFRESH_FAST = 60; // every minute
 const REFRESH_SLOW = 900; // every 15 minutes
 
@@ -261,6 +262,18 @@ function refreshDatalists(){
   }
 }
 
+navigator.serviceWorker.addEventListener("message", (event) => {
+  console.log("ServiceWorker msg received: ", event.data.type);
+  switch(event.data.type) {
+      case "chime":
+        playSound(CHIME);
+        break;
+      default:
+        console.log("noop msg:" event.data.type);
+  }
+});
+
+
 
 ///////////////// DOM helper functions ///////////////////
 
@@ -445,6 +458,12 @@ function htmlDecode(input) {
 // https://stackoverflow.com/questions/18082/validate-decimal-numbers-in-javascript-isnumeric
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
+function playSound(url) {
+  const audio = new Audio(url);
+  audio.play();
 }
 
 

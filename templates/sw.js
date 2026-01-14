@@ -66,15 +66,30 @@ workbox.routing.registerRoute(({url}) => appShell.includes(url), new workbox.str
 
 // Reload url in all windowClients
 self.addEventListener("push", (event) => {
-  console.log("Push reload triggered");
-  event.waitUntil(
-    self.clients.matchAll({type: 'window'}).then(clients => {
-      clients.forEach(client => {
-        client.navigate(client.url);
-      });
-    })
-  )
-});
+  console.log("Push received");
+  event.waitUntil(reload_clients())
+  event.waitUntil(sound_chime())
+})
+
+
+function reload_clients() {
+  console.log("Reload clients triggered");
+  self.clients.matchAll({type: 'window'}).then(clients => {
+    clients.forEach(client => {
+      client.navigate(client.url);
+    });
+  })
+}
+
+
+async function sound_chime() {
+  console.log("Chime triggered")
+  self.clients.matchAll({type: 'window'}).then(clients => {
+    if (clients.length > 0) {
+      clients[0].postMessage({type: 'chime'});
+    }
+  });
+}
 
 
 console.log("Qwik Service Worker loaded.");

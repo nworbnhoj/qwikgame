@@ -31,7 +31,7 @@ ul{list-style: none; font-weight: 400;}
 header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 230)97%); padding: 1em 0;}
 .hero {padding: 1em 0;}
 .hero_text {width: 60%;}
-.hero_image {align-self: center; max-width: 37%; padding: 7rem 3rem 7rem 3rem; }
+.hero_image {align-self: center; max-width: 37%; padding: 7rem 0 7rem 0; }
 .nav_list {display: flex; gap: 2em; list-style: none; margin: 0; padding: 0; }
 .nav_link {color: black; text-decoration: none; text-transform: uppercase;}
 .nav_link-button {background: #f5a600; border-radius: 3em; padding: 0.5em 1.5em; }
@@ -101,39 +101,45 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 #license{background-color: #f5a600; padding-top: 1em; }
 
 
-@media(max-width: 600px){
+/***************************MEDIA QUERIES*********************/
 
-h1 {margin-top: 1em; font-size: 2rem;}
-h2 {font-size: 1.5rem;}
-h3 {font-size: 1.25rem;margin-top: 4em;}
-h4, h5 {font-size: 1rem;}
-p {font-size: 0.9rem;}
 
-.card_button {padding: 0.8em 2.4em;}
-.CTA_button_Orange {font-size: 1.25rem; padding: 1em 1.5em; }
-.CTA_button_White {font-size: 1.25rem; padding: 1em 1.5em; }
-.fa-ul {font-size: 1rem;}
-.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1em; padding: 2em; margin: 0;}
-.feature_item {display: flex; flex-direction: row; justify-content: space-evenly; padding: 0;}
-.feature_item .fa-solid, .fa-brands {font-size: 2em; }
-.flex {display: flex; flex-direction: column; justify-content: space-between; gap: 1em;}
-.footer_socialmedia {display: flex; justify-content: space-evenly;}
-.gridcontainer {padding: 2em 2em;}
-.h2_StrongSection {font-size: 1.5rem;}
-.hero_text {text-align: center; width: 100%;}
-.hero_image {max-width: 100%;}
-.keentoplay_image1, .keentoplay_image2 {max-width: 100%;}
-.keentoplay_text1, .keentoplay_text2 {text-align: center; width: 100%; }
-.list {line-height: 1.5; padding: 3em 0em; }
-.logo_footer {max-width: 100%;}
-.questions {width: 90%;}
+@media(max-width: 620px){
+	h1 {margin-top: 1em; font-size: 2rem;}
+	h2 {font-size: 1.5rem;}
+	h3 {font-size: 1.25rem;margin-top: 4em;}
+	h4, h5 {font-size: 1rem;}
+	p {font-size: 0.9rem;}
 
+	.card_button {padding: 0.8em 2.4em;}
+	.CTA_button_Orange {font-size: 1.25rem; padding: 1em 1.5em; }
+	.CTA_button_White {font-size: 1.25rem; padding: 1em 1.5em; }
+	.fa-ul {font-size: 1rem;}
+	.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1em; padding: 2em; margin: 0;}
+	.feature_item {display: flex; flex-direction: row; justify-content: space-evenly; padding: 0;}
+	.feature_item .fa-solid, .fa-brands {font-size: 2em; }
+	.flex {display: flex; flex-direction: column; justify-content: space-between; gap: 1em;}
+	.footer_socialmedia {display: flex; justify-content: space-evenly;}
+	.gridcontainer {padding: 2em 2em;}
+	.h2_StrongSection {font-size: 1.5rem;}
+	.hero_text {text-align: center; width: 100%;}
+	.hero_image {max-width: 100%;}
+	.keentoplay_image1, .keentoplay_image2 {max-width: 100%;}
+	.keentoplay_text1, .keentoplay_text2 {text-align: center; width: 100%; }
+	.list {line-height: 1.5; padding: 3em 0em; }
+	.logo_footer {max-width: 100%;}
+	.questions {width: 90%;}
 } 
 
 
+@media(max-width: 800px){
+    h1 {font-size: 2.5rem;}
+}
 
 
-
+@media(max-width: 900px){
+    h1 {font-size: 3rem;}
+}
 
 
 

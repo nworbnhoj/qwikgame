@@ -17,7 +17,7 @@ if('serviceWorker' in navigator) {
             if (subscription) {
               console.log("WebPush subscribed");
               setMetaRefresh(REFRESH_SLOW);
-            } else {
+            } else if (typeof subscribe === 'function') {
               subscribe(registration);
               console.log("WebPush subscription underway");
             }

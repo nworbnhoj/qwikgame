@@ -269,7 +269,7 @@ navigator.serviceWorker.addEventListener("message", (event) => {
         playSound(CHIME);
         break;
       default:
-        console.log("noop msg:" event.data.type);
+        console.log("noop msg:", event.data.type);
   }
 });
 
@@ -463,7 +463,9 @@ function isNumeric(n) {
 
 function playSound(url) {
   const audio = new Audio(url);
-  audio.play();
+  audio.play().catch(error => {
+    console.error('Audio play failed:', error);
+  });
 }
 
 

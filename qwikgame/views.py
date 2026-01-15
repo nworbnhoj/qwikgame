@@ -123,13 +123,18 @@ class ServiceWorkerView(TemplateView):
             'css_qwik_url': static('css/qwik.css'),
             'css_reset_url': static('css/reset.css'),
             'css_small_screen_url': static('css/small_screen.css'),
+            'css_welcome_url': static('css/welcome.css'),
             'favicon_url': static('img/favicon.ico'),
-            'font_fa_url': static('font/fa-solid-900.woff2'),
+            'font_fa_brands_url': static('font/fa-brands-400.woff2'),
+            'font_fa_solid_url': static('font/fa-solid-900.woff2'),
             'font_notosans_url': static('font/NotoSans-Regular.ttf'),
             'icon_url': static('img/qwik-icon.png'),
             'icon_152_url': static('img/qwik-icon.152x152.png'),
             'icon_192_url': static('img/qwik-icon.192x192.png'),
             'icon_512_url': static('img/qwik-icon.512x512.png'),
+            'img_ss_feed_chat_url': static('img/ss-feed-chat.webp'),
+            'img_ss_home_url': static('img/ss-home.webp'),
+            'img_ss_invite_offer_url': static('img/ss-invite-offer.webp'),
             'js_map_url': static('map.js'),
             'js_qwik_url': static('qwik.js'),
             'logo_url': static('img/qwik-logo.png'),
@@ -138,6 +143,8 @@ class ServiceWorkerView(TemplateView):
             'logo_512_url': static('img/qwik-logo.512x512.png'),
             'manifest_url': static('manifest.json'),
             'version': subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
+            'mp3_chime_url': static('chime.mp3'),
+            'welcome_url': '/',
         }
 
 

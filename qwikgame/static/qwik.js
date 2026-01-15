@@ -821,26 +821,6 @@ function showDetail() {
   })
 }
 
-function showBlockAdd(event) {
-  document.getElementById('block_list').classList.add('hidden');
-  document.getElementById('block_add').classList.remove('hidden');
-}
-
-function showBlockList(event) {
-  document.getElementById('block_add').classList.add('hidden');
-  document.getElementById('block_list').classList.remove('hidden');
-}
-
-function showFriendAdd(event) {
-  document.getElementById('friend_invite').classList.add('hidden');
-  document.getElementById('friend_add').classList.remove('hidden');
-}
-
-function showFriendInvite(event) {
-  document.getElementById('friend_add').classList.add('hidden');
-  document.getElementById('friend_invite').classList.remove('hidden');
-}
-
 function showGroup(event) {
   let button = event.currentTarget;
   button.nextElementSibling.classList.toggle('hidden');
@@ -871,11 +851,6 @@ function showNextSibling(event) {
 
 function showInfo(event) {
   event.currentTarget.parentElement.querySelector('div.info_text').classList.toggle('hidden');
-}
-
-function showAvailableEdit(event) {
-  document.querySelector('.available_edit').classList.remove('hidden');
-  document.querySelector('.available_view').classList.add('hidden');
 }
 
 function slide(slider) {
@@ -1028,9 +1003,6 @@ window.onload = function() {
       document.querySelector("input[type='text']").value = query;
     };
   });
-  document.querySelectorAll('input.enable-invite-friend').forEach(function(checkbox) {
-    checkbox.oninput = enableInviteFriend;
-  });
   document.querySelectorAll('label.toggle span.stop-prop').forEach(function(hr) {
     hr.onclick = function(event) {
       event.stopPropagation()
@@ -1042,23 +1014,8 @@ window.onload = function() {
   document.querySelectorAll('[name=list]').forEach(function(list_radio) {
     list_radio.onclick = showDetail;
   });
-  document.querySelectorAll('.show_block_add').forEach(function(element) {
-    element.onclick = showBlockAdd;
-  });
-  document.querySelectorAll('.show_block_list').forEach(function(element) {
-    element.onclick = showBlockList;
-  });
-  document.querySelectorAll('.show_friend_add').forEach(function(element) {
-    element.onclick = showFriendAdd;
-  });
-  document.querySelectorAll('.show_friend_invite').forEach(function(element) {
-    element.onclick = showFriendInvite;
-  });
   document.querySelectorAll('.show_next_parent_sibling').forEach(function(element) {
     element.onclick = showNextParentSibling;
-  });
-  document.querySelectorAll('.edit_available').forEach(function(div) {
-    div.onclick = showAvailableEdit;
   });
   document.querySelectorAll('div.tab').forEach(function(div) {
     div.onclick = openTab;

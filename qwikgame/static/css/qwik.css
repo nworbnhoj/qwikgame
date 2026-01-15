@@ -1,5 +1,5 @@
-@font-face { font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
-@font-face { font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
+@font-face { font-display: swap; font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
+@font-face { font-display: swap; font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display:none; }

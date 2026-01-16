@@ -11,7 +11,12 @@
 {% endblock refresh %}
     <link rel="manifest" href="{% static 'manifest.json' %}" />
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/qwik-font.css' %}">
+    <style>
+        /* Fonts are loaded inline in parallel for network performance   */
+        @font-face { font-display: swap; font-family: 'AstroSpace'; src: url(../font/AstroSpace-eZ2Bg.ttf);  font-weight: bold; }
+        @font-face { font-display: swap; font-family: 'FASolid'; src: url(../font/fa-solid-900.woff2) }
+        @font-face { font-display: swap; font-family: 'NotoSans'; src: url(../font/NotoSans-Regular.ttf) }
+    </style>
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/qwik.css' %}">

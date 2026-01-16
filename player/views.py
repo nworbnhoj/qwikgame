@@ -245,11 +245,11 @@ class FriendAddView(FriendsView):
             email = context.get('email','not@valid')
             email_hash = Person.hash(email)
             rival, created = Player.objects.get_or_create(email_hash = email_hash)
-            friend = Friend.objects.create(
+            friend, created = Friend.objects.update_or_create(
                 email = email,
-                name = context.get('name',email.split('@')[0]),
                 player = self.user.player,
                 rival = rival,
+                defaults = {"name" : context.get('name',email.split('@')[0])},
             )
         except:
             logger.exception(f'failed add friend: {context}')
@@ -341,11 +341,11 @@ class FriendView(FriendsView):
             try:
                 email_hash = Person.hash(email)
                 rival, created = Player.objects.get_or_create(email_hash = email_hash)
-                friend = Friend.objects.create(
+                friend, created = Friend.objects.update_or_create(
                     email = email,
-                    name = context.get('name',email.split('@')[0]),
                     player = player,
                     rival = rival,
+                    defaults = {"name" : context.get('name',email.split('@')[0])},
                 )
                 friend_pk = friend.pk
             except:

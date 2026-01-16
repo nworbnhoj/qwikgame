@@ -48,6 +48,7 @@ const appShell = [
     '{{ img_ss_invite_offer_url }}',
     '{{ js_map_url }}',
     '{{ js_qwik_url }}',
+    '{{ js_qwik_json_url }}',
     '{{ js_qwik_pwa_install_url }}',
     '{{ js_qwik_sw_load_url }}',
     '{{ logo_url }}',

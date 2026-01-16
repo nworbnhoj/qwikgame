@@ -12,6 +12,7 @@
 
 {% block script %}
     {{ block.super }}
+    <script defer src="{% static 'js/qwik-json.js' %}"></script>
     <script defer src="{% static 'map.js' %}"></script>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&loading=async&callback=venuesMap&libraries=places">
     </script>

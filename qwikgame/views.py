@@ -137,6 +137,7 @@ class ServiceWorkerView(TemplateView):
             'img_ss_invite_offer_url': static('img/ss-invite-offer.webp'),
             'js_map_url': static('map.js'),
             'js_qwik_url': static('qwik.js'),
+            'js_qwik_json_url': static('js/qwik-json.js'),
             'js_qwik_pwa_install_url': static('js/qwik-pwa-install.js'),
             'js_qwik_sw_load_url': static('js/qwik-sw-load.js'),
             'logo_url': static('img/qwik-logo.png'),

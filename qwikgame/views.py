@@ -125,6 +125,7 @@ class ServiceWorkerView(TemplateView):
             'css_small_screen_url': static('css/small_screen.css'),
             'css_welcome_url': static('css/welcome.css'),
             'favicon_url': static('img/favicon.ico'),
+            'font_astrospace_url': static('font/AstroSpace-eZ2Bg.ttf'),
             'font_fa_brands_url': static('font/fa-brands-400.woff2'),
             'font_fa_solid_url': static('font/fa-solid-900.woff2'),
             'font_notosans_url': static('font/NotoSans-Regular.ttf'),

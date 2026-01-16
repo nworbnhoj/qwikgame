@@ -36,6 +36,7 @@ const appShell = [
     '{{ css_small_screen_url }}',
     '{{ css_welcome_url }}',
     '{{ favicon_url }}',
+    '{{ font_astrospace_url }}',
     '{{ font_fa_brands_url }}',
     '{{ font_fa_solid_url }}',
     '{{ font_notosans_url }}',

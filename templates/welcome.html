@@ -1,6 +1,7 @@
 <!-- qwikgame/templates/welcome.html -->
 {% extends "qwik.html" %}
 {% load static %}
+{% load webpush_notifications %}
 
 {% block refresh %}{% endblock refresh %}
 
@@ -8,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
 {% endblock css %}
+
+{% block script %}
+    {% webpush_header %}
+    <script defer src="{% static 'js/qwik-sw-load.js' %}"></script>
+{% endblock %}
 
 {% block title %}QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.{% endblock %}
 

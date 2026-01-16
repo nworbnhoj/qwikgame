@@ -1,7 +1,8 @@
-///////////////// Service Worker Load functions //////////////////
+///////////////// Service Worker functions //////////////////
 
 const REFRESH_FAST = 60; // every minute
 const REFRESH_SLOW = 900; // every 15 minutes
+const CHIME = "/static/chime.mp3"
 
 
 // Registering Service Worker
@@ -60,4 +61,24 @@ function setMetaRefresh(seconds) {
   for (var refresh of document.querySelectorAll("meta[http-equiv='refresh'")) {
     refresh.content = seconds;
   }
+}
+
+
+navigator.serviceWorker.addEventListener("message", (event) => {
+  console.log("ServiceWorker msg received: ", event.data.type);
+  switch(event.data.type) {
+      case "chime":
+        playSound(CHIME);
+        break;
+      default:
+        console.log("noop msg:", event.data.type);
+  }
+});
+
+
+function playSound(url) {
+  const audio = new Audio(url);
+  audio.play().catch(error => {
+    console.error('Audio play failed:', error);
+  });
 }

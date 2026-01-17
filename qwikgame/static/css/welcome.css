@@ -72,6 +72,7 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /***************************PWA ***************************/
 
+label.CTA_button_Orange { display: inline-block; }
 .CTA_button_Orange.installed { background-color:rgb(74, 180, 74); cursor: default;}
 .fa-li {color: green;}
 .fa-ul {text-align: left; font-size: 1.5rem;}

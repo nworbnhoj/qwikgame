@@ -21,6 +21,7 @@ ul{list-style: none; font-weight: 400;}
 .CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
 .CTA_button_Orange:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999; cursor: default; }
 .CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
+.CTA_button_Orange.err {background-color: #dadada; border: 2px solid red;border-radius: 3em; color: rgb(100, 100, 100); cursor: pointer; font-size: 1rem; margin-top: 3em;padding: 1em 3em}
 .fa-solid, .fa-brands {color: #f5a600;}
 .hidden {display: none;}
 .qwik {color: #f5a600; font-weight: 600;}
@@ -71,11 +72,13 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /***************************PWA ***************************/
 
+.CTA_button_Orange.installed { background-color:rgb(74, 180, 74); cursor: default;}
 .fa-li {color: green;}
 .fa-ul {text-align: left; font-size: 1.5rem;}
 .pwa-info {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; padding-bottom: 2rem; padding-left: 2rem; text-align: left; width: 90%; }
 .list {align-items: center; display: flex; flex-direction: column; line-height: 1.5; padding: 8em 0em;}
 .sectionPWA {padding-bottom: 5em; text-align: center; }
+.toggle-content.pwa { margin: auto; padding: 3rem; width: 50%; }
 
 /***************************FAQ***************************/
 

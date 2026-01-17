@@ -2,108 +2,81 @@
 ///////////////// PWA Install functions ///////////////////
 
 let installPrompt = null;
-const INSTALL_BUTTON = document.getElementById("install_app");
-if (INSTALL_BUTTON){
+const PWA_TRIGGER = document.getElementById("install_pwa");
+if (PWA_TRIGGER){
+  const PWA_INPUT = document.getElementById("pwa_input");
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
-    INSTALL_BUTTON.disabled = false;
-    hidePWAInfo();
+    PWA_TRIGGER.disabled = false;
+    PWA_INPUT.checked = false;
     console.log("PWA installPrompt ready");
   });
 
-  INSTALL_BUTTON.addEventListener("click", async () => {
+  PWA_TRIGGER.addEventListener("click", async () => {
     if (installPrompt) {
       const RESULT = await installPrompt.prompt();
       console.log(`Install prompt was: ${RESULT.outcome}`);
-      disableInAppInstallPrompt();
+      installPrompt = null;
+      PWA_TRIGGER.classList.add('installed')
     } else {
-      showPWAInfo();
       console.log("PWA installPrompt missing");
     }
   });
   
   window.addEventListener("appinstalled", () => {
-    disableInAppInstallPrompt();
-    showInstalled();
     console.log("PWA installed");
     detectAppState().then(state => {
-      console.log('Current App State:', state); 
+      console.log('PWA State:', state); 
     });
+    installPrompt = null;
+    PWA_TRIGGER.classList.add('installed')
   });
 
   detectAppState().then(state => {
-    console.log('Current App State:', state); 
+    console.log('PWA State:', state);
+    let show = ".pwa_install";
     switch(state) {
 
       case "active_pwa":
-        hidePWAInfo();
-        showInstalled()
+        show = ".pwa_active";
+        PWA_TRIGGER.classList.add('installed');
+        PWA_INPUT.disabled = true;
         break;
 
       case "installed_pwa":
-        hidePWAInfo();
-        showInstalled()
+        show = ".pwa_installed";
+        PWA_TRIGGER.classList.add('installed');
+        PWA_INPUT.disabled = true;
         break;
 
       case "uninstalled_pwa":
-        showPWAInfo();
+        if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
+          show = ".pwa_install";
+        } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          show = ".pwa_ios";
+        } else if (/Firefox/i.test(navigator.userAgent)) {
+          show = ".pwa_install";
+        } else {
+          show = ".pwa_unsupported"
+        }
         break;
 
       case "standard_mobile_website":
-        showPWAInfo();
+        if (/Firefox/i.test(navigator.userAgent)) {
+          show = ".pwa_ff";
+          PWA_INPUT.checked = true;
+          PWA_TRIGGER.disabled = true;
+        } else {
+          show = ".pwa_err";
+        }
         break;
-
-      default:
-        showPWAInfo();
     }
+    document.querySelectorAll(show).forEach((element) => {
+        element.classList.remove('hidden');
+    });
   });
-
-  function disableInAppInstallPrompt() {
-    installPrompt = null;
-    INSTALL_BUTTON.disabled = true;
-  }
-
-  function hidePWAInfo() {
-    const PWAFAIL = document.querySelectorAll("p.pwa-fail");
-    PWAFAIL.forEach((msg) => {
-      msg.classList.add('hidden');
-    }); 
-  }
-
-  function showInstalled(){
-    const INSTALLED = document.getElementById("app_installed");
-    if (INSTALLED){
-      INSTALL_BUTTON.disabled = true
-      INSTALLED.classList.remove('hidden')
-    }
-
-  }
-
-  function showPWAInfo() {
-    if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
-      return;
-    } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      const IOS = document.getElementById("ios_install_app");
-      if (IOS){
-        INSTALL_BUTTON.classList.add('hidden')
-        IOS.classList.remove('hidden')
-      }
-    } else if (/Firefox/i.test(navigator.userAgent)) {
-      const FIREFOX = document.getElementById("firefox_install_app");
-      if (FIREFOX){
-        INSTALL_BUTTON.disabled = true
-        FIREFOX.classList.remove('hidden')
-      }
-    } else {
-      const UNSUPPORTED = document.getElementById("unsupported_install_app");
-      if (UNSUPPORTED){
-        INSTALL_BUTTON.disabled = true
-        UNSUPPORTED.classList.remove('hidden')
-      }    
-    }
-  }
 
   // https://www.javaspring.net/blog/javascript-to-check-if-pwa-or-mobile-web/
   // Returns:

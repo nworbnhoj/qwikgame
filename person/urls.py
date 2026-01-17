@@ -1,5 +1,5 @@
 from django.urls import include, path
-from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, TermsView, UpgradeView
+from person.views import AccountView, BlockView, NotifyEmailView, PrivateView, PrivacyView, PublicView, PWAView, TermsView, UpgradeView
 from qwikgame.views import ServiceWorkerView
 
 urlpatterns = [
@@ -15,6 +15,7 @@ urlpatterns = [
     # name
     path("privacy/", PrivacyView.as_view(), name='privacy'),
     path("private/", PrivateView.as_view(), name='private'),
+    path("pwa/", PWAView.as_view(), name='pwa'),
     path("public/", PublicView.as_view(), name='public'),
     path("terms/", TermsView.as_view(), name='terms'),
     path("upgrade/", UpgradeView.as_view(), name='upgrade'),

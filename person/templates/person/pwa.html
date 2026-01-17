@@ -1,0 +1,36 @@
+<!-- qwikgame/person/templates/person/pwa.html -->
+{% extends "person/account.html" %}
+{% load static %}
+{% load webpush_notifications %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+{% endblock css %}
+
+
+{% block script %}
+    {% webpush_header %}
+    <script defer src="{% static 'js/qwik-pwa-install.js' %}"></script>
+    {{ block.super }}
+{% endblock %}
+
+{% block private_class %}selected{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div id="PRIVATE" class="post">
+            <div class="pillar">
+                {% include 'app_snippet.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

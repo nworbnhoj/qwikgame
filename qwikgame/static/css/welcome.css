@@ -9,7 +9,7 @@ img{max-width: 100%;} /*makes all images responsive*/
 
 div {box-sizing: border-box;}
 h1 {font-size: 4rem; margin-bottom: 0.5em;}
-h2 {font-size: 3rem; margin-top: 3em; text-align: center; text-decoration: uppercase;}
+h2 {font-size: 3rem; margin-top: 3em; overflow: visible; text-align: center; text-decoration: uppercase;}
 h3 {font-size: 2.5rem; margin-bottom: 0.5em;}
 h4 {font-size: 2rem; margin: 1em;}
 h5 {font-size: 1.5rem;}

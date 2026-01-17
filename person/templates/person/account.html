@@ -36,6 +36,10 @@
                 <input type="checkbox" name="selected" {{ private_checked }} hidden>
                 Private Settings
             </a>
+            <a class="btn secondary pwa_class" href="{% url 'pwa' %}">
+                <input type="checkbox" name="selected" {{ pwa_checked }} hidden>
+                QWIKGAME App
+            </a>
             <a class="btn secondary privacy_class" href="{% url 'privacy' %}">
                 <input type="checkbox" name="selected" {{ privacy_checked }} hidden>
                 Privacy

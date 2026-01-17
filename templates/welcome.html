@@ -186,73 +186,7 @@
 
     <section class="sectionPWA">
         <div class="container">
-            <h2>BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP.</h2>
-            <p>Install QWIKGAME app in seconds.
-            <div class="list">
-                <ul class="fa-ul">
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>No download process. No payment. Remove anytime</li>
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>No app store needed</li>
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Accessible from any device with a web browser</li>
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Requires minimal storage</li>
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Better performance in regions with limited internet connection</li>
-                    <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Compatible with all platforms: iOS, Android, Windows phone, Linux, etc</li>
-                </ul>
-            </div>
-            <label id="install_pwa" for="pwa_input" class="CTA_button_Orange toggle-trigger pwa">
-                <span class="pwa_install hidden">
-                    Install QWIKGAME 
-                    <i class="fa-solid fa-download"></i>
-                </span>
-                <span class="pwa_ff hidden">
-                    Install QWIKGAME 
-                    <i class="fa-solid fa-download"></i>
-                </span>                 
-                <span class="pwa_installed hidden">
-                    QWIKGAME is installed. Open the app 
-                    <i class="fa-solid fa-up-right-from-square"></i>
-                </span>               
-                <span class="pwa_active hidden">
-                    This is the QWIKGAME App.
-                </span>
-                <span class="pwa_unsupported hidden">
-                    Unfortunately this browser does not support PWA's. 
-                    <i class="fa-regular fa-face-frown"></i> 
-                </span>
-                <span class="pwa_err hidden">
-                    Something went wrong! 
-                    <i class="fa-regular fa-face-frown"></i> 
-                    Please, try again.
-                </span>
-                <span class="pwa_ios hidden">
-                    Install QWIKGAME 
-                    <i class="fa-solid fa-angles_down"></i>
-                </span>
-            </label>
-            <input id="pwa_input" type="checkbox" class="toggle-input pwa">
-            <div id="pwa_content" class="toggle-content pwa">
-                <div class="pwa_ios hidden">
-                    <h6>Install QWIKGAME:</h6>
-                    <ol> 
-                        <li>Open Safari</li>
-                        <li>Tap the Share button (box with an arrow)</li>
-                        <li>Select Add to Home Screen</li>
-                        <li>Tap Add
-                    </ol>
-                    <h6>Enable QWIKGAME push notifications:</h6>
-                    <ol>
-                        <li>Go to Settings</li>
-                        <li>Open Notifications</li>
-                        <li>Select qwikgame</li>
-                        <li>Turn on Allow Notifications</li>
-                    </ol>
-                </div>
-                <div class="pwa_ff hidden">
-                    <p>PWA requires <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">extension</a></p>
-                </div>
-                <div class="pwa_unsupported hidden">
-                    <p>You may try Chrome, Edge, Firefox with PWA add-on, Safari and more.</p>
-                </div>
-            </div>
+            {% include 'pwa_snippet.html' %}
         </div>   
     </section>
 

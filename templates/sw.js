@@ -77,6 +77,21 @@ if (workbox) {
   );
 
 
+  // Cache API requests 
+  workbox.routing.registerRoute(
+    ({ url }) => url.origin.startsWith('/api/'),
+    new workbox.strategies.NetworkFirst({
+      cacheName: 'api-cache',
+      plugins: [
+        new workbox.expiration.ExpirationPlugin({
+          maxAgeSeconds: 24 * 60 * 60,
+          maxEntries: 10,
+        }),
+      ],
+    })
+  );
+
+
   // Cache images
   workbox.routing.registerRoute(
     ({ request }) => request.destination === 'image',

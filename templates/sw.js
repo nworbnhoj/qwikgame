@@ -12,8 +12,27 @@ self.addEventListener('install', (event) => {
 
 ////////////////////////////////////////////////////////////////////// ACTIVATE
 
+// Clean up old/unused caches during activation
 self.addEventListener('activate', event => {
+  const currentCaches = [
+    workbox.core.cacheNames.precache,
+    'api-cache',
+    'image-cache',
+    'pages-cache',
+    'static-cache'
+  ];
 
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (!currentCaches.includes(cacheName)) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
 
 ///////////////////////////////////////////////////////////////////////////////

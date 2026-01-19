@@ -3,7 +3,7 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView
 
-from qwikgame.views import QwikView,ServiceWorkerView, WelcomeView
+from qwikgame.views import OfflineView,QwikView,ServiceWorkerView, WelcomeView
 
 urlpatterns = [
     path('', WelcomeView.as_view(), name='welcome'),
@@ -14,6 +14,7 @@ urlpatterns = [
     path('authenticate/', include('authenticate.urls')),
     path('game/', include('game.urls')),
     path("feedback/", include("feedback.urls")),
+    path('offline/', OfflineView.as_view(), name='offline'),
     path('player/', include('player.urls')),
     path('venue/', include('venue.urls')),
     path('webpush/', include('webpush.urls')),

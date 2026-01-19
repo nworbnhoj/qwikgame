@@ -111,6 +111,15 @@ class QwikView(BaseView):
         return context
 
 
+class OfflineView(QwikView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = super().context(request)
+        return render(request, "offline.html", context)
+
+
+
 class ServiceWorkerView(TemplateView):
     template_name = 'sw.js'
     content_type = 'application/javascript'

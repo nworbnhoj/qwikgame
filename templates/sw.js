@@ -99,6 +99,27 @@ if (workbox) {
       cacheName: 'image-cache',
     })
   );
+  // Serve HTML pages with Network First and offline fallback
+  workbox.routing.registerRoute(
+    ({ request }) => request.mode === 'navigate',
+    async ({ event }) => {
+      try {
+        const response = await workbox.strategies.networkFirst({
+          cacheName: 'pages-cache',
+          plugins: [
+            new workbox.expiration.ExpirationPlugin({
+              maxEntries: 50,
+            }),
+          ],
+        }).handle({ event });
+        return response || await caches.match('/offline.html');
+      } catch (error) {
+        return await caches.match('/offline.html');
+      }
+    }
+  );
+
+
 } else {
   console.log(`Warning: Workbox didn't load 😬`);
 }

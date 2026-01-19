@@ -13,13 +13,16 @@ self.addEventListener('install', (event) => {
 ////////////////////////////////////////////////////////////////////// ACTIVATE
 
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+
 });
 
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////// WORKBOX
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox-sw.js');
+
+workbox.core.clientsClaim();
+
 
 if (workbox) {
   console.log(`Workbox loaded 🎉`);

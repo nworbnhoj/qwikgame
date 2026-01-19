@@ -49,9 +49,6 @@ if (workbox) {
       '{{ icon_192_url }}',
       '{{ icon_512_url }}',
       '{{ img_creativecommons_url }}',
-      '{{ img_ss_feed_chat_url }}',
-      '{{ img_ss_home_url }}',
-      '{{ img_ss_invite_offer_url }}',
       '{{ js_map_url }}',
       '{{ js_qwik_url }}',
       '{{ js_qwik_json_url }}',
@@ -77,6 +74,15 @@ if (workbox) {
   workbox.routing.registerRoute(
     ({url}) => appShell.includes(url),
     new workbox.strategies.CacheOnly()
+  );
+
+
+  // Cache images
+  workbox.routing.registerRoute(
+    ({ request }) => request.destination === 'image',
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: 'image-cache',
+    })
   );
 } else {
   console.log(`Warning: Workbox didn't load 😬`);

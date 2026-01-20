@@ -52,6 +52,7 @@ if (workbox) {
 
   const appShell = [
       '{{ css_all_min_url }}',
+      '{{ css_fonts_url }}',
       '{{ css_map_url }}',
       '{{ css_qwik_url }}',
       '{{ css_reset_url }}',
@@ -75,7 +76,7 @@ if (workbox) {
       '{{ js_qwik_json_url }}',
       '{{ js_qwik_pwa_install_url }}',
       '{{ js_qwik_sw_load_url }}',
-
+      '{{ js_webpush_url }}',
       '{{ logo_152_url }}',
       '{{ logo_192_url }}',
       '{{ logo_512_url }}',

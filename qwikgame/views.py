@@ -128,6 +128,7 @@ class ServiceWorkerView(TemplateView):
     def get_context_data(self, **kwargs):
         return {
             'css_all_min_url': static('css/all.min.css'),
+            'css_fonts_url': static('css/fonts.css'),
             'css_map_url': static('css/map.css'),
             'css_qwik_url': static('css/qwik.css'),
             'css_reset_url': static('css/reset.css'),
@@ -144,9 +145,6 @@ class ServiceWorkerView(TemplateView):
             'icon_192_url': static('img/qwik-icon.192x192.png'),
             'icon_512_url': static('img/qwik-icon.512x512.png'),
             'img_creativecommons_url': static('img/creativecommons.png'),
-            'img_ss_feed_chat_url': static('img/ss-feed-chat.webp'),
-            'img_ss_home_url': static('img/ss-home.webp'),
-            'img_ss_invite_offer_url': static('img/ss-invite-offer.webp'),
             'img_qwik_icon_url': static('img/qwik-icon.webp'),
             'img_qwik_logo_url': static('img/qwik-logo.webp'),
             'js_map_url': static('map.js'),
@@ -154,7 +152,7 @@ class ServiceWorkerView(TemplateView):
             'js_qwik_json_url': static('js/qwik-json.js'),
             'js_qwik_pwa_install_url': static('js/qwik-pwa-install.js'),
             'js_qwik_sw_load_url': static('js/qwik-sw-load.js'),
-
+            'js_webpush_url': static('webpush/webpush.js'),
             'logo_152_url': static('img/qwik-logo.152x152.png'),
             'logo_192_url': static('img/qwik-logo.192x192.png'),
             'logo_512_url': static('img/qwik-logo.512x512.png'),

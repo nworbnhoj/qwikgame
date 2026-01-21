@@ -112,14 +112,8 @@ if (workbox) {
   );
 
 
-  // Cache images
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'image',
-    new workbox.strategies.StaleWhileRevalidate({
-      cacheName: 'image-cache',
-    })
-  );
 
+  workbox.recipes.imageCache();
 
   // Serve Cached Resources 
   workbox.routing.registerRoute(

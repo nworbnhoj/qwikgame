@@ -365,6 +365,7 @@ class FriendView(FriendsView):
             )
             if created:
                 friend.strengths.add(strength)
+                friend.save()
         except:
             logger.exception(f'failed add strength: {context}')
         return HttpResponseRedirect(f'/player/friend/{friend_pk}/')

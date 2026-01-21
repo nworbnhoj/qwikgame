@@ -90,12 +90,6 @@ if (workbox) {
       revision: VERSION,
   })));
 
-  // Serve the app shell from the cache.
-  workbox.routing.registerRoute(
-    ({url}) => appShell.includes(url),
-    new workbox.strategies.CacheOnly()
-  );
-
 
   // Cache API requests 
   workbox.routing.registerRoute(
@@ -114,6 +108,7 @@ if (workbox) {
 
 
   workbox.recipes.imageCache();
+  workbox.recipes.pageCache();
 
   // Serve Cached Resources 
   workbox.routing.registerRoute(

@@ -2,23 +2,24 @@
 
 /************COMMON***************/
 
+button {font-family: Arial; }
 img{max-width: 100%;} /*makes all images responsive*/
 
 .container {margin: 0 auto; max-width: 1200px; width: 80%;}
 .flex {align-items: center; display: flex; justify-content: space-between; gap: 3em;}
 
 div {box-sizing: border-box;}
-h1 {font-size: 4rem; margin-bottom: 0.5em;}
-h2 {font-size: 3rem; margin-top: 3em; overflow: visible; text-align: center; text-decoration: uppercase;}
-h3 {font-size: 2.5rem; margin-bottom: 0.5em;}
-h4 {font-size: 2rem; margin: 1em;}
-h5 {font-size: 1.5rem;}
+h1 {font-size: 4rem; font-weight: 700; margin-bottom: 0.5em;}
+h2 {font-size: 3rem; font-weight: 700; margin-top: 3em; overflow: visible; text-align: center; text-decoration: uppercase;}
+h3 {font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5em;}
+h4 {font-size: 2rem; font-weight: 700; margin: 1em;}
+h5 {font-size: 1.5rem; font-weight: 700;}
 h6 {font-size: 1.25rem; font-weight: 900;}
 p {font-size: 1.25rem; margin-top: 1em;}
 label {box-sizing: border-box;}
 ul{list-style: none; font-weight: 400;}
 
-.CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
+.CTA_button_Orange {background-color: #f5a600; border: none; border-radius: 3rem; color: rgb(50, 50, 50); cursor: pointer; font-family: "Arial"; font-size: 1.5rem; font-weight: 500; margin-top: 3em; padding: 1em 3em;}
 .CTA_button_Orange:disabled { background-color: #cccccc; border-color: #cccccc; color: #999999; cursor: default; }
 .CTA_button_Orange:hover:not(:disabled) {scale: 1.1;}
 .CTA_button_Orange.err {background-color: #dadada; border: 2px solid red;border-radius: 3em; color: rgb(100, 100, 100); cursor: pointer; font-size: 1rem; margin-top: 3em;padding: 1em 3em}
@@ -59,7 +60,7 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /***************************STRONG SECTION 1***************************/
 
-.CTA_button_White {background-color: #ffffff; border: none; border-radius: 3rem; color: rgb(20, 20, 20); cursor: pointer; font-size: 1.5rem; font-weight: 500; margin-bottom: 2em; margin-top: 1em; padding: 1em 3em;}
+.CTA_button_White {background-color: #ffffff; border: none; border-radius: 3rem; color: rgb(20, 20, 20); cursor: pointer; font-family: "Arial"; font-size: 1.5rem; font-weight: 500; margin-bottom: 2em; margin-top: 1em; padding: 1em 3em;}
 .h2_StrongSection {color: rgb(50, 50, 50); font-size: 2.5rem; padding-top: 0em;}
 .StrongSection {background-color: #f5a600; margin-bottom: 3em; margin-top: 3em; padding: 1em; text-align: center;}
 
@@ -86,7 +87,7 @@ label.CTA_button_Orange { display: inline-block; }
 
 /* https://www.codegenes.net/blog/show-hide-div-on-click-with-css/ */
 .toggle-input {border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
-.toggle-trigger.faq {background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 1rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
+.toggle-trigger.faq {background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 1rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-family: "Arial"; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
 .toggle-trigger:hover {/*background-color: #f5a600;*/scale: 1.05;}
 .toggle-content {display: none; font-size: 1.25rem; overflow: hidden; padding-bottom: 2rem; padding-left: 2rem;  text-align: left; width: 90%;}
 .toggle-input:checked + .toggle-content {display: block;}

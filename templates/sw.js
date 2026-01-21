@@ -57,13 +57,13 @@ if (workbox) {
       '{{ css_qwik_url }}',
       '{{ css_reset_url }}',
       '{{ css_small_screen_url }}',
-      '{{ css_welcome_url }}',
       '{{ favicon_url }}',
       '{{ font_astrospace_url }}',
       '{{ font_fa_brands_url }}',
       '{{ font_fa_regular_url }}',
       '{{ font_fa_solid_url }}',
       '{{ font_notosans_url }}',
+      '{{ html_offline_url }}',
       '{{ icon_url }}',
       '{{ icon_152_url }}',
       '{{ icon_192_url }}',
@@ -82,8 +82,6 @@ if (workbox) {
       '{{ logo_512_url }}',
       '{{ manifest_url }}',
       '{{ mp3_chime_url }}',
-       '{{ welcome_url }}',
-      // '{{ offline_url }}',
   ].map((partialUrl) => `${location.protocol}//${location.host}${partialUrl}`);
 
   // Precache the shell.

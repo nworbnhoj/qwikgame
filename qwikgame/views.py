@@ -133,13 +133,13 @@ class ServiceWorkerView(TemplateView):
             'css_qwik_url': static('css/qwik.css'),
             'css_reset_url': static('css/reset.css'),
             'css_small_screen_url': static('css/small_screen.css'),
-            'css_welcome_url': static('css/welcome.css'),
             'favicon_url': static('img/favicon.ico'),
             'font_astrospace_url': static('font/AstroSpace-eZ2Bg.ttf'),
             'font_fa_brands_url': static('font/fa-brands-400.woff2'),
             'font_fa_regular_url': static('font/fa-regular-400.woff2'),
             'font_fa_solid_url': static('font/fa-solid-900.woff2'),
             'font_notosans_url': static('font/NotoSans-Regular.ttf'),
+            'html_offline_url': OfflineView.as_view(),
             'icon_url': static('img/qwik-icon.png'),
             'icon_152_url': static('img/qwik-icon.152x152.png'),
             'icon_192_url': static('img/qwik-icon.192x192.png'),
@@ -159,7 +159,6 @@ class ServiceWorkerView(TemplateView):
             'manifest_url': static('manifest.json'),
             'version': subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
             'mp3_chime_url': static('chime.mp3'),
-            'welcome_url': '/',
         }
 
 

@@ -109,19 +109,8 @@ if (workbox) {
 
   workbox.recipes.imageCache();
   workbox.recipes.pageCache();
+  workbox.recipes.staticResourceCache();
 
-  // Serve Cached Resources 
-  workbox.routing.registerRoute(
-    ({url}) => url.origin === self.location.origin,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'static-cache',  
-      plugins: [
-        new workbox.expiration.ExpirationPlugin({
-          maxAgeSeconds: 7 * 24 * 60 * 60,  // Cache static resources for 7 days
-        }),
-      ],
-    })
-  );
 
 
   // Serve HTML pages with Network First and offline fallback

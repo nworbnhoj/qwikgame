@@ -45,6 +45,7 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/7.3.0/workbox
 
 self.skipWaiting();
 workbox.core.clientsClaim();
+workbox.routing.setDefaultHandler(new workbox.strategies.NetworkOnly());
 
 
 if (workbox) {
@@ -105,40 +106,15 @@ if (workbox) {
     })
   );
 
-
-
+  // https://developer.chrome.com/docs/workbox/modules/workbox-routing/
   workbox.recipes.imageCache();
   workbox.recipes.pageCache();
   workbox.recipes.staticResourceCache();
-
-
-
-  // Serve HTML pages with Network First and offline fallback
-  workbox.routing.registerRoute(
-    ({ request }) => request.mode === 'navigate',
-    async ({ event }) => {
-      try {
-        const response = await workbox.strategies.networkFirst({
-          cacheName: 'pages-cache',
-          plugins: [
-            new workbox.expiration.ExpirationPlugin({
-              maxEntries: 50,
-            }),
-          ],
-        }).handle({ event });
-        return response || await caches.match('/offline.html');
-      } catch (error) {
-        return await caches.match('/offline.html');
-      }
-    }
-  );
-
+  workbox.recipes.offlineFallback();
 
 } else {
   console.log(`Warning: Workbox didn't load 😬`);
 }
-
-
 
 
 /////////////////////////////////////////////////////////////////////// WEBPUSH

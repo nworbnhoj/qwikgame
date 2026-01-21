@@ -14,7 +14,7 @@ urlpatterns = [
     path('authenticate/', include('authenticate.urls')),
     path('game/', include('game.urls')),
     path("feedback/", include("feedback.urls")),
-    path('offline/', OfflineView.as_view(), name='offline'),
+    path('offline.html', OfflineView.as_view(), name='offline'),
     path('player/', include('player.urls')),
     path('venue/', include('venue.urls')),
     path('webpush/', include('webpush.urls')),

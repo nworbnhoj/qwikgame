@@ -192,7 +192,7 @@ class Player(models.Model):
 
     # returns the favorite locality in region_favorites()
     # step thru region_favorites and select the first country, and then the
-    # for admin1 in the country, and then the first locality in the admin1
+    # first admin1 in the country, and then the first locality in the admin1
     def region_favorite(self):
         country = None
         admin1 = None
@@ -339,6 +339,12 @@ class Player(models.Model):
         qs = qs.order_by('name')
         return [(v.placeid, v.name) for v in qs.all()][:count]
 
+    # returns a QuerySet of Venues that are of current interest to this Player.
+    # param count: the min number of Venues to attempt to return
+    # first include Venues this Player has Bid on
+    # second include Venues this Player has Appealed at
+    # third include Venues this Player has Filtered on
+    # forth include Venues this Player has played at 
     def venue_favorites(self, count):
         qs = Venue.objects.filter(appeal__bid__rival=self).distinct()
         if qs.count() < count:

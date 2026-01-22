@@ -12,7 +12,7 @@ You can use qwikgame for free at [qwikgame.org](https://qwikgame.org)
 >After a Match, you should rate your rivals **ability** as stronger, weaker or well matched. **well matched** indicates an enjoyable challenging match, regardless of who actually 'won'. You may also bolster the reputation of your rival by recognising good sportsmanship, regardless of who was the stronger player.
 
 
-## Deployment  
+## Deployment   
 
 Typical setup might involve:
 - linux on a virtual server

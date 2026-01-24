@@ -1,13 +1,21 @@
+const EMAIL_CKB = document.getElementById('id_notify_email');
+const HIDDEN_WEBPUSH_BTN = document.getElementById('webpush-subscribe-button');
+const LANGUAGE_SEL = document.getElementById('id_language');
+const LOCATION_CKB = document.getElementById('id_location_auto');
+const PRIVATE_FRM = document.forms["private"];
+const PUSH_SUPPORT = 'serviceWorker' in navigator && 'PushManager' in window && "Notification" in window;
+const WEBPUSH_CKB = document.getElementById('id_notify_push');
+var webpush_clicked = false;
+
+
 docReady(event => {
   initPage();
-  document.getElementById('id_notify_email').addEventListener('click', autoSubmit, false);
-  document.getElementById('id_notify_push').addEventListener('click', autoSubmit, false);
-  document.getElementById('id_location_auto').addEventListener('click', autoSubmit, false);
-  document.getElementById('id_language').addEventListener('change', autoSubmit, false);
-  document.querySelectorAll("#webpush-subscribe-button").forEach(function(input) {
-    input.addEventListener("click", () => {
-      showLoader(input, 4000);
-    });
+  EMAIL_CKB.addEventListener('change', autoSubmit, false);
+  LOCATION_CKB.addEventListener('change', autoSubmit, false);
+  LANGUAGE_SEL.addEventListener('change', autoSubmit, false);
+  HIDDEN_WEBPUSH_BTN.addEventListener("click", (event) => {
+    webpush_clicked = true;
+    showLoader(event.target, 4000);
   });
 });
 
@@ -16,30 +24,40 @@ winReady(event => {});
 
 
 function autoSubmit(){
-  updateNotifyPush()
-  this.form.submit();
+  const DATA = {
+    email:EMAIL_CKB.checked,
+    push:WEBPUSH_CKB.checked,
+    location:LOCATION_CKB.checked,
+    language:LANGUAGE_SEL.value
+  };
+  console.log("Submitting: ", DATA);
+  PRIVATE_FRM.submit();
 }
+
 
 const observer = new MutationObserver((event) => {
-  console.log(event);
-  updateNotifyPush()
+  if (updateNotifyPush() && webpush_clicked){
+    autoSubmit();
+  }
 });
-observer.observe(document.getElementById('webpush-message'), {childList: true,});
+observer.observe(HIDDEN_WEBPUSH_BTN, {childList: true,});
+
 
 function initPage(){
-  updateNotifyPush()
+  if (PUSH_SUPPORT){
+    updateNotifyPush()
+  } else {
+    WEBPUSH_CKB.disabled = true;
+  }
 }
 
-// Link the hidden WebPush UI to the visible qwikgame UI
+
+// update the visible qwikgame UI to reflect the hidden WebPush UI
 function updateNotifyPush() {
+  const WAS_CHECKED = WEBPUSH_CKB.checked;
   const granted = Notification.permission === 'granted';
-  const btn_txt = document.getElementById('webpush-subscribe-button').innerText;
-  const subscribed = btn_txt.includes('Unsubscribe');
-  const push_checkbox = document.getElementById('id_notify_push');
-  push_checkbox.disabled = !('serviceWorker' in navigator && 'PushManager' in window && "Notification" in window);
-  push_checkbox.checked = granted && subscribed;
-  // const msg_txt = document.getElementById('webpush-message').innerText;
-  // const push_info = document.getElementById('id_notify_push_info');
-  // push_info.innerText = msg_txt ? msg_txt : 'click to enable push notifications';
-  unLoader(push_checkbox.closest('label'))
+  const subscribed = HIDDEN_WEBPUSH_BTN.innerText.includes('Unsubscribe');
+  WEBPUSH_CKB.checked = granted && subscribed;
+  const CHANGED = !(WEBPUSH_CKB.checked === WAS_CHECKED);
+  return CHANGED;
 }

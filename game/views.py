@@ -79,7 +79,7 @@ class MatchView(MatchesView):
                 case 'A':
                     banner_txt = 'Match is scheduled!'
                     banner_class = 'active'
-                case 'C':
+                case 'C' | 'D':
                     banner_txt = 'Match is complete.'
                     banner_class = 'complete'
                 case 'X':
@@ -94,7 +94,7 @@ class MatchView(MatchesView):
             context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
-                'enable_chat': now < match.date + DELAY_MATCH_CHAT,
+                'enable_chat': match.state in {'A','C'},
                 'notify_off': person.alert_str(False, 'match'),
                 'notify_on': person.alert_str(True, 'match'),
                 'rivals': rivals,

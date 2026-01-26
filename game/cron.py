@@ -7,9 +7,20 @@ logger = logging.getLogger(__file__)
 
 
 # Intended to be run hourly as a cron job
-def match_perish():
+def match_disable():
     stats = {}
     matches = Match.objects.filter(status='C').all()
+    for match in matches:
+        action = match.disable()
+        stats[action] = stats.get(action, 0) + 1
+        match.save()
+    logger.info(f'CRON: match_disable() {stats}')
+
+
+# Intended to be run hourly as a cron job
+def match_perish():
+    stats = {}
+    matches = Match.objects.filter(status='D').all()
     for match in matches:
         action = match.perish()
         stats[action] = stats.get(action, 0) + 1

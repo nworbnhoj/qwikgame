@@ -35,6 +35,7 @@ class Match(models.Model):
     STATUS = {
         'A': 'active',
         'C': 'complete',
+        'D': 'disabled',
         'X': 'cancelled',
     }
 
@@ -141,6 +142,18 @@ class Match(models.Model):
     def datetime_str(self):
         return self.datetime_aware.strftime('%d %b %Y, %Hh')
 
+    def disable(self, dry_run=False):
+        now = self.venue.now()
+        if now > (self.date + DELAY_MATCH_CHAT):
+            dry = 'dry_run' if dry_run else ''
+            if not dry_run:
+                self.status = 'D'
+                self.log_event('disabled')
+                self.save()
+            logger.debug(f'match disabled {dry}: {self}')
+            return 'chat'
+        return 'noop'
+
     @property
     def hour_str(self):
         return self.datetime_aware.strftime('%Hh')
@@ -182,6 +195,8 @@ class Match(models.Model):
                 entry['text'] = 'match cancelled'
             case 'chat':
                 entry['text'] = text
+            case 'disabled':
+                entry['text'] = 'match chat disabled'
             case 'scheduled':
                 entry['text'] = 'match scheduled'
             case 'perished':

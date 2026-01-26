@@ -55,7 +55,29 @@
     }],
     "id": "qwikgame",
     "lang": "en-US",
+    "launch_handler": {
+      "client_mode": ["focus-existing"]
+    },
     "name": "qwik game org",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": true,
+    "related_applications": [{
+           "id": "qwikgame",
+           "platform": "webapp",
+           "url": "https://qwikgame.org/static/manifest.json"
+        },{
+           "id": "qwikgame",
+           "platform": "webapp",
+           "url": "https://beta.qwikgame.org/static/manifest.json"
+        },{
+           "id": "qwikgame",
+           "platform": "webapp",
+           "url": "https://alpha.qwikgame.org/static/manifest.json"
+        },{
+           "id": "qwikgame",
+           "platform": "webapp",
+           "url": "http://localhost:8000/static/manifest.json"
+    }],
     "scope": "/",
     "screenshots": [{
         "form_factor": "narrow",
@@ -128,24 +150,5 @@
     }],
     "short_name": "qwikgame",
     "start_url": "/",
-    "prefer_related_applications": true,
-    "related_applications": [{
-           "id": "qwikgame",
-           "platform": "webapp",
-           "url": "https://qwikgame.org/static/manifest.json"
-        },{
-           "id": "qwikgame",
-           "platform": "webapp",
-           "url": "https://beta.qwikgame.org/static/manifest.json"
-        },{
-           "id": "qwikgame",
-           "platform": "webapp",
-           "url": "https://alpha.qwikgame.org/static/manifest.json"
-    }],
-    "start_url": "/",
-    "theme_color": "#F5A600",
-    "launch_handler": {
-      "client_mode": ["focus-existing"]
-    },
-    "orientation": "portrait-primary"
+    "theme_color": "#F5A600"
 }

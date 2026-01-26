@@ -2,6 +2,7 @@ import logging
 from appeal.forms import AcceptForm, KeenForm, BidForm
 from appeal.views import AppealsView
 from datetime import datetime, timedelta, timezone
+from django.db.models.functions import Lower
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -199,7 +200,7 @@ class FriendsView(QwikView):
     def context(self, request, *args, **kwargs):
         player = self.user.player
         player.alert_del(type='')
-        kwargs['items'] = Friend.objects.filter(player=player).order_by('name')
+        kwargs['items'] = Friend.objects.filter(player=player).order_by(Lower('name'))
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend')
         context = super().context(request, *args, **kwargs)

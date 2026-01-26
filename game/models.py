@@ -90,7 +90,7 @@ class Match(models.Model):
                     type=type,
                     expires=self.date + datetime.timedelta(days=1),
                     context=context,
-                    url = f'/game/match/{self.pk}/#form',
+                    url = f'/game/match/{self.pk}/',
                 )
 
     def announce(self, instigator):

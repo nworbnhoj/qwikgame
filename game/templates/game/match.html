@@ -1,5 +1,6 @@
-<!-- qwikgame/match/templates/match/match.html -->
+<!-- qwikgame/game/templates/game/match.html -->
 {% extends "game/matches.html" %}
+{% load static %}
 
 
 {% block refresh %}
@@ -8,6 +9,12 @@
 
 
 {% block title %}Match{% endblock %}
+
+
+{% block script %}
+    {{ block.super }}
+    <script defer src="{% static 'js/match.js' %}"></script>
+{% endblock %}
 
     
 {% block list_bar %}
@@ -165,7 +172,7 @@
 {% endif %}
 
 {% if enable_chat %}
-            <form id="form" action="{% url 'match' match=match.pk %}#form" method="post">
+            <form id="chat_form" action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}
                 <div class="chat_input">
                     <div class="button" onclick="return alert('☺ emogi coming soon ☺')">

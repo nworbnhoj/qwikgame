@@ -62,7 +62,11 @@ if (PWA_TRIGGER){
         break;
 
       case "standard_mobile_website":
-        if (/Firefox/i.test(navigator.userAgent)) {
+        if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
+          show = ".pwa_brave";
+          PWA_INPUT.checked = true;
+          PWA_TRIGGER.disabled = true;
+        } else if (/Firefox/i.test(navigator.userAgent)) {
           show = ".pwa_ff";
           PWA_INPUT.checked = true;
           PWA_TRIGGER.disabled = true;

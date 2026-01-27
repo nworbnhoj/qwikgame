@@ -94,7 +94,7 @@ class MatchView(MatchesView):
             context |= {
                 'banner_class': banner_class,
                 'banner_txt': banner_txt,
-                'enable_chat': match.state in {'A','C'},
+                'enable_chat': match.status in {'A','C'},
                 'notify_off': person.alert_str(False, 'match'),
                 'notify_on': person.alert_str(True, 'match'),
                 'rivals': rivals,

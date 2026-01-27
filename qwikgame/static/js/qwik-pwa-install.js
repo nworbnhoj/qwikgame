@@ -54,8 +54,6 @@ if (PWA_TRIGGER){
       case "uninstalled_pwa":
         if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
           show = ".pwa_install";
-        } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          show = ".pwa_ios";
         } else if (/Firefox/i.test(navigator.userAgent)) {
           show = ".pwa_install";
         } else {
@@ -68,6 +66,8 @@ if (PWA_TRIGGER){
           show = ".pwa_ff";
           PWA_INPUT.checked = true;
           PWA_TRIGGER.disabled = true;
+        } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          show = ".pwa_ios";
         } else {
           show = ".pwa_err";
         }

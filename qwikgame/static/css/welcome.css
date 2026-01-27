@@ -15,6 +15,7 @@ h3 {font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5em;}
 h4 {font-size: 2rem; font-weight: 700; margin: 1em;}
 h5 {font-size: 1.5rem; font-weight: 700;}
 h6 {font-size: 1.25rem; font-weight: 900;}
+ol {list-style-position: inside; list-style-type: decimal; padding: 1rem;}
 p {font-size: 1.25rem; margin-top: 1em;}
 label {box-sizing: border-box;}
 ul{list-style: none; font-weight: 400;}
@@ -74,11 +75,10 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /***************************PWA ***************************/
 
-label.CTA_button_Orange { display: inline-block; }
 .CTA_button_Orange.installed { background-color:rgb(74, 180, 74); cursor: default;}
 .fa-li {color: green;}
 .fa-ul {text-align: left; font-size: 1.5rem;}
-.pwa-info {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; padding-bottom: 2rem; padding-left: 2rem; text-align: left; width: 90%; }
+.pwa-info {align-items: center; display: flex; flex-direction: column; font-size: 1.25rem; padding-bottom: 2rem; text-align: left; }
 .list {align-items: center; display: flex; flex-direction: column; line-height: 1.5; padding: 8em 0em;}
 .sectionPWA {padding-bottom: 5em; text-align: center; }
 .toggle-content.pwa { margin: auto; padding: 3rem; width: 50%; }
@@ -149,16 +149,3 @@ label.CTA_button_Orange { display: inline-block; }
 
 
 
-
-
-
-
-
-
-    
-
-
-
-
-
- 

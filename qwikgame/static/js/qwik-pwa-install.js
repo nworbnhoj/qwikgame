@@ -2,24 +2,24 @@
 ///////////////// PWA Install functions ///////////////////
 
 let installPrompt = null;
-const PWA_TRIGGER = document.getElementById("install_pwa");
-if (PWA_TRIGGER){
-  const PWA_INPUT = document.getElementById("pwa_input");
+const PWA_INSTALL = document.getElementById("install_pwa");
+if (PWA_INSTALL){
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
     installPrompt = event;
-    PWA_TRIGGER.disabled = false;
-    PWA_INPUT.checked = false;
+    pwa_show(".pwa_install");
+    PWA_INSTALL.disabled = false;
     console.log("PWA installPrompt ready");
   });
 
-  PWA_TRIGGER.addEventListener("click", async () => {
+  PWA_INSTALL.addEventListener("click", async () => {
     if (installPrompt) {
       const RESULT = await installPrompt.prompt();
       console.log(`Install prompt was: ${RESULT.outcome}`);
       installPrompt = null;
-      PWA_TRIGGER.classList.add('installed')
+      pwa_show(".pwa_active");
+      PWA_INSTALL.classList.add('installed');
     } else {
       console.log("PWA installPrompt missing");
     }
@@ -31,51 +31,57 @@ if (PWA_TRIGGER){
       console.log('PWA State:', state); 
     });
     installPrompt = null;
-    PWA_TRIGGER.classList.add('installed')
+    PWA_INSTALL.classList.add('installed')
   });
 
   detectAppState().then(state => {
     console.log('PWA State:', state);
-    let show = ".pwa_install";
     switch(state) {
 
       case "active_pwa":
-        show = ".pwa_active";
-        PWA_TRIGGER.classList.add('installed');
-        PWA_INPUT.disabled = true;
+        pwa_show(".pwa_active");
+        PWA_INSTALL.classList.add('installed');
         break;
 
       case "installed_pwa":
-        show = ".pwa_installed";
-        PWA_TRIGGER.classList.add('installed');
-        PWA_INPUT.disabled = true;
+        pwa_show(".pwa_installed");
+        PWA_INSTALL.classList.add('installed');
         break;
 
       case "uninstalled_pwa":
-        show = ".pwa_install"; 
+        pwa_show(".pwa_install");
         break;
 
       case "standard_mobile_website":
         if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
-          show = ".pwa_brave";
-          PWA_INPUT.checked = true;
-          PWA_TRIGGER.disabled = true;
+          pwa_show(".pwa_brave");
+          PWA_INSTALL.disabled = true;
         } else if (/Firefox/i.test(navigator.userAgent)) {
-          show = ".pwa_ff";
-          PWA_INPUT.checked = true;
-          PWA_TRIGGER.disabled = true;
+          pwa_show(".pwa_ff");
+          PWA_INSTALL.disabled = true;
         } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          show = ".pwa_ios";
+          PWA_INSTALL.hidden = true;
+          document.getElementById("pwa_ios").hidden = false;
         } else {
-          show = ".pwa_unsupported"
+          pwa_show(".pwa_unsupported");
+          PWA_INSTALL.disabled = true;
           console.log("PWA unsupported userAgent: ", navigator.userAgent);
         }
         break;
     }
-    document.querySelectorAll(show).forEach((element) => {
-        element.classList.remove('hidden');
-    });
   });
+
+
+  function pwa_show(klass) {
+    console.log("pwa_show(",klass,")");
+    for (const child of PWA_INSTALL.children) {
+      child.hidden = true;
+    }
+    document.querySelectorAll(klass).forEach((element) => {
+        element.hidden = false;
+    });
+  }
+
 
   // https://www.javaspring.net/blog/javascript-to-check-if-pwa-or-mobile-web/
   // Returns:

@@ -14,57 +14,51 @@
         <li><span class="fa-li"><i class="fa-solid fa-check fa-1x"></i></i></span>Compatible with all platforms: iOS, Android, Windows phone, Linux, etc</li>
     </ul>
 </div>
-<label id="install_pwa" for="pwa_input" class="CTA_button_Orange toggle-trigger pwa">
-    <span class="pwa_brave pwa_ff pwa_install hidden">
+<button id="install_pwa" class="CTA_button_Orange">
+    <span class="pwa_install pwa_ff pwa_brave">
         Install QWIKGAME 
         <i class="fa-solid fa-download"></i>
     </span>
-    <span class="pwa_installed hidden">
+    <span class="pwa_installed" hidden>
         QWIKGAME is installed. Open the app 
         <i class="fa-solid fa-up-right-from-square"></i>
     </span>
-    <span class="pwa_active hidden">
+    <span class="pwa_active" hidden>
         QWIKGAME is installed and in-use.
     </span>
-    <span class="pwa_unsupported hidden">
+    <span class="pwa_unsupported" hidden>
         Unfortunately this browser does not support PWA's. 
         <i class="fa-regular fa-face-frown"></i> 
     </span>
-    <span class="pwa_err hidden">
+    <span class="pwa_err" hidden>
         Something went wrong! 
         <i class="fa-regular fa-face-frown"></i> 
         Please, try again.
     </span>
-    <span class="pwa_ios hidden">
-        Install QWIKGAME 
-        <i class="fa-solid fa-angles_down"></i>
-    </span>
+</button>
+<div class="pwa-info">
+    <p class="pwa_brave" hidden>PWA requires <a href="brave://settings/?search=push" target="_blank">Google services for push messaging</a> on Brave</p>
+    <p class="pwa_ff" hidden>PWA requires <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">extension</a> on Firefox</p>
+    <p class="pwa_unsupported" hidden>You may try Chrome, Edge, Firefox with PWA add-on, Safari and more.</p>
+</div>
+<label for="pwa_ios" class="CTA_button_Orange toggle-trigger pwa" hidden>
+    Install QWIKGAME 
+    <i class="fa-solid fa-angles-down"></i>
 </label>
-<input id="pwa_input" type="checkbox" class="toggle-input pwa">
+<input id="pwa_ios" type="checkbox" class="toggle-input pwa">
 <div id="pwa_content" class="toggle-content pwa">
-    <div class="pwa_brave hidden">
-        <p>PWA requires <a href="brave://settings/?search=push" target="_blank">Google services for push messaging</a> on Brave</p>
-    </div>
-    <div class="pwa_ios hidden">
-        <h6>Install QWIKGAME:</h6>
-        <ol> 
-            <li>Open Safari</li>
-            <li>Tap the Share button (box with an arrow)</li>
-            <li>Select Add to Home Screen</li>
-            <li>Tap Add
-        </ol>
-        <h6>Enable QWIKGAME push notifications:</h6>
-        <ol>
-            <li>Go to Settings</li>
-            <li>Open Notifications</li>
-            <li>Select qwikgame</li>
-            <li>Turn on Allow Notifications</li>
-        </ol>
-    </div>
-    <div class="pwa_ff hidden">
-        <p>PWA requires <a href="https://addons.mozilla.org/en-US/firefox/addon/pwas-for-firefox/" target="_blank">extension</a> on Firefox</p>
-    </div>
-    <div class="pwa_unsupported hidden">
-        <p>You may try Chrome, Edge, Firefox with PWA add-on, Safari and more.</p>
-    </div>
+    <h6>Install QWIKGAME:</h6>
+    <ol> 
+        <li>Open Safari</li>
+        <li>Tap the Share button (box with an arrow)</li>
+        <li>Select Add to Home Screen</li>
+        <li>Tap Add
+    </ol>
+    <h6>Enable QWIKGAME push notifications:</h6>
+    <ol>
+        <li>Go to Settings</li>
+        <li>Open Notifications</li>
+        <li>Select qwikgame</li>
+        <li>Turn on Allow Notifications</li>
+    </ol>
 </div>

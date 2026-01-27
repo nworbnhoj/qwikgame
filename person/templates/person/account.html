@@ -1,7 +1,15 @@
 <!-- qwikgame/person/templates/person/account.html -->
 {% extends "content.html" %}
+{% load static %}
 
 {% block refresh %}{% endblock refresh %}
+
+
+{% block script %}
+    {{ block.super }}
+    <script defer src="{% static '/js/account.js' %}"></script>
+{% endblock %}
+
 
 {% block title %}Account{% endblock %}
 
@@ -48,7 +56,7 @@
                 <input type="checkbox" name="selected" {{ terms_checked }} hidden>
                 Terms & Conditions
             </a>
-            <form action="{% url 'logout' %}" method="post">
+            <form id="logout_form" action="{% url 'logout' %}" method="post">
     {% csrf_token %}
                 <label class="btn secondary">
                     <input hidden name="logout" type="submit">

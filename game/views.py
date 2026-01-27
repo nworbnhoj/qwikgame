@@ -66,11 +66,16 @@ class MatchView(MatchesView):
         person = self.user.person
         match = context.get('match')
         if match:
+            # temporarily rename rival log entries, and
+            # locate the index of the 'scheduled' log entry
             match_log_start = -1
             for i, entry in enumerate(match.log):
+                if 'id' in entry and entry['id'] != player.pk:
+                    rival = Player.objects.filter(pk=entry['id']).first();
+                    if rival:
+                        entry['name'] = player.name_rival(rival);
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
-                    break
             now = datetime.now(timezone.utc)
             if match.status == 'A':
                 if now > match.date + DELAY_MATCH_BANNER:

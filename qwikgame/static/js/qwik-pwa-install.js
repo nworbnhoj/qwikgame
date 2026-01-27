@@ -52,13 +52,7 @@ if (PWA_TRIGGER){
         break;
 
       case "uninstalled_pwa":
-        if (/Chrome|Edg|OPR/i.test(navigator.userAgent)) {
-          show = ".pwa_install";
-        } else if (/Firefox/i.test(navigator.userAgent)) {
-          show = ".pwa_install";
-        } else {
-          show = ".pwa_unsupported"
-        }
+        show = ".pwa_install"; 
         break;
 
       case "standard_mobile_website":
@@ -73,7 +67,8 @@ if (PWA_TRIGGER){
         } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           show = ".pwa_ios";
         } else {
-          show = ".pwa_err";
+          show = ".pwa_unsupported"
+          console.log("PWA unsupported userAgent: ", navigator.userAgent);
         }
         break;
     }

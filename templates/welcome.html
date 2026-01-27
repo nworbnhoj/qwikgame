@@ -22,7 +22,7 @@
 {% block tab_bar %}{% endblock tab_bar %}
 
 {% block content %}
-    <header>
+    <header id="header">
         <div class="container flex">
             <a class="logo" href="https://qwikgame.org">
                 <img src="{% static 'img/qwik-logo.webp' %}" alt="logo of 2 linked wonky smilies over QWIKGAME" data-href="{% url 'welcome' %}" height="50px" alt="QWIKGAME Logo Smileys">
@@ -36,7 +36,7 @@
         </div>
     </header>  
 
-    <section class="hero container flex">
+    <section id="hero_section" class="hero container flex">
         <div class="hero_text">
             <h1>FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE.</h1>
             <p>You play squash, tennis or paddel? Or may be chess, darts or pool? But you can't find partners? This is <span class="qwik">QWIK</span>GAME! Now finding partners and arranging games is fast and easy. With <span class="qwik">QWIK</span>GAME you have all match invitations in one place. Just pick one or post your own.</p>     
@@ -49,7 +49,7 @@
         </div>
     </section>
 
-    <section class="gridcontainer">
+    <section id="card_section" class="gridcontainer">
         <div class="card">
             <img src="{% static 'img/welcome_bdm.png' %}"loading="lazy" alt="Badminton shuttle" class="image">
             <h5>Badminton</h5>
@@ -103,7 +103,7 @@
     
     <main class="keentoplay">
         <h2>KEEN TO PLAY?</h2>
-        <section class="keentoplay_section1">
+        <section id="keen1_section" class="keentoplay_section1">
             <div class="container">
                 <div class="flex">
                     <div class="keentoplay_image1">
@@ -121,7 +121,7 @@
             </div>
         </section>
 
-        <section class="keentoplay_section2">
+        <section id="keen2_section" class="keentoplay_section2">
             <div class="container">
                 <div class="flex">
                     <div class="keentoplay_text1">
@@ -140,7 +140,7 @@
         </section>
     </main>
     
-    <section class="StrongSection">
+    <section id="now1_section" class="StrongSection">
     <div class="container">
         <h2 class="h2_StrongSection"> SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!</h2>
         <a href="{% url 'register' %}">
@@ -149,7 +149,7 @@
     </div>
     </section>
 
-    <section class="features">
+    <section id="feature_section" class="features">
         <div class="feature_item">
             <i class="fa-solid fa-rss"></i>
             <h4>Accept Feed Invitation</h4>
@@ -176,7 +176,7 @@
         </div>
     </section> 
 
-    <section class="StrongSection">
+    <section id="partner_section" class="StrongSection">
         <div class="container">
             <h2 class="h2_StrongSection"> FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS EASY.</h2>
             <a href="{% url 'register' %}">
@@ -185,13 +185,13 @@
         </div>
     </section>
 
-    <section class="sectionPWA">
+    <section id="pwa_section" class="sectionPWA">
         <div class="container">
             {% include 'pwa_snippet.html' %}
         </div>   
     </section>
 
-    <section class="StrongSection">
+    <section id="now2_section" class="StrongSection">
         <div class="container">
             <h2 class="h2_StrongSection"> ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE</h2>
             <a href="{% url 'register' %}">
@@ -200,7 +200,7 @@
         </div>
     </section>
 
-    <article class="FAQs">
+    <article id="faq_article" class="FAQs">
     
         <h2>FREQUENTLY ASKED QUESTIONS</h2>
         <div class="questions">
@@ -295,7 +295,7 @@
 
     </article>
 
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="container">
             <div class="flex">
                 <div class="column1">

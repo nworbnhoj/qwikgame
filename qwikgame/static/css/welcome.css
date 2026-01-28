@@ -15,7 +15,7 @@ h3 {font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5em;}
 h4 {font-size: 2rem; font-weight: 700; margin: 1em;}
 h5 {font-size: 1.5rem; font-weight: 700;}
 h6 {font-size: 1.25rem; font-weight: 900;}
-ol {list-style-position: inside; list-style-type: decimal; padding: 1rem;}
+ol {font-size: 1.25rem; list-style-position: inside; list-style-type: decimal; padding: 1rem;}
 p {font-size: 1.25rem; margin-top: 1em;}
 label {box-sizing: border-box;}
 ul{list-style: none; font-weight: 400;}
@@ -75,6 +75,7 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 
 /***************************PWA ***************************/
 
+#pwa_content { position: relative; top: 3rem; }
 .CTA_button_Orange.installed { background-color:rgb(74, 180, 74); cursor: default;}
 .fa-li {color: green;}
 .fa-ul {text-align: left; font-size: 1.5rem;}
@@ -114,7 +115,8 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 	h1 {margin-top: 1em; font-size: 2rem;}
 	h2 {font-size: 1.5rem;}
 	h3 {font-size: 1.25rem;margin-top: 4em;}
-	h4, h5 {font-size: 1rem;}
+	h4, h5, h6 {font-size: 1rem;}
+	ol {font-size: 1rem; }
 	p {font-size: 0.9rem;}
 
 	.card_button {padding: 0.8em 2.4em;}

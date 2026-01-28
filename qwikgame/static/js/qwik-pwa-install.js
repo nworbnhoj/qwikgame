@@ -61,7 +61,7 @@ if (PWA_INSTALL){
           PWA_INSTALL.disabled = true;
         } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
           PWA_INSTALL.hidden = true;
-          document.getElementById("pwa_ios").hidden = false;
+          document.querySelector("label[for='pwa_ios']").hidden = false;
         } else {
           pwa_show(".pwa_unsupported");
           PWA_INSTALL.disabled = true;

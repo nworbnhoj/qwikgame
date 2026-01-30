@@ -189,8 +189,12 @@ class RivalView(AppealsView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+        player = self.user.player
         context = super().context(request, *args, **kwargs)
-        context |= { 'review_tab': 'selected' }
+        context |= {
+            'review_tab': 'selected',
+            'rival_name': player.name_rival(rival)
+        }
         return render(request, "player/rival.html", context)
 
 

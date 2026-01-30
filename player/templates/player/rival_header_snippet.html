@@ -3,7 +3,7 @@
         <a class="btn special2" href="{{ request.path }}{{ rival.pk }}/">
             <i class="fa-solid {{ rival.icon }} fa-3x"></i>
        </a>
-        <p>{{ rival.qwikname }}</p>  
+        <p>{{ rival_name }}</p>  
         <p>{{ strength }}</p>
 {% with rival as player %}
     {% include 'player/conduct_stars_snippet.html' %}

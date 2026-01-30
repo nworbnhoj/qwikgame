@@ -16,4 +16,13 @@
         </label>
     </div>
     <div id="webpush-message" class="push_right" hidden=""></div>
+    <!-- TODO
+    Brave browser will fail silently unless the User  allows Google services for push messaging:
+    brave://settings/?search=push'
+    Brave browser actually has window.PushManager but
+    generates an error on registration.pushManager.subscribe() which the django-webpush library catches and console.log() but unfortunately with no User message to id="webpush-message".
+    see: webpush.js:128
+    One solution is to replace Google WebPush with a privacy conscious alternative.
+    Vanadium Browser does not support WebPush at all.
+    -->
 </div>

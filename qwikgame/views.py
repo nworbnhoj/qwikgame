@@ -127,6 +127,13 @@ class OfflineView(QwikView):
         return render(request, "offline.html", context)
 
 
+class PrivacyView(BaseView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = super().context(request)
+        return render(request, "privacy.html", context)
+
 
 class ServiceWorkerView(TemplateView):
     template_name = 'sw.js'

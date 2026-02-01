@@ -65,18 +65,6 @@ class NotifyEmailView(QwikView):
         return render(request, 'person/notify_email_done.html', context )
 
 
-class PrivacyView(QwikView):
-
-    def get(self, request, *args, **kwargs):
-        super().get(request)
-        context = super().context(request)
-        context |= { 
-            'account_tab': 'selected',
-            'privacy_checked': 'checked',
-        }
-        return render(request, "person/privacy.html", context)
-
-
 class PrivateView(QwikView):
     private_form_class = PrivateForm
     blocked_form_class = UnblockForm

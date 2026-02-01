@@ -3,12 +3,13 @@ from django.urls import include, path
 from django.views.generic.base import RedirectView
 from django.views.generic.base import TemplateView
 
-from qwikgame.views import LicenseView, OfflineView, PrivacyView, QwikView, ServiceWorkerView, WelcomeView
+from qwikgame.views import LicenseView, OfflineView, PrivacyView, QwikView, ServiceWorkerView, TermsView, WelcomeView
 
 urlpatterns = [
     path('', WelcomeView.as_view(), name='welcome'),
     path("about/license/", LicenseView.as_view(), name='license'),
     path("about/privacy/", PrivacyView.as_view(), name='privacy'),
+    path("about/terms/", TermsView.as_view(), name='terms'),
     path('account/', include("person.urls")),
     path('admin/', admin.site.urls),
     path('appeal/', include('appeal.urls')),

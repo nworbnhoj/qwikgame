@@ -144,18 +144,6 @@ class PWAView(QwikView):
         return render(request, "person/pwa.html", context)
 
 
-class TermsView(QwikView):
-
-    def get(self, request, *args, **kwargs):
-        super().get(request)
-        context = super().context(request)
-        context |= {
-            'account_tab': 'selected',
-            'terms_checked': 'checked',
-        }
-        return render(request, "person/terms.html", context)
-
-
 class UpgradeView(QwikView):
 
     def get(self, request, *args, **kwargs):

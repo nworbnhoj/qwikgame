@@ -177,6 +177,14 @@ class ServiceWorkerView(TemplateView):
         }
 
 
+class TermsView(BaseView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = super().context(request)
+        return render(request, "terms.html", context)
+
+
 class WelcomeView(BaseView):
 
     def context(self, request, *args, **kwargs):

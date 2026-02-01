@@ -19,6 +19,9 @@ h5 {font-size: 1.5rem; font-weight: 700;}
 h6 {font-size: 1.25rem; font-weight: 900;}
 ol {font-size: 1.25rem; list-style-position: inside; list-style-type: decimal; padding: 1rem;}
 p {font-size: 1.25rem; margin-top: 1em;}
+table { margin: 3rem; }
+td { border-bottom: 1px solid #f5a600; padding: 1em; }
+th { font-size: 1.5rem; font-weight: 700; padding: 1em; }
 label {box-sizing: border-box;}
 ul{list-style: none; font-weight: 400;}
 
@@ -123,6 +126,8 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 	h4, h5, h6 {font-size: 1rem;}
 	ol {font-size: 1rem; }
 	p {font-size: 0.9rem;}
+	td { font-size: 0.9rem; }
+    th { font-size: 1rem; }
 
 	.card_button {padding: 0.8em 2.4em;}
 	.CTA_button_Orange {font-size: 1.25rem; padding: 1em 1.5em; }

@@ -111,6 +111,14 @@ class QwikView(BaseView):
         return context
 
 
+class LicenseView(BaseView):
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = super().context(request)
+        return render(request, "license.html", context)
+
+
 class OfflineView(QwikView):
 
     def get(self, request, *args, **kwargs):

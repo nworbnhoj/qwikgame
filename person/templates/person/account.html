@@ -56,6 +56,10 @@
                 <input type="checkbox" name="selected" {{ terms_checked }} hidden>
                 Terms & Conditions
             </a>
+            <a class="btn secondary terms_class" href="{% url 'license' %}">
+                <input type="checkbox" name="selected" {{ license_checked }} hidden>
+                Licence
+            </a>
             <form id="logout_form" action="{% url 'logout' %}" method="post">
     {% csrf_token %}
                 <label class="btn secondary">

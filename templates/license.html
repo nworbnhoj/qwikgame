@@ -1,0 +1,157 @@
+<!-- qwikgame/person/templates/person/license.html -->
+{% extends "qwik.html" %}
+{% load static %}
+
+{% block refresh %}{% endblock refresh %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+{% endblock css %}
+
+
+{% block title %}QWIKGAME License{% endblock %}
+
+{% block tab_bar %}{% endblock tab_bar %}
+
+
+{% block content %}
+
+    <div id="content" class="content">
+        <div id="alert_content_start" class="alert"></div>
+
+{% include 'welcome_header_snippet.html' %}
+
+            <div class="container">
+
+                <h2>Open Source Software</h2>
+
+
+                <p>Qwikgame is released as Open-Source software, and is grateful for the use of many other great Open-Source software projects.</p>
+
+                <table>
+                    <tr>
+                        <th>Software</th>
+                        <th>Licence</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/dateutil/dateutil" target="_blank">dateutil</a>
+                        </td>
+                        <td>
+                            <a href="https://github.com/dateutil/dateutil/blob/master/LICENSE" target="_blank">Apache 2.0 and AUTHORS file</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://www.djangoproject.com/" target="_blank">Django</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/bsd-3-clause" target="_blank">BSD-3-Clause</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/kraiz/django-crontab" target="_blank">django-crontab</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/mit" target="_blank">MIT</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/safwanrahman/django-webpush" target="_blank">django-webpush</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/lgpl-3-0" target="_blank">GPL-3.0-only</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/theskumar/python-dotenv" target="_blank">dotenv</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/bsd-3-clause" target="_blank">BSD-3-Clause</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://fontawesome.com/v4/license/" target="_blank">Font Awesome</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/ofl-1-1" target="_blank">OFL-1.1</a>
+                            <a href="https://opensource.org/license/mit" target="_blank">MIT</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://git-scm.com/" target="_blank">git</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/GPL-2.0" target="_blank">GPL-2.0</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://gunicorn.org/" target="_blank">Gunicorn</a>
+                        </td>
+                        <td>
+                            <a href="https://github.com/benoitc/gunicorn/blob/master/LICENSE" target="_blank">licence</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://nginx.org/en/" target="_blank">NGINX</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/bsd-2-clause" target="_blank">BSD-2-Clause</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/bndr/pipreqs" target="_blank">pipreqs</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/apache-2-0" target="_blank">Apache-2.0</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/postgresql" target="_blank">PostgreSQL</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://www.psycopg.org/" target="_blank">psycopg2</a>
+                        </td>
+                        <td>
+                            <a href="https://github.com/psycopg/psycopg2/blob/master/LICENSE" target="_blank">sycopg2 and the LGPL</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://github.com/nworbnhoj/qwikgame" target="_blank">Qwikgame</a>
+                        </td>
+                        <td> <a href="https://opensource.org/license/lgpl-3-0" target="_blank">GPL-3.0-only</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="https://requests.readthedocs.io/en/latest/" target="_blank">requests</a>
+                        </td>
+                        <td>
+                            <a href="https://opensource.org/license/apache-2-0" target="_blank">Apache-2.0</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block feedback %}{% endblock feedback %}

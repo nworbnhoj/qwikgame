@@ -1,0 +1,16 @@
+<!-- qwikgame/templates/welcome_header_snippet.html -->
+{% load static %}
+
+<header id="header">
+    <div class="container flex">
+        <a class="logo" href="https://qwikgame.org">
+            <img src="{% static 'img/qwik-logo.webp' %}" alt="logo of 2 linked wonky smilies over QWIKGAME" data-href="{% url 'welcome' %}" height="50px" alt="QWIKGAME Logo Smileys">
+        </a>
+        <nav class="nav">
+            <ul class="nav_list">
+                <li class="nav_item"><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
+                <li class="nav_item"><a href="{% url 'register' %}" class="nav_link nav_link-button">Sign up</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>  

@@ -251,6 +251,7 @@ h4 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h5 { align-items: center; color: black; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; padding: 0 1em; }
 h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: #eeeeee; border-width: 1px; margin: 0.3em 0 0.3em 0; width: 100% }
+html { height: 100%; }
 img.logo { display: block; height: 2.54em; padding: 0.1em }
 input[type=checkbox] { margin: 0em 1em 0em 1em; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
@@ -300,6 +301,9 @@ ul.leaders { line-height: 2em; list-style: none; max-width: 40em; overflow-x: hi
 ul.leaders li:before { float: left; width: 0; white-space: nowrap; content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";} 
 ul.leaders span:first-child { background: white; padding-right: 0.33em; }
 ul.leaders span + span { background: white; float: right; padding-left: 0.33em; }
+
+#content { flex: 1 0 auto; }
+#license { flex-shrink: 0; }
 
 @keyframes l46 {
   0%  {background-position: 0 0      ,100% 0,100% 100%,0 100%}

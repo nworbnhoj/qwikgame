@@ -2,7 +2,9 @@
 
 /************COMMON***************/
 
+body { display: flex; flex-direction: column; height: 100%; }
 button {font-family: Arial; }
+html { height: 100%; }
 img{max-width: 100%;} /*makes all images responsive*/
 
 .container {margin: 0 auto; max-width: 1200px; width: 80%;}
@@ -105,7 +107,10 @@ header {background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 2
 .footer {background-color: #f5a600; margin-top: 5em; padding-top: 5em;}
 .footer_link {text-decoration: none;}
 .logo_footer {max-width: 80%;}
-#license{background-color: #f5a600; padding-top: 1em; }
+
+
+#content { flex: 1 0 auto; }
+#license { background-color: #f5a600; flex-shrink: 0; padding-top: 1em; }
 
 
 /***************************MEDIA QUERIES*********************/

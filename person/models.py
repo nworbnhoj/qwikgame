@@ -11,40 +11,9 @@ from webpush import send_user_notification
 
 logger = logging.getLogger(__file__)
 
-ICONS = [
-    'fa-face-smile',
-    'fa-face-smile-wink',
-    'fa-face-smile-beam',
-    'fa-face-rolling-eyes',
-    'fa-face-meh-blank',
-    'fa-face-laugh-wink',
-    'fa-face-laugh-beam',
-    'fa-face-laugh',
-    'fa-face-laugh-wink',
-    'fa-face-laugh-beam',
-    'fa-face-grin-wink',
-    'fa-face-grin-wide',
-    'fa-face-grin-stars',
-    'fa-face-grin-beam',
-    'fa-face-grin',
-    'fa-hand-peace',
-    'fa-person-walking',
-    'fa-person-swimming',
-    'fa-person-snowboarding',
-    'fa-person-skiing-nordic',
-    'fa-person-skiing',
-    'fa-person-skating',
-    'fa-person-running',
-    'fa-person-hiking',
-    'fa-person-falling',
-    'fa-person-drowning',
-    'fa-person-biking',
-    'fa-user-secret',
-    'fa-user',
-]
 
 def rnd_icon():
-    return random.choice(ICONS)
+    return 'fa-face-smile'
 
 LANGUAGE = [
     # ('bg', 'български'),
@@ -257,6 +226,10 @@ class Person(models.Model):
         blocker = self.block.all()
         blockee = Person.objects.filter(block__in=[self]).all()
         return list(blocker | blockee)
+
+    @property
+    def email_hash(self):
+        return self.hash(self.user.email)
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()

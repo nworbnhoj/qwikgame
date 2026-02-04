@@ -3,14 +3,8 @@
 
 	<div class="detail_head">
         <div id="alert_detail_head" class="alert"></div>
-        <div class="icon">
-            <i class="fa-solid {{ rival.icon }} fa-2x"></i>
-        </div>
-        <div class='head'>
-            <p class="line">
-                {{ rival.qwikname }}
-            </p>
-        </div>
+        <div class="identicon" data-hash="{{ rival.email_hash }}"></div>
+        <h2>{{ rival.qwikname }}</h2>
         <div class="drop_down head_more">
             <div class="btn special2 drop" data-down="false">
                 <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>

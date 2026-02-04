@@ -100,7 +100,7 @@ class QwikView(BaseView):
             }
         context |= {
             'items': items,
-            'person_icon': person.icon,
+            'person': person,
             'qwikname': person.qwikname,
             'appeal_alert': person.alert_show('abklm'),
             'match_alert': person.alert_show('pqr'),
@@ -190,8 +190,7 @@ class WelcomeView(BaseView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         context['games']: list(Game.objects.all())
-        if hasattr(self, 'user'):   
-            context['person_icon'] = self.user.person.icon
+        if hasattr(self, 'user'):
             context['qwikname'] = self.user.person.qwikname
         return context
 

@@ -13,8 +13,8 @@ class BlockAdmin(admin.ModelAdmin):
 
 
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ['name', 'icon', 'language', 'notify_email', 'notify_push', 'user']
-    list_filter = ['icon', 'language', 'notify_email', 'notify_push']
+    list_display = ['name', 'language', 'notify_email', 'notify_push', 'user']
+    list_filter = ['language', 'notify_email', 'notify_push']
 
 
 admin.site.register(Alert, AlertAdmin)

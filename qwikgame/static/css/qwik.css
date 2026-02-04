@@ -55,6 +55,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special2:has(input:disabled) { border-color: #cccccc; color: #999999 }
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1em;}
+.btn.special2 .identicon { height: 44px; width: 44px; }
 
 @media (hover: hover) {
   .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
@@ -91,7 +92,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .hidden { display: none }
 
 .ellipsis { display: block; overflow: hidden;  text-overflow: ellipsis; white-space: nowrap; }
-
+.identicon { height: 100%; width: auto; }
 .item { align-items: start; display:flex; flex-flow: row wrap; justify-content: center; padding:0.3em 0.3em 0.9em 0em; }
 .item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; flex-direction: column; height: 100%; width: 20%}
 .item .badges time {  margin-top: auto; }
@@ -156,6 +157,7 @@ div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-directi
 div.detail_body { }
 div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1em 0 -1em; padding: 1em }
+div.detail_head .identicon { height: 5em; position: relative; top: 0.7em; width: 5em;}
 div.detail_n { flex: 0 0 auto; gap: 1em; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
 div.down { align-items: start; background-color: white; border: 1px solid #888888; display: flex; flex-direction: column; gap: 0.5em; margin: 0.3em; min-width: 100%; opacity: 1.0; padding: 0.3em 1em 0.3em 1em; position: absolute; top: 3.2em; white-space: nowrap; z-index: 10 }
@@ -199,6 +201,7 @@ div.info .info_text::after { border-color: transparent transparent black transpa
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
 div.label { align-items: center; display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: start; padding: 1em 0 0.5em 0; width: 100% }
+div.line { line-height: 1.6em; margin: 0em; overflow: hidden; padding-left: 0.5em; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
 div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
@@ -279,7 +282,6 @@ label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-
 legend { padding: 1em; }
 ol { list-style: decimal; padding-left: 2em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
@@ -292,6 +294,8 @@ span.brick { display: inline-block; white-space: nowrap; width: auto; }
 span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
+span.identicon { border-width: 0px; display: inline-block; text-align: center; width: 2em }
+span.identicon svg { position: relative;  top: 0.6em; } 
 span.on { color: lightseagreen; }
 span.off { color: indianred; }
 span.qwik { color: #f5a600 }

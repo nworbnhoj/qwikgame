@@ -311,7 +311,7 @@ class Bid(models.Model):
                 player = self.appeal.player
                 person = player.user.person
                 entry = Entry(
-                    icon = person.icon,
+                    hash = person.email_hash,
                     id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
@@ -321,7 +321,7 @@ class Bid(models.Model):
             case 'bid':
                 person = self.rival.user.person
                 entry = Entry(
-                    icon = person.icon,
+                    hash = person.email_hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
@@ -332,7 +332,7 @@ class Bid(models.Model):
                 player = self.appeal.player
                 person = player.user.person
                 entry = Entry(
-                    icon = person.icon,
+                    hash = person.email_hash,
                     id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
@@ -342,7 +342,7 @@ class Bid(models.Model):
             case 'expired':
                 person = self.rival.user.person
                 entry = Entry(
-                    icon = person.icon,
+                    hash = person.email_hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
@@ -352,7 +352,7 @@ class Bid(models.Model):
             case 'withdraw':
                 person = self.rival.user.person
                 entry = Entry(
-                    icon = rival.icon,
+                    hash = rival.email_hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = rival.qwikname,

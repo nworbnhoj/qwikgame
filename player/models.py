@@ -125,13 +125,7 @@ class Player(models.Model):
 
     def friend_choices(self):
         friends = Friend.objects.filter(player=self).order_by('name')
-        return { f.rival.email_hash: f.name for f in friends }
-
-    @property
-    def icon(self):
-        if self.user and self.user.person and self.user.person.icon:
-            return self.user.person.icon
-        return None
+        return { f.rival.email_hash: f.name for f in friends }  
 
     def matches(self):
         return Match.objects.filter(competitors__in=[self])
@@ -492,13 +486,6 @@ class Friend(models.Model):
     def __str__(self):
         return "{} knows {}".format(self.player, self.rival)
 
-    @property
-    def icon(self):
-        icon = self.rival.icon
-        if icon:
-            return icon
-        return 'fa-face-smile'
-
     def alert(self,
         type,
         expires=datetime.now() + timedelta(days=2),
@@ -517,7 +504,9 @@ class Friend(models.Model):
             else:
                 logger.exception(f"Invalid InviteForm: {form}")
 
-
+    @property
+    def email_hash(self):
+        return Person.hash(self.email)
 
     def name_best(self):
         if self.name:

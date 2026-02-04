@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from person.models import Person
 
 ENDIAN = 'big'
 
@@ -51,7 +52,7 @@ DELAY_MATCH_PERISH_CHAT = timedelta(days=7)
 DELAY_MATCHS_LIST = timedelta(minutes=10)
 DELAY_REVIEW_PERISH = timedelta(days=7)
 
-SYSTEM_ICON = 'fa-lightbulb'
+SYSTEM_HASH = Person.hash('facilitator@qwikgame.org')
 SYSTEM_NAME='facilitator'
 
 COUNTRIES = {

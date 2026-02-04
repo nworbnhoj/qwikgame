@@ -31,6 +31,7 @@
 {% endblock css %}
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
 {% block script %}
+    <script defer type="module" src="{% static 'js/qwik-identicons.js' %}"></script>
     <script defer src="{% static 'js/qwik-sw-load.js' %}"></script>
     <script defer src="{% static 'qwik.js' %}"></script>
 {% endblock %}
@@ -67,7 +68,7 @@
         </a>
         <div class="flex_space"></div>
         <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
-            <i class="fa-solid {{ person_icon }} fa-2x"></i>
+            <div class="identicon" data-hash="{{ person.email_hash }}"></div>
             <span class="fat">{% block name %}{{ qwikname }}{% endblock %}</span>
             <div {{ account_alert }} class="dot"></div>
         </a>

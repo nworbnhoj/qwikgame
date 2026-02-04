@@ -17,24 +17,9 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="detail_head">
             <div id="alert_detail_head" class="alert"></div>
-            <div class="icon selected">
-                <i class="fa-solid fa-user-group fa-2x"></i>
-            </div>
-            <div class='head'>
+                <div class="identicon" data-hash="{{ friend.email_hash }}"></div>
 {% if friend %}
-                <p class="line">
-                    <span class="icon">
-                        <i class="fa-solid {{ friend.icon }} fa-1x"></i>
-                    </span>
-                    {{ friend.name }}
-                </p>
-                <p class="line">
-                    <span class="icon">
-                        <i class="fa-regular fa-envelope"></i>
-                    </span>
-                    {{ friend.email }}
-                </p>
-            </div>
+                <h2>{{ friend.name }}</h2>
             <div class="context_menu">
                 <div class="drop_down head_more">
                     <div class="btn special2 drop" data-down="false">

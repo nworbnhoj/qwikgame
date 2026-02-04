@@ -50,18 +50,16 @@
                 <input type="checkbox" name="selected" checked='checked' hidden>
 {% endif %}
                 <div class='lines'>
-                    <p class="line">
-                        <span class="icon">
-                            <i class="fa-solid {{ fri.icon }} fa-1x"></i>
-                        </span>
+                    <div class="line">
+                        <span class="identicon" data-hash="{{ fri.email_hash }}"></span>
                         {{ fri.name }}
-                    </p>
-                    <p class="line">
+                    </div>
+                    <div class="line">
                         <span class="icon">
                             <i class="fa-regular fa-envelope"></i>
                         </span>
                         {{ fri.email }}
-                    </p>
+                    </div>
                 </div>
                 <div class="badges"></div>
             </a>

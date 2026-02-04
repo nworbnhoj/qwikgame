@@ -87,12 +87,6 @@ class PrivateForm(QwikForm):
 
 
 class PublicForm(QwikForm):
-    icon = CharField(
-        label='PROFILE PICTURE',
-        max_length=32,
-        required = False,
-        template_name='field.html',
-    )
     name = CharField(
         label='QWIK NAME',
         max_length=32,
@@ -114,10 +108,6 @@ class PublicForm(QwikForm):
     def __init__(self, *args, **kwargs):
         social_urls = kwargs.pop('social_urls')
         super(PublicForm, self).__init__(*args, **kwargs)
-        self.fields['icon'].sub_text = 'Change (coming soon)'
-        self.fields['icon'].url = ''
-        self.fields['icon'].widget.attrs['placeholder'] = "your qwikgame icon"
-        self.fields['icon'].widget.attrs['class'] = "hidden"
         self.fields['name'].widget.attrs['placeholder'] = "your qwikgame screen name"
         self.fields['social'].widget.attrs['placeholder'] = "add a social media url"
         self.fields['socials'].choices = social_urls
@@ -131,7 +121,6 @@ class PublicForm(QwikForm):
         return {
             'public_form': klass(
                     initial = {
-                        'icon': person.icon,
                         'name': person.qwikname,
                     },
                     social_urls = klass.social_urls(person.user.id),
@@ -145,7 +134,6 @@ class PublicForm(QwikForm):
         context = {}
         public_form = klass(data=request_post, social_urls = klass.social_urls(person.user.id))
         if public_form.is_valid():
-            person.icon = public_form.cleaned_data["icon"]
             person.name = public_form.cleaned_data["name"]
             person.save()            
             for url in public_form.cleaned_data['socials']:

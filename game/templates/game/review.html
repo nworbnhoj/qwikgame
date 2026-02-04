@@ -17,7 +17,7 @@
         <div id="detail" class="detail">
             <div class="detail_head">
                 <div class="icon">
-                    <i class="fa-solid {{ review.rival.icon }} fa-3x"></i>
+                    <div class="identicon" data-hash="{{ review.rival.email_hash }}"></div>
                 </div>
                 <div class='head'>
                     <p class="line">
@@ -61,7 +61,7 @@
             <div class="post">
                 <div class="pillar">
                     <div class="icon">
-                        <i class="fa-solid {{ review.rival.icon }} fa-3x"></i>
+                        <div class="identicon" data-hash="{{ review.rival.email_hash }}"></div>
                     </div>
                     <p>{{ review.rival.qwikname }}</p>
                 </div>

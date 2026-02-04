@@ -1,6 +1,6 @@
 import datetime, logging
 from django.db import models
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_ICON, SYSTEM_NAME
+from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
 from qwikgame.settings import FQDN
 
@@ -181,7 +181,7 @@ class Match(models.Model):
         person = user.person if user else None
         player = user.player if user else None
         entry = Entry(
-            icon = person.icon if person else SYSTEM_ICON,
+            hash = person.email_hash if person else SYSTEM_HASH,
             id = player.pk if player else '',
             klass = template,
             name = person.qwikname if person else SYSTEM_NAME,
@@ -255,7 +255,7 @@ class Review(models.Model):
                 player = self.player
                 person = self.player.user.person
                 entry = Entry(
-                    icon = person.icon,
+                    hash = person.email_hash,
                     id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,

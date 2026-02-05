@@ -102,13 +102,17 @@ class AcceptView(AppealsView):
         person = self.user.person
         appeal = context.get('appeal')
         if appeal:
+            log = appeal.log_filter(person.blocked())
+            for i, entry in enumerate(match.log):
+                if 'id' in entry and entry['id'] != player.pk:
+                    entry.rename(player)
             next_up = appeal.status + 'O'
             context |= {
                 'notify_off': person.alert_str(False, 'bid'),
                 'notify_on': person.alert_str(True, 'bid'),
                 'next_up': NEXT_UP[next_up],
                 'bids': self._bids(appeal, player),
-                'log': appeal.log_filter(person.blocked()),
+                'log': log,
                 'target': 'bid',
             }
         self._context = context
@@ -184,10 +188,14 @@ class BidView(AppealsView):
             ).first()
             player = self.user.player
             person = self.user.person
+            log = appeal.log_filter(person.blocked())
+            for i, entry in enumerate(match.log):
+                if 'id' in entry and entry['id'] != player.pk:
+                    entry.rename(player)
             next_up = appeal.status + ('B' if bid else '')
             context |= {
                 'appeal': appeal,
-                'log': appeal.log_filter(person.blocked()),
+                'log': log,
                 'next_up': NEXT_UP[next_up],
                 'notify_off': person.alert_str(False, 'bid'),
                 'notify_on': person.alert_str(True, 'bid'),

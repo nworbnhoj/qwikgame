@@ -71,9 +71,8 @@ class MatchView(MatchesView):
             match_log_start = -1
             for i, entry in enumerate(match.log):
                 if 'id' in entry and entry['id'] != player.pk:
-                    rival = Player.objects.filter(pk=entry['id']).first();
-                    if rival:
-                        entry['name'] = player.name_rival(rival);
+                    # TODO fix inefficiency in Match Chat display
+                    entry.rename(player)
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
             now = datetime.now(timezone.utc)

@@ -118,7 +118,7 @@ class Appeal(models.Model):
         if hours24.is_hour(hour):
             self.set_hours(hours24.unset_hour(hour))
             entry = Entry(
-                icon = self.player.icon,
+                hash = self.player.email_hash,
                 id = self.player.pk,
                 klass= 'event',
                 name = self.player.qwikname,
@@ -158,10 +158,10 @@ class Appeal(models.Model):
 
     def log_event(self, template):
         entry = Entry(
-            icon = self.player.user.person.icon,
+            hash = self.player.email_hash,
             id = self.player.pk,
             klass= 'event',
-            name=self.player.qwikname,
+            name = self.player.qwikname,
         )
         match template:
             case 'appeal':

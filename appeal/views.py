@@ -103,7 +103,7 @@ class AcceptView(AppealsView):
         appeal = context.get('appeal')
         if appeal:
             log = appeal.log_filter(person.blocked())
-            for i, entry in enumerate(match.log):
+            for i, entry in enumerate(log):
                 if 'id' in entry and entry['id'] != player.pk:
                     entry.rename(player)
             next_up = appeal.status + 'O'
@@ -189,7 +189,7 @@ class BidView(AppealsView):
             player = self.user.player
             person = self.user.person
             log = appeal.log_filter(person.blocked())
-            for i, entry in enumerate(match.log):
+            for i, entry in enumerate(log):
                 if 'id' in entry and entry['id'] != player.pk:
                     entry.rename(player)
             next_up = appeal.status + ('B' if bid else '')

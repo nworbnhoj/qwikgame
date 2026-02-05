@@ -93,7 +93,7 @@
         {% else %}
                 <div class="log_entry align_start {{ entry.klass }}">
                     <a class="btn special2" href="{{ request.path }}{{ entry.id }}/">
-                        <div class="identicon" data-hash="{{ entry.email_hash }}"></div>
+                        <div class="identicon" data-hash="{{ entry.hash }}"></div>
                     </a>
         {% endif %}
                     <div class="chat_bubble">

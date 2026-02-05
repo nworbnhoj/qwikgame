@@ -229,7 +229,7 @@ class Person(models.Model):
 
     @property
     def email_hash(self):
-        return self.hash(self.user.email)
+        return Person.hash(self.user.email)
 
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()

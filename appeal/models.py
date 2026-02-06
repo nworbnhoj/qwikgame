@@ -118,7 +118,7 @@ class Appeal(models.Model):
         if hours24.is_hour(hour):
             self.set_hours(hours24.unset_hour(hour))
             entry = Entry(
-                hash = self.player.email_hash,
+                hash = self.player.user.hash,
                 id = self.player.pk,
                 klass= 'event',
                 name = self.player.qwikname,
@@ -158,7 +158,7 @@ class Appeal(models.Model):
 
     def log_event(self, template):
         entry = Entry(
-            hash = self.player.email_hash,
+            hash = self.player.user.hash,
             id = self.player.pk,
             klass= 'event',
             name = self.player.qwikname,
@@ -309,9 +309,10 @@ class Bid(models.Model):
         match template:
             case 'accept':
                 player = self.appeal.player
-                person = player.user.person
+                user = player.user
+                person = user.person
                 entry = Entry(
-                    hash = person.email_hash,
+                    hash = user.hash,
                     id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
@@ -319,9 +320,10 @@ class Bid(models.Model):
                     text = f'Confirmed for {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'bid':
-                person = self.rival.user.person
+                user = self.rival.user
+                person = user.person
                 entry = Entry(
-                    hash = person.email_hash,
+                    hash = user.hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
@@ -330,9 +332,10 @@ class Bid(models.Model):
                 )
             case 'decline':
                 player = self.appeal.player
-                person = player.user.person
+                user = player.user
+                person = user.person
                 entry = Entry(
-                    hash = person.email_hash,
+                    hash = user.hash,
                     id = player.pk,
                     klass= 'event',
                     name = person.qwikname,
@@ -340,9 +343,10 @@ class Bid(models.Model):
                     text = f'declined {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'expired':
-                person = self.rival.user.person
+                user = self.rival.user
+                person = user.person
                 entry = Entry(
-                    hash = person.email_hash,
+                    hash = user.hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = person.qwikname,
@@ -350,9 +354,10 @@ class Bid(models.Model):
                     text = f'bid expired'
                 )
             case 'withdraw':
-                person = self.rival.user.person
+                user = self.rival.user
+                rival = user.person
                 entry = Entry(
-                    hash = rival.email_hash,
+                    hash = user.hash,
                     id = self.rival.pk,
                     klass= 'event rival',
                     name = rival.qwikname,

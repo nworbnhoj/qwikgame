@@ -1,7 +1,7 @@
 <!-- qwikgame/player/templates/player/rival_header_snippet.html -->
     <div class="pillar">
         <a class="btn special2" href="{{ request.path }}{{ rival.pk }}/">
-            <div class="identicon" data-hash="{{ rival.email_hash }}"></div>
+            <div class="identicon" data-hash="{{ rival.user.hash }}"></div>
        </a>
         <p>{{ rival_name }}</p>  
         <p>{{ strength }}</p>

@@ -227,10 +227,6 @@ class Person(models.Model):
         blockee = Person.objects.filter(block__in=[self]).all()
         return list(blocker | blockee)
 
-    @property
-    def email_hash(self):
-        return Person.hash(self.user.email)
-
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
 

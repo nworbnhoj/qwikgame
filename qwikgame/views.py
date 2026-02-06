@@ -100,6 +100,7 @@ class QwikView(BaseView):
             }
         context |= {
             'items': items,
+            'user': self.user,
             'person': person,
             'qwikname': person.qwikname,
             'appeal_alert': person.alert_show('abklm'),

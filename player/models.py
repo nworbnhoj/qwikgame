@@ -230,7 +230,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):
         if self.user is not None:
-            self.email_hash = Person.hash(self.user.email)
+            self.email_hash = self.user.hash
         super().save(*args, **kwargs)
 
     # Estimate the relative Game strength between Self & Rival via a single chain of Strengths

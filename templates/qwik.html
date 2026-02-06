@@ -68,7 +68,7 @@
         </a>
         <div class="flex_space"></div>
         <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
-            <div class="identicon" data-hash="{{ person.email_hash }}"></div>
+            <div class="identicon" data-hash="{{ user.hash }}"></div>
             <span class="fat">{% block name %}{{ qwikname }}{% endblock %}</span>
             <div {{ account_alert }} class="dot"></div>
         </a>

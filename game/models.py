@@ -181,7 +181,7 @@ class Match(models.Model):
         person = user.person if user else None
         player = user.player if user else None
         entry = Entry(
-            hash = person.email_hash if person else SYSTEM_HASH,
+            hash = user.hash if user else SYSTEM_HASH,
             id = player.pk if player else '',
             klass = template,
             name = person.qwikname if person else SYSTEM_NAME,
@@ -253,9 +253,10 @@ class Review(models.Model):
         match template:
             case 'review':
                 player = self.player
-                person = self.player.user.person
+                user = player.user
+                person = user.person
                 entry = Entry(
-                    hash = person.email_hash,
+                    hash = user.hash,
                     id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,

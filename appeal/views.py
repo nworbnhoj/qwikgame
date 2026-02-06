@@ -12,6 +12,7 @@ from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm
+from qwikgame.log import Entry
 from qwikgame.settings import FQDN
 from api.models import Mark
 from service.locate import Locate
@@ -103,9 +104,9 @@ class AcceptView(AppealsView):
         appeal = context.get('appeal')
         if appeal:
             log = appeal.log_filter(person.blocked())
-            for i, entry in enumerate(log):
+            for entry in log:
                 if 'id' in entry and entry['id'] != player.pk:
-                    entry.rename(player)
+                    Entry(entry).rename(player)
             next_up = appeal.status + 'O'
             context |= {
                 'notify_off': person.alert_str(False, 'bid'),
@@ -189,9 +190,9 @@ class BidView(AppealsView):
             player = self.user.player
             person = self.user.person
             log = appeal.log_filter(person.blocked())
-            for i, entry in enumerate(log):
+            for entry in log:
                 if 'id' in entry and entry['id'] != player.pk:
-                    entry.rename(player)
+                    Entry(entry).rename(player)
             next_up = appeal.status + ('B' if bid else '')
             context |= {
                 'appeal': appeal,

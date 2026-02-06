@@ -72,7 +72,7 @@ class MatchView(MatchesView):
             for i, entry in enumerate(match.log):
                 if 'id' in entry and entry['id'] != player.pk:
                     # TODO fix inefficiency in Match Chat display
-                    entry.rename(player)
+                    Entry(entry).rename(player)
                 if 'klass' in entry and 'scheduled' in entry['klass']:
                     match_log_start = i+1
             now = datetime.now(timezone.utc)

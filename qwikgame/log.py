@@ -7,8 +7,8 @@ class Entry(dict):
 
 
     def rename(self, player):
-        if self.id:
-            rival = player.models.Player.objects.filter(pk=self.id).first();
+        if id in self:
+            rival = player.models.Player.objects.filter(pk=self['id']).first();
             if rival:
-                self.name = player.name_rival(rival);
+                self['name'] = player.name_rival(rival);
 

@@ -1,5 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from hashlib import md5
+from uuid import uuid4
+
+
+def uuid4_hex():
+    return uuid4().hex
 
 
 class UserManager(BaseUserManager):
@@ -10,8 +16,10 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("Users must have an email address")
 
+        norm_email = self.normalize_email(email)
         user = self.model(
-            email=self.normalize_email(email)
+            email=norm_email,
+            hash=md5(norm_email.encode()).hexdigest()
         )
 
         user.set_password(password)
@@ -35,6 +43,12 @@ class User(PermissionsMixin, AbstractBaseUser):
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
+        unique=True,
+    )
+    hash = models.CharField(
+        db_index=True,
+        default=uuid4_hex,
+        max_length=32,
         unique=True,
     )
     is_active = models.BooleanField(default=True)

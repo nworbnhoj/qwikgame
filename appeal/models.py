@@ -305,60 +305,49 @@ class Bid(models.Model):
         return self.hours24.to_dips
 
     def log_event(self, template):
-        rival = self.rival.user.person
+        player = self.appeal.player
+        rival = self.rival
         match template:
             case 'accept':
-                player = self.appeal.player
-                user = player.user
-                person = user.person
                 entry = Entry(
-                    hash = user.hash,
+                    hash = player.user.hash,
                     id = player.pk,
                     klass= 'event',
-                    name = person.qwikname,
+                    name = player.qwikname,
                     pk = self.pk,
                     text = f'Confirmed for {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'bid':
-                user = self.rival.user
-                person = user.person
                 entry = Entry(
-                    hash = user.hash,
-                    id = self.rival.pk,
+                    hash = rival.user.hash,
+                    id = rival.pk,
                     klass= 'event rival',
-                    name = person.qwikname,
+                    name = rival.qwikname,
                     pk = self.pk,
                     text = f'Offered {self.hours24().as_str()}'
                 )
             case 'decline':
-                player = self.appeal.player
-                user = player.user
-                person = user.person
                 entry = Entry(
-                    hash = user.hash,
+                    hash = player.user.hash,
                     id = player.pk,
                     klass= 'event',
-                    name = person.qwikname,
+                    name = player.qwikname,
                     pk = self.pk,
                     text = f'declined {self.hours24().as_str()} with {rival.qwikname}'
                 )
             case 'expired':
-                user = self.rival.user
-                person = user.person
                 entry = Entry(
-                    hash = user.hash,
-                    id = self.rival.pk,
+                    hash = rival.user.hash,
+                    id = rival.pk,
                     klass= 'event rival',
-                    name = person.qwikname,
+                    name = rival.qwikname,
                     pk = self.pk,
                     text = f'bid expired'
                 )
             case 'withdraw':
-                user = self.rival.user
-                rival = user.person
                 entry = Entry(
-                    hash = user.hash,
-                    id = self.rival.pk,
+                    hash = rival.user.hash,
+                    id = rival.pk,
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,

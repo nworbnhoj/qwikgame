@@ -3,7 +3,7 @@
         <a class="btn special2" href="{{ request.path }}{{ rival.pk }}/">
             <div class="identicon" data-hash="{{ rival.user.hash }}"></div>
        </a>
-        <p>{{ rival_name }}</p>  
+        <p class="name">{{ rival_name }}</p>  
         <p>{{ strength }}</p>
 {% with rival as player %}
     {% include 'player/conduct_stars_snippet.html' %}

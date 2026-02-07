@@ -201,6 +201,7 @@ class BidView(AppealsView):
                 'notify_off': person.alert_str(False, 'bid'),
                 'notify_on': person.alert_str(True, 'bid'),
                 'rival': appeal.player,
+                'rival_name': player.name_rival(appeal.player),
                 'strength': player.strength_str(appeal.game, appeal.player),
                 'bid': bid,
             }

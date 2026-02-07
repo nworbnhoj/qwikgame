@@ -105,6 +105,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .item.unseen div.icon { color: #f5a600 }
 
 .invisible { visibility: hidden }
+.name {color: #f5a600; font-weight: bold; }
 .loader::after {
   align-self: center;
   position: absolute;
@@ -139,7 +140,6 @@ div.banner.xancelled { background-color: yellow; }
 
 div.chat_bubble { display: flex; background-color: #eeeeee; border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
 div.chat_bubble .row {display: flex; flex-direction: row; gap: 1em; justify-content: space-between; } 
-div.chat_bubble .name {color: #f5a600; font-weight: bold; }
 div.chat_bubble .text {  }
 div.chat_bubble time {  margin-left: auto }
 div.chat_input { align-items: center; display: flex; flex-direction: row; gap: 0.3em; justify-content: stretch; width: 100% }

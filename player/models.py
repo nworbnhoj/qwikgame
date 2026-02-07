@@ -23,7 +23,7 @@ MASK_24 = ((1 << 24) - 1)   # binary 000000001111111111111111111111111111111
 class Player(models.Model):
     # conduct is a bitfield representing a timeseries of good/bad Player reviews
     conduct = models.BinaryField(default=INIT_CONDUCT)
-    email_hash = models.CharField(max_length=32, primary_key=True)
+    hash = models.CharField(max_length=32, primary_key=True)
     friends = models.ManyToManyField('self', symmetrical=False, through='Friend', blank=True)
     games = models.ManyToManyField('game.Game')
     user = models.OneToOneField('authenticate.User', on_delete=models.CASCADE, blank=True, null=True)
@@ -121,11 +121,11 @@ class Player(models.Model):
         return round (5 * self.conduct_rep())
 
     def facet(self):
-        return self.email_hash[:3].upper()
+        return self.hash[:3].upper()
 
     def friend_choices(self):
         friends = Friend.objects.filter(player=self).order_by('name')
-        return { f.rival.email_hash: f.name for f in friends }  
+        return { f.rival.hash: f.name for f in friends }  
 
     def matches(self):
         return Match.objects.filter(competitors__in=[self])
@@ -230,7 +230,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         #if hasattr(self, 'user'):
         if self.user is not None:
-            self.email_hash = self.user.hash
+            self.hash = self.user.hash
         super().save(*args, **kwargs)
 
     # Estimate the relative Game strength between Self & Rival via a single chain of Strengths
@@ -381,7 +381,7 @@ class Player(models.Model):
        
 
     def __str__(self):
-        return self.email_hash if self.user is None else self.user.email
+        return self.hash if self.user is None else self.user.email
 
 
 
@@ -503,10 +503,6 @@ class Friend(models.Model):
                 form.save(request)
             else:
                 logger.exception(f"Invalid InviteForm: {form}")
-
-    @property
-    def email_hash(self):
-        return Person.hash(self.email)
 
     def name_best(self):
         if self.name:

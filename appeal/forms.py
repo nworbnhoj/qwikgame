@@ -319,7 +319,7 @@ class KeenForm(QwikForm):
                     'friends': [
                         Friend.objects.get(
                             player=player,
-                            rival__email_hash=f
+                            rival__hash=f
                         )
                         for f in friends
                     ],

@@ -159,7 +159,7 @@ class RegisterHandleView(EmailValidateHandleView):
         else:
             logger.info(f'linked existing Person to user: {person.pk}')
         player, created = Player.objects.get_or_create(
-            email_hash = self.user.hash
+            hash = self.user.hash
         )
         if created:
             logger.info(f'created Player: {player.pk}')

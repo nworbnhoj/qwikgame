@@ -17,9 +17,9 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="detail_head">
             <div id="alert_detail_head" class="alert"></div>
-                <div class="identicon" data-hash="{{ friend.rival.hash }}"></div>
 {% if friend %}
-                <h2>{{ friend.name }}</h2>
+            <div class="identicon" data-hash="{{ friend.rival.hash }}"></div>
+            <h2>{{ friend.name }}</h2>
             <div class="context_menu">
                 <div class="drop_down head_more">
                     <div class="btn special2 drop" data-down="false">
@@ -41,10 +41,10 @@
                 <a class="btn special2 head_fwd" href="{% url target friend=next %}">
                     <i class="fa-solid fa-chevron-right fa-2x"></i>
                 </a>
+            </div>
     {% else %}
                 <h2>Add Friend</h2>
     {% endif %}
-            </div>
         </div>
         <div class="post form">
             <div id="alert_form_start" class="alert"></div>

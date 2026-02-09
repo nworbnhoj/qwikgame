@@ -120,6 +120,11 @@ class LoginSentView(TemplateView):
     template_name = "authenticate/login_email_sent.html"
     title = "Login details sent"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["hash"] = Person.hash(self.request.GET['to_email'])
+        return context
+
 
 class LoginHandleView(EmailValidateHandleView):
 
@@ -140,6 +145,11 @@ class RegisterView(EmailValidateView):
 class RegisterSentView(TemplateView):
     template_name = "authenticate/register_email_sent.html"
     title = "Register details sent"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["hash"] = Person.hash(self.request.GET['to_email'])
+        return context
 
 
 class RegisterHandleView(EmailValidateHandleView):

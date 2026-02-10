@@ -53,6 +53,45 @@ class FilterForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
+    east = DecimalField(
+        decimal_places=6,
+        initial=180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    north = DecimalField(
+        decimal_places=6,
+        initial=80.0,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    south = DecimalField(
+        decimal_places=6,
+        initial=-80,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    west = DecimalField(
+        decimal_places=6,
+        initial=-180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    zoom = IntegerField(
+        initial=10,
+        max_value=20,
+        min_value=0,
+        required=False,
+        widget=HiddenInput(),
+    )
     placeid = CharField(
         required=False,
         widget=HiddenInput(),
@@ -107,6 +146,10 @@ class FilterForm(QwikForm):
         if region:
             form.fields['lat'].initial = region.lat
             form.fields['lng'].initial = region.lng
+            form.fields['east'].initial = region.east
+            form.fields['north'].initial = region.north
+            form.fields['south'].initial = region.south
+            form.fields['west'].initial = region.west
         return { 'filter_form': form }
 
     # Processes a FilterForm for 'player'.

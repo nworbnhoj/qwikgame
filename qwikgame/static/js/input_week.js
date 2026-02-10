@@ -78,15 +78,16 @@ if (typeof toggleAllWeek == "undefined") {
 
   window.addEventListener("load", function() {
     document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
-      updateAllWeek(all_week)
       all_week.addEventListener("click", toggleAllWeek);
       the_week = all_week.closest('.by_week').nextElementSibling;
       the_week.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
         all_day.addEventListener("click", boggleAllDay);
+        updateAllDay(all_day);
       });
       all_hours = the_week.querySelectorAll('label.toggle.hour').forEach(function(hour) {
         hour.addEventListener('click', hoggleHour);
       });
+      updateAllWeek(all_week)
     });
   });
 

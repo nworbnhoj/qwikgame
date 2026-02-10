@@ -324,7 +324,7 @@ class KeenView(AppealsView):
             else:
                 appeal.log_event('reappeal')
                 logger.info(f'updated Appeal: {appeal}')
-            return appeal.pk
+            return appeal
         return None
 
     def _getGame(gameid):
@@ -403,7 +403,7 @@ class KeenView(AppealsView):
         self._updateVenueGames(game, venue, place)
         venue_now = venue.now()
         invitees = context.get('friends', [])
-        today_appeal_pk = self._createAppeal(
+        today_appeal = self._createAppeal(
             venue_now,
             context.get('today', DAY_NONE),
             game,
@@ -412,7 +412,7 @@ class KeenView(AppealsView):
             invitees,
             request,
         )
-        tomorrow_appeal_pk = self._createAppeal(
+        tomorrow_appeal = self._createAppeal(
             venue_now + timedelta(days=1),
             context.get('tomorrow', DAY_NONE),
             game,
@@ -422,10 +422,10 @@ class KeenView(AppealsView):
             request,
         )
         self._updateMarkSize(game, place)
-        if today_appeal_pk:
-            return HttpResponseRedirect(f'/appeal/{today_appeal_pk}/')
-        elif tommorow_appeal_pk:
-            return HttpResponseRedirect(f'/appeal/{tommorow_appeal_pk}/')
+        if today_appeal:
+            return HttpResponseRedirect(f'/appeal/{today_appeal.pk}/')
+        elif tommorow_appeal:
+            return HttpResponseRedirect(f'/appeal/{tommorow_appeal.pk}/')
         else:
             return HttpResponseRedirect(f'/appeal/')
 

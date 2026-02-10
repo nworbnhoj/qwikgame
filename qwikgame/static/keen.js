@@ -38,9 +38,20 @@ winReady(event => {
       submit.querySelector(".appeal_friends").hidden = true;
      }
   });
-
-
 });
+
+
+window.onload = function() {
+  document.querySelectorAll("form:has( .by_day)").forEach(function(form){
+    const PLACE_SELECT = document.getElementById('id_place');
+    if (PLACE_SELECT){
+        PLACE_SELECT.addEventListener("change", function(e) {
+          place = this.options[this.selectedIndex]
+          handlePlaceChange(place);
+        });
+    }
+  });
+}
 
 
 function initPage(){
@@ -78,6 +89,24 @@ function changeGame(event){
   }
 }
 
+function handlePlaceChange(place){
+  hours = [];
+  if (place.dataset.hasOwnProperty('hours')){
+    hours = place.dataset.hours.split(',')
+    hours = hours.flatMap(x => [parseInt(x)]);
+  }
+  now_weekday = undefined
+  if (place.dataset.hasOwnProperty('now_weekday')){
+    now_weekday = parseInt(place.dataset.now_weekday);
+    now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
+  }
+  now_hour = undefined
+  if (place.dataset.hasOwnProperty('now_hour')){
+    now_hour = parseInt(place.dataset.now_hour);
+    now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
+  }
+  setDayFields(hours, now_weekday, now_hour);
+}
 
 function setPlaceDefault(){
     setPlaceOption();

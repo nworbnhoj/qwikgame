@@ -249,25 +249,6 @@ function close(event) {
   event.currentTarget.closest('.closable').classList.toggle('hidden');
 }
 
-function handlePlaceChange(place){
-  hours = [];
-  if (place.dataset.hasOwnProperty('hours')){
-    hours = place.dataset.hours.split(',')
-    hours = hours.flatMap(x => [parseInt(x)]);
-  }
-  now_weekday = undefined
-  if (place.dataset.hasOwnProperty('now_weekday')){
-    now_weekday = parseInt(place.dataset.now_weekday);
-    now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
-  }
-  now_hour = undefined
-  if (place.dataset.hasOwnProperty('now_hour')){
-    now_hour = parseInt(place.dataset.now_hour);
-    now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
-  }
-  setDayFields(hours, now_weekday, now_hour);
-}
-
 function closeStuff(event) {
   let target = event.target;
   if (!(target.classList.contains('info') || target.parentElement.classList.contains('info'))){
@@ -643,14 +624,5 @@ window.onload = function() {
   });
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
-  });
-  document.querySelectorAll("form:has( .by_day)").forEach(function(form){
-    const PLACE_SELECT = document.getElementById('id_place');
-    if (PLACE_SELECT){
-        PLACE_SELECT.addEventListener("change", function(e) {
-          place = this.options[this.selectedIndex]
-          handlePlaceChange(place);
-        });
-    }
   });
 }

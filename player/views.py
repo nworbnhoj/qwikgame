@@ -59,7 +59,7 @@ class FilterView(AppealsView):
             player,
             game='ANY',
             place='ANY',
-            hours=WEEK_NONE,
+            hours=WEEK_ALL,
             places=places,
         )
         return render(request, self.template_name, context)

@@ -90,7 +90,10 @@ class FilterForm(QwikForm):
         form = klass(
                 initial = {
                     'game': game,
-                    'hours': hours,
+                    'hours': [
+                            Hours24(day).as_list()
+                            for day in Hours24x7(hours).as_7hr24()
+                        ],
                     # 'strength': strength,
                     'place': place,
                 },

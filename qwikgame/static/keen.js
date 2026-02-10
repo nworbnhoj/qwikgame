@@ -47,7 +47,7 @@ window.onload = function() {
     if (PLACE_SELECT){
         PLACE_SELECT.addEventListener("change", function(e) {
           place = this.options[this.selectedIndex]
-          handlePlaceChange(place);
+          updatePlaceHours(place);
         });
     }
   });
@@ -89,7 +89,7 @@ function changeGame(event){
   }
 }
 
-function handlePlaceChange(place){
+function updatePlaceHours(place){
   hours = [];
   if (place.dataset.hasOwnProperty('hours')){
     hours = place.dataset.hours.split(',')

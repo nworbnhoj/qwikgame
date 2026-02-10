@@ -379,7 +379,7 @@ function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour='', phone='',
     option.setAttribute('data-phone', phone);
     option.setAttribute('data-url', url);
   }
-  handlePlaceChange(option)
+  updatePlaceHours(option)
   PLACE_SELECT.dispatchEvent(new Event('change'));
   showMap(false);
 }

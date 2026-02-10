@@ -322,6 +322,11 @@ class KeenView(AppealsView):
             friend.alert('b', appeal.last_hour,  context, url, request)
         appeal.save()
 
+    def _updateMarkSize(game, place):
+        mark = Mark.objects.filter(game=game, place=place).first()
+        if mark:
+            mark.save()
+
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player 
@@ -416,10 +421,7 @@ class KeenView(AppealsView):
                 logger.info(f'updated Appeal: {appeal}')
             if not appeal_pk:
                 appeal_pk = appeal.pk
-        # update the Mark size
-        mark = Mark.objects.filter(game=game, place=place).first()
-        if mark:
-            mark.save()
+        self._updateMarkSize(game, place)
         if appeal_pk:
             return HttpResponseRedirect(f'/appeal/{appeal_pk}/')
         else:

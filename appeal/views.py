@@ -327,6 +327,22 @@ class KeenView(AppealsView):
             return appeal.pk
         return None
 
+    def _getVenue(placeid):
+        place, venue = None, None
+        if placeid:
+            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
+            if place:
+                venue = place.venue
+            else:  # then it must be a new Venue from a google POI
+                venue = Venue.from_placeid(placeid)
+                if venue:
+                    venue.save()
+                    logger.info(f'Venue new: {venue}')
+                    place = venue.place_ptr
+        if not venue:
+            logger.warn(f'Venue missing from Appeal: {placeid}')
+        return (place, venue)
+
     def _invite(self, appeal, invitees, request):
         appeal.invitees.clear()
         for friend in invitees:
@@ -374,21 +390,9 @@ class KeenView(AppealsView):
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.keen_template, context)
-        game, place, venue = None, None, None
-        placeid = context.get('placeid')
-        if placeid:
-            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
-            if place:
-                venue = place.venue
-            else:  # then it must be a new Venue from a google POI
-                venue = Venue.from_placeid(placeid)
-                if venue:
-                    venue.save()
-                    logger.info(f'Venue new: {venue}')
-                    place = venue.place_ptr
-        if not venue:
-            logger.warn(f'Venue missing from Appeal: {placeid}')
-            return HttpResponseRedirect('/appeal/')
+        place, venue = self._getVenue(context.get('placeid'))
+
+
         gameid = context.get('game')
         game = Game.objects.filter(pk=gameid).first()
         if not game:

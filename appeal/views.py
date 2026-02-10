@@ -302,6 +302,31 @@ class KeenView(AppealsView):
         )
         return render(request, self.keen_template, context)
 
+    def _createAppeal(day, hours, game, venue, player, invitees, request):
+        appeal, created = Appeal.objects.get_or_create(
+            date=day.date(),
+            game=game,
+            player=player,
+            venue=venue,
+        )
+        valid_hours = venue.open_date(day) & hours
+        if valid_hours.is_none:
+            appeal.delete()
+            logger.info(f"no valid hours for {hours} {day} at {venue}")
+        else:
+            if appeal.hours24 != hours:
+                appeal.set_hours(valid_hours)
+                appeal.perish()
+            self._invite(appeal, invitees, request)
+            if created:
+                appeal.log_event('appeal')
+                logger.info(f'created Appeal: {appeal}')
+            else:
+                appeal.log_event('reappeal')
+                logger.info(f'updated Appeal: {appeal}')
+            return appeal.pk
+        return None
+
     def _invite(self, appeal, invitees, request):
         appeal.invitees.clear()
         for friend in invitees:
@@ -370,62 +395,31 @@ class KeenView(AppealsView):
             logger.warn(f'Game missing from Appeal: {game}')
             return HttpResponseRedirect('/appeal/')
         self._updateVenueGames(game, venue, place)
+        venue_now = venue.now()
         invitees = context.get('friends', [])
-        appeal_pk = None
-        # create/update/delete today appeal
-        today=venue.now()
-        appeal, created = Appeal.objects.get_or_create(
-            date=today.date(),
-            game=game,
-            player=player,
-            venue=venue,
+        today_appeal_pk = self._createAppeal(
+            venue_now,
+            context.get('today', DAY_NONE),
+            game,
+            venue,
+            player,
+            invitees,
+            request,
         )
-        today_hours = context.get('today', DAY_NONE)
-        valid_hours = venue.open_date(today) & today_hours
-        if valid_hours.is_none:
-            appeal.delete()
-            logger.info(f"no valid hours for {today_hours} {today} at {venue}")
-        else:
-            if appeal.hours24 != today_hours:
-                appeal.set_hours(valid_hours)
-                appeal.perish()
-            self._invite(appeal, invitees, request)
-            if created:
-                appeal.log_event('appeal')
-                logger.info(f'created Appeal: {appeal}')
-            else:
-                appeal.log_event('reappeal')
-                logger.info(f'updated Appeal: {appeal}')
-            appeal_pk = appeal.pk
-        # create/update/delete tomorrow appeal
-        tomorrow = today + timedelta(days=1)
-        appeal, created = Appeal.objects.get_or_create(
-            date=tomorrow.date(),
-            game=game,
-            player=player,
-            venue=venue,
+        tomorrow_appeal_pk = self._createAppeal(
+            venue_now + timedelta(days=1),
+            context.get('tomorrow', DAY_NONE),
+            game,
+            venue,
+            player,
+            invitees,
+            request,
         )
-        tomorrow_hours = context.get('tomorrow', DAY_NONE)
-        valid_hours = venue.open_date(tomorrow) & tomorrow_hours
-        if valid_hours.is_none:
-            appeal.delete()
-            logger.info(f"no valid hours for {tomorrow_hours} {tomorrow} at {venue}")
-        else:
-            if appeal.hours24 != tomorrow_hours:
-                appeal.set_hours(valid_hours)
-                appeal.perish()
-            self._invite(appeal, invitees, request)
-            if created:
-                appeal.log_event('appeal')
-                logger.info(f'created Appeal: {appeal}')
-            else:
-                appeal.log_event('reappeal')
-                logger.info(f'updated Appeal: {appeal}')
-            if not appeal_pk:
-                appeal_pk = appeal.pk
         self._updateMarkSize(game, place)
-        if appeal_pk:
-            return HttpResponseRedirect(f'/appeal/{appeal_pk}/')
+        if today_appeal_pk:
+            return HttpResponseRedirect(f'/appeal/{today_appeal_pk}/')
+        else if tommorow_appeal_pk:
+            return HttpResponseRedirect(f'/appeal/{tommorow_appeal_pk}/')
         else:
             return HttpResponseRedirect(f'/appeal/')
 

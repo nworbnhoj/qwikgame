@@ -327,6 +327,12 @@ class KeenView(AppealsView):
             return appeal.pk
         return None
 
+    def _getGame(gameid):
+        game = Game.objects.filter(pk=gameid).first()
+        if not game:
+            logger.warn(f'Game missing from Appeal: {game}')
+        return game   
+
     def _getVenue(placeid):
         place, venue = None, None
         if placeid:
@@ -391,12 +397,8 @@ class KeenView(AppealsView):
             context |= self.context(request, *args, **kwargs)
             return render(request, self.keen_template, context)
         place, venue = self._getVenue(context.get('placeid'))
-
-
-        gameid = context.get('game')
-        game = Game.objects.filter(pk=gameid).first()
-        if not game:
-            logger.warn(f'Game missing from Appeal: {game}')
+        game = self._getGame(context.get('game'))
+        if not (game and venue):
             return HttpResponseRedirect('/appeal/')
         self._updateVenueGames(game, venue, place)
         venue_now = venue.now()

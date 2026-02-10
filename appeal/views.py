@@ -424,7 +424,7 @@ class KeenView(AppealsView):
         self._updateMarkSize(game, place)
         if today_appeal_pk:
             return HttpResponseRedirect(f'/appeal/{today_appeal_pk}/')
-        else if tommorow_appeal_pk:
+        elif tommorow_appeal_pk:
             return HttpResponseRedirect(f'/appeal/{tommorow_appeal_pk}/')
         else:
             return HttpResponseRedirect(f'/appeal/')

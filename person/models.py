@@ -51,6 +51,7 @@ class Alert(models.Model):
     TYPE = {
         'a': 'woo_invite',
         'b': 'rival_invite',
+        'c': 'filter_invite',
         'k': 'new_bid',
         'l': 'cancel_bid',
         'm': 'decline_bid',

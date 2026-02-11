@@ -131,6 +131,10 @@ class Appeal(models.Model):
             self.meta['seen'] = []
 
     @property
+    def invitee_players(self):
+        return [ f.player for f in self.invitees ]
+
+    @property
     def is_open(self):
         return self.invitees.count() == 0
 

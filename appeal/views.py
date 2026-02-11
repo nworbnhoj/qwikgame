@@ -4,6 +4,7 @@ from appeal.models import Appeal, Bid
 from authenticate.views import RegisterView
 from datetime import datetime, timedelta, timezone
 from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Q
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -302,6 +303,32 @@ class KeenView(AppealsView):
         )
         return render(request, self.keen_template, context)
 
+    # notify all Players with a active matching Filter
+    def _broadcast(appeal, filter_qs):
+        if filter_qs.len() > 0:
+            logger.info(f'Broadcasting notifications to {filter_qs.len()} Players')
+            datetime = appeal.venue.datetime
+            context = {
+                'appeal': appeal,
+                'date': datetime.strftime("%Y-%m-%d %A"),
+                'game': appeal.game(),
+                'domain': FQDN,
+                'time': datetime.strftime("%Hh"),
+                'venue': appeal.venue(),
+            }
+            for f in filters:
+                player = f.player
+                context |= {
+                    'name': player.name_rival(appeal.player),
+                    'recipient': player,
+                }
+                player.alert(
+                    type='c',
+                    expires=appeal.hours24.last_hour(),
+                    context=context,
+                    url=f'/appeal/{appeal.pk}/'
+                )
+
     def _createAppeal(day, hours, game, venue, player, invitees, request):
         appeal, created = Appeal.objects.get_or_create(
             date=day.date(),
@@ -326,6 +353,24 @@ class KeenView(AppealsView):
                 logger.info(f'updated Appeal: {appeal}')
             return appeal
         return None
+
+    def _filter_qs(appeal):
+        qs = Filter.objects.filter(active=True)
+        qs = qs.filter(
+            Q(game=appeal.game) |
+            Q(game__isnull=True)
+        )
+        qs = qs.filter(
+            Q(place=appeal.venue) | 
+            Q(place__venue__isnull=True, place__locality=appeal.venue.locality) | 
+            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1=appeal.venue.admin1) | 
+            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1__isnull=True, place__country=appeal.venue.country) | 
+            Q(place__isnull=True)
+        )
+        # TODO filter by Filter.hours
+        qs = qs.order_by('player').distinct('player')
+        qs = qs.exclude(player__in=appeal.invitee_players)
+        return qs
 
     def _getGame(gameid):
         game = Game.objects.filter(pk=gameid).first()
@@ -421,7 +466,11 @@ class KeenView(AppealsView):
             invitees,
             request,
         )
-        self._updateMarkSize(game, place)
+        if today_appeal or tomorrow_appeal:
+            self._updateMarkSize(game, place)
+            filter_qs = self._filter_qs
+            self._broadcast(today_appeal_pk, filter_qs)
+            self._broadcast(tomorrow_appeal_pk, filter_qs)
         if today_appeal:
             return HttpResponseRedirect(f'/appeal/{today_appeal.pk}/')
         elif tommorow_appeal:

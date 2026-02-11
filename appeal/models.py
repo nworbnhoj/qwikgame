@@ -132,7 +132,7 @@ class Appeal(models.Model):
 
     @property
     def invitee_players(self):
-        return [ f.player for f in self.invitees ]
+        return [ f.player for f in self.invitees.all() ]
 
     @property
     def is_open(self):

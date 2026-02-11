@@ -2,7 +2,7 @@ import logging
 from appeal.forms import AcceptForm, BidForm, KeenForm
 from appeal.models import Appeal, Bid
 from authenticate.views import RegisterView
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Q
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
@@ -304,32 +304,32 @@ class KeenView(AppealsView):
         return render(request, self.keen_template, context)
 
     # notify all Players with a active matching Filter
-    def _broadcast(appeal, filter_qs):
-        if filter_qs.len() > 0:
-            logger.info(f'Broadcasting notifications to {filter_qs.len()} Players')
-            datetime = appeal.venue.datetime
+    def _broadcast(self, appeal, filter_qs):
+        if filter_qs.count() > 0:
+            logger.info(f'Broadcasting notifications to {len(filter_qs)} Players')
             context = {
                 'appeal': appeal,
-                'date': datetime.strftime("%Y-%m-%d %A"),
-                'game': appeal.game(),
+                'date': appeal.date.strftime("%Y-%m-%d %A"),
+                'game': appeal.game,
                 'domain': FQDN,
-                'time': datetime.strftime("%Hh"),
-                'venue': appeal.venue(),
+                'time': appeal.hours24.as_str(),
+                'venue': appeal.venue,
             }
-            for f in filters:
+            for f in filters_qs.all():
                 player = f.player
                 context |= {
                     'name': player.name_rival(appeal.player),
                     'recipient': player,
                 }
+                last_hour = appeal.hours24.last_hour()
                 player.alert(
                     type='c',
-                    expires=appeal.hours24.last_hour(),
+                    expires=appeal.datetime(time=time(hour=last_hour)),
                     context=context,
                     url=f'/appeal/{appeal.pk}/'
                 )
 
-    def _createAppeal(day, hours, game, venue, player, invitees, request):
+    def _createAppeal(self, day, hours, game, venue, player, invitees, request):
         appeal, created = Appeal.objects.get_or_create(
             date=day.date(),
             game=game,
@@ -354,7 +354,7 @@ class KeenView(AppealsView):
             return appeal
         return None
 
-    def _filter_qs(appeal):
+    def _filter_qs(self, appeal):
         qs = Filter.objects.filter(active=True)
         qs = qs.filter(
             Q(game=appeal.game) |
@@ -372,13 +372,13 @@ class KeenView(AppealsView):
         qs = qs.exclude(player__in=appeal.invitee_players)
         return qs
 
-    def _getGame(gameid):
+    def _getGame(self, gameid):
         game = Game.objects.filter(pk=gameid).first()
         if not game:
             logger.warn(f'Game missing from Appeal: {game}')
         return game   
 
-    def _getVenue(placeid):
+    def _getVenue(self, placeid):
         place, venue = None, None
         if placeid:
             place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
@@ -414,12 +414,12 @@ class KeenView(AppealsView):
             friend.alert('b', appeal.last_hour,  context, url, request)
         appeal.save()
 
-    def _updateMarkSize(game, place):
+    def _updateMarkSize(self, game, place):
         mark = Mark.objects.filter(game=game, place=place).first()
         if mark:
             mark.save()
 
-    def _updateVenueGames(game, venue, place):
+    def _updateVenueGames(self, game, venue, place):
         if not(game in venue.games.all()):
             venue.games.add(game)
             logger.info(f'Venue Game add: {game}')
@@ -468,9 +468,12 @@ class KeenView(AppealsView):
         )
         if today_appeal or tomorrow_appeal:
             self._updateMarkSize(game, place)
-            filter_qs = self._filter_qs
-            self._broadcast(today_appeal_pk, filter_qs)
-            self._broadcast(tomorrow_appeal_pk, filter_qs)
+            appeal = today_appeal if today_appeal else tomorrow_appeal
+            filter_qs = self._filter_qs(appeal)
+            if today_appeal:
+                self._broadcast(today_appeal, filter_qs)
+            if tomorrow_appeal:
+                self._broadcast(tomorrow_appeal, filter_qs)
         if today_appeal:
             return HttpResponseRedirect(f'/appeal/{today_appeal.pk}/')
         elif tommorow_appeal:

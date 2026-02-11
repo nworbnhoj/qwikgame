@@ -315,7 +315,7 @@ class KeenView(AppealsView):
                 'time': appeal.hours24.as_str(),
                 'venue': appeal.venue,
             }
-            for f in filters_qs.all():
+            for f in filter_qs.all():
                 player = f.player
                 context |= {
                     'name': player.name_rival(appeal.player),
@@ -476,8 +476,8 @@ class KeenView(AppealsView):
                 self._broadcast(tomorrow_appeal, filter_qs)
         if today_appeal:
             return HttpResponseRedirect(f'/appeal/{today_appeal.pk}/')
-        elif tommorow_appeal:
-            return HttpResponseRedirect(f'/appeal/{tommorow_appeal.pk}/')
+        elif tomorrow_appeal:
+            return HttpResponseRedirect(f'/appeal/{tomorrow_appeal.pk}/')
         else:
             return HttpResponseRedirect(f'/appeal/')
 

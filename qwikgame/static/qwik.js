@@ -606,9 +606,6 @@ docReady(event => {
   document.querySelectorAll('[name=list]').forEach(function(element) {
     element.addEventListener('click', showDetail);
   });
-  document.querySelectorAll('.show_next_parent_sibling').forEach(function(element) {
-    element.addEventListener('click', showNextParentSibling);
-  });
   document.querySelectorAll('div.tab').forEach(function(element) {
     element.addEventListener('click', openTab);
   });

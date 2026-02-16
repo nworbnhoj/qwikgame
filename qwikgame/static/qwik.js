@@ -540,7 +540,7 @@ window.onpageshow = function(event) {
 };
 
 
-window.onload = function() {
+docReady(event => {
   document.querySelectorAll('time').forEach($e => {
     const date = new Date($e.dateTime);
     $e.innerHTML = date.toLocaleTimeString([], { weekday: "short", hour: "2-digit", minute: "2-digit",  hour12: false });
@@ -625,4 +625,4 @@ window.onload = function() {
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
     toggle.onclick = togglePreviousSibling;
   });
-}
+})

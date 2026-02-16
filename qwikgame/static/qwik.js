@@ -574,7 +574,7 @@ docReady(event => {
     element.addEventListener('click', showNextParentSibling);
   });
   document.querySelectorAll('div.show-next-sibling').forEach(function(element) {
-    element.addEventListener('click', showNextParentSibling);
+    element.addEventListener('click', showNextSibling);
   });
   document.querySelectorAll('div.closer').forEach(function(element) {
     element.addEventListener('click', close);

@@ -28,7 +28,7 @@ LANGUAGE = [
 ]
 
 ALERT_EMAIL_DEFAULT = 'bkmpq'
-ALERT_PUSH_DEFAULT = 'bklmpqr'
+ALERT_PUSH_DEFAULT = 'bcklmpqr'
 
 
 class AlertEmail(EmailMultiAlternatives):

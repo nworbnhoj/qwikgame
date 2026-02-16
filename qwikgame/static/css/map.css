@@ -59,7 +59,7 @@ div#map {
 	display: none;
 	height: 30em;
 	position:relative;
-	top:-3.5em;
+	top:-5em;
     width: 100%;
 	z-index: 4
 }

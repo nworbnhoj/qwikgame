@@ -546,41 +546,41 @@ docReady(event => {
     $e.innerHTML = date.toLocaleTimeString([], { weekday: "short", hour: "2-digit", minute: "2-digit",  hour12: false });
   });
   document.addEventListener('click', closeStuff);
-  document.querySelectorAll('div.drop').forEach(function(button) {
-    button.onclick = drop;
+  document.querySelectorAll('div.drop').forEach(function(element) {
+    element.addEventListener('click', drop);
   });
-  document.querySelectorAll('div.drop_down').forEach(function(drop_down){
+  document.querySelectorAll('div.drop_down').forEach(function(drop_down) {
     dropDownUpdate(drop_down);
   });
-  document.querySelectorAll('div.down label').forEach(function(div){
-    div.onclick = downClick;
+  document.querySelectorAll('div.down label').forEach(function(element) {
+    element.addEventListener('click', downClick);
   });
-  document.querySelectorAll('.cta_mobile').forEach(function(proxy) {
-    proxy.onclick = ctaKeen;
+  document.querySelectorAll('.cta_mobile').forEach(function(element) {
+    element.addEventListener('click', ctaKeen);
   });
-  document.querySelectorAll('div.head_fwd').forEach(function(button) {
-    button.onclick = nextDetail;
+  document.querySelectorAll('div.head_fwd').forEach(function(element) {
+    element.addEventListener('click', nextDetail);
   });
-  document.querySelectorAll('div.head_back').forEach(function(button) {
-    button.onclick = previousDetail;
+  document.querySelectorAll('div.head_back').forEach(function(element) {
+    element.addEventListener('click', previousDetail);
   });
-  document.querySelectorAll('div.info').forEach(function(button) {
-    button.onclick = showInfo;
+  document.querySelectorAll('div.info').forEach(function(element) {
+    element.addEventListener('click', showInfo);
   });
-  document.querySelectorAll('.show_group').forEach(function(button) {
-    button.onclick = showGroup;
+  document.querySelectorAll('.show_group').forEach(function(element) {
+    element.addEventListener('click', showGroup);
   });
-  document.querySelectorAll('div.show-next-parent-sibling').forEach(function(button) {
-    button.onclick = showNextParentSibling;
+  document.querySelectorAll('div.show-next-parent-sibling').forEach(function(element) {
+    element.addEventListener('click', showNextParentSibling);
   });
-  document.querySelectorAll('div.show-next-sibling').forEach(function(button) {
-    button.onclick = showNextParentSibling;
+  document.querySelectorAll('div.show-next-sibling').forEach(function(element) {
+    element.addEventListener('click', showNextParentSibling);
   });
-  document.querySelectorAll('div.closer').forEach(function(div) {
-    div.onclick = close;
+  document.querySelectorAll('div.closer').forEach(function(element) {
+    element.addEventListener('click', close);
   });
-  document.querySelectorAll('div.checkbox_wrap').forEach(function(div) {
-    div.onclick = check;
+  document.querySelectorAll('div.checkbox_wrap').forEach(function(element) {
+    element.addEventListener('click', check);
   });
   // store text input across page reload https://darekkay.com/blog/preserve-form-values/
   document.querySelectorAll("input[type='text']").forEach(function(input) {
@@ -595,22 +595,22 @@ docReady(event => {
       document.querySelector("input[type='text']").value = query;
     };
   });
-  document.querySelectorAll('label.toggle span.stop-prop').forEach(function(hr) {
-    hr.onclick = function(event) {
+  document.querySelectorAll('label.toggle span.stop-prop').forEach(function(element) {
+    element.addEventListener('click', (event) => {
       event.stopPropagation()
-    };
+    });
   });
-  document.querySelectorAll('div.unread').forEach(function(button) {
-    button.onclick = unreadRemove;
+  document.querySelectorAll('div.unread').forEach(function(element) {
+    element.addEventListener('click', unreadRemove);
   });
-  document.querySelectorAll('[name=list]').forEach(function(list_radio) {
-    list_radio.onclick = showDetail;
+  document.querySelectorAll('[name=list]').forEach(function(element) {
+    element.addEventListener('click', showDetail);
   });
   document.querySelectorAll('.show_next_parent_sibling').forEach(function(element) {
-    element.onclick = showNextParentSibling;
+    element.addEventListener('click', showNextParentSibling);
   });
-  document.querySelectorAll('div.tab').forEach(function(div) {
-    div.onclick = openTab;
+  document.querySelectorAll('div.tab').forEach(function(element) {
+    element.addEventListener('click', openTab);
   });
   document.querySelectorAll("a.btn").forEach(function(element) {
     element.addEventListener("click", () => {
@@ -622,7 +622,7 @@ docReady(event => {
       showLoader(input);
     });
   });
-  document.querySelectorAll('.toggle_previous_sibling').forEach(function(toggle) {
-    toggle.onclick = togglePreviousSibling;
+  document.querySelectorAll('.toggle_previous_sibling').forEach(function(element) {
+    element.addEventListener('click', togglePreviousSibling);
   });
 })

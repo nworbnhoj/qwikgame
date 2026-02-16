@@ -56,8 +56,8 @@ function venuesMap() {
     } else {
       MAP.setCenter(CENTER);
     }
-    const GAME_OPTIONS = document.querySelectorAll("input[name=game]");
-    addListeners(GAME_OPTIONS, 'input', changeGame);
+    const GAME_SELECT = document.getElementById('id_game');
+    GAME_SELECT.addEventListener('change', changeMarks);
 
     // setup Places search box in map
     if (SHOW_SEARCH_BOX == 'SHOW') {
@@ -243,7 +243,7 @@ function clickHandler(event){
 }
 
 
-function changeGame(){
+function changeMarks(){
   clearMarks();
   fetchMarks(game(), mapCenterIdle, null, '');
 }

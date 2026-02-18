@@ -456,7 +456,7 @@ class Filter(models.Model):
     def __str__(self):
         hours24x7 = Hours24x7(self.hours)
         week_str = hours24x7.as_str(week_all=WEEK_QWIK, day_all=DAY_QWIK)
-        return  '{}, {}, {}'.format(
+        return  '{} + {} + {}'.format(
                 'Any Game' if self.game is None else self.game,
                 'Anywhere' if self.place is None else self.place,
                 'Any Time' if week_str == '24x7' else week_str,

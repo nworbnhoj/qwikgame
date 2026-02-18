@@ -4,6 +4,7 @@ from .models import Manager, Place, Region, Venue
 
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'lat', 'lng']
+    list_filter = ['country', 'admin1', 'locality']
 
 class RegionAdmin(admin.ModelAdmin):
     list_filter = ['country', 'admin1', 'locality']

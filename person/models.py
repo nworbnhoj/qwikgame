@@ -84,6 +84,7 @@ class Alert(models.Model):
         return ' '.join(list)
 
     def dispatch(self):
+        self.context['domain'] = FQDN
         match self.mode:
             case 'E':
                 return self._email()

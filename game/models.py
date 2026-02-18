@@ -2,7 +2,6 @@ import datetime, logging
 from django.db import models
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
-from qwikgame.settings import FQDN
 
 logger = logging.getLogger(__file__)
 
@@ -74,7 +73,6 @@ class Match(models.Model):
         context = {
             'date': self.date.strftime("%Y-%m-%d %A"),
             'game': self.game,
-            'domain': FQDN,
             'match': self,
             'text': text,
             'time': self.date.strftime("%Hh"),

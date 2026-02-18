@@ -3,7 +3,6 @@ from appeal.forms import AcceptForm, BidForm, KeenForm
 from appeal.models import Appeal, Bid
 from authenticate.views import RegisterView
 from datetime import datetime, time, timedelta, timezone
-from django.contrib.sites.shortcuts import get_current_site
 from django.db.models import Q
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -14,7 +13,6 @@ from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm
 from qwikgame.log import Entry
-from qwikgame.settings import FQDN
 from api.models import Mark
 from service.locate import Locate
 from venue.models import Place, Region, Venue
@@ -311,7 +309,6 @@ class KeenView(AppealsView):
                 'appeal': appeal,
                 'date': appeal.date.strftime("%Y-%m-%d %A"),
                 'game': appeal.game,
-                'domain': FQDN,
                 'time': appeal.hours24.as_str(),
                 'venue': appeal.venue,
             }
@@ -329,7 +326,7 @@ class KeenView(AppealsView):
                     url=f'/appeal/{appeal.pk}/'
                 )
 
-    def _createAppeal(self, day, hours, game, venue, player, invitees, request):
+    def _createAppeal(self, day, hours, game, venue, player, invitees):
         appeal, created = Appeal.objects.get_or_create(
             date=day.date(),
             game=game,
@@ -344,7 +341,7 @@ class KeenView(AppealsView):
             if appeal.hours24 != hours:
                 appeal.set_hours(valid_hours)
                 appeal.perish()
-            self._invite(appeal, invitees, request)
+            self._invite(appeal, invitees)
             if created:
                 appeal.log_event('appeal')
                 logger.info(f'created Appeal: {appeal}')
@@ -394,24 +391,22 @@ class KeenView(AppealsView):
             logger.warn(f'Venue missing from Appeal: {placeid}')
         return (place, venue)
 
-    def _invite(self, appeal, invitees, request):
+    def _invite(self, appeal, invitees):
         appeal.invitees.clear()
         for friend in invitees:
             appeal.invitees.add(friend)
-            current_site = get_current_site(request)
             context={
                 'appeal': appeal,
                 'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
-                'domain': current_site.domain,
                 'game': appeal.game,
                 'name': appeal.player.qwikname,
-                'protocol': 'https' if request.is_secure() else 'http',
+                'protocol': 'https' if self.request.is_secure() else 'http',
                 'site_name': current_site.name,
                 'time': appeal.hours24.as_str(),
                 'venue': appeal.venue,
             }
             url = f'/appeal/{appeal.pk}/',
-            friend.alert('b', appeal.last_hour,  context, url, request)
+            friend.alert('b', appeal.last_hour, context, url, request)
         appeal.save()
 
     def _updateMarkSize(self, game, place):
@@ -455,7 +450,6 @@ class KeenView(AppealsView):
             venue,
             player,
             invitees,
-            request,
         )
         tomorrow_appeal = self._createAppeal(
             venue_now + timedelta(days=1),
@@ -464,7 +458,6 @@ class KeenView(AppealsView):
             venue,
             player,
             invitees,
-            request,
         )
         if today_appeal or tomorrow_appeal:
             self._updateMarkSize(game, place)

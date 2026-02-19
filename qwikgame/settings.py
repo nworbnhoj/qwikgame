@@ -182,6 +182,7 @@ STATICFILES_DIRS = [
 ]
 
 CRONJOBS = [
+    ('* * * * *', 'person.cron.smtp_connection_close', '>> /var/log/django_cron_alpha.log'),
     ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron_alpha.log'),
     ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron_alpha.log'),
     ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron_alpha.log'),
@@ -287,6 +288,7 @@ EMAIL_BACKEND = os.getenv('EMAIL_BACKEND','django.core.mail.backends.console.Ema
 EMAIL_HOST = os.getenv('EMAIL_HOST','error: set environ variable EMAIL_HOST')
 EMAIL_PORT = os.getenv('EMAIL_PORT','587')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS','error: set environ variable EMAIL_USE_TLS') == "True"
+EMAIL_SMTP_TIMEOUT = os.getenv('EMAIL_SMTP_TIMEOUT', 'error: set environ variable EMAIL_SMTP_TIMEOUT')
 EMAIL_ACCOUNT_USER = os.getenv('EMAIL_ACCOUNT_USER','error: set environ variable EMAIL_ACCOUNT_USER')
 EMAIL_ACCOUNT_PASSWORD = os.getenv('EMAIL_ACCOUNT_PASSWORD','error: set environ variable EMAIL_ACCOUNT_PASSWORD')
 EMAIL_ACCOUNT_NAME = os.getenv('EMAIL_ACCOUNT_NAME','QWIK ACCOUNTS')

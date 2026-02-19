@@ -32,14 +32,38 @@ ALERT_PUSH_DEFAULT = 'bcklmpqr'
 
 
 class AlertEmail(EmailMultiAlternatives):
+
+    _connection = None
+    _timeout = datetime.now()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.connection = get_connection(
-            fail_silently=False,
-            username = EMAIL_ALERT_USER,
-            password = EMAIL_ALERT_PASSWORD,
-        )
+        self.connection = AlertEmail._get_connection()
         self.from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER);
+
+    @classmethod
+    def _get_connection(klass):
+        if AlertEmail._connection:
+            AlertEmail._timeout = datetime.now() + timedelta(seconds=EMAIL_SMTP_TIMEOUT)
+        else:
+            AlertEmail._connection = get_connection(
+                username = EMAIL_ALERT_USER,
+                password = EMAIL_ALERT_PASSWORD,
+            )
+            AlertEmail._connection.open()
+            logger.info(f'SMTP connection opened')
+        return AlertEmail._connection
+
+    @classmethod
+    @property
+    def timeout():
+        if now() > AlertEmail._timeout:
+            connection = AlertEmail._connection
+            if connection:
+                AlertEmail._connection = None
+                connection.close()
+            return true
+        return false
 
 
 class Alert(models.Model):

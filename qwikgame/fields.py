@@ -118,7 +118,7 @@ class SelectRangeField(RangeField):
 
 class WeekField(MultiValueField):
 
-    def __init__(self, hours_enable=[*range(24)], hours_show=[*range(24)], **kwargs):
+    def __init__(self, hours_enable=[*range(24)], hours_show=[*range(24)], *args, **kwargs):
         self.widget=WeekInput( hours_enable=hours_enable, hours_show=hours_show)
         super().__init__(
             fields=(
@@ -132,6 +132,7 @@ class WeekField(MultiValueField):
             ),
             require_all_fields=False,
             template_name='field.html',
+            *args,
             **kwargs
         )
 

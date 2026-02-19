@@ -7,6 +7,7 @@ const CHIME = "/static/chime.mp3"
 
 // Registering Service Worker
 if('serviceWorker' in navigator) {
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').then(registration => {
       console.log("serviceWorker registered");
@@ -33,13 +34,15 @@ if('serviceWorker' in navigator) {
       console.log("WARNING: serviceWorker registration failed.");
     });
   });
+
   window.addEventListener('focus', () => {
-      navigator.serviceWorker.getRegistration("/webpush/service-worker.js").then((registration) => {
-          if (registration) {
-              closeNotifications(registration);
-          }
-      });
+    navigator.serviceWorker.getRegistration("/webpush/service-worker.js").then((registration) => {
+      if (registration) {
+        closeNotifications(registration);
+      }
+    });
   });
+  
 };
 
 

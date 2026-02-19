@@ -286,7 +286,6 @@ class KeenForm(QwikForm):
         form.personalise(player)
         if venue:
             today = venue.now()
-            logger.warn(today)
             tomorrow = today + datetime.timedelta(days=1)
             form.fields['today'].sub_text = today.strftime('%A')
             form.fields['tomorrow'].sub_text = tomorrow.strftime('%A')

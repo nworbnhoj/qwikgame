@@ -21,7 +21,7 @@ urlpatterns = [
     path('player/', include('player.urls')),
     path('venue/', include('venue.urls')),
     path('webpush/', include('webpush.urls')),
-    path('webpush/icon/', RedirectView.as_view(url='/static/img/qwik-icon.qwik-icon.svg')),
+    path('webpush/icon/', RedirectView.as_view(url='/static/img/qwik-icon.svg')),
     # The service worker cannot be in /static because its scope will be limited to /static.
     path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

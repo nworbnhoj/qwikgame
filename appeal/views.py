@@ -4,6 +4,7 @@ from appeal.models import Appeal, Bid
 from authenticate.views import RegisterView
 from datetime import datetime, time, timedelta, timezone
 from django.db.models import Q
+from django.contrib.sites.shortcuts import get_current_site
 from django.forms import BooleanField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -395,6 +396,7 @@ class KeenView(AppealsView):
         appeal.invitees.clear()
         for friend in invitees:
             appeal.invitees.add(friend)
+            current_site = get_current_site(self.request)
             context={
                 'appeal': appeal,
                 'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
@@ -406,7 +408,7 @@ class KeenView(AppealsView):
                 'venue': appeal.venue,
             }
             url = f'/appeal/{appeal.pk}/',
-            friend.alert('b', appeal.last_hour, context, url, request)
+            friend.alert('b', appeal.last_hour, context, url, self.request)
         appeal.save()
 
     def _updateMarkSize(self, game, place):

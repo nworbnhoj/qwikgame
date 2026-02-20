@@ -367,6 +367,7 @@ class KeenView(AppealsView):
         )
         # TODO filter by Filter.hours
         qs = qs.order_by('player').distinct('player')
+        qs = qs.exclude(player=appeal.player)
         qs = qs.exclude(player__in=appeal.invitee_players)
         return qs
 

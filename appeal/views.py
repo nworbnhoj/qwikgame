@@ -369,6 +369,7 @@ class KeenView(AppealsView):
         qs = qs.order_by('player').distinct('player')
         qs = qs.exclude(player=appeal.player)
         qs = qs.exclude(player__in=appeal.invitee_players)
+        qs = qs.exclude(player__user__person__in=appeal.player.user.person.blocked())
         return qs
 
     def _getGame(self, gameid):

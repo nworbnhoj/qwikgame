@@ -33,35 +33,43 @@ ALERT_PUSH_DEFAULT = 'bcklmpqr'
 
 class AlertEmail(EmailMultiAlternatives):
 
-    _connection = None
-    _timeout = datetime.now()
+    _open_connection = None
+    _timeout_connection = datetime.now()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.connection = AlertEmail._get_connection()
+        self.get_connection()
         self.from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER);
 
-    @classmethod
-    def _get_connection(klass):
-        if AlertEmail._connection:
-            AlertEmail._timeout = datetime.now() + timedelta(seconds=EMAIL_SMTP_TIMEOUT)
+    def get_connection(self):
+        if AlertEmail._open_connection:
+            self.connection = AlertEmail._open_connection
         else:
-            AlertEmail._connection = get_connection(
+            self.connection = get_connection(
                 username = EMAIL_ALERT_USER,
                 password = EMAIL_ALERT_PASSWORD,
             )
-            AlertEmail._connection.open()
-            logger.info(f'SMTP connection opened')
-        return AlertEmail._connection
+            if self.connection.open():
+                AlertEmail._open_connection = self.connection
+                logger.info(f'SMTP connection opened')
+            else:
+                logger.warn(f'SMTP connection open failed')
+        AlertEmail.prolong_connection()
+        return self.connection
+
+    @classmethod
+    def prolong_connection(klass):
+        extention = timedelta(seconds=EMAIL_SMTP_TIMEOUT)
+        AlertEmail._timeout_connection = datetime.now() + extention
 
     @classmethod
     @property
     def timeout():
-        if now() > AlertEmail._timeout:
-            connection = AlertEmail._connection
-            if connection:
-                AlertEmail._connection = None
-                connection.close()
+        connection = AlertEmail._open_connection
+        if connection and now() > AlertEmail._timeout_connection:
+            AlertEmail._open_connection = None
+            connection.close()
+            logger.info(f'SMTP connection closed')
             return true
         return false
 

@@ -328,6 +328,25 @@ function setAllWeek(button, checked) {
   }
 }
 
+function updatePlaceHours(place){
+  hours = [];
+  if (place.dataset.hasOwnProperty('hours')){
+    hours = place.dataset.hours.split(',')
+    hours = hours.flatMap(x => [parseInt(x)]);
+  }
+  now_weekday = undefined
+  if (place.dataset.hasOwnProperty('now_weekday')){
+    now_weekday = parseInt(place.dataset.now_weekday);
+    now_weekday = Number.isInteger(now_weekday) ? now_weekday % 7 : undefined;
+  }
+  now_hour = undefined
+  if (place.dataset.hasOwnProperty('now_hour')){
+    now_hour = parseInt(place.dataset.now_hour);
+    now_hour = Number.isInteger(now_hour) ? now_hour % 24 : undefined;
+  }
+  setDayFields(hours, now_weekday, now_hour);
+}
+
 // shows only the Venue open-hours in DayFields
 // hours24x7 is an array[int:7] representing 7 days of open hours in the
 //     24 least significant bits (--------012345....23)

@@ -41,7 +41,7 @@ class AlertEmail(EmailMultiAlternatives):
         self.get_connection()
         self.from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER);
 
-    def get_connection(self):
+    def get_connection(self, fail_silently=False):
         if AlertEmail._open_connection:
             self.connection = AlertEmail._open_connection
         else:

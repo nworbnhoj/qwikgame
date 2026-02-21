@@ -1,9 +1,12 @@
 <!-- templates/404.html -->
 {% extends "public.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block detail %}
 
-<p>Sorry - we could not find that page.</p>
+<p>
+	{% translate "Sorry - we could not find that page." %}
+</p>
 
 {% endblock detail %}

@@ -1,5 +1,6 @@
 <!-- qwikgame/player/templates/appeal/bid.html -->
 {% extends "appeal/appeals.html" %}
+{% load i18n %}
 
 
 {% block title %}Bid{% endblock %}
@@ -71,8 +72,10 @@
                         <form id="form" action="{% url 'bid' appeal.pk %}" method="post">
             {% csrf_token %}
                             <label class="btn tertiary">
-                                <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm('Cancel this Offer?')">
-                                cancel
+                                <input hidden form="form" name="CANCEL" type="submit" value='{{ bid.pk }}' onclick="return confirm(
+                                    {% translate 'Cancel this Offer?' %}
+                                )">
+                                {% translate "cancel" %}
                             </label>
                         </form>
                     </div>

@@ -1,7 +1,7 @@
 import logging, hashlib, random
 from datetime import datetime, timedelta
 from django.core.mail import EmailMultiAlternatives, get_connection
-from qwikgame.settings import FQDN, EMAIL_ALERT_NAME, EMAIL_ALERT_PASSWORD, EMAIL_ALERT_USER
+from qwikgame.settings import FQDN, EMAIL_ALERT_NAME, EMAIL_ALERT_PASSWORD, EMAIL_ALERT_USER, EMAIL_SMTP_TIMEOUT
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models

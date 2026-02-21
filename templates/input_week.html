@@ -1,12 +1,17 @@
 <!-- qwikgame/templates/input_week.html -->
 {% load static %}
+{% load i18n %}
 <script defer src="{% static 'js/input_week.js' %}"></script>
 
 <div class="by_week grid_2_col">
-    <div class="btn tertiary show-next-parent-sibling">Select Days and Time</div>
+    <div class="btn tertiary show-next-parent-sibling">
+        {% translate "Select Days and Time" %}
+    </div>
     <label class="btn secondary wide toggle all_week">
         <input type="checkbox" name="all_week">
-        <span class="stop-prop">Any Time</span>
+        <span class="stop-prop">
+            {% translate "Any Time" %}
+        </span>
     </label>
 </div>
 <div class="post hidden">

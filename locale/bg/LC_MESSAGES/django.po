@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 06:18+1100\n"
+"POT-Creation-Date: 2026-02-22 06:28+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: appeal/templates/appeal/accept.html:53
+msgid "Cancel this Invitation?"
+msgstr ""
+
+#: appeal/templates/appeal/accept.html:55
+msgid "cancel"
+msgstr ""
+
+#: appeal/templates/appeal/accept.html:84
+msgid "decline"
+msgstr ""
+
+#: appeal/templates/appeal/accept.html:125
+msgid ""
+"You are about to schedule a Match. A chat session will be opened with your "
+"rival. Continue?"
+msgstr ""
 
 #: templates/404.html:9
 msgid "Sorry - we could not find that page."

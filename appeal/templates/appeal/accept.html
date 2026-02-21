@@ -1,5 +1,6 @@
 <!-- qwikgame/player/templates/accept/accept.html -->
 {% extends "appeal/appeals.html" %}
+{% load i18n %}
 
 
 {% block title %}Reply{% endblock %}
@@ -48,8 +49,10 @@
                     <div class="down right hidden">
     {% if player == appeal.player %}
                         <label class="btn tertiary">
-                            <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm('Cancel this Invitation?')">
-                            cancel
+                            <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm(
+                                {% translate 'Cancel this Invitation?' %}
+                            )">
+                            {% translate "cancel" %}
                         </label>
     {% endif %}
                     </div>
@@ -78,7 +81,7 @@
                         <div class="down left hidden">
                             <label class="btn tertiary menu">
                                 <input hidden type="submit" name='decline' value='{{ bid.pk }}'>
-                                decline
+                                {% translate "decline" %}
                             </label>
                         </div>
                     </div>
@@ -118,7 +121,9 @@
                 </div>
         {% if bids|get_item:entry.pk %}
                 <label class="btn primary small round">
-                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm('You are about to schedule a Match. A chat session will be opened with your rival. Continue?')">
+                    <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm(
+                        {% translate 'You are about to schedule a Match. A chat session will be opened with your rival. Continue?' %}
+                    )">
                     <i class="fa-solid fa-right-long fa-xl"></i>
                 </label>
         {% endif %}    

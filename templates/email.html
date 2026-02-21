@@ -1,5 +1,6 @@
 <!-- templates/person/email.html -->
-{% load static %}{% load i18n %}
+{% load static %}
+{% load i18n %}
 {% autoescape off %}
 
 
@@ -11,7 +12,7 @@
         <div style="align-items: center; padding: 1em">
             <h3 style="align-items: center; color: black; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; text-align: center; ">
 {% block title %}
-                Welcome to Qwikgame
+                {% translate "Welcome to Qwikgame" %}
 {% endblock title %}
             </h3>
 {% block detail %}{% endblock detail %}

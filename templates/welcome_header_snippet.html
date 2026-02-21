@@ -1,5 +1,6 @@
 <!-- qwikgame/templates/welcome_header_snippet.html -->
 {% load static %}
+{% load i18n %}
 
 <header id="header">
     <div class="container flex">
@@ -8,8 +9,8 @@
         </a>
         <nav class="nav">
             <ul class="nav_list">
-                <li class="nav_item"><a href="{% url 'login' %}" class="nav_link">Sign In</a></li>
-                <li class="nav_item"><a href="{% url 'register' %}" class="nav_link nav_link-button">Sign up</a></li>
+                <li class="nav_item"><a href="{% url 'login' %}" class="nav_link">{% translate "Sign In" %}</a></li>
+                <li class="nav_item"><a href="{% url 'register' %}" class="nav_link nav_link-button">{% translate "Sign up" %}</a></li>
             </ul>
         </nav>
     </div>

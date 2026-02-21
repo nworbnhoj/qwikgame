@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 05:46+1100\n"
+"POT-Creation-Date: 2026-02-22 05:49+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,6 +44,18 @@ msgstr ""
 
 #: templates/email.html:15 templates/public.html:33
 msgid "Welcome to Qwikgame"
+msgstr ""
+
+#: templates/input_day.html:9
+msgid "Pick time"
+msgstr ""
+
+#: templates/input_day.html:14
+msgid "All Day"
+msgstr ""
+
+#: templates/input_day.html:24
+msgid "The Venue is closed."
 msgstr ""
 
 #: templates/qwik.html:41

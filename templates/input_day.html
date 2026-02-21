@@ -1,13 +1,18 @@
 <!-- qwikgame/templates/input_day.html -->
 {% load static %}
+{% load i18n %}
 <script defer src="{% static 'js/input_day.js' %}"></script>
 <div class='post by_day'>
     <div class='post on_day'>
         <div class="grid_2_col">
-            <div class="btn tertiary show-next-parent-sibling">Pick time</div>
+            <div class="btn tertiary show-next-parent-sibling">
+                {% translate "Pick time" %}
+            </div>
             <label class="btn secondary wide toggle all_day">
                 <input type="checkbox" name="{{ field.name }}">
-                <span class="stop-prop">All Day</span>
+                <span class="stop-prop">
+                    {% translate "All Day" %}
+                </span>
             </label>
         </div>
         <div class="post hidden">
@@ -15,6 +20,8 @@
         </div>
     </div>
     <div class="hidden no_day">
-        <p>The Venue is closed.</p>
+        <p>
+            {% translate "The Venue is closed." %}
+        </p>
     </div>
 </div> 

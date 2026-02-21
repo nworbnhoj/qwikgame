@@ -1,17 +1,20 @@
 <!-- templates/authenticate/login_email_sent.html -->
 {% extends "authenticate/auth.html" %}
+{% load i18n %}
 
 
 {% block detail %}
     <div class="pillar">
         <p class="push_down">
+    {% blocktranslate %}
             An email has been sent to {{ request.GET.to_email}} with a login link. 
+    {% endblocktranslate %}
         </p>
         <p class="push_down">
-            You should receive it shortly.
+            {% translate "You should receive it shortly." %}"
         </p>
         <p class="push_down">
-            If you don’t receive an email, please check your spam folder.
+            {% translate "If you don’t receive an email, please check your spam folder." %}"
         </p>
     </div>
 {% endblock detail %}

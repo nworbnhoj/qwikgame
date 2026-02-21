@@ -1,8 +1,11 @@
 <!-- qwikgame/feedback/templates/feedback/feedback_list.html -->
 {% extends "content.html" %}
+{% load i18n %}
 
 
-{% block title %}Feedback{% endblock %}
+{% block title %}
+    {% translate "Feedback" %}
+{% endblock %}
 
 
 {% block cta_mobile %}{% endblock %}
@@ -13,7 +16,7 @@
         <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
             <div id="alert_list_head" class="alert"></div>
-            <h2>Feedback</h2>
+            <h2>{% translate "Feedback" %}</h2>
         </div>
         <div class="post group">
 {% for fb in feedbacks %}
@@ -26,7 +29,9 @@
                 </div>
             </a>
 {% empty %}
-            <p>No feedback!</p>
+            <p>
+                {% translate "No feedback!" %}                
+            </p>
 {% endfor %}
         </div>
         <div id="alert_list_end" class="alert"></div>
@@ -39,7 +44,7 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
-                Select Feedback to see detail.
+                {% translate "Select Feedback to see detail." %}
             </div>
         </div>
         <div id="alert_detail_end" class="alert"></div>

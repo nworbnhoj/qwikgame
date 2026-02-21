@@ -1,21 +1,27 @@
 <!-- templates/authenticate/login_form.html -->
 {% extends "authenticate/auth.html" %}
 {% load static %}
+{% load i18n %}
 
 
 {% block detail %}
-    <p>Need a new account? <a href="{% url 'register' %}">signup</a></p>
+    <p>
+        {% translate "Need a new account?" %}"
+        <a href="{% url 'register' %}">{% translate "signup" %}</a>
+    </p>
     <div class="pillar push_down">
         <form method="post">
   {% csrf_token %}
   {{ form.email.errors }}
   {{ form.email }}
   {{ form.password }}
-            <p class="small">We will send you a verification link to login</p>
+            <p class="small">
+                {% translate "We will send you a verification link to login" %}
+            </p>
             <div class="pillar push_down">
                 <label class="btn primary">
                     <input type="submit" hidden>
-                    Send login link
+                    {% translate "Send login link" %}
                 </label>
             </div>
         </form>

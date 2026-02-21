@@ -1,6 +1,7 @@
 <!-- templates/authenticate/auth.html -->
 {% extends "qwik.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
@@ -29,7 +30,7 @@
     <fieldset style="text-align: center;">
         <legend><img class="logo href" src="{% static 'img/qwik-icon.webp' %}"></legend>
         <div class="pillar">
-            <h6>Welcome to Qwikgame</h6>
+            <h6>{% translate "Welcome to Qwikgame" %}</h6>
 {% if hash %}         
             <div class="identicon push_down" data-hash="{{ hash }}" style="height: 4em; width: 4em;"></div>
 {% endif %}

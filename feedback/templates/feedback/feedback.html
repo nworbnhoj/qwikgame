@@ -1,8 +1,11 @@
 <!-- qwikgame/feedback/templates/feedback/feedback.html -->
 {% extends "feedback/feedback_list.html" %}
+{% load i18n %}
 
 
-{% block title %}Feedback{% endblock %}
+{% block title %}
+    {% translate "Feedback" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -35,14 +38,17 @@
             <p>{{ feedback.text }}</p>
             <hr>
             <p>
-                Version: <a href="https://github.com/nworbnhoj/qwikgame/commit/{{ feedback.commit }}" target="_blank">{{ feedback.version }}</a>
+                {% translate "Version: " %}<a href="https://github.com/nworbnhoj/qwikgame/commit/{{ feedback.commit }}" target="_blank">{{ feedback.version }}</a>
             </p>
             <p>
-                Issue:
+                {% translate "Issue:" %}"
     {% if feedback.issue %}
-                 <a href="https://github.com/nworbnhoj/qwikgame/issues/{{ feedback.issue }}" target="_blank">#{{ feedback.issue }}</a>
+                <a href="https://github.com/nworbnhoj/qwikgame/issues/{{ feedback.issue }}" target="_blank">#{{ feedback.issue }}</a>
     {% else %}
-                 None (<a href="https://github.com/nworbnhoj/qwikgame/issues" target="_blank">create issue</a>)
+                {% translate "None" %}
+                (<a href="https://github.com/nworbnhoj/qwikgame/issues" target="_blank">
+                    {% translate "create issue" %}
+                </a>)
     {% endif %}
             </p>
         </div>

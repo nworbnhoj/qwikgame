@@ -6,13 +6,15 @@
 {% block detail %}
     <div class="pillar">
         <p class="push_down">
-            Sorry that didn't work.
+            {% translate "Sorry that didn't work." %}
         </p>
         <p class="push_down">
-            The security token in that link has expired, or is invalid for some reason.
+            {% translate "The security token in that link has expired, or is invalid for some reason." %}
         </p>
         <p class="push_down">
-            Please generate a fresh token by returning to the <a href="{% url 'welcome' %}">Login / Registration</a> page.
+            {% translate "Please generate a fresh token by returning to the "
+            <a href="{% url 'welcome' %}">{% translate "Login / Registration" %}</a>
+            {% translate " page." %}"
         </p>
     </div>
 {% endblock detail %}

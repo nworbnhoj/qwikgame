@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-21 22:39+1100\n"
+"POT-Creation-Date: 2026-02-21 22:49+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,18 @@ msgstr ""
 
 #: templates/404.html:9
 msgid "Sorry - we could not find that page."
+msgstr ""
+
+#: templates/500.html:9
+msgid "Game Over!"
+msgstr ""
+
+#: templates/500.html:13
+msgid "Sorry - we didnt expect that to happen."
+msgstr ""
+
+#: templates/500.html:17
+msgid "We will get it fixed as soon as we figure our what went wrong."
 msgstr ""
 
 #: templates/public.html:33

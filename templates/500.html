@@ -1,13 +1,20 @@
 <!-- templates/500.html -->
 {% extends "public.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block detail %}
 
-<p>Game Over!</p>
+<p>
+	{% translate "Game Over!" %}
+</p>
 
-<p>Sorry - we didnt expect that to happen.</p>
+<p>
+    {% translate "Sorry - we didnt expect that to happen." %}
+</p>
 
-<p>We will get it fixed as soon as we figure our what went wrong.</p>
+<p>
+	{% translate "We will get it fixed as soon as we figure our what went wrong." %}
+</p>
 
 {% endblock detail %}

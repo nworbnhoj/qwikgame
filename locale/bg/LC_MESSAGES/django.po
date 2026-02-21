@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 06:02+1100\n"
+"POT-Creation-Date: 2026-02-22 06:17+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,6 +106,134 @@ msgstr ""
 
 #: templates/offline.html:9
 msgid "Sorry, you appear to be offline right now."
+msgstr ""
+
+#: templates/pwa_snippet.html:7
+msgid "BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP."
+msgstr ""
+
+#: templates/pwa_snippet.html:10
+msgid "Install QWIKGAME app in seconds."
+msgstr ""
+
+#: templates/pwa_snippet.html:14
+msgid "No download process. No payment. Remove anytime"
+msgstr ""
+
+#: templates/pwa_snippet.html:17
+msgid "No app store needed"
+msgstr ""
+
+#: templates/pwa_snippet.html:20
+msgid "Accessible from any device with a web browser"
+msgstr ""
+
+#: templates/pwa_snippet.html:23
+msgid "Requires minimal storage"
+msgstr ""
+
+#: templates/pwa_snippet.html:26
+msgid "Better performance in regions with limited internet connection"
+msgstr ""
+
+#: templates/pwa_snippet.html:29
+msgid "Compatible with all platforms: iOS, Android, Windows phone, Linux, etc"
+msgstr ""
+
+#: templates/pwa_snippet.html:35
+msgid "Install QWIKGAME "
+msgstr ""
+
+#: templates/pwa_snippet.html:39
+msgid "QWIKGAME is installed. Open the app "
+msgstr ""
+
+#: templates/pwa_snippet.html:43
+msgid "QWIKGAME is installed and in-use."
+msgstr ""
+
+#: templates/pwa_snippet.html:46
+msgid "Unfortunately this browser does not support PWA's. "
+msgstr ""
+
+#: templates/pwa_snippet.html:50
+msgid "Something went wrong!"
+msgstr ""
+
+#: templates/pwa_snippet.html:52
+msgid "Please, try again."
+msgstr ""
+
+#: templates/pwa_snippet.html:57 templates/pwa_snippet.html:64
+msgid "PWA requires"
+msgstr ""
+
+#: templates/pwa_snippet.html:59
+msgid "Google services for push messaging"
+msgstr ""
+
+#: templates/pwa_snippet.html:61
+msgid "on Brave"
+msgstr ""
+
+#: templates/pwa_snippet.html:66
+msgid "extension"
+msgstr ""
+
+#: templates/pwa_snippet.html:68
+msgid "on Firefox"
+msgstr ""
+
+#: templates/pwa_snippet.html:71
+msgid "You may try Chrome, Edge, Firefox with PWA add-on, Safari and more."
+msgstr ""
+
+#: templates/pwa_snippet.html:75
+msgid "Install QWIKGAME"
+msgstr ""
+
+#: templates/pwa_snippet.html:80
+msgid "Install QWIKGAME:"
+msgstr ""
+
+#: templates/pwa_snippet.html:82
+msgid "Open Safari"
+msgstr ""
+
+#: templates/pwa_snippet.html:83
+msgid "Tap the Share button (box with an arrow)"
+msgstr ""
+
+#: templates/pwa_snippet.html:84
+msgid "Select Add to Home Screen"
+msgstr ""
+
+#: templates/pwa_snippet.html:85
+msgid "Select Add to Dock"
+msgstr ""
+
+#: templates/pwa_snippet.html:86
+msgid "Tap Add"
+msgstr ""
+
+#: templates/pwa_snippet.html:88
+msgid "Enable QWIKGAME push notifications:"
+msgstr ""
+
+#: templates/pwa_snippet.html:90
+msgid "Go to Settings"
+msgstr ""
+
+#: templates/pwa_snippet.html:91
+msgid "Open Notifications"
+msgstr ""
+
+#: templates/pwa_snippet.html:92
+msgid "Select qwikgame"
+msgstr ""
+
+#: templates/pwa_snippet.html:93
+msgid "Turn on Allow Notifications"
 msgstr ""
 
 #: templates/qwik.html:41

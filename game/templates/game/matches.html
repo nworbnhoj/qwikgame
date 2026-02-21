@@ -1,8 +1,11 @@
 <!-- qwikgame/player/templates/player/matches.html -->
 {% extends "content.html" %}
+{% load i18n %}
 
 
-{% block title %}Match{% endblock %}
+{% block title %}
+    {% translate "Match" %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -20,7 +23,7 @@
     <a class="btn special1" href="{% url 'matches' %}">
         <input {{ cta_disabled }} type="hidden" name="">
         <i class="fa-regular fa-comments fa-xl"></i>
-        Chat
+        {% translate "Chat" %}
     </a>
 {% endif %}
 {% endblock %}
@@ -30,31 +33,31 @@
         <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
             <div id="alert_list_head" class="alert"></div>
-            <h2>Matches</h2> 
+            <h2>{% translate "Matches" %}</h2> 
             <div class="drop_down todo">
                 <div class="btn drop" data-down="false">
-                    <div>Group by</div>
+                    <div>{% translate "Group by" %}</div>
                     <div class="fat" aria-hidden="true">v</div>
                 </div>
                 <div class="down left hidden">
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        date
+                        {% translate "date" %}
                     </label>
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        game
+                        {% translate "game" %}
                     </label>
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        venue
+                        {% translate "venue" %}
                     </label>
                 </div>
             </div>
         </div>
         <div id="alert_list_group1" class="alert"></div>
         <h3 class="show_group">
-            Upcoming
+            {% translate "Upcoming" %}
             <span>▲</span>
         </h3>
         <div class="post group">
@@ -88,12 +91,14 @@
                 </div>
             </a>
 {% empty %}
-           <p>No pending Matches</p>
+           <p>
+               {% translate "No pending Matches" %}
+           </p>
 {% endfor %}
         </div>
         <div id="alert_list_group2" class="alert"></div>
         <h3 class="show_group">
-            History
+            {% translate "History" %}
             <span>▲</span>
         </h3>
         <div class="post group">
@@ -125,7 +130,9 @@
                 <div class="badges"></div>
             </a>
 {% empty %}
-            <p>No history yet!</p>
+            <p>
+                {% translate "No history yet!" %}
+            </p>
 {% endfor %}
         </div>
         <div id="alert_list_end" class="alert"></div>
@@ -139,9 +146,11 @@
         <div class="pillar push_down">
             <div class="push_down">                
     {% if matches_future.all %}
-                Select a Match to Chat.
+                {% translate "Select a Match to Chat." %}
     {% else %}
-                No pending Matches<br>Keen to play?
+        {% blocktranslate with br="<br>" %}
+            No pending Matches{{ br }}Keen to play?
+        {% endblocktranslate %}
     {% endif %}
             </div>
             <a class="btn special1 push_down" href="{% url 'keen' %}">

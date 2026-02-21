@@ -1,6 +1,7 @@
 <!-- qwikgame/game/templates/game/match.html -->
 {% extends "game/matches.html" %}
 {% load static %}
+{% load i18n %}
 
 
 {% block refresh %}
@@ -8,7 +9,9 @@
 {% endblock refresh %}
 
 
-{% block title %}Match{% endblock %}
+{% block title %}
+    {% translate "Match" %}
+{% endblock %}
 
 
 {% block script %}
@@ -58,8 +61,10 @@
                             <form action="{% url 'match' match=match.pk %}" method="post">
         {% csrf_token %}
                                 <label class="btn tertiary">
-                                    <input hidden name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm('Cancel this Match?')">
-                                    cancel
+                                    <input hidden name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm(
+                                        {% translate 'Cancel this Match?' %}
+                                    )">
+                                    {% translate "cancel" %}
                                 </label>
                             </form>
     {% endif %}
@@ -131,8 +136,12 @@
             </div>
 {% if match_log_start > 0 %}
             <div class="btn tertiary toggle_previous_sibling align_center">
-                <span class="tog">Show invitation history</span>
-                <span class="tog hidden">Hide invitation history</span>
+                <span class="tog">
+                    {% translate "Show invitation history" %}
+                </span>
+                <span class="tog hidden">
+                    {% translate "Hide invitation history" %}
+                </span>
             </div>  
 {% endif %}
             <div class="post">
@@ -166,7 +175,7 @@
             <div class="pillar">                
                 <a class="btn primary" href="{% url 'review' review=review.pk %}">
                     <i class="fa-solid fa-thumbs-up fa-2x"></i>
-                    Review
+                    {% translate "Review" %}
                 </a>
             </div>
 {% endif %}
@@ -175,7 +184,9 @@
             <form id="chat_form" action="{% url 'match' match=match.pk %}" method="post">
 {% csrf_token %}
                 <div class="chat_input">
-                    <div class="button" onclick="return alert('☺ emogi coming soon ☺')">
+                    <div class="button" onclick="return alert(
+                        {% translate '☺ emogi coming soon ☺' %}
+                    )">
                         <i class="fa-regular fa-face-smile fa-xl"></i>
                     </div>
                     {{ match_form }}
@@ -187,8 +198,12 @@
             </form>
 {% endif %}
             <div class="nextup">
-                <P>Chat will be disabled 24 hours after Match.</P>
-                <P>Chat will be deleted 1 week after Match.</P>
+                <p>
+                    {% translate "Chat will be disabled 24 hours after Match." %}
+                </p>
+                <p>
+                    {% translate "Chat will be deleted 1 week after Match." %}
+                </p>
             </div>
            <!--  <div class="alert_sum push_down">
                 <p><a href='/account/private'>Notifications</a>: <span class='on'>{{ notify_on }}</span> <span class='off'>{{ notify_off }}</span></p>

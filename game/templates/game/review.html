@@ -1,9 +1,12 @@
 <!-- qwikgame/match/templates/game/review.html -->
 {% extends "game/reviews.html" %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
-{% block title %}Reviews{% endblock %}
+{% block title %}
+    {% translate "Reviews" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -68,7 +71,7 @@
                         <div class="pillar">
                             <label class="btn primary push_down">
                                 <input hidden type="submit">
-                                Submit
+                                {% translate "Submit" %}
                             </label>
                         </div>
                     </form>

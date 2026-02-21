@@ -1,9 +1,13 @@
 <!-- qwikgame/game/templates/game/reviews.html -->
 {% extends "content.html" %}
+{% load i18n %}
+
 
 {% block refresh %}{% endblock refresh %}
 
-{% block title %}Review{% endblock %}
+{% block title %}
+    {% translate "Review" %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -21,7 +25,7 @@
     <a class="btn special1" href="{% url 'review' %}">
         <input {{ cta_disabled }} type="hidden" name="">
         <i class="fa-solid fa-thumbs-up fa-xl"></i>
-        Review
+        {% translate "Review" %}
     </a>
 {% endif %}
 {% endblock %}
@@ -31,24 +35,24 @@
         <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
             <div id="alert_list_head" class="alert"></div>
-            <h2>Reviews</h2> 
+            <h2>{% translate "Reviews" %}</h2> 
             <div class="drop_down todo">
                 <div class="btn drop" data-down="false">
-                    <div>Group by</div>
+                    <div>{% translate "Group by" %}</div>
                     <div class="fat" aria-hidden="true">v</div>
                 </div>
                 <div class="down left hidden">
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        date
+                        {% translate "date" %}
                     </label>
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        game
+                        {% translate "game" %}
                     </label>
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        venue
+                        {% translate "venue" %}
                     </label>
                 </div>
             </div>
@@ -94,14 +98,16 @@
         <div class="pillar push_down">
             <div class="push_down">
     {% if reviews.all %}
-                Select a Match to Review.
+                {% translate "Select a Match to Review." %}
     {% else %}
-                All Match reviews complete - thank you<br>Keen to play?
+        {% blocktranslate with br="<br>" %}
+                All Match reviews complete - thank you{{ br }}Keen to play?
+        {% endblocktranslate %}
     {% endif %}
             </div>
             <a class="btn special1 push_down" href="{% url 'keen' %}">
                 <i class="fa-solid fa-paper-plane fa-xl"></i>
-                Invite
+                {% translate "Invite" %}
             </a>
         </div>
         <div id="alert_detail_end" class="alert"></div>

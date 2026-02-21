@@ -1,8 +1,11 @@
 <!-- qwikgame/game/templates/game/rival.html -->
 {% extends "game/matches.html" %}
+{% load i18n %}
 
 
-{% block title %}Rival{% endblock %}
+{% block title %}
+    {% translate "Rival" %}
+{% endblock %}
 
     
 {% block list_bar %}

@@ -370,7 +370,7 @@ function setDayFields(hours24x7, now_weekday, now_hour){
       // set the week day in the DayField Field Label
       sub_text = day.closest('div.field').querySelector('.sub_text')
       if (sub_text){
-        sub_text.innerText = WEEKDAY[now_weekday + offset];
+        sub_text.innerText = WEEKDAY[(now_weekday + offset) % 7];
       }
     }
     day.querySelectorAll(".hour_grid input").forEach(function(input) {

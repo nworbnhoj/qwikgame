@@ -51,12 +51,13 @@ class Player(models.Model):
                     qs = qs.filter(game=f.game)
                 if f.place:
                     if f.place.is_venue:
-                        qs = qs.filter(venue=f.place)
-                    elif f.place.is_region:
-                        qs = qs.filter(venue__lat__lte=f.place.region.north)
-                        qs = qs.filter(venue__lat__gte=f.place.region.south)
-                        qs = qs.filter(venue__lng__lte=f.place.region.east)
-                        qs = qs.filter(venue__lng__gte=f.place.region.west)
+                        qs = qs.filter(place__venue=f.place)
+                    elif f.place.locality:
+                        qs = qs.filter(place__locality=f.place.locality)
+                    elif f.place.admin1:
+                        qs = qs.filter(place__admin1=f.place.admin1)
+                    elif f.place.country:
+                        qs = qs.filter(place__country=f.place.country)
                 hours = f.hours24x7
                 if not hours.is_week_all:
                     qs = qs.filter(hours__h24x7=hours.as_bytes())

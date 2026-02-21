@@ -1,6 +1,7 @@
 <!-- qwikgame/person/templates/person/private.html -->
 {% extends "person/account.html" %}
 {% load static %}
+{% load i18n %}
 {% load webpush_notifications %}
 
 {% block css %}
@@ -33,16 +34,16 @@
         <div id="PRIVATE" class="post">
             <div class="detail_head">
                 <div class="identicon" data-hash="{{ user.hash }}"></div>
-                <h2>PRIVATE SETTINGS</h2> 
+                <h2>{% translate "PRIVATE SETTINGS" %}</h2> 
             </div>
             <div class="post detail_body">
                 <div class="post form">
                     <form action="{% url 'private' %}" method="post" name="private">
                         <div class="post">
                             <h3>
-                                EMAIL ADDRESS
+                                {% translate "EMAIL ADDRESS" %}
                                 <div class="btn tertiary">
-                                    Change (coming soon)
+                                    {% translate "Change (coming soon)" %}
                                 </div>
                             </h3>
                             <p>{{ email }}</p>
@@ -57,7 +58,7 @@
                             <div class="pillar">
                                 <label class="btn primary">
                                     <input hidden type="submit" form="unblock_form" name="unblock">
-                                    UnBlock
+                                    {% translate "UnBlock" %}
                                 </label>
                             </div>
                         </div>

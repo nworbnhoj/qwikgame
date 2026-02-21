@@ -1,5 +1,6 @@
 <!-- qwikgame/person/templates/person/upgrade.html -->
 {% extends "person/account.html" %}
+{% load i18n %}
 
 
 {% block upgrade_class %}selected{% endblock %}
@@ -17,9 +18,9 @@
         <div id="UPGRADE" class="post">
             <div class="detail_head">
                 <div class="identicon" data-hash="{{ user.hash }}"></div>
-                <h2>UPGRADE</h2> 
+                <h2>{% translate "UPGRADE" %}</h2> 
             </div>
-            <h3>coming soon</h3>
+            <h3>{% translate "coming soon" %}</h3>
         </div>
     </div>
 {% endblock %}

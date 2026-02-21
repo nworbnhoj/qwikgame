@@ -1,3 +1,8 @@
-{% load i18n %}{% autoescape off %}
-{% blocktranslate %}Bid on {{ game }} withdrawn{% endblocktranslate %}
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktranslate %}
+Bid on {{ game }} withdrawn
+{% endblocktranslate %}
+
 {% endautoescape %}

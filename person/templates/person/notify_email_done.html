@@ -1,13 +1,22 @@
 <!-- templates/person/notify_email_done.html -->
 {% extends "public.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block detail %}
 
-<p>Thank you for letting us know.</p>
+<p>
+	{% translate "Thank you for letting us know." %}
+</p>
 
-<p>Invitations from {{ site_name }} have been disabled.</p>
+<p>
+{% blocktranslate %}
+	Invitations from {{ site_name }} have been disabled.
+{% endblocktranslate %}
+</p>
 
-<p>Have a great day.</p>
+<p>
+	{% translate "Have a great day." %}
+</p>
 
 {% endblock detail %}

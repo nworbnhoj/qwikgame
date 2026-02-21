@@ -1,6 +1,7 @@
 <!-- qwikgame/person/templates/person/account.html -->
 {% extends "content.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
@@ -11,7 +12,9 @@
 {% endblock %}
 
 
-{% block title %}Account{% endblock %}
+{% block title %}
+    {% translate "Account" %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -27,7 +30,7 @@
 {% if big_screen %}
     <a class="btn special1" href="{% url 'upgrade' %}">
         <i class="fa-solid fa-trophy fa-xl"></i>
-        Upgrade
+        {% translate "Upgrade" %}
     </a>
 {% endif %}
 {% endblock %}
@@ -38,33 +41,33 @@
             <div id="alert_list_start" class="alert"></div>
             <a class="btn secondary public_class" href="{% url 'public' %}">
                 <input type="checkbox" name="selected" {{ public_checked }} hidden>
-                Public Profile
+                {% translate "Public Profile" %}
             </a>
             <a class="btn secondary private_class" href="{% url 'private' %}">
                 <input type="checkbox" name="selected" {{ private_checked }} hidden>
-                Private Settings
+                {% translate "Private Settings" %}
             </a>
             <a class="btn secondary pwa_class" href="{% url 'pwa' %}">
                 <input type="checkbox" name="selected" {{ pwa_checked }} hidden>
-                QWIKGAME App
+                {% translate "QWIKGAME App" %}
             </a>
             <a class="btn secondary privacy_class" href="{% url 'privacy' %}">
                 <input type="checkbox" name="selected" {{ privacy_checked }} hidden>
-                Privacy
+                {% translate "Privacy" %}
             </a>
             <a class="btn secondary terms_class" href="{% url 'terms' %}">
                 <input type="checkbox" name="selected" {{ terms_checked }} hidden>
-                Terms & Conditions
+                {% translate "Terms & Conditions" %}
             </a>
             <a class="btn secondary terms_class" href="{% url 'license' %}">
                 <input type="checkbox" name="selected" {{ license_checked }} hidden>
-                Licence
+                {% translate "Licence" %}
             </a>
             <form id="logout_form" action="{% url 'logout' %}" method="post">
     {% csrf_token %}
                 <label class="btn secondary">
                     <input hidden name="logout" type="submit">
-                    Logout
+                    {% translate "Logout" %}
                 </label>
             </form>
             <div id="alert_list_end" class="alert"></div>

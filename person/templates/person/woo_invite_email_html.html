@@ -1,6 +1,7 @@
 <!-- templates/appeal/invite_email_html.html -->
 {% extends "email.html" %}
-{% load static %}{% load i18n %}
+{% load static %}
+{% load i18n %}
 
 
 {% block detail %}
@@ -29,11 +30,11 @@
     <hr>
 
     <p style="margin: 0em; padding: 0.3em; text-align: center;">
-        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> email invitations from {{ name }}.
+        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'block' block=appeal.player.user.person.pk %}">block</a> {% translate "email invitations from" %} {{ name }}.
     </p>
 
     <p style="margin: 0em; padding: 0.3em; text-align: center;">
-        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}">block ALL</a> email invitations from {{ site_name }}.
+        <a href="{{ protocol }}://{{ domain }}{% url 'register_handle' uidb64=uid token=token %}?next={% url 'notify_email' notify=0 %}">block ALL</a> {% translate "email invitations from" %} {{ site_name }}.
     </p>
 
 {% endblock detail %}

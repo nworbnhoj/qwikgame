@@ -1,17 +1,26 @@
 <!-- templates/person/block_done.html -->
 {% extends "public.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block detail %}
 
-<p>Thank you for letting us know.</p>
+<p>
+    {% translate "Thank you for letting us know." %}
+</p>
 
-<p>Invitations from {{ blocked_player.qwikname }} have been blocked.</p>
+<p>
+{% blocktranslate %}
+    Invitations from {{ blocked_player.qwikname }} have been blocked.
+{% endblocktranslate %}
+</p>
 
-<p>Have a great day.</p>
+<p>
+    {% translate "Have a great day." %}
+</p>
 
 <hr>
 
-<p class="small">( blocked Player ID {{ blocked_player.pk }} )</p>
+<p class="small">( {% translate "blocked Player ID" %} {{ blocked_player.pk }} )</p>
 
 {% endblock detail %}

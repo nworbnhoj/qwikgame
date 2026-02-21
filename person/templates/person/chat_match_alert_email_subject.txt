@@ -1,3 +1,8 @@
-{% load i18n %}{% autoescape off %}
-{% blocktranslate %}Chat message for {{ game }} at {{ venue }}{% endblocktranslate %}
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktranslate %}
+Chat message for {{ game }} at {{ venue }}
+{% endblocktranslate %}
+
 {% endautoescape %}

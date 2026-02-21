@@ -1,5 +1,6 @@
 <!-- qwikgame/person/templates/person/public.html -->
 {% extends "person/account.html" %}
+{% load i18n %}
 
 
 {% block public_class %}selected{% endblock %}
@@ -17,7 +18,7 @@
         <div id="PUBLIC" class="post">
             <div class="detail_head">
                 <div class="identicon" data-hash="{{ user.hash }}"></div>
-                <h2>PUBLIC PROFILE</h2> 
+                <h2>{% translate "PUBLIC PROFILE" %}</h2> 
             </div>
             <div class="post detail_body">
                 <div class="post form">
@@ -31,7 +32,7 @@
                         <div class="pillar">
                             <label class="btn primary push_down">
                                 <input hidden type="submit">
-                                Save
+                                {% translate "Save" %}
                             </label>
                         </div>
                     </form>

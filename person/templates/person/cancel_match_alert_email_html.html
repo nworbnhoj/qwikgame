@@ -1,8 +1,11 @@
 <!-- templates/game/cancelled_match_alert_email_html.html -->
 {% extends "email_html.html" %}
-{% load static %}{% load i18n %}
+{% load static %}
+{% load i18n %}
 
-{% block title %}Qwik Alert{% endblock title %}
+{% block title %}
+    {% translate "Qwik Alert" %}
+{% endblock title %}
 
 {% block detail %}
 

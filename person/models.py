@@ -127,7 +127,7 @@ class Alert(models.Model):
         return False;
 
     def _push(self):
-        logger.info(f'Alert._push(): {self.pk}')
+        logger.info(f'Alert._push(): {self.person.hash}')
         try:
             alert_type = Alert.TYPE[self.type]
             head_template_name = f'person/{alert_type}_alert_notify_head.txt',
@@ -153,7 +153,7 @@ class Alert(models.Model):
         return True
 
     def _email(self):
-        logger.info(f'Alert.send_mail(): {self.pk}')
+        logger.info(f'Alert.send_mail(): {self.person.hash}')
         try:
             alert_type = Alert.TYPE[self.type]
             subject_template_name = f'person/{alert_type}_alert_email_subject.txt',

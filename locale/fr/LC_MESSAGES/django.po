@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 05:41+1100\n"
+"POT-Creation-Date: 2026-02-22 05:43+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,14 @@ msgstr ""
 
 #: templates/500.html:17
 msgid "We will get it fixed as soon as we figure our what went wrong."
+msgstr ""
+
+#: templates/authenticate_snippet.html:7 templates/authenticate_snippet.html:9
+msgid "Log IN"
+msgstr ""
+
+#: templates/authenticate_snippet.html:11
+msgid "Sign UP"
 msgstr ""
 
 #: templates/public.html:33

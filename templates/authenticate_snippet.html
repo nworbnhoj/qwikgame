@@ -1,11 +1,12 @@
 <!-- qwikgame/templates/authenticate_snippet.html -->
 {% load static %}
+{% load i18n %}
 
 <div class="grid_2_col">
 {% if user.is_authenticated %}
-    <a class="btn secondary" href="{% url 'appeal' %}">Log IN</a>
+    <a class="btn secondary" href="{% url 'appeal' %}">{% translate "Log IN" %}</a>
 {% else %}
-    <a class="btn secondary" href="{% url 'login' %}">Log IN</a>
+    <a class="btn secondary" href="{% url 'login' %}">{% translate "Log IN" %}</a>
 {% endif %}        
-    <a class="btn primary" href="{% url 'register' %}">Sign UP</a>
+    <a class="btn primary" href="{% url 'register' %}">{% translate "Sign UP" %}</a>
 </div>

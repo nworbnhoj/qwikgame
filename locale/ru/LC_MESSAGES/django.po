@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 06:00+1100\n"
+"POT-Creation-Date: 2026-02-22 06:02+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,6 +104,10 @@ msgstr ""
 
 #: templates/map.html:46
 msgid "Players"
+msgstr ""
+
+#: templates/offline.html:9
+msgid "Sorry, you appear to be offline right now."
 msgstr ""
 
 #: templates/qwik.html:41

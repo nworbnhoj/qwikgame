@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +36,11 @@
     <script defer src="{% static 'js/qwik-sw-load.js' %}"></script>
     <script defer src="{% static 'qwik.js' %}"></script>
 {% endblock %}
-    <title>{% block title %}QwikGame{% endblock %}</title>
+    <title>
+{% block title %}
+        {% translate "QwikGame" %}
+{% endblock %}
+    </title>
 </head>
 <body>
     <div id="alert_body_start" class="alert"></div>
@@ -48,22 +53,22 @@
         <div class="flex_space"></div>
         <a class="btn special2 {{ appeals_tab }}" href="{% url 'appeal' %}">
             <i class="fa-solid fa-house fa-2x"></i>
-            <span class="fat">Invitations</span>
+            <span class="fat">{% translate "Invitations" %}</span>
             <div {{ appeal_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ match_tab }}" href="{% url 'matches' %}">
             <i class="fa-solid fa-calendar-days fa-2x"></i>
-            <span class="fat">Matches</span>
+            <span class="fat">{% translate "Matches" %}</span>
             <div {{ match_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
             <i class="fa-solid fa-thumbs-up fa-2x"></i>
-            <span class="fat">Reviews</span>
+            <span class="fat">{% translate "Reviews" %}</span>
             <div {{ review_alert }} class="dot"></div>
         </a>
         <a class="btn special2 {{ friend_tab }}" href="{% url 'friend' %}">
             <i class="fa-solid fa-user-group fa-2x"></i>
-            <span class="fat">Friends</span>
+            <span class="fat">{% translate "Friends" %}</span>
             <div {{ friend_alert }} class="dot"></div>
         </a>
         <div class="flex_space"></div>
@@ -89,7 +94,7 @@
     <div id='feedback' class='post field'>
         <label class="btn tertiary reveal">
             <input name="reveal_feedback" type="checkbox">
-            Feedback
+                {% translate "Feedback" %}
         </label>
         <div class='post field'>
             <div id="feedback_form_start" class="alert"></div>
@@ -100,7 +105,7 @@
                     <div id="fedback_form_submit" class="alert"></div>
                     <label id="feedback_submit" class="btn primary push_down">
                         <input hidden type="submit">
-                        Submit
+                            {% translate "Submit" %}
                     </label>
                 </div>
             </form>
@@ -109,8 +114,12 @@
     </div>
 
 {% endblock feedback %}
-    <div id="license"><p style="text-align: center;">
-        This work by <a href="https://qwikgame.org">qwikgame.org</a> is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPL-3.0-only</a>.
+    <div id="license">
+        <p style="text-align: center;">
+{% blocktranslate with qwik_link="<a href="https://qwikgame.org">qwikgame.org</a>" gpl-3.0_link="<a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">GPL-3.0-only</a>" %}
+            This work by {{ qwik_link }} is licensed under {{ gpl-3.0_link }}.
+{% endblocktranslate %}
+        </p>
     </div>
     <div id="alert_body_end" class="alert"></div>
 </body>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-21 20:34+1100\n"
+"POT-Creation-Date: 2026-02-21 22:31+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: templates/qwik.html:40
+msgid "QwikGame"
+msgstr ""
+
+#: templates/qwik.html:55
+msgid "Invitations"
+msgstr ""
+
+#: templates/qwik.html:60
+msgid "Matches"
+msgstr ""
+
+#: templates/qwik.html:65
+msgid "Reviews"
+msgstr ""
+
+#: templates/qwik.html:70
+msgid "Friends"
+msgstr ""
+
+#: templates/qwik.html:96
+msgid "Feedback"
+msgstr ""
+
+#: templates/qwik.html:107
+msgid "Submit"
+msgstr ""
+
+#: templates/qwik.html:118
+#, python-format
+msgid ""
+"\n"
+"            This work by %(qwik_link)s is licensed under %(gpl-3.0_link)s.\n"
+msgstr ""
 
 #: templates/welcome.html:22
 msgid "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES."

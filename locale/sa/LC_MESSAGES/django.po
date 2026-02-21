@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 06:57+1100\n"
+"POT-Creation-Date: 2026-02-22 07:00+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,7 @@ msgstr ""
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
+#: appeal/templates/appeal/keen.html:49 appeal/templates/appeal/keen.html:86
 msgid "Invite"
 msgstr ""
 
@@ -89,6 +90,14 @@ msgstr ""
 
 #: appeal/templates/appeal/bid.html:76
 msgid "Cancel this Offer?"
+msgstr ""
+
+#: appeal/templates/appeal/keen.html:70
+msgid "Keen To Play? Send Invitation?"
+msgstr ""
+
+#: appeal/templates/appeal/keen.html:89 templates/welcome.html:195
+msgid "Invite Friends Only"
 msgstr ""
 
 #: templates/404.html:9
@@ -455,10 +464,6 @@ msgstr ""
 
 #: templates/welcome.html:191
 msgid "Post New Invitation"
-msgstr ""
-
-#: templates/welcome.html:195
-msgid "Invite Friends Only"
 msgstr ""
 
 #: templates/welcome.html:199

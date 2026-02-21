@@ -1,5 +1,6 @@
 <!-- qwikgame/player/templates/appeal/keen.html -->
 {% extends "appeal/appeals.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block refresh %}{% endblock refresh %}
@@ -44,7 +45,9 @@
 {% endblock %}
 
 
-{% block title %}Invite{% endblock %}
+{% block title %}
+    {% translate "Invite" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -63,7 +66,9 @@
                 <i class="fa-solid fa-paper-plane fa-2x"></i>
             </div>
             <div class="post head_txt">
-                <h2>Keen To Play? Send Invitation?</h2>
+                <h2>
+                    {% translate "Keen To Play? Send Invitation?" %}
+                </h2>
             </div>
         </div>
         <div class="post">
@@ -77,8 +82,12 @@
                         <label id="appeal_submit" class="btn primary push_down">
                             <input hidden type="submit">
                             <i class="fa-solid fa-paper-plane fa-xl"></i>
-                            <span class="appeal_all">Invite</span>
-                            <span hidden class="appeal_friends">Invite Friends Only</span>
+                            <span class="appeal_all">
+                                {% translate "Invite" %}
+                            </span>
+                            <span hidden class="appeal_friends">
+                                {% translate "Invite Friends Only" %}
+                            </span>
                         </label>
                     </div>
                 </form>

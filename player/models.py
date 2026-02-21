@@ -53,11 +53,11 @@ class Player(models.Model):
                     if f.place.is_venue:
                         qs = qs.filter(place__venue=f.place)
                     elif f.place.locality:
-                        qs = qs.filter(place__locality=f.place.locality)
+                        qs = qs.filter(venue__locality=f.place.locality)
                     elif f.place.admin1:
-                        qs = qs.filter(place__admin1=f.place.admin1)
+                        qs = qs.filter(venue__admin1=f.place.admin1)
                     elif f.place.country:
-                        qs = qs.filter(place__country=f.place.country)
+                        qs = qs.filter(venue__country=f.place.country)
                 hours = f.hours24x7
                 if not hours.is_week_all:
                     qs = qs.filter(hours__h24x7=hours.as_bytes())

@@ -1,6 +1,7 @@
 <!-- qwikgame/templates/license.html -->
 {% extends "qwik.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
@@ -11,7 +12,9 @@
 {% endblock css %}
 
 
-{% block title %}QWIKGAME License{% endblock %}
+{% block title %}
+    {% translate "QWIKGAME License" %}
+{% endblock %}
 
 {% block tab_bar %}{% endblock tab_bar %}
 
@@ -25,15 +28,17 @@
 
             <div class="container">
 
-                <h2>Open Source Software</h2>
+                <h2>{% translate "Open Source Software" %}</h2>
 
 
-                <p>Qwikgame is released as Open-Source software, and is grateful for the use of many other great Open-Source software projects.</p>
+                <p>
+                    {% translate "Qwikgame is released as Open-Source software, and is grateful for the use of many other great Open-Source software projects." %}
+                </p>
 
                 <table>
                     <tr>
-                        <th>Software</th>
-                        <th>Licence</th>
+                        <th>{% translate "Software" %}</th>
+                        <th>{% translate "Licence" %}</th>
                     </tr>
                     <tr>
                         <td>

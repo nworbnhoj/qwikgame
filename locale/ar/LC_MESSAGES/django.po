@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 05:53+1100\n"
+"POT-Creation-Date: 2026-02-22 05:56+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,28 @@ msgstr ""
 
 #: templates/input_week.html:13
 msgid "Any Time"
+msgstr ""
+
+#: templates/license.html:16
+msgid "QWIKGAME License"
+msgstr ""
+
+#: templates/license.html:31
+msgid "Open Source Software"
+msgstr ""
+
+#: templates/license.html:35
+msgid ""
+"Qwikgame is released as Open-Source software, and is grateful for the use of "
+"many other great Open-Source software projects."
+msgstr ""
+
+#: templates/license.html:40
+msgid "Software"
+msgstr ""
+
+#: templates/license.html:41
+msgid "Licence"
 msgstr ""
 
 #: templates/qwik.html:41

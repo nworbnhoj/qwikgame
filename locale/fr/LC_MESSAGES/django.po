@@ -18,35 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/qwik.html:40
+
+#: templates/public.html:33
+msgid "Welcome to Qwikgame"
+msgstr ""
+
+#: templates/qwik.html:41
 msgid "QwikGame"
 msgstr ""
 
-#: templates/qwik.html:55
+#: templates/qwik.html:56
 msgid "Invitations"
 msgstr ""
 
-#: templates/qwik.html:60
+#: templates/qwik.html:61
 msgid "Matches"
 msgstr ""
 
-#: templates/qwik.html:65
+#: templates/qwik.html:66
 msgid "Reviews"
 msgstr ""
 
-#: templates/qwik.html:70
+#: templates/qwik.html:71
 msgid "Friends"
 msgstr ""
 
-#: templates/qwik.html:96
+#: templates/qwik.html:97
 msgid "Feedback"
 msgstr ""
 
-#: templates/qwik.html:107
+#: templates/qwik.html:108
 msgid "Submit"
 msgstr ""
 
-#: templates/qwik.html:118
+#: templates/qwik.html:119
 #, python-format
 msgid ""
 "\n"

@@ -1,6 +1,7 @@
 <!-- qwikgame/templates/welcome.html -->
 {% extends "qwik.html" %}
 {% load static %}
+{% load i18n %}
 {% load webpush_notifications %}
 
 {% block refresh %}{% endblock refresh %}
@@ -17,7 +18,9 @@
     <script defer src="{% static 'js/qwik-pwa-install.js' %}"></script>
 {% endblock %}
 
-{% block title %}QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES.{% endblock %}
+{% block title %}
+    {% translate "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES." %}
+{% endblock %}
 
 {% block tab_bar %}{% endblock tab_bar %}
 
@@ -25,12 +28,22 @@
 
 {% include 'welcome_header_snippet.html' %}
 
+{% translate "Find partner" as find_partner %}
+
     <section id="hero_section" class="hero container flex">
         <div class="hero_text">
-            <h1>FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE.</h1>
-            <p>You play squash, tennis or paddel? Or may be chess, darts or pool? But you can't find partners? This is <span class="qwik">QWIK</span>GAME! Now finding partners and arranging games is fast and easy. With <span class="qwik">QWIK</span>GAME you have all match invitations in one place. Just pick one or post your own.</p>     
+            <h1>
+                {% translate "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE." %}
+            </h1>
+            <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                You play squash, tennis or paddel? Or may be chess, darts or pool? But you can't find partners? This is {{ QWIK }}GAME! Now finding partners and arranging games is fast and easy. With {{ QWIK }}GAME you have all match invitations in one place. Just pick one or post your own.
+{% endblocktranslate %}
+            </p>     
             <a href="{% url 'register' %}">
-                <button class="CTA_button_Orange">Organize A Match For Free!</button>
+                <button class="CTA_button_Orange">
+                    {% translate "Organize A Match For Free!" %}
+                </button>
             </a>
         </div>
         <div class="hero_image">
@@ -41,57 +54,71 @@
     <section id="card_section" class="gridcontainer">
         <div class="card">
             <img src="{% static 'img/welcome_bdm.png' %}"loading="lazy" alt="Badminton shuttle" class="image">
-            <h5>Badminton</h5>
+            <h5>{% translate "Badminton" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="  {% static 'img/welcome_tts.png' %}"loading="lazy" alt="Table tennis players" class="image">
-            <h5>Table Tennis</h5>
+            <h5>{% translate "Table Tennis" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="{% static 'img/welcome_drt.png' %}"loading="lazy" alt="Dart board" class="image">
-            <h5>Darts</h5>
+            <h5>{% translate "Darts" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="{% static 'img/welcome_squ.png' %}"loading="lazy" alt="Squash players" class="image">
-            <h5>Squash</h5>
+            <h5>{% translate "Squash" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="{% static 'img/welcome_chs.png' %}"loading="lazy" alt="Chess board" class="image">
-            <h5>Chess</h5>
+            <h5>{% translate "Chess" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="{% static 'img/welcome_tns.png' %}"loading="lazy" alt="Tennis players" class="image">
-            <h5>Tennis</h5>
+            <h5>{% translate "Tennis" %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>
         <div class="card">
             <img src="{% static 'img/welcome_more.png' %}" loading="lazy" alt="Game players" class="image">
-            <h5>And more...</h5>
+            <h5>{% translate "And more..." %}</h5>
             <a href="{% url 'register' %}">
-                <button class="card_button">Find partner</button>
+                <button class="card_button">
+                    {% translate find_partner %}
+                </button>
             </a>
         </div>        
     </section>
     
     <main class="keentoplay">
-        <h2>KEEN TO PLAY?</h2>
+        <h2>{% translate "KEEN TO PLAY?" %}</h2>
         <section id="keen1_section" class="keentoplay_section1">
             <div class="container">
                 <div class="flex">
@@ -99,10 +126,16 @@
                         <img src="{% static 'img/ss-feed-chat.webp' %}" alt="Screen-shots of Feed and Chat" loading="lazy">
                     </div>
                     <div class="keentoplay_text1">
-                        <h3>Try the Feed Invitations</h2>
-                        <p>Other Players are looking for partners too!  Meet them in <span class="qwik">QWIK</span>GAME. Scroll the <span class="qwik">QWIK</span>Feed and pick an invitation ... or post your own!</p>
+                        <h3>{% translate "Try the Feed Invitations" %}</h3>
+                        <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                            Other Players are looking for partners too!  Meet them in {{ QWIK }}GAME. Scroll the {{ QWIK }}Feed and pick an invitation ... or post your own!
+{% endblocktranslate %}
+                        </p>
                         <a href="{% url 'register' %}">
-                            <button class="CTA_button_Orange">Find Partner</button>
+                            <button class="CTA_button_Orange">
+                                {% translate find_partner %}
+                            </button>
                         </a>
                     </div>
 
@@ -114,10 +147,16 @@
             <div class="container">
                 <div class="flex">
                     <div class="keentoplay_text1">
-                        <h3>Post new Match Invitation</h2>
-                        <p>You don't find a suitable invitation in the <span class="qwik">QWIK</span>Feed? Send invitation on your terms. Pick the game, the timeframe and the place. Confirm a match with a Rival of your preference. You choose! </p>
+                        <h3>{% translate "Post new Match Invitation" %}</h3>
+                        <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                            You don't find a suitable invitation in the {{ QWIK }}Feed? Send invitation on your terms. Pick the game, the timeframe and the place. Confirm a match with a Rival of your preference. You choose! 
+{% endblocktranslate %}
+                        </p>
                         <a href="{% url 'register' %}">
-                            <button class="CTA_button_Orange">Organize A Match</button>
+                            <button class="CTA_button_Orange">
+                                {% translate "Organize A Match" %}
+                            </button>
                         </a>
                     </div>
                     <div class="keentoplay_image2">
@@ -131,9 +170,13 @@
     
     <section id="now1_section" class="StrongSection">
     <div class="container">
-        <h2 class="h2_StrongSection"> SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!</h2>
+        <h2 class="h2_StrongSection">
+            {% translate "SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!" %}
+        </h2>
         <a href="{% url 'register' %}">
-            <button class="CTA_button_White">Organize A Game Now</button>
+            <button class="CTA_button_White">
+                {% translate "Organize A Game Now" %}
+            </button>
         </a>
     </div>
     </section>
@@ -141,35 +184,39 @@
     <section id="feature_section" class="features">
         <div class="feature_item">
             <i class="fa-solid fa-rss"></i>
-            <h4>Accept Feed Invitation</h4>
+            <h4>{% translate "Accept Feed Invitation" %}</h4>
         </div>
         <div class="feature_item">
             <i class="fa-solid fa-paper-plane"></i>
-            <h4>Post New Invitation</h4>
+            <h4>{% translate "Post New Invitation" %}</h4>
         </div>
         <div class="feature_item">
             <i class="fa-solid fa-user-group"></i>
-            <h4>Invite Friends Only</h4>
+            <h4>{% translate "Invite Friends Only" %}</h4>
         </div>
         <div class="feature_item">
             <i class="fa-solid fa-comments"></i>
-            <h4>Chat With Your Rival</h4>
+            <h4>{% translate "Chat With Your Rival" %}</h4>
         </div>
         <div class="feature_item">
             <i class="fa-solid fa-thumbs-up"></i>
-            <h4>Leave A Review</h4>
+            <h4>{% translate "Leave A Review" %}</h4>
         </div>
         <div class="feature_item">
             <i class="fa-brands fa-wpexplorer"></i>
-            <h4>Try New Games</h4>
+            <h4>{% translate "Try New Games" %}</h4>
         </div>
     </section> 
 
     <section id="partner_section" class="StrongSection">
         <div class="container">
-            <h2 class="h2_StrongSection"> FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS EASY.</h2>
+            <h2 class="h2_StrongSection">
+                {% translate "FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS EASY." %}
+            </h2>
             <a href="{% url 'register' %}">
-                <button class="CTA_button_White">Find Your Partner</button>
+                <button class="CTA_button_White">
+                {% translate "Find Your Partner" %}
+            </button>
             </a>
         </div>
     </section>
@@ -182,103 +229,173 @@
 
     <section id="now2_section" class="StrongSection">
         <div class="container">
-            <h2 class="h2_StrongSection"> ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE</h2>
+            <h2 class="h2_StrongSection">
+                {% translate "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE" %}
+            </h2>
             <a href="{% url 'register' %}">
-                <button class="CTA_button_White">Organize A Game Now</button>
+                <button class="CTA_button_White">
+                    {% translate "Organize A Game Now" %}
+                </button>
             </a>
         </div>
     </section>
 
     <article id="faq_article" class="FAQs">
     
-        <h2>FREQUENTLY ASKED QUESTIONS</h2>
+        <h2>{% translate "FREQUENTLY ASKED QUESTIONS" %}</h2>
         <div class="questions">
             <label for="faq1" class="toggle-trigger faq">
-                What is <span class="qwik">QWIK</span>GAME?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                What is {{ QWIK }}GAME?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq1" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME is an app which facilitates finding partners and arranging 2-player games.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME is an app which facilitates finding partners and arranging 2-player games.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq2" class="toggle-trigger faq">
-                For which games can I find partners on <span class="qwik">QWIK</span>GAME?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                For which games can I find partners on {{ QWIK }}GAME?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq2" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME focuses on 2-player games only with ambitious plans for multi-player games in the future. Currently we have the most popular 2-player games like tennis, squash, table tennis, badminton, racquetball, but also chess, darts, backgammon, billiards and more.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME focuses on 2-player games only with ambitious plans for multi-player games in the future. Currently we have the most popular 2-player games like tennis, squash, table tennis, badminton, racquetball, but also chess, darts, backgammon, billiards and more.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq3" class="toggle-trigger faq">
-                Is <span class="qwik">QWIK</span>GAME paid?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                Is {{ QWIK }}GAME paid?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq3" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME is free of charge.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME is free of charge.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq4" class="toggle-trigger faq">
-                Is <span class="qwik">QWIK</span>GAME available in my country?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                Is {{ QWIK }}GAME available in my country?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq4" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME works anywhere in the world.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME works anywhere in the world.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq5" class="toggle-trigger faq">
-                How do I find partner and schedule a match with <span class="qwik">QWIK</span>GAME?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                How do I find partner and schedule a match with {{ QWIK }}GAME?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq5" class="toggle-input">
             <div class="toggle-content">
-                <p>To find a partner and organize a match start by sending an invitation for a match. Select the game, venue and a timeframe. It is recommended to call the venue and check if there are available playgrounds for your preferred timeframe. Your Match Invitation will be visible in the QWIKFeed to other Players. Multiple Players may respond to your Invitation. You get to choose the best offer and confirm the match. You can also reply to an existing invitation from the <span class="qwik">QWIK</span>Feed by placing an offer for a particular hour from the given timeframe.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    To find a partner and organize a match start by sending an invitation for a match. Select the game, venue and a timeframe. It is recommended to call the venue and check if there are available playgrounds for your preferred timeframe. Your Match Invitation will be visible in the QWIKFeed to other Players. Multiple Players may respond to your Invitation. You get to choose the best offer and confirm the match. You can also reply to an existing invitation from the {{ QWIK }}Feed by placing an offer for a particular hour from the given timeframe.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq6" class="toggle-trigger faq">
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
                 How many invitations can I send?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq6" class="toggle-input">
             <div class="toggle-content">
-                <p>You can post as many invitations as you wish every day and for any game, venue or timeframe.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    You can post as many invitations as you wish every day and for any game, venue or timeframe.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq7" class="toggle-trigger faq">
-                What is <span class="qwik">QWIK</span>Feed?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                What is {{ QWIK }}Feed?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq7" class="toggle-input">
             <div class="toggle-content">
-                <p>You can find all current invitations in our <span class="qwik">QWIK</span>Feed. It is contantly updated with new invitations sent by Players.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    You can find all current invitations in our {{ QWIK }}Feed. It is contantly updated with new invitations sent by Players.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq8" class="toggle-trigger faq">
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
                 Who books the court/playground?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq8" class="toggle-input">
             <div class="toggle-content">
-                <p>The Player who send the initial match invitation is responsible to call and book a court/playground once the match is confirmed. The Player is also recommended to call and check the venue availability before sending the invitation.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    The Player who send the initial match invitation is responsible to call and book a court/playground once the match is confirmed. The Player is also recommended to call and check the venue availability before sending the invitation.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq9" class="toggle-trigger faq">
-                Why can't I find <span class="qwik">QWIK</span>GAME in the PlayStore and AppStore?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                Why can't I find {{ QWIK }}GAME in the PlayStore and AppStore?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq9" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME is a Progressive Web App. It's the new generation of apps. No need to download nor install anything. Just save <span class="qwik">QWIK</span>GAME on your Home screen. <span class="qwik">QWIK</span>GAME PWA works on all operating systems and an Internet Browser is the only requirement.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME is a Progressive Web App. It's the new generation of apps. No need to download nor install anything. Just save {{ QWIK }}GAME on your Home screen. {{ QWIK }}GAME PWA works on all operating systems and an Internet Browser is the only requirement.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq10" class="toggle-trigger faq">
-                Who owns <span class="qwik">QWIK</span>GAME?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                Who owns {{ QWIK }}GAME?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq10" class="toggle-input">
             <div class="toggle-content">
-                <p><span class="qwik">QWIK</span>GAME is managed by QWIKGAME Inc. registered in Victoria, Australia as a Not For Profit Association. All discussions and decisions regarding <span class="qwik">QWIK</span>GAME are made online in the <a href="https://forum.qwikgame.org/" target="_blank">QWIK Forum</a>. Your assistance will be most welcome.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                    {{ QWIK }}GAME is managed by QWIKGAME Inc. registered in Victoria, Australia as a Not For Profit Association. All discussions and decisions regarding {{ QWIK }}GAME are made online in the <a href="https://forum.qwikgame.org/" target="_blank">QWIK Forum</a>. Your assistance will be most welcome.
+{% endblocktranslate %}
+                </p>
             </div>
 
             <label for="faq11" class="toggle-trigger faq">
-                Is <span class="qwik">QWIK</span>GAME open-source?
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" %}
+                Is {{ QWIK }}GAME open-source?
+{% endblocktranslate %}
             </label>
             <input type="checkbox" id="faq11" class="toggle-input">
             <div class="toggle-content">
-                <p>Yes! The <span class="qwik">QWIK</span>GAME software is entirely open-source. The latest code can be found on <a href="https://github.com/nworbnhoj/qwikgame" target="_blank">Github</a>. Your assistance will be most welcome.</p>
+                <p>
+{% blocktranslate with QWIK="<span class='qwik'>QWIK</span>" github_link="<a href="https://github.com/nworbnhoj/qwikgame" target="_blank">Github</a>" %}
+                    Yes! The {{ QWIK }}GAME software is entirely open-source. The latest code can be found on {{ github_link }}. Your assistance will be most welcome.
+{% endblocktranslate %}
+                </p>
             </div>
         </div>
 
@@ -293,11 +410,17 @@
                 <div class="column2">
                     <a href="https://forum.qwikgame.org/" class="footer_link" target="_blank">QWIKForum</a>
                     <br>
-                    <a href="/about/license" class="footer_link">License</a>
+                    <a href="/about/license" class="footer_link">
+                        {% translate "License" %}
+                    </a>
                     <br>
-                    <a href="/about/privacy" class="footer_link">Privacy</a>
+                    <a href="/about/privacy" class="footer_link">
+                        {% translate "Privacy" %}
+                    </a>
                     <br>
-                    <a href="/about/terms" class="footer_link">Terms & Conditions</a>
+                    <a href="/about/terms" class="footer_link">
+                        {% translate "Terms & Conditions" %}
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,346 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-21 21:56+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: templates/welcome.html:22
+msgid "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES."
+msgstr ""
+
+#: templates/welcome.html:31
+msgid "Find partner"
+msgstr ""
+
+#: templates/welcome.html:36
+msgid "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE."
+msgstr ""
+
+#: templates/welcome.html:39
+#, python-format
+msgid ""
+"\n"
+"                You play squash, tennis or paddel? Or may be chess, darts or "
+"pool? But you can't find partners? This is %(QWIK)sGAME! Now finding "
+"partners and arranging games is fast and easy. With %(QWIK)sGAME you have "
+"all match invitations in one place. Just pick one or post your own.\n"
+msgstr ""
+
+#: templates/welcome.html:45
+msgid "Organize A Match For Free!"
+msgstr ""
+
+#: templates/welcome.html:57
+msgid "Badminton"
+msgstr ""
+
+#: templates/welcome.html:66
+msgid "Table Tennis"
+msgstr ""
+
+#: templates/welcome.html:75
+msgid "Darts"
+msgstr ""
+
+#: templates/welcome.html:84
+msgid "Squash"
+msgstr ""
+
+#: templates/welcome.html:93
+msgid "Chess"
+msgstr ""
+
+#: templates/welcome.html:102
+msgid "Tennis"
+msgstr ""
+
+#: templates/welcome.html:111
+msgid "And more..."
+msgstr ""
+
+#: templates/welcome.html:121
+msgid "KEEN TO PLAY?"
+msgstr ""
+
+#: templates/welcome.html:129
+msgid "Try the Feed Invitations"
+msgstr ""
+
+#: templates/welcome.html:131
+#, python-format
+msgid ""
+"\n"
+"                            Other Players are looking for partners too!  "
+"Meet them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an "
+"invitation ... or post your own!\n"
+msgstr ""
+
+#: templates/welcome.html:150
+msgid "Post new Match Invitation"
+msgstr ""
+
+#: templates/welcome.html:152
+#, python-format
+msgid ""
+"\n"
+"                            You don't find a suitable invitation in the "
+"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"and the place. Confirm a match with a Rival of your preference. You "
+"choose! \n"
+msgstr ""
+
+#: templates/welcome.html:158
+msgid "Organize A Match"
+msgstr ""
+
+#: templates/welcome.html:174
+msgid "SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!"
+msgstr ""
+
+#: templates/welcome.html:178 templates/welcome.html:237
+msgid "Organize A Game Now"
+msgstr ""
+
+#: templates/welcome.html:187
+msgid "Accept Feed Invitation"
+msgstr ""
+
+#: templates/welcome.html:191
+msgid "Post New Invitation"
+msgstr ""
+
+#: templates/welcome.html:195
+msgid "Invite Friends Only"
+msgstr ""
+
+#: templates/welcome.html:199
+msgid "Chat With Your Rival"
+msgstr ""
+
+#: templates/welcome.html:203
+msgid "Leave A Review"
+msgstr ""
+
+#: templates/welcome.html:207
+msgid "Try New Games"
+msgstr ""
+
+#: templates/welcome.html:214
+msgid ""
+"FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
+"EASY."
+msgstr ""
+
+#: templates/welcome.html:218
+msgid "Find Your Partner"
+msgstr ""
+
+#: templates/welcome.html:233
+msgid "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE"
+msgstr ""
+
+#: templates/welcome.html:245
+msgid "FREQUENTLY ASKED QUESTIONS"
+msgstr ""
+
+#: templates/welcome.html:248
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sGAME?\n"
+msgstr ""
+
+#: templates/welcome.html:255
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is an app which facilitates finding "
+"partners and arranging 2-player games.\n"
+msgstr ""
+
+#: templates/welcome.html:262
+#, python-format
+msgid ""
+"\n"
+"                For which games can I find partners on %(QWIK)sGAME?\n"
+msgstr ""
+
+#: templates/welcome.html:269
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME focuses on 2-player games only with "
+"ambitious plans for multi-player games in the future. Currently we have the "
+"most popular 2-player games like tennis, squash, table tennis, badminton, "
+"racquetball, but also chess, darts, backgammon, billiards and more.\n"
+msgstr ""
+
+#: templates/welcome.html:276
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME paid?\n"
+msgstr ""
+
+#: templates/welcome.html:283
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is free of charge.\n"
+msgstr ""
+
+#: templates/welcome.html:290
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME available in my country?\n"
+msgstr ""
+
+#: templates/welcome.html:297
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME works anywhere in the world.\n"
+msgstr ""
+
+#: templates/welcome.html:304
+#, python-format
+msgid ""
+"\n"
+"                How do I find partner and schedule a match with "
+"%(QWIK)sGAME?\n"
+msgstr ""
+
+#: templates/welcome.html:311
+#, python-format
+msgid ""
+"\n"
+"                    To find a partner and organize a match start by sending "
+"an invitation for a match. Select the game, venue and a timeframe. It is "
+"recommended to call the venue and check if there are available playgrounds "
+"for your preferred timeframe. Your Match Invitation will be visible in the "
+"QWIKFeed to other Players. Multiple Players may respond to your Invitation. "
+"You get to choose the best offer and confirm the match. You can also reply "
+"to an existing invitation from the %(QWIK)sFeed by placing an offer for a "
+"particular hour from the given timeframe.\n"
+msgstr ""
+
+#: templates/welcome.html:318
+msgid ""
+"\n"
+"                How many invitations can I send?\n"
+msgstr ""
+
+#: templates/welcome.html:325
+msgid ""
+"\n"
+"                    You can post as many invitations as you wish every day "
+"and for any game, venue or timeframe.\n"
+msgstr ""
+
+#: templates/welcome.html:332
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sFeed?\n"
+msgstr ""
+
+#: templates/welcome.html:339
+#, python-format
+msgid ""
+"\n"
+"                    You can find all current invitations in our "
+"%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
+msgstr ""
+
+#: templates/welcome.html:346
+msgid ""
+"\n"
+"                Who books the court/playground?\n"
+msgstr ""
+
+#: templates/welcome.html:353
+msgid ""
+"\n"
+"                    The Player who send the initial match invitation is "
+"responsible to call and book a court/playground once the match is confirmed. "
+"The Player is also recommended to call and check the venue availability "
+"before sending the invitation.\n"
+msgstr ""
+
+#: templates/welcome.html:360
+#, python-format
+msgid ""
+"\n"
+"                Why can't I find %(QWIK)sGAME in the PlayStore and "
+"AppStore?\n"
+msgstr ""
+
+#: templates/welcome.html:367
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is a Progressive Web App. It's the new "
+"generation of apps. No need to download nor install anything. Just save "
+"%(QWIK)sGAME on your Home screen. %(QWIK)sGAME PWA works on all operating "
+"systems and an Internet Browser is the only requirement.\n"
+msgstr ""
+
+#: templates/welcome.html:374
+#, python-format
+msgid ""
+"\n"
+"                Who owns %(QWIK)sGAME?\n"
+msgstr ""
+
+#: templates/welcome.html:381
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
+"Victoria, Australia as a Not For Profit Association. All discussions and "
+"decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
+"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
+"be most welcome.\n"
+msgstr ""
+
+#: templates/welcome.html:388
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME open-source?\n"
+msgstr ""
+
+#: templates/welcome.html:395
+#, python-format
+msgid ""
+"\n"
+"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
+"The latest code can be found on %(github_link)s. Your assistance will be "
+"most welcome.\n"
+msgstr ""
+
+#: templates/welcome.html:414
+msgid "License"
+msgstr ""
+
+#: templates/welcome.html:418
+msgid "Privacy"
+msgstr ""
+
+#: templates/welcome.html:422
+msgid "Terms & Conditions"
+msgstr ""

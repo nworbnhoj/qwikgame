@@ -1,9 +1,10 @@
 <!-- qwikgame/templates/upgrade.html -->
+{% load i18n %}
 <div class='post upgrade'>
 {% include 'field.html' %}
     <div class="rival-skill-learn grid_3_col">
     	<div></div>
-        <a href="{% url 'upgrade' %}">Learn more</a>
-        <a class='btn secondary' href="{% url 'upgrade' %}">Unlock</a>
+        <a href="{% url 'upgrade' %}">{% translate "Learn more" %}</a>
+        <a class='btn secondary' href="{% url 'upgrade' %}">{% translate "Unlock" %}</a>
     </div>
 </div>

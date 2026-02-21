@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 06:28+1100\n"
+"POT-Creation-Date: 2026-02-22 06:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,6 +36,58 @@ msgstr ""
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:7
+msgid "Feed"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:24
+#: appeal/templates/appeal/appeals.html:156
+msgid "Invite"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:35
+#, python-format
+msgid ""
+" \n"
+"            Feed (%(appeals_length)s)\n"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:41
+msgid "Filter"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:46
+msgid "Participating"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:85
+msgid "Get involved by accepting an Invitation, or sending a new one."
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:91
+msgid "All"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:95
+msgid "filtered"
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:132
+msgid "Unfortunately no Invitations match your Filters."
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:135
+msgid "Try deactivating a Filter or send out your own Invitation."
+msgstr ""
+
+#: appeal/templates/appeal/appeals.html:150
+#, python-format
+msgid ""
+"\n"
+"                Open an Invitation %(br)s or send a new one!\n"
+"    "
 msgstr ""
 
 #: templates/404.html:9

@@ -1,8 +1,11 @@
 <!-- qwikgame/player/templates/appeal/appeals.html -->
 {% extends "content.html" %}
+{% load i18n %}
 
 
-{% block title %}Feed{% endblock %}
+{% block title %}
+    {% translate "Feed" %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -18,7 +21,7 @@
 {% if big_screen %}
     <a class="btn special1" href="{% url 'keen' %}">
         <i class="fa-solid fa-paper-plane fa-xl"></i>
-        Invite
+        {% translate "Invite" %}
     </a>
 {% endif %}
 {% endblock %}
@@ -28,15 +31,19 @@
         <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
             <div id="alert_list_head" class="alert"></div>
-            <h2>Feed ({{ appeals_length }})</h2>
+            <h2>
+{% blocktranslate %} 
+            Feed ({{ appeals_length }})
+{% endblocktranslate %}
+            </h2>
             <a class="btn secondary" href="{% url 'filters' %}">
                 <i class="fa-solid fa-filter fa-1x"></i>
-                Filter
+                {% translate "Filter" %}
             </a>
         </div>
         <div id="alert_list_group1" class="alert"></div>
         <h3 class="show_group">
-            Participating
+            {% translate "Participating" %}
             <span>▲</span>
         </h3>
         <div class="post group">
@@ -74,15 +81,19 @@
                 </div>
             </a>
 {% empty %}
-            <p>Get involved by accepting an Invitation, or sending a new one.</p>
+            <p>
+                {% translate "Get involved by accepting an Invitation, or sending a new one." %}
+            </p>
 {% endfor %}
         </div>
         <div id="alert_list_group2" class="alert"></div>
         <h3 class="show_group">
-            All
+            {% translate "All" %}
             <span>▲</span>
 {% if filtered %}
-            <a class="push_right" href="{% url 'filters' %}">filtered</a>
+            <a class="push_right" href="{% url 'filters' %}">
+                {% translate "filtered" %}
+            </a>
 {% endif %}
         </h3>
         <div class="post group">
@@ -117,8 +128,12 @@
             </a>
 {% empty %}
         <div class="pillar">
-            <p>Unfortunately no Invitations match your Filters.</p>
-            <p>Try deactivating a Filter or send out your own Invitation.</p>
+            <p>
+                {% translate "Unfortunately no Invitations match your Filters." %}
+            </p>
+            <p>
+                {% translate "Try deactivating a Filter or send out your own Invitation." %}
+            </p>
         </div>
 {% endfor %}
         </div>
@@ -132,11 +147,13 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
-                Open an Invitation<br>or send a new one!
+    {% blocktranslate with br="<br>" %}
+                Open an Invitation {{ br }} or send a new one!
+    {% endblocktranslate %}
             </div>
             <a class="btn special1 push_down" href="{% url 'keen' %}">
                 <i class="fa-solid fa-paper-plane fa-xl"></i>
-                Invite
+                {% translate "Invite" %}
             </a>
         </div>
         <div id="alert_detail_end" class="alert"></div>

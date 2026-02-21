@@ -1,7 +1,9 @@
 <!-- qwikgame/templates/qwikgame/map.html -->
-
+{% load i18n %}
 <div id='map-elements' style='display:none;'>    
-  <div id='map' class='center wide'>loading ...</div>      
+  <div id='map' class='center wide'>
+      {% translate "loading ..." %}
+  </div>      
   <input id="map-search" class="controls" type="text" form="not-register-form" placeholder="Search by Location or by Game" />
   <template id="infowindow_mark_region">
     <div>
@@ -9,7 +11,9 @@
         <p class="line" id="map_mark_info_name"></p>
       </div>
       <div class="map_mark_info_body">
-        <p class="line"><span id='map_mark_info_size'></span> Venues</p>
+        <p class="line"><span id='map_mark_info_size'></span>
+            {% translate "Venues" %}
+          </p>
       </div>
     </div>
   </template>
@@ -20,7 +24,9 @@
       </div>
       <div class="map_mark_info_body">
         <p class="line" id="map_mark_info_status"></p>
-        <p class="line"><a id='map_mark_info_search' href='' target='_blank'>search</a></p>
+        <p class="line">
+          <a id='map_mark_info_search' href='' target='_blank'>{% translate "search" %} </a>
+        </p>
         <!-- <p><a id='map_mark_info_website' href='' target='_blank'>website</a></p> -->
         <!-- <p><a id='map_mark_info_create' onclick=''>create new venue</a></p> -->
       </div>
@@ -36,7 +42,9 @@
         <!-- <button onclick=" navigator.clipboard.writeText('{{ venue.address }}');">
           <i class="fa-regular fa-copy fa-lg"></i>
         </button> -->
-        <p class="line"><span id='map_mark_info_size'></span> Players</p>
+        <p class="line">
+          <span id='map_mark_info_size'></span>{% translate "Players" %}
+        </p>
         <p class="line" id="map_mark_info_open"></p>
       </div>
     </div>

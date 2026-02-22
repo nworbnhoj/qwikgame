@@ -1,8 +1,11 @@
 <!-- qwikgame/venue/templates/venue/venue.html -->
 {% extends "venue/venues.html" %}
+{% load i18n %}
 
 
-{% block title %}Venues{% endblock %}
+{% block title %}
+    {% translate "Venues" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -34,12 +37,12 @@
                 <i class="fa-solid fa-chevron-right fa-2x"></i>
             </a>
 {% else %}
-            <h2>Add Venue</h2>
+            <h2>{% translate "Add Venue" %}</h2>
 {% endif %}
         </div>
         <div class="pole">
             <h2>{{ venue.name }}</h2>
-                <h2>ADDRESS</h2>
+                <h2>{% translate "ADDRESS" %}</h2>
                 <p>
                     <a href='https://www.google.com/maps/search/?api=1&query=Google&query_place_id={{ venue.placeid }}'  target='_blank' rel='noopener'>
                         <i class="fa-solid fa-location-dot fa-lg"></i>
@@ -49,21 +52,21 @@
                         <i class="fa-regular fa-copy fa-lg"></i>
                     </button>
                 </p>
-                <h2>WEBSITE</h2>
+                <h2>{% translate "WEBSITE" %}</h2>
                 <p><a href='{{ venue.url }}' target='_blank' rel='noopener'>website</a>
-                <h2>PHONE</h2>
+                <h2>{% translate "PHONE" %}</h2>
                 <p>{{ venue.phone }}</p>
-                <h2>OPEN HOURS</h2>
+                <h2>{% translate "OPEN HOURS" %}</h2>
                 <p>{{ venue.open_week }}</p>
-                <h2>TIMEZONE</h2>
+                <h2>{% translate "TIMEZONE" %}</h2>
                 <p>{{ venue.tz }}</p>
-                <h2>NOTE</h2>
+                <h2>{% translate "NOTE" %}</h2>
                 <p>{{ venue.note }}</p>
-                <h2>MANAGERS</h2>
+                <h2>{% translate "MANAGERS" %}</h2>
 {% for manager in venue.managers.all %}
                 <p>{{ manager }}</p>
 {% endfor %}
-                <h2>GAMES</h2>
+                <h2>{% translate "GAMES" %}</h2>
 {% for game in venue.games.all %}
                 <p>{{ game }}</p>
 {% endfor %}

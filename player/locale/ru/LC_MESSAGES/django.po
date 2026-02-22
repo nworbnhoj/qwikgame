@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-22 12:18+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: player/templates/player/account_public_snippet.html:5
+msgid "YOUR QWIKGAME REPUTATION"
+msgstr ""
+
+#: player/templates/player/account_public_snippet.html:10
+msgid "Based on feedback given by your rivals."
+msgstr ""
+
+#: player/templates/player/filter.html:46
+#: player/templates/player/filters.html:8
+msgid "Filter"
+msgstr ""
+
+#: player/templates/player/filter.html:65
+msgid "New Invitation Filter"
+msgstr ""
+
+#: player/templates/player/filter.html:78
+msgid "Add Filter"
+msgstr ""
+
+#: player/templates/player/filters.html:27
+msgid "Invitation Filters"
+msgstr ""
+
+#: player/templates/player/filters.html:31
+#: player/templates/player/friend_add.html:34
+#: player/templates/player/friends.html:25
+#: player/templates/player/strength.html:102
+msgid "Add"
+msgstr ""
+
+#: player/templates/player/filters.html:47
+msgid "Delete these Filters?"
+msgstr ""
+
+#: player/templates/player/filters.html:49
+msgid "Remove"
+msgstr ""
+
+#: player/templates/player/filters.html:53
+msgid "Apply"
+msgstr ""
+
+#: player/templates/player/friend.html:7
+#: player/templates/player/friend_add.html:7
+#: player/templates/player/friends.html:8
+#: player/templates/player/friends.html:35
+#: player/templates/player/strength.html:7
+msgid "Friends"
+msgstr ""
+
+#: player/templates/player/friend.html:36
+msgid "Delete this Friend?"
+msgstr ""
+
+#: player/templates/player/friend.html:38
+#: player/templates/player/friend.html:69
+#: player/templates/player/strength.html:43
+msgid "delete"
+msgstr ""
+
+#: player/templates/player/friend.html:51
+#: player/templates/player/friend_add.html:24
+#: player/templates/player/friends.html:93
+msgid "Add Friend"
+msgstr ""
+
+#: player/templates/player/friend.html:79
+#: player/templates/player/strength.html:75
+msgid "Submit"
+msgstr ""
+
+#: player/templates/player/friends.html:39
+msgid "Group by"
+msgstr ""
+
+#: player/templates/player/friends.html:46
+msgid "game"
+msgstr ""
+
+#: player/templates/player/friends.html:73
+msgid "No friends :-("
+msgstr ""
+
+#: player/templates/player/friends.html:87
+#, python-format
+msgid ""
+"\n"
+"                Edit a Friend%(br)sor add a new one!\n"
+"    "
+msgstr ""
+
+#: player/templates/player/rival_stats_snippet.html:4
+msgid "MATCHES"
+msgstr ""
+
+#: player/templates/player/rival_stats_snippet.html:10
+msgid "GAMES"
+msgstr ""
+
+#: player/templates/player/rival_stats_snippet.html:16
+msgid "VENUES"
+msgstr ""
+
+#: player/templates/player/strength.html:61
+msgid "Important!"
+msgstr ""
+
+#: player/templates/player/strength.html:63
+msgid ""
+"Please take a little time to let qwikgame know how strong your Friend is. "
+"This will help qwikgame make better Matches for you, and your friend, and "
+"other qwikgame Players who know either of you."
+msgstr ""
+
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr ""
+
+#: player/templates/player/strength.html:85
+msgid "STRENGTH"
+msgstr ""
+
+#: player/templates/player/strength.html:87
+msgid "Much Weaker"
+msgstr ""
+
+#: player/templates/player/strength.html:88
+msgid "Weaker"
+msgstr ""
+
+#: player/templates/player/strength.html:89
+msgid "Well Matched"
+msgstr ""
+
+#: player/templates/player/strength.html:90
+msgid "Stronger"
+msgstr ""
+
+#: player/templates/player/strength.html:91
+msgid "Much Stronger"
+msgstr ""
+
+#: player/templates/player/strength.html:96
+msgid "Cancel"
+msgstr ""
+
+#: player/templates/player/strength.html:99
+msgid "Learn more"
+msgstr ""

@@ -1,9 +1,12 @@
 <!-- qwikgame/player/templates/player/friends.html -->
 {% extends "content.html" %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
-{% block title %}Friends{% endblock %}
+{% block title %}
+    {% translate "Friends" %}
+{% endblock %}
 
 
 {% block cta_mobile %}
@@ -19,7 +22,7 @@
 {% if big_screen %}
     <a class="btn special1" href="{% url 'friend_add' %}">
         <i class="fa-solid fa-plus fa-xl"></i>
-        Add
+        {% translate "Add" %}
     </a>
 {% endif %}
 {% endblock %}
@@ -29,16 +32,18 @@
         <div id="alert_list_start" class="alert"></div>
         <div class="list_head">
             <div id="alert_list_head" class="alert"></div>
-            <h2>Friends</h2> 
+            <h2>{% translate "Friends" %}</h2> 
             <div class="drop_down todo">
                 <div class="btn drop" data-down="false">
-                    <div>Group by</div>
+                    <div>
+                        {% translate "Group by" %}
+                    </div>
                     <div class="fat" aria-hidden="true">v</div>
                 </div>
                 <div class="down left hidden">
                     <label class="toggle option">
                         <input type="radio" name="groupby">
-                        game
+                        {% translate "game" %}
                     </label>
                 </div>
             </div>
@@ -64,7 +69,9 @@
                 <div class="badges"></div>
             </a>
 {% empty %}
-           <p>No friends :-(</p>
+           <p>
+               {% translate "No friends :-(" %}
+           </p>
 {% endfor %}
         </div>
         <div id="alert_list_end" class="alert"></div>
@@ -77,11 +84,13 @@
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
-                Edit a Friend<br>or add a new one!
+    {% blocktranslate with br = "<br>" %}
+                Edit a Friend{{ br }}or add a new one!
+    {% endblocktranslate %}
             </div>
             <a class="btn special1 push_down" href="{% url 'friend_add' %}">
                 <i class="fa-solid fa-plus fa-xl"></i>
-                Add Friend
+                {% translate "Add Friend" %}
             </a>
         </div>
         <div id="alert_detail_end" class="alert"></div>

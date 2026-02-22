@@ -1,12 +1,17 @@
 <!-- qwikgame/player/templates/player/account_public_snippet.html -->
-                    <div class="label">
-                        <label for="id_icon">YOUR QWIKGAME REPUTATION</label>
-                        <div class="btn secondary tiny round push_right info" data-visible="false">
-                            <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
-                            <div class="info_text hidden">Based on feedback given by your rivals</div>
-                        </div>
-                    </div>
-                    <div class="plank">
+{% load i18n %}
+    <div class="label">
+        <label for="id_icon">
+            {% translate "YOUR QWIKGAME REPUTATION" %}
+        </label>
+        <div class="btn secondary tiny round push_right info" data-visible="false">
+            <i class="fa-solid fa-info fa-1x" aria-hidden="true"></i>
+            <div class="info_text hidden">
+                {% translate "Based on feedback given by your rivals." %}
+            </div>
+        </div>
+    </div>
+    <div class="plank">
 {% include 'player/conduct_stars_snippet.html' %}
-                    </div>
-                    {{ player_form }}
+    </div>
+    {{ player_form }}

@@ -1,8 +1,11 @@
 <!-- qwikgame/player/templates/player/friends.html -->
 {% extends "player/friends.html" %}
+{% load i18n %}
 
 
-{% block title %}Friends{% endblock %}
+{% block title %}
+    {% translate "Friends" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -18,7 +21,7 @@
             <div class="icon selected">
                 <i class="fa-solid fa-user-group fa-2x"></i>
             </div>
-            <h2>Add Friend</h2>
+            <h2>{% translate "Add Friend" %}</h2>
         </div>
         <div class="post available_edit {{ hide_edit }}">
             <div class="post form">
@@ -28,7 +31,7 @@
                     <div class="pillar">
                         <label class="btn primary push_down">
                             <input hidden type="submit" name="ADD">
-                            Add
+                            {% translate "Add" %}
                         </label>
                     </div>
                 </form>

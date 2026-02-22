@@ -1,9 +1,12 @@
 <!-- qwikgame/player/templates/player/filters.html -->
 {% extends "appeal/appeals.html" %}
+{% load i18n %}
 
 {% block refresh %}{% endblock refresh %}
 
-{% block title %}Filter{% endblock %}
+{% block title %}
+    {% translate "Filter" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -21,11 +24,11 @@
             <div class="icon selected">
                 <i class="fa-solid fa-filter fa-2x"></i>
             </div>
-            <h2>Invitation Filters</h2>
+            <h2>{% translate "Invitation Filters" %}</h2>
             <div class="push_right">
                 <a class="btn secondary" href="{% url 'filter' %}">
                     <i class="fa-solid fa-plus fa-xl"></i>
-                    Add
+                    {% translate "Add" %}
                 </a>
             </div>
         </div>
@@ -40,12 +43,14 @@
                         <div id="alert_form_submit" class="alert"></div>
                         <label class="btn tertiary push_down">
                             <input hidden name="DELETE" type="submit"
-                            onclick="return confirm('Delete these Filters?')">
-                            Remove
+                            onclick="return confirm(
+                                {% translate 'Delete these Filters?' %}
+                            )">
+                            {% translate "Remove" %}
                         </label>
                         <label class="btn primary push_down">
                             <input hidden name="ACTIVATE" type="submit">
-                            Apply
+                            {% translate "Apply" %}
                         </label>
                     </div>
                 </form>

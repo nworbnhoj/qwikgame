@@ -1,8 +1,11 @@
 <!-- qwikgame/player/templates/player/friends.html -->
 {% extends "player/friends.html" %}
+{% load i18n %}
 
 
-{% block title %}Friends{% endblock %}
+{% block title %}
+    {% translate "Friends" %}
+{% endblock %}
 
     
 {% block list_bar %}
@@ -29,8 +32,10 @@
                         <form id="menu_form " action="{% url 'friend_add' %}" method="post">
     {% csrf_token %}
                             <label class="btn tertiary">
-                                <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm('Delete this Friend?')">
-                                delete
+                                <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(
+                                    {% translate 'Delete this Friend?' %}
+                                )">
+                                {% translate "delete" %}
                             </label>
                         </form>
                     </div>
@@ -43,7 +48,7 @@
                 </a>
             </div>
     {% else %}
-                <h2>Add Friend</h2>
+                <h2>{% translate "Add Friend" %}</h2>
     {% endif %}
         </div>
         <div class="post form">
@@ -61,7 +66,7 @@
                     <h2>{{ strength.relative_str }}</h2>
                     <label class="btn tertiary">
                         <input hidden name="DELETE_STRENGTH" type="submit" value='{{ strength.pk }}'>
-                        delete
+                        {% translate "delete" %}
                     </label>
                 </div>
 {% endfor %}
@@ -71,7 +76,7 @@
                     <div id="alert_form_submit" class="alert"></div>
                     <label class="btn secondary push_down">
                         <input hidden name="ADD" type="submit">
-                        Submit
+                        {% translate "Submit" %}
                     </label>
                 </div>
             </form>

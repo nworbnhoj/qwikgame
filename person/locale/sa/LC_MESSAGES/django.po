@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 09:48+1100\n"
+"POT-Creation-Date: 2026-02-22 12:27+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,15 +59,18 @@ msgid "Thank you for letting us know."
 msgstr ""
 
 #: person/templates/person/block_done.html:13
-msgid "Invitations from {{ blocked_player.qwikname }} have been blocked."
+#, python-format
+msgid ""
+"\n"
+"    Invitations from %(blocked_player.qwikname)s have been blocked.\n"
 msgstr ""
 
-#: person/templates/person/block_done.html:17
+#: person/templates/person/block_done.html:19
 #: person/templates/person/notify_email_done.html:19
 msgid "Have a great day."
 msgstr ""
 
-#: person/templates/person/block_done.html:22
+#: person/templates/person/block_done.html:24
 msgid "blocked Player ID"
 msgstr ""
 
@@ -78,9 +81,9 @@ msgstr ""
 #: person/templates/person/chat_match_alert_email_html.html:7
 #: person/templates/person/chat_match_alert_email_text.html:4
 #: person/templates/person/decline_bid_alert_email_html.html:7
-#: person/templates/person/decline_bid_alert_email_text.html:3
+#: person/templates/person/decline_bid_alert_email_text.html:4
 #: person/templates/person/filter_invite_alert_email_html.html:7
-#: person/templates/person/filter_invite_alert_email_text.html:3
+#: person/templates/person/filter_invite_alert_email_text.html:4
 #: person/templates/person/new_bid_alert_email_html.html:7
 #: person/templates/person/new_bid_alert_email_text.html:3
 #: person/templates/person/new_match_alert_email_html.html:7
@@ -123,15 +126,15 @@ msgid ""
 msgstr ""
 
 #: person/templates/person/cancel_bid_alert_email_text.html:10
-#: person/templates/person/decline_bid_alert_email_text.html:9
+#: person/templates/person/decline_bid_alert_email_text.html:10
 msgid "To review please go to:"
 msgstr ""
 
 #: person/templates/person/cancel_bid_alert_email_text.html:13
 #: person/templates/person/cancel_match_alert_email_text.html:13
 #: person/templates/person/chat_match_alert_email_text.html:17
-#: person/templates/person/decline_bid_alert_email_text.html:12
-#: person/templates/person/filter_invite_alert_email_text.html:12
+#: person/templates/person/decline_bid_alert_email_text.html:13
+#: person/templates/person/filter_invite_alert_email_text.html:13
 #: person/templates/person/new_bid_alert_email_text.html:12
 #: person/templates/person/new_match_alert_email_text.html:13
 #: person/templates/person/rival_invite_alert_email_text.html:12
@@ -275,7 +278,7 @@ msgid ""
 "Bid declined on %(game)s at %(venue)s\n"
 msgstr ""
 
-#: person/templates/person/decline_bid_alert_email_text.html:5
+#: person/templates/person/decline_bid_alert_email_text.html:6
 #, python-format
 msgid ""
 "\n"
@@ -323,7 +326,7 @@ msgid ""
 "Qwikgame of %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
 
-#: person/templates/person/filter_invite_alert_email_text.html:5
+#: person/templates/person/filter_invite_alert_email_text.html:6
 #, python-format
 msgid ""
 "\n"
@@ -331,7 +334,7 @@ msgid ""
 "%(game)s at %(venue)s.\n"
 msgstr ""
 
-#: person/templates/person/filter_invite_alert_email_text.html:9
+#: person/templates/person/filter_invite_alert_email_text.html:10
 #: person/templates/person/new_bid_alert_email_text.html:9
 #: person/templates/person/rival_invite_alert_email_text.html:9
 msgid "To accept please go to:"
@@ -420,9 +423,11 @@ msgid ""
 "\t%(name)s has confirmed the %(game)s Match at %(venue)s.\n"
 msgstr ""
 
-#: person/templates/person/new_match_alert_notify_head.txt:2
+#: person/templates/person/new_match_alert_notify_head.txt:4
 #, python-format
-msgid "%(game)s Match confirmed"
+msgid ""
+"\n"
+"%(game)s Match confirmed\n"
 msgstr ""
 
 #: person/templates/person/notify_email_done.html:13

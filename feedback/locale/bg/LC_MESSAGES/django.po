@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,28 +21,28 @@ msgstr ""
 #: feedback/templates/feedback/feedback_list.html:7
 #: feedback/templates/feedback/feedback_list.html:19
 msgid "Feedback"
-msgstr ""
+msgstr "Обратна връзка"
 
 #: feedback/templates/feedback/feedback.html:41
 msgid "Version: "
-msgstr ""
+msgstr "Версия: "
 
 #: feedback/templates/feedback/feedback.html:44
 msgid "Issue:"
-msgstr ""
+msgstr "Проблем:"
 
 #: feedback/templates/feedback/feedback.html:48
 msgid "None"
-msgstr ""
+msgstr "Няма"
 
 #: feedback/templates/feedback/feedback.html:50
 msgid "create issue"
-msgstr ""
+msgstr "създай проблем"
 
 #: feedback/templates/feedback/feedback_list.html:33
 msgid "No feedback!"
-msgstr ""
+msgstr "Няма обратна връзка!"
 
 #: feedback/templates/feedback/feedback_list.html:47
 msgid "Select Feedback to see detail."
-msgstr ""
+msgstr "Изберете обратна връзка, за да видите подробности."

@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,59 +20,59 @@ msgstr ""
 #: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
 #: venue/templates/venue/venues.html:33
 msgid "Venues"
-msgstr ""
+msgstr "Места"
 
 #: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
 msgid "Add Venue"
-msgstr ""
+msgstr "Добави място"
 
 #: venue/templates/venue/venue.html:45
 msgid "ADDRESS"
-msgstr ""
+msgstr "АДРЕС"
 
 #: venue/templates/venue/venue.html:55
 msgid "WEBSITE"
-msgstr ""
+msgstr "УЕБСАЙТ"
 
 #: venue/templates/venue/venue.html:57
 msgid "PHONE"
-msgstr ""
+msgstr "ТЕЛЕФОН"
 
 #: venue/templates/venue/venue.html:59
 msgid "OPEN HOURS"
-msgstr ""
+msgstr "РАБОТНО ВРЕМЕ"
 
 #: venue/templates/venue/venue.html:61
 msgid "TIMEZONE"
-msgstr ""
+msgstr "ЧАСОВА ЗОНА"
 
 #: venue/templates/venue/venue.html:63
 msgid "NOTE"
-msgstr ""
+msgstr "БЕЛЕЖКА"
 
 #: venue/templates/venue/venue.html:65
 msgid "MANAGERS"
-msgstr ""
+msgstr "УПРАВИТЕЛИ"
 
 #: venue/templates/venue/venue.html:69
 msgid "GAMES"
-msgstr ""
+msgstr "ИГРИ"
 
 #: venue/templates/venue/venues.html:24
 msgid "Add"
-msgstr ""
+msgstr "Добави"
 
 #: venue/templates/venue/venues.html:36
 msgid "Group by"
-msgstr ""
+msgstr "Групирай по"
 
 #: venue/templates/venue/venues.html:42
 msgid "game"
-msgstr ""
+msgstr "игра"
 
 #: venue/templates/venue/venues.html:72
 msgid "No venues :-("
-msgstr ""
+msgstr "Няма места :-("
 
 #: venue/templates/venue/venues.html:85
 #, python-format
@@ -81,3 +81,6 @@ msgid ""
 "                Get Venue details%(br)sor add a new one!\n"
 "    "
 msgstr ""
+"\n"
+"                Вижте детайли за място%(br)sили добавете ново!\n"
+"    "

@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,47 +20,47 @@ msgstr ""
 
 #: player/templates/player/account_public_snippet.html:5
 msgid "YOUR QWIKGAME REPUTATION"
-msgstr ""
+msgstr "ВАШАТА РЕПУТАЦИЯ В QWIKGAME"
 
 #: player/templates/player/account_public_snippet.html:10
 msgid "Based on feedback given by your rivals."
-msgstr ""
+msgstr "Въз основа на обратната връзка от вашите съперници."
 
 #: player/templates/player/filter.html:46
 #: player/templates/player/filters.html:8
 msgid "Filter"
-msgstr ""
+msgstr "Филтър"
 
 #: player/templates/player/filter.html:65
 msgid "New Invitation Filter"
-msgstr ""
+msgstr "Нов филтър за покани"
 
 #: player/templates/player/filter.html:78
 msgid "Add Filter"
-msgstr ""
+msgstr "Добави филтър"
 
 #: player/templates/player/filters.html:27
 msgid "Invitation Filters"
-msgstr ""
+msgstr "Филтри за покани"
 
 #: player/templates/player/filters.html:31
 #: player/templates/player/friend_add.html:34
 #: player/templates/player/friends.html:25
 #: player/templates/player/strength.html:102
 msgid "Add"
-msgstr ""
+msgstr "Добави"
 
 #: player/templates/player/filters.html:47
 msgid "Delete these Filters?"
-msgstr ""
+msgstr "Изтриване на тези филтри?"
 
 #: player/templates/player/filters.html:49
 msgid "Remove"
-msgstr ""
+msgstr "Премахни"
 
 #: player/templates/player/filters.html:53
 msgid "Apply"
-msgstr ""
+msgstr "Приложи"
 
 #: player/templates/player/friend.html:7
 #: player/templates/player/friend_add.html:7
@@ -68,40 +68,40 @@ msgstr ""
 #: player/templates/player/friends.html:35
 #: player/templates/player/strength.html:7
 msgid "Friends"
-msgstr ""
+msgstr "Приятели"
 
 #: player/templates/player/friend.html:36
 msgid "Delete this Friend?"
-msgstr ""
+msgstr "Изтриване на този приятел?"
 
 #: player/templates/player/friend.html:38
 #: player/templates/player/friend.html:69
 #: player/templates/player/strength.html:43
 msgid "delete"
-msgstr ""
+msgstr "изтрий"
 
 #: player/templates/player/friend.html:51
 #: player/templates/player/friend_add.html:24
 #: player/templates/player/friends.html:93
 msgid "Add Friend"
-msgstr ""
+msgstr "Добави приятел"
 
 #: player/templates/player/friend.html:79
 #: player/templates/player/strength.html:75
 msgid "Submit"
-msgstr ""
+msgstr "Изпрати"
 
 #: player/templates/player/friends.html:39
 msgid "Group by"
-msgstr ""
+msgstr "Групирай по"
 
 #: player/templates/player/friends.html:46
 msgid "game"
-msgstr ""
+msgstr "игра"
 
 #: player/templates/player/friends.html:73
 msgid "No friends :-("
-msgstr ""
+msgstr "Няма приятели :-("
 
 #: player/templates/player/friends.html:87
 #, python-format
@@ -110,22 +110,25 @@ msgid ""
 "                Edit a Friend%(br)sor add a new one!\n"
 "    "
 msgstr ""
+"\n"
+"                Редактирайте приятел%(br)sили добавете нов!\n"
+"    "
 
 #: player/templates/player/rival_stats_snippet.html:4
 msgid "MATCHES"
-msgstr ""
+msgstr "МАЧОВЕ"
 
 #: player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
-msgstr ""
+msgstr "ИГРИ"
 
 #: player/templates/player/rival_stats_snippet.html:16
 msgid "VENUES"
-msgstr ""
+msgstr "МЕСТА"
 
 #: player/templates/player/strength.html:61
 msgid "Important!"
-msgstr ""
+msgstr "Важно!"
 
 #: player/templates/player/strength.html:63
 msgid ""
@@ -133,39 +136,42 @@ msgid ""
 "This will help qwikgame make better Matches for you, and your friend, and "
 "other qwikgame Players who know either of you."
 msgstr ""
+"Моля, отделете малко време, за да уведомите qwikgame колко силен е вашият "
+"приятел. Това ще помогне на qwikgame да създава по-добри мачове за вас, "
+"вашия приятел и други qwikgame играчи, които познават някой от вас."
 
 #: player/templates/player/strength.html:84
 msgid "GAME"
-msgstr ""
+msgstr "ИГРА"
 
 #: player/templates/player/strength.html:85
 msgid "STRENGTH"
-msgstr ""
+msgstr "СИЛА"
 
 #: player/templates/player/strength.html:87
 msgid "Much Weaker"
-msgstr ""
+msgstr "Много по-слаб"
 
 #: player/templates/player/strength.html:88
 msgid "Weaker"
-msgstr ""
+msgstr "По-слаб"
 
 #: player/templates/player/strength.html:89
 msgid "Well Matched"
-msgstr ""
+msgstr "Равностоен"
 
 #: player/templates/player/strength.html:90
 msgid "Stronger"
-msgstr ""
+msgstr "По-силен"
 
 #: player/templates/player/strength.html:91
 msgid "Much Stronger"
-msgstr ""
+msgstr "Много по-силен"
 
 #: player/templates/player/strength.html:96
 msgid "Cancel"
-msgstr ""
+msgstr "Отказ"
 
 #: player/templates/player/strength.html:99
 msgid "Learn more"
-msgstr ""
+msgstr "Научете повече"

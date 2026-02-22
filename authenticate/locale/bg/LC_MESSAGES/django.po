@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
-msgstr ""
+msgstr "Добре дошли в Qwikgame"
 
 #: authenticate/templates/authenticate/email_validate_email.html:3
 #: authenticate/templates/authenticate/login_email_text.html:6
@@ -30,26 +30,29 @@ msgid ""
 "You're receiving this email because you requested access to your account at "
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"Получавате този имейл, защото поискахте достъп до профила си в "
+"%(site_name)s.\n"
 
 #: authenticate/templates/authenticate/email_validate_email.html:8
 #: authenticate/templates/authenticate/login_email_text.html:11
 #: authenticate/templates/authenticate/register_email_text.html:11
 msgid "Please click on the following link to access your account:"
-msgstr ""
+msgstr "Моля, кликнете върху следния линк, за да получите достъп до профила си:"
 
 #: authenticate/templates/authenticate/email_validate_email.html:13
 #: authenticate/templates/authenticate/login_email_text.html:4
 #: authenticate/templates/authenticate/register_email_text.html:4
 msgid "Welcome to qwikgame.org!"
-msgstr ""
+msgstr "Добре дошли в qwikgame.org!"
 
 #: authenticate/templates/authenticate/email_validate_form.html:15
 msgid "We will send you a verification link to login."
-msgstr ""
+msgstr "Ще ви изпратим линк за потвърждение за вход."
 
 #: authenticate/templates/authenticate/email_validate_form.html:20
 msgid "Submit"
-msgstr ""
+msgstr "Изпрати"
 
 #: authenticate/templates/authenticate/email_validate_sent.html:10
 #, python-format
@@ -59,18 +62,21 @@ msgid ""
 "link.\n"
 "    "
 msgstr ""
+"\n"
+"        Изпратен е имейл до %(request.GET.to_email)s с линк за потвърждение.\n"
+"    "
 
 #: authenticate/templates/authenticate/email_validate_sent.html:15
 #: authenticate/templates/authenticate/login_email_sent.html:14
 #: authenticate/templates/authenticate/register_email_sent.html:14
 msgid "You should receive it shortly."
-msgstr ""
+msgstr "Трябва да го получите скоро."
 
 #: authenticate/templates/authenticate/email_validate_sent.html:18
 #: authenticate/templates/authenticate/login_email_sent.html:17
 #: authenticate/templates/authenticate/register_email_sent.html:17
 msgid "If you don’t receive an email, please check your spam folder."
-msgstr ""
+msgstr "Ако не получите имейл, моля проверете папката за спам."
 
 #: authenticate/templates/authenticate/email_validate_subject.txt:4
 #, python-format
@@ -78,6 +84,8 @@ msgid ""
 "\n"
 "Account details for %(site_name)s\n"
 msgstr ""
+"\n"
+"Данни за профила в %(site_name)s\n"
 
 #: authenticate/templates/authenticate/login_email_html.html:10
 #, python-format
@@ -87,11 +95,15 @@ msgid ""
 "account at %(site_name)s.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото поискахте достъп до профила си в "
+"%(site_name)s.\n"
+"        "
 
 #: authenticate/templates/authenticate/login_email_html.html:17
 #: authenticate/templates/authenticate/register_email_html.html:17
 msgid "Login"
-msgstr ""
+msgstr "Вход"
 
 #: authenticate/templates/authenticate/login_email_sent.html:9
 #, python-format
@@ -101,6 +113,9 @@ msgid ""
 "link. \n"
 "    "
 msgstr ""
+"\n"
+"            Изпратен е имейл до %(request.GET.to_email)s с линк за вход. \n"
+"    "
 
 #: authenticate/templates/authenticate/login_email_subject.txt:4
 #, python-format
@@ -108,23 +123,25 @@ msgid ""
 "\n"
 "Login details for %(site_name)s\n"
 msgstr ""
+"\n"
+"Данни за вход в %(site_name)s\n"
 
 #: authenticate/templates/authenticate/login_form.html:9
 msgid "Need a new account?"
-msgstr ""
+msgstr "Нуждаете се от нов профил?"
 
 #: authenticate/templates/authenticate/login_form.html:10
 msgid "signup"
-msgstr ""
+msgstr "регистрация"
 
 #: authenticate/templates/authenticate/login_form.html:19
 #: authenticate/templates/authenticate/register_form.html:19
 msgid "We will send you a verification link to login"
-msgstr ""
+msgstr "Ще ви изпратим линк за потвърждение за вход"
 
 #: authenticate/templates/authenticate/login_form.html:24
 msgid "Send login link"
-msgstr ""
+msgstr "Изпрати линк за вход"
 
 #: authenticate/templates/authenticate/register_email_html.html:10
 #, python-format
@@ -134,6 +151,10 @@ msgid ""
 "%(site_name)s.\n"
 "    "
 msgstr ""
+"\n"
+"        Получавате този имейл, защото поискахте създаване на профил в "
+"%(site_name)s.\n"
+"    "
 
 #: authenticate/templates/authenticate/register_email_sent.html:9
 #, python-format
@@ -143,6 +164,9 @@ msgid ""
 "registration link.\n"
 "    "
 msgstr ""
+"\n"
+"            Изпратен е имейл до %(request.GET.to_email)s с линк за регистрация.\n"
+"    "
 
 #: authenticate/templates/authenticate/register_email_subject.txt:4
 #, python-format
@@ -150,6 +174,8 @@ msgid ""
 "\n"
 "Registration details for %(site_name)s\n"
 msgstr ""
+"\n"
+"Данни за регистрация в %(site_name)s\n"
 
 #: authenticate/templates/authenticate/register_email_text.html:6
 #, python-format
@@ -158,32 +184,36 @@ msgid ""
 "You're receiving this email because you requested an account at "
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"Получавате този имейл, защото поискахте създаване на профил в "
+"%(site_name)s.\n"
 
 #: authenticate/templates/authenticate/register_form.html:9
 msgid "Already have an account?"
-msgstr ""
+msgstr "Вече имате профил?"
 
 #: authenticate/templates/authenticate/register_form.html:10
 msgid "login"
-msgstr ""
+msgstr "вход"
 
 #: authenticate/templates/authenticate/register_form.html:24
 msgid "Send verification link"
-msgstr ""
+msgstr "Изпрати линк за потвърждение"
 
 #: authenticate/templates/authenticate/token_invalid.html:9
 msgid "Sorry that didn't work."
-msgstr ""
+msgstr "Съжаляваме, това не проработи."
 
 #: authenticate/templates/authenticate/token_invalid.html:12
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr ""
+"Токенът за сигурност в този линк е изтекъл или е невалиден по някаква причина."
 
 #: authenticate/templates/authenticate/token_invalid.html:16
 msgid "Login / Registration"
-msgstr ""
+msgstr "Вход / Регистрация"
 
 #: authenticate/templates/authenticate/token_invalid.html:17
 msgid " page."
-msgstr ""
+msgstr " страница."

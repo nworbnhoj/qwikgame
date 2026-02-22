@@ -6,58 +6,59 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-22 12:27+1100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2026-02-22 15:05+1100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #: person/templates/person/account.html:16
 msgid "Account"
-msgstr ""
+msgstr "Акаунт"
 
 #: person/templates/person/account.html:33
 msgid "Upgrade"
-msgstr ""
+msgstr "Надграждане"
 
 #: person/templates/person/account.html:44
 msgid "Public Profile"
-msgstr ""
+msgstr "Публичен профил"
 
 #: person/templates/person/account.html:48
 msgid "Private Settings"
-msgstr ""
+msgstr "Лични настройки"
 
 #: person/templates/person/account.html:52
 msgid "QWIKGAME App"
-msgstr ""
+msgstr "QWIKGAME приложение"
 
 #: person/templates/person/account.html:56
 msgid "Privacy"
-msgstr ""
+msgstr "Поверителност"
 
 #: person/templates/person/account.html:60
 msgid "Terms & Conditions"
-msgstr ""
+msgstr "Общи условия"
 
 #: person/templates/person/account.html:64
 msgid "Licence"
-msgstr ""
+msgstr "Лиценз"
 
 #: person/templates/person/account.html:70
 msgid "Logout"
-msgstr ""
+msgstr "Изход"
 
 #: person/templates/person/block_done.html:9
 #: person/templates/person/notify_email_done.html:9
 msgid "Thank you for letting us know."
-msgstr ""
+msgstr "Благодарим ви, че ни уведомихте."
 
 #: person/templates/person/block_done.html:13
 #, python-format
@@ -65,15 +66,17 @@ msgid ""
 "\n"
 "    Invitations from %(blocked_player.qwikname)s have been blocked.\n"
 msgstr ""
+"\n"
+"    Поканите от %(blocked_player.qwikname)s бяха блокирани.\n"
 
 #: person/templates/person/block_done.html:19
 #: person/templates/person/notify_email_done.html:19
 msgid "Have a great day."
-msgstr ""
+msgstr "Приятен ден."
 
 #: person/templates/person/block_done.html:24
 msgid "blocked Player ID"
-msgstr ""
+msgstr "блокиран ID на играч"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:7
 #: person/templates/person/cancel_bid_alert_email_text.html:4
@@ -92,7 +95,7 @@ msgstr ""
 #: person/templates/person/rival_invite_alert_email_html.html:7
 #: person/templates/person/rival_invite_alert_email_text.html:3
 msgid "Qwik Alert"
-msgstr ""
+msgstr "Qwik известие"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:13
 #, python-format
@@ -102,6 +105,10 @@ msgid ""
 "their Bid on your Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "    "
 msgstr ""
+"\n"
+"        Получавате този имейл, защото <b>%(name)s</b> оттегли своята оферта "
+"за вашата Qwikgame игра на <b>%(game)s</b> в <b>%(venue)s</b>.\n"
+"    "
 
 #: person/templates/person/cancel_bid_alert_email_html.html:20
 #, python-format
@@ -110,6 +117,9 @@ msgid ""
 "                Visit %(site_name)s to review\n"
 "    "
 msgstr ""
+"\n"
+"                Посетете %(site_name)s, за да прегледате\n"
+"    "
 
 #: person/templates/person/cancel_bid_alert_email_subject.txt:4
 #, python-format
@@ -117,6 +127,8 @@ msgid ""
 "\n"
 "Bid withdrawn on %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Оттеглена оферта за %(game)s в %(venue)s\n"
 
 #: person/templates/person/cancel_bid_alert_email_text.html:6
 #, python-format
@@ -125,11 +137,14 @@ msgid ""
 "\tYou're receiving this email because %(name)s has withdrawn their Bid on "
 "your Qwikgame of %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото %(name)s оттегли своята оферта за вашата "
+"Qwikgame игра на %(game)s в %(venue)s.\n"
 
 #: person/templates/person/cancel_bid_alert_email_text.html:10
 #: person/templates/person/decline_bid_alert_email_text.html:10
 msgid "To review please go to:"
-msgstr ""
+msgstr "За преглед посетете:"
 
 #: person/templates/person/cancel_bid_alert_email_text.html:13
 #: person/templates/person/cancel_match_alert_email_text.html:13
@@ -140,7 +155,7 @@ msgstr ""
 #: person/templates/person/new_match_alert_email_text.html:13
 #: person/templates/person/rival_invite_alert_email_text.html:12
 msgid "To change email notification settings, please go to:"
-msgstr ""
+msgstr "За да промените настройките за имейл известия, посетете:"
 
 #: person/templates/person/cancel_bid_alert_notify_body.txt:3
 #, python-format
@@ -148,6 +163,8 @@ msgid ""
 "\n"
 "\t%(name)s has withdrawn their Bid on %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s оттегли своята оферта за %(game)s в %(venue)s.\n"
 
 #: person/templates/person/cancel_bid_alert_notify_head.txt:4
 #, python-format
@@ -155,6 +172,8 @@ msgid ""
 "\n"
 "Bid on %(game)s withdrawn\n"
 msgstr ""
+"\n"
+"Офертата за %(game)s е оттеглена\n"
 
 #: person/templates/person/cancel_match_alert_email_html.html:13
 #, python-format
@@ -164,6 +183,10 @@ msgid ""
 "<b>%(game)s</b> at <b>%(venue)s</b> has been CANCELLED.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото вашата %(site_name)s  по "
+"<b>%(game)s</b> в <b>%(venue)s</b> е ОТМЕНЕНА.\n"
+"        "
 
 #: person/templates/person/cancel_match_alert_email_html.html:27
 #: person/templates/person/chat_match_alert_email_html.html:24
@@ -174,6 +197,9 @@ msgid ""
 "                Visit %(site_name)s to chat\n"
 "            "
 msgstr ""
+"\n"
+"                Посетете %(site_name)s, за да чатите\n"
+"            "
 
 #: person/templates/person/cancel_match_alert_email_subject.txt:4
 #, python-format
@@ -181,6 +207,8 @@ msgid ""
 "\n"
 "CANCELLED %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"ОТМЕНЕНА %(game)s в %(venue)s\n"
 
 #: person/templates/person/cancel_match_alert_email_text.html:6
 #, python-format
@@ -189,12 +217,15 @@ msgid ""
 "\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
 "has been CANCELLED.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото вашата игра %(game)s в %(venue)s беше "
+"ОТМЕНЕНА.\n"
 
 #: person/templates/person/cancel_match_alert_email_text.html:10
 #: person/templates/person/chat_match_alert_email_text.html:14
 #: person/templates/person/new_match_alert_email_text.html:10
 msgid "To chat please go to:"
-msgstr ""
+msgstr "За да чатите, посетете:"
 
 #: person/templates/person/cancel_match_alert_notify_body.txt:3
 #, python-format
@@ -202,6 +233,8 @@ msgid ""
 "\n"
 "\t%(name)s has cancelled the %(game)s Match at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s отмени мача по %(game)s в %(venue)s.\n"
 
 #: person/templates/person/cancel_match_alert_notify_head.txt:4
 #, python-format
@@ -209,6 +242,8 @@ msgid ""
 "\n"
 "%(game)s Match cancelled\n"
 msgstr ""
+"\n"
+"Мачът по %(game)s е отменен\n"
 
 #: person/templates/person/chat_match_alert_email_html.html:13
 #, python-format
@@ -218,6 +253,10 @@ msgid ""
 "<b>%(game)s</b> at <b>%(venue)s</b> received a chat message.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото вашата %(site_name)s  по "
+"<b>%(game)s</b> в <b>%(venue)s</b> получи чат съобщение.\n"
+"        "
 
 #: person/templates/person/chat_match_alert_email_subject.txt:4
 #, python-format
@@ -225,6 +264,8 @@ msgid ""
 "\n"
 "Chat message for %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Чат съобщение за %(game)s в %(venue)s\n"
 
 #: person/templates/person/chat_match_alert_email_text.html:6
 #, python-format
@@ -233,6 +274,9 @@ msgid ""
 "\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
 "received a chat message.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото вашата игра %(game)s в %(venue)s получи чат "
+"съобщение.\n"
 
 #: person/templates/person/chat_match_alert_email_text.html:10
 #, python-format
@@ -240,6 +284,8 @@ msgid ""
 "\n"
 "\t%(name)s said: %(text)s\n"
 msgstr ""
+"\n"
+"\t%(name)s каза: %(text)s\n"
 
 #: person/templates/person/chat_match_alert_notify_body.txt:3
 #, python-format
@@ -247,6 +293,8 @@ msgid ""
 "\n"
 "\t%(text)s\n"
 msgstr ""
+"\n"
+"\t%(text)s\n"
 
 #: person/templates/person/chat_match_alert_notify_head.txt:4
 #, python-format
@@ -254,6 +302,8 @@ msgid ""
 "\n"
 "%(game)s Chat %(name)s\n"
 msgstr ""
+"\n"
+"%(game)s чат %(name)s\n"
 
 #: person/templates/person/decline_bid_alert_email_html.html:13
 #, python-format
@@ -271,6 +321,9 @@ msgid ""
 "                Visit %(site_name)s to review\n"
 "            "
 msgstr ""
+"\n"
+"            Ппосетете %(site_name)s, за да направите преглед\n"
+"        "
 
 #: person/templates/person/decline_bid_alert_email_subject.txt:4
 #, python-format
@@ -278,6 +331,8 @@ msgid ""
 "\n"
 "Bid declined on %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Офертата за %(game)s в %(venue)s е отхвърлена\n"
 
 #: person/templates/person/decline_bid_alert_email_text.html:6
 #, python-format
@@ -286,6 +341,9 @@ msgid ""
 "\tYou're receiving this email because %(name)s has declined your Bid on "
 "%(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото %(name)s отхвърли вашата оферта за %(game)s "
+"в %(venue)s.\n"
 
 #: person/templates/person/decline_bid_alert_notify_body.txt:3
 #, python-format
@@ -293,6 +351,8 @@ msgid ""
 "\n"
 "\t%(name)s has declined your Bid on %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s отхвърли вашата оферта за %(game)s в %(venue)s.\n"
 
 #: person/templates/person/decline_bid_alert_notify_head.txt:4
 #, python-format
@@ -300,6 +360,8 @@ msgid ""
 "\n"
 "Bid on %(game)s declined\n"
 msgstr ""
+"\n"
+"Офертата за %(game)s е отхвърлена\n"
 
 #: person/templates/person/filter_invite_alert_email_html.html:13
 #, python-format
@@ -319,6 +381,9 @@ msgid ""
 "                Visit %(site_name)s to accept\n"
 "            "
 msgstr ""
+"\n"
+"                Ппосетете %(site_name)s, за да приемете\n"
+"            "
 
 #: person/templates/person/filter_invite_alert_email_subject.txt:4
 #, python-format
@@ -326,6 +391,8 @@ msgid ""
 "\n"
 "Qwikgame of %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Qwikgame на %(game)s с %(name)s в %(venue)s\n"
 
 #: person/templates/person/filter_invite_alert_email_text.html:6
 #, python-format
@@ -334,12 +401,15 @@ msgid ""
 "    You're receiving this email because %(name)s is Keen for a Qwikgame of "
 "%(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"    Получавате този имейл, защото %(name)s има интерес към Qwikgame игра на "
+"%(game)s в %(venue)s.\n"
 
 #: person/templates/person/filter_invite_alert_email_text.html:10
 #: person/templates/person/new_bid_alert_email_text.html:9
 #: person/templates/person/rival_invite_alert_email_text.html:9
 msgid "To accept please go to:"
-msgstr ""
+msgstr "За да приемете, посетете:"
 
 #: person/templates/person/filter_invite_alert_notify_body.txt:3
 #, python-format
@@ -347,6 +417,8 @@ msgid ""
 "\n"
 "\t%(name)s is Keen for a Qwikgame of %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s има интерес към Qwikgame игра на %(game)s в %(venue)s.\n"
 
 #: person/templates/person/filter_invite_alert_notify_head.txt:4
 #, python-format
@@ -354,6 +426,8 @@ msgid ""
 "\n"
 "Qwikgame of %(game)s\n"
 msgstr ""
+"\n"
+"Qwikgame на %(game)s\n"
 
 #: person/templates/person/new_bid_alert_email_html.html:13
 #, python-format
@@ -363,6 +437,10 @@ msgid ""
 "your Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото <b>%(name)s</b> направи оферта за "
+"вашата Qwikgame игра на <b>%(game)s</b> в <b>%(venue)s</b>.\n"
+"        "
 
 #: person/templates/person/new_bid_alert_email_subject.txt:4
 #, python-format
@@ -370,6 +448,8 @@ msgid ""
 "\n"
 "Bid on %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Оферта за %(game)s в %(venue)s\n"
 
 #: person/templates/person/new_bid_alert_email_text.html:5
 #, python-format
@@ -378,6 +458,9 @@ msgid ""
 "\tYou're receiving this email because %(name)s has Bid on your Qwikgame of "
 "%(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото %(name)s направи оферта за вашата Qwikgame "
+"игра на %(game)s в %(venue)s.\n"
 
 #: person/templates/person/new_bid_alert_notify_body.txt:3
 #, python-format
@@ -385,6 +468,8 @@ msgid ""
 "\n"
 "\t%(name)s has Bid on %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s направи оферта за %(game)s в %(venue)s.\n"
 
 #: person/templates/person/new_bid_alert_notify_head.txt:4
 #, python-format
@@ -392,6 +477,8 @@ msgid ""
 "\n"
 "Bid on %(game)s\n"
 msgstr ""
+"\n"
+"Оферта за %(game)s\n"
 
 #: person/templates/person/new_match_alert_email_html.html:13
 #, python-format
@@ -401,6 +488,10 @@ msgid ""
 "%(site_name)s has confirmed <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото <b>%(name)s</b> в %(site_name)s "
+"потвърди <b>%(game)s</b> в <b>%(venue)s</b>.\n"
+"        "
 
 #: person/templates/person/new_match_alert_email_subject.txt:4
 #, python-format
@@ -408,6 +499,8 @@ msgid ""
 "\n"
 "Confirmed %(game)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Потвърдена %(game)s в %(venue)s\n"
 
 #: person/templates/person/new_match_alert_email_text.html:6
 #, python-format
@@ -416,6 +509,9 @@ msgid ""
 "\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
 "has been Confirmed.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото вашата игра %(game)s в %(venue)s беше "
+"потвърдена.\n"
 
 #: person/templates/person/new_match_alert_notify_body.txt:3
 #, python-format
@@ -423,6 +519,8 @@ msgid ""
 "\n"
 "\t%(name)s has confirmed the %(game)s Match at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s потвърди мача по %(game)s в %(venue)s.\n"
 
 #: person/templates/person/new_match_alert_notify_head.txt:4
 #, python-format
@@ -430,6 +528,8 @@ msgid ""
 "\n"
 "%(game)s Match confirmed\n"
 msgstr ""
+"\n"
+"Мачът по %(game)s е потвърден\n"
 
 #: person/templates/person/notify_email_done.html:13
 #, python-format
@@ -437,30 +537,32 @@ msgid ""
 "\n"
 "\tInvitations from %(site_name)s have been disabled.\n"
 msgstr ""
+"\n"
+"\tПоканите от %(site_name)s бяха деактивирани.\n"
 
 #: person/templates/person/private.html:37
 msgid "PRIVATE SETTINGS"
-msgstr ""
+msgstr "ЛИЧНИ НАСТРОЙКИ"
 
 #: person/templates/person/private.html:44
 msgid "EMAIL ADDRESS"
-msgstr ""
+msgstr "ИМЕЙЛ АДРЕС"
 
 #: person/templates/person/private.html:46
 msgid "Change (coming soon)"
-msgstr ""
+msgstr "Промяна (скоро)"
 
 #: person/templates/person/private.html:61
 msgid "UnBlock"
-msgstr ""
+msgstr "Деблокирай"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
-msgstr ""
+msgstr "ПУБЛИЧЕН ПРОФИЛ"
 
 #: person/templates/person/public.html:35
 msgid "Save"
-msgstr ""
+msgstr "Запази"
 
 #: person/templates/person/rival_invite_alert_email_html.html:13
 #, python-format
@@ -470,6 +572,10 @@ msgid ""
 "you to a  Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото <b>%(name)s</b> ви покани на "
+"Qwikgame игра на <b>%(game)s</b> в <b>%(venue)s</b>.\n"
+"        "
 
 #: person/templates/person/rival_invite_alert_email_subject.txt:4
 #, python-format
@@ -477,6 +583,8 @@ msgid ""
 "\n"
 "Invitation to %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Покана за %(game)s с %(name)s в %(venue)s\n"
 
 #: person/templates/person/rival_invite_alert_email_text.html:5
 #, python-format
@@ -485,6 +593,9 @@ msgid ""
 "\tYou're receiving this email because %(name)s has Invited you to a Qwikgame "
 "of %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\tПолучавате този имейл, защото %(name)s ви покани на Qwikgame игра на "
+"%(game)s в %(venue)s.\n"
 
 #: person/templates/person/rival_invite_alert_notify_body.txt:3
 #, python-format
@@ -492,6 +603,8 @@ msgid ""
 "\n"
 "\t%(name)s has Invited you to %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s ви покани на %(game)s в %(venue)s.\n"
 
 #: person/templates/person/rival_invite_alert_notify_head.txt:4
 #, python-format
@@ -499,14 +612,16 @@ msgid ""
 "\n"
 "Invite to %(game)s\n"
 msgstr ""
+"\n"
+"Покана за %(game)s\n"
 
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
-msgstr ""
+msgstr "НАДГРАЖДАНЕ"
 
 #: person/templates/person/upgrade.html:23
 msgid "coming soon"
-msgstr ""
+msgstr "скоро"
 
 #: person/templates/person/woo_invite_email_html.html:10
 #, python-format
@@ -516,6 +631,10 @@ msgid ""
 "%(site_name)s has invited you to play <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            Получавате този имейл, защото <b>%(name)s</b> в %(site_name)s ви "
+"покани да играете <b>%(game)s</b> в <b>%(venue)s</b>.\n"
+"        "
 
 #: person/templates/person/woo_invite_email_html.html:24
 #, python-format
@@ -524,11 +643,14 @@ msgid ""
 "                Visit %(site_name)s to accept invitation\n"
 "            "
 msgstr ""
+"\n"
+"                Посетете %(site_name)s, за да приемете поканата\n"
+"            "
 
 #: person/templates/person/woo_invite_email_html.html:33
 #: person/templates/person/woo_invite_email_html.html:37
 msgid "email invitations from"
-msgstr ""
+msgstr "имейл покани от"
 
 #: person/templates/person/woo_invite_email_subject.txt:4
 #, python-format
@@ -536,10 +658,12 @@ msgid ""
 "\n"
 "Invitation to play %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
+"\n"
+"Покана за игра на %(game)s с %(name)s в %(venue)s\n"
 
 #: person/templates/person/woo_invite_email_text.html:5
 msgid "Welcome to qwikgame.org"
-msgstr ""
+msgstr "Добре дошли в qwikgame.org"
 
 #: person/templates/person/woo_invite_email_text.html:7
 #, python-format
@@ -548,28 +672,33 @@ msgid ""
 "You're receiving this email because %(name)s at %(site_name)s has invited "
 "you to play %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"Получавате този имейл, защото %(name)s в %(site_name)s ви покани да играете "
+"%(game)s в %(venue)s.\n"
 
 #: person/templates/person/woo_invite_email_text.html:11
 msgid "Game"
-msgstr ""
+msgstr "Игра"
 
 #: person/templates/person/woo_invite_email_text.html:12
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: person/templates/person/woo_invite_email_text.html:13
 msgid "Time"
-msgstr ""
+msgstr "Час"
 
 #: person/templates/person/woo_invite_email_text.html:14
 msgid "Venue"
-msgstr ""
+msgstr "Място"
 
 #: person/templates/person/woo_invite_email_text.html:16
 msgid ""
 "\n"
 "Please click on the following link to accept the invitation:\n"
 msgstr ""
+"\n"
+"Моля, кликнете върху следния линк, за да приемете поканата:\n"
 
 #: person/templates/person/woo_invite_email_text.html:21
 #, python-format
@@ -577,6 +706,8 @@ msgid ""
 "\n"
 "To block email invitations from %(name)s, please click :\n"
 msgstr ""
+"\n"
+"За да блокирате имейл покани от %(name)s, моля кликнете:\n"
 
 #: person/templates/person/woo_invite_email_text.html:26
 #, python-format
@@ -585,3 +716,6 @@ msgid ""
 "To block email invitations from all Players at %(site_name)s, please "
 "click :\n"
 msgstr ""
+"\n"
+"За да блокирате имейл покани от всички играчи в %(site_name)s, моля "
+"кликнете:\n"

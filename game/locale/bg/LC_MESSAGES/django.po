@@ -12,91 +12,91 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
-msgstr ""
+msgstr "Мач"
 
 #: game/templates/game/match.html:65
 msgid "Cancel this Match?"
-msgstr ""
+msgstr "Отказ от този мач?"
 
 #: game/templates/game/match.html:67
 msgid "cancel"
-msgstr ""
+msgstr "отказ"
 
 #: game/templates/game/match.html:140
 msgid "Show invitation history"
-msgstr ""
+msgstr "Покажи историята на поканите"
 
 #: game/templates/game/match.html:143
 msgid "Hide invitation history"
-msgstr ""
+msgstr "Скрий историята на поканите"
 
 #: game/templates/game/match.html:178 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
-msgstr ""
+msgstr "Отзив"
 
 #: game/templates/game/match.html:188
 msgid "☺ emogi coming soon ☺"
-msgstr ""
+msgstr "☺ емоджи скоро ☺"
 
 #: game/templates/game/match.html:202
 msgid "Chat will be disabled 24 hours after Match."
-msgstr ""
+msgstr "Чатът ще бъде деактивиран 24 часа след мача."
 
 #: game/templates/game/match.html:205
 msgid "Chat will be deleted 1 week after Match."
-msgstr ""
+msgstr "Чатът ще бъде изтрит 1 седмица след мача."
 
 #: game/templates/game/matches.html:26
 msgid "Chat"
-msgstr ""
+msgstr "Чат"
 
 #: game/templates/game/matches.html:36
 msgid "Matches"
-msgstr ""
+msgstr "Мачове"
 
 #: game/templates/game/matches.html:39 game/templates/game/reviews.html:41
 msgid "Group by"
-msgstr ""
+msgstr "Групирай по"
 
 #: game/templates/game/matches.html:45 game/templates/game/reviews.html:47
 msgid "date"
-msgstr ""
+msgstr "дата"
 
 #: game/templates/game/matches.html:49 game/templates/game/reviews.html:51
 msgid "game"
-msgstr ""
+msgstr "игра"
 
 #: game/templates/game/matches.html:53 game/templates/game/reviews.html:55
 msgid "venue"
-msgstr ""
+msgstr "място"
 
 #: game/templates/game/matches.html:60
 msgid "Upcoming"
-msgstr ""
+msgstr "Предстоящи"
 
 #: game/templates/game/matches.html:95
 msgid "No pending Matches"
-msgstr ""
+msgstr "Няма предстоящи мачове"
 
 #: game/templates/game/matches.html:101
 msgid "History"
-msgstr ""
+msgstr "История"
 
 #: game/templates/game/matches.html:134
 msgid "No history yet!"
-msgstr ""
+msgstr "Все още няма история!"
 
 #: game/templates/game/matches.html:149
 msgid "Select a Match to Chat."
-msgstr ""
+msgstr "Изберете мач за чат."
 
 #: game/templates/game/matches.html:151
 #, python-format
@@ -105,18 +105,21 @@ msgid ""
 "            No pending Matches%(br)sKeen to play?\n"
 "        "
 msgstr ""
+"\n"
+"            Няма предстоящи мачове%(br)sИскате да играете?\n"
+"        "
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
-msgstr ""
+msgstr "Отзиви"
 
 #: game/templates/game/review.html:74
 msgid "Submit"
-msgstr ""
+msgstr "Изпрати"
 
 #: game/templates/game/reviews.html:101
 msgid "Select a Match to Review."
-msgstr ""
+msgstr "Изберете мач за отзив."
 
 #: game/templates/game/reviews.html:103
 #, python-format
@@ -125,11 +128,14 @@ msgid ""
 "                All Match reviews complete - thank you%(br)sKeen to play?\n"
 "        "
 msgstr ""
+"\n"
+"                Всички отзиви за мачове са завършени - благодарим%(br)sИскате да играете?\n"
+"        "
 
 #: game/templates/game/reviews.html:110
 msgid "Invite"
-msgstr ""
+msgstr "Покани"
 
 #: game/templates/game/rival.html:7
 msgid "Rival"
-msgstr ""
+msgstr "Съперник"

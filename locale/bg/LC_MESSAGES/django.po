@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 07:00+1100\n"
+"POT-Creation-Date: 2026-02-22 22:02+1100\n"
 "PO-Revision-Date: 2026-02-22 14:48+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,95 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.8\n"
-
-#: appeal/templates/appeal/accept.html:53
-msgid "Cancel this Invitation?"
-msgstr "Отказ от тази покана?"
-
-#: appeal/templates/appeal/accept.html:55 appeal/templates/appeal/bid.html:78
-msgid "cancel"
-msgstr "отказ"
-
-#: appeal/templates/appeal/accept.html:84
-msgid "decline"
-msgstr "отхвърляне"
-
-#: appeal/templates/appeal/accept.html:125
-msgid ""
-"You are about to schedule a Match. A chat session will be opened with your "
-"rival. Continue?"
-msgstr ""
-"На път сте да насрочите мач. Ще бъде отворен чат с вашия съперник. Продължаване?"
-
-#: appeal/templates/appeal/appeals.html:7
-msgid "Feed"
-msgstr "Поток"
-
-#: appeal/templates/appeal/appeals.html:24
-#: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:49 appeal/templates/appeal/keen.html:86
-msgid "Invite"
-msgstr "Покани"
-
-#: appeal/templates/appeal/appeals.html:35
-#, python-format
-msgid ""
-" \n"
-"            Feed (%(appeals_length)s)\n"
-msgstr ""
-" \n"
-"            Поток (%(appeals_length)s)\n"
-
-#: appeal/templates/appeal/appeals.html:41
-msgid "Filter"
-msgstr "Филтър"
-
-#: appeal/templates/appeal/appeals.html:46
-msgid "Participating"
-msgstr "Участие"
-
-#: appeal/templates/appeal/appeals.html:85
-msgid "Get involved by accepting an Invitation, or sending a new one."
-msgstr "Включете се, като приемете покана или изпратите нова."
-
-#: appeal/templates/appeal/appeals.html:91
-msgid "All"
-msgstr "Всички"
-
-#: appeal/templates/appeal/appeals.html:95
-msgid "filtered"
-msgstr "филтрирани"
-
-#: appeal/templates/appeal/appeals.html:132
-msgid "Unfortunately no Invitations match your Filters."
-msgstr "За съжаление няма покани, които да съответстват на вашите филтри."
-
-#: appeal/templates/appeal/appeals.html:135
-msgid "Try deactivating a Filter or send out your own Invitation."
-msgstr "Опитайте да деактивирате филтър или изпратете своя покана."
-
-#: appeal/templates/appeal/appeals.html:150
-#, python-format
-msgid ""
-"\n"
-"                Open an Invitation %(br)s or send a new one!\n"
-"    "
-msgstr ""
-"\n"
-"                Отворете покана %(br)s или изпратете нова!\n"
-"    "
-
-#: appeal/templates/appeal/bid.html:76
-msgid "Cancel this Offer?"
-msgstr "Отказ от тази оферта?"
-
-#: appeal/templates/appeal/keen.html:70
-msgid "Keen To Play? Send Invitation?"
-msgstr "Искате да играете? Изпратете покана?"
-
-#: appeal/templates/appeal/keen.html:89 templates/welcome.html:195
-msgid "Invite Friends Only"
-msgstr "Покани само приятели"
 
 #: templates/404.html:9
 msgid "Sorry - we could not find that page."
@@ -202,7 +113,8 @@ msgstr "Съжаляваме, изглежда в момента сте офла
 
 #: templates/pwa_snippet.html:7
 msgid "BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP."
-msgstr "ПО-ДОБРО ОТ НАТИВНИ МОБИЛНИ ПРИЛОЖЕНИЯ. ТОВА Е ПРОГРЕСИВНО УЕБ ПРИЛОЖЕНИЕ."
+msgstr ""
+"ПО-ДОБРО ОТ НАТИВНИ МОБИЛНИ ПРИЛОЖЕНИЯ. ТОВА Е ПРОГРЕСИВНО УЕБ ПРИЛОЖЕНИЕ."
 
 #: templates/pwa_snippet.html:10
 msgid "Install QWIKGAME app in seconds."
@@ -357,10 +269,14 @@ msgid "Submit"
 msgstr "Изпрати"
 
 #: templates/qwik.html:119
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "            This work by %(qwik_link)s is licensed under "
+#| "%(gpl-3.0_link)s.\n"
 msgid ""
 "\n"
-"            This work by %(qwik_link)s is licensed under %(gpl-3.0_link)s.\n"
+"            This work by %(qwik_link)s is licensed under %(gpl_link)s.\n"
 msgstr ""
 "\n"
 "            Това произведение от %(qwik_link)s е лицензирано под "
@@ -391,16 +307,16 @@ msgstr "НАМЕРИ ПАРТНЬОРИ. НАСРОЧИ МАЧОВЕ. ИГРАЙ
 msgid ""
 "\n"
 "                You play squash, tennis or paddel? Or may be chess, darts or "
-"pool? But you can't find partners? This is %(QWIK)sGAME! Now finding partners "
-"and arranging games is fast and easy. With %(QWIK)sGAME you have all match "
-"invitations in one place. Just pick one or post your own.\n"
+"pool? But you can't find partners? This is %(QWIK)sGAME! Now finding "
+"partners and arranging games is fast and easy. With %(QWIK)sGAME you have "
+"all match invitations in one place. Just pick one or post your own.\n"
 msgstr ""
 "\n"
 "                Играете скуош, тенис или падел? Или може би шах, дартс или "
-"билярд? Но не можете да намерите партньори? Това е %(QWIK)sGAME! Сега намирането "
-"на партньори и организирането на игри е бързо и лесно. С %(QWIK)sGAME имате "
-"всички покани за мачове на едно място. Просто изберете една или публикувайте "
-"своя.\n"
+"билярд? Но не можете да намерите партньори? Това е %(QWIK)sGAME! Сега "
+"намирането на партньори и организирането на игри е бързо и лесно. С "
+"%(QWIK)sGAME имате всички покани за мачове на едно място. Просто изберете "
+"една или публикувайте своя.\n"
 
 #: templates/welcome.html:45
 msgid "Organize A Match For Free!"
@@ -446,14 +362,14 @@ msgstr "Разгледайте поканите в потока"
 #, python-format
 msgid ""
 "\n"
-"                            Other Players are looking for partners too!  Meet "
-"them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an invitation ... or post "
-"your own!\n"
+"                            Other Players are looking for partners too!  "
+"Meet them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an "
+"invitation ... or post your own!\n"
 msgstr ""
 "\n"
-"                            Други играчи също търсят партньори! Срещнете ги в "
-"%(QWIK)sGAME. Прегледайте %(QWIK)sFeed и изберете покана ... или публикувайте "
-"своя!\n"
+"                            Други играчи също търсят партньори! Срещнете ги "
+"в %(QWIK)sGAME. Прегледайте %(QWIK)sFeed и изберете покана ... или "
+"публикувайте своя!\n"
 
 #: templates/welcome.html:150
 msgid "Post new Match Invitation"
@@ -464,8 +380,9 @@ msgstr "Публикувай нова покана за мач"
 msgid ""
 "\n"
 "                            You don't find a suitable invitation in the "
-"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe and "
-"the place. Confirm a match with a Rival of your preference. You choose! \n"
+"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"and the place. Confirm a match with a Rival of your preference. You "
+"choose! \n"
 msgstr ""
 "\n"
 "                            Не намирате подходяща покана в %(QWIK)sFeed? "
@@ -492,6 +409,10 @@ msgstr "Приемете покана от потока"
 msgid "Post New Invitation"
 msgstr "Публикувайте нова покана"
 
+#: templates/welcome.html:195
+msgid "Invite Friends Only"
+msgstr "Покани само приятели"
+
 #: templates/welcome.html:199
 msgid "Chat With Your Rival"
 msgstr "Чат със съперника ви"
@@ -506,10 +427,11 @@ msgstr "Опитайте нови игри"
 
 #: templates/welcome.html:214
 msgid ""
-"FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS EASY."
+"FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
+"EASY."
 msgstr ""
-"НАМИРАНЕТО НА ПАРТНЬОРИ И ОРГАНИЗИРАНЕТО НА ИГРИ НЕ ТРЯБВА ДА Е ТРУДНО. НИЕ ГО "
-"ПРАВИМ ЛЕСНО."
+"НАМИРАНЕТО НА ПАРТНЬОРИ И ОРГАНИЗИРАНЕТО НА ИГРИ НЕ ТРЯБВА ДА Е ТРУДНО. НИЕ "
+"ГО ПРАВИМ ЛЕСНО."
 
 #: templates/welcome.html:218
 msgid "Find Your Partner"
@@ -536,8 +458,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    %(QWIK)sGAME is an app which facilitates finding partners "
-"and arranging 2-player games.\n"
+"                    %(QWIK)sGAME is an app which facilitates finding "
+"partners and arranging 2-player games.\n"
 msgstr ""
 "\n"
 "                    %(QWIK)sGAME е приложение, което улеснява намирането на "
@@ -556,10 +478,10 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    %(QWIK)sGAME focuses on 2-player games only with ambitious "
-"plans for multi-player games in the future. Currently we have the most popular 2-"
-"player games like tennis, squash, table tennis, badminton, racquetball, but also "
-"chess, darts, backgammon, billiards and more.\n"
+"                    %(QWIK)sGAME focuses on 2-player games only with "
+"ambitious plans for multi-player games in the future. Currently we have the "
+"most popular 2-player games like tennis, squash, table tennis, badminton, "
+"racquetball, but also chess, darts, backgammon, billiards and more.\n"
 msgstr ""
 "\n"
 "                    %(QWIK)sGAME се фокусира само върху игри за 2 играчи с "
@@ -607,7 +529,8 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                How do I find partner and schedule a match with %(QWIK)sGAME?\n"
+"                How do I find partner and schedule a match with "
+"%(QWIK)sGAME?\n"
 msgstr ""
 "\n"
 "                Как да намеря партньор и да насроча мач с %(QWIK)sGAME?\n"
@@ -616,24 +539,24 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    To find a partner and organize a match start by sending an "
-"invitation for a match. Select the game, venue and a timeframe. It is "
-"recommended to call the venue and check if there are available playgrounds for "
-"your preferred timeframe. Your Match Invitation will be visible in the QWIKFeed "
-"to other Players. Multiple Players may respond to your Invitation. You get to "
-"choose the best offer and confirm the match. You can also reply to an existing "
-"invitation from the %(QWIK)sFeed by placing an offer for a particular hour from "
-"the given timeframe.\n"
+"                    To find a partner and organize a match start by sending "
+"an invitation for a match. Select the game, venue and a timeframe. It is "
+"recommended to call the venue and check if there are available playgrounds "
+"for your preferred timeframe. Your Match Invitation will be visible in the "
+"QWIKFeed to other Players. Multiple Players may respond to your Invitation. "
+"You get to choose the best offer and confirm the match. You can also reply "
+"to an existing invitation from the %(QWIK)sFeed by placing an offer for a "
+"particular hour from the given timeframe.\n"
 msgstr ""
 "\n"
 "                    За да намерите партньор и да организирате мач, започнете "
 "като изпратите покана за мач. Изберете играта, мястото и времевия диапазон. "
 "Препоръчително е да се обадите на мястото и да проверите дали има свободни "
 "игрища за предпочитания от вас период. Вашата покана за мач ще бъде видима в "
-"QWIKFeed за други играчи. Няколко играчи могат да отговорят на вашата покана. "
-"Вие избирате най-добрата оферта и потвърждавате мача. Можете също да отговорите "
-"на съществуваща покана от %(QWIK)sFeed, като направите оферта за конкретен час "
-"от посочения времеви диапазон.\n"
+"QWIKFeed за други играчи. Няколко играчи могат да отговорят на вашата "
+"покана. Вие избирате най-добрата оферта и потвърждавате мача. Можете също да "
+"отговорите на съществуваща покана от %(QWIK)sFeed, като направите оферта за "
+"конкретен час от посочения времеви диапазон.\n"
 
 #: templates/welcome.html:318
 msgid ""
@@ -646,12 +569,12 @@ msgstr ""
 #: templates/welcome.html:325
 msgid ""
 "\n"
-"                    You can post as many invitations as you wish every day and "
-"for any game, venue or timeframe.\n"
+"                    You can post as many invitations as you wish every day "
+"and for any game, venue or timeframe.\n"
 msgstr ""
 "\n"
-"                    Можете да публикувате толкова покани, колкото желаете всеки "
-"ден и за всяка игра, място или времеви диапазон.\n"
+"                    Можете да публикувате толкова покани, колкото желаете "
+"всеки ден и за всяка игра, място или времеви диапазон.\n"
 
 #: templates/welcome.html:332
 #, python-format
@@ -666,12 +589,13 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    You can find all current invitations in our %(QWIK)sFeed. It "
-"is contantly updated with new invitations sent by Players.\n"
+"                    You can find all current invitations in our "
+"%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
 msgstr ""
 "\n"
 "                    Можете да намерите всички текущи покани в нашия "
-"%(QWIK)sFeed. Той се актуализира постоянно с нови покани, изпратени от играчи.\n"
+"%(QWIK)sFeed. Той се актуализира постоянно с нови покани, изпратени от "
+"играчи.\n"
 
 #: templates/welcome.html:346
 msgid ""
@@ -685,21 +609,22 @@ msgstr ""
 msgid ""
 "\n"
 "                    The Player who send the initial match invitation is "
-"responsible to call and book a court/playground once the match is confirmed. The "
-"Player is also recommended to call and check the venue availability before "
-"sending the invitation.\n"
+"responsible to call and book a court/playground once the match is confirmed. "
+"The Player is also recommended to call and check the venue availability "
+"before sending the invitation.\n"
 msgstr ""
 "\n"
 "                    Играчът, който изпраща първоначалната покана за мач, е "
-"отговорен да се обади и да резервира игрището, след като мачът бъде потвърден. "
-"Също така се препоръчва играчът да се обади и да провери наличността на мястото "
-"преди изпращане на поканата.\n"
+"отговорен да се обади и да резервира игрището, след като мачът бъде "
+"потвърден. Също така се препоръчва играчът да се обади и да провери "
+"наличността на мястото преди изпращане на поканата.\n"
 
 #: templates/welcome.html:360
 #, python-format
 msgid ""
 "\n"
-"                Why can't I find %(QWIK)sGAME in the PlayStore and AppStore?\n"
+"                Why can't I find %(QWIK)sGAME in the PlayStore and "
+"AppStore?\n"
 msgstr ""
 "\n"
 "                Защо не мога да намеря %(QWIK)sGAME в PlayStore и AppStore?\n"
@@ -714,10 +639,10 @@ msgid ""
 "systems and an Internet Browser is the only requirement.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME е Progressive Web App. Това е новото поколение "
-"приложения. Не е необходимо да изтегляте или инсталирате нищо. Просто запазете "
-"%(QWIK)sGAME на началния си екран. %(QWIK)sGAME PWA работи на всички операционни "
-"системи и единственото изискване е интернет браузър.\n"
+"                    %(QWIK)sGAME е Progressive Web App. Това е новото "
+"поколение приложения. Не е необходимо да изтегляте или инсталирате нищо. "
+"Просто запазете %(QWIK)sGAME на началния си екран. %(QWIK)sGAME PWA работи "
+"на всички операционни системи и единственото изискване е интернет браузър.\n"
 
 #: templates/welcome.html:374
 #, python-format
@@ -735,15 +660,15 @@ msgid ""
 "                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
 "Victoria, Australia as a Not For Profit Association. All discussions and "
 "decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
-"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will be "
-"most welcome.\n"
+"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
+"be most welcome.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME се управлява от QWIKGAME Inc., регистрирана във "
-"Виктория, Австралия като сдружение с нестопанска цел. Всички обсъждания и "
-"решения относно %(QWIK)sGAME се вземат онлайн във <a href=\"https://"
-"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Вашата помощ ще бъде "
-"много добре дошла.\n"
+"                    %(QWIK)sGAME се управлява от QWIKGAME Inc., регистрирана "
+"във Виктория, Австралия като сдружение с нестопанска цел. Всички обсъждания "
+"и решения относно %(QWIK)sGAME се вземат онлайн във <a href=\"https://forum."
+"qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Вашата помощ ще бъде много "
+"добре дошла.\n"
 
 #: templates/welcome.html:388
 #, python-format
@@ -758,9 +683,9 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Yes! The %(QWIK)sGAME software is entirely open-source. The "
-"latest code can be found on %(github_link)s. Your assistance will be most "
-"welcome.\n"
+"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
+"The latest code can be found on %(github_link)s. Your assistance will be "
+"most welcome.\n"
 msgstr ""
 "\n"
 "                    Да! Софтуерът на %(QWIK)sGAME е изцяло с отворен код. "
@@ -786,3 +711,70 @@ msgstr "Вход"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "Регистрация"
+
+#~ msgid "Cancel this Invitation?"
+#~ msgstr "Отказ от тази покана?"
+
+#~ msgid "cancel"
+#~ msgstr "отказ"
+
+#~ msgid "decline"
+#~ msgstr "отхвърляне"
+
+#~ msgid ""
+#~ "You are about to schedule a Match. A chat session will be opened with "
+#~ "your rival. Continue?"
+#~ msgstr ""
+#~ "На път сте да насрочите мач. Ще бъде отворен чат с вашия съперник. "
+#~ "Продължаване?"
+
+#~ msgid "Feed"
+#~ msgstr "Поток"
+
+#~ msgid "Invite"
+#~ msgstr "Покани"
+
+#, python-format
+#~ msgid ""
+#~ " \n"
+#~ "            Feed (%(appeals_length)s)\n"
+#~ msgstr ""
+#~ " \n"
+#~ "            Поток (%(appeals_length)s)\n"
+
+#~ msgid "Filter"
+#~ msgstr "Филтър"
+
+#~ msgid "Participating"
+#~ msgstr "Участие"
+
+#~ msgid "Get involved by accepting an Invitation, or sending a new one."
+#~ msgstr "Включете се, като приемете покана или изпратите нова."
+
+#~ msgid "All"
+#~ msgstr "Всички"
+
+#~ msgid "filtered"
+#~ msgstr "филтрирани"
+
+#~ msgid "Unfortunately no Invitations match your Filters."
+#~ msgstr "За съжаление няма покани, които да съответстват на вашите филтри."
+
+#~ msgid "Try deactivating a Filter or send out your own Invitation."
+#~ msgstr "Опитайте да деактивирате филтър или изпратете своя покана."
+
+#, python-format
+#~ msgid ""
+#~ "\n"
+#~ "                Open an Invitation %(br)s or send a new one!\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "                Отворете покана %(br)s или изпратете нова!\n"
+#~ "    "
+
+#~ msgid "Cancel this Offer?"
+#~ msgstr "Отказ от тази оферта?"
+
+#~ msgid "Keen To Play? Send Invitation?"
+#~ msgstr "Искате да играете? Изпратете покана?"

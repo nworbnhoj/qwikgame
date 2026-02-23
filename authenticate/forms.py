@@ -83,9 +83,16 @@ class LoginForm(EmailValidateForm):
             if user.has_usable_password():
                 return email
             else:
-                raise ValidationError(f'The account is disabled for {email}')
+                msg = _("The account is disabled for %(e)s") % {"e": email}
+                raise ValidationError(msg)
         except User.DoesNotExist:
-            raise ValidationError((mark_safe(f"There is no account for this email.<br>Would you like to <a href='/authenticate/register/'>register</a>?")))
+            raise ValidationError((mark_safe(
+                _("There is no account for this email.%(br)sWould you like to %(a0)sregister%(a1)s?") % {
+                    'br': '<br>',
+                    'a0': "<a href='/authenticate/register/'>",
+                    'a1': "</a>"
+                }
+            )))
 
 
 class RegisterForm(EmailValidateForm):

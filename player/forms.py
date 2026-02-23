@@ -3,6 +3,7 @@ from authenticate.forms import RegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
+from django.utils.translation import gettext as _
 from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
@@ -20,21 +21,21 @@ logger = logging.getLogger(__file__)
 
 class FilterForm(QwikForm):
     game = ChoiceField(
-        choices = {'ANY':'Any Game'} | Game.choices(),
-        help_text='Only see invitations for a particular Game.',
-        label = 'GAME',
+        choices = {'ANY':_('Any Game')} | Game.choices(),
+        help_text=_('Only see invitations for a particular Game.'),
+        label = _('GAME'),
         required=True,
         template_name='field.html',
     )
     place = ChoiceField(
-        help_text='Only see invitations for a particular Venue.',
-        label='PLACE',
+        help_text=_('Only see invitations for a particular Venue.'),
+        label=_('PLACE'),
         template_name='field.html',
         widget=DataSelect,
     )
     hours = WeekField(
-        help_text='Only see invitations at specific times in your week.',
-        label='TIME',
+        help_text=_('Only see invitations at specific times in your week.'),
+        label=_('TIME'),
         hours_enable=[*range(6,21)],
         hours_show=[*range(6,21)],
         required=True,
@@ -106,7 +107,7 @@ class FilterForm(QwikForm):
             if not cleaned_data.get('placeid'):
                 self.add_error(
                     "place",
-                    'Sorry, that Venue selection did not work. Please try again.'
+                    _('Sorry, that Venue selection did not work. Please try again.')
                 )
 
     def clean_hours(self):
@@ -138,7 +139,7 @@ class FilterForm(QwikForm):
                 },
             )
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
-        choices = [('ANY','Anywhere'), ('show-map', 'Select from map'), ('placeid', '')]
+        choices = [('ANY',_('Anywhere')), (_('show-map'), _('Select from map')), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
         form.fields['place'].widget.data_attr = form._place_data_attr(places)
@@ -157,7 +158,7 @@ class FilterForm(QwikForm):
     @classmethod
     def post(klass, request_post, places):
         form = klass(data=request_post)
-        choices = [('ANY','Anywhere'), ('placeid', '')]
+        choices = [('ANY',_('Anywhere')), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
         form.fields['place'].widget.data_attr = form._place_data_attr(places)
@@ -180,7 +181,7 @@ class FilterForm(QwikForm):
 
 class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
-        label='NO ACTIVE FILTERS',
+        label=_('NO ACTIVE FILTERS'),
         required=False,
         widget=CheckboxSelectMultiple,
     )
@@ -213,13 +214,13 @@ class FiltersForm(QwikForm):
 
 class FriendForm(QwikForm):
     email = EmailField(
-        label = "FRIEND'S EMAIL ADDRESS",
+        label = _("FRIEND'S EMAIL ADDRESS"),
         max_length=255,
         required = True,
         template_name = 'field.html',
     )
     name = CharField(
-        label = 'NAME',
+        label = _('NAME'),
         max_length=32,
         required=False,
         template_name = 'field.html',
@@ -231,8 +232,8 @@ class FriendForm(QwikForm):
         if friend:
             form.fields['email'].initial = friend.email
             form.fields['name'].initial = friend.name
-        form.fields['email'].widget.attrs = { 'placeholder': 'Type email address'}
-        form.fields['name'].widget.attrs = { 'placeholder': 'A screen name for your friend (optional)'}
+        form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
+        form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
         return { 'friend_form' : form, }
 
     @classmethod
@@ -271,14 +272,14 @@ class InviteForm(RegisterForm):
 class StrengthForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),
-        label = 'GAME',
+        label = _('GAME'),
         required = True,
         template_name='field.html',
     )
     strength = SelectRangeField(
         choices = Strength.SCALE,
         initial = Strength.SCALE.get('m'),
-        label = 'RIVAL SKILL LEVEL',
+        label = _('RIVAL SKILL LEVEL'),
         required = True,
     )
 

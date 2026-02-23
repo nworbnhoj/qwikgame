@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, Select, URLField
+from django.utils.translation import gettext as _
 from person.models import LANGUAGE, ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Person, Social
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
@@ -9,7 +10,7 @@ class DeleteWidget(CheckboxSelectMultiple):
 
 class BlockForm(QwikForm):
     block = IntegerField(
-        label='Person to block',
+        label=_('Person to block'),
         required=True,
         )
 
@@ -29,24 +30,24 @@ class BlockForm(QwikForm):
 
 class PrivateForm(QwikForm):
     notify_email = BooleanField(
-        label='EMAIL NOTIFICATIONS',
+        label=_('EMAIL NOTIFICATIONS'),
         required=False,
         template_name='input_checkbox.html'
     )
     notify_push = BooleanField(
-        label='WEB / APP NOTIFICATIONS',
+        label=_('WEB / APP NOTIFICATIONS'),
         required=False,
         template_name='input_webpush.html'
     )
     location_auto = BooleanField(
         help_text="This will make finding a Venue nearby faster.",
-        label='ALLOW LOCATION ACCESS',
+        label=_('ALLOW LOCATION ACCESS'),
         required=False,
         template_name="input_checkbox.html"
     )
     language = ChoiceField(
         choices = dict(LANGUAGE), 
-        label='LANGUAGE', 
+        label=_('LANGUAGE'), 
         template_name='field.html', 
     )
 
@@ -65,8 +66,14 @@ class PrivateForm(QwikForm):
                 'language': person.language,
             },
         )
-        form.fields['notify_email'].help_text = f"Receive Email for Bid ({Alert.str(True, ALERT_EMAIL_DEFAULT, 'bid', 'email')}) and Match ({Alert.str(True, ALERT_EMAIL_DEFAULT, 'match', 'email')})"
-        form.fields['notify_push'].help_text = f"See App Notifications for Bid ({Alert.str(True, ALERT_PUSH_DEFAULT, 'bid', 'push')}) and Match ({Alert.str(True, ALERT_PUSH_DEFAULT, 'match', 'push')})"
+        form.fields['notify_email'].help_text = _("Receive Email for Bid %(bid)s and Match %(match)s") % {
+                "bid": Alert.str(True, ALERT_EMAIL_DEFAULT, 'bid', 'email'),
+                "match": Alert.str(True, ALERT_EMAIL_DEFAULT, 'match', 'email')
+            }
+        form.fields['notify_push'].help_text = _("See App Notifications for Bid %(bid)s and Match %(match)s)") % {
+                "bid": Alert.str(True, ALERT_PUSH_DEFAULT, 'bid', 'push'),
+                "match": Alert.str(True, ALERT_PUSH_DEFAULT, 'match', 'push')
+            }
         return {'private_form': form }
 
     # Initializes a PrivateForm with 'request_post' for 'person'.
@@ -88,14 +95,14 @@ class PrivateForm(QwikForm):
 
 class PublicForm(QwikForm):
     name = CharField(
-        label='QWIK NAME',
+        label=_('QWIK NAME'),
         max_length=32,
         required=False,
         template_name='field.html',
     )
     socials = MultipleChoiceField(
         choices=(),
-        label='WEBSITE / SOCIAL MEDIA',
+        label=_('WEBSITE / SOCIAL MEDIA'),
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple()
@@ -108,8 +115,8 @@ class PublicForm(QwikForm):
     def __init__(self, *args, **kwargs):
         social_urls = kwargs.pop('social_urls')
         super(PublicForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs['placeholder'] = "your qwikgame screen name"
-        self.fields['social'].widget.attrs['placeholder'] = "add a social media url"
+        self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
+        self.fields['social'].widget.attrs['placeholder'] = _('add a social media url')
         self.fields['socials'].choices = social_urls
         self.fields['socials'].widget.attrs['class'] = "post"
         self.fields['socials'].widget.option_template_name='option_delete.html'
@@ -156,8 +163,8 @@ class PublicForm(QwikForm):
 
 class UnblockForm(QwikForm):
     blocked = MultipleChoiceField(
-        help_text='When you block a person, neither of you will see the other on qwikgame.',
-        label='PEOPLE YOU HAVE BLOCKED',
+        help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
+        label=_('PEOPLE YOU HAVE BLOCKED'),
         widget=CheckboxSelectMultiple,
     )
         

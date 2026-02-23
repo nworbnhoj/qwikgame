@@ -1,6 +1,7 @@
 import logging
 from django.core.exceptions import ValidationError
 from django.forms import CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
+from django.utils.translation import gettext as _
 from game.models import Game
 from venue.models import Region, Venue
 from qwikgame.fields import WeekField
@@ -12,22 +13,22 @@ logger = logging.getLogger(__file__)
 
 class GoogleSearchForm(QwikForm):
     query = CharField(
-        # help_text='Google Places search',
-        label = 'SEARCH',
+        # help_text=_('Google Places search'),
+        label = _('SEARCH'),
         required = True,
     )
     region = ChoiceField(
         choices = Region.choices(),
-        help_text='restrict the search to a region',
-        label = 'REGION',
+        help_text=_('restrict the search to a region'),
+        label = _('REGION'),
         required = True,
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down left hidden"})
     )
     game = ChoiceField(
         choices = Game.choices(),
-        help_text = 'Specify the Game for these Qwikgame Venues',
-        label = 'GAME',
+        help_text = _('Specify the Game for these Qwikgame Venues'),
+        label = _('GAME'),
         required = True,
         template_name='field.html',
     )
@@ -56,8 +57,8 @@ class GoogleSearchForm(QwikForm):
 class GooglePlacesForm(QwikForm):
     places = MultipleChoiceField(
         choices = {},
-        help_text='Select Google Places to add as Qwikgame Venues',
-        label='GOOGLE PLACES',
+        help_text=_('Select Google Places to add as Qwikgame Venues'),
+        label=_('GOOGLE PLACES'),
         required=True,
         widget=CheckboxSelectMultiple,
     )

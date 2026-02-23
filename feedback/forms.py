@@ -1,6 +1,7 @@
 import logging
-from feedback.models import Feedback
 from django.forms import ModelForm, Select, Textarea
+from django.utils.translation import gettext as _
+from feedback.models import Feedback
 
 
 logger = logging.getLogger(__file__)
@@ -11,10 +12,10 @@ class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
         fields = ['type', 'text']
-        labels = { 'text': 'Description' }
+        labels = { 'text': _('Description') }
         widgets = {
-            'text': Textarea(attrs={'placeholder': 'thanks heaps for taking the time!'}),
-            'type': Select(attrs={'class': 'feedback'}),
+            'text': Textarea(attrs={'placeholder': _('thanks heaps for taking the time!')}),
+            'type': Select(attrs={'class': _('feedback')}),
         }
 
     @classmethod

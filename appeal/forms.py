@@ -1,6 +1,7 @@
 import datetime, logging
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
+from django.utils.translation import gettext as _
 from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
@@ -53,8 +54,8 @@ class AcceptForm(QwikForm):
 
 class BidForm(QwikForm):
     hour = DayRadioField(
-        help_text='When are you keen to play?',
-        label='WHAT TIME WORKS FOR YOU?',
+        help_text=_('When are you keen to play?'),
+        label=_('WHAT TIME WORKS FOR YOU?'),
         required=False,
         template_name='field.html',
     )
@@ -105,33 +106,33 @@ class BidForm(QwikForm):
 class KeenForm(QwikForm):
     game = ChoiceField(
         choices = {None: ''} | Game.choices(),
-        label = 'GAME',
+        label = _('GAME'),
         required = True,
         template_name='field.html',
     )
     place = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(
-        help_text='When are you keen to play?',
+        help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label='TODAY',
+        label=_('TODAY'),
         offsetday='0',
         required=False,
         template_name='field.html',
     )
     tomorrow = DayMultiField(
-        help_text='When are you keen to play?',
+        help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label='TOMORROW',
+        label=_('TOMORROW'),
         offsetday='1',
         required=False,
         template_name='field.html',
     )
     friends = MultipleActionField(
         action='invite:',
-        # help_text='Invite your friends to play this qwikgame.',
-        label='FRIENDS',
+        # help_text=_('Invite your friends to play this qwikgame.'),
+        label=_('FRIENDS'),
         required=False,
     )
     lat = DecimalField(
@@ -194,8 +195,8 @@ class KeenForm(QwikForm):
         widget=HiddenInput(),
     )
     # strength = SelectRangeField(
-    #     choices={'W':'Much Weaker', 'w':'Weaker', 'm':'Well Matched', 's':'Stronger', 'S':'Much Stronger'},
-    #     help_text='Restrict this invitation to Rivals of a particular skill level.',
+    #     choices={'W':_('Much Weaker'), 'w':_('Weaker'), 'm':_('Well Matched'), 's':_('Stronger'), 'S':_('Much Stronger')},
+    #     help_text=_('Restrict this invitation to Rivals of a particular skill level.'),
     #     label = "RIVAL'S SKILL LEVEL",
     #     required=False,
     #     template_name = 'upgrade.html',
@@ -209,20 +210,20 @@ class KeenForm(QwikForm):
         cleaned_data = super().clean()
         if not cleaned_data.get('today'):
             if not cleaned_data.get('tomorrow'):
-                msg = 'Please select at least one hour in today or tomorrow.'
+                msg = _('Please select at least one hour in today or tomorrow.')
                 self.add_error('today', msg)
                 self.add_error('tomorrow', msg)
         if cleaned_data.get('place') == 'placeid':
             if not cleaned_data.get('placeid'):
                 self.add_error(
                     "place",
-                    'Sorry, that Venue selection did not work. Please try again.'
+                    _('Sorry, that Venue selection did not work. Please try again.')
                 )
         if 'reveal_friends' in self.data:
             if len(cleaned_data['friends']) == 0:
                 self.add_error(
                     'friends',
-                    'Please invite at least one Friend.'
+                    _('Please invite at least one Friend.')
                 )
 
     def clean_place(self):
@@ -232,22 +233,22 @@ class KeenForm(QwikForm):
         if Venue.objects.filter(placeid=place_id).exists():
             return place_id
         raise ValidationError(
-            'Sorry, that Venue selection did not work. Please try again.'
+            _('Sorry, that Venue selection did not work. Please try again.')
         )
 
     def personalise(self, player):
         self.fields['friends'].choices = player.friend_choices()
-        self.fields['friends'].reveal = 'Invite Friends Only?'
+        self.fields['friends'].reveal = _('Invite Friends Only?')
         if not self.fields['friends'].choices:
-            self.fields['friends'].sub_text = "You don't have any added friends yet. Please add them from the Friends tab"
+            self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(20).order_by('name').all()[:20]
-        choices = [(None, ''), ('show-map', 'Select from map'), ('placeid', '')]
+        choices = [(None, ''), (_('show-map'), _('Select from map')), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,
-            label='VENUE',
+            label=_('VENUE'),
             required = True,
             template_name='field.html', 
             widget=DataSelect(

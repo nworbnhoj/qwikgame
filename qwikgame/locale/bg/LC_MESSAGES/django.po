@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:43+1100\n"
+"POT-Creation-Date: 2026-02-24 05:51+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: qwikgame/constants.py:9
 msgid "SUNDAY"
 msgstr "НЕДЕЛЯ"
@@ -503,6 +504,178 @@ msgstr ""
 
 #: qwikgame/constants.py:174
 msgid "Kazakhstan"
+msgstr ""
+
+#: qwikgame/constants.py:175
+msgid "Kenya"
+msgstr ""
+
+#: qwikgame/constants.py:176
+msgid "Kiribati"
+msgstr ""
+
+#: qwikgame/constants.py:177
+#, fuzzy
+#| msgid "Congo, the Democratic Republic of the"
+msgid "Korea, Democratic People's Republic of"
+msgstr "Демократична република Конго"
+
+#: qwikgame/constants.py:178
+#, fuzzy
+#| msgid "Iran, Islamic Republic of"
+msgid "Korea, Republic of"
+msgstr "Иран"
+
+#: qwikgame/constants.py:179
+msgid "Kuwait"
+msgstr ""
+
+#: qwikgame/constants.py:180
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: qwikgame/constants.py:181
+#, fuzzy
+#| msgid "Congo, the Democratic Republic of the"
+msgid "Lao People's Democratic Republic"
+msgstr "Демократична република Конго"
+
+#: qwikgame/constants.py:182
+msgid "Latvia"
+msgstr ""
+
+#: qwikgame/constants.py:183
+msgid "Lebanon"
+msgstr ""
+
+#: qwikgame/constants.py:184
+msgid "Lesotho"
+msgstr ""
+
+#: qwikgame/constants.py:185
+msgid "Liberia"
+msgstr ""
+
+#: qwikgame/constants.py:186
+msgid "Libya"
+msgstr ""
+
+#: qwikgame/constants.py:187
+msgid "Liechtenstein"
+msgstr ""
+
+#: qwikgame/constants.py:188
+msgid "Lithuania"
+msgstr ""
+
+#: qwikgame/constants.py:189
+msgid "Luxembourg"
+msgstr ""
+
+#: qwikgame/constants.py:190
+msgid "Macao"
+msgstr ""
+
+#: qwikgame/constants.py:191
+msgid "Macedonia, the former Yugoslav Republic of"
+msgstr ""
+
+#: qwikgame/constants.py:192
+msgid "Madagascar"
+msgstr ""
+
+#: qwikgame/constants.py:193
+msgid "Malawi"
+msgstr ""
+
+#: qwikgame/constants.py:194
+msgid "Malaysia"
+msgstr ""
+
+#: qwikgame/constants.py:195
+msgid "Mali"
+msgstr ""
+
+#: qwikgame/constants.py:196
+msgid "Malta"
+msgstr ""
+
+#: qwikgame/constants.py:197
+#, fuzzy
+#| msgid "Faroe Islands"
+msgid "Marshall Islands"
+msgstr "Фарьорски острови"
+
+#: qwikgame/constants.py:198
+msgid "Martinique"
+msgstr ""
+
+#: qwikgame/constants.py:199
+msgid "Mauritania"
+msgstr ""
+
+#: qwikgame/constants.py:200
+msgid "Mauritius"
+msgstr ""
+
+#: qwikgame/constants.py:201
+msgid "Mayotte"
+msgstr ""
+
+#: qwikgame/constants.py:202
+msgid "Mexico"
+msgstr ""
+
+#: qwikgame/constants.py:203
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#: qwikgame/constants.py:204
+#, fuzzy
+#| msgid "Iran, Islamic Republic of"
+msgid "Moldova, Republic of"
+msgstr "Иран"
+
+#: qwikgame/constants.py:205
+msgid "Monaco"
+msgstr ""
+
+#: qwikgame/constants.py:206
+#, fuzzy
+#| msgid "Angola"
+msgid "Mongolia"
+msgstr "Ангола"
+
+#: qwikgame/constants.py:207
+msgid "Montenegro"
+msgstr ""
+
+#: qwikgame/constants.py:208
+msgid "Montserrat"
+msgstr ""
+
+#: qwikgame/constants.py:209
+msgid "Morocco"
+msgstr ""
+
+#: qwikgame/constants.py:210
+msgid "Mozambique"
+msgstr ""
+
+#: qwikgame/constants.py:211
+msgid "Myanmar"
+msgstr ""
+
+#: qwikgame/constants.py:212
+msgid "Namibia"
+msgstr ""
+
+#: qwikgame/constants.py:213
+msgid "Nauru"
+msgstr ""
+
+#: qwikgame/constants.py:214
+msgid "Nepal"
 msgstr ""
 
 #: qwikgame/constants.py:215

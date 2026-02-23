@@ -2,7 +2,7 @@ import logging
 from django.forms import BooleanField, CharField,  CheckboxInput, CheckboxSelectMultiple, ChoiceField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from game.models import Game
 from player.models import Strength
 from qwikgame.fields import ActionMultiple, MultipleActionField

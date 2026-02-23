@@ -1,6 +1,6 @@
 import logging
 from django.forms import ModelForm, Select, Textarea
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from feedback.models import Feedback
 
 

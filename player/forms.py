@@ -3,7 +3,7 @@ from authenticate.forms import RegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength

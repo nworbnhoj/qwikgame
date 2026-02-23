@@ -1,7 +1,7 @@
 import logging
 from django.core.exceptions import ValidationError
 from django.forms import CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from game.models import Game
 from venue.models import Region, Venue
 from qwikgame.fields import WeekField

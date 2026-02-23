@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:08+1100\n"
+"POT-Creation-Date: 2026-02-23 11:07+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: authenticate/forms.py:86
+#, python-format
+msgid "The account is disabled for %(e)s"
+msgstr "Акаунтът за %(e)s е деактивиран."
+
+#: authenticate/forms.py:90
+#, python-format
+msgid ""
+"There is no account for this email.%(br)sWould you like to "
+"%(a0)sregister%(a1)s?"
+msgstr ""
+"Няма акаунт с този имейл.%(br)sИскате ли да се "
+"%(a0)sрегистрирате%(a1)s?"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -38,7 +52,8 @@ msgstr ""
 #: authenticate/templates/authenticate/login_email_text.html:11
 #: authenticate/templates/authenticate/register_email_text.html:11
 msgid "Please click on the following link to access your account:"
-msgstr "Моля, кликнете върху следния линк, за да получите достъп до профила си:"
+msgstr ""
+"Моля, кликнете върху следния линк, за да получите достъп до профила си:"
 
 #: authenticate/templates/authenticate/email_validate_email.html:13
 #: authenticate/templates/authenticate/login_email_text.html:4
@@ -63,7 +78,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Изпратен е имейл до %(request.GET.to_email)s с линк за потвърждение.\n"
+"        Изпратен е имейл до %(request.GET.to_email)s с линк за "
+"потвърждение.\n"
 "    "
 
 #: authenticate/templates/authenticate/email_validate_sent.html:15
@@ -165,7 +181,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"            Изпратен е имейл до %(request.GET.to_email)s с линк за регистрация.\n"
+"            Изпратен е имейл до %(request.GET.to_email)s с линк за "
+"регистрация.\n"
 "    "
 
 #: authenticate/templates/authenticate/register_email_subject.txt:4
@@ -208,7 +225,8 @@ msgstr "Съжаляваме, това не проработи."
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr ""
-"Токенът за сигурност в този линк е изтекъл или е невалиден по някаква причина."
+"Токенът за сигурност в този линк е изтекъл или е невалиден по някаква "
+"причина."
 
 #: authenticate/templates/authenticate/token_invalid.html:16
 msgid "Login / Registration"

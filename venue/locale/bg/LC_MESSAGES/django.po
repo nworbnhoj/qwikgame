@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 12:18+1100\n"
+"POT-Creation-Date: 2026-02-23 11:07+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: venue/forms.py:17
+msgid "SEARCH"
+msgstr "ТЪРСЕНЕ"
+
+#: venue/forms.py:22
+msgid "restrict the search to a region"
+msgstr "ограничи търсенето до регион"
+
+#: venue/forms.py:23
+msgid "REGION"
+msgstr "РЕГИОН"
+
+#: venue/forms.py:30
+msgid "Specify the Game for these Qwikgame Venues"
+msgstr "Посочете играта за тези места в Qwikgame"
+
+#: venue/forms.py:31
+#, fuzzy
+#| msgid "GAMES"
+msgid "GAME"
+msgstr "ИГРА"
+
+#: venue/forms.py:60
+msgid "Select Google Places to add as Qwikgame Venues"
+msgstr "Изберете Google Places, за да ги добавите като места в Qwikgame"
+
+#: venue/forms.py:61
+msgid "GOOGLE PLACES"
+msgstr "GOOGLE PLACES"
+
 #: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
 #: venue/templates/venue/venues.html:33
 msgid "Venues"

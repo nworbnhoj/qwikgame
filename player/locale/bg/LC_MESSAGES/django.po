@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 12:18+1100\n"
+"POT-Creation-Date: 2026-02-23 11:07+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,75 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: player/forms.py:24
+msgid "Any Game"
+msgstr "Всяка игра"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "Показвай само покани за определена игра."
+
+#: player/forms.py:26 player/forms.py:275
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "ИГРА"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "Показвай само покани за определено място."
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "МЯСТО"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "Показвай само покани в определени часове от седмицата."
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "ВРЕМЕ"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
+
+#: player/forms.py:142 player/forms.py:161
+msgid "Anywhere"
+msgstr "Навсякъде"
+
+#: player/forms.py:142
+msgid "show-map"
+msgstr "покажи-карта"
+
+#: player/forms.py:142
+msgid "Select from map"
+msgstr "Избери от картата"
+
+#: player/forms.py:184
+msgid "NO ACTIVE FILTERS"
+msgstr "НЯМА АКТИВНИ ФИЛТРИ"
+
+#: player/forms.py:217
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "ИМЕЙЛ АДРЕС НА ПРИЯТЕЛ"
+
+#: player/forms.py:223
+msgid "NAME"
+msgstr "ИМЕ"
+
+#: player/forms.py:235
+msgid "Type email address"
+msgstr "Въведете имейл адрес"
+
+#: player/forms.py:236
+msgid "A screen name for your friend (optional)"
+msgstr "Екранно име за вашия приятел (по избор)"
+
+#: player/forms.py:282
+msgid "RIVAL SKILL LEVEL"
+msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
 
 #: player/templates/player/account_public_snippet.html:5
 msgid "YOUR QWIKGAME REPUTATION"
@@ -139,10 +208,6 @@ msgstr ""
 "Моля, отделете малко време, за да уведомите qwikgame колко силен е вашият "
 "приятел. Това ще помогне на qwikgame да създава по-добри мачове за вас, "
 "вашия приятел и други qwikgame играчи, които познават някой от вас."
-
-#: player/templates/player/strength.html:84
-msgid "GAME"
-msgstr "ИГРА"
 
 #: player/templates/player/strength.html:85
 msgid "STRENGTH"

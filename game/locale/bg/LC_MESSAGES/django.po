@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:31+1100\n"
+"POT-Creation-Date: 2026-02-23 11:07+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game/forms.py:30
+msgid "Chat here with your rival"
+msgstr "Чатете тук с вашия съперник"
+
+#: game/forms.py:56
+msgid "RIVAL SKILL LEVEL"
+msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
+
+#: game/forms.py:60
+msgid "poor sportsmanship"
+msgstr "неспортсменско поведение"
+
+#: game/forms.py:60
+msgid "did not show up"
+msgstr "не се появи"
+
+#: game/forms.py:61
+msgid "RIVAL CONDUCT"
+msgstr "ПОВЕДЕНИЕ НА СЪПЕРНИКА"
+
+#: game/forms.py:75
+msgid "Did anything go wrong?"
+msgstr "Имаше ли нещо нередно?"
+
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
 msgstr "Мач"
@@ -129,7 +154,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"                Всички отзиви за мачове са завършени - благодарим%(br)sИскате да играете?\n"
+"                Всички отзиви за мачове са завършени - "
+"благодарим%(br)sИскате да играете?\n"
 "        "
 
 #: game/templates/game/reviews.html:110

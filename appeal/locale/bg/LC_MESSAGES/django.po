@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 22:02+1100\n"
+"POT-Creation-Date: 2026-02-23 11:07+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
+msgid "When are you keen to play?"
+msgstr "Кога искаш да играеш?"
+
+#: appeal/forms.py:58
+msgid "WHAT TIME WORKS FOR YOU?"
+msgstr "КОЕ ВРЕМЕ ТИ Е УДОБНО?"
+
+#: appeal/forms.py:109
+msgid "GAME"
+msgstr "ИГРА"
+
+#: appeal/forms.py:118
+msgid "TODAY"
+msgstr "ДНЕС"
+
+#: appeal/forms.py:127
+msgid "TOMORROW"
+msgstr "УТРЕ"
+
+#: appeal/forms.py:135
+msgid "FRIENDS"
+msgstr "ПРИЯТЕЛИ"
+
+#: appeal/forms.py:213
+msgid "Please select at least one hour in today or tomorrow."
+msgstr "Моля, изберете поне един час за днес или утре."
+
+#: appeal/forms.py:220 appeal/forms.py:236
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
+
+#: appeal/forms.py:226
+msgid "Please invite at least one Friend."
+msgstr "Моля, поканете поне един приятел."
+
+#: appeal/forms.py:241
+#, fuzzy
+#| msgid "Invite Friends Only"
+msgid "Invite Friends Only?"
+msgstr "Покани само приятели?"
+
+#: appeal/forms.py:243
+msgid ""
+"You don't have any added friends yet. Please add them from the Friends tab"
+msgstr "Все още нямате добавени приятели. Моля, добавете ги от раздела „Приятели“."
+
+#: appeal/forms.py:247
+msgid "show-map"
+msgstr "покажи-карта"
+
+#: appeal/forms.py:247
+msgid "Select from map"
+msgstr "Избери от картата"
+
+#: appeal/forms.py:251
+msgid "VENUE"
+msgstr "МЯСТО"
+
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"
 msgstr "Отказ от тази покана?"
@@ -34,7 +94,8 @@ msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
 msgstr ""
-"На път сте да насрочите мач. Ще бъде отворен чат с вашия съперник. Продължаване?"
+"На път сте да насрочите мач. Ще бъде отворен чат с вашия съперник. "
+"Продължаване?"
 
 #: appeal/templates/appeal/appeals.html:7
 msgid "Feed"
@@ -102,6 +163,6 @@ msgstr "Отказ от тази оферта?"
 msgid "Keen To Play? Send Invitation?"
 msgstr "Искате да играете? Изпратете покана?"
 
-#: appeal/templates/appeal/keen.html:89 templates/welcome.html:195
+#: appeal/templates/appeal/keen.html:89
 msgid "Invite Friends Only"
 msgstr "Покани само приятели"

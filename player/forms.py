@@ -192,7 +192,7 @@ class FiltersForm(QwikForm):
         active = [ str(filter.id) for filter in filters.filter(active=True) ]
         choices = { str(filter.id) : filter for filter in filters}
         self.fields['filters'].choices = choices
-        self.fields['filters'].label = '{} ACTIVE FILTERS'.format(len(active))
+        self.fields['filters'].label = _("%(n)s ACTIVE FILTERS") % {'n': len(active)}
         self.fields['filters'].initial = active
         # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
 

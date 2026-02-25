@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:07+1100\n"
+"POT-Creation-Date: 2026-02-25 22:28+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: player/forms.py:24
+#: player/forms.py:24 player/models.py:462
 msgid "Any Game"
 msgstr "Всяка игра"
 
@@ -51,7 +51,7 @@ msgstr "ВРЕМЕ"
 msgid "Sorry, that Venue selection did not work. Please try again."
 msgstr "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
 
-#: player/forms.py:142 player/forms.py:161
+#: player/forms.py:142 player/forms.py:161 player/models.py:463
 msgid "Anywhere"
 msgstr "Навсякъде"
 
@@ -65,6 +65,10 @@ msgstr "Избери от картата"
 
 #: player/forms.py:184
 msgid "NO ACTIVE FILTERS"
+msgstr "НЯМА АКТИВНИ ФИЛТРИ"
+
+#: player/forms.py:195
+msgid "%(n)s ACTIVE FILTERS"
 msgstr "НЯМА АКТИВНИ ФИЛТРИ"
 
 #: player/forms.py:217
@@ -86,6 +90,42 @@ msgstr "Екранно име за вашия приятел (по избор)"
 #: player/forms.py:282
 msgid "RIVAL SKILL LEVEL"
 msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "вероятно"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "може би"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "неизвестен"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+msgid "much-weaker"
+msgstr "Много по-слаб"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+msgid "weaker"
+msgstr "По-слаб"
+
+#: player/models.py:400
+msgid "matched"
+msgstr "Равностоен"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+msgid "stronger"
+msgstr "По-силен"
+
+#: player/models.py:402
+msgid "much-stonger"
+msgstr "Много по-силен"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "Всяка игра"
 
 #: player/templates/player/account_public_snippet.html:5
 msgid "YOUR QWIKGAME REPUTATION"
@@ -213,24 +253,12 @@ msgstr ""
 msgid "STRENGTH"
 msgstr "СИЛА"
 
-#: player/templates/player/strength.html:87
-msgid "Much Weaker"
-msgstr "Много по-слаб"
-
-#: player/templates/player/strength.html:88
-msgid "Weaker"
-msgstr "По-слаб"
-
 #: player/templates/player/strength.html:89
-msgid "Well Matched"
+msgid "well-matched"
 msgstr "Равностоен"
 
-#: player/templates/player/strength.html:90
-msgid "Stronger"
-msgstr "По-силен"
-
 #: player/templates/player/strength.html:91
-msgid "Much Stronger"
+msgid "much-stronger"
 msgstr "Много по-силен"
 
 #: player/templates/player/strength.html:96

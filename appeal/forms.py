@@ -195,7 +195,7 @@ class KeenForm(QwikForm):
         widget=HiddenInput(),
     )
     # strength = SelectRangeField(
-    #     choices={'W':_('Much Weaker'), 'w':_('Weaker'), 'm':_('Well Matched'), 's':_('Stronger'), 'S':_('Much Stronger')},
+    #     choices={'W':_('much-weaker'), 'w':_('weaker'), 'm':_('well-matched'), 's':_('stronger'), 'S':_('much-stronger')},
     #     help_text=_('Restrict this invitation to Rivals of a particular skill level.'),
     #     label = "RIVAL'S SKILL LEVEL",
     #     required=False,
@@ -238,7 +238,7 @@ class KeenForm(QwikForm):
 
     def personalise(self, player):
         self.fields['friends'].choices = player.friend_choices()
-        self.fields['friends'].reveal = _('Invite Friends Only?')
+        self.fields['friends'].reveal = _('Invite Friends Only')
         if not self.fields['friends'].choices:
             self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
         self.fields['today'].sub_text = ' '

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:07+1100\n"
+"POT-Creation-Date: 2026-02-25 22:03+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,16 +54,15 @@ msgstr "Съжаляваме, изборът на място не беше ус�
 msgid "Please invite at least one Friend."
 msgstr "Моля, поканете поне един приятел."
 
-#: appeal/forms.py:241
-#, fuzzy
-#| msgid "Invite Friends Only"
-msgid "Invite Friends Only?"
-msgstr "Покани само приятели?"
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:89
+msgid "Invite Friends Only"
+msgstr "Покани само приятели"
 
 #: appeal/forms.py:243
 msgid ""
 "You don't have any added friends yet. Please add them from the Friends tab"
-msgstr "Все още нямате добавени приятели. Моля, добавете ги от раздела „Приятели“."
+msgstr ""
+"Все още нямате добавени приятели. Моля, добавете ги от раздела „Приятели“."
 
 #: appeal/forms.py:247
 msgid "show-map"
@@ -162,7 +161,3 @@ msgstr "Отказ от тази оферта?"
 #: appeal/templates/appeal/keen.html:70
 msgid "Keen To Play? Send Invitation?"
 msgstr "Искате да играете? Изпратете покана?"
-
-#: appeal/templates/appeal/keen.html:89
-msgid "Invite Friends Only"
-msgstr "Покани само приятели"

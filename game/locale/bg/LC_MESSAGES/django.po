@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:07+1100\n"
+"POT-Creation-Date: 2026-02-25 22:03+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,6 +134,10 @@ msgstr ""
 "            Няма предстоящи мачове%(br)sИскате да играете?\n"
 "        "
 
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
+msgid "Invite"
+msgstr "Покани"
+
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
 msgstr "Отзиви"
@@ -157,10 +161,6 @@ msgstr ""
 "                Всички отзиви за мачове са завършени - "
 "благодарим%(br)sИскате да играете?\n"
 "        "
-
-#: game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "Покани"
 
 #: game/templates/game/rival.html:7
 msgid "Rival"

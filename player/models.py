@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from django.db import models
 from django.db.models import Lookup
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from game.models import Game, Match
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_ALL, WEEK_NONE, WEEK_QWIK
@@ -388,17 +389,17 @@ class Player(models.Model):
 class Strength(models.Model):
     CONFIDENCE = {
         'a': '',
-        'b': 'probably',
-        'c': 'maybe',
-        'z': 'unknown',
+        'b': _('probably'),
+        'c': _('maybe'),
+        'z': _('unknown'),
     }
     INT = {'W':-2, 'w':-1, 'm':0, 's':1, 'S':2}
     SCALE = {
-        'W': 'much-weaker',
-        'w': 'weaker',
-        'm': 'matched',
-        's': 'stronger',
-        'S': 'much-stonger'
+        'W': _('much-weaker'),
+        'w': _('weaker'),
+        'm': _('matched'),
+        's': _('stronger'),
+        'S': _('much-stonger')
     }
     SCALEZ = SCALE | {'z': 'unknown' }
     KEY = list(SCALE.keys())
@@ -458,9 +459,9 @@ class Filter(models.Model):
         hours24x7 = Hours24x7(self.hours)
         week_str = hours24x7.as_str(week_all=WEEK_QWIK, day_all=DAY_QWIK)
         return  '{} + {} + {}'.format(
-                'Any Game' if self.game is None else self.game,
-                'Anywhere' if self.place is None else self.place,
-                'Any Time' if week_str == '24x7' else week_str,
+                _('Any Game') if self.game is None else self.game,
+                _('Anywhere') if self.place is None else self.place,
+                _('Any Time') if week_str == '24x7' else week_str,
                 )
 
     @property

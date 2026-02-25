@@ -110,7 +110,7 @@ class PublicView(QwikView):
         super().get(request)
         context = self.public_form_class.get(self.user.person)
         if self.is_player:
-            context = context | {}
+            context = context | {'player': self.user.player}
         if self.is_manager:
             manager = self.user.manager
             context = context | {}
@@ -125,7 +125,7 @@ class PublicView(QwikView):
         super().post(request)
         context = self.public_form_class.post(request.POST, self.user.person)
         if self.is_player:
-            context = context | {}
+            context = context | {'player': self.user.player}
         if len(context) == 0:
             return HttpResponseRedirect("/account/public/")
         context = context | super().context(request)

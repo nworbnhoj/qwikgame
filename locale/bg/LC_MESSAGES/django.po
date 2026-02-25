@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 22:02+1100\n"
+"POT-Creation-Date: 2026-02-26 07:41+1100\n"
 "PO-Revision-Date: 2026-02-22 14:48+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -269,18 +269,14 @@ msgid "Submit"
 msgstr "Изпрати"
 
 #: templates/qwik.html:119
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "            This work by %(qwik_link)s is licensed under "
-#| "%(gpl-3.0_link)s.\n"
+#, python-format
 msgid ""
 "\n"
 "            This work by %(qwik_link)s is licensed under %(gpl_link)s.\n"
 msgstr ""
 "\n"
 "            Това произведение от %(qwik_link)s е лицензирано под "
-"%(gpl-3.0_link)s.\n"
+"%(gpl_link)s.\n"
 
 #: templates/upgrade.html:7
 msgid "Learn more"

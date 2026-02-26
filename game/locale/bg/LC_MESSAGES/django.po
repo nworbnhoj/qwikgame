@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 22:03+1100\n"
+"POT-Creation-Date: 2026-02-27 10:25+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,28 +54,44 @@ msgstr "Отказ от този мач?"
 msgid "cancel"
 msgstr "отказ"
 
-#: game/templates/game/match.html:140
+#: game/templates/game/match.html:82
+msgid "Match is scheduled"
+msgstr "Мачът е насрочен"
+
+#: game/templates/game/match.html:83
+msgid "Match is complete"
+msgstr "Мачът е завършен"
+
+#: game/templates/game/match.html:84
+msgid "Match is cancelled"
+msgstr "Мачът е отменен"
+
+#: game/templates/game/match.html:85
+msgid "unknown status"
+msgstr "неизвестен статус"
+
+#: game/templates/game/match.html:143
 msgid "Show invitation history"
 msgstr "Покажи историята на поканите"
 
-#: game/templates/game/match.html:143
+#: game/templates/game/match.html:146
 msgid "Hide invitation history"
 msgstr "Скрий историята на поканите"
 
-#: game/templates/game/match.html:178 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "Отзив"
 
-#: game/templates/game/match.html:188
+#: game/templates/game/match.html:191
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ емоджи скоро ☺"
 
-#: game/templates/game/match.html:202
+#: game/templates/game/match.html:205
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "Чатът ще бъде деактивиран 24 часа след мача."
 
-#: game/templates/game/match.html:205
+#: game/templates/game/match.html:208
 msgid "Chat will be deleted 1 week after Match."
 msgstr "Чатът ще бъде изтрит 1 седмица след мача."
 

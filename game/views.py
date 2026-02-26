@@ -79,25 +79,31 @@ class MatchView(MatchesView):
             if match.status == 'A':
                 if now > match.date + DELAY_MATCH_BANNER:
                     match.status = 'C'
+            context |= {
+                'match_status_a_hidden': 'hidden',
+                'match_status_cd_hidden': 'hidden',
+                'match_status_u_hidden': 'hidden',
+                'match_status_x_hidden': 'hidden',
+            }
             match match.status:
                 case 'A':
-                    banner_txt = 'Match is scheduled!'
-                    banner_class = 'active'
+                    context['match_status_a_hidden'] = ''
+                    context['banner_class'] = 'active'
                 case 'C' | 'D':
-                    banner_txt = 'Match is complete.'
-                    banner_class = 'complete'
+                    context['match_status_bc_hidden'] = ''
+                    context['banner_class'] = 'complete'
                 case 'X':
-                    banner_txt = 'Match is cancelled!'
-                    banner_class = 'xancelled'
+                    context['match_status_x_hidden'] = ''
+                    context['banner_class'] = 'xancelled'
                 case _:
-                    banner_txt = 'unknown status'
-                    banner_class = ''
+                    context['match_status_u_hidden'] = ''
+                    context['banner_class'] = ''
             review = Review.objects.filter(match=match, player=player).first()
             rivals = list(match.competitors.all())
             rivals.remove(player)
             context |= {
-                'banner_class': banner_class,
-                'banner_txt': banner_txt,
+
+
                 'enable_chat': match.status in {'A','C'},
                 'notify_off': person.alert_str(False, 'match'),
                 'notify_on': person.alert_str(True, 'match'),

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'service.apps.ServiceConfig',
     'venue.apps.VenueConfig',
     'responsive.conf.ResponsiveAppConf',
+    'modeltranslation',    # must be before admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -160,19 +161,22 @@ WEBPUSH_SETTINGS = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'Australia/Melbourne'
-
-USE_I18N = True
-
-USE_TZ = True
-
+# https://github.com/deschler/django-modeltranslation
 LANGUAGES = [
     ("en", "English"),
     ("bg", "Bulgarian"),
 ]
+LANGUAGE_CODE = 'en-us'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_LANGUAGES = ('en', 'bg')
+TIME_ZONE = 'Australia/Melbourne'
+USE_I18N = True
+USE_TZ = True
+
+# The gettext lambda function is required by modeltranslation
+# for Django to be able to (statically) translate the verbose 
+# names of the languages using the standard i18n solution.
+gettext = lambda s: s
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),

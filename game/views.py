@@ -102,9 +102,7 @@ class MatchView(MatchesView):
             rivals = list(match.competitors.all())
             rivals.remove(player)
             context |= {
-
-
-                'enable_chat': match.status in {'A','C'},
+                'enable_chat': match.status in {'A','C','X'},
                 'notify_off': person.alert_str(False, 'match'),
                 'notify_on': person.alert_str(True, 'match'),
                 'rivals': rivals,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-02-28 06:18+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: qwikgame/constants.py:9
 msgid "SUNDAY"
 msgstr "DOMENICA"
@@ -1044,3 +1045,7 @@ msgstr "Inglese"
 #: qwikgame/settings.py:169
 msgid "Bulgarian"
 msgstr "Bulgaro"
+
+#: qwikgame/settings.py:170
+msgid "Italian"
+msgstr "Italia"

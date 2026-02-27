@@ -166,6 +166,7 @@ WEBPUSH_SETTINGS = {
 LANGUAGES = [
     ("en", _("English")),
     ("bg", _("Bulgarian")),
+    ("it", _("Italian")),
 ]
 LANGUAGE_CODE = 'en-us'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'

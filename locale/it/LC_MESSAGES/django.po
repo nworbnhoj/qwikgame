@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-02-28 08:46+1100\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -140,7 +140,8 @@ msgstr "Prestazioni migliori in aree con connessione internet limitata"
 
 #: templates/pwa_snippet.html:29
 msgid "Compatible with all platforms: iOS, Android, Windows phone, Linux, etc"
-msgstr "Compatibile con tutte le piattaforme: iOS, Android, Windows Phone, Linux, ecc"
+msgstr ""
+"Compatibile con tutte le piattaforme: iOS, Android, Windows Phone, Linux, ecc"
 
 #: templates/pwa_snippet.html:35
 msgid "Install QWIKGAME "
@@ -273,7 +274,8 @@ msgid ""
 "            This work by %(qwik_link)s is licensed under %(gpl_link)s.\n"
 msgstr ""
 "\n"
-"            Quest'opera di %(qwik_link)s è concessa in licenza sotto %(gpl_link)s.\n"
+"            Quest'opera di %(qwik_link)s è concessa in licenza sotto "
+"%(gpl_link)s.\n"
 
 #: templates/upgrade.html:7
 msgid "Learn more"
@@ -295,9 +297,412 @@ msgstr "Trova partner"
 msgid "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE."
 msgstr "TROVA PARTNER. ORGANIZZA PARTITE. GIOCA DI PIÙ."
 
+#: templates/welcome.html:39
+#, python-format
+msgid ""
+"\n"
+"                You play squash, tennis or paddel? Or may be chess, darts or "
+"pool? But you can't find partners? This is %(QWIK)sGAME! Now finding "
+"partners and arranging games is fast and easy. With %(QWIK)sGAME you have "
+"all match invitations in one place. Just pick one or post your own.\n"
+msgstr ""
+"\n"
+"                Giochi a squash, tennis o padel? Oppure magari a scacchi, "
+"freccette o biliardo? Ma non riesci a trovare partner? Questo è "
+"%(QWIK)sGAME! Ora trovare partner e organizzare partite è facile e veloce. "
+"Con %(QWIK)sGAME hai tutti gli inviti alle partite in un unico posto. "
+"Scegline uno oppure pubblica il tuo.\n"
+
+#: templates/welcome.html:45
+msgid "Organize A Match For Free!"
+msgstr "Organizza una partita gratuitamente!"
+
+#: templates/welcome.html:57
+msgid "Badminton"
+msgstr "Badminton"
+
+#: templates/welcome.html:66
+msgid "Table Tennis"
+msgstr "Tennis tavolo"
+
+#: templates/welcome.html:75
+msgid "Darts"
+msgstr "Freccette"
+
+#: templates/welcome.html:84
+msgid "Squash"
+msgstr "Squash"
+
+#: templates/welcome.html:93
+msgid "Chess"
+msgstr "Scacchi"
+
+#: templates/welcome.html:102
+msgid "Tennis"
+msgstr "Tennis"
+
+#: templates/welcome.html:111
+msgid "And more..."
+msgstr "E molto altro..."
+
+#: templates/welcome.html:121
+msgid "KEEN TO PLAY?"
+msgstr "VUOI GIOCARE?"
+
+#: templates/welcome.html:129
+msgid "Try the Feed Invitations"
+msgstr "Prova gli inviti del Feed"
+
+#: templates/welcome.html:131
+#, python-format
+msgid ""
+"\n"
+"                            Other Players are looking for partners too!  "
+"Meet them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an "
+"invitation ... or post your own!\n"
+msgstr ""
+"\n"
+"                            Anche altri giocatori stanno cercando partner!  "
+"Incontrali su %(QWIK)sGAME. Scorri il %(QWIK)sFeed e scegli un invito... "
+"oppure pubblica il tuo!\n"
+
+#: templates/welcome.html:150
+msgid "Post new Match Invitation"
+msgstr "Pubblica un nuovo invito alla partita"
+
+#: templates/welcome.html:152
+#, python-format
+msgid ""
+"\n"
+"                            You don't find a suitable invitation in the "
+"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"and the place. Confirm a match with a Rival of your preference. You "
+"choose! \n"
+msgstr ""
+"\n"
+"                            Non trovi un invito adatto nel %(QWIK)sFeed? "
+"Invia un invito alle tue condizioni. Scegli il gioco, la fascia oraria e il "
+"luogo. Conferma una partita con un rivale di tua preferenza. Decidi tu! \n"
+
+#: templates/welcome.html:158
+msgid "Organize A Match"
+msgstr "Organizza una partita"
+
+#: templates/welcome.html:174
+msgid "SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!"
+msgstr "ORGANIZZA UNA PARTITA VELOCEMENTE. POI GODITI IL GIOCO!"
+
+#: templates/welcome.html:178 templates/welcome.html:237
+msgid "Organize A Game Now"
+msgstr "Organizza una partita ora"
+
+#: templates/welcome.html:187
+msgid "Accept Feed Invitation"
+msgstr "Accetta un invito dal Feed"
+
+#: templates/welcome.html:191
+msgid "Post New Invitation"
+msgstr "Pubblica nuovo invito"
+
+#: templates/welcome.html:195
+msgid "Invite Friends Only"
+msgstr "Invita solo amici"
+
+#: templates/welcome.html:199
+msgid "Chat With Your Rival"
+msgstr "Chatta con il tuo rivale"
+
+#: templates/welcome.html:203
+msgid "Leave A Review"
+msgstr "Lascia una recensione"
+
+#: templates/welcome.html:207
+msgid "Try New Games"
+msgstr "Prova nuovi giochi"
+
+#: templates/welcome.html:214
+msgid ""
+"FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
+"EASY."
+msgstr ""
+"TROVARE PARTNER E ORGANIZZARE PARTITE NON DOVREBBE ESSERE DIFFICILE. NOI LO "
+"RENDIAMO SEMPLICE."
+
+#: templates/welcome.html:218
+msgid "Find Your Partner"
+msgstr "Trova il tuo partner"
+
+#: templates/welcome.html:233
+msgid "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE"
+msgstr "TUTTI GLI INVITI A PARTITE REALI 1VS1 IN UN UNICO POSTO"
+
+#: templates/welcome.html:245
+msgid "FREQUENTLY ASKED QUESTIONS"
+msgstr "DOMANDE FREQUENTI"
+
+#: templates/welcome.html:248
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Cos'è %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:255
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is an app which facilitates finding "
+"partners and arranging 2-player games.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME è un'app che facilita la ricerca di partner "
+"e l'organizzazione di partite a 2 giocatori.\n"
+
+#: templates/welcome.html:262
+#, python-format
+msgid ""
+"\n"
+"                For which games can I find partners on %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Per quali giochi posso trovare partner su %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:269
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME focuses on 2-player games only with "
+"ambitious plans for multi-player games in the future. Currently we have the "
+"most popular 2-player games like tennis, squash, table tennis, badminton, "
+"racquetball, but also chess, darts, backgammon, billiards and more.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME si concentra sui giochi a 2 giocatori con "
+"ambiziosi piani per giochi multiplayer in futuro. Attualmente offriamo i "
+"giochi più popolari come tennis, squash, tennis tavolo, badminton, "
+"racquetball, ma anche scacchi, freccette, backgammon, biliardo e altro.\n"
+
+#: templates/welcome.html:276
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME paid?\n"
+msgstr ""
+"\n"
+"                %(QWIK)sGAME è a pagamento?\n"
+
+#: templates/welcome.html:283
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is free of charge.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME è gratuito.\n"
+
+#: templates/welcome.html:290
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME available in my country?\n"
+msgstr ""
+"\n"
+"                %(QWIK)sGAME è disponibile nel mio paese?\n"
+
+#: templates/welcome.html:297
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME works anywhere in the world.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME funziona ovunque nel mondo.\n"
+
+#: templates/welcome.html:304
+#, python-format
+msgid ""
+"\n"
+"                How do I find partner and schedule a match with "
+"%(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Per quali giochi posso trovare partner su %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:311
+#, python-format
+msgid ""
+"\n"
+"                    To find a partner and organize a match start by sending "
+"an invitation for a match. Select the game, venue and a timeframe. It is "
+"recommended to call the venue and check if there are available playgrounds "
+"for your preferred timeframe. Your Match Invitation will be visible in the "
+"QWIKFeed to other Players. Multiple Players may respond to your Invitation. "
+"You get to choose the best offer and confirm the match. You can also reply "
+"to an existing invitation from the %(QWIK)sFeed by placing an offer for a "
+"particular hour from the given timeframe.\n"
+msgstr ""
+"\n"
+"                    Per trovare un partner e organizzare una partita inizia "
+"inviando un invito. Seleziona il gioco, il luogo e una fascia oraria. È "
+"consigliato chiamare la struttura per verificare la disponibilità dei campi "
+"nell’orario preferito. Il tuo invito alla partita sarà visibile nel QWIKFeed "
+"agli altri giocatori. Più giocatori possono rispondere al tuo invito. Potrai "
+"scegliere l’offerta migliore e confermare la partita. Puoi anche rispondere "
+"a un invito esistente dal %(QWIK)sFeed proponendo un orario specifico "
+"all’interno della fascia indicata.\n"
+
+#: templates/welcome.html:318
+msgid ""
+"\n"
+"                How many invitations can I send?\n"
+msgstr ""
+"\n"
+"                Quanti inviti posso inviare?\n"
+
+#: templates/welcome.html:325
+msgid ""
+"\n"
+"                    You can post as many invitations as you wish every day "
+"and for any game, venue or timeframe.\n"
+msgstr ""
+"\n"
+"                    Puoi pubblicare tutti gli inviti che desideri ogni "
+"giorno per qualsiasi gioco, luogo o fascia oraria.\n"
+
+#: templates/welcome.html:332
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sFeed?\n"
+msgstr ""
+"\n"
+"                Cos’è %(QWIK)sFeed?\n"
+
+#: templates/welcome.html:339
+#, python-format
+msgid ""
+"\n"
+"                    You can find all current invitations in our "
+"%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
+msgstr ""
+"\n"
+"                    Puoi trovare tutti gli inviti attivi nel nostro "
+"%(QWIK)sFeed. Viene aggiornato costantemente con nuovi inviti inviati dai "
+"giocatori.\n"
+
+#: templates/welcome.html:346
+msgid ""
+"\n"
+"                Who books the court/playground?\n"
+msgstr ""
+"\n"
+"                Chi prenota il campo?\n"
+
+#: templates/welcome.html:353
+msgid ""
+"\n"
+"                    The Player who send the initial match invitation is "
+"responsible to call and book a court/playground once the match is confirmed. "
+"The Player is also recommended to call and check the venue availability "
+"before sending the invitation.\n"
+msgstr ""
+"\n"
+"                    Il giocatore che invia l’invito iniziale è responsabile "
+"di chiamare e prenotare il campo una volta che la partita è confermata. Si "
+"consiglia inoltre di verificare la disponibilità della struttura prima di "
+"inviare l’invito.\n"
+
+#: templates/welcome.html:360
+#, python-format
+msgid ""
+"\n"
+"                Why can't I find %(QWIK)sGAME in the PlayStore and "
+"AppStore?\n"
+msgstr ""
+"\n"
+"                Perché non trovo %(QWIK)sGAME nel Play Store o nell’App "
+"Store?\n"
+
+#: templates/welcome.html:367
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is a Progressive Web App. It's the new "
+"generation of apps. No need to download nor install anything. Just save "
+"%(QWIK)sGAME on your Home screen. %(QWIK)sGAME PWA works on all operating "
+"systems and an Internet Browser is the only requirement.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME è una Progressive Web App. È la nuova "
+"generazione di applicazioni. Non è necessario scaricare o installare nulla. "
+"Basta salvare %(QWIK)sGAME sulla schermata Home. La PWA di %(QWIK)sGAME "
+"funziona su tutti i sistemi operativi e richiede solo un browser Internet.\n"
+
+#: templates/welcome.html:374
+#, python-format
+msgid ""
+"\n"
+"                Who owns %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Chi è il proprietario di %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:381
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
+"Victoria, Australia as a Not For Profit Association. All discussions and "
+"decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
+"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
+"be most welcome.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME è gestito da QWIKGAME Inc., registrata in "
+"Victoria, Australia, come associazione senza scopo di lucro. Tutte le "
+"discussioni e decisioni riguardanti %(QWIK)sGAME vengono prese online nel <a "
+"href=\"https://forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Il "
+"tuo contributo sarà molto apprezzato.\n"
+
+#: templates/welcome.html:388
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME open-source?\n"
+msgstr ""
+"\n"
+"                %(QWIK)sGAME è open source?\n"
+
+#: templates/welcome.html:395
+#, python-format
+msgid ""
+"\n"
+"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
+"The latest code can be found on %(github_link)s. Your assistance will be "
+"most welcome.\n"
+msgstr ""
+"\n"
+"                    Sì! Il software %(QWIK)sGAME è completamente open "
+"source. L’ultima versione del codice è disponibile su %(github_link)s. Il "
+"tuo contributo sarà molto apprezzato.\n"
+
+#: templates/welcome.html:414
+msgid "License"
+msgstr "Licenza"
+
+#: templates/welcome.html:418
+msgid "Privacy"
+msgstr "Privacy"
+
+#: templates/welcome.html:422
+msgid "Terms & Conditions"
+msgstr "Termini e condizioni"
+
 #: templates/welcome_header_snippet.html:12
 msgid "Sign In"
-msgstr "Accedi"
+msgstr "Registrati"
 
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-02-28 08:46+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: person/forms.py:13
 msgid "Person to block"
 msgstr "Persona da bloccare"
@@ -49,7 +50,8 @@ msgstr "Ricevi email per l’offerta %(bid)s e la partita %(match)s"
 #: person/forms.py:73
 #, python-format
 msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr "Visualizza notifiche dell’app per l’offerta %(bid)s e la partita %(match)s"
+msgstr ""
+"Visualizza notifiche dell’app per l’offerta %(bid)s e la partita %(match)s"
 
 #: person/forms.py:98
 msgid "QWIK NAME"
@@ -69,7 +71,8 @@ msgstr "aggiungi un URL social"
 
 #: person/forms.py:166
 msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr "Quando blocchi una persona, nessuno dei due potrà vedere l’altro su qwikgame."
+msgstr ""
+"Quando blocchi una persona, nessuno dei due potrà vedere l’altro su qwikgame."
 
 #: person/forms.py:167
 msgid "PEOPLE YOU HAVE BLOCKED"
@@ -135,6 +138,21 @@ msgid "blocked Player ID"
 msgstr "ID giocatore bloccato"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:7
+#: person/templates/person/cancel_bid_alert_email_text.html:4
+#: person/templates/person/cancel_match_alert_email_html.html:7
+#: person/templates/person/cancel_match_alert_email_text.html:4
+#: person/templates/person/chat_match_alert_email_html.html:7
+#: person/templates/person/chat_match_alert_email_text.html:4
+#: person/templates/person/decline_bid_alert_email_html.html:7
+#: person/templates/person/decline_bid_alert_email_text.html:4
+#: person/templates/person/filter_invite_alert_email_html.html:7
+#: person/templates/person/filter_invite_alert_email_text.html:4
+#: person/templates/person/new_bid_alert_email_html.html:7
+#: person/templates/person/new_bid_alert_email_text.html:3
+#: person/templates/person/new_match_alert_email_html.html:7
+#: person/templates/person/new_match_alert_email_text.html:4
+#: person/templates/person/rival_invite_alert_email_html.html:7
+#: person/templates/person/rival_invite_alert_email_text.html:3
 msgid "Qwik Alert"
 msgstr "Avviso Qwik"
 
@@ -150,6 +168,16 @@ msgstr ""
 "        Ricevi questa email perché <b>%(name)s</b> ha ritirato la propria "
 "offerta per il tuo Qwikgame di <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
 "    "
+
+#: person/templates/person/cancel_bid_alert_email_html.html:20
+#, python-format
+msgid ""
+"\n"
+"                Visit %(site_name)s to review\n"
+"    "
+msgstr ""
+"\n"
+"                Visita %(site_name)s per recensire    "
 
 #: person/templates/person/cancel_bid_alert_email_subject.txt:4
 #, python-format
@@ -172,8 +200,29 @@ msgstr ""
 "tuo Qwikgame di %(game)s presso %(venue)s.\n"
 
 #: person/templates/person/cancel_bid_alert_email_text.html:10
+#: person/templates/person/decline_bid_alert_email_text.html:10
 msgid "To review please go to:"
 msgstr "Per visualizzare vai a:"
+
+#: person/templates/person/cancel_bid_alert_email_text.html:13
+#: person/templates/person/cancel_match_alert_email_text.html:13
+#: person/templates/person/chat_match_alert_email_text.html:17
+#: person/templates/person/decline_bid_alert_email_text.html:13
+#: person/templates/person/filter_invite_alert_email_text.html:13
+#: person/templates/person/new_bid_alert_email_text.html:12
+#: person/templates/person/new_match_alert_email_text.html:13
+#: person/templates/person/rival_invite_alert_email_text.html:12
+msgid "To change email notification settings, please go to:"
+msgstr "Per modificare le impostazioni di notifica e-mail, vai a:"
+
+#: person/templates/person/cancel_bid_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has withdrawn their Bid on %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"%(name)s ha ritirato la propria offerta per %(game)s a %(venue)s.\n"
 
 #: person/templates/person/cancel_bid_alert_notify_head.txt:4
 #, python-format
@@ -184,6 +233,32 @@ msgstr ""
 "\n"
 "Offerta per %(game)s ritirata\n"
 
+#: person/templates/person/cancel_match_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because your %(site_name)s of "
+"<b>%(game)s</b> at <b>%(venue)s</b> has been CANCELLED.\n"
+"        "
+msgstr ""
+"\n"
+"        Hai ricevuto questa email perché il tuo %(site_name)s di "
+"<b>%(game)s</b> presso <b>%(venue)s</b> è stato ANNULLATO.\n"
+"    "
+
+#: person/templates/person/cancel_match_alert_email_html.html:27
+#: person/templates/person/chat_match_alert_email_html.html:24
+#: person/templates/person/new_match_alert_email_html.html:27
+#, python-format
+msgid ""
+"\n"
+"                Visit %(site_name)s to chat\n"
+"            "
+msgstr ""
+"\n"
+"                Visita %(site_name)s per chattare\n"
+"            "
+
 #: person/templates/person/cancel_match_alert_email_subject.txt:4
 #, python-format
 msgid ""
@@ -192,6 +267,54 @@ msgid ""
 msgstr ""
 "\n"
 "%(game)s presso %(venue)s ANNULLATA\n"
+
+#: person/templates/person/cancel_match_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
+"has been CANCELLED.\n"
+msgstr ""
+"\n"
+"\tHai ricevuto questa email perché il tuo Qwikgame di %(game)s presso %(venue)s "
+"è stato ANNULLATO.\n"
+
+#: person/templates/person/cancel_match_alert_email_text.html:10
+#: person/templates/person/chat_match_alert_email_text.html:14
+#: person/templates/person/new_match_alert_email_text.html:10
+msgid "To chat please go to:"
+msgstr "Per visualizzare vai a:"
+
+#: person/templates/person/cancel_match_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has cancelled the %(game)s Match at %(venue)s.\n"
+msgstr ""
+"\n"
+"\t%(name)s ha annullato la partita di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/cancel_match_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"%(game)s Match cancelled\n"
+msgstr ""
+"\n"
+"Partita di %(game)s annullata\n"
+
+#: person/templates/person/chat_match_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because your %(site_name)s of "
+"<b>%(game)s</b> at <b>%(venue)s</b> received a chat message.\n"
+"        "
+msgstr ""
+"\n"
+"            Ricevi questa email perché il tuo %(site_name)s di <b>%(game)s</"
+"b> presso <b>%(venue)s</b> ha ricevuto un messaggio di chat.\n"
+"        "
 
 #: person/templates/person/chat_match_alert_email_subject.txt:4
 #, python-format
@@ -202,6 +325,68 @@ msgstr ""
 "\n"
 "Messaggio di chat per %(game)s presso %(venue)s\n"
 
+#: person/templates/person/chat_match_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
+"received a chat message.\n"
+msgstr ""
+"\n"
+"\tRicevi questa email perché il tuo Qwikgame di %(game)s presso %(venue)s ha "
+"ricevuto un messaggio di chat.\n"
+
+#: person/templates/person/chat_match_alert_email_text.html:10
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s said: %(text)s\n"
+msgstr ""
+"\n"
+"%(name)s presso: %(text)s\n"
+
+#: person/templates/person/chat_match_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(text)s\n"
+msgstr ""
+"\n"
+"\t%(text)s\n"
+
+#: person/templates/person/chat_match_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"%(game)s Chat %(name)s\n"
+msgstr ""
+"\n"
+"%(game)s presso %(name)s\n"
+
+#: person/templates/person/decline_bid_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> has declined "
+"your Bid on <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"            Hai ricevuto questa email perché <b>%(name)s</b> ha rifiutato "
+"la tua offerta per <b>%(game)s</b> a <b>%(venue)s</b>.\n"
+"        "
+
+#: person/templates/person/decline_bid_alert_email_html.html:20
+#, python-format
+msgid ""
+"\n"
+"                Visit %(site_name)s to review\n"
+"            "
+msgstr ""
+"\n"
+"                Visita %(site_name)s per visualizzare\n"
+"            "
+
 #: person/templates/person/decline_bid_alert_email_subject.txt:4
 #, python-format
 msgid ""
@@ -210,6 +395,61 @@ msgid ""
 msgstr ""
 "\n"
 "Offerta rifiutata per %(game)s presso %(venue)s\n"
+
+#: person/templates/person/decline_bid_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because %(name)s has declined your Bid on "
+"%(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"\tRicevi questa email perché %(name)s ha ritirato la propria offerta per il "
+"tuo Qwikgame di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/decline_bid_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has declined your Bid on %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"%(name)s ha ritirato la propria offerta per %(game)s a %(venue)s.\n"
+
+#: person/templates/person/decline_bid_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Bid on %(game)s declined\n"
+msgstr ""
+"\n"
+"Offerta per %(game)s ritirata\n"
+
+#: person/templates/person/filter_invite_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> is Keen for "
+"a Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"        Ricevi questa email perché <b>%(name)s</b> ha ritirato la propria "
+"offerta per il tuo Qwikgame di <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
+"    "
+
+#: person/templates/person/filter_invite_alert_email_html.html:27
+#: person/templates/person/new_bid_alert_email_html.html:27
+#: person/templates/person/rival_invite_alert_email_html.html:27
+#, python-format
+msgid ""
+"\n"
+"                Visit %(site_name)s to accept\n"
+"            "
+msgstr ""
+"\n"
+"                Visita %(site_name)s per accettare\n"
+"            "
 
 #: person/templates/person/filter_invite_alert_email_subject.txt:4
 #, python-format
@@ -220,6 +460,54 @@ msgstr ""
 "\n"
 "Qwikgame di %(game)s con %(name)s presso %(venue)s\n"
 
+#: person/templates/person/filter_invite_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"    You're receiving this email because %(name)s is Keen for a Qwikgame of "
+"%(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"\tRicevi questa email perché %(name)s ha ritirato la propria offerta per il "
+"tuo Qwikgame di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/filter_invite_alert_email_text.html:10
+#: person/templates/person/new_bid_alert_email_text.html:9
+#: person/templates/person/rival_invite_alert_email_text.html:9
+msgid "To accept please go to:"
+msgstr "Per accettare vai a:"
+
+#: person/templates/person/filter_invite_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s is Keen for a Qwikgame of %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"%(name)s ha ritirato la propria offerta per %(game)s a %(venue)s.\n"
+
+#: person/templates/person/filter_invite_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Qwikgame of %(game)s\n"
+msgstr ""
+"\n"
+"Qwikgame di %(game)s\n"
+
+#: person/templates/person/new_bid_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> has Bid on "
+"your Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"        Ricevi questa email perché <b>%(name)s</b> ha ritirato la propria "
+"offerta per il tuo Qwikgame di <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
+"    "
+
 #: person/templates/person/new_bid_alert_email_subject.txt:4
 #, python-format
 msgid ""
@@ -229,6 +517,48 @@ msgstr ""
 "\n"
 "Offerta per %(game)s presso %(venue)s\n"
 
+#: person/templates/person/new_bid_alert_email_text.html:5
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because %(name)s has Bid on your Qwikgame of "
+"%(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"\tRicevi questa email perché %(name)s ha ritirato la propria offerta per il "
+"tuo Qwikgame di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/new_bid_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has Bid on %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"%(name)s ha ritirato la propria offerta per %(game)s a %(venue)s.\n"
+
+#: person/templates/person/new_bid_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Bid on %(game)s\n"
+msgstr ""
+"\n"
+"Offerta per %(game)s ritirata\n"
+
+#: person/templates/person/new_match_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> at "
+"%(site_name)s has confirmed <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"            Ricevi questa email perché <b>%(name)s</b> su %(site_name)s ti "
+"ha invitato a giocare a <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
+"        "
+
 #: person/templates/person/new_match_alert_email_subject.txt:4
 #, python-format
 msgid ""
@@ -237,6 +567,44 @@ msgid ""
 msgstr ""
 "\n"
 "%(game)s confermata presso %(venue)s\n"
+
+#: person/templates/person/new_match_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because your Qwikgame of %(game)s at %(venue)s "
+"has been Confirmed.\n"
+msgstr ""
+"\n"
+"\tHai ricevuto questa email perché il tuo Qwikgame di %(game)s a %(venue)s "
+"è stato confermato.\n"
+
+#: person/templates/person/new_match_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has confirmed the %(game)s Match at %(venue)s.\n"
+msgstr ""
+"\n"
+"\t%(name)s ha annullato la partita di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/new_match_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"%(game)s Match confirmed\n"
+msgstr ""
+"\n"
+"Partita di %(game)s annullata\n"
+
+#: person/templates/person/notify_email_done.html:13
+#, python-format
+msgid ""
+"\n"
+"\tInvitations from %(site_name)s have been disabled.\n"
+msgstr ""
+"\n"
+"\tGli inviti da %(site_name)s sono stati disabilitati.\n"
 
 #: person/templates/person/private.html:37
 msgid "PRIVATE SETTINGS"
@@ -262,6 +630,57 @@ msgstr "PROFILO PUBBLICO"
 msgid "Save"
 msgstr "Salva"
 
+#: person/templates/person/rival_invite_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> has Invited "
+"you to a  Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"            Hai ricevuto questa email perché <b>%(name)s</b> ti ha invitato "
+" a un Qwikgame di <b>%(game)s</b> a <b>%(venue)s</b>.\n"
+"        "
+
+#: person/templates/person/rival_invite_alert_email_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"Invitation to %(game)s with %(name)s at %(venue)s\n"
+msgstr ""
+"\n"
+"Invito a %(game)s con %(name)s presso %(venue)s\n"
+
+#: person/templates/person/rival_invite_alert_email_text.html:5
+#, python-format
+msgid ""
+"\n"
+"\tYou're receiving this email because %(name)s has Invited you to a Qwikgame "
+"of %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"\tRicevi questa email perché %(name)s ha ritirato la propria offerta per il "
+"tuo Qwikgame di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/rival_invite_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\t%(name)s has Invited you to %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"\t%(name)s ha annullato la partita di %(game)s presso %(venue)s.\n"
+
+#: person/templates/person/rival_invite_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Invite to %(game)s\n"
+msgstr ""
+"\n"
+"Invita a %(game)s\n"
+
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
 msgstr "AGGIORNA"
@@ -270,9 +689,58 @@ msgstr "AGGIORNA"
 msgid "coming soon"
 msgstr "in arrivo"
 
+#: person/templates/person/woo_invite_email_html.html:10
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because <b>%(name)s</b> at "
+"%(site_name)s has invited you to play <b>%(game)s</b> at <b>%(venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"            Ricevi questa email perché <b>%(name)s</b> su %(site_name)s ti "
+"ha invitato a giocare a <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
+"        "
+
+#: person/templates/person/woo_invite_email_html.html:24
+#, python-format
+msgid ""
+"\n"
+"                Visit %(site_name)s to accept invitation\n"
+"            "
+msgstr ""
+"\n"
+"                Visita %(site_name)s per accettare\n"
+"            "
+
+#: person/templates/person/woo_invite_email_html.html:33
+#: person/templates/person/woo_invite_email_html.html:37
+msgid "email invitations from"
+msgstr "inviti via e-mail da"
+
+#: person/templates/person/woo_invite_email_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"Invitation to play %(game)s with %(name)s at %(venue)s\n"
+msgstr ""
+"\n"
+"Invito a giocare a %(game)s con %(name)s presso %(venue)s\n"
+
 #: person/templates/person/woo_invite_email_text.html:5
 msgid "Welcome to qwikgame.org"
 msgstr "Benvenuto su qwikgame.org"
+
+#: person/templates/person/woo_invite_email_text.html:7
+#, python-format
+msgid ""
+"\n"
+"You're receiving this email because %(name)s at %(site_name)s has invited "
+"you to play %(game)s at %(venue)s.\n"
+msgstr ""
+"\n"
+"            Ricevi questa email perché <b>%(name)s</b> su %(site_name)s ti "
+"ha invitato a giocare a <b>%(game)s</b> presso <b>%(venue)s</b>.\n"
 
 #: person/templates/person/woo_invite_email_text.html:11
 msgid "Game"
@@ -315,5 +783,5 @@ msgid ""
 "click :\n"
 msgstr ""
 "\n"
-"Per bloccare le email di invito da tutti i giocatori su %(site_name)s, "
-"fai clic qui:\n"
+"Per bloccare le email di invito da tutti i giocatori su %(site_name)s, fai "
+"clic qui:\n"

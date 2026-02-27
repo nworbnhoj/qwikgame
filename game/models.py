@@ -1,5 +1,6 @@
 import datetime, logging
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
 
@@ -188,17 +189,24 @@ class Match(models.Model):
         match template:
             case 'book_prompt':
                 # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
-                entry['text'] = f'{self.init_player().qwikname} please contact venue to ensure availability on {self.datetime_str}: {self.venue.phone} {self.venue.url}'
+                entry['text'] = _(
+                        "%(name)s, please contact venue to ensure availability on %(date)s : %(phone)s : %(url)s"
+                    ) % {
+                        'name': self.init_player().qwikname,
+                        'date': self.datetime_str,
+                        'phone': self.venue.phone,
+                        'url': self.venue.url,
+                    }
             case 'cancelled':
-                entry['text'] = 'match cancelled'
+                entry['text'] = _('match cancelled')
             case 'chat':
                 entry['text'] = text
             case 'disabled':
-                entry['text'] = 'match chat disabled'
+                entry['text'] = _('match chat disabled')
             case 'scheduled':
-                entry['text'] = 'match scheduled'
+                entry['text'] = _('match scheduled')
             case 'perished':
-                entry['text'] = 'match chat perished'
+                entry['text'] = _('match chat perished')
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)

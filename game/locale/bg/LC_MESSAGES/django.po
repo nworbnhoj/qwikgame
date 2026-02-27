@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 10:25+1100\n"
+"POT-Creation-Date: 2026-02-27 12:19+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,30 @@ msgstr "ПОВЕДЕНИЕ НА СЪПЕРНИКА"
 #: game/forms.py:75
 msgid "Did anything go wrong?"
 msgstr "Имаше ли нещо нередно?"
+
+#: game/models.py:193
+#, python-format
+msgid ""
+"%(name)s, please contact venue to ensure availability on %(date)s : "
+"%(phone)s : %(url)s"
+msgstr "%(name)s моля, свържете се с мястото на провеждане, за да се уверите в наличността в %(date)s : "
+"%(phone)s : %(url)s"
+
+#: game/models.py:201
+msgid "match cancelled"
+msgstr "Мачът е отменен"
+
+#: game/models.py:205
+msgid "match chat disabled"
+msgstr "Чатът за мачове е деактивиран"
+
+#: game/models.py:207
+msgid "match scheduled"
+msgstr "Мачът е насрочен"
+
+#: game/models.py:209
+msgid "match chat perished"
+msgstr "Чатът за мача загина"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"

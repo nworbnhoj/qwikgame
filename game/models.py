@@ -17,7 +17,7 @@ class Game(models.Model):
         try:
             return [(game.code, game.name) for game in klass.objects.order_by('name')]
         except:
-            return {}
+            return []
 
     @classmethod
     def icons(klass):

@@ -105,7 +105,7 @@ class BidForm(QwikForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        choices = {None: ''} | Game.choices(),
+        choices = [(None, '')],
         label = _('GAME'),
         required = True,
         template_name='field.html',
@@ -284,6 +284,7 @@ class KeenForm(QwikForm):
                     'place': venue.placeid if venue else 'map',
                 },
             )
+        form.fields['game'].choices += Game.choices()
         form.personalise(player)
         if venue:
             today = venue.now()

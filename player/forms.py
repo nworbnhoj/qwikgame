@@ -21,7 +21,7 @@ logger = logging.getLogger(__file__)
 
 class FilterForm(QwikForm):
     game = ChoiceField(
-        choices = {'ANY':_('Any Game')} | Game.choices(),
+        choices = [('ANY',_('Any Game'))],
         help_text=_('Only see invitations for a particular Game.'),
         label = _('GAME'),
         required=True,
@@ -138,6 +138,7 @@ class FilterForm(QwikForm):
                     'place': place,
                 },
             )
+        form.fields['game'].choices += Game.choices()
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
         choices = [('ANY',_('Anywhere')), (_('show-map'), _('Select from map')), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
@@ -271,7 +272,6 @@ class InviteForm(RegisterForm):
 
 class StrengthForm(QwikForm):
     game = ChoiceField(
-        choices = Game.choices(),
         label = _('GAME'),
         required = True,
         template_name='field.html',
@@ -286,6 +286,7 @@ class StrengthForm(QwikForm):
     @classmethod
     def get(klass, strength=None):
         form = klass()
+        form.fields['game'].choices = Game.choices()
         if strength:
             form.fields['game'].initial = strength.game.code
             form.fields['strength'].initial = strength.relative

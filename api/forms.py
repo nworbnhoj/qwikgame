@@ -16,7 +16,7 @@ class VenueMarksJson(QwikForm):
         required=False
     )
     game = ChoiceField( 
-        choices = {'ANY':'Any Game'} | Game.choices(),
+        choices = [('ANY','Any Game')] + Game.choices(),
         required=True,
     )
     lat = DecimalField(

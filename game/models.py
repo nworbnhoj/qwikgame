@@ -15,7 +15,7 @@ class Game(models.Model):
     @classmethod
     def choices(klass):
         try:
-            return {game.code: game.name for game in klass.objects.order_by('name')}
+            return [(game.code, game.name) for game in klass.objects.order_by('name')]
         except:
             return {}
 

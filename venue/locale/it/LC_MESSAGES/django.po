@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: VERSIONE PACCHETTO\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
+"Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
+"Language-Team: Italiano <LL@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: venue/forms.py:17
+msgid "SEARCH"
+msgstr "CERCA"
+
+#: venue/forms.py:22
+msgid "restrict the search to a region"
+msgstr "limita la ricerca a una regione"
+
+#: venue/forms.py:23
+msgid "REGION"
+msgstr "REGIONE"
+
+#: venue/forms.py:30
+msgid "Specify the Game for these Qwikgame Venues"
+msgstr "Specifica il gioco per queste sedi Qwikgame"
+
+#: venue/forms.py:31
+msgid "GAME"
+msgstr "GIOCO"
+
+#: venue/forms.py:60
+msgid "Select Google Places to add as Qwikgame Venues"
+msgstr "Seleziona Google Places da aggiungere come sedi Qwikgame"
+
+#: venue/forms.py:61
+msgid "GOOGLE PLACES"
+msgstr "GOOGLE PLACES"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
+#: venue/templates/venue/venues.html:33
+msgid "Venues"
+msgstr "Sedi"
+
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+msgid "Add Venue"
+msgstr "Aggiungi sede"
+
+#: venue/templates/venue/venue.html:45
+msgid "ADDRESS"
+msgstr "INDIRIZZO"
+
+#: venue/templates/venue/venue.html:55
+msgid "WEBSITE"
+msgstr "SITO WEB"
+
+#: venue/templates/venue/venue.html:57
+msgid "PHONE"
+msgstr "TELEFONO"
+
+#: venue/templates/venue/venue.html:59
+msgid "OPEN HOURS"
+msgstr "ORARI DI APERTURA"
+
+#: venue/templates/venue/venue.html:61
+msgid "TIMEZONE"
+msgstr "FUSO ORARIO"
+
+#: venue/templates/venue/venue.html:63
+msgid "NOTE"
+msgstr "NOTA"
+
+#: venue/templates/venue/venue.html:65
+msgid "MANAGERS"
+msgstr "RESPONSABILI"
+
+#: venue/templates/venue/venue.html:69
+msgid "GAMES"
+msgstr "GIOCHI"
+
+#: venue/templates/venue/venues.html:24
+msgid "Add"
+msgstr "Aggiungi"
+
+#: venue/templates/venue/venues.html:36
+msgid "Group by"
+msgstr "Raggruppa per"
+
+#: venue/templates/venue/venues.html:42
+msgid "game"
+msgstr "gioco"
+
+#: venue/templates/venue/venues.html:72
+msgid "No venues :-("
+msgstr "Nessuna sede :-("
+
+#: venue/templates/venue/venues.html:85
+#, python-format
+msgid ""
+"\n"
+"                Get Venue details%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                Ottieni i dettagli della sede%(br)soppure aggiungine una nuova!\n"
+"    "

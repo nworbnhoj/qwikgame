@@ -1,0 +1,270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: player/forms.py:24 player/models.py:462
+msgid "Any Game"
+msgstr "Qualsiasi gioco"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "Visualizza solo gli inviti per un gioco specifico."
+
+#: player/forms.py:26 player/forms.py:275
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "GIOCO"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "Visualizza solo gli inviti per una sede specifica."
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "LUOGO"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "Visualizza solo gli inviti in orari specifici della settimana."
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "ORARIO"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "Spiacenti, la selezione della sede non ha funzionato. Riprova."
+
+#: player/forms.py:143 player/forms.py:162 player/models.py:463
+msgid "Anywhere"
+msgstr "Ovunque"
+
+#: player/forms.py:143
+msgid "show-map"
+msgstr "mostra-mappa"
+
+#: player/forms.py:143
+msgid "Select from map"
+msgstr "Seleziona dalla mappa"
+
+#: player/forms.py:185
+msgid "NO ACTIVE FILTERS"
+msgstr "NESSUN FILTRO ATTIVO"
+
+#: player/forms.py:196
+#, python-format
+msgid "%(n)s ACTIVE FILTERS"
+msgstr "%(n)s FILTRI ATTIVI"
+
+#: player/forms.py:218
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "INDIRIZZO EMAIL DELL’AMICO"
+
+#: player/forms.py:224
+msgid "NAME"
+msgstr "NOME"
+
+#: player/forms.py:236
+msgid "Type email address"
+msgstr "Inserisci l’indirizzo email"
+
+#: player/forms.py:237
+msgid "A screen name for your friend (optional)"
+msgstr "Un nome visualizzato per il tuo amico (facoltativo)"
+
+#: player/forms.py:282
+msgid "RIVAL SKILL LEVEL"
+msgstr "LIVELLO DI ABILITÀ DELL’AVVERSARIO"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "probabilmente"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "forse"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "sconosciuto"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+msgid "much-weaker"
+msgstr "molto più debole"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+msgid "weaker"
+msgstr "più debole"
+
+#: player/models.py:400
+msgid "matched"
+msgstr "alla pari"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+msgid "stronger"
+msgstr "più forte"
+
+#: player/models.py:402
+msgid "much-stonger"
+msgstr "molto più forte"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "Qualsiasi orario"
+
+#: player/templates/player/account_public_snippet.html:5
+msgid "YOUR QWIKGAME REPUTATION"
+msgstr "LA TUA REPUTAZIONE QWIKGAME"
+
+#: player/templates/player/account_public_snippet.html:10
+msgid "Based on feedback given by your rivals."
+msgstr "Basata sui feedback forniti dai tuoi avversari."
+
+#: player/templates/player/filter.html:46
+#: player/templates/player/filters.html:8
+msgid "Filter"
+msgstr "Filtro"
+
+#: player/templates/player/filter.html:65
+msgid "New Invitation Filter"
+msgstr "Nuovo filtro inviti"
+
+#: player/templates/player/filter.html:78
+msgid "Add Filter"
+msgstr "Aggiungi filtro"
+
+#: player/templates/player/filters.html:27
+msgid "Invitation Filters"
+msgstr "Filtri inviti"
+
+#: player/templates/player/filters.html:31
+#: player/templates/player/friend_add.html:34
+#: player/templates/player/friends.html:25
+#: player/templates/player/strength.html:102
+msgid "Add"
+msgstr "Aggiungi"
+
+#: player/templates/player/filters.html:47
+msgid "Delete these Filters?"
+msgstr "Eliminare questi filtri?"
+
+#: player/templates/player/filters.html:49
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: player/templates/player/filters.html:53
+msgid "Apply"
+msgstr "Applica"
+
+#: player/templates/player/friend.html:7
+#: player/templates/player/friend_add.html:7
+#: player/templates/player/friends.html:8
+#: player/templates/player/friends.html:35
+#: player/templates/player/strength.html:7
+msgid "Friends"
+msgstr "Amici"
+
+#: player/templates/player/friend.html:36
+msgid "Delete this Friend?"
+msgstr "Eliminare questo amico?"
+
+#: player/templates/player/friend.html:38
+#: player/templates/player/friend.html:69
+#: player/templates/player/strength.html:43
+msgid "delete"
+msgstr "elimina"
+
+#: player/templates/player/friend.html:51
+#: player/templates/player/friend_add.html:24
+#: player/templates/player/friends.html:93
+msgid "Add Friend"
+msgstr "Aggiungi amico"
+
+#: player/templates/player/friend.html:79
+#: player/templates/player/strength.html:75
+msgid "Submit"
+msgstr "Invia"
+
+#: player/templates/player/friends.html:39
+msgid "Group by"
+msgstr "Raggruppa per"
+
+#: player/templates/player/friends.html:46
+msgid "game"
+msgstr "gioco"
+
+#: player/templates/player/friends.html:73
+msgid "No friends :-("
+msgstr "Nessun amico :-("
+
+#: player/templates/player/friends.html:87
+#, python-format
+msgid ""
+"\n"
+"                Edit a Friend%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                Modifica un amico%(br)soppure aggiungine uno nuovo!\n"
+"    "
+
+#: player/templates/player/rival_stats_snippet.html:4
+msgid "MATCHES"
+msgstr "PARTITE"
+
+#: player/templates/player/rival_stats_snippet.html:10
+msgid "GAMES"
+msgstr "GIOCHI"
+
+#: player/templates/player/rival_stats_snippet.html:16
+msgid "VENUES"
+msgstr "SEDI"
+
+#: player/templates/player/strength.html:61
+msgid "Important!"
+msgstr "Importante!"
+
+#: player/templates/player/strength.html:63
+msgid ""
+"Please take a little time to let qwikgame know how strong your Friend is. "
+"This will help qwikgame make better Matches for you, and your friend, and "
+"other qwikgame Players who know either of you."
+msgstr ""
+"Per favore dedica un momento per indicare a qwikgame quanto è forte il tuo "
+"amico. Questo aiuterà qwikgame a creare partite migliori per te, per il tuo "
+"amico e per altri giocatori qwikgame che conoscono uno di voi."
+
+#: player/templates/player/strength.html:85
+msgid "STRENGTH"
+msgstr "FORZA"
+
+#: player/templates/player/strength.html:89
+msgid "well-matched"
+msgstr "ben bilanciato"
+
+#: player/templates/player/strength.html:91
+msgid "much-stronger"
+msgstr "molto più forte"
+
+#: player/templates/player/strength.html:96
+msgid "Cancel"
+msgstr "Annulla"
+
+#: player/templates/player/strength.html:99
+msgid "Learn more"
+msgstr "Scopri di più"

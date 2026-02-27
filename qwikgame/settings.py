@@ -1,4 +1,5 @@
 import django, logging, os
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -163,8 +164,8 @@ WEBPUSH_SETTINGS = {
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 # https://github.com/deschler/django-modeltranslation
 LANGUAGES = [
-    ("en", "English"),
-    ("bg", "Bulgarian"),
+    ("en", _("English")),
+    ("bg", _("Bulgarian")),
 ]
 LANGUAGE_CODE = 'en-us'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'

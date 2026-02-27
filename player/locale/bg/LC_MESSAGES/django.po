@@ -68,8 +68,9 @@ msgid "NO ACTIVE FILTERS"
 msgstr "НЯМА АКТИВНИ ФИЛТРИ"
 
 #: player/forms.py:195
+#, python-format
 msgid "%(n)s ACTIVE FILTERS"
-msgstr "НЯМА АКТИВНИ ФИЛТРИ"
+msgstr "%(n)s АКТИВНИ ФИЛТРИ"
 
 #: player/forms.py:217
 msgid "FRIEND'S EMAIL ADDRESS"

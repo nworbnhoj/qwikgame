@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:07+1100\n"
+"POT-Creation-Date: 2026-02-28 05:37+1100\n"
 "PO-Revision-Date: 2026-02-22 15:05+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -30,6 +30,10 @@ msgstr "ИМЕЙЛ ИЗВЕСТИЯ"
 #: person/forms.py:38
 msgid "WEB / APP NOTIFICATIONS"
 msgstr "УЕБ / ПРИЛОЖЕНИЕ ИЗВЕСТИЯ"
+
+#: person/forms.py:43
+msgid "This will make finding a Venue nearby faster."
+msgstr "Това ще ускори намирането на място наблизо."
 
 #: person/forms.py:44
 msgid "ALLOW LOCATION ACCESS"
@@ -69,7 +73,8 @@ msgstr "добавете URL на социална мрежа"
 
 #: person/forms.py:166
 msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr "Когато блокирате човек, нито един от вас няма да вижда другия в qwikgame."
+msgstr ""
+"Когато блокирате човек, нито един от вас няма да вижда другия в qwikgame."
 
 #: person/forms.py:167
 msgid "PEOPLE YOU HAVE BLOCKED"

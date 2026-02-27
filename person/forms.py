@@ -40,7 +40,7 @@ class PrivateForm(QwikForm):
         template_name='input_webpush.html'
     )
     location_auto = BooleanField(
-        help_text="This will make finding a Venue nearby faster.",
+        help_text=_("This will make finding a Venue nearby faster."),
         label=_('ALLOW LOCATION ACCESS'),
         required=False,
         template_name="input_checkbox.html"

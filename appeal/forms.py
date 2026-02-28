@@ -301,6 +301,7 @@ class KeenForm(QwikForm):
     def post(klass, request_post, player):
         context = {}
         form = klass(data=request_post)
+        form.fields['game'].choices += Game.choices()
         form.personalise(player)
         if form.is_valid():
             try:

@@ -159,6 +159,7 @@ class FilterForm(QwikForm):
     @classmethod
     def post(klass, request_post, places):
         form = klass(data=request_post)
+        form.fields['game'].choices += Game.choices()
         choices = [('ANY',_('Anywhere')), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices

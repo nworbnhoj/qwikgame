@@ -76,18 +76,19 @@ class PrivateForm(QwikForm):
             }
         return {'private_form': form }
 
-    # Initializes a PrivateForm with 'request_post' for 'person'.
+    # Initializes a PrivateForm with 'request_post'.
     # Returns a context dict including 'private_form' if form is not valid
     @classmethod
-    def post(klass, request_post, person):
+    def post(klass, request_post):
         context = {}
         private_form = klass(data=request_post)
         if private_form.is_valid():
-            person.notify_email = ALERT_EMAIL_DEFAULT if private_form.cleaned_data["notify_email"] else ''
-            person.notify_push = ALERT_PUSH_DEFAULT if private_form.cleaned_data["notify_push"] else ''
-            person.location_auto = private_form.cleaned_data["location_auto"]
-            person.language = private_form.cleaned_data["language"]
-            person.save()
+            context = {
+                'notify_email': ALERT_EMAIL_DEFAULT if private_form.cleaned_data["notify_email"] else '',
+                'notify_push': ALERT_PUSH_DEFAULT if private_form.cleaned_data["notify_push"] else '',
+                'location_auto': private_form.cleaned_data["location_auto"],
+                'language': private_form.cleaned_data["language"],
+            }
         else:
             context = {'private_form': private_form}
         return context

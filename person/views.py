@@ -95,7 +95,13 @@ class PrivateView(QwikView):
         if 'unblock' in request.POST:
             context = self.blocked_form_class.post(request.POST, self.user.person)
         else:
-            context = self.private_form_class.post(request.POST, self.user.person)
+            context = self.private_form_class.post(request.POST)
+            person = self.user.person
+            person.notify_email = context["notify_email"]
+            person.notify_push = context["notify_push"]
+            person.location_auto = context["location_auto"]
+            person.language = context["language"]
+            person.save()
         if len(context) == 0:
             return HttpResponseRedirect("/account/private/")
         context = context | super().context(request)

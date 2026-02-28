@@ -296,6 +296,7 @@ class StrengthForm(QwikForm):
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
+        form.fields['game'].choices = Game.choices()
         context = {'strength_form': form}
         if form.is_valid():
             context |= {

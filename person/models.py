@@ -1,7 +1,7 @@
 import logging, hashlib, random
 from datetime import datetime, timedelta
 from django.core.mail import EmailMultiAlternatives, get_connection
-from qwikgame.settings import FQDN, EMAIL_ALERT_NAME, EMAIL_ALERT_PASSWORD, EMAIL_ALERT_USER, EMAIL_SMTP_TIMEOUT
+from qwikgame.settings import FQDN, EMAIL_ALERT_NAME, EMAIL_ALERT_PASSWORD, EMAIL_ALERT_USER, EMAIL_SMTP_TIMEOUT, LANGUAGES
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -15,17 +15,6 @@ logger = logging.getLogger(__file__)
 def rnd_icon():
     return 'fa-face-smile'
 
-LANGUAGE = [
-    # ('bg', 'български'),
-    ('en', 'English'),
-    # ('es', 'Español'),
-    # ('zh', '中文'),
-    # ('ru', 'русский'),
-    # ('fr', 'Français'),
-    # ('hi', 'हिंदी'),
-    # ('ar', 'اللغة العربية'),
-    # ('jp', '日本語'),
-]
 
 ALERT_EMAIL_DEFAULT = 'bkmpq'
 ALERT_PUSH_DEFAULT = 'bcklmpqr'
@@ -183,7 +172,7 @@ class Alert(models.Model):
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
     icon = models.CharField(max_length=32, default=rnd_icon)
-    language = models.CharField(max_length=2, choices=LANGUAGE, default='en',)
+    language = models.CharField(max_length=2, choices=LANGUAGES, default='en',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")
     notify_email = models.CharField(max_length=64, default='kmpq')

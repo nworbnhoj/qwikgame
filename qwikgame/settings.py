@@ -164,9 +164,16 @@ WEBPUSH_SETTINGS = {
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 # https://github.com/deschler/django-modeltranslation
 LANGUAGES = [
-    ("en", _("English")),
-    ("bg", _("Bulgarian")),
-    ("it", _("Italian")),
+    # ('ar', 'اللغة العربية'),
+    ('bg', 'български'),
+    ('en', 'English'),
+    # ('es', 'Español'),
+    # ('fr', 'Français'),
+    # ('hi', 'हिंदी'),
+    ('it', 'italiano'),
+    # ('jp', '日本語'),
+    # ('ru', 'русский'),
+    # ('zh', '中文'),
 ]
 LANGUAGE_CODE = 'en-us'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'

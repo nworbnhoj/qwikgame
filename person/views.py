@@ -97,7 +97,7 @@ class PrivateView(QwikView):
             context = self.blocked_form_class.post(request.POST, self.user.person)
         else:
             context = self.private_form_class.post(request.POST)
-        if 'private_form' in context:
+        if 'private_form' in context or 'blocked_form' in context:
             context = context | super().context(request)
             return render(request, self.template_name, context)
         person = self.user.person

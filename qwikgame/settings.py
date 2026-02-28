@@ -164,7 +164,7 @@ WEBPUSH_SETTINGS = {
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 # https://github.com/deschler/django-modeltranslation
 LANGUAGES = [
-    # ('ar', 'اللغة العربية'),
+    ('ar', 'اللغة العربية'),
     ('bg', 'български'),
     ('en', 'English'),
     # ('es', 'Español'),
@@ -178,7 +178,7 @@ LANGUAGES = [
 LANGUAGE_CODE = 'en-us'
 LANGUAGE_COOKIE_NAME = 'qwik_language'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_LANGUAGES = ('en', 'bg', 'it')
+MODELTRANSLATION_LANGUAGES = ('ar', 'en', 'bg', 'it')
 TIME_ZONE = 'Australia/Melbourne'
 USE_I18N = True
 USE_TZ = True

@@ -8,42 +8,55 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:09+1100\n"
+"POT-Creation-Date: 2026-02-28 17:32+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Arabic <LL@li.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: feedback/forms.py:15
+msgid "Description"
+msgstr "الوصف"
+
+#: feedback/forms.py:17
+msgid "thanks heaps for taking the time!"
+msgstr "شكرًا جزيلًا لوقتك!"
+
+#: feedback/forms.py:18
+msgid "feedback"
+msgstr "الملاحظات"
+
 #: feedback/templates/feedback/feedback.html:7
 #: feedback/templates/feedback/feedback_list.html:7
 #: feedback/templates/feedback/feedback_list.html:19
 msgid "Feedback"
-msgstr ""
+msgstr "الملاحظات"
 
 #: feedback/templates/feedback/feedback.html:41
 msgid "Version: "
-msgstr ""
+msgstr "الإصدار: "
 
 #: feedback/templates/feedback/feedback.html:44
 msgid "Issue:"
-msgstr ""
+msgstr "المشكلة:"
 
 #: feedback/templates/feedback/feedback.html:48
 msgid "None"
-msgstr ""
+msgstr "لا يوجد"
 
 #: feedback/templates/feedback/feedback.html:50
 msgid "create issue"
-msgstr ""
+msgstr "إنشاء مشكلة"
 
 #: feedback/templates/feedback/feedback_list.html:33
 msgid "No feedback!"
-msgstr ""
+msgstr "لا توجد ملاحظات!"
 
 #: feedback/templates/feedback/feedback_list.html:47
 msgid "Select Feedback to see detail."
-msgstr ""
+msgstr "اختر ملاحظة لعرض التفاصيل."

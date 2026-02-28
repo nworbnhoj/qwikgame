@@ -8,96 +8,162 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:31+1100\n"
+"POT-Creation-Date: 2026-02-28 17:32+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Arabic <LL@li.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: game/forms.py:30
+msgid "Chat here with your rival"
+msgstr "تحدث هنا مع خصمك"
+
+#: game/forms.py:56
+msgid "RIVAL SKILL LEVEL"
+msgstr "مستوى مهارة الخصم"
+
+#: game/forms.py:60
+msgid "poor sportsmanship"
+msgstr "سلوك رياضي سيئ"
+
+#: game/forms.py:60
+msgid "did not show up"
+msgstr "لم يحضر"
+
+#: game/forms.py:61
+msgid "RIVAL CONDUCT"
+msgstr "سلوك الخصم"
+
+#: game/forms.py:75
+msgid "Did anything go wrong?"
+msgstr "هل حدث أي خطأ؟"
+
+#: game/models.py:193
+#, python-format
+msgid ""
+"%(name)s, please contact venue to ensure availability on %(date)s : "
+"%(phone)s : %(url)s"
+msgstr ""
+"%(name)s، يرجى التواصل مع المكان للتأكد من التوفر بتاريخ %(date)s : "
+"%(phone)s : %(url)s"
+
+#: game/models.py:201
+msgid "match cancelled"
+msgstr "تم إلغاء المباراة"
+
+#: game/models.py:205
+msgid "match chat disabled"
+msgstr "تم تعطيل دردشة المباراة"
+
+#: game/models.py:207
+msgid "match scheduled"
+msgstr "تم جدولة المباراة"
+
+#: game/models.py:209
+msgid "match chat perished"
+msgstr "انتهت دردشة المباراة"
+
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
-msgstr ""
+msgstr "مباراة"
 
 #: game/templates/game/match.html:65
 msgid "Cancel this Match?"
-msgstr ""
+msgstr "إلغاء هذه المباراة؟"
 
 #: game/templates/game/match.html:67
 msgid "cancel"
-msgstr ""
+msgstr "إلغاء"
 
-#: game/templates/game/match.html:140
-msgid "Show invitation history"
-msgstr ""
+#: game/templates/game/match.html:82
+msgid "Match is scheduled"
+msgstr "تمت جدولة المباراة"
+
+#: game/templates/game/match.html:83
+msgid "Match is complete"
+msgstr "اكتملت المباراة"
+
+#: game/templates/game/match.html:84
+msgid "Match is cancelled"
+msgstr "تم إلغاء المباراة"
+
+#: game/templates/game/match.html:85
+msgid "unknown status"
+msgstr "حالة غير معروفة"
 
 #: game/templates/game/match.html:143
-msgid "Hide invitation history"
-msgstr ""
+msgid "Show invitation history"
+msgstr "عرض سجل الدعوات"
 
-#: game/templates/game/match.html:178 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:146
+msgid "Hide invitation history"
+msgstr "إخفاء سجل الدعوات"
+
+#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
-msgstr ""
+msgstr "مراجعة"
 
-#: game/templates/game/match.html:188
+#: game/templates/game/match.html:191
 msgid "☺ emogi coming soon ☺"
-msgstr ""
-
-#: game/templates/game/match.html:202
-msgid "Chat will be disabled 24 hours after Match."
-msgstr ""
+msgstr "☺ الرموز التعبيرية قريبًا ☺"
 
 #: game/templates/game/match.html:205
+msgid "Chat will be disabled 24 hours after Match."
+msgstr "سيتم تعطيل الدردشة بعد 24 ساعة من انتهاء المباراة."
+
+#: game/templates/game/match.html:208
 msgid "Chat will be deleted 1 week after Match."
-msgstr ""
+msgstr "سيتم حذف الدردشة بعد أسبوع من انتهاء المباراة."
 
 #: game/templates/game/matches.html:26
 msgid "Chat"
-msgstr ""
+msgstr "الدردشة"
 
 #: game/templates/game/matches.html:36
 msgid "Matches"
-msgstr ""
+msgstr "المباريات"
 
 #: game/templates/game/matches.html:39 game/templates/game/reviews.html:41
 msgid "Group by"
-msgstr ""
+msgstr "تجميع حسب"
 
 #: game/templates/game/matches.html:45 game/templates/game/reviews.html:47
 msgid "date"
-msgstr ""
+msgstr "التاريخ"
 
 #: game/templates/game/matches.html:49 game/templates/game/reviews.html:51
 msgid "game"
-msgstr ""
+msgstr "اللعبة"
 
 #: game/templates/game/matches.html:53 game/templates/game/reviews.html:55
 msgid "venue"
-msgstr ""
+msgstr "المكان"
 
 #: game/templates/game/matches.html:60
 msgid "Upcoming"
-msgstr ""
+msgstr "القادمة"
 
 #: game/templates/game/matches.html:95
 msgid "No pending Matches"
-msgstr ""
+msgstr "لا توجد مباريات معلّقة"
 
 #: game/templates/game/matches.html:101
 msgid "History"
-msgstr ""
+msgstr "السجل"
 
 #: game/templates/game/matches.html:134
 msgid "No history yet!"
-msgstr ""
+msgstr "لا يوجد سجل بعد!"
 
 #: game/templates/game/matches.html:149
 msgid "Select a Match to Chat."
-msgstr ""
+msgstr "اختر مباراة لبدء الدردشة."
 
 #: game/templates/game/matches.html:151
 #, python-format
@@ -106,18 +172,25 @@ msgid ""
 "            No pending Matches%(br)sKeen to play?\n"
 "        "
 msgstr ""
+"\n"
+"            لا توجد مباريات معلّقة%(br)sهل ترغب في اللعب؟\n"
+"        "
+
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
+msgid "Invite"
+msgstr "دعوة"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
-msgstr ""
+msgstr "المراجعات"
 
 #: game/templates/game/review.html:74
 msgid "Submit"
-msgstr ""
+msgstr "إرسال"
 
 #: game/templates/game/reviews.html:101
 msgid "Select a Match to Review."
-msgstr ""
+msgstr "اختر مباراة لإضافة مراجعة."
 
 #: game/templates/game/reviews.html:103
 #, python-format
@@ -126,11 +199,11 @@ msgid ""
 "                All Match reviews complete - thank you%(br)sKeen to play?\n"
 "        "
 msgstr ""
-
-#: game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr ""
+"\n"
+"                تم إكمال جميع مراجعات المباريات - شكرًا لك%(br)sهل ترغب في "
+"اللعب؟\n"
+"        "
 
 #: game/templates/game/rival.html:7
 msgid "Rival"
-msgstr ""
+msgstr "المنافس"

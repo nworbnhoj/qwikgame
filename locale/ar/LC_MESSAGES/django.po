@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 22:02+1100\n"
+"POT-Creation-Date: 2026-02-28 18:20+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,249 +21,257 @@ msgstr ""
 
 #: templates/404.html:9
 msgid "Sorry - we could not find that page."
-msgstr ""
+msgstr "عذرًا - لم نتمكن من العثور على تلك الصفحة."
 
 #: templates/500.html:9
 msgid "Game Over!"
-msgstr ""
+msgstr "انتهت اللعبة!"
 
 #: templates/500.html:13
 msgid "Sorry - we didnt expect that to happen."
-msgstr ""
+msgstr "عذرًا - لم نتوقع حدوث ذلك."
 
 #: templates/500.html:17
 msgid "We will get it fixed as soon as we figure our what went wrong."
-msgstr ""
+msgstr "سنعمل على إصلاحه بمجرد معرفة ما الذي حدث."
 
 #: templates/authenticate_snippet.html:7 templates/authenticate_snippet.html:9
 msgid "Log IN"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 #: templates/authenticate_snippet.html:11
 msgid "Sign UP"
-msgstr ""
+msgstr "إنشاء حساب"
 
 #: templates/email.html:15 templates/public.html:33
 msgid "Welcome to Qwikgame"
-msgstr ""
+msgstr "مرحبًا بك في Qwikgame"
 
 #: templates/input_day.html:9
 msgid "Pick time"
-msgstr ""
+msgstr "اختر الوقت"
 
 #: templates/input_day.html:14
 msgid "All Day"
-msgstr ""
+msgstr "طوال اليوم"
 
 #: templates/input_day.html:24
 msgid "The Venue is closed."
-msgstr ""
+msgstr "المكان مغلق."
 
 #: templates/input_week.html:8
 msgid "Select Days and Time"
-msgstr ""
+msgstr "اختر الأيام والوقت"
 
 #: templates/input_week.html:13
 msgid "Any Time"
-msgstr ""
+msgstr "في أي وقت"
 
 #: templates/license.html:16
 msgid "QWIKGAME License"
-msgstr ""
+msgstr "رخصة QWIKGAME"
 
 #: templates/license.html:31
 msgid "Open Source Software"
-msgstr ""
+msgstr "برمجيات مفتوحة المصدر"
 
 #: templates/license.html:35
 msgid ""
 "Qwikgame is released as Open-Source software, and is grateful for the use of "
 "many other great Open-Source software projects."
 msgstr ""
+"تم إصدار Qwikgame كبرنامج مفتوح المصدر، وهو ممتن لاستخدام العديد من مشاريع "
+"البرمجيات المفتوحة المصدر الرائعة الأخرى."
 
 #: templates/license.html:40
 msgid "Software"
-msgstr ""
+msgstr "البرنامج"
 
 #: templates/license.html:41
 msgid "Licence"
-msgstr ""
+msgstr "الرخصة"
 
 #: templates/map.html:5
 msgid "loading ..."
-msgstr ""
+msgstr "جارٍ التحميل..."
 
 #: templates/map.html:15
 msgid "Venues"
-msgstr ""
+msgstr "الأماكن"
 
 #: templates/map.html:28
 msgid "search"
-msgstr ""
+msgstr "بحث"
 
 #: templates/map.html:46
 msgid "Players"
-msgstr ""
+msgstr "اللاعبون"
 
 #: templates/offline.html:9
 msgid "Sorry, you appear to be offline right now."
-msgstr ""
+msgstr "عذرًا، يبدو أنك غير متصل بالإنترنت حاليًا."
 
 #: templates/pwa_snippet.html:7
 msgid "BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP."
-msgstr ""
+msgstr "أفضل من تطبيقات الجوال التقليدية. هذا تطبيق ويب تقدمي."
 
 #: templates/pwa_snippet.html:10
 msgid "Install QWIKGAME app in seconds."
-msgstr ""
+msgstr "قم بتثبيت تطبيق QWIKGAME خلال ثوانٍ."
 
 #: templates/pwa_snippet.html:14
 msgid "No download process. No payment. Remove anytime"
-msgstr ""
+msgstr "بدون تنزيل. بدون دفع. يمكن الإزالة في أي وقت"
 
 #: templates/pwa_snippet.html:17
 msgid "No app store needed"
-msgstr ""
+msgstr "لا حاجة إلى متجر تطبيقات"
 
 #: templates/pwa_snippet.html:20
 msgid "Accessible from any device with a web browser"
-msgstr ""
+msgstr "متاح من أي جهاز يحتوي على متصفح ويب"
 
 #: templates/pwa_snippet.html:23
 msgid "Requires minimal storage"
-msgstr ""
+msgstr "يتطلب مساحة تخزين قليلة"
 
 #: templates/pwa_snippet.html:26
 msgid "Better performance in regions with limited internet connection"
-msgstr ""
+msgstr "أداء أفضل في المناطق ذات الاتصال المحدود بالإنترنت"
 
 #: templates/pwa_snippet.html:29
 msgid "Compatible with all platforms: iOS, Android, Windows phone, Linux, etc"
-msgstr ""
+msgstr "متوافق مع جميع المنصات: iOS، Android، Windows Phone، Linux وغيرها"
 
 #: templates/pwa_snippet.html:35
 msgid "Install QWIKGAME "
-msgstr ""
+msgstr "تثبيت QWIKGAME "
 
 #: templates/pwa_snippet.html:39
 msgid "QWIKGAME is installed. Open the app "
-msgstr ""
+msgstr "تم تثبيت QWIKGAME. افتح التطبيق "
 
 #: templates/pwa_snippet.html:43
 msgid "QWIKGAME is installed and in-use."
-msgstr ""
+msgstr "تم تثبيت QWIKGAME وهو قيد الاستخدام."
 
 #: templates/pwa_snippet.html:46
 msgid "Unfortunately this browser does not support PWA's. "
-msgstr ""
+msgstr "للأسف، هذا المتصفح لا يدعم تطبيقات الويب التقدمية (PWA). "
 
 #: templates/pwa_snippet.html:50
 msgid "Something went wrong!"
-msgstr ""
+msgstr "حدث خطأ ما!"
 
 #: templates/pwa_snippet.html:52
 msgid "Please, try again."
-msgstr ""
+msgstr "يرجى المحاولة مرة أخرى."
 
 #: templates/pwa_snippet.html:57 templates/pwa_snippet.html:64
 msgid "PWA requires"
-msgstr ""
+msgstr "يتطلب PWA"
 
 #: templates/pwa_snippet.html:59
 msgid "Google services for push messaging"
-msgstr ""
+msgstr "خدمات Google للإشعارات الفورية"
 
 #: templates/pwa_snippet.html:61
 msgid "on Brave"
-msgstr ""
+msgstr "على Brave"
 
 #: templates/pwa_snippet.html:66
 msgid "extension"
-msgstr ""
+msgstr "إضافة"
 
 #: templates/pwa_snippet.html:68
 msgid "on Firefox"
-msgstr ""
+msgstr "على Firefox"
 
 #: templates/pwa_snippet.html:71
 msgid "You may try Chrome, Edge, Firefox with PWA add-on, Safari and more."
-msgstr ""
+msgstr "يمكنك تجربة Chrome أو Edge أو Firefox مع إضافة PWA أو Safari وغيرها."
 
 #: templates/pwa_snippet.html:75
+#, fuzzy
+#| msgid "Install QWIKGAME "
 msgid "Install QWIKGAME"
-msgstr ""
+msgstr "تثبيت QWIKGAME "
 
 #: templates/pwa_snippet.html:80
+#, fuzzy
+#| msgid "Install QWIKGAME "
 msgid "Install QWIKGAME:"
-msgstr ""
+msgstr "تثبيت QWIKGAME "
 
 #: templates/pwa_snippet.html:82
 msgid "Open Safari"
-msgstr ""
+msgstr "افتح Safari"
 
 #: templates/pwa_snippet.html:83
 msgid "Tap the Share button (box with an arrow)"
-msgstr ""
+msgstr "اضغط على زر المشاركة (مربع بسهم)"
 
 #: templates/pwa_snippet.html:84
 msgid "Select Add to Home Screen"
-msgstr ""
+msgstr "اختر إضافة إلى الشاشة الرئيسية"
 
 #: templates/pwa_snippet.html:85
 msgid "Select Add to Dock"
-msgstr ""
+msgstr "اختر إضافة إلى Dock"
 
 #: templates/pwa_snippet.html:86
 msgid "Tap Add"
-msgstr ""
+msgstr "اضغط إضافة"
 
 #: templates/pwa_snippet.html:88
 msgid "Enable QWIKGAME push notifications:"
-msgstr ""
+msgstr "تفعيل إشعارات QWIKGAME:"
 
 #: templates/pwa_snippet.html:90
 msgid "Go to Settings"
-msgstr ""
+msgstr "اذهب إلى الإعدادات"
 
 #: templates/pwa_snippet.html:91
 msgid "Open Notifications"
-msgstr ""
+msgstr "افتح الإشعارات"
 
 #: templates/pwa_snippet.html:92
+#, fuzzy
+#| msgid "Welcome to Qwikgame"
 msgid "Select qwikgame"
-msgstr ""
+msgstr "مرحبًا بك في Qwikgame"
 
 #: templates/pwa_snippet.html:93
 msgid "Turn on Allow Notifications"
-msgstr ""
+msgstr "قم بتفعيل السماح بالإشعارات"
 
 #: templates/qwik.html:41
 msgid "QwikGame"
-msgstr ""
+msgstr "QwikGame"
 
 #: templates/qwik.html:56
 msgid "Invitations"
-msgstr ""
+msgstr "الدعوات"
 
 #: templates/qwik.html:61
 msgid "Matches"
-msgstr ""
+msgstr "المباريات"
 
 #: templates/qwik.html:66
 msgid "Reviews"
-msgstr ""
+msgstr "التقييمات"
 
 #: templates/qwik.html:71
 msgid "Friends"
-msgstr ""
+msgstr "الأصدقاء"
 
 #: templates/qwik.html:97
 msgid "Feedback"
-msgstr ""
+msgstr "الملاحظات"
 
 #: templates/qwik.html:108
 msgid "Submit"
-msgstr ""
+msgstr "إرسال"
 
 #: templates/qwik.html:119
 #, python-format
@@ -271,26 +279,28 @@ msgid ""
 "\n"
 "            This work by %(qwik_link)s is licensed under %(gpl_link)s.\n"
 msgstr ""
+"\n"
+"            هذا العمل من %(qwik_link)s مرخّص بموجب %(gpl_link)s.\n"
 
 #: templates/upgrade.html:7
 msgid "Learn more"
-msgstr ""
+msgstr "اعرف المزيد"
 
 #: templates/upgrade.html:8
 msgid "Unlock"
-msgstr ""
+msgstr "فتح"
 
 #: templates/welcome.html:22
 msgid "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES."
-msgstr ""
+msgstr "QWIKGAME. اعثر على شركاء. جدولة المباريات."
 
 #: templates/welcome.html:31
 msgid "Find partner"
-msgstr ""
+msgstr "اعثر على شريك"
 
 #: templates/welcome.html:36
 msgid "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE."
-msgstr ""
+msgstr "اعثر على شركاء. جدولة المباريات. العب أكثر."
 
 #: templates/welcome.html:39
 #, python-format
@@ -301,46 +311,51 @@ msgid ""
 "partners and arranging games is fast and easy. With %(QWIK)sGAME you have "
 "all match invitations in one place. Just pick one or post your own.\n"
 msgstr ""
+"\n"
+"                هل تلعب الاسكواش أو التنس أو البادل؟ أو ربما الشطرنج أو "
+"السهام أو البلياردو؟ ولكن لا تجد شركاء؟ هذا هو %(QWIK)sGAME! الآن أصبح "
+"العثور على شركاء وتنظيم المباريات سريعًا وسهلًا. مع %(QWIK)sGAME ستجد جميع "
+"دعوات المباريات في مكان واحد. اختر واحدة أو أنشئ دعوتك الخاصة.\n"
 
 #: templates/welcome.html:45
 msgid "Organize A Match For Free!"
-msgstr ""
+msgstr "نظّم مباراة مجانًا!"
 
 #: templates/welcome.html:57
 msgid "Badminton"
-msgstr ""
+msgstr "الريشة الطائرة"
 
 #: templates/welcome.html:66
 msgid "Table Tennis"
-msgstr ""
+msgstr "تنس الطاولة"
 
 #: templates/welcome.html:75
 msgid "Darts"
-msgstr ""
+msgstr "السهام"
 
 #: templates/welcome.html:84
 msgid "Squash"
-msgstr ""
+msgstr "الاسكواش"
 
 #: templates/welcome.html:93
 msgid "Chess"
-msgstr ""
+msgstr "الشطرنج"
 
 #: templates/welcome.html:102
 msgid "Tennis"
-msgstr ""
+msgstr "التنس"
 
 #: templates/welcome.html:111
 msgid "And more..."
-msgstr ""
+msgstr "والمزيد..."
 
 #: templates/welcome.html:121
 msgid "KEEN TO PLAY?"
-msgstr ""
+msgstr "هل ترغب في اللعب؟"
 
 #: templates/welcome.html:129
 msgid "Try the Feed Invitations"
-msgstr ""
+msgstr "جرّب دعوات الخلاصة"
 
 #: templates/welcome.html:131
 #, python-format
@@ -350,10 +365,14 @@ msgid ""
 "Meet them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an "
 "invitation ... or post your own!\n"
 msgstr ""
+"\n"
+"                            لاعبون آخرون يبحثون عن شركاء أيضًا!  "
+"التقِ بهم في %(QWIK)sGAME. تصفّح %(QWIK)sFeed واختر "
+"دعوة... أو أنشئ دعوتك الخاصة!\n"
 
 #: templates/welcome.html:150
 msgid "Post new Match Invitation"
-msgstr ""
+msgstr "انشر دعوة مباراة جديدة"
 
 #: templates/welcome.html:152
 #, python-format
@@ -364,60 +383,58 @@ msgid ""
 "and the place. Confirm a match with a Rival of your preference. You "
 "choose! \n"
 msgstr ""
+"\n"
+"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ أرسل دعوة وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره أنت. القرار لك! \n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
-msgstr ""
+msgstr "نظّم مباراة"
 
 #: templates/welcome.html:174
 msgid "SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!"
-msgstr ""
+msgstr "جدول مباراة بسرعة. ثم استمتع باللعبة!"
 
 #: templates/welcome.html:178 templates/welcome.html:237
 msgid "Organize A Game Now"
-msgstr ""
+msgstr "نظّم لعبة الآن"
 
 #: templates/welcome.html:187
 msgid "Accept Feed Invitation"
-msgstr ""
+msgstr "اقبل دعوة من الخلاصة"
 
 #: templates/welcome.html:191
 msgid "Post New Invitation"
-msgstr ""
+msgstr "انشر دعوة جديدة"
 
 #: templates/welcome.html:195
 msgid "Invite Friends Only"
-msgstr ""
+msgstr "ادعُ الأصدقاء فقط"
 
 #: templates/welcome.html:199
 msgid "Chat With Your Rival"
-msgstr ""
+msgstr "تحدث مع خصمك"
 
 #: templates/welcome.html:203
 msgid "Leave A Review"
-msgstr ""
+msgstr "اترك تقييمًا"
 
 #: templates/welcome.html:207
 msgid "Try New Games"
-msgstr ""
+msgstr "جرّب ألعابًا جديدة"
 
 #: templates/welcome.html:214
 msgid ""
 "FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
 "EASY."
-msgstr ""
+msgstr "العثور على شركاء وتنظيم الألعاب لا يجب أن يكون أمرًا صعبًا. نحن نجعل ذلك سهلًا."
 
 #: templates/welcome.html:218
 msgid "Find Your Partner"
-msgstr ""
+msgstr "اعثر على شريكك"
 
 #: templates/welcome.html:233
 msgid "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE"
-msgstr ""
-
-#: templates/welcome.html:245
-msgid "FREQUENTLY ASKED QUESTIONS"
-msgstr ""
+msgstr "جميع دعوات الألعاب الثنائية الواقعية في مكان واحد"
 
 #: templates/welcome.html:248
 #, python-format
@@ -425,6 +442,8 @@ msgid ""
 "\n"
 "                What is %(QWIK)sGAME?\n"
 msgstr ""
+"\n"
+"                ما هو %(QWIK)sGAME؟\n"
 
 #: templates/welcome.html:255
 #, python-format
@@ -433,6 +452,8 @@ msgid ""
 "                    %(QWIK)sGAME is an app which facilitates finding "
 "partners and arranging 2-player games.\n"
 msgstr ""
+"\n"
+"                    %(QWIK)sGAME هو تطبيق يسهل العثور على شركاء وتنظيم ألعاب ثنائية.\n"
 
 #: templates/welcome.html:262
 #, python-format
@@ -440,16 +461,17 @@ msgid ""
 "\n"
 "                For which games can I find partners on %(QWIK)sGAME?\n"
 msgstr ""
+"\n"
+"                لأي ألعاب يمكنني العثور على شركاء عبر %(QWIK)sGAME؟\n"
 
 #: templates/welcome.html:269
 #, python-format
 msgid ""
 "\n"
-"                    %(QWIK)sGAME focuses on 2-player games only with "
-"ambitious plans for multi-player games in the future. Currently we have the "
-"most popular 2-player games like tennis, squash, table tennis, badminton, "
-"racquetball, but also chess, darts, backgammon, billiards and more.\n"
+"                    %(QWIK)sGAME يركز على الألعاب الثنائية فقط مع خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. حاليًا نوفر أشهر الألعاب الثنائية مثل التنس، الاسكواش، تنس الطاولة، الريشة الطائرة، راكيتبول، بالإضافة إلى الشطرنج، السهام، الطاولة (Backgammon)، البلياردو وغيرها.\n"
 msgstr ""
+"\n"
+"                    %(QWIK)sGAME يركز على الألعاب الثنائية فقط مع خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. حاليًا نوفر أشهر الألعاب الثنائية مثل التنس، الاسكواش، تنس الطاولة، الريشة الطائرة، راكيتبول، بالإضافة إلى الشطرنج، السهام، الطاولة (Backgammon)، البلياردو وغيرها.\n"
 
 #: templates/welcome.html:276
 #, python-format
@@ -457,6 +479,8 @@ msgid ""
 "\n"
 "                Is %(QWIK)sGAME paid?\n"
 msgstr ""
+"\n"
+"                هل %(QWIK)sGAME مدفوع؟\n"
 
 #: templates/welcome.html:283
 #, python-format
@@ -464,6 +488,8 @@ msgid ""
 "\n"
 "                    %(QWIK)sGAME is free of charge.\n"
 msgstr ""
+"\n"
+"                    %(QWIK)sGAME مجاني بالكامل.\n"
 
 #: templates/welcome.html:290
 #, python-format
@@ -471,6 +497,8 @@ msgid ""
 "\n"
 "                Is %(QWIK)sGAME available in my country?\n"
 msgstr ""
+"\n"
+"                هل %(QWIK)sGAME متاح في بلدي؟\n"
 
 #: templates/welcome.html:297
 #, python-format
@@ -478,6 +506,8 @@ msgid ""
 "\n"
 "                    %(QWIK)sGAME works anywhere in the world.\n"
 msgstr ""
+"\n"
+"                    %(QWIK)sGAME يعمل في أي مكان في العالم.\n"
 
 #: templates/welcome.html:304
 #, python-format
@@ -486,6 +516,8 @@ msgid ""
 "                How do I find partner and schedule a match with "
 "%(QWIK)sGAME?\n"
 msgstr ""
+"\n"
+"                كيف أجد شريكًا وأجدول مباراة باستخدام %(QWIK)sGAME؟\n"
 
 #: templates/welcome.html:311
 #, python-format
@@ -500,12 +532,16 @@ msgid ""
 "to an existing invitation from the %(QWIK)sFeed by placing an offer for a "
 "particular hour from the given timeframe.\n"
 msgstr ""
+"\n"
+"                    للعثور على شريك وتنظيم مباراة، ابدأ بإرسال دعوة مباراة. اختر اللعبة والمكان والفترة الزمنية. يُنصح بالاتصال بالمكان للتأكد من توفر الملاعب في الوقت الذي تفضله. ستكون دعوتك مرئية في %(QWIK)sFeed لبقية اللاعبين. قد يرد عدة لاعبين على دعوتك. يمكنك اختيار أفضل عرض وتأكيد المباراة. كما يمكنك الرد على دعوة موجودة في %(QWIK)sFeed من خلال تقديم عرض لساعة محددة ضمن الفترة الزمنية المعروضة.\n"
 
 #: templates/welcome.html:318
 msgid ""
 "\n"
 "                How many invitations can I send?\n"
 msgstr ""
+"\n"
+"                كم عدد الدعوات التي يمكنني إرسالها؟\n"
 
 #: templates/welcome.html:325
 msgid ""
@@ -513,6 +549,8 @@ msgid ""
 "                    You can post as many invitations as you wish every day "
 "and for any game, venue or timeframe.\n"
 msgstr ""
+"\n"
+"                    يمكنك نشر عدد غير محدود من الدعوات يوميًا ولأي لعبة أو مكان أو فترة زمنية.\n"
 
 #: templates/welcome.html:332
 #, python-format
@@ -520,6 +558,8 @@ msgid ""
 "\n"
 "                What is %(QWIK)sFeed?\n"
 msgstr ""
+"\n"
+"                ما هو %(QWIK)sFeed؟\n"
 
 #: templates/welcome.html:339
 #, python-format
@@ -528,12 +568,16 @@ msgid ""
 "                    You can find all current invitations in our "
 "%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
 msgstr ""
+"\n"
+"                    يمكنك العثور على جميع الدعوات الحالية في %(QWIK)sFeed. يتم تحديثه باستمرار بدعوات جديدة يرسلها اللاعبون.\n"
 
 #: templates/welcome.html:346
 msgid ""
 "\n"
 "                Who books the court/playground?\n"
 msgstr ""
+"\n"
+"                من يقوم بحجز الملعب؟\n"
 
 #: templates/welcome.html:353
 msgid ""
@@ -543,6 +587,8 @@ msgid ""
 "The Player is also recommended to call and check the venue availability "
 "before sending the invitation.\n"
 msgstr ""
+"\n"
+"                    اللاعب الذي يرسل دعوة المباراة الأولية هو المسؤول عن الاتصال وحجز الملعب بعد تأكيد المباراة. كما يُنصح بالاتصال بالمكان للتحقق من التوفر قبل إرسال الدعوة.\n"
 
 #: templates/welcome.html:360
 #, python-format
@@ -551,6 +597,8 @@ msgid ""
 "                Why can't I find %(QWIK)sGAME in the PlayStore and "
 "AppStore?\n"
 msgstr ""
+"\n"
+"                لماذا لا أجد %(QWIK)sGAME في PlayStore أو AppStore؟\n"
 
 #: templates/welcome.html:367
 #, python-format
@@ -561,6 +609,8 @@ msgid ""
 "%(QWIK)sGAME on your Home screen. %(QWIK)sGAME PWA works on all operating "
 "systems and an Internet Browser is the only requirement.\n"
 msgstr ""
+"\n"
+"                    %(QWIK)sGAME هو تطبيق ويب تقدمي (PWA). إنه الجيل الجديد من التطبيقات. لا حاجة للتنزيل أو التثبيت. فقط احفظ %(QWIK)sGAME على شاشتك الرئيسية. يعمل %(QWIK)sGAME على جميع أنظمة التشغيل ويتطلب فقط متصفح إنترنت.\n"
 
 #: templates/welcome.html:374
 #, python-format
@@ -568,17 +618,8 @@ msgid ""
 "\n"
 "                Who owns %(QWIK)sGAME?\n"
 msgstr ""
-
-#: templates/welcome.html:381
-#, python-format
-msgid ""
 "\n"
-"                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
-"Victoria, Australia as a Not For Profit Association. All discussions and "
-"decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
-"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
-"be most welcome.\n"
-msgstr ""
+"                من يملك %(QWIK)sGAME؟\n"
 
 #: templates/welcome.html:388
 #, python-format
@@ -586,6 +627,8 @@ msgid ""
 "\n"
 "                Is %(QWIK)sGAME open-source?\n"
 msgstr ""
+"\n"
+"                هل %(QWIK)sGAME مفتوح المصدر؟\n"
 
 #: templates/welcome.html:395
 #, python-format
@@ -595,23 +638,17 @@ msgid ""
 "The latest code can be found on %(github_link)s. Your assistance will be "
 "most welcome.\n"
 msgstr ""
+"\n"
+"                    نعم! برنامج %(QWIK)sGAME مفتوح المصدر بالكامل. يمكن العثور على أحدث الشيفرة عبر %(github_link)s. مساهمتك مرحب بها للغاية.\n"
 
 #: templates/welcome.html:414
 msgid "License"
-msgstr ""
+msgstr "الرخصة"
 
 #: templates/welcome.html:418
 msgid "Privacy"
-msgstr ""
+msgstr "الخصوصية"
 
 #: templates/welcome.html:422
 msgid "Terms & Conditions"
-msgstr ""
-
-#: templates/welcome_header_snippet.html:12
-msgid "Sign In"
-msgstr ""
-
-#: templates/welcome_header_snippet.html:13
-msgid "Sign up"
-msgstr ""
+msgstr "الشروط والأحكام"

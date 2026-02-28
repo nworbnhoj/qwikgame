@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 12:18+1100\n"
+"POT-Creation-Date: 2026-02-28 17:32+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,49 +19,169 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
+#: player/forms.py:24 player/models.py:462
+msgid "Any Game"
+msgstr "أي لعبة"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "عرض الدعوات الخاصة بلعبة معينة فقط."
+
+#: player/forms.py:26 player/forms.py:276
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "اللعبة"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "عرض الدعوات الخاصة بمكان معين فقط."
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "المكان"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "عرض الدعوات في أوقات محددة من أسبوعك فقط."
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "الوقت"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "عذرًا، لم تنجح عملية اختيار المكان. يرجى المحاولة مرة أخرى."
+
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
+msgid "Anywhere"
+msgstr "في أي مكان"
+
+#: player/forms.py:143
+msgid "show-map"
+msgstr "عرض-الخريطة"
+
+#: player/forms.py:143
+msgid "Select from map"
+msgstr "اختر من الخريطة"
+
+#: player/forms.py:186
+msgid "NO ACTIVE FILTERS"
+msgstr "لا توجد فلاتر نشطة"
+
+#: player/forms.py:197
+#, python-format
+msgid "%(n)s ACTIVE FILTERS"
+msgstr "%(n)s فلاتر نشطة"
+
+#: player/forms.py:219
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "عنوان بريد الصديق الإلكتروني"
+
+#: player/forms.py:225
+msgid "NAME"
+msgstr "الاسم"
+
+#: player/forms.py:237
+msgid "Type email address"
+msgstr "اكتب عنوان البريد الإلكتروني"
+
+#: player/forms.py:238
+msgid "A screen name for your friend (optional)"
+msgstr "اسم عرض لصديقك (اختياري)"
+
+#: player/forms.py:283
+msgid "RIVAL SKILL LEVEL"
+msgstr "مستوى مهارة الخصم"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "على الأرجح"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "ربما"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "غير معروف"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+#, fuzzy
+#| msgid "Much Weaker"
+msgid "much-weaker"
+msgstr "أضعف بكثير"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+#, fuzzy
+#| msgid "Weaker"
+msgid "weaker"
+msgstr "أضعف"
+
+#: player/models.py:400
+#, fuzzy
+#| msgid "Well Matched"
+msgid "matched"
+msgstr "متكافئان"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+#, fuzzy
+#| msgid "Stronger"
+msgid "stronger"
+msgstr "أقوى"
+
+#: player/models.py:402
+#, fuzzy
+#| msgid "Much Stronger"
+msgid "much-stonger"
+msgstr "أقوى بكثير"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "في أي وقت"
+
 #: player/templates/player/account_public_snippet.html:5
 msgid "YOUR QWIKGAME REPUTATION"
-msgstr ""
+msgstr "سمعتك في QWIKGAME"
 
 #: player/templates/player/account_public_snippet.html:10
 msgid "Based on feedback given by your rivals."
-msgstr ""
+msgstr "بناءً على التقييمات المقدمة من منافسيك."
 
 #: player/templates/player/filter.html:46
 #: player/templates/player/filters.html:8
 msgid "Filter"
-msgstr ""
+msgstr "تصفية"
 
 #: player/templates/player/filter.html:65
 msgid "New Invitation Filter"
-msgstr ""
+msgstr "مرشح دعوات جديد"
 
 #: player/templates/player/filter.html:78
 msgid "Add Filter"
-msgstr ""
+msgstr "إضافة مرشح"
 
 #: player/templates/player/filters.html:27
 msgid "Invitation Filters"
-msgstr ""
+msgstr "مرشحات الدعوات"
 
 #: player/templates/player/filters.html:31
 #: player/templates/player/friend_add.html:34
 #: player/templates/player/friends.html:25
 #: player/templates/player/strength.html:102
 msgid "Add"
-msgstr ""
+msgstr "إضافة"
 
 #: player/templates/player/filters.html:47
 msgid "Delete these Filters?"
-msgstr ""
+msgstr "حذف هذه المرشحات؟"
 
 #: player/templates/player/filters.html:49
 msgid "Remove"
-msgstr ""
+msgstr "إزالة"
 
 #: player/templates/player/filters.html:53
 msgid "Apply"
-msgstr ""
+msgstr "تطبيق"
 
 #: player/templates/player/friend.html:7
 #: player/templates/player/friend_add.html:7
@@ -69,40 +189,40 @@ msgstr ""
 #: player/templates/player/friends.html:35
 #: player/templates/player/strength.html:7
 msgid "Friends"
-msgstr ""
+msgstr "الأصدقاء"
 
 #: player/templates/player/friend.html:36
 msgid "Delete this Friend?"
-msgstr ""
+msgstr "حذف هذا الصديق؟"
 
 #: player/templates/player/friend.html:38
 #: player/templates/player/friend.html:69
 #: player/templates/player/strength.html:43
 msgid "delete"
-msgstr ""
+msgstr "حذف"
 
 #: player/templates/player/friend.html:51
 #: player/templates/player/friend_add.html:24
 #: player/templates/player/friends.html:93
 msgid "Add Friend"
-msgstr ""
+msgstr "إضافة صديق"
 
 #: player/templates/player/friend.html:79
 #: player/templates/player/strength.html:75
 msgid "Submit"
-msgstr ""
+msgstr "إرسال"
 
 #: player/templates/player/friends.html:39
 msgid "Group by"
-msgstr ""
+msgstr "تجميع حسب"
 
 #: player/templates/player/friends.html:46
 msgid "game"
-msgstr ""
+msgstr "اللعبة"
 
 #: player/templates/player/friends.html:73
 msgid "No friends :-("
-msgstr ""
+msgstr "لا يوجد أصدقاء :-("
 
 #: player/templates/player/friends.html:87
 #, python-format
@@ -111,22 +231,25 @@ msgid ""
 "                Edit a Friend%(br)sor add a new one!\n"
 "    "
 msgstr ""
+"\n"
+"                عدّل صديقًا%(br)sأو أضف صديقًا جديدًا!\n"
+"    "
 
 #: player/templates/player/rival_stats_snippet.html:4
 msgid "MATCHES"
-msgstr ""
+msgstr "المباريات"
 
 #: player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
-msgstr ""
+msgstr "الألعاب"
 
 #: player/templates/player/rival_stats_snippet.html:16
 msgid "VENUES"
-msgstr ""
+msgstr "الأماكن"
 
 #: player/templates/player/strength.html:61
 msgid "Important!"
-msgstr ""
+msgstr "مهم!"
 
 #: player/templates/player/strength.html:63
 msgid ""
@@ -134,39 +257,29 @@ msgid ""
 "This will help qwikgame make better Matches for you, and your friend, and "
 "other qwikgame Players who know either of you."
 msgstr ""
-
-#: player/templates/player/strength.html:84
-msgid "GAME"
-msgstr ""
+"يرجى تخصيص بعض الوقت لإخبار qwikgame بمستوى قوة صديقك. سيساعد ذلك qwikgame "
+"على إنشاء مباريات أفضل لك، ولصديقك، وللاعبين الآخرين الذين يعرفون أحدكما."
 
 #: player/templates/player/strength.html:85
 msgid "STRENGTH"
-msgstr ""
-
-#: player/templates/player/strength.html:87
-msgid "Much Weaker"
-msgstr ""
-
-#: player/templates/player/strength.html:88
-msgid "Weaker"
-msgstr ""
+msgstr "المستوى"
 
 #: player/templates/player/strength.html:89
-msgid "Well Matched"
-msgstr ""
-
-#: player/templates/player/strength.html:90
-msgid "Stronger"
-msgstr ""
+#, fuzzy
+#| msgid "Well Matched"
+msgid "well-matched"
+msgstr "متكافئان"
 
 #: player/templates/player/strength.html:91
-msgid "Much Stronger"
-msgstr ""
+#, fuzzy
+#| msgid "Much Stronger"
+msgid "much-stronger"
+msgstr "أقوى بكثير"
 
 #: player/templates/player/strength.html:96
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #: player/templates/player/strength.html:99
 msgid "Learn more"
-msgstr ""
+msgstr "اعرف المزيد"

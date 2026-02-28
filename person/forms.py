@@ -47,8 +47,9 @@ class PrivateForm(QwikForm):
         template_name="input_checkbox.html"
     )
     language = ChoiceField(
-        choices = LANGUAGES, 
-        label=_('LANGUAGE'), 
+        choices = [('', _("Browser default"))] + LANGUAGES, 
+        label=_('LANGUAGE'),
+        required=False,
         template_name='field.html', 
     )
 

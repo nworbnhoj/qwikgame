@@ -8,6 +8,7 @@ from authenticate.models import User
 from person.models import Block, Person
 from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
 from player.models import Player
+from qwikgame.settings import LANGUAGES, LANGUAGE_COOKIE_NAME
 from qwikgame.views import QwikView
 
 
@@ -96,16 +97,21 @@ class PrivateView(QwikView):
             context = self.blocked_form_class.post(request.POST, self.user.person)
         else:
             context = self.private_form_class.post(request.POST)
-            person = self.user.person
-            person.notify_email = context["notify_email"]
-            person.notify_push = context["notify_push"]
-            person.location_auto = context["location_auto"]
-            person.language = context["language"]
-            person.save()
-        if len(context) == 0:
-            return HttpResponseRedirect("/account/private/")
-        context = context | super().context(request)
-        return render(request, self.template_name, context)
+        if 'private_form' in context:
+            context = context | super().context(request)
+            return render(request, self.template_name, context)
+        person = self.user.person
+        person.notify_email = context["notify_email"]
+        person.notify_push = context["notify_push"]
+        person.location_auto = context["location_auto"]
+        person.language = context["language"]
+        person.save()
+        response = HttpResponseRedirect("/account/private/")
+        if person.language in dict(LANGUAGES):
+            response.set_cookie(LANGUAGE_COOKIE_NAME, person.language)
+        else:
+            response.delete_cookie(LANGUAGE_COOKIE_NAME)
+        return response
 
 
 class PublicView(QwikView):

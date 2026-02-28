@@ -176,6 +176,7 @@ LANGUAGES = [
     # ('zh', '中文'),
 ]
 LANGUAGE_CODE = 'en-us'
+LANGUAGE_COOKIE_NAME = 'qwik_language'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 MODELTRANSLATION_LANGUAGES = ('en', 'bg', 'it')
 TIME_ZONE = 'Australia/Melbourne'

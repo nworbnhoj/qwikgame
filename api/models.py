@@ -94,13 +94,17 @@ class Mark(models.Model):
         return mark_qs
 
     def key(self):
-        key = self.place.country
-        if self.place.admin1:
-            key = f'{self.place.admin1}|{key}'
-            if self.place.locality:
-                key = f'{self.place.locality}|{key}'
-                if self.place.is_venue:
-                    key = f'{self.place.name}|{key}'
+        key = self.place.country if self.place.country else 'None'
+        if self.place.is_region:
+            if self.place.admin1:
+                key = f'{self.place.admin1}|{key}'
+                if self.place.locality:
+                    key = f'{self.place.locality}|{key}'
+        elif self.place.is_venue:
+            name = self.place.name if self.place.name else '-'
+            locality = self.place.locality if self.place.locality else name
+            admin1 = self.place.admin1 if self.place.admin1 else locality
+            key = f'{name}|{locality}|{admin1}|{key}'
         return key
 
     def mark(self):

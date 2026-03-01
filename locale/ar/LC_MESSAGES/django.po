@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 18:20+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -366,9 +366,8 @@ msgid ""
 "invitation ... or post your own!\n"
 msgstr ""
 "\n"
-"                            لاعبون آخرون يبحثون عن شركاء أيضًا!  "
-"التقِ بهم في %(QWIK)sGAME. تصفّح %(QWIK)sFeed واختر "
-"دعوة... أو أنشئ دعوتك الخاصة!\n"
+"                            لاعبون آخرون يبحثون عن شركاء أيضًا!  التقِ بهم في "
+"%(QWIK)sGAME. تصفّح %(QWIK)sFeed واختر دعوة... أو أنشئ دعوتك الخاصة!\n"
 
 #: templates/welcome.html:150
 msgid "Post new Match Invitation"
@@ -384,7 +383,9 @@ msgid ""
 "choose! \n"
 msgstr ""
 "\n"
-"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ أرسل دعوة وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره أنت. القرار لك! \n"
+"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ أرسل دعوة "
+"وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره "
+"أنت. القرار لك! \n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -426,7 +427,8 @@ msgstr "جرّب ألعابًا جديدة"
 msgid ""
 "FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
 "EASY."
-msgstr "العثور على شركاء وتنظيم الألعاب لا يجب أن يكون أمرًا صعبًا. نحن نجعل ذلك سهلًا."
+msgstr ""
+"العثور على شركاء وتنظيم الألعاب لا يجب أن يكون أمرًا صعبًا. نحن نجعل ذلك سهلًا."
 
 #: templates/welcome.html:218
 msgid "Find Your Partner"
@@ -435,6 +437,10 @@ msgstr "اعثر على شريكك"
 #: templates/welcome.html:233
 msgid "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE"
 msgstr "جميع دعوات الألعاب الثنائية الواقعية في مكان واحد"
+
+#: templates/welcome.html:245
+msgid "FREQUENTLY ASKED QUESTIONS"
+msgstr "الأسئلة الشائعة"
 
 #: templates/welcome.html:248
 #, python-format
@@ -453,7 +459,8 @@ msgid ""
 "partners and arranging 2-player games.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME هو تطبيق يسهل العثور على شركاء وتنظيم ألعاب ثنائية.\n"
+"                    %(QWIK)sGAME هو تطبيق يسهل العثور على شركاء وتنظيم ألعاب "
+"ثنائية.\n"
 
 #: templates/welcome.html:262
 #, python-format
@@ -468,10 +475,17 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    %(QWIK)sGAME يركز على الألعاب الثنائية فقط مع خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. حاليًا نوفر أشهر الألعاب الثنائية مثل التنس، الاسكواش، تنس الطاولة، الريشة الطائرة، راكيتبول، بالإضافة إلى الشطرنج، السهام، الطاولة (Backgammon)، البلياردو وغيرها.\n"
+"                    %(QWIK)sGAME focuses on 2-player games only with "
+"ambitious plans for multi-player games in the future. Currently we have the "
+"most popular 2-player games like tennis, squash, table tennis, badminton, "
+"racquetball, but also chess, darts, backgammon, billiards and more.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME يركز على الألعاب الثنائية فقط مع خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. حاليًا نوفر أشهر الألعاب الثنائية مثل التنس، الاسكواش، تنس الطاولة، الريشة الطائرة، راكيتبول، بالإضافة إلى الشطرنج، السهام، الطاولة (Backgammon)، البلياردو وغيرها.\n"
+"                    يركز %(QWIK)sGAME حاليًا على الألعاب الثنائية فقط، مع "
+"خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. نوفر حاليًا أشهر "
+"الألعاب الثنائية مثل التنس، والاسكواش، وتنس الطاولة، والريشة الطائرة، "
+"وراكيتبول، بالإضافة إلى الشطرنج، والسهام، والطاولة (الطاولة الزهر)، "
+"والبلياردو وغيرها.\n"
 
 #: templates/welcome.html:276
 #, python-format
@@ -533,7 +547,12 @@ msgid ""
 "particular hour from the given timeframe.\n"
 msgstr ""
 "\n"
-"                    للعثور على شريك وتنظيم مباراة، ابدأ بإرسال دعوة مباراة. اختر اللعبة والمكان والفترة الزمنية. يُنصح بالاتصال بالمكان للتأكد من توفر الملاعب في الوقت الذي تفضله. ستكون دعوتك مرئية في %(QWIK)sFeed لبقية اللاعبين. قد يرد عدة لاعبين على دعوتك. يمكنك اختيار أفضل عرض وتأكيد المباراة. كما يمكنك الرد على دعوة موجودة في %(QWIK)sFeed من خلال تقديم عرض لساعة محددة ضمن الفترة الزمنية المعروضة.\n"
+"                    للعثور على شريك وتنظيم مباراة، ابدأ بإرسال دعوة مباراة. "
+"اختر اللعبة والمكان والفترة الزمنية. يُنصح بالاتصال بالمكان للتأكد من توفر "
+"الملاعب في الوقت الذي تفضله. ستكون دعوتك مرئية في %(QWIK)sFeed لبقية "
+"اللاعبين. قد يرد عدة لاعبين على دعوتك. يمكنك اختيار أفضل عرض وتأكيد "
+"المباراة. كما يمكنك الرد على دعوة موجودة في %(QWIK)sFeed من خلال تقديم عرض "
+"لساعة محددة ضمن الفترة الزمنية المعروضة.\n"
 
 #: templates/welcome.html:318
 msgid ""
@@ -550,7 +569,8 @@ msgid ""
 "and for any game, venue or timeframe.\n"
 msgstr ""
 "\n"
-"                    يمكنك نشر عدد غير محدود من الدعوات يوميًا ولأي لعبة أو مكان أو فترة زمنية.\n"
+"                    يمكنك نشر عدد غير محدود من الدعوات يوميًا ولأي لعبة أو "
+"مكان أو فترة زمنية.\n"
 
 #: templates/welcome.html:332
 #, python-format
@@ -569,7 +589,8 @@ msgid ""
 "%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
 msgstr ""
 "\n"
-"                    يمكنك العثور على جميع الدعوات الحالية في %(QWIK)sFeed. يتم تحديثه باستمرار بدعوات جديدة يرسلها اللاعبون.\n"
+"                    يمكنك العثور على جميع الدعوات الحالية في %(QWIK)sFeed. "
+"يتم تحديثه باستمرار بدعوات جديدة يرسلها اللاعبون.\n"
 
 #: templates/welcome.html:346
 msgid ""
@@ -588,7 +609,9 @@ msgid ""
 "before sending the invitation.\n"
 msgstr ""
 "\n"
-"                    اللاعب الذي يرسل دعوة المباراة الأولية هو المسؤول عن الاتصال وحجز الملعب بعد تأكيد المباراة. كما يُنصح بالاتصال بالمكان للتحقق من التوفر قبل إرسال الدعوة.\n"
+"                    اللاعب الذي يرسل دعوة المباراة الأولية هو المسؤول عن "
+"الاتصال وحجز الملعب بعد تأكيد المباراة. كما يُنصح بالاتصال بالمكان للتحقق من "
+"التوفر قبل إرسال الدعوة.\n"
 
 #: templates/welcome.html:360
 #, python-format
@@ -610,7 +633,9 @@ msgid ""
 "systems and an Internet Browser is the only requirement.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME هو تطبيق ويب تقدمي (PWA). إنه الجيل الجديد من التطبيقات. لا حاجة للتنزيل أو التثبيت. فقط احفظ %(QWIK)sGAME على شاشتك الرئيسية. يعمل %(QWIK)sGAME على جميع أنظمة التشغيل ويتطلب فقط متصفح إنترنت.\n"
+"                    %(QWIK)sGAME هو تطبيق ويب تقدمي (PWA). إنه الجيل الجديد "
+"من التطبيقات. لا حاجة للتنزيل أو التثبيت. فقط احفظ %(QWIK)sGAME على شاشتك "
+"الرئيسية. يعمل %(QWIK)sGAME على جميع أنظمة التشغيل ويتطلب فقط متصفح إنترنت.\n"
 
 #: templates/welcome.html:374
 #, python-format
@@ -620,6 +645,21 @@ msgid ""
 msgstr ""
 "\n"
 "                من يملك %(QWIK)sGAME؟\n"
+
+#: templates/welcome.html:381
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
+"Victoria, Australia as a Not For Profit Association. All discussions and "
+"decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
+"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
+"be most welcome.\n"
+msgstr ""
+"\n"
+"                    تتم إدارة %(QWIK)sGAME من قبل QWIKGAME Inc. المسجلة في "
+"فيكتوريا، أستراليا، كجمعية غير ربحية. تُجرى جميع المناقشات والقرارات "
+"المتعلقة بـ %(QWIK)sGAME عبر الإنترنت في <a href=\"https://forum.qwikgame.org/\" target=\"_blank\">منتدى QWIK</a>. نرحب بمساهمتك.\n"
 
 #: templates/welcome.html:388
 #, python-format
@@ -639,7 +679,8 @@ msgid ""
 "most welcome.\n"
 msgstr ""
 "\n"
-"                    نعم! برنامج %(QWIK)sGAME مفتوح المصدر بالكامل. يمكن العثور على أحدث الشيفرة عبر %(github_link)s. مساهمتك مرحب بها للغاية.\n"
+"                    نعم! برنامج %(QWIK)sGAME مفتوح المصدر بالكامل. يمكن "
+"العثور على أحدث الشيفرة عبر %(github_link)s. مساهمتك مرحب بها للغاية.\n"
 
 #: templates/welcome.html:414
 msgid "License"
@@ -652,3 +693,16 @@ msgstr "الخصوصية"
 #: templates/welcome.html:422
 msgid "Terms & Conditions"
 msgstr "الشروط والأحكام"
+
+#: templates/welcome_header_snippet.html:12
+#, fuzzy
+#| msgid "Sign UP"
+msgid "Sign In"
+msgstr "إنشاء حساب"
+
+#: templates/welcome_header_snippet.html:13
+#, fuzzy
+#| msgid "Sign UP"
+msgid "Sign up"
+msgstr "إنشاء حساب"
+

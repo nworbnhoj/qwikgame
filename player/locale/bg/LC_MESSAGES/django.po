@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 22:28+1100\n"
+"POT-Creation-Date: 2026-03-01 15:54+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "Всяка игра"
 msgid "Only see invitations for a particular Game."
 msgstr "Показвай само покани за определена игра."
 
-#: player/forms.py:26 player/forms.py:275
+#: player/forms.py:26 player/forms.py:276
 #: player/templates/player/strength.html:84
 msgid "GAME"
 msgstr "ИГРА"
@@ -51,44 +51,44 @@ msgstr "ВРЕМЕ"
 msgid "Sorry, that Venue selection did not work. Please try again."
 msgstr "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
 
-#: player/forms.py:142 player/forms.py:161 player/models.py:463
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
 msgid "Anywhere"
 msgstr "Навсякъде"
 
-#: player/forms.py:142
+#: player/forms.py:143
 msgid "show-map"
 msgstr "покажи-карта"
 
-#: player/forms.py:142
+#: player/forms.py:143
 msgid "Select from map"
 msgstr "Избери от картата"
 
-#: player/forms.py:184
+#: player/forms.py:186
 msgid "NO ACTIVE FILTERS"
 msgstr "НЯМА АКТИВНИ ФИЛТРИ"
 
-#: player/forms.py:195
+#: player/forms.py:197
 #, python-format
 msgid "%(n)s ACTIVE FILTERS"
 msgstr "%(n)s АКТИВНИ ФИЛТРИ"
 
-#: player/forms.py:217
+#: player/forms.py:219
 msgid "FRIEND'S EMAIL ADDRESS"
 msgstr "ИМЕЙЛ АДРЕС НА ПРИЯТЕЛ"
 
-#: player/forms.py:223
+#: player/forms.py:225
 msgid "NAME"
 msgstr "ИМЕ"
 
-#: player/forms.py:235
+#: player/forms.py:237
 msgid "Type email address"
 msgstr "Въведете имейл адрес"
 
-#: player/forms.py:236
+#: player/forms.py:238
 msgid "A screen name for your friend (optional)"
 msgstr "Екранно име за вашия приятел (по избор)"
 
-#: player/forms.py:282
+#: player/forms.py:283
 msgid "RIVAL SKILL LEVEL"
 msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
 

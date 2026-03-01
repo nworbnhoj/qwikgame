@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: player/forms.py:24 player/models.py:462
 msgid "Any Game"
 msgstr "Qualsiasi gioco"
@@ -25,7 +26,7 @@ msgstr "Qualsiasi gioco"
 msgid "Only see invitations for a particular Game."
 msgstr "Visualizza solo gli inviti per un gioco specifico."
 
-#: player/forms.py:26 player/forms.py:275
+#: player/forms.py:26 player/forms.py:276
 #: player/templates/player/strength.html:84
 msgid "GAME"
 msgstr "GIOCO"
@@ -50,7 +51,7 @@ msgstr "ORARIO"
 msgid "Sorry, that Venue selection did not work. Please try again."
 msgstr "Spiacenti, la selezione della sede non ha funzionato. Riprova."
 
-#: player/forms.py:143 player/forms.py:162 player/models.py:463
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
 msgid "Anywhere"
 msgstr "Ovunque"
 
@@ -62,32 +63,32 @@ msgstr "mostra-mappa"
 msgid "Select from map"
 msgstr "Seleziona dalla mappa"
 
-#: player/forms.py:185
+#: player/forms.py:186
 msgid "NO ACTIVE FILTERS"
 msgstr "NESSUN FILTRO ATTIVO"
 
-#: player/forms.py:196
+#: player/forms.py:197
 #, python-format
 msgid "%(n)s ACTIVE FILTERS"
 msgstr "%(n)s FILTRI ATTIVI"
 
-#: player/forms.py:218
+#: player/forms.py:219
 msgid "FRIEND'S EMAIL ADDRESS"
 msgstr "INDIRIZZO EMAIL DELL’AMICO"
 
-#: player/forms.py:224
+#: player/forms.py:225
 msgid "NAME"
 msgstr "NOME"
 
-#: player/forms.py:236
+#: player/forms.py:237
 msgid "Type email address"
 msgstr "Inserisci l’indirizzo email"
 
-#: player/forms.py:237
+#: player/forms.py:238
 msgid "A screen name for your friend (optional)"
 msgstr "Un nome visualizzato per il tuo amico (facoltativo)"
 
-#: player/forms.py:282
+#: player/forms.py:283
 msgid "RIVAL SKILL LEVEL"
 msgstr "LIVELLO DI ABILITÀ DELL’AVVERSARIO"
 

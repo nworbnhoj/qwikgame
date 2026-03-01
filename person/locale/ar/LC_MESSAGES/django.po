@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 18:20+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -280,8 +280,8 @@ msgid ""
 "has been CANCELLED.\n"
 msgstr ""
 "\n"
-"أنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s موجودة في %(venue)s "
-"تم الإلغاء.\n"
+"أنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s موجودة "
+"في %(venue)s تم الإلغاء.\n"
 
 #: person/templates/person/cancel_match_alert_email_text.html:10
 #: person/templates/person/chat_match_alert_email_text.html:14
@@ -337,7 +337,8 @@ msgid ""
 "received a chat message.\n"
 msgstr ""
 "\n"
-"\tأنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s في %(venue)s تلقت رسالة دردشة.\n"
+"\tأنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s في "
+"%(venue)s تلقت رسالة دردشة.\n"
 
 #: person/templates/person/chat_match_alert_email_text.html:10
 #, python-format
@@ -547,11 +548,6 @@ msgstr ""
 
 #: person/templates/person/new_match_alert_email_html.html:13
 #, python-format
-#| msgid ""
-#| "\n"
-#| "        You're receiving this email because <b>%(name)s</b> has withdrawn "
-#| "their Bid on your Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
-#| "    "
 msgid ""
 "\n"
 "            You're receiving this email because <b>%(name)s</b> at "
@@ -559,8 +555,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-" أنت تتلقى هذا البريد الإلكتروني لأن <b>%(name)s</b> في "
-"أكّد %(site_name)s وجود <b>%(game)s</b> في <b>%(venue)s</b>.\n"
+" أنت تتلقى هذا البريد الإلكتروني لأن <b>%(name)s</b> في أكّد %(site_name)s "
+"وجود <b>%(game)s</b> في <b>%(venue)s</b>.\n"
 "    "
 
 #: person/templates/person/new_match_alert_email_subject.txt:4
@@ -580,8 +576,8 @@ msgid ""
 "has been Confirmed.\n"
 msgstr ""
 "\n"
-"أنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s موجودة في %(venue)s "
-"تم التأكيد.\n"
+"أنت تتلقى هذا البريد الإلكتروني لأن لعبة Qwikgame الخاصة بـ %(game)s موجودة "
+"في %(venue)s تم التأكيد.\n"
 
 #: person/templates/person/new_match_alert_notify_body.txt:3
 #, python-format
@@ -702,9 +698,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"           أنت تتلقى هذا البريد الإلكتروني لأن <b>%(name)s</b> في "
-"لقد دعاك %(site_name)s للعب <b>%(game)s</b> في <b>%(venue)s</b>."
-"        "
+"           أنت تتلقى هذا البريد الإلكتروني لأن <b>%(name)s</b> في لقد دعاك "
+"%(site_name)s للعب <b>%(game)s</b> في <b>%(venue)s</b>.        "
 
 #: person/templates/person/woo_invite_email_html.html:24
 #, python-format
@@ -743,8 +738,8 @@ msgid ""
 "you to play %(game)s at %(venue)s.\n"
 msgstr ""
 "\n"
-"        تصلك هذه الرسالة لأن <b>%(name)s</b> قام %(site_name)s بسحب عرضه على لعبتك "
-"<b>%(game)s</b> في <b>%(venue)s</b>.\n"
+"        تصلك هذه الرسالة لأن <b>%(name)s</b> قام %(site_name)s بسحب عرضه على "
+"لعبتك <b>%(game)s</b> في <b>%(venue)s</b>.\n"
 
 #: person/templates/person/woo_invite_email_text.html:11
 msgid "Game"

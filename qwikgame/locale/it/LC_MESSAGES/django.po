@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 06:18+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1037,15 +1037,3 @@ msgstr "Zambia"
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
-
-#: qwikgame/settings.py:168
-msgid "English"
-msgstr "Inglese"
-
-#: qwikgame/settings.py:169
-msgid "Bulgarian"
-msgstr "Bulgaro"
-
-#: qwikgame/settings.py:170
-msgid "Italian"
-msgstr "Italia"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:37+1100\n"
+"POT-Creation-Date: 2026-03-01 15:54+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1000,23 +1000,23 @@ msgstr "Съединени американски щати"
 
 #: qwikgame/constants.py:295
 msgid "United States Minor Outlying Islands"
-msgstr ""
+msgstr "Малки отдалечени острови на Съединените щати"
 
 #: qwikgame/constants.py:296
 msgid "Uruguay"
-msgstr ""
+msgstr "Уругвай"
 
 #: qwikgame/constants.py:297
 msgid "Uzbekistan"
-msgstr ""
+msgstr "Узбекистан"
 
 #: qwikgame/constants.py:298
 msgid "Vanuatu"
-msgstr ""
+msgstr "Вануату"
 
 #: qwikgame/constants.py:299
 msgid "Venezuela, Bolivarian Republic of"
-msgstr ""
+msgstr "Боливарска република Венецуела"
 
 #: qwikgame/constants.py:300
 msgid "Viet Nam"
@@ -1024,38 +1024,28 @@ msgstr "Виетнам"
 
 #: qwikgame/constants.py:301
 msgid "Virgin Islands, British"
-msgstr ""
+msgstr "Британски Вирджински острови"
 
 #: qwikgame/constants.py:302
 msgid "Virgin Islands, U.S."
-msgstr ""
+msgstr "Американски Вирджински острови"
 
 #: qwikgame/constants.py:303
 msgid "Wallis and Futuna"
-msgstr ""
+msgstr "Уолис и Футуна"
 
 #: qwikgame/constants.py:304
 msgid "Western Sahara"
-msgstr ""
+msgstr "Западна Сахара"
 
 #: qwikgame/constants.py:305
 msgid "Yemen"
-msgstr ""
+msgstr "Йемен"
 
 #: qwikgame/constants.py:306
 msgid "Zambia"
-msgstr ""
+msgstr "Замбия"
 
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "Зимбабве"
-
-#: qwikgame/settings.py:168
-msgid "English"
-msgstr ""
-
-#: qwikgame/settings.py:169
-#, fuzzy
-#| msgid "Bulgaria"
-msgid "Bulgarian"
-msgstr "България"

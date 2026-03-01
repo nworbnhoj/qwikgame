@@ -1,4 +1,4 @@
-# qwikgame 
+# qwikgame  
 
 qwikgame is a system to help people find a rival to play their favorite (real-world) game at a convenient time and place. Players are able to rate each others ability to enable qwikgame to estimate the relative strength between new rivals. Care has been taken to provide a range privacy options for players. Players are able to add and maintain information about suitable venues to play a range of games from Chess to Squash.
 

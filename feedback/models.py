@@ -14,7 +14,7 @@ class Feedback(models.Model):
         'D': 'Something is too dfficult',
         'G': 'Something is really good',
         'I': 'Suggestion for improvement',
-        'O': 'Other',
+        'T': 'Translation issue',
     }
 
     commit = models.CharField(editable=False, max_length=40)

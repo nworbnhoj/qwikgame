@@ -244,7 +244,7 @@ class KeenForm(QwikForm):
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(20).order_by('name').all()[:20]
-        choices = [(None, ''), (_('show-map'), _('Select from map')), ('placeid', '')]
+        choices = [(None, ''), ('show-map', _('Select from map')), ('placeid', '')]
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,

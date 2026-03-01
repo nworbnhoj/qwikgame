@@ -56,10 +56,6 @@ msgid "Anywhere"
 msgstr "Навсякъде"
 
 #: player/forms.py:143
-msgid "show-map"
-msgstr "покажи-карта"
-
-#: player/forms.py:143
 msgid "Select from map"
 msgstr "Избери от картата"
 

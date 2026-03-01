@@ -65,10 +65,6 @@ msgstr ""
 "Все още нямате добавени приятели. Моля, добавете ги от раздела „Приятели“."
 
 #: appeal/forms.py:247
-msgid "show-map"
-msgstr "покажи-карта"
-
-#: appeal/forms.py:247
 msgid "Select from map"
 msgstr "Избери от картата"
 

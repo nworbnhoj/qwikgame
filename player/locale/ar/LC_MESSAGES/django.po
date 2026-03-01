@@ -57,10 +57,6 @@ msgid "Anywhere"
 msgstr "في أي مكان"
 
 #: player/forms.py:143
-msgid "show-map"
-msgstr "عرض-الخريطة"
-
-#: player/forms.py:143
 msgid "Select from map"
 msgstr "اختر من الخريطة"
 

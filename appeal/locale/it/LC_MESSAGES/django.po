@@ -65,10 +65,6 @@ msgstr ""
 "Non hai ancora aggiunto nessun amico. Aggiungili dalla scheda Amici"
 
 #: appeal/forms.py:247
-msgid "show-map"
-msgstr "mostra-mappa"
-
-#: appeal/forms.py:247
 msgid "Select from map"
 msgstr "Seleziona dalla mappa"
 

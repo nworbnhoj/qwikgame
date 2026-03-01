@@ -65,10 +65,6 @@ msgid ""
 msgstr "ليس لديك أي أصدقاء مضافين بعد. يرجى إضافتهم من تبويب الأصدقاء"
 
 #: appeal/forms.py:247
-msgid "show-map"
-msgstr "عرض-الخريطة"
-
-#: appeal/forms.py:247
 msgid "Select from map"
 msgstr "اختر من الخريطة"
 

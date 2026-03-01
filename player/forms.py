@@ -140,7 +140,7 @@ class FilterForm(QwikForm):
             )
         form.fields['game'].choices += Game.choices()
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
-        choices = [('ANY',_('Anywhere')), (_('show-map'), _('Select from map')), ('placeid', '')]
+        choices = [('ANY',_('Anywhere')), ('show-map', _('Select from map')), ('placeid', '')]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
         form.fields['place'].widget.data_attr = form._place_data_attr(places)

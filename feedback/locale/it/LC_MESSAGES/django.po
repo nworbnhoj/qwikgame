@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,44 +17,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: feedback/forms.py:15
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #: feedback/forms.py:17
 msgid "thanks heaps for taking the time!"
-msgstr ""
+msgstr "Grazie mille per aver dedicato del tempo!"
 
 #: feedback/forms.py:18
 msgid "feedback"
-msgstr ""
+msgstr "Feedback"
+
+#: feedback/models.py:13
+msgid "Bug"
+msgstr "Bug"
+
+#: feedback/models.py:14
+msgid "Something is not clear"
+msgstr "Qualcosa non è chiaro"
+
+#: feedback/models.py:15
+msgid "Something is too dfficult"
+msgstr "Qualcosa è troppo difficile"
+
+#: feedback/models.py:16
+msgid "Something is really good"
+msgstr "Qualcosa è davvero ottimo"
+
+#: feedback/models.py:17
+msgid "Suggestion for improvement"
+msgstr "Suggerimento di miglioramento"
+
+#: feedback/models.py:18
+msgid "Translation issue"
+msgstr "Problema di traduzione"
+
+#: feedback/models.py:19
+msgid "Other"
+msgstr "Altro"
 
 #: feedback/templates/feedback/feedback.html:7
 #: feedback/templates/feedback/feedback_list.html:7
 #: feedback/templates/feedback/feedback_list.html:19
 msgid "Feedback"
-msgstr ""
+msgstr "Feedback"
 
 #: feedback/templates/feedback/feedback.html:41
 msgid "Version: "
-msgstr ""
+msgstr "Versione: "
 
 #: feedback/templates/feedback/feedback.html:44
 msgid "Issue:"
-msgstr ""
+msgstr "Problema:"
 
 #: feedback/templates/feedback/feedback.html:48
 msgid "None"
-msgstr ""
+msgstr "Nessuno"
 
 #: feedback/templates/feedback/feedback.html:50
 msgid "create issue"
-msgstr ""
+msgstr "Crea problema"
 
 #: feedback/templates/feedback/feedback_list.html:33
 msgid "No feedback!"
-msgstr ""
+msgstr "Nessun feedback!"
 
 #: feedback/templates/feedback/feedback_list.html:47
 msgid "Select Feedback to see detail."
-msgstr ""
+msgstr "Seleziona un feedback per vedere i dettagli."

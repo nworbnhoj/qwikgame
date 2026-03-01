@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:32+1100\n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -30,6 +30,34 @@ msgstr "شكرًا جزيلًا لوقتك!"
 #: feedback/forms.py:18
 msgid "feedback"
 msgstr "الملاحظات"
+
+#: feedback/models.py:13
+msgid "Bug"
+msgstr "خلل"
+
+#: feedback/models.py:14
+msgid "Something is not clear"
+msgstr "هناك شيء غير واضح"
+
+#: feedback/models.py:15
+msgid "Something is too dfficult"
+msgstr "هناك شيء صعب جدًا"
+
+#: feedback/models.py:16
+msgid "Something is really good"
+msgstr "هناك شيء رائع جدًا"
+
+#: feedback/models.py:17
+msgid "Suggestion for improvement"
+msgstr "اقتراح للتحسين"
+
+#: feedback/models.py:18
+msgid "Translation issue"
+msgstr "مشكلة في الترجمة"
+
+#: feedback/models.py:19
+msgid "Other"
+msgstr "أخرى"
 
 #: feedback/templates/feedback/feedback.html:7
 #: feedback/templates/feedback/feedback_list.html:7

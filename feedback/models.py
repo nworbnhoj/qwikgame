@@ -1,5 +1,6 @@
 import logging
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 logger = logging.getLogger(__file__)
@@ -9,12 +10,13 @@ class Feedback(models.Model):
 
     TYPE = {
         '_': '',
-        'B': 'Bug',
-        'U': 'Something is not clear',
-        'D': 'Something is too dfficult',
-        'G': 'Something is really good',
-        'I': 'Suggestion for improvement',
-        'T': 'Translation issue',
+        'B': _('Bug'),
+        'U': _('Something is not clear'),
+        'D': _('Something is too dfficult'),
+        'G': _('Something is really good'),
+        'I': _('Suggestion for improvement'),
+        'T': _('Translation issue'),
+        'O': _('Other'),
     }
 
     commit = models.CharField(editable=False, max_length=40)

@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
+msgid "When are you keen to play?"
+msgstr "آپ کب کھیلنے کے خواہشمند ہیں؟"
+
+#: appeal/forms.py:58
+msgid "WHAT TIME WORKS FOR YOU?"
+msgstr "آپ کے لیے کون سا وقت موزوں ہے؟"
+
+#: appeal/forms.py:109
+msgid "GAME"
+msgstr "کھیل"
+
+#: appeal/forms.py:118
+msgid "TODAY"
+msgstr "آج"
+
+#: appeal/forms.py:127
+msgid "TOMORROW"
+msgstr "کل"
+
+#: appeal/forms.py:135
+msgid "FRIENDS"
+msgstr "دوست"
+
+#: appeal/forms.py:213
+msgid "Please select at least one hour in today or tomorrow."
+msgstr "براہ کرم آج یا کل میں کم از کم ایک گھنٹہ منتخب کریں۔"
+
+#: appeal/forms.py:220 appeal/forms.py:236
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "معذرت، مقام کا انتخاب کامیاب نہیں ہوا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: appeal/forms.py:226
+msgid "Please invite at least one Friend."
+msgstr "براہ کرم کم از کم ایک دوست کو مدعو کریں۔"
+
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:89
+msgid "Invite Friends Only"
+msgstr "صرف دوستوں کو مدعو کریں"
+
+#: appeal/forms.py:243
+msgid ""
+"You don't have any added friends yet. Please add them from the Friends tab"
+msgstr ""
+"آپ نے ابھی تک کوئی دوست شامل نہیں کیے۔ براہ کرم فرینڈز ٹیب سے انہیں شامل کریں"
+
+#: appeal/forms.py:247
+msgid "Select from map"
+msgstr "نقشے سے منتخب کریں"
+
+#: appeal/forms.py:251
+msgid "VENUE"
+msgstr "مقام"
+
+#: appeal/templates/appeal/accept.html:53
+msgid "Cancel this Invitation?"
+msgstr "کیا آپ اس دعوت کو منسوخ کرنا چاہتے ہیں؟"
+
+#: appeal/templates/appeal/accept.html:55 appeal/templates/appeal/bid.html:78
+msgid "cancel"
+msgstr "منسوخ کریں"
+
+#: appeal/templates/appeal/accept.html:84
+msgid "decline"
+msgstr "انکار کریں"
+
+#: appeal/templates/appeal/accept.html:125
+msgid ""
+"You are about to schedule a Match. A chat session will be opened with your "
+"rival. Continue?"
+msgstr ""
+"آپ ایک میچ طے کرنے والے ہیں۔ آپ کے حریف کے ساتھ چیٹ سیشن کھول دیا جائے گا۔ کیا جاری رکھنا چاہتے ہیں؟"
+
+#: appeal/templates/appeal/appeals.html:7
+msgid "Feed"
+msgstr "فیڈ"
+
+#: appeal/templates/appeal/appeals.html:24
+#: appeal/templates/appeal/appeals.html:156
+#: appeal/templates/appeal/keen.html:49 appeal/templates/appeal/keen.html:86
+msgid "Invite"
+msgstr "دعوت دیں"
+
+#: appeal/templates/appeal/appeals.html:35
+#, python-format
+msgid ""
+" \n"
+"            Feed (%(appeals_length)s)\n"
+msgstr ""
+" \n"
+"            فیڈ (%(appeals_length)s)\n"
+
+#: appeal/templates/appeal/appeals.html:41
+msgid "Filter"
+msgstr "فلٹر"
+
+#: appeal/templates/appeal/appeals.html:46
+msgid "Participating"
+msgstr "شرکت کر رہے ہیں"
+
+#: appeal/templates/appeal/appeals.html:85
+msgid "Get involved by accepting an Invitation, or sending a new one."
+msgstr "دعوت قبول کر کے یا نئی دعوت بھیج کر شامل ہوں۔"
+
+#: appeal/templates/appeal/appeals.html:91
+msgid "All"
+msgstr "سب"
+
+#: appeal/templates/appeal/appeals.html:95
+msgid "filtered"
+msgstr "فلٹر شدہ"
+
+#: appeal/templates/appeal/appeals.html:132
+msgid "Unfortunately no Invitations match your Filters."
+msgstr "بدقسمتی سے کوئی دعوت آپ کے فلٹرز سے مطابقت نہیں رکھتی۔"
+
+#: appeal/templates/appeal/appeals.html:135
+msgid "Try deactivating a Filter or send out your own Invitation."
+msgstr "کسی فلٹر کو غیر فعال کریں یا اپنی دعوت بھیجیں۔"
+
+#: appeal/templates/appeal/appeals.html:150
+#, python-format
+msgid ""
+"\n"
+"                Open an Invitation %(br)s or send a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                ایک دعوت کھولیں %(br)s یا نئی بھیجیں!\n"
+"    "
+
+#: appeal/templates/appeal/bid.html:76
+msgid "Cancel this Offer?"
+msgstr "کیا آپ اس پیشکش کو منسوخ کرنا چاہتے ہیں؟"
+
+#: appeal/templates/appeal/keen.html:70
+msgid "Keen To Play? Send Invitation?"
+msgstr "کھیلنے کے خواہشمند ہیں؟ دعوت بھیجیں؟"

@@ -1,0 +1,266 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: player/forms.py:24 player/models.py:462
+msgid "Any Game"
+msgstr "کوئی بھی کھیل"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "صرف مخصوص کھیل کی دعوتیں دیکھیں۔"
+
+#: player/forms.py:26 player/forms.py:276
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "کھیل"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "صرف مخصوص مقام کی دعوتیں دیکھیں۔"
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "مقام"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "اپنے ہفتے کے مخصوص اوقات میں ہی دعوتیں دیکھیں۔"
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "وقت"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "معذرت، مقام کا انتخاب کامیاب نہیں ہوا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
+msgid "Anywhere"
+msgstr "کہیں بھی"
+
+#: player/forms.py:143
+msgid "Select from map"
+msgstr "نقشے سے منتخب کریں"
+
+#: player/forms.py:186
+msgid "NO ACTIVE FILTERS"
+msgstr "کوئی فعال فلٹر موجود نہیں"
+
+#: player/forms.py:197
+#, python-format
+msgid "%(n)s ACTIVE FILTERS"
+msgstr "%(n)s فعال فلٹرز"
+
+#: player/forms.py:219
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "دوست کا ای میل پتہ"
+
+#: player/forms.py:225
+msgid "NAME"
+msgstr "نام"
+
+#: player/forms.py:237
+msgid "Type email address"
+msgstr "ای میل پتہ درج کریں"
+
+#: player/forms.py:238
+msgid "A screen name for your friend (optional)"
+msgstr "اپنے دوست کے لیے اسکرین نام (اختیاری)"
+
+#: player/forms.py:283
+msgid "RIVAL SKILL LEVEL"
+msgstr "حریف کی مہارت کی سطح"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "شاید"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "ممکن ہے"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "نامعلوم"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+msgid "much-weaker"
+msgstr "بہت کمزور"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+msgid "weaker"
+msgstr "کمزور"
+
+#: player/models.py:400
+msgid "matched"
+msgstr "برابر"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+msgid "stronger"
+msgstr "زیادہ مضبوط"
+
+#: player/models.py:402
+msgid "much-stonger"
+msgstr "بہت زیادہ مضبوط"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "کوئی بھی وقت"
+
+#: player/templates/player/account_public_snippet.html:5
+msgid "YOUR QWIKGAME REPUTATION"
+msgstr "آپ کی QWIKGAME ساکھ"
+
+#: player/templates/player/account_public_snippet.html:10
+msgid "Based on feedback given by your rivals."
+msgstr "آپ کے حریفوں کی دی گئی رائے پر مبنی۔"
+
+#: player/templates/player/filter.html:46
+#: player/templates/player/filters.html:8
+msgid "Filter"
+msgstr "فلٹر"
+
+#: player/templates/player/filter.html:65
+msgid "New Invitation Filter"
+msgstr "نیا دعوت فلٹر"
+
+#: player/templates/player/filter.html:78
+msgid "Add Filter"
+msgstr "فلٹر شامل کریں"
+
+#: player/templates/player/filters.html:27
+msgid "Invitation Filters"
+msgstr "دعوت فلٹرز"
+
+#: player/templates/player/filters.html:31
+#: player/templates/player/friend_add.html:34
+#: player/templates/player/friends.html:25
+#: player/templates/player/strength.html:102
+msgid "Add"
+msgstr "شامل کریں"
+
+#: player/templates/player/filters.html:47
+msgid "Delete these Filters?"
+msgstr "کیا یہ فلٹرز حذف کریں؟"
+
+#: player/templates/player/filters.html:49
+msgid "Remove"
+msgstr "ہٹائیں"
+
+#: player/templates/player/filters.html:53
+msgid "Apply"
+msgstr "لاگو کریں"
+
+#: player/templates/player/friend.html:7
+#: player/templates/player/friend_add.html:7
+#: player/templates/player/friends.html:8
+#: player/templates/player/friends.html:35
+#: player/templates/player/strength.html:7
+msgid "Friends"
+msgstr "دوست"
+
+#: player/templates/player/friend.html:36
+msgid "Delete this Friend?"
+msgstr "کیا اس دوست کو حذف کریں؟"
+
+#: player/templates/player/friend.html:38
+#: player/templates/player/friend.html:69
+#: player/templates/player/strength.html:43
+msgid "delete"
+msgstr "حذف کریں"
+
+#: player/templates/player/friend.html:51
+#: player/templates/player/friend_add.html:24
+#: player/templates/player/friends.html:93
+msgid "Add Friend"
+msgstr "دوست شامل کریں"
+
+#: player/templates/player/friend.html:79
+#: player/templates/player/strength.html:75
+msgid "Submit"
+msgstr "جمع کریں"
+
+#: player/templates/player/friends.html:39
+msgid "Group by"
+msgstr "گروپ کریں بذریعہ"
+
+#: player/templates/player/friends.html:46
+msgid "game"
+msgstr "کھیل"
+
+#: player/templates/player/friends.html:73
+msgid "No friends :-("
+msgstr "کوئی دوست نہیں :-("
+
+#: player/templates/player/friends.html:87
+#, python-format
+msgid ""
+"\n"
+"                Edit a Friend%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                کسی دوست میں ترمیم کریں%(br)sیا نیا شامل کریں!\n"
+"    "
+
+#: player/templates/player/rival_stats_snippet.html:4
+msgid "MATCHES"
+msgstr "میچز"
+
+#: player/templates/player/rival_stats_snippet.html:10
+msgid "GAMES"
+msgstr "کھیل"
+
+#: player/templates/player/rival_stats_snippet.html:16
+msgid "VENUES"
+msgstr "مقامات"
+
+#: player/templates/player/strength.html:61
+msgid "Important!"
+msgstr "اہم!"
+
+#: player/templates/player/strength.html:63
+msgid ""
+"Please take a little time to let qwikgame know how strong your Friend is. "
+"This will help qwikgame make better Matches for you, and your friend, and "
+"other qwikgame Players who know either of you."
+msgstr ""
+"براہ کرم تھوڑا وقت نکال کر qwikgame کو بتائیں کہ آپ کا دوست کتنا مضبوط ہے۔ "
+"اس سے qwikgame آپ کے لیے، آپ کے دوست کے لیے، اور دیگر کھلاڑیوں کے لیے بہتر میچز بنا سکے گا جو آپ دونوں کو جانتے ہیں۔"
+
+#: player/templates/player/strength.html:85
+msgid "STRENGTH"
+msgstr "طاقت"
+
+#: player/templates/player/strength.html:89
+msgid "well-matched"
+msgstr "اچھی طرح برابر"
+
+#: player/templates/player/strength.html:91
+msgid "much-stronger"
+msgstr "بہت زیادہ مضبوط"
+
+#: player/templates/player/strength.html:96
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+#: player/templates/player/strength.html:99
+msgid "Learn more"
+msgstr "مزید جانیں"

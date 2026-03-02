@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: feedback/forms.py:15
+msgid "Description"
+msgstr "تفصیل"
+
+#: feedback/forms.py:17
+msgid "thanks heaps for taking the time!"
+msgstr "وقت نکالنے کا بے حد شکریہ!"
+
+#: feedback/forms.py:18
+msgid "feedback"
+msgstr "رائے"
+
+#: feedback/models.py:13
+msgid "Bug"
+msgstr "خرابی"
+
+#: feedback/models.py:14
+msgid "Something is not clear"
+msgstr "کچھ واضح نہیں ہے"
+
+#: feedback/models.py:15
+msgid "Something is too dfficult"
+msgstr "کچھ بہت مشکل ہے"
+
+#: feedback/models.py:16
+msgid "Something is really good"
+msgstr "کچھ واقعی بہت اچھا ہے"
+
+#: feedback/models.py:17
+msgid "Suggestion for improvement"
+msgstr "بہتری کے لیے تجویز"
+
+#: feedback/models.py:18
+msgid "Translation issue"
+msgstr "ترجمے کا مسئلہ"
+
+#: feedback/models.py:19
+msgid "Other"
+msgstr "دیگر"
+
+#: feedback/templates/feedback/feedback.html:7
+#: feedback/templates/feedback/feedback_list.html:7
+#: feedback/templates/feedback/feedback_list.html:19
+msgid "Feedback"
+msgstr "رائے"
+
+#: feedback/templates/feedback/feedback.html:41
+msgid "Version: "
+msgstr "ورژن: "
+
+#: feedback/templates/feedback/feedback.html:44
+msgid "Issue:"
+msgstr "مسئلہ:"
+
+#: feedback/templates/feedback/feedback.html:48
+msgid "None"
+msgstr "کوئی نہیں"
+
+#: feedback/templates/feedback/feedback.html:50
+msgid "create issue"
+msgstr "مسئلہ بنائیں"
+
+#: feedback/templates/feedback/feedback_list.html:33
+msgid "No feedback!"
+msgstr "کوئی رائے موجود نہیں!"
+
+#: feedback/templates/feedback/feedback_list.html:47
+msgid "Select Feedback to see detail."
+msgstr "تفصیل دیکھنے کے لیے رائے منتخب کریں۔"

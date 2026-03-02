@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: game/forms.py:30
+msgid "Chat here with your rival"
+msgstr "اپنے حریف کے ساتھ یہاں چیٹ کریں"
+
+#: game/forms.py:56
+msgid "RIVAL SKILL LEVEL"
+msgstr "حریف کی مہارت کی سطح"
+
+#: game/forms.py:60
+msgid "poor sportsmanship"
+msgstr "غیر کھیلانہ رویہ"
+
+#: game/forms.py:60
+msgid "did not show up"
+msgstr "حاضر نہیں ہوا"
+
+#: game/forms.py:61
+msgid "RIVAL CONDUCT"
+msgstr "حریف کا رویہ"
+
+#: game/forms.py:75
+msgid "Did anything go wrong?"
+msgstr "کیا کچھ غلط ہوا؟"
+
+#: game/models.py:193
+#, python-format
+msgid ""
+"%(name)s, please contact venue to ensure availability on %(date)s : "
+"%(phone)s : %(url)s"
+msgstr ""
+"%(name)s، براہ کرم %(date)s کو دستیابی یقینی بنانے کے لیے مقام سے رابطہ کریں: "
+"%(phone)s : %(url)s"
+
+#: game/models.py:201
+msgid "match cancelled"
+msgstr "میچ منسوخ ہو گیا"
+
+#: game/models.py:205
+msgid "match chat disabled"
+msgstr "میچ چیٹ غیر فعال کر دی گئی"
+
+#: game/models.py:207
+msgid "match scheduled"
+msgstr "میچ طے ہو گیا"
+
+#: game/models.py:209
+msgid "match chat perished"
+msgstr "میچ چیٹ ختم ہو گئی"
+
+#: game/templates/game/match.html:13 game/templates/game/matches.html:7
+msgid "Match"
+msgstr "میچ"
+
+#: game/templates/game/match.html:65
+msgid "Cancel this Match?"
+msgstr "کیا آپ اس میچ کو منسوخ کرنا چاہتے ہیں؟"
+
+#: game/templates/game/match.html:67
+msgid "cancel"
+msgstr "منسوخ کریں"
+
+#: game/templates/game/match.html:82
+msgid "Match is scheduled"
+msgstr "میچ طے شدہ ہے"
+
+#: game/templates/game/match.html:83
+msgid "Match is complete"
+msgstr "میچ مکمل ہو چکا ہے"
+
+#: game/templates/game/match.html:84
+msgid "Match is cancelled"
+msgstr "میچ منسوخ ہو چکا ہے"
+
+#: game/templates/game/match.html:85
+msgid "unknown status"
+msgstr "نامعلوم حالت"
+
+#: game/templates/game/match.html:143
+msgid "Show invitation history"
+msgstr "دعوت کی تاریخ دکھائیں"
+
+#: game/templates/game/match.html:146
+msgid "Hide invitation history"
+msgstr "دعوت کی تاریخ چھپائیں"
+
+#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
+#: game/templates/game/reviews.html:28
+msgid "Review"
+msgstr "جائزہ"
+
+#: game/templates/game/match.html:191
+msgid "☺ emogi coming soon ☺"
+msgstr "☺ ایموجی جلد آ رہا ہے ☺"
+
+#: game/templates/game/match.html:205
+msgid "Chat will be disabled 24 hours after Match."
+msgstr "میچ کے 24 گھنٹے بعد چیٹ غیر فعال کر دی جائے گی۔"
+
+#: game/templates/game/match.html:208
+msgid "Chat will be deleted 1 week after Match."
+msgstr "میچ کے 1 ہفتے بعد چیٹ حذف کر دی جائے گی۔"
+
+#: game/templates/game/matches.html:26
+msgid "Chat"
+msgstr "چیٹ"
+
+#: game/templates/game/matches.html:36
+msgid "Matches"
+msgstr "میچز"
+
+#: game/templates/game/matches.html:39 game/templates/game/reviews.html:41
+msgid "Group by"
+msgstr "گروپ کریں بذریعہ"
+
+#: game/templates/game/matches.html:45 game/templates/game/reviews.html:47
+msgid "date"
+msgstr "تاریخ"
+
+#: game/templates/game/matches.html:49 game/templates/game/reviews.html:51
+msgid "game"
+msgstr "کھیل"
+
+#: game/templates/game/matches.html:53 game/templates/game/reviews.html:55
+msgid "venue"
+msgstr "مقام"
+
+#: game/templates/game/matches.html:60
+msgid "Upcoming"
+msgstr "آئندہ"
+
+#: game/templates/game/matches.html:95
+msgid "No pending Matches"
+msgstr "کوئی زیر التواء میچ نہیں"
+
+#: game/templates/game/matches.html:101
+msgid "History"
+msgstr "تاریخ"
+
+#: game/templates/game/matches.html:134
+msgid "No history yet!"
+msgstr "ابھی تک کوئی تاریخ موجود نہیں!"
+
+#: game/templates/game/matches.html:149
+msgid "Select a Match to Chat."
+msgstr "چیٹ کرنے کے لیے ایک میچ منتخب کریں۔"
+
+#: game/templates/game/matches.html:151
+#, python-format
+msgid ""
+"\n"
+"            No pending Matches%(br)sKeen to play?\n"
+"        "
+msgstr ""
+"\n"
+"            کوئی زیر التواء میچ نہیں%(br)sکھیلنے کے خواہشمند ہیں؟\n"
+"        "
+
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
+msgid "Invite"
+msgstr "دعوت دیں"
+
+#: game/templates/game/review.html:8 game/templates/game/reviews.html:38
+msgid "Reviews"
+msgstr "جائزے"
+
+#: game/templates/game/review.html:74
+msgid "Submit"
+msgstr "جمع کریں"
+
+#: game/templates/game/reviews.html:101
+msgid "Select a Match to Review."
+msgstr "جائزہ دینے کے لیے ایک میچ منتخب کریں۔"
+
+#: game/templates/game/reviews.html:103
+#, python-format
+msgid ""
+"\n"
+"                All Match reviews complete - thank you%(br)sKeen to play?\n"
+"        "
+msgstr ""
+"\n"
+"                تمام میچ جائزے مکمل ہو گئے - شکریہ%(br)sکھیلنے کے خواہشمند ہیں؟\n"
+"        "
+
+#: game/templates/game/rival.html:7
+msgid "Rival"
+msgstr "حریف"

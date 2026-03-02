@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: venue/forms.py:17
+msgid "SEARCH"
+msgstr "تلاش"
+
+#: venue/forms.py:22
+msgid "restrict the search to a region"
+msgstr "تلاش کو کسی مخصوص علاقے تک محدود کریں"
+
+#: venue/forms.py:23
+msgid "REGION"
+msgstr "علاقہ"
+
+#: venue/forms.py:30
+msgid "Specify the Game for these Qwikgame Venues"
+msgstr "ان Qwikgame مقامات کے لیے کھیل منتخب کریں"
+
+#: venue/forms.py:31
+msgid "GAME"
+msgstr "کھیل"
+
+#: venue/forms.py:60
+msgid "Select Google Places to add as Qwikgame Venues"
+msgstr "Qwikgame مقامات کے طور پر شامل کرنے کے لیے Google Places منتخب کریں"
+
+#: venue/forms.py:61
+msgid "GOOGLE PLACES"
+msgstr "گوگل پلیسز"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
+#: venue/templates/venue/venues.html:33
+msgid "Venues"
+msgstr "مقامات"
+
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+msgid "Add Venue"
+msgstr "مقام شامل کریں"
+
+#: venue/templates/venue/venue.html:45
+msgid "ADDRESS"
+msgstr "پتہ"
+
+#: venue/templates/venue/venue.html:55
+msgid "WEBSITE"
+msgstr "ویب سائٹ"
+
+#: venue/templates/venue/venue.html:57
+msgid "PHONE"
+msgstr "فون"
+
+#: venue/templates/venue/venue.html:59
+msgid "OPEN HOURS"
+msgstr "اوقات کار"
+
+#: venue/templates/venue/venue.html:61
+msgid "TIMEZONE"
+msgstr "ٹائم زون"
+
+#: venue/templates/venue/venue.html:63
+msgid "NOTE"
+msgstr "نوٹ"
+
+#: venue/templates/venue/venue.html:65
+msgid "MANAGERS"
+msgstr "منتظمین"
+
+#: venue/templates/venue/venue.html:69
+msgid "GAMES"
+msgstr "کھیل"
+
+#: venue/templates/venue/venues.html:24
+msgid "Add"
+msgstr "شامل کریں"
+
+#: venue/templates/venue/venues.html:36
+msgid "Group by"
+msgstr "گروپ کریں بذریعہ"
+
+#: venue/templates/venue/venues.html:42
+msgid "game"
+msgstr "کھیل"
+
+#: venue/templates/venue/venues.html:72
+msgid "No venues :-("
+msgstr "کوئی مقام موجود نہیں :-("
+
+#: venue/templates/venue/venues.html:85
+#, python-format
+msgid ""
+"\n"
+"                Get Venue details%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                مقام کی تفصیلات دیکھیں%(br)sیا نیا شامل کریں!\n"
+"    "

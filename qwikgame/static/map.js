@@ -810,7 +810,7 @@ function endowMark(key, mark){
   if(K.length === 4){  // venue Mark
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
-    mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
+    // mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
     setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
   } else {  // region Mark
     var label_origin = new google.maps.Point(20,20)

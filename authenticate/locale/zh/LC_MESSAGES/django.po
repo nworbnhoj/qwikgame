@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:08+1100\n"
+"POT-Creation-Date: 2026-03-02 15:29+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: authenticate/forms.py:86
+#, python-format
+msgid "The account is disabled for %(e)s"
+msgstr "该账户已被禁用：%(e)s"
+
+#: authenticate/forms.py:90
+#, python-format
+msgid ""
+"There is no account for this email.%(br)sWould you like to "
+"%(a0)sregister%(a1)s?"
+msgstr ""
+"此邮箱没有关联的账户。%(br)s您是否想要"
+"%(a0)s注册%(a1)s？"
+
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
-msgstr ""
+msgstr "欢迎来到 Qwikgame"
 
 #: authenticate/templates/authenticate/email_validate_email.html:3
 #: authenticate/templates/authenticate/login_email_text.html:6
@@ -29,26 +43,28 @@ msgid ""
 "You're receiving this email because you requested access to your account at "
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"您收到此邮件是因为您请求访问您在 %(site_name)s 的账户。\n"
 
 #: authenticate/templates/authenticate/email_validate_email.html:8
 #: authenticate/templates/authenticate/login_email_text.html:11
 #: authenticate/templates/authenticate/register_email_text.html:11
 msgid "Please click on the following link to access your account:"
-msgstr ""
+msgstr "请点击以下链接以访问您的账户："
 
 #: authenticate/templates/authenticate/email_validate_email.html:13
 #: authenticate/templates/authenticate/login_email_text.html:4
 #: authenticate/templates/authenticate/register_email_text.html:4
 msgid "Welcome to qwikgame.org!"
-msgstr ""
+msgstr "欢迎来到 qwikgame.org！"
 
 #: authenticate/templates/authenticate/email_validate_form.html:15
 msgid "We will send you a verification link to login."
-msgstr ""
+msgstr "我们将向您发送一个验证链接用于登录。"
 
 #: authenticate/templates/authenticate/email_validate_form.html:20
 msgid "Submit"
-msgstr ""
+msgstr "提交"
 
 #: authenticate/templates/authenticate/email_validate_sent.html:10
 #, python-format
@@ -58,18 +74,21 @@ msgid ""
 "link.\n"
 "    "
 msgstr ""
+"\n"
+"        一封包含验证链接的邮件已发送至 %(request.GET.to_email)s。\n"
+"    "
 
 #: authenticate/templates/authenticate/email_validate_sent.html:15
 #: authenticate/templates/authenticate/login_email_sent.html:14
 #: authenticate/templates/authenticate/register_email_sent.html:14
 msgid "You should receive it shortly."
-msgstr ""
+msgstr "您应该很快会收到。"
 
 #: authenticate/templates/authenticate/email_validate_sent.html:18
 #: authenticate/templates/authenticate/login_email_sent.html:17
 #: authenticate/templates/authenticate/register_email_sent.html:17
 msgid "If you don’t receive an email, please check your spam folder."
-msgstr ""
+msgstr "如果您未收到邮件，请检查您的垃圾邮件文件夹。"
 
 #: authenticate/templates/authenticate/email_validate_subject.txt:4
 #, python-format
@@ -77,6 +96,8 @@ msgid ""
 "\n"
 "Account details for %(site_name)s\n"
 msgstr ""
+"\n"
+"%(site_name)s 的账户详情\n"
 
 #: authenticate/templates/authenticate/login_email_html.html:10
 #, python-format
@@ -86,11 +107,14 @@ msgid ""
 "account at %(site_name)s.\n"
 "        "
 msgstr ""
+"\n"
+"            您收到此邮件是因为您请求访问您在 %(site_name)s 的账户。\n"
+"        "
 
 #: authenticate/templates/authenticate/login_email_html.html:17
 #: authenticate/templates/authenticate/register_email_html.html:17
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #: authenticate/templates/authenticate/login_email_sent.html:9
 #, python-format
@@ -100,6 +124,9 @@ msgid ""
 "link. \n"
 "    "
 msgstr ""
+"\n"
+"            一封包含登录链接的邮件已发送至 %(request.GET.to_email)s。 \n"
+"    "
 
 #: authenticate/templates/authenticate/login_email_subject.txt:4
 #, python-format
@@ -107,23 +134,25 @@ msgid ""
 "\n"
 "Login details for %(site_name)s\n"
 msgstr ""
+"\n"
+"%(site_name)s 的登录信息\n"
 
 #: authenticate/templates/authenticate/login_form.html:9
 msgid "Need a new account?"
-msgstr ""
+msgstr "需要新账户？"
 
 #: authenticate/templates/authenticate/login_form.html:10
 msgid "signup"
-msgstr ""
+msgstr "注册"
 
 #: authenticate/templates/authenticate/login_form.html:19
 #: authenticate/templates/authenticate/register_form.html:19
 msgid "We will send you a verification link to login"
-msgstr ""
+msgstr "我们将向您发送一个验证链接用于登录"
 
 #: authenticate/templates/authenticate/login_form.html:24
 msgid "Send login link"
-msgstr ""
+msgstr "发送登录链接"
 
 #: authenticate/templates/authenticate/register_email_html.html:10
 #, python-format
@@ -133,6 +162,9 @@ msgid ""
 "%(site_name)s.\n"
 "    "
 msgstr ""
+"\n"
+"        您收到此邮件是因为您在 %(site_name)s 请求注册账户。\n"
+"    "
 
 #: authenticate/templates/authenticate/register_email_sent.html:9
 #, python-format
@@ -142,6 +174,9 @@ msgid ""
 "registration link.\n"
 "    "
 msgstr ""
+"\n"
+"            一封包含注册链接的邮件已发送至 %(request.GET.to_email)s。\n"
+"    "
 
 #: authenticate/templates/authenticate/register_email_subject.txt:4
 #, python-format
@@ -149,6 +184,8 @@ msgid ""
 "\n"
 "Registration details for %(site_name)s\n"
 msgstr ""
+"\n"
+"%(site_name)s 的注册信息\n"
 
 #: authenticate/templates/authenticate/register_email_text.html:6
 #, python-format
@@ -157,32 +194,34 @@ msgid ""
 "You're receiving this email because you requested an account at "
 "%(site_name)s.\n"
 msgstr ""
+"\n"
+"您收到此邮件是因为您在 %(site_name)s 请求注册账户。\n"
 
 #: authenticate/templates/authenticate/register_form.html:9
 msgid "Already have an account?"
-msgstr ""
+msgstr "已经有账户？"
 
 #: authenticate/templates/authenticate/register_form.html:10
 msgid "login"
-msgstr ""
+msgstr "登录"
 
 #: authenticate/templates/authenticate/register_form.html:24
 msgid "Send verification link"
-msgstr ""
+msgstr "发送验证链接"
 
 #: authenticate/templates/authenticate/token_invalid.html:9
 msgid "Sorry that didn't work."
-msgstr ""
+msgstr "抱歉，未能成功。"
 
 #: authenticate/templates/authenticate/token_invalid.html:12
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
-msgstr ""
+msgstr "该链接中的安全令牌已过期，或因某种原因无效。"
 
 #: authenticate/templates/authenticate/token_invalid.html:16
 msgid "Login / Registration"
-msgstr ""
+msgstr "登录 / 注册"
 
 #: authenticate/templates/authenticate/token_invalid.html:17
 msgid " page."
-msgstr ""
+msgstr " 页面。"

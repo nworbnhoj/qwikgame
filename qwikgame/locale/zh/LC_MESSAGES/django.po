@@ -1,0 +1,1038 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-01 15:55+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: qwikgame/constants.py:9
+msgid "SUNDAY"
+msgstr "星期日"
+
+#: qwikgame/constants.py:10
+msgid "MONDAY"
+msgstr "星期一"
+
+#: qwikgame/constants.py:11
+msgid "TUESDAY"
+msgstr "星期二"
+
+#: qwikgame/constants.py:12
+msgid "WEDNESDAY"
+msgstr "星期三"
+
+#: qwikgame/constants.py:13
+msgid "THURSDAY"
+msgstr "星期四"
+
+#: qwikgame/constants.py:14
+msgid "FRIDAY"
+msgstr "星期五"
+
+#: qwikgame/constants.py:15
+msgid "SATURDAY"
+msgstr "星期六"
+
+#: qwikgame/constants.py:60
+msgid "Afghanistan"
+msgstr "阿富汗"
+
+#: qwikgame/constants.py:61
+msgid "Åland Islands"
+msgstr "奥兰群岛"
+
+#: qwikgame/constants.py:62
+msgid "Albania"
+msgstr "阿尔巴尼亚"
+
+#: qwikgame/constants.py:63
+msgid "Algeria"
+msgstr "阿尔及利亚"
+
+#: qwikgame/constants.py:64
+msgid "American Samoa"
+msgstr "美属萨摩亚"
+
+#: qwikgame/constants.py:65
+msgid "Andorra"
+msgstr "安道尔"
+
+#: qwikgame/constants.py:66
+msgid "Angola"
+msgstr "安哥拉"
+
+#: qwikgame/constants.py:67
+msgid "Anguilla"
+msgstr "安圭拉"
+
+#: qwikgame/constants.py:68
+msgid "Antarctica"
+msgstr "南极洲"
+
+#: qwikgame/constants.py:69
+msgid "Antigua and Barbuda"
+msgstr "安提瓜和巴布达"
+
+#: qwikgame/constants.py:70
+msgid "Argentina"
+msgstr "阿根廷"
+
+#: qwikgame/constants.py:71
+msgid "Armenia"
+msgstr "亚美尼亚"
+
+#: qwikgame/constants.py:72
+msgid "Aruba"
+msgstr "阿鲁巴"
+
+#: qwikgame/constants.py:73
+msgid "Australia"
+msgstr "澳大利亚"
+
+#: qwikgame/constants.py:74
+msgid "Austria"
+msgstr "奥地利"
+
+#: qwikgame/constants.py:75
+msgid "Azerbaijan"
+msgstr "阿塞拜疆"
+
+#: qwikgame/constants.py:76
+msgid "Bahamas"
+msgstr "巴哈马"
+
+#: qwikgame/constants.py:77
+msgid "Bahrain"
+msgstr "巴林"
+
+#: qwikgame/constants.py:78
+msgid "Bangladesh"
+msgstr "孟加拉国"
+
+#: qwikgame/constants.py:79
+msgid "Barbados"
+msgstr "巴巴多斯"
+
+#: qwikgame/constants.py:80
+msgid "Belarus"
+msgstr "白俄罗斯"
+
+#: qwikgame/constants.py:81
+msgid "Belgium"
+msgstr "比利时"
+
+#: qwikgame/constants.py:82
+msgid "Belize"
+msgstr "伯利兹"
+
+#: qwikgame/constants.py:83
+msgid "Benin"
+msgstr "贝宁"
+
+#: qwikgame/constants.py:84
+msgid "Bermuda"
+msgstr "百慕大"
+
+#: qwikgame/constants.py:85
+msgid "Bhutan"
+msgstr "不丹"
+
+#: qwikgame/constants.py:86
+msgid "Bolivia, Plurinational State of"
+msgstr "玻利维亚（多民族国）"
+
+#: qwikgame/constants.py:87
+msgid "Bonaire, Sint Eustatius and Saba"
+msgstr "博奈尔、圣尤斯特歇斯和萨巴"
+
+#: qwikgame/constants.py:88
+msgid "Bosnia and Herzegovina"
+msgstr "波斯尼亚和黑塞哥维那"
+
+#: qwikgame/constants.py:89
+msgid "Botswana"
+msgstr "博茨瓦纳"
+
+#: qwikgame/constants.py:90
+msgid "Bouvet Island"
+msgstr "布韦岛"
+
+#: qwikgame/constants.py:91
+msgid "Brazil"
+msgstr "巴西"
+
+#: qwikgame/constants.py:92
+msgid "British Indian Ocean Territory"
+msgstr "英属印度洋领地"
+
+#: qwikgame/constants.py:93
+msgid "Brunei Darussalam"
+msgstr "文莱达鲁萨兰国"
+
+#: qwikgame/constants.py:94
+msgid "Bulgaria"
+msgstr "保加利亚"
+
+#: qwikgame/constants.py:95
+msgid "Burkina Faso"
+msgstr "布基纳法索"
+
+#: qwikgame/constants.py:96
+msgid "Burundi"
+msgstr "布隆迪"
+
+#: qwikgame/constants.py:97
+msgid "Cambodia"
+msgstr "柬埔寨"
+
+#: qwikgame/constants.py:98
+msgid "Cameroon"
+msgstr "喀麦隆"
+
+#: qwikgame/constants.py:99
+msgid "Canada"
+msgstr "加拿大"
+
+#: qwikgame/constants.py:100
+msgid "Cape Verde"
+msgstr "佛得角"
+
+#: qwikgame/constants.py:101
+msgid "Cayman Islands"
+msgstr "开曼群岛"
+
+#: qwikgame/constants.py:102
+msgid "Central African Republic"
+msgstr "中非共和国"
+
+#: qwikgame/constants.py:103
+msgid "Chad"
+msgstr "乍得"
+
+#: qwikgame/constants.py:104
+msgid "Chile"
+msgstr "智利"
+
+#: qwikgame/constants.py:105
+msgid "China"
+msgstr "中国"
+
+#: qwikgame/constants.py:106
+msgid "Christmas Island"
+msgstr "圣诞岛"
+
+#: qwikgame/constants.py:107
+msgid "Cocos (Keeling) Islands"
+msgstr "科科斯（基林）群岛"
+
+#: qwikgame/constants.py:108
+msgid "Colombia"
+msgstr "哥伦比亚"
+
+#: qwikgame/constants.py:109
+msgid "Comoros"
+msgstr "科摩罗"
+
+#: qwikgame/constants.py:110
+msgid "Congo"
+msgstr "刚果"
+
+#: qwikgame/constants.py:111
+msgid "Congo, the Democratic Republic of the"
+msgstr "刚果民主共和国"
+
+#: qwikgame/constants.py:112
+msgid "Cook Islands"
+msgstr "库克群岛"
+
+#: qwikgame/constants.py:113
+msgid "Costa Rica"
+msgstr "哥斯达黎加"
+
+#: qwikgame/constants.py:114
+msgid "Côte d'Ivoire"
+msgstr "科特迪瓦"
+
+#: qwikgame/constants.py:115
+msgid "Croatia"
+msgstr "克罗地亚"
+
+#: qwikgame/constants.py:116
+msgid "Cuba"
+msgstr "古巴"
+
+#: qwikgame/constants.py:117
+msgid "Curaçao"
+msgstr "库拉索"
+
+#: qwikgame/constants.py:118
+msgid "Cyprus"
+msgstr "塞浦路斯"
+
+#: qwikgame/constants.py:119
+msgid "Czech Republic"
+msgstr "捷克共和国"
+
+#: qwikgame/constants.py:120
+msgid "Denmark"
+msgstr "丹麦"
+
+#: qwikgame/constants.py:121
+msgid "Djibouti"
+msgstr "吉布提"
+
+#: qwikgame/constants.py:122
+msgid "Dominica"
+msgstr "多米尼克"
+
+#: qwikgame/constants.py:123
+msgid "Dominican Republic"
+msgstr "多米尼加共和国"
+
+#: qwikgame/constants.py:124
+msgid "Ecuador"
+msgstr "厄瓜多尔"
+
+#: qwikgame/constants.py:125
+msgid "Egypt"
+msgstr "埃及"
+
+#: qwikgame/constants.py:126
+msgid "El Salvador"
+msgstr "萨尔瓦多"
+
+#: qwikgame/constants.py:127
+msgid "Equatorial Guinea"
+msgstr "赤道几内亚"
+
+#: qwikgame/constants.py:128
+msgid "Eritrea"
+msgstr "厄立特里亚"
+
+#: qwikgame/constants.py:129
+msgid "Estonia"
+msgstr "爱沙尼亚"
+
+#: qwikgame/constants.py:130
+msgid "Ethiopia"
+msgstr "埃塞俄比亚"
+
+#: qwikgame/constants.py:131
+msgid "Falkland Islands (Malvinas)"
+msgstr "福克兰群岛（马尔维纳斯）"
+
+#: qwikgame/constants.py:132
+msgid "Faroe Islands"
+msgstr "法罗群岛"
+
+#: qwikgame/constants.py:133
+msgid "Fiji"
+msgstr "斐济"
+
+#: qwikgame/constants.py:134
+msgid "Finland"
+msgstr "芬兰"
+
+#: qwikgame/constants.py:135
+msgid "France"
+msgstr "法国"
+
+#: qwikgame/constants.py:136
+msgid "French Guiana"
+msgstr "法属圭亚那"
+
+#: qwikgame/constants.py:137
+msgid "French Polynesia"
+msgstr "法属波利尼西亚"
+
+#: qwikgame/constants.py:138
+msgid "French Southern Territories"
+msgstr "法属南部领地"
+
+#: qwikgame/constants.py:139
+msgid "Gabon"
+msgstr "加蓬"
+
+#: qwikgame/constants.py:140
+msgid "Gambia"
+msgstr "冈比亚"
+
+#: qwikgame/constants.py:141
+msgid "Georgia"
+msgstr "格鲁吉亚"
+
+#: qwikgame/constants.py:142
+msgid "Germany"
+msgstr "德国"
+
+#: qwikgame/constants.py:143
+msgid "Ghana"
+msgstr "加纳"
+
+#: qwikgame/constants.py:144
+msgid "Gibraltar"
+msgstr "直布罗陀"
+
+#: qwikgame/constants.py:145
+msgid "Greece"
+msgstr "希腊"
+
+#: qwikgame/constants.py:146
+msgid "Greenland"
+msgstr "格陵兰"
+
+#: qwikgame/constants.py:147
+msgid "Grenada"
+msgstr "格林纳达"
+
+#: qwikgame/constants.py:148
+msgid "Guadeloupe"
+msgstr "瓜德罗普"
+
+#: qwikgame/constants.py:149
+msgid "Guam"
+msgstr "关岛"
+
+#: qwikgame/constants.py:150
+msgid "Guatemala"
+msgstr "危地马拉"
+
+#: qwikgame/constants.py:151
+msgid "Guernsey"
+msgstr "根西岛"
+
+#: qwikgame/constants.py:152
+msgid "Guinea"
+msgstr "几内亚"
+
+#: qwikgame/constants.py:153
+msgid "Guinea-Bissau"
+msgstr "几内亚比绍"
+
+#: qwikgame/constants.py:154
+msgid "Guyana"
+msgstr "圭亚那"
+
+#: qwikgame/constants.py:155
+msgid "Haiti"
+msgstr "海地"
+
+#: qwikgame/constants.py:156
+msgid "Heard Island and McDonald Islands"
+msgstr "赫德岛和麦克唐纳群岛"
+
+#: qwikgame/constants.py:157
+msgid "Holy See (Vatican City State)"
+msgstr "圣座（梵蒂冈城国）"
+
+#: qwikgame/constants.py:158
+msgid "Honduras"
+msgstr "洪都拉斯"
+
+#: qwikgame/constants.py:159
+msgid "Hong Kong"
+msgstr "香港"
+
+#: qwikgame/constants.py:160
+msgid "Hungary"
+msgstr "匈牙利"
+
+#: qwikgame/constants.py:161
+msgid "Iceland"
+msgstr "冰岛"
+
+#: qwikgame/constants.py:162
+msgid "India"
+msgstr "印度"
+
+#: qwikgame/constants.py:163
+msgid "Indonesia"
+msgstr "印度尼西亚"
+
+#: qwikgame/constants.py:164
+msgid "Iran, Islamic Republic of"
+msgstr "伊朗伊斯兰共和国"
+
+#: qwikgame/constants.py:165
+msgid "Iraq"
+msgstr "伊拉克"
+
+#: qwikgame/constants.py:166
+msgid "Ireland"
+msgstr "爱尔兰"
+
+#: qwikgame/constants.py:167
+msgid "Isle of Man"
+msgstr "马恩岛"
+
+#: qwikgame/constants.py:168
+msgid "Israel"
+msgstr "以色列"
+
+#: qwikgame/constants.py:169
+msgid "Italy"
+msgstr "意大利"
+
+#: qwikgame/constants.py:170
+msgid "Jamaica"
+msgstr "牙买加"
+
+#: qwikgame/constants.py:171
+msgid "Japan"
+msgstr "日本"
+
+#: qwikgame/constants.py:172
+msgid "Jersey"
+msgstr "泽西岛"
+
+#: qwikgame/constants.py:173
+msgid "Jordan"
+msgstr "约旦"
+
+#: qwikgame/constants.py:174
+msgid "Kazakhstan"
+msgstr "哈萨克斯坦"
+
+#: qwikgame/constants.py:175
+msgid "Kenya"
+msgstr "肯尼亚"
+
+#: qwikgame/constants.py:176
+msgid "Kiribati"
+msgstr "基里巴斯"
+
+#: qwikgame/constants.py:177
+msgid "Korea, Democratic People's Republic of"
+msgstr "朝鲜民主主义人民共和国"
+
+#: qwikgame/constants.py:178
+msgid "Korea, Republic of"
+msgstr "大韩民国"
+
+#: qwikgame/constants.py:179
+msgid "Kuwait"
+msgstr "科威特"
+
+#: qwikgame/constants.py:180
+msgid "Kyrgyzstan"
+msgstr "吉尔吉斯斯坦"
+
+#: qwikgame/constants.py:181
+msgid "Lao People's Democratic Republic"
+msgstr "老挝人民民主共和国"
+
+#: qwikgame/constants.py:182
+msgid "Latvia"
+msgstr "拉脱维亚"
+
+#: qwikgame/constants.py:183
+msgid "Lebanon"
+msgstr "黎巴嫩"
+
+#: qwikgame/constants.py:184
+msgid "Lesotho"
+msgstr "莱索托"
+
+#: qwikgame/constants.py:185
+msgid "Liberia"
+msgstr "利比里亚"
+
+#: qwikgame/constants.py:186
+msgid "Libya"
+msgstr "利比亚"
+
+#: qwikgame/constants.py:187
+msgid "Liechtenstein"
+msgstr "列支敦士登"
+
+#: qwikgame/constants.py:188
+msgid "Lithuania"
+msgstr "立陶宛"
+
+#: qwikgame/constants.py:189
+msgid "Luxembourg"
+msgstr "卢森堡"
+
+#: qwikgame/constants.py:190
+msgid "Macao"
+msgstr "澳门"
+
+#: qwikgame/constants.py:191
+msgid "Macedonia, the former Yugoslav Republic of"
+msgstr "马其顿（前南斯拉夫共和国）"
+
+#: qwikgame/constants.py:192
+msgid "Madagascar"
+msgstr "马达加斯加"
+
+#: qwikgame/constants.py:193
+msgid "Malawi"
+msgstr "马拉维"
+
+#: qwikgame/constants.py:194
+msgid "Malaysia"
+msgstr "马来西亚"
+
+#: qwikgame/constants.py:195
+msgid "Mali"
+msgstr "马里"
+
+#: qwikgame/constants.py:196
+msgid "Malta"
+msgstr "马耳他"
+
+#: qwikgame/constants.py:197
+msgid "Marshall Islands"
+msgstr "马绍尔群岛"
+
+#: qwikgame/constants.py:198
+msgid "Martinique"
+msgstr "马提尼克"
+
+#: qwikgame/constants.py:199
+msgid "Mauritania"
+msgstr "毛里塔尼亚"
+
+#: qwikgame/constants.py:200
+msgid "Mauritius"
+msgstr "毛里求斯"
+
+#: qwikgame/constants.py:201
+msgid "Mayotte"
+msgstr "马约特"
+
+#: qwikgame/constants.py:202
+msgid "Mexico"
+msgstr "墨西哥"
+
+#: qwikgame/constants.py:203
+msgid "Micronesia, Federated States of"
+msgstr "密克罗尼西亚联邦"
+
+#: qwikgame/constants.py:204
+msgid "Moldova, Republic of"
+msgstr "摩尔多瓦共和国"
+
+#: qwikgame/constants.py:205
+msgid "Monaco"
+msgstr "摩纳哥"
+
+#: qwikgame/constants.py:206
+msgid "Mongolia"
+msgstr "蒙古"
+
+#: qwikgame/constants.py:207
+msgid "Montenegro"
+msgstr "黑山"
+
+#: qwikgame/constants.py:208
+msgid "Montserrat"
+msgstr "蒙特塞拉特"
+
+#: qwikgame/constants.py:209
+msgid "Morocco"
+msgstr "摩洛哥"
+
+#: qwikgame/constants.py:210
+msgid "Mozambique"
+msgstr "莫桑比克"
+
+#: qwikgame/constants.py:211
+msgid "Myanmar"
+msgstr "缅甸"
+
+#: qwikgame/constants.py:212
+msgid "Namibia"
+msgstr "纳米比亚"
+
+#: qwikgame/constants.py:213
+msgid "Nauru"
+msgstr "瑙鲁"
+
+#: qwikgame/constants.py:214
+msgid "Nepal"
+msgstr "尼泊尔"
+
+#: qwikgame/constants.py:215
+msgid "Netherlands"
+msgstr "荷兰"
+
+#: qwikgame/constants.py:216
+msgid "New Caledonia"
+msgstr "新喀里多尼亚"
+
+#: qwikgame/constants.py:217
+msgid "New Zealand"
+msgstr "新西兰"
+
+#: qwikgame/constants.py:218
+msgid "Nicaragua"
+msgstr "尼加拉瓜"
+
+#: qwikgame/constants.py:219
+msgid "Niger"
+msgstr "尼日尔"
+
+#: qwikgame/constants.py:220
+msgid "Nigeria"
+msgstr "尼日利亚"
+
+#: qwikgame/constants.py:221
+msgid "Niue"
+msgstr "纽埃"
+
+#: qwikgame/constants.py:222
+msgid "Norfolk Island"
+msgstr "诺福克岛"
+
+#: qwikgame/constants.py:223
+msgid "Northern Mariana Islands"
+msgstr "北马里亚纳群岛"
+
+#: qwikgame/constants.py:224
+msgid "Norway"
+msgstr "挪威"
+
+#: qwikgame/constants.py:225
+msgid "Oman"
+msgstr "阿曼"
+
+#: qwikgame/constants.py:226
+msgid "Pakistan"
+msgstr "巴基斯坦"
+
+#: qwikgame/constants.py:227
+msgid "Palau"
+msgstr "帕劳"
+
+#: qwikgame/constants.py:228
+msgid "Palestinian Territory, Occupied"
+msgstr "巴勒斯坦被占领土"
+
+#: qwikgame/constants.py:229
+msgid "Panama"
+msgstr "巴拿马"
+
+#: qwikgame/constants.py:230
+msgid "Papua New Guinea"
+msgstr "巴布亚新几内亚"
+
+#: qwikgame/constants.py:231
+msgid "Paraguay"
+msgstr "巴拉圭"
+
+#: qwikgame/constants.py:232
+msgid "Peru"
+msgstr "秘鲁"
+
+#: qwikgame/constants.py:233
+msgid "Philippines"
+msgstr "菲律宾"
+
+#: qwikgame/constants.py:234
+msgid "Pitcairn"
+msgstr "皮特凯恩"
+
+#: qwikgame/constants.py:235
+msgid "Poland"
+msgstr "波兰"
+
+#: qwikgame/constants.py:236
+msgid "Portugal"
+msgstr "葡萄牙"
+
+#: qwikgame/constants.py:237
+msgid "Puerto Rico"
+msgstr "波多黎各"
+
+#: qwikgame/constants.py:238
+msgid "Qatar"
+msgstr "卡塔尔"
+
+#: qwikgame/constants.py:239
+msgid "Réunion"
+msgstr "留尼汪"
+
+#: qwikgame/constants.py:240
+msgid "Romania"
+msgstr "罗马尼亚"
+
+#: qwikgame/constants.py:241
+msgid "Russian Federation"
+msgstr "俄罗斯联邦"
+
+#: qwikgame/constants.py:242
+msgid "Rwanda"
+msgstr "卢旺达"
+
+#: qwikgame/constants.py:243
+msgid "Saint Barthélemy"
+msgstr "圣巴泰勒米"
+
+#: qwikgame/constants.py:244
+msgid "Saint Helena, Ascension and Tristan da Cunha"
+msgstr "圣赫勒拿、阿森松和特里斯坦-达库尼亚"
+
+#: qwikgame/constants.py:245
+msgid "Saint Kitts and Nevis"
+msgstr "圣基茨和尼维斯"
+
+#: qwikgame/constants.py:246
+msgid "Saint Lucia"
+msgstr "圣卢西亚"
+
+#: qwikgame/constants.py:247
+msgid "Saint Martin (French part)"
+msgstr "法属圣马丁"
+
+#: qwikgame/constants.py:248
+msgid "Saint Pierre and Miquelon"
+msgstr "圣皮埃尔和密克隆"
+
+#: qwikgame/constants.py:249
+msgid "Saint Vincent and the Grenadines"
+msgstr "圣文森特和格林纳丁斯"
+
+#: qwikgame/constants.py:250
+msgid "Samoa"
+msgstr "萨摩亚"
+
+#: qwikgame/constants.py:251
+msgid "San Marino"
+msgstr "圣马力诺"
+
+#: qwikgame/constants.py:252
+msgid "Sao Tome and Principe"
+msgstr "圣多美和普林西比"
+
+#: qwikgame/constants.py:253
+msgid "Saudi Arabia"
+msgstr "沙特阿拉伯"
+
+#: qwikgame/constants.py:254
+msgid "Senegal"
+msgstr "塞内加尔"
+
+#: qwikgame/constants.py:255
+msgid "Serbia"
+msgstr "塞尔维亚"
+
+#: qwikgame/constants.py:256
+msgid "Seychelles"
+msgstr "塞舌尔"
+
+#: qwikgame/constants.py:257
+msgid "Sierra Leone"
+msgstr "塞拉利昂"
+
+#: qwikgame/constants.py:258
+msgid "Singapore"
+msgstr "新加坡"
+
+#: qwikgame/constants.py:259
+msgid "Sint Maarten (Dutch part)"
+msgstr "荷属圣马丁"
+
+#: qwikgame/constants.py:260
+msgid "Slovakia"
+msgstr "斯洛伐克"
+
+#: qwikgame/constants.py:261
+msgid "Slovenia"
+msgstr "斯洛文尼亚"
+
+#: qwikgame/constants.py:262
+msgid "Solomon Islands"
+msgstr "所罗门群岛"
+
+#: qwikgame/constants.py:263
+msgid "Somalia"
+msgstr "索马里"
+
+#: qwikgame/constants.py:264
+msgid "South Africa"
+msgstr "南非"
+
+#: qwikgame/constants.py:265
+msgid "South Georgia and the South Sandwich Islands"
+msgstr "南乔治亚和南桑威奇群岛"
+
+#: qwikgame/constants.py:266
+msgid "South Sudan"
+msgstr "南苏丹"
+
+#: qwikgame/constants.py:267
+msgid "Spain"
+msgstr "西班牙"
+
+#: qwikgame/constants.py:268
+msgid "Sri Lanka"
+msgstr "斯里兰卡"
+
+#: qwikgame/constants.py:269
+msgid "Sudan"
+msgstr "苏丹"
+
+#: qwikgame/constants.py:270
+msgid "Suriname"
+msgstr "苏里南"
+
+#: qwikgame/constants.py:271
+msgid "Svalbard and Jan Mayen"
+msgstr "斯瓦尔巴和扬马延"
+
+#: qwikgame/constants.py:272
+msgid "Swaziland"
+msgstr "斯威士兰"
+
+#: qwikgame/constants.py:273
+msgid "Sweden"
+msgstr "瑞典"
+
+#: qwikgame/constants.py:274
+msgid "Switzerland"
+msgstr "瑞士"
+
+#: qwikgame/constants.py:275
+msgid "Syrian Arab Republic"
+msgstr "叙利亚阿拉伯共和国"
+
+#: qwikgame/constants.py:276
+msgid "Taiwan, Province of China"
+msgstr "台湾"
+
+#: qwikgame/constants.py:277
+msgid "Tajikistan"
+msgstr "塔吉克斯坦"
+
+#: qwikgame/constants.py:278
+msgid "Tanzania, United Republic of"
+msgstr "坦桑尼亚联合共和国"
+
+#: qwikgame/constants.py:279
+msgid "Thailand"
+msgstr "泰国"
+
+#: qwikgame/constants.py:280
+msgid "Timor-Leste"
+msgstr "东帝汶"
+
+#: qwikgame/constants.py:281
+msgid "Togo"
+msgstr "多哥"
+
+#: qwikgame/constants.py:282
+msgid "Tokelau"
+msgstr "托克劳"
+
+#: qwikgame/constants.py:283
+msgid "Tonga"
+msgstr "汤加"
+
+#: qwikgame/constants.py:284
+msgid "Trinidad and Tobago"
+msgstr "特立尼达和多巴哥"
+
+#: qwikgame/constants.py:285
+msgid "Tunisia"
+msgstr "突尼斯"
+
+#: qwikgame/constants.py:286
+msgid "Turkey"
+msgstr "土耳其"
+
+#: qwikgame/constants.py:287
+msgid "Turkmenistan"
+msgstr "土库曼斯坦"
+
+#: qwikgame/constants.py:288
+msgid "Turks and Caicos Islands"
+msgstr "特克斯和凯科斯群岛"
+
+#: qwikgame/constants.py:289
+msgid "Tuvalu"
+msgstr "图瓦卢"
+
+#: qwikgame/constants.py:290
+msgid "Uganda"
+msgstr "乌干达"
+
+#: qwikgame/constants.py:291
+msgid "Ukraine"
+msgstr "乌克兰"
+
+#: qwikgame/constants.py:292
+msgid "United Arab Emirates"
+msgstr "阿拉伯联合酋长国"
+
+#: qwikgame/constants.py:293
+msgid "United Kingdom"
+msgstr "英国"
+
+#: qwikgame/constants.py:294
+msgid "United States"
+msgstr "美国"
+
+#: qwikgame/constants.py:295
+msgid "United States Minor Outlying Islands"
+msgstr "美国本土外小岛屿"
+
+#: qwikgame/constants.py:296
+msgid "Uruguay"
+msgstr "乌拉圭"
+
+#: qwikgame/constants.py:297
+msgid "Uzbekistan"
+msgstr "乌兹别克斯坦"
+
+#: qwikgame/constants.py:298
+msgid "Vanuatu"
+msgstr "瓦努阿图"
+
+#: qwikgame/constants.py:299
+msgid "Venezuela, Bolivarian Republic of"
+msgstr "委内瑞拉玻利瓦尔共和国"
+
+#: qwikgame/constants.py:300
+msgid "Viet Nam"
+msgstr "越南"
+
+#: qwikgame/constants.py:301
+msgid "Virgin Islands, British"
+msgstr "英属维尔京群岛"
+
+#: qwikgame/constants.py:302
+msgid "Virgin Islands, U.S."
+msgstr "美属维尔京群岛"
+
+#: qwikgame/constants.py:303
+msgid "Wallis and Futuna"
+msgstr "瓦利斯和富图纳"
+
+#: qwikgame/constants.py:304
+msgid "Western Sahara"
+msgstr "西撒哈拉"
+
+#: qwikgame/constants.py:305
+msgid "Yemen"
+msgstr "也门"
+
+#: qwikgame/constants.py:306
+msgid "Zambia"
+msgstr "赞比亚"
+
+#: qwikgame/constants.py:307
+msgid "Zimbabwe"
+msgstr "津巴布韦"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:31+1100\n"
+"POT-Creation-Date: 2026-03-02 15:29+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,86 +17,151 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: game/forms.py:30
+msgid "Chat here with your rival"
+msgstr "在此与您的对手聊天"
+
+#: game/forms.py:56
+msgid "RIVAL SKILL LEVEL"
+msgstr "对手技能水平"
+
+#: game/forms.py:60
+msgid "poor sportsmanship"
+msgstr "缺乏体育精神"
+
+#: game/forms.py:60
+msgid "did not show up"
+msgstr "未出席"
+
+#: game/forms.py:61
+msgid "RIVAL CONDUCT"
+msgstr "对手表现"
+
+#: game/forms.py:75
+msgid "Did anything go wrong?"
+msgstr "是否发生了任何问题？"
+
+#: game/models.py:193
+#, python-format
+msgid ""
+"%(name)s, please contact venue to ensure availability on %(date)s : "
+"%(phone)s : %(url)s"
+msgstr ""
+"%(name)s，请联系场地确认 %(date)s 是否有空位："
+"%(phone)s ：%(url)s"
+
+#: game/models.py:201
+msgid "match cancelled"
+msgstr "比赛已取消"
+
+#: game/models.py:205
+msgid "match chat disabled"
+msgstr "比赛聊天已禁用"
+
+#: game/models.py:207
+msgid "match scheduled"
+msgstr "比赛已安排"
+
+#: game/models.py:209
+msgid "match chat perished"
+msgstr "比赛聊天已删除"
+
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
-msgstr ""
+msgstr "比赛"
 
 #: game/templates/game/match.html:65
 msgid "Cancel this Match?"
-msgstr ""
+msgstr "取消此比赛？"
 
 #: game/templates/game/match.html:67
 msgid "cancel"
-msgstr ""
+msgstr "取消"
 
-#: game/templates/game/match.html:140
-msgid "Show invitation history"
-msgstr ""
+#: game/templates/game/match.html:82
+msgid "Match is scheduled"
+msgstr "比赛已安排"
+
+#: game/templates/game/match.html:83
+msgid "Match is complete"
+msgstr "比赛已完成"
+
+#: game/templates/game/match.html:84
+msgid "Match is cancelled"
+msgstr "比赛已取消"
+
+#: game/templates/game/match.html:85
+msgid "unknown status"
+msgstr "未知状态"
 
 #: game/templates/game/match.html:143
-msgid "Hide invitation history"
-msgstr ""
+msgid "Show invitation history"
+msgstr "显示邀请历史"
 
-#: game/templates/game/match.html:178 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:146
+msgid "Hide invitation history"
+msgstr "隐藏邀请历史"
+
+#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
-msgstr ""
+msgstr "评价"
 
-#: game/templates/game/match.html:188
+#: game/templates/game/match.html:191
 msgid "☺ emogi coming soon ☺"
-msgstr ""
-
-#: game/templates/game/match.html:202
-msgid "Chat will be disabled 24 hours after Match."
-msgstr ""
+msgstr "☺ 表情功能即将推出 ☺"
 
 #: game/templates/game/match.html:205
+msgid "Chat will be disabled 24 hours after Match."
+msgstr "比赛结束24小时后将禁用聊天。"
+
+#: game/templates/game/match.html:208
 msgid "Chat will be deleted 1 week after Match."
-msgstr ""
+msgstr "比赛结束1周后聊天将被删除。"
 
 #: game/templates/game/matches.html:26
 msgid "Chat"
-msgstr ""
+msgstr "聊天"
 
 #: game/templates/game/matches.html:36
 msgid "Matches"
-msgstr ""
+msgstr "比赛"
 
 #: game/templates/game/matches.html:39 game/templates/game/reviews.html:41
 msgid "Group by"
-msgstr ""
+msgstr "分组方式"
 
 #: game/templates/game/matches.html:45 game/templates/game/reviews.html:47
 msgid "date"
-msgstr ""
+msgstr "日期"
 
 #: game/templates/game/matches.html:49 game/templates/game/reviews.html:51
 msgid "game"
-msgstr ""
+msgstr "游戏"
 
 #: game/templates/game/matches.html:53 game/templates/game/reviews.html:55
 msgid "venue"
-msgstr ""
+msgstr "场地"
 
 #: game/templates/game/matches.html:60
 msgid "Upcoming"
-msgstr ""
+msgstr "即将开始"
 
 #: game/templates/game/matches.html:95
 msgid "No pending Matches"
-msgstr ""
+msgstr "没有待进行的比赛"
 
 #: game/templates/game/matches.html:101
 msgid "History"
-msgstr ""
+msgstr "历史记录"
 
 #: game/templates/game/matches.html:134
 msgid "No history yet!"
-msgstr ""
+msgstr "暂无历史记录！"
 
 #: game/templates/game/matches.html:149
 msgid "Select a Match to Chat."
-msgstr ""
+msgstr "选择一场比赛进行聊天。"
 
 #: game/templates/game/matches.html:151
 #, python-format
@@ -105,18 +170,25 @@ msgid ""
 "            No pending Matches%(br)sKeen to play?\n"
 "        "
 msgstr ""
+"\n"
+"            没有待进行的比赛%(br)s想玩吗？\n"
+"        "
+
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
+msgid "Invite"
+msgstr "邀请"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
-msgstr ""
+msgstr "评价"
 
 #: game/templates/game/review.html:74
 msgid "Submit"
-msgstr ""
+msgstr "提交"
 
 #: game/templates/game/reviews.html:101
 msgid "Select a Match to Review."
-msgstr ""
+msgstr "选择一场比赛进行评价。"
 
 #: game/templates/game/reviews.html:103
 #, python-format
@@ -125,11 +197,10 @@ msgid ""
 "                All Match reviews complete - thank you%(br)sKeen to play?\n"
 "        "
 msgstr ""
-
-#: game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr ""
+"\n"
+"                所有比赛评价已完成 - 感谢您%(br)s想玩吗？\n"
+"        "
 
 #: game/templates/game/rival.html:7
 msgid "Rival"
-msgstr ""
+msgstr "对手"

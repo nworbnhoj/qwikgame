@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 08:09+1100\n"
+"POT-Creation-Date: 2026-03-02 15:29+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,32 +17,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: feedback/forms.py:15
+msgid "Description"
+msgstr "描述"
+
+#: feedback/forms.py:17
+msgid "thanks heaps for taking the time!"
+msgstr "非常感谢您抽出时间！"
+
+#: feedback/forms.py:18
+msgid "feedback"
+msgstr "反馈"
+
+#: feedback/models.py:13
+msgid "Bug"
+msgstr "错误"
+
+#: feedback/models.py:14
+msgid "Something is not clear"
+msgstr "某些内容不清楚"
+
+#: feedback/models.py:15
+msgid "Something is too dfficult"
+msgstr "某些内容太难"
+
+#: feedback/models.py:16
+msgid "Something is really good"
+msgstr "某些内容非常好"
+
+#: feedback/models.py:17
+msgid "Suggestion for improvement"
+msgstr "改进建议"
+
+#: feedback/models.py:18
+msgid "Translation issue"
+msgstr "翻译问题"
+
+#: feedback/models.py:19
+msgid "Other"
+msgstr "其他"
+
 #: feedback/templates/feedback/feedback.html:7
 #: feedback/templates/feedback/feedback_list.html:7
 #: feedback/templates/feedback/feedback_list.html:19
 msgid "Feedback"
-msgstr ""
+msgstr "反馈"
 
 #: feedback/templates/feedback/feedback.html:41
 msgid "Version: "
-msgstr ""
+msgstr "版本："
 
 #: feedback/templates/feedback/feedback.html:44
 msgid "Issue:"
-msgstr ""
+msgstr "问题："
 
 #: feedback/templates/feedback/feedback.html:48
 msgid "None"
-msgstr ""
+msgstr "无"
 
 #: feedback/templates/feedback/feedback.html:50
 msgid "create issue"
-msgstr ""
+msgstr "创建问题"
 
 #: feedback/templates/feedback/feedback_list.html:33
 msgid "No feedback!"
-msgstr ""
+msgstr "暂无反馈！"
 
 #: feedback/templates/feedback/feedback_list.html:47
 msgid "Select Feedback to see detail."
-msgstr ""
+msgstr "选择反馈以查看详情。"

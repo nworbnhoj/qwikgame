@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 12:18+1100\n"
+"POT-Creation-Date: 2026-03-02 15:29+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,49 +17,155 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: player/forms.py:24 player/models.py:462
+msgid "Any Game"
+msgstr "任何游戏"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "仅查看特定游戏的邀请。"
+
+#: player/forms.py:26 player/forms.py:276
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "游戏"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "仅查看特定场地的邀请。"
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "地点"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "仅查看您每周特定时间段的邀请。"
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "时间"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "抱歉，场地选择未成功。请重试。"
+
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
+msgid "Anywhere"
+msgstr "任何地点"
+
+#: player/forms.py:143
+msgid "Select from map"
+msgstr "从地图选择"
+
+#: player/forms.py:186
+msgid "NO ACTIVE FILTERS"
+msgstr "无启用的筛选条件"
+
+#: player/forms.py:197
+#, python-format
+msgid "%(n)s ACTIVE FILTERS"
+msgstr "%(n)s 个启用的筛选条件"
+
+#: player/forms.py:219
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "好友的电子邮箱"
+
+#: player/forms.py:225
+msgid "NAME"
+msgstr "姓名"
+
+#: player/forms.py:237
+msgid "Type email address"
+msgstr "输入电子邮箱地址"
+
+#: player/forms.py:238
+msgid "A screen name for your friend (optional)"
+msgstr "为您的好友设置一个昵称（可选）"
+
+#: player/forms.py:283
+msgid "RIVAL SKILL LEVEL"
+msgstr "对手技能水平"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "可能"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "也许"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "未知"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+msgid "much-weaker"
+msgstr "明显较弱"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+msgid "weaker"
+msgstr "较弱"
+
+#: player/models.py:400
+msgid "matched"
+msgstr "实力相当"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+msgid "stronger"
+msgstr "较强"
+
+#: player/models.py:402
+msgid "much-stonger"
+msgstr "明显更强"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "任何时间"
+
 #: player/templates/player/account_public_snippet.html:5
 msgid "YOUR QWIKGAME REPUTATION"
-msgstr ""
+msgstr "您的 QWIKGAME 声誉"
 
 #: player/templates/player/account_public_snippet.html:10
 msgid "Based on feedback given by your rivals."
-msgstr ""
+msgstr "基于您的对手给予的反馈。"
 
 #: player/templates/player/filter.html:46
 #: player/templates/player/filters.html:8
 msgid "Filter"
-msgstr ""
+msgstr "筛选"
 
 #: player/templates/player/filter.html:65
 msgid "New Invitation Filter"
-msgstr ""
+msgstr "新建邀请筛选"
 
 #: player/templates/player/filter.html:78
 msgid "Add Filter"
-msgstr ""
+msgstr "添加筛选"
 
 #: player/templates/player/filters.html:27
 msgid "Invitation Filters"
-msgstr ""
+msgstr "邀请筛选"
 
 #: player/templates/player/filters.html:31
 #: player/templates/player/friend_add.html:34
 #: player/templates/player/friends.html:25
 #: player/templates/player/strength.html:102
 msgid "Add"
-msgstr ""
+msgstr "添加"
 
 #: player/templates/player/filters.html:47
 msgid "Delete these Filters?"
-msgstr ""
+msgstr "删除这些筛选条件？"
 
 #: player/templates/player/filters.html:49
 msgid "Remove"
-msgstr ""
+msgstr "移除"
 
 #: player/templates/player/filters.html:53
 msgid "Apply"
-msgstr ""
+msgstr "应用"
 
 #: player/templates/player/friend.html:7
 #: player/templates/player/friend_add.html:7
@@ -67,40 +173,40 @@ msgstr ""
 #: player/templates/player/friends.html:35
 #: player/templates/player/strength.html:7
 msgid "Friends"
-msgstr ""
+msgstr "好友"
 
 #: player/templates/player/friend.html:36
 msgid "Delete this Friend?"
-msgstr ""
+msgstr "删除此好友？"
 
 #: player/templates/player/friend.html:38
 #: player/templates/player/friend.html:69
 #: player/templates/player/strength.html:43
 msgid "delete"
-msgstr ""
+msgstr "删除"
 
 #: player/templates/player/friend.html:51
 #: player/templates/player/friend_add.html:24
 #: player/templates/player/friends.html:93
 msgid "Add Friend"
-msgstr ""
+msgstr "添加好友"
 
 #: player/templates/player/friend.html:79
 #: player/templates/player/strength.html:75
 msgid "Submit"
-msgstr ""
+msgstr "提交"
 
 #: player/templates/player/friends.html:39
 msgid "Group by"
-msgstr ""
+msgstr "分组方式"
 
 #: player/templates/player/friends.html:46
 msgid "game"
-msgstr ""
+msgstr "游戏"
 
 #: player/templates/player/friends.html:73
 msgid "No friends :-("
-msgstr ""
+msgstr "暂无好友 :-("
 
 #: player/templates/player/friends.html:87
 #, python-format
@@ -109,22 +215,25 @@ msgid ""
 "                Edit a Friend%(br)sor add a new one!\n"
 "    "
 msgstr ""
+"\n"
+"                编辑好友%(br)s或添加新的好友！\n"
+"    "
 
 #: player/templates/player/rival_stats_snippet.html:4
 msgid "MATCHES"
-msgstr ""
+msgstr "比赛"
 
 #: player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
-msgstr ""
+msgstr "游戏"
 
 #: player/templates/player/rival_stats_snippet.html:16
 msgid "VENUES"
-msgstr ""
+msgstr "场地"
 
 #: player/templates/player/strength.html:61
 msgid "Important!"
-msgstr ""
+msgstr "重要！"
 
 #: player/templates/player/strength.html:63
 msgid ""
@@ -132,39 +241,24 @@ msgid ""
 "This will help qwikgame make better Matches for you, and your friend, and "
 "other qwikgame Players who know either of you."
 msgstr ""
-
-#: player/templates/player/strength.html:84
-msgid "GAME"
-msgstr ""
+"请花一点时间告知 qwikgame 您好友的实力水平。这将帮助 qwikgame 为您、您的好友以及认识你们的其他玩家安排更合适的比赛。"
 
 #: player/templates/player/strength.html:85
 msgid "STRENGTH"
-msgstr ""
-
-#: player/templates/player/strength.html:87
-msgid "Much Weaker"
-msgstr ""
-
-#: player/templates/player/strength.html:88
-msgid "Weaker"
-msgstr ""
+msgstr "实力"
 
 #: player/templates/player/strength.html:89
-msgid "Well Matched"
-msgstr ""
-
-#: player/templates/player/strength.html:90
-msgid "Stronger"
-msgstr ""
+msgid "well-matched"
+msgstr "实力相当"
 
 #: player/templates/player/strength.html:91
-msgid "Much Stronger"
-msgstr ""
+msgid "much-stronger"
+msgstr "明显更强"
 
 #: player/templates/player/strength.html:96
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #: player/templates/player/strength.html:99
 msgid "Learn more"
-msgstr ""
+msgstr "了解更多"

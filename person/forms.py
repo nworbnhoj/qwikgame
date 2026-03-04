@@ -175,8 +175,10 @@ class UnblockForm(QwikForm):
     def get(klass, person):
         form = klass()
         form.fields['blocked'].choices = klass.blocked_choices(person)
+        disabled = 'disabled' if len(form.fields['blocked'].choices) == 0 else ''
         return {
             'blocked_form': form,
+            'unblock_disabled': disabled,
         }
 
     @classmethod

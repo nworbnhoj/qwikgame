@@ -57,7 +57,7 @@
 {{ blocked_form }}
                             <div class="pillar">
                                 <label class="btn primary">
-                                    <input hidden type="submit" form="unblock_form" name="unblock">
+                                    <input hidden type="submit" form="unblock_form" name="unblock" {{ unblock_disabled }}>
                                     {% translate "UnBlock" %}
                                 </label>
                             </div>

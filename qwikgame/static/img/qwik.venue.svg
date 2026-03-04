@@ -3,7 +3,8 @@
   <g stroke-width="1">
     <circle cx="10" cy="13" r="7" fill="#fff"/>
     <circle cx="21" cy="13" r="7" fill="#fff"/>
-    <polygon points="6,16 15,50 24,16" fill="#fff" />
+    <polygon points="6,19 15,50 15,17" fill="#000" />
+    <polygon points="15,17 15,50 24,19" fill="#f5a600" />
     <line x1="8" y1="20" x2="15" y2="50" stroke="#000000"/>
     <line x1="22" y1="20" x2="15" y2="50" stroke="#f5a600"/>
   </g>

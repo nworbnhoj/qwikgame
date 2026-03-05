@@ -260,6 +260,10 @@ class Venue(Place):
     def __str__(self):
         return self.name
 
+    @property
+    def active(self):
+        return not self.flags.proposed
+
     # returns an aware datetime based in the venue timezone
     def datetime(self, date, time=datetime.time(hour=0)):
         return datetime.datetime.combine(date, time, self.tzinfo)

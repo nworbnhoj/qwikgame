@@ -109,12 +109,14 @@ class AcceptView(AppealsView):
                     Entry(entry).rename(player)
             next_up = appeal.status + 'O'
             context |= {
+                'banner_class': 'pending',
                 'notify_off': person.alert_str(False, 'bid'),
                 'notify_on': person.alert_str(True, 'bid'),
                 'next_up': NEXT_UP[next_up],
                 'bids': self._bids(appeal, player),
                 'log': log,
                 'target': 'bid',
+                'venue_pending_hidden': 'hidden' if appeal.venue.active else '',
             }
         self._context = context
         return self._context
@@ -196,6 +198,7 @@ class BidView(AppealsView):
             next_up = appeal.status + ('B' if bid else '')
             context |= {
                 'appeal': appeal,
+                'banner_class': 'pending',
                 'log': log,
                 'next_up': NEXT_UP[next_up],
                 'notify_off': person.alert_str(False, 'bid'),
@@ -204,6 +207,7 @@ class BidView(AppealsView):
                 'rival_name': player.name_rival(appeal.player),
                 'strength': player.strength_str(appeal.game, appeal.player),
                 'bid': bid,
+                'venue_pending_hidden': 'hidden' if appeal.venue.active else '',
             }
         self._context = context
         return self._context

@@ -134,6 +134,7 @@ div.alert { align-items: center; display: none; flex: auto; flex-direction: colu
 div.banner { align-items: center; background-color: #ffffff; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center; z-index: 20; }
 div.banner.active { background-color: #f5a600; }
 div.banner.complete { background-color: lightgrey; }
+div.banner.pending { background-color: lightgrey; }
 div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }

@@ -1,3 +1,5 @@
+from bitfield import BitField
+from bitfield.forms import BitFieldCheckboxSelectMultiple
 from django.contrib import admin
 
 from .models import Manager, Place, Region, Venue
@@ -12,6 +14,9 @@ class RegionAdmin(admin.ModelAdmin):
 
 
 class VenueAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+            BitField: {'widget': BitFieldCheckboxSelectMultiple},
+    }
     list_display = ['pk', 'name', 'open_week', 'tz']
     list_filter = ['games', 'country', 'admin1', 'locality']
     ordering = ['name']

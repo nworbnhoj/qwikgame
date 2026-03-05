@@ -388,6 +388,7 @@ class KeenView(AppealsView):
                 if venue:
                     venue.save()
                     logger.info(f'Venue new: {venue}')
+                    venue.update(flags=F('flags').bitor(Venue.flags.proposed))
                     place = venue.place_ptr
         if not venue:
             logger.warn(f'Venue missing from Appeal: {placeid}')

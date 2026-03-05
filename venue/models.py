@@ -191,7 +191,7 @@ class Region(Place):
 
 class Venue(Place):
 
-    FLAGS = ()
+    FLAGS = ('proposed')
 
     address = models.CharField(max_length=256, blank=True)
     flags = BitField(flags=FLAGS, default=[])

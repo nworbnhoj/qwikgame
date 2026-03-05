@@ -1,4 +1,5 @@
 import datetime, logging, sys
+from bitfield import BitField
 from dateutil import zoneinfo, tz
 from django.db import models
 from qwikgame.constants import ADDRESS, ADMIN1, COUNTRY, EAST, HOUR, HOURS, LAT, LNG, LOCALITY, NAME, NORTH, OPEN, PHONE, PLACEID, SOUTH, URL, WEEKDAY, WEST
@@ -189,7 +190,11 @@ class Region(Place):
 
 
 class Venue(Place):
+
+    FLAGS = ()
+
     address = models.CharField(max_length=256, blank=True)
+    flags = BitField(flags=FLAGS, default=[])
     games = models.ManyToManyField('game.Game')
     hours = models.BinaryField(default=WEEK_NONE)
     managers = models.ManyToManyField(Manager, blank=True)

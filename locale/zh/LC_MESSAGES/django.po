@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-22 22:02+1100\n"
+"POT-Creation-Date: 2026-03-05 11:58+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,8 +77,7 @@ msgstr "开源软件"
 msgid ""
 "Qwikgame is released as Open-Source software, and is grateful for the use of "
 "many other great Open-Source software projects."
-msgstr ""
-"Qwikgame 以开源软件形式发布，并感谢众多优秀开源项目的支持与贡献。"
+msgstr "Qwikgame 以开源软件形式发布，并感谢众多优秀开源项目的支持与贡献。"
 
 #: templates/license.html:40
 msgid "Software"
@@ -97,10 +96,14 @@ msgid "Venues"
 msgstr "场地"
 
 #: templates/map.html:28
-msgid "search"
-msgstr "搜索"
+msgid "more"
+msgstr "更多的"
 
-#: templates/map.html:46
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "添加 QWIK 场所"
+
+#: templates/map.html:50
 msgid "Players"
 msgstr "玩家"
 
@@ -303,7 +306,9 @@ msgid ""
 "all match invitations in one place. Just pick one or post your own.\n"
 msgstr ""
 "\n"
-"                你玩壁球、网球或板式网球？或者国际象棋、飞镖或台球？但找不到伙伴？这就是 %(QWIK)sGAME！现在寻找伙伴和安排比赛变得快速又简单。在 %(QWIK)sGAME 中，所有比赛邀请尽在一处。选择一个，或发布你自己的邀请。\n"
+"                你玩壁球、网球或板式网球？或者国际象棋、飞镖或台球？但找不到"
+"伙伴？这就是 %(QWIK)sGAME！现在寻找伙伴和安排比赛变得快速又简单。在 "
+"%(QWIK)sGAME 中，所有比赛邀请尽在一处。选择一个，或发布你自己的邀请。\n"
 
 #: templates/welcome.html:45
 msgid "Organize A Match For Free!"
@@ -354,7 +359,8 @@ msgid ""
 "invitation ... or post your own!\n"
 msgstr ""
 "\n"
-"                            其他玩家也在寻找伙伴！在 %(QWIK)sGAME 中与他们相遇。浏览 %(QWIK)sFeed 并选择一个邀请……或者发布您自己的邀请！\n"
+"                            其他玩家也在寻找伙伴！在 %(QWIK)sGAME 中与他们相"
+"遇。浏览 %(QWIK)sFeed 并选择一个邀请……或者发布您自己的邀请！\n"
 
 #: templates/welcome.html:150
 msgid "Post new Match Invitation"
@@ -370,7 +376,8 @@ msgid ""
 "choose! \n"
 msgstr ""
 "\n"
-"                            在 %(QWIK)sFeed 中找不到合适的邀请？按照您的条件发送邀请。选择游戏、时间段和地点。与您心仪的对手确认比赛。一切由您决定！\n"
+"                            在 %(QWIK)sFeed 中找不到合适的邀请？按照您的条件"
+"发送邀请。选择游戏、时间段和地点。与您心仪的对手确认比赛。一切由您决定！\n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -443,7 +450,8 @@ msgid ""
 "partners and arranging 2-player games.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME 是一款帮助寻找伙伴并安排双人游戏的应用程序。\n"
+"                    %(QWIK)sGAME 是一款帮助寻找伙伴并安排双人游戏的应用程"
+"序。\n"
 
 #: templates/welcome.html:262
 #, python-format
@@ -464,7 +472,9 @@ msgid ""
 "racquetball, but also chess, darts, backgammon, billiards and more.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME 目前专注于双人游戏，并计划在未来扩展到多人游戏。目前涵盖最受欢迎的双人游戏，如网球、壁球、乒乓球、羽毛球、回力球，以及国际象棋、飞镖、西洋双陆棋、台球等。\n"
+"                    %(QWIK)sGAME 目前专注于双人游戏，并计划在未来扩展到多人游"
+"戏。目前涵盖最受欢迎的双人游戏，如网球、壁球、乒乓球、羽毛球、回力球，以及国"
+"际象棋、飞镖、西洋双陆棋、台球等。\n"
 
 #: templates/welcome.html:276
 #, python-format
@@ -526,7 +536,11 @@ msgid ""
 "particular hour from the given timeframe.\n"
 msgstr ""
 "\n"
-"                    要寻找伙伴并组织比赛，请先发送一条比赛邀请。选择游戏、场地和时间段。建议提前联系场地确认在您首选时间是否有可用场地。您的比赛邀请将显示在 QWIKFeed 中供其他玩家查看。可能会有多位玩家回应您的邀请。您可以选择最合适的报价并确认比赛。您也可以在 %(QWIK)sFeed 中回复现有邀请，为指定时间段内的某个具体小时提交报价。\n"
+"                    要寻找伙伴并组织比赛，请先发送一条比赛邀请。选择游戏、场"
+"地和时间段。建议提前联系场地确认在您首选时间是否有可用场地。您的比赛邀请将显"
+"示在 QWIKFeed 中供其他玩家查看。可能会有多位玩家回应您的邀请。您可以选择最合"
+"适的报价并确认比赛。您也可以在 %(QWIK)sFeed 中回复现有邀请，为指定时间段内的"
+"某个具体小时提交报价。\n"
 
 #: templates/welcome.html:318
 msgid ""
@@ -543,7 +557,8 @@ msgid ""
 "and for any game, venue or timeframe.\n"
 msgstr ""
 "\n"
-"                    您每天可以根据需要发布任意数量的邀请，适用于任何游戏、场地或时间段。\n"
+"                    您每天可以根据需要发布任意数量的邀请，适用于任何游戏、场"
+"地或时间段。\n"
 
 #: templates/welcome.html:332
 #, python-format
@@ -562,7 +577,8 @@ msgid ""
 "%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
 msgstr ""
 "\n"
-"                    您可以在 %(QWIK)sFeed 中查看所有当前邀请。该页面会持续更新玩家发布的新邀请。\n"
+"                    您可以在 %(QWIK)sFeed 中查看所有当前邀请。该页面会持续更"
+"新玩家发布的新邀请。\n"
 
 #: templates/welcome.html:346
 msgid ""
@@ -581,7 +597,8 @@ msgid ""
 "before sending the invitation.\n"
 msgstr ""
 "\n"
-"                    发送最初比赛邀请的玩家在比赛确认后负责联系并预订场地。同时建议在发送邀请前先致电场地确认可用情况。\n"
+"                    发送最初比赛邀请的玩家在比赛确认后负责联系并预订场地。同"
+"时建议在发送邀请前先致电场地确认可用情况。\n"
 
 #: templates/welcome.html:360
 #, python-format
@@ -603,7 +620,9 @@ msgid ""
 "systems and an Internet Browser is the only requirement.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME 是一款渐进式网页应用（PWA），属于新一代应用形式。无需下载或安装任何内容。只需将 %(QWIK)sGAME 保存到您的主屏幕即可。%(QWIK)sGAME PWA 可在所有操作系统上运行，仅需互联网浏览器。\n"
+"                    %(QWIK)sGAME 是一款渐进式网页应用（PWA），属于新一代应用"
+"形式。无需下载或安装任何内容。只需将 %(QWIK)sGAME 保存到您的主屏幕即"
+"可。%(QWIK)sGAME PWA 可在所有操作系统上运行，仅需互联网浏览器。\n"
 
 #: templates/welcome.html:374
 #, python-format
@@ -625,7 +644,10 @@ msgid ""
 "be most welcome.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME 由 QWIKGAME Inc. 管理，该机构注册于澳大利亚维多利亚州，为非营利协会。关于 %(QWIK)sGAME 的所有讨论和决策均在 <a href=\"https://forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a> 在线进行。欢迎您的参与和支持。\n"
+"                    %(QWIK)sGAME 由 QWIKGAME Inc. 管理，该机构注册于澳大利亚"
+"维多利亚州，为非营利协会。关于 %(QWIK)sGAME 的所有讨论和决策均在 <a "
+"href=\"https://forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a> 在线进"
+"行。欢迎您的参与和支持。\n"
 
 #: templates/welcome.html:388
 #, python-format
@@ -645,7 +667,8 @@ msgid ""
 "most welcome.\n"
 msgstr ""
 "\n"
-"                    是的！%(QWIK)sGAME 软件完全开源。最新代码可在 %(github_link)s 上获取。欢迎您的参与和贡献。\n"
+"                    是的！%(QWIK)sGAME 软件完全开源。最新代码可在 "
+"%(github_link)s 上获取。欢迎您的参与和贡献。\n"
 
 #: templates/welcome.html:414
 msgid "License"
@@ -666,3 +689,6 @@ msgstr "登录"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "注册"
+
+#~ msgid "search"
+#~ msgstr "搜索"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-26 07:41+1100\n"
+"POT-Creation-Date: 2026-03-05 11:56+1100\n"
 "PO-Revision-Date: 2026-02-22 14:48+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -100,10 +100,14 @@ msgid "Venues"
 msgstr "Локации"
 
 #: templates/map.html:28
-msgid "search"
-msgstr "търсене"
+msgid "more"
+msgstr "повече"
 
-#: templates/map.html:46
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "Добавете място за провеждане на QWIK"
+
+#: templates/map.html:50
 msgid "Players"
 msgstr "Играчите"
 
@@ -707,6 +711,9 @@ msgstr "Вход"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "Регистрация"
+
+#~ msgid "search"
+#~ msgstr "търсене"
 
 #~ msgid "Cancel this Invitation?"
 #~ msgstr "Отказ от тази покана?"

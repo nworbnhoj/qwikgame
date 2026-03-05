@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg height="50" width="30" viewBox="0 0 30 50" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <g stroke-width="1">
+    <circle cx="15" cy="13" r="12" fill="#fff" stroke="#000"/>
+    <line x1="8" y1="12" x2="22" y2="12" stroke-width="3"  stroke="#f5a600" />
+    <line x1="15" y1="5" x2="15" y2="20" stroke-width="3"  stroke="#f5a600" />
+    <polygon points="6,21 15,50 15,23" fill="#000" />
+    <polygon points="15,23 15,50 24,21" fill="#f5a600" />
+  </g> 
+</svg>

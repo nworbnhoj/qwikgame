@@ -307,6 +307,7 @@ ul.leaders span:first-child { background: white; padding-right: 0.33em; }
 ul.leaders span + span { background: white; float: right; padding-left: 0.33em; }
 
 #content { flex: 1 0 auto; }
+#infowindow_mark_place { overflow:hidden; }
 #license { flex-shrink: 0; }
 
 @keyframes l46 {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-01 15:55+1100\n"
+"POT-Creation-Date: 2026-03-05 11:58+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,10 +100,14 @@ msgid "Venues"
 msgstr "الأماكن"
 
 #: templates/map.html:28
-msgid "search"
-msgstr "بحث"
+msgid "more"
+msgstr "أكثر"
 
-#: templates/map.html:46
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "أضف مكان QWIK"
+
+#: templates/map.html:50
 msgid "Players"
 msgstr "اللاعبون"
 
@@ -481,11 +485,10 @@ msgid ""
 "racquetball, but also chess, darts, backgammon, billiards and more.\n"
 msgstr ""
 "\n"
-"                    يركز %(QWIK)sGAME حاليًا على الألعاب الثنائية فقط، مع "
-"خطط طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. نوفر حاليًا أشهر "
-"الألعاب الثنائية مثل التنس، والاسكواش، وتنس الطاولة، والريشة الطائرة، "
-"وراكيتبول، بالإضافة إلى الشطرنج، والسهام، والطاولة (الطاولة الزهر)، "
-"والبلياردو وغيرها.\n"
+"                    يركز %(QWIK)sGAME حاليًا على الألعاب الثنائية فقط، مع خطط "
+"طموحة لإضافة ألعاب متعددة اللاعبين في المستقبل. نوفر حاليًا أشهر الألعاب "
+"الثنائية مثل التنس، والاسكواش، وتنس الطاولة، والريشة الطائرة، وراكيتبول، "
+"بالإضافة إلى الشطرنج، والسهام، والطاولة (الطاولة الزهر)، والبلياردو وغيرها.\n"
 
 #: templates/welcome.html:276
 #, python-format
@@ -658,8 +661,9 @@ msgid ""
 msgstr ""
 "\n"
 "                    تتم إدارة %(QWIK)sGAME من قبل QWIKGAME Inc. المسجلة في "
-"فيكتوريا، أستراليا، كجمعية غير ربحية. تُجرى جميع المناقشات والقرارات "
-"المتعلقة بـ %(QWIK)sGAME عبر الإنترنت في <a href=\"https://forum.qwikgame.org/\" target=\"_blank\">منتدى QWIK</a>. نرحب بمساهمتك.\n"
+"فيكتوريا، أستراليا، كجمعية غير ربحية. تُجرى جميع المناقشات والقرارات المتعلقة "
+"بـ %(QWIK)sGAME عبر الإنترنت في <a href=\"https://forum.qwikgame.org/\" "
+"target=\"_blank\">منتدى QWIK</a>. نرحب بمساهمتك.\n"
 
 #: templates/welcome.html:388
 #, python-format
@@ -706,3 +710,5 @@ msgstr "إنشاء حساب"
 msgid "Sign up"
 msgstr "إنشاء حساب"
 
+#~ msgid "search"
+#~ msgstr "بحث"

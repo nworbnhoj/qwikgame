@@ -60,17 +60,15 @@ function venuesMap() {
     GAME_SELECT.addEventListener('change', changeMarks);
 
     // setup Places search box in map
-    if (SHOW_SEARCH_BOX == 'SHOW') {
-      const INPUT = document.getElementById("map-search");
-      const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
-      MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
-      MAP.addListener("bounds_changed", () => {
-          SEARCHBOX.setBounds(MAP.getBounds());
-      });
-      SEARCHBOX.addListener("places_changed", () => {
-          searchChangeHandler(SEARCHBOX.getPlaces());
-      });
-    }
+    const INPUT = document.getElementById("map-search");
+    const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
+    MAP.controls[google.maps.ControlPosition.TOP_LEFT].push(INPUT);
+    MAP.addListener("bounds_changed", () => {
+        SEARCHBOX.setBounds(MAP.getBounds());
+    });
+    SEARCHBOX.addListener("places_changed", () => {
+        searchChangeHandler(SEARCHBOX.getPlaces());
+    });
 
     //setup Close button in map
     const CLOSE = document.createElement("button");
@@ -219,6 +217,7 @@ function searchChangeHandler(places){
       // title: place.name+'\nyou are the first player!\n'+open
     });
     mark.marker = MARKER;
+    mark.marker.setIcon({ url: ICON_PLACE });
     SEARCH_MARKERS.push(MARKER);
     setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
 
@@ -267,14 +266,14 @@ function showMarkInfo(mark, template){
       var href = 'https://duckduckgo.com/?q='+mark.name+' '+mark.address;
       FRAG.getElementById("map_mark_info_search").setAttribute('href', href);
       // FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
-      var pixelOffset = new google.maps.Size(0,-30)
+      var pixelOffset = new google.maps.Size(0,-45)
       break;
     case 'venue':
       FRAG.getElementById("map_mark_info_name").textContent = mark.name;
       FRAG.getElementById("map_mark_info_address").textContent = mark.address;
       FRAG.getElementById("map_mark_info_open").textContent = mark.open;
       FRAG.getElementById("map_mark_info_size").textContent = mark.num_player.toString();
-      var pixelOffset = new google.maps.Size(0,-40)
+      var pixelOffset = new google.maps.Size(0,-45)
       break;
   }
   INFOWINDOW.setOptions({
@@ -348,9 +347,10 @@ function markerFromPlaceId(placeId){
         visible:true,
         map:qwikMap,
       });
-      var label_origin = new google.maps.Point(13,15)
-      mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
-      mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
+      mark.marker.setIcon({ url: ICON_PLACE });
+      //var label_origin = new google.maps.Point(13,15)
+      //mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
+      // mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
       setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER, ONPRESS_PLACE_MARKER)
     } else {
       console.log(status);

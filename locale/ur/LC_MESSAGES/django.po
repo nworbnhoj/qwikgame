@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 14:47+1100\n"
+"POT-Creation-Date: 2026-03-05 11:58+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,10 +100,14 @@ msgid "Venues"
 msgstr "مقامات"
 
 #: templates/map.html:28
-msgid "search"
-msgstr "تلاش"
+msgid "more"
+msgstr "مزید"
 
-#: templates/map.html:46
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "QWIK مقام شامل کریں۔"
+
+#: templates/map.html:50
 msgid "Players"
 msgstr "کھلاڑی"
 
@@ -442,7 +446,8 @@ msgid ""
 "FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
 "EASY."
 msgstr ""
-"پارٹنرز تلاش کرنا اور کھیل ترتیب دینا مشکل نہیں ہونا چاہیے۔ ہم اسے آسان بنا دیتے ہیں۔"
+"پارٹنرز تلاش کرنا اور کھیل ترتیب دینا مشکل نہیں ہونا چاہیے۔ ہم اسے آسان بنا "
+"دیتے ہیں۔"
 
 #: templates/welcome.html:218
 #, fuzzy
@@ -724,3 +729,6 @@ msgstr "سائن اِن"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "سائن اپ"
+
+#~ msgid "search"
+#~ msgstr "تلاش"

@@ -43,7 +43,6 @@ class FilterView(AppealsView):
             'onpress_region_marker': 'info',
             'onpress_search_marker': 'info',
             'onpress_venue_marker': 'info',
-            'show_search_box': 'SHOW' if is_admin else 'HIDE',
         }
         self._context = context
         return self._context

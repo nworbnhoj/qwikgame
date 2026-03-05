@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 08:46+1100\n"
+"POT-Creation-Date: 2026-03-05 11:58+1100\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -99,10 +99,14 @@ msgid "Venues"
 msgstr "Sedi"
 
 #: templates/map.html:28
-msgid "search"
-msgstr "cerca"
+msgid "more"
+msgstr "Di più"
 
-#: templates/map.html:46
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "Aggiungi sede QWIK"
+
+#: templates/map.html:50
 msgid "Players"
 msgstr "Giocatori"
 
@@ -707,3 +711,6 @@ msgstr "Registrati"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "Registrati"
+
+#~ msgid "search"
+#~ msgstr "cerca"

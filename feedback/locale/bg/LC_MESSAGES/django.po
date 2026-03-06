@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-01 15:54+1100\n"
+"POT-Creation-Date: 2026-03-07 09:27+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgid "Something is not clear"
 msgstr "Нещо не е ясно"
 
 #: feedback/models.py:15
-msgid "Something is too dfficult"
+msgid "Something is too difficult"
 msgstr "Нещо е твърде трудно"
 
 #: feedback/models.py:16
@@ -59,6 +59,10 @@ msgid "Translation issue"
 msgstr "Проблем с превода"
 
 #: feedback/models.py:19
+msgid "Venue issue"
+msgstr "Проблем с мястото на провеждане"
+
+#: feedback/models.py:20
 msgid "Other"
 msgstr "Друго"
 

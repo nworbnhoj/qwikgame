@@ -12,10 +12,11 @@ class Feedback(models.Model):
         '_': '',
         'B': _('Bug'),
         'U': _('Something is not clear'),
-        'D': _('Something is too dfficult'),
+        'D': _('Something is too difficult'),
         'G': _('Something is really good'),
         'I': _('Suggestion for improvement'),
         'T': _('Translation issue'),
+        'V': _('Venue issue'),
         'O': _('Other'),
     }
 

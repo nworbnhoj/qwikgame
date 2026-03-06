@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:43+1100\n"
+"POT-Creation-Date: 2026-03-06 18:22+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,19 @@ msgstr "اپنے حریف کے ساتھ یہاں چیٹ کریں"
 msgid "RIVAL SKILL LEVEL"
 msgstr "حریف کی مہارت کی سطح"
 
-#: game/forms.py:60
-msgid "poor sportsmanship"
+#: game/forms.py:61
+msgid "rival showed poor sportsmanship"
 msgstr "غیر کھیلانہ رویہ"
 
-#: game/forms.py:60
-msgid "did not show up"
+#: game/forms.py:62
+msgid "rival did not show up"
 msgstr "حاضر نہیں ہوا"
 
-#: game/forms.py:61
-msgid "RIVAL CONDUCT"
-msgstr "حریف کا رویہ"
+#: game/forms.py:64
+msgid "DISSAPOINTMENT"
+msgstr ""
 
-#: game/forms.py:75
+#: game/forms.py:79
 msgid "Did anything go wrong?"
 msgstr "کیا کچھ غلط ہوا؟"
 
@@ -66,7 +66,8 @@ msgstr "یہ اس مقام پر %(game)s کا پہلا QWIKGAME ہے۔"
 
 #: game/models.py:210
 msgid "Please check that the Venue has everything you need for the Match."
-msgstr "براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
+msgstr ""
+"براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
 
 #: game/models.py:212
 msgid "match scheduled"

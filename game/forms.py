@@ -56,9 +56,13 @@ class ReviewForm(QwikForm):
         label = _('RIVAL SKILL LEVEL'),
         required = True,
     )
-    conduct = MultipleChoiceField(
-        choices = {'poor':_('poor sportsmanship'), 'noshow': _('did not show up')},
-        label = _('RIVAL CONDUCT'),
+    dud = MultipleChoiceField(
+        choices = {
+            'poor':_('rival showed poor sportsmanship'),
+            'noshow': _('rival did not show up'),
+        },
+        label = _('DISSAPOINTMENT'),
+
         required = False,
         widget = CheckboxSelectMultiple,
     )
@@ -72,11 +76,11 @@ class ReviewForm(QwikForm):
     @classmethod
     def get(klass, rivals):
         form = klass()
-        form.fields['conduct'].reveal = _('Did anything go wrong?')
-        form.fields['conduct'].reveal_css_classes = 'btn tertiary'
-        form.fields['conduct'].template_name = 'field.html'
-        form.fields['conduct'].widget.attrs = {'class': 'post',}
-        form.fields['conduct'].widget.use_fieldset = False
+        form.fields['dud'].reveal = _('Did anything go wrong?')
+        form.fields['dud'].reveal_css_classes = 'btn tertiary'
+        form.fields['dud'].template_name = 'field.html'
+        form.fields['dud'].widget.attrs = {'class': 'post',}
+        form.fields['dud'].widget.use_fieldset = False
         form.fields['rival'].choices = rivals
         form.fields['rival'].initial = next(iter(rivals))
         return {
@@ -90,9 +94,9 @@ class ReviewForm(QwikForm):
         context = { 'review_form': form }
         if form.is_valid():
             context['conduct_bad'] = False
-            if form.cleaned_data['conduct']:
-                poor = 'poor' in form.cleaned_data['conduct']
-                noshow = 'noshow' in form.cleaned_data['conduct']
+            if form.cleaned_data['dud']:
+                poor = 'poor' in form.cleaned_data['dud']
+                noshow = 'noshow' in form.cleaned_data['dud']
                 context['conduct_bad'] = poor or noshow
             context['strength'] = form.cleaned_data['strength']
             context['rival'] = form.cleaned_data['rival']

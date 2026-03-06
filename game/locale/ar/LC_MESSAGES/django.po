@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:42+1100\n"
+"POT-Creation-Date: 2026-03-06 18:22+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -27,19 +27,19 @@ msgstr "تحدث هنا مع خصمك"
 msgid "RIVAL SKILL LEVEL"
 msgstr "مستوى مهارة الخصم"
 
-#: game/forms.py:60
-msgid "poor sportsmanship"
-msgstr "سلوك رياضي سيئ"
-
-#: game/forms.py:60
-msgid "did not show up"
-msgstr "لم يحضر"
-
 #: game/forms.py:61
-msgid "RIVAL CONDUCT"
-msgstr "سلوك الخصم"
+msgid "rival showed poor sportsmanship"
+msgstr "أظهر المنافس سلوكًا رياضيًا سيئًا"
 
-#: game/forms.py:75
+#: game/forms.py:62
+msgid "rival did not show up"
+msgstr "لم يحضر المنافس"
+
+#: game/forms.py:64
+msgid "DISSAPOINTMENT"
+msgstr "خيبة الأمل"
+
+#: game/forms.py:79
 msgid "Did anything go wrong?"
 msgstr "هل حدث أي خطأ؟"
 

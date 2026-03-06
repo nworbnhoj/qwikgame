@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:43+1100\n"
+"POT-Creation-Date: 2026-03-06 18:22+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,19 +25,19 @@ msgstr "在此与您的对手聊天"
 msgid "RIVAL SKILL LEVEL"
 msgstr "对手技能水平"
 
-#: game/forms.py:60
-msgid "poor sportsmanship"
-msgstr "缺乏体育精神"
-
-#: game/forms.py:60
-msgid "did not show up"
-msgstr "未出席"
-
 #: game/forms.py:61
-msgid "RIVAL CONDUCT"
-msgstr "对手表现"
+msgid "rival showed poor sportsmanship"
+msgstr "对手表现出缺乏体育精神"
 
-#: game/forms.py:75
+#: game/forms.py:62
+msgid "rival did not show up"
+msgstr "对手没有出现"
+
+#: game/forms.py:64
+msgid "DISSAPOINTMENT"
+msgstr "失望"
+
+#: game/forms.py:79
 msgid "Did anything go wrong?"
 msgstr "是否发生了任何问题？"
 

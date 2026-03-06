@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:42+1100\n"
+"POT-Creation-Date: 2026-03-06 18:22+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,19 @@ msgstr "Чатете тук с вашия съперник"
 msgid "RIVAL SKILL LEVEL"
 msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
 
-#: game/forms.py:60
-msgid "poor sportsmanship"
-msgstr "неспортсменско поведение"
-
-#: game/forms.py:60
-msgid "did not show up"
-msgstr "не се появи"
-
 #: game/forms.py:61
-msgid "RIVAL CONDUCT"
-msgstr "ПОВЕДЕНИЕ НА СЪПЕРНИКА"
+msgid "rival showed poor sportsmanship"
+msgstr "съперникът показа неспорстменско поведение"
 
-#: game/forms.py:75
+#: game/forms.py:62
+msgid "rival did not show up"
+msgstr "съперникът не се появи"
+
+#: game/forms.py:64
+msgid "DISSAPOINTMENT"
+msgstr "РАЗОЧАРОВАНИЕ"
+
+#: game/forms.py:79
 msgid "Did anything go wrong?"
 msgstr "Имаше ли нещо нередно?"
 

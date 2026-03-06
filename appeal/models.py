@@ -187,6 +187,7 @@ class Appeal(models.Model):
                 entry['id'] = ''
                 entry['name'] = SYSTEM_NAME
                 entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
+                entry['text'] += '<br>'
                 entry['text'] += _('Please check that the Venue has everything you need for the Match.')
             case 'reappeal':
                 entry['text'] = _('Updated hours: %(hours)s') % {

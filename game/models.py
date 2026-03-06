@@ -257,6 +257,11 @@ class Review(models.Model):
     player = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewer')
     rival = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewee')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['match', 'player', 'rival'], name='unique_review')
+        ]
+
     def __str__(self):
         return f"{self.player}: {self.rival} {self.match}"
 

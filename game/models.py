@@ -271,7 +271,7 @@ class Review(models.Model):
                     id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,
-                    text = f'reviewed the Match'
+                    text = _('reviewed the Match')
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

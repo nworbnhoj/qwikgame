@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 19:57+1100\n"
+"POT-Creation-Date: 2026-03-07 07:50+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -29,18 +29,20 @@ msgstr "LIVELLO DI ABILITÀ DELL’AVVERSARIO"
 #: game/forms.py:61
 msgid "venue not suitable for game"
 msgstr "luogo non adatto al gioco"
+
+#: game/forms.py:62
 msgid "rival showed poor sportsmanship"
 msgstr "l'avversario ha mostrato scarso fair play"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival did not show up"
 msgstr "l'avversario non si è presentato"
 
-#: game/forms.py:64
+#: game/forms.py:65
 msgid "DISSAPOINTMENT"
 msgstr "DELUSIONE"
 
-#: game/forms.py:79
+#: game/forms.py:80
 msgid "Did anything go wrong?"
 msgstr "È andato storto qualcosa?"
 
@@ -77,6 +79,10 @@ msgstr "partita programmata"
 #: game/models.py:214
 msgid "match chat perished"
 msgstr "chat della partita eliminata"
+
+#: game/models.py:274
+msgid "reviewed the Match"
+msgstr "ha valutato la partita"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"

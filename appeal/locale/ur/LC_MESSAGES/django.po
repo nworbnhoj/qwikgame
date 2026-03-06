@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:43+1100\n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,14 +72,60 @@ msgstr "نقشے سے منتخب کریں"
 msgid "VENUE"
 msgstr "مقام"
 
-#: appeal/models.py:188
+#: appeal/models.py:173
+#, python-format
+msgid "Proposed %(game)s at %(venue)s, %(date)s, %(time)s"
+msgstr "%(venue)s میں %(date)s، %(time)s پر %(game)s کی تجویز"
+
+#: appeal/models.py:180
+#, python-format
+msgid " with %(fiends)s"
+msgstr " %(fiends)s کے ساتھ"
+
+#: appeal/models.py:184
+#, fuzzy
+#| msgid "Cancel this Invitation?"
+msgid "Cancelled Invitation"
+msgstr "کیا آپ اس دعوت کو منسوخ کرنا چاہتے ہیں؟"
+
+#: appeal/models.py:189
 #, python-format
 msgid "This is the first QWIKGAME of %(game)s at this Venue."
 msgstr "یہ اس مقام پر %(game)s کا پہلا QWIKGAME ہے۔"
 
-#: appeal/models.py:189
+#: appeal/models.py:190
 msgid "Please check that the Venue has everything you need for the Match."
-msgstr "براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
+msgstr ""
+"براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
+
+#: appeal/models.py:192
+#, python-format
+msgid "Updated hours: %(hours)s"
+msgstr "اپ ڈیٹ شدہ اوقات: %(hours)s"
+
+#: appeal/models.py:331
+#, python-format
+msgid "Confirmed for %(hours)s with %(name)s"
+msgstr "%(name)s کے ساتھ %(hours)s کے لیے تصدیق ہو گئی"
+
+#: appeal/models.py:343
+#, python-format
+msgid "Offered %(hours)s"
+msgstr "%(hours)s کی پیشکش کی"
+
+#: appeal/models.py:354
+#, python-format
+msgid "Declined %(hours)s with %(name)s"
+msgstr "%(name)s کے ساتھ %(hours)s مسترد کر دیا گیا"
+
+#: appeal/models.py:366
+msgid "bid expired"
+msgstr "پیشکش کی مدت ختم ہو گئی"
+
+#: appeal/models.py:375
+#, python-format
+msgid "withdrew %(hours)s"
+msgstr "%(hours)s واپس لے لیا"
 
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 19:57+1100\n"
+"POT-Creation-Date: 2026-03-07 07:50+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,18 +29,20 @@ msgstr "حریف کی مہارت کی سطح"
 #: game/forms.py:61
 msgid "venue not suitable for game"
 msgstr "مقام کھیل کے لیے موزوں نہیں ہے۔"
+
+#: game/forms.py:62
 msgid "rival showed poor sportsmanship"
 msgstr "غیر کھیلانہ رویہ"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival did not show up"
 msgstr "حاضر نہیں ہوا"
 
-#: game/forms.py:64
+#: game/forms.py:65
 msgid "DISSAPOINTMENT"
 msgstr ""
 
-#: game/forms.py:79
+#: game/forms.py:80
 msgid "Did anything go wrong?"
 msgstr "کیا کچھ غلط ہوا؟"
 
@@ -78,6 +80,10 @@ msgstr "میچ طے ہو گیا"
 #: game/models.py:214
 msgid "match chat perished"
 msgstr "میچ چیٹ ختم ہو گئی"
+
+#: game/models.py:274
+msgid "reviewed the Match"
+msgstr "میچ کا جائزہ لیا"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"

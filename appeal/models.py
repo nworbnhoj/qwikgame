@@ -170,17 +170,18 @@ class Appeal(models.Model):
         )
         match template:
             case 'appeal':
-                entry['text'] = "Proposed {} at {}, {}, {}".format(
-                    self.game,
-                    self.venue,
-                    self.venue.datetime(self.date).strftime("%b %d"),
-                    self.hours24.as_str()
-                )
+                entry['text'] = _('Proposed %(game)s at %(venue)s, %(date)s, %(time)s') % {
+                    'game': self.game,
+                    'venue': self.venue,
+                    'date': self.venue.datetime(self.date).strftime("%b %d"),
+                    'time': self.hours24.as_str(),
+                }
                 if not self.is_open:
-                    friends = ', '.join(friend.name_best() for friend in self.invitees.all())
-                    entry['text'] += f" with {friends}"
+                    entry['text'] += _(' with %(fiends)s') % {
+                        'friends': ', '.join(friend.name_best() for friend in self.invitees.all())
+                    }
             case 'cancelled':
-                entry['text'] = "Cancelled Invitation"
+                entry['text'] = _('Cancelled Invitation')
             case 'first_game':
                 entry['hash'] = SYSTEM_HASH
                 entry['id'] = ''
@@ -188,7 +189,9 @@ class Appeal(models.Model):
                 entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
                 entry['text'] += _('Please check that the Venue has everything you need for the Match.')
             case 'reappeal':
-                entry['text'] = f"Updated hours: {self.venue.datetime(self.date).strftime('%b %d')}"
+                entry['text'] = _('Updated hours: %(hours)s') % {
+                    'hours': self.venue.datetime(self.date).strftime('%b %d')
+                }
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
@@ -325,7 +328,10 @@ class Bid(models.Model):
                     klass= 'event',
                     name = player.qwikname,
                     pk = self.pk,
-                    text = f'Confirmed for {self.hours24().as_str()} with {rival.qwikname}'
+                    text = _('Confirmed for %(hours)s with %(name)s') % {
+                        'hours': self.hours24().as_str(),
+                        'name': rival.qwikname,
+                    }
                 )
             case 'bid':
                 entry = Entry(
@@ -334,7 +340,9 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = f'Offered {self.hours24().as_str()}'
+                    text = _('Offered %(hours)s') % {
+                        'hours': self.hours24().as_str()
+                    }
                 )
             case 'decline':
                 entry = Entry(
@@ -343,7 +351,10 @@ class Bid(models.Model):
                     klass= 'event',
                     name = player.qwikname,
                     pk = self.pk,
-                    text = f'declined {self.hours24().as_str()} with {rival.qwikname}'
+                    text = _('Declined %(hours)s with %(name)s') % {
+                        'hours': self.hours24().as_str(),
+                        'name': rival.qwikname,                         
+                    }
                 )
             case 'expired':
                 entry = Entry(
@@ -352,7 +363,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = f'bid expired'
+                    text = _('bid expired'),
                 )
             case 'withdraw':
                 entry = Entry(
@@ -361,7 +372,9 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = f'withdrew {self.hours24().as_str()}'
+                    text = _('withdrew %(hours)s') % {
+                       'hours': self.hours24().as_str()
+                    },
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

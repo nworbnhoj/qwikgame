@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-06 16:42+1100\n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -71,14 +71,59 @@ msgstr "Seleziona dalla mappa"
 msgid "VENUE"
 msgstr "SEDE"
 
-#: appeal/models.py:188
+#: appeal/models.py:173
+#, python-format
+msgid "Proposed %(game)s at %(venue)s, %(date)s, %(time)s"
+msgstr "%(game)s proposto presso %(venue)s, %(date)s, %(time)s"
+
+#: appeal/models.py:180
+#, python-format
+msgid " with %(fiends)s"
+msgstr ""
+
+#: appeal/models.py:184
+#, fuzzy
+#| msgid "Cancel this Invitation?"
+msgid "Cancelled Invitation"
+msgstr "Annullare questo invito?"
+
+#: appeal/models.py:189
 #, python-format
 msgid "This is the first QWIKGAME of %(game)s at this Venue."
 msgstr "Questo è il primo QWIKGAME di %(game)s in questa struttura."
 
-#: appeal/models.py:189
+#: appeal/models.py:190
 msgid "Please check that the Venue has everything you need for the Match."
 msgstr "Controlla che la struttura abbia tutto il necessario per la partita."
+
+#: appeal/models.py:192
+#, python-format
+msgid "Updated hours: %(hours)s"
+msgstr "Ore aggiornate: %(hours)s"
+
+#: appeal/models.py:331
+#, python-format
+msgid "Confirmed for %(hours)s with %(name)s"
+msgstr "Confermato per %(hours)s con %(name)s"
+
+#: appeal/models.py:343
+#, python-format
+msgid "Offered %(hours)s"
+msgstr "Offerte %(hours)s"
+
+#: appeal/models.py:354
+#, python-format
+msgid "Declined %(hours)s with %(name)s"
+msgstr "Rifiutate %(hours)s con %(name)s"
+
+#: appeal/models.py:366
+msgid "bid expired"
+msgstr "offerta scaduta"
+
+#: appeal/models.py:375
+#, python-format
+msgid "withdrew %(hours)s"
+msgstr "ritirate %(hours)s"
 
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"

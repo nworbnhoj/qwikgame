@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 22:03+1100\n"
+"POT-Creation-Date: 2026-03-06 16:42+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Съжаляваме, изборът на място не беше ус�
 msgid "Please invite at least one Friend."
 msgstr "Моля, поканете поне един приятел."
 
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:89
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:88
 msgid "Invite Friends Only"
 msgstr "Покани само приятели"
 
@@ -71,6 +71,15 @@ msgstr "Избери от картата"
 #: appeal/forms.py:251
 msgid "VENUE"
 msgstr "МЯСТО"
+
+#: appeal/models.py:188
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "Това е първата QWIKGAME на %(game)s на това място."
+
+#: appeal/models.py:189
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "Моля, проверете дали мястото разполага с всичко необходимо за мача."
 
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"
@@ -98,7 +107,7 @@ msgstr "Поток"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:49 appeal/templates/appeal/keen.html:86
+#: appeal/templates/appeal/keen.html:48 appeal/templates/appeal/keen.html:85
 msgid "Invite"
 msgstr "Покани"
 
@@ -154,6 +163,6 @@ msgstr ""
 msgid "Cancel this Offer?"
 msgstr "Отказ от тази оферта?"
 
-#: appeal/templates/appeal/keen.html:70
+#: appeal/templates/appeal/keen.html:69
 msgid "Keen To Play? Send Invitation?"
 msgstr "Искате да играете? Изпратете покана?"

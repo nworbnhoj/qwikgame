@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-03-06 16:42+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "COMPORTAMENTO DELL’AVVERSARIO"
 msgid "Did anything go wrong?"
 msgstr "È andato storto qualcosa?"
 
-#: game/models.py:193
+#: game/models.py:195
 #, python-format
 msgid ""
 "%(name)s, please contact venue to ensure availability on %(date)s : "
@@ -51,19 +51,28 @@ msgstr ""
 "%(name)s, contatta la sede per verificare la disponibilità il %(date)s : "
 "%(phone)s : %(url)s"
 
-#: game/models.py:201
+#: game/models.py:203
 msgid "match cancelled"
 msgstr "partita annullata"
 
-#: game/models.py:205
+#: game/models.py:207
 msgid "match chat disabled"
 msgstr "chat della partita disabilitata"
 
-#: game/models.py:207
+#: game/models.py:209
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "Questo è il primo QWIKGAME di %(game)s in questa struttura."
+
+#: game/models.py:210
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "Controlla che la struttura abbia tutto il necessario per la partita."
+
+#: game/models.py:212
 msgid "match scheduled"
 msgstr "partita programmata"
 
-#: game/models.py:209
+#: game/models.py:214
 msgid "match chat perished"
 msgstr "chat della partita eliminata"
 
@@ -199,7 +208,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"                Tutte le recensioni delle partite sono complete - grazie%(br)sHai voglia di giocare?\n"
+"                Tutte le recensioni delle partite sono complete - "
+"grazie%(br)sHai voglia di giocare?\n"
 "        "
 
 #: game/templates/game/rival.html:7

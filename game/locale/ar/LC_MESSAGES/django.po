@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:32+1100\n"
+"POT-Creation-Date: 2026-03-06 16:42+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -43,7 +43,7 @@ msgstr "سلوك الخصم"
 msgid "Did anything go wrong?"
 msgstr "هل حدث أي خطأ؟"
 
-#: game/models.py:193
+#: game/models.py:195
 #, python-format
 msgid ""
 "%(name)s, please contact venue to ensure availability on %(date)s : "
@@ -52,19 +52,28 @@ msgstr ""
 "%(name)s، يرجى التواصل مع المكان للتأكد من التوفر بتاريخ %(date)s : "
 "%(phone)s : %(url)s"
 
-#: game/models.py:201
+#: game/models.py:203
 msgid "match cancelled"
 msgstr "تم إلغاء المباراة"
 
-#: game/models.py:205
+#: game/models.py:207
 msgid "match chat disabled"
 msgstr "تم تعطيل دردشة المباراة"
 
-#: game/models.py:207
+#: game/models.py:209
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "هذه هي أول مباراة QWIKGAME للعبة %(game)s في هذا المكان."
+
+#: game/models.py:210
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "يرجى التأكد من أن المكان يحتوي على كل ما تحتاجه للمباراة."
+
+#: game/models.py:212
 msgid "match scheduled"
 msgstr "تم جدولة المباراة"
 
-#: game/models.py:209
+#: game/models.py:214
 msgid "match chat perished"
 msgstr "انتهت دردشة المباراة"
 

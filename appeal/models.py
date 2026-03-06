@@ -1,8 +1,10 @@
 import datetime, logging
 from django.db import models
 from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 from game.models import Match
 from player.models import Friend, Player, Strength
+from qwikgame.constants import SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.hourbits import Hours24, Hours24x7, DAY_ALL, DAY_NONE, DAY_QWIK, WEEK_NONE, WEEK_QWIK
 from qwikgame.log import Entry
 
@@ -179,6 +181,12 @@ class Appeal(models.Model):
                     entry['text'] += f" with {friends}"
             case 'cancelled':
                 entry['text'] = "Cancelled Invitation"
+            case 'first_game':
+                entry['hash'] = SYSTEM_HASH
+                entry['id'] = ''
+                entry['name'] = SYSTEM_NAME
+                entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
+                entry['text'] += _('Please check that the Venue has everything you need for the Match.')
             case 'reappeal':
                 entry['text'] = f"Updated hours: {self.venue.datetime(self.date).strftime('%b %d')}"
             case _:

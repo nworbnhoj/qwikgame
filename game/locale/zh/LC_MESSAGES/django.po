@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 15:29+1100\n"
+"POT-Creation-Date: 2026-03-06 16:43+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,28 +41,35 @@ msgstr "对手表现"
 msgid "Did anything go wrong?"
 msgstr "是否发生了任何问题？"
 
-#: game/models.py:193
+#: game/models.py:195
 #, python-format
 msgid ""
 "%(name)s, please contact venue to ensure availability on %(date)s : "
 "%(phone)s : %(url)s"
-msgstr ""
-"%(name)s，请联系场地确认 %(date)s 是否有空位："
-"%(phone)s ：%(url)s"
+msgstr "%(name)s，请联系场地确认 %(date)s 是否有空位：%(phone)s ：%(url)s"
 
-#: game/models.py:201
+#: game/models.py:203
 msgid "match cancelled"
 msgstr "比赛已取消"
 
-#: game/models.py:205
+#: game/models.py:207
 msgid "match chat disabled"
 msgstr "比赛聊天已禁用"
 
-#: game/models.py:207
+#: game/models.py:209
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "这是该场地的第一场 %(game)s QWIKGAME。"
+
+#: game/models.py:210
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "请确认该场地具备进行比赛所需的一切条件。"
+
+#: game/models.py:212
 msgid "match scheduled"
 msgstr "比赛已安排"
 
-#: game/models.py:209
+#: game/models.py:214
 msgid "match chat perished"
 msgstr "比赛聊天已删除"
 

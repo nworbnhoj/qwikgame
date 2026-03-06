@@ -345,6 +345,8 @@ class KeenView(AppealsView):
             if created:
                 appeal.log_event('appeal')
                 logger.info(f'created Appeal: {appeal}')
+                if not game in venue.games:
+                    appeal.log_event('first_game')
             else:
                 appeal.log_event('reappeal')
                 logger.info(f'updated Appeal: {appeal}')

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-27 12:19+1100\n"
+"POT-Creation-Date: 2026-03-06 16:42+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,27 +42,37 @@ msgstr "ПОВЕДЕНИЕ НА СЪПЕРНИКА"
 msgid "Did anything go wrong?"
 msgstr "Имаше ли нещо нередно?"
 
-#: game/models.py:193
+#: game/models.py:195
 #, python-format
 msgid ""
 "%(name)s, please contact venue to ensure availability on %(date)s : "
 "%(phone)s : %(url)s"
-msgstr "%(name)s моля, свържете се с мястото на провеждане, за да се уверите в наличността в %(date)s : "
-"%(phone)s : %(url)s"
+msgstr ""
+"%(name)s моля, свържете се с мястото на провеждане, за да се уверите в "
+"наличността в %(date)s : %(phone)s : %(url)s"
 
-#: game/models.py:201
+#: game/models.py:203
 msgid "match cancelled"
 msgstr "Мачът е отменен"
 
-#: game/models.py:205
+#: game/models.py:207
 msgid "match chat disabled"
 msgstr "Чатът за мачове е деактивиран"
 
-#: game/models.py:207
+#: game/models.py:209
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "Това е първата QWIKGAME на %(game)s на това място."
+
+#: game/models.py:210
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "Моля, проверете дали мястото разполага с всичко необходимо за мача."
+
+#: game/models.py:212
 msgid "match scheduled"
 msgstr "Мачът е насрочен"
 
-#: game/models.py:209
+#: game/models.py:214
 msgid "match chat perished"
 msgstr "Чатът за мача загина"
 

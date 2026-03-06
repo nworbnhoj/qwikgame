@@ -100,6 +100,8 @@ class Match(models.Model):
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
         self.log_event('book_prompt')
+        if not self.game in self.venue.games:
+            self.log_event('first_game')
 
     def cancel(self, instigator):
         logger.info(f'Cancelling Match: {self}')
@@ -203,6 +205,9 @@ class Match(models.Model):
                 entry['text'] = text
             case 'disabled':
                 entry['text'] = _('match chat disabled')
+            case 'first_game':
+                entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
+                entry['text'] += _('Please check that the Venue has everything you need for the Match.')
             case 'scheduled':
                 entry['text'] = _('match scheduled')
             case 'perished':

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"POT-Creation-Date: 2026-03-06 16:43+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,28 +42,37 @@ msgstr "حریف کا رویہ"
 msgid "Did anything go wrong?"
 msgstr "کیا کچھ غلط ہوا؟"
 
-#: game/models.py:193
+#: game/models.py:195
 #, python-format
 msgid ""
 "%(name)s, please contact venue to ensure availability on %(date)s : "
 "%(phone)s : %(url)s"
 msgstr ""
-"%(name)s، براہ کرم %(date)s کو دستیابی یقینی بنانے کے لیے مقام سے رابطہ کریں: "
-"%(phone)s : %(url)s"
+"%(name)s، براہ کرم %(date)s کو دستیابی یقینی بنانے کے لیے مقام سے رابطہ "
+"کریں: %(phone)s : %(url)s"
 
-#: game/models.py:201
+#: game/models.py:203
 msgid "match cancelled"
 msgstr "میچ منسوخ ہو گیا"
 
-#: game/models.py:205
+#: game/models.py:207
 msgid "match chat disabled"
 msgstr "میچ چیٹ غیر فعال کر دی گئی"
 
-#: game/models.py:207
+#: game/models.py:209
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "یہ اس مقام پر %(game)s کا پہلا QWIKGAME ہے۔"
+
+#: game/models.py:210
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
+
+#: game/models.py:212
 msgid "match scheduled"
 msgstr "میچ طے ہو گیا"
 
-#: game/models.py:209
+#: game/models.py:214
 msgid "match chat perished"
 msgstr "میچ چیٹ ختم ہو گئی"
 
@@ -199,7 +208,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"                تمام میچ جائزے مکمل ہو گئے - شکریہ%(br)sکھیلنے کے خواہشمند ہیں؟\n"
+"                تمام میچ جائزے مکمل ہو گئے - شکریہ%(br)sکھیلنے کے خواہشمند "
+"ہیں؟\n"
 "        "
 
 #: game/templates/game/rival.html:7

@@ -229,7 +229,7 @@ class ReviewView(ReviewsView):
         try:
             player = self.user.player
             rival = Player.objects.get(pk=context.get('rival'))
-            rival.conduct_add(context.get('conduct_good', True))
+            rival.conduct_add(not context.get('conduct_bad', False))
             rival.save()
             Strength.objects.update_or_create(
                 game = review.match.game,

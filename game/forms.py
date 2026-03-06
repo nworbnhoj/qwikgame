@@ -89,9 +89,11 @@ class ReviewForm(QwikForm):
         form.fields['rival'].choices = rivals
         context = { 'review_form': form }
         if form.is_valid():
-            poor = 'poor' in form.cleaned_data['conduct']
-            noshow = 'noshow' in form.cleaned_data['conduct']
-            context['conduct_good'] = not form.cleaned_data['conduct']
+            context['conduct_bad'] = False
+            if form.cleaned_data['conduct']:
+                poor = 'poor' in form.cleaned_data['conduct']
+                noshow = 'noshow' in form.cleaned_data['conduct']
+                context['conduct_bad'] = poor or noshow
             context['strength'] = form.cleaned_data['strength']
             context['rival'] = form.cleaned_data['rival']
         return context

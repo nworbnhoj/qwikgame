@@ -202,6 +202,21 @@ class ReviewView(ReviewsView):
             return {p.pk:'name' for p in competitors if p != player}
         return {}
 
+    def _updateVenueGames(self, valid, game, venue):
+        venue_has_game = game in venue.games.all()
+        if valid and not venue_has_game:
+            venue.games.add(game)
+            logger.info(f'Venue Game add: {game}')
+            venue.save()
+            mark = Mark(game=game, place=venue, num_player=1)
+            mark.save()
+            logger.info(f'Mark new {mark}')
+        if not valid and venue_has_game:
+            venue.games.remove(game)
+            logger.info(f'Venue Game removed: {game}')
+            venue.save()
+            Mark.objects.filter(game=game, place=venue.place).delete()
+
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
@@ -240,6 +255,11 @@ class ReviewView(ReviewsView):
                     'relative': context.get('strength', 'm'),
                     'weight': 3
                 }
+            )
+            self._updateVenueGames(
+                not context.get('nogame', False),
+                review.match.game,
+                review.match.venue
             )
             review.log_event('review')
             review.delete()

@@ -58,6 +58,7 @@ class ReviewForm(QwikForm):
     )
     dud = MultipleChoiceField(
         choices = {
+            'nogame': _('venue not suitable for game'),
             'poor':_('rival showed poor sportsmanship'),
             'noshow': _('rival did not show up'),
         },
@@ -98,6 +99,7 @@ class ReviewForm(QwikForm):
                 poor = 'poor' in form.cleaned_data['dud']
                 noshow = 'noshow' in form.cleaned_data['dud']
                 context['conduct_bad'] = poor or noshow
+            context['nogame'] = 'nogame' in form.cleaned_data['dud']
             context['strength'] = form.cleaned_data['strength']
             context['rival'] = form.cleaned_data['rival']
         return context

@@ -419,17 +419,6 @@ class KeenView(AppealsView):
         if mark:
             mark.save()
 
-    def _updateVenueGames(self, game, venue, place):
-        if not(game in venue.games.all()):
-            venue.games.add(game)
-            logger.info(f'Venue Game add: {game}')
-            venue.save()
-            # TODO consider delay adding Mark until Match completed as Venue/Game combination
-            # TODO Venue Manager to set and restrict Games at Venue
-            mark = Mark(game=game, place=place, num_player=1)
-            mark.save()
-            logger.info(f'Mark new {mark}')
-
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player 
@@ -445,7 +434,6 @@ class KeenView(AppealsView):
         game = self._getGame(context.get('game'))
         if not (game and venue):
             return HttpResponseRedirect('/appeal/')
-        self._updateVenueGames(game, venue, place)
         venue_now = venue.now()
         invitees = context.get('friends', [])
         today_appeal = self._createAppeal(

@@ -197,34 +197,42 @@ function searchChangeHandler(places){
     marker.setMap(null);
   });
   SEARCH_MARKERS.length = 0;
+
+  const KNOWN_PLACES = [];
+  QWIK_MARKS.forEach( mark => {
+    KNOWN_PLACES.push(mark.placeid)
+  })
   
   // For each place, get the icon, name and location.
   const BOUNDS = new google.maps.LatLngBounds(null, null);
   places.forEach(place => {
-    var mark = markFromPlace(place);
-
-    // neither open_hours or tz_offset are available in search results
-    // so default to 24x7 and irrelevent weekday and hour
-    mark.hours = OPEN_24X7;
-    mark.weekday = 0;
-    mark.hour = 0;
-
-    const MARKER = new google.maps.Marker({
-      // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
-      // label: {text:'0', className:'qg_style_mark_label place'},
-      map: MAP,
-      position: place.geometry.location,
-      // title: place.name+'\nyou are the first player!\n'+open
-    });
-    mark.marker = MARKER;
-    mark.marker.setIcon({ url: ICON_PLACE });
-    SEARCH_MARKERS.push(MARKER);
-    setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
 
     if (place.geometry.viewport) { // Only geocodes have viewport.
       BOUNDS.union(place.geometry.viewport);
     } else {
       BOUNDS.extend(place.geometry.location);
+    }
+
+    if (!KNOWN_PLACES.includes(place.place_id)) {
+      var mark = markFromPlace(place);
+
+      // neither open_hours or tz_offset are available in search results
+      // so default to 24x7 and irrelevent weekday and hour
+      mark.hours = OPEN_24X7;
+      mark.weekday = 0;
+      mark.hour = 0;
+
+      const MARKER = new google.maps.Marker({
+        // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
+        // label: {text:'0', className:'qg_style_mark_label place'},
+        map: MAP,
+        position: place.geometry.location,
+        // title: place.name+'\nyou are the first player!\n'+open
+      });
+      mark.marker = MARKER;
+      mark.marker.setIcon({ url: ICON_PLACE });
+      SEARCH_MARKERS.push(MARKER);
+      setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
     }
   });
   MAP.fitBounds(BOUNDS);

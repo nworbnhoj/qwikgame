@@ -100,7 +100,7 @@ class Match(models.Model):
         self.meta['seen'] = [instigator.pk]
         self.log_event('scheduled', instigator)
         self.log_event('book_prompt')
-        if not self.game in self.venue.games:
+        if not self.game in self.venue.games.all():
             self.log_event('first_game')
 
     def cancel(self, instigator):

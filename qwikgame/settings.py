@@ -172,6 +172,7 @@ LANGUAGES = [
     # ('hi', 'हिंदी'),
     ('it', 'italiano'),
     # ('jp', '日本語'),
+    ('ms', 'Bahasa Melayu'),
     # ('ru', 'русский'),
     ('ur', 'اردو'),
     ('zh', '中文'),
@@ -179,7 +180,7 @@ LANGUAGES = [
 LANGUAGE_CODE = 'en-us'
 LANGUAGE_COOKIE_NAME = 'qwik_language'
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_LANGUAGES = ('ar', 'en', 'bg', 'it', 'ur', 'zh')
+MODELTRANSLATION_LANGUAGES = ('ar', 'en', 'bg', 'it', 'ms', 'ur', 'zh')
 TIME_ZONE = 'Australia/Melbourne'
 USE_I18N = True
 USE_TZ = True

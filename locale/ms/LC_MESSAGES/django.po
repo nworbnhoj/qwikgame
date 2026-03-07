@@ -1,0 +1,710 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: templates/404.html:9
+msgid "Sorry - we could not find that page."
+msgstr "Maaf - kami tidak dapat menemui halaman tersebut."
+
+#: templates/500.html:9
+msgid "Game Over!"
+msgstr "Permainan Tamat!"
+
+#: templates/500.html:13
+msgid "Sorry - we didnt expect that to happen."
+msgstr "Maaf - kami tidak menjangka perkara itu akan berlaku."
+
+#: templates/500.html:17
+msgid "We will get it fixed as soon as we figure our what went wrong."
+msgstr "Kami akan membaikinya sebaik sahaja kami mengetahui apa yang salah."
+
+#: templates/authenticate_snippet.html:7 templates/authenticate_snippet.html:9
+msgid "Log IN"
+msgstr "Log Masuk"
+
+#: templates/authenticate_snippet.html:11
+msgid "Sign UP"
+msgstr "Daftar"
+
+#: templates/email.html:15 templates/public.html:33
+msgid "Welcome to Qwikgame"
+msgstr "Selamat datang ke Qwikgame"
+
+#: templates/input_day.html:9
+msgid "Pick time"
+msgstr "Pilih masa"
+
+#: templates/input_day.html:14
+msgid "All Day"
+msgstr "Sepanjang hari"
+
+#: templates/input_day.html:24
+msgid "The Venue is closed."
+msgstr "Lokasi ditutup."
+
+#: templates/input_week.html:8
+msgid "Select Days and Time"
+msgstr "Pilih Hari dan Masa"
+
+#: templates/input_week.html:13
+msgid "Any Time"
+msgstr "Bila-bila masa"
+
+#: templates/license.html:16
+msgid "QWIKGAME License"
+msgstr "Lesen QWIKGAME"
+
+#: templates/license.html:31
+msgid "Open Source Software"
+msgstr "Perisian Sumber Terbuka"
+
+#: templates/license.html:35
+msgid ""
+"Qwikgame is released as Open-Source software, and is grateful for the use of "
+"many other great Open-Source software projects."
+msgstr ""
+"Qwikgame dikeluarkan sebagai perisian Sumber Terbuka dan berterima kasih "
+"atas penggunaan banyak projek perisian Sumber Terbuka yang hebat."
+
+#: templates/license.html:40
+msgid "Software"
+msgstr "Perisian"
+
+#: templates/license.html:41
+msgid "Licence"
+msgstr "Lesen"
+
+#: templates/map.html:5
+msgid "loading ..."
+msgstr "memuatkan ..."
+
+#: templates/map.html:15
+msgid "Venues"
+msgstr "Lokasi"
+
+#: templates/map.html:28
+msgid "more"
+msgstr "lagi"
+
+#: templates/map.html:35
+msgid "Add QWIK Venue"
+msgstr "Tambah Lokasi QWIK"
+
+#: templates/map.html:50
+msgid "Players"
+msgstr "Pemain"
+
+#: templates/offline.html:9
+msgid "Sorry, you appear to be offline right now."
+msgstr "Maaf, anda nampaknya sedang luar talian sekarang."
+
+#: templates/pwa_snippet.html:7
+msgid "BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP."
+msgstr "LEBIH BAIK DARIPADA APLIKASI MUDAH ALIH ASLI. INI ADALAH PROGRESSIVE WEB APP."
+
+#: templates/pwa_snippet.html:10
+msgid "Install QWIKGAME app in seconds."
+msgstr "Pasang aplikasi QWIKGAME dalam beberapa saat."
+
+#: templates/pwa_snippet.html:14
+msgid "No download process. No payment. Remove anytime"
+msgstr "Tiada proses muat turun. Tiada bayaran. Boleh buang bila-bila masa"
+
+#: templates/pwa_snippet.html:17
+msgid "No app store needed"
+msgstr "Tidak memerlukan app store"
+
+#: templates/pwa_snippet.html:20
+msgid "Accessible from any device with a web browser"
+msgstr "Boleh diakses dari mana-mana peranti dengan pelayar web"
+
+#: templates/pwa_snippet.html:23
+msgid "Requires minimal storage"
+msgstr "Memerlukan storan minimum"
+
+#: templates/pwa_snippet.html:26
+msgid "Better performance in regions with limited internet connection"
+msgstr "Prestasi lebih baik di kawasan dengan sambungan internet terhad"
+
+#: templates/pwa_snippet.html:29
+msgid "Compatible with all platforms: iOS, Android, Windows phone, Linux, etc"
+msgstr "Serasi dengan semua platform: iOS, Android, Windows phone, Linux, dll"
+
+#: templates/pwa_snippet.html:35
+msgid "Install QWIKGAME "
+msgstr "Pasang QWIKGAME "
+
+#: templates/pwa_snippet.html:39
+msgid "QWIKGAME is installed. Open the app "
+msgstr "QWIKGAME telah dipasang. Buka aplikasi "
+
+#: templates/pwa_snippet.html:43
+msgid "QWIKGAME is installed and in-use."
+msgstr "QWIKGAME telah dipasang dan sedang digunakan."
+
+#: templates/pwa_snippet.html:46
+msgid "Unfortunately this browser does not support PWA's. "
+msgstr "Malangnya pelayar ini tidak menyokong PWA."
+
+#: templates/pwa_snippet.html:50
+msgid "Something went wrong!"
+msgstr "Sesuatu telah berlaku!"
+
+#: templates/pwa_snippet.html:52
+msgid "Please, try again."
+msgstr "Sila cuba lagi."
+
+#: templates/pwa_snippet.html:57 templates/pwa_snippet.html:64
+msgid "PWA requires"
+msgstr "PWA memerlukan"
+
+#: templates/pwa_snippet.html:59
+msgid "Google services for push messaging"
+msgstr "Perkhidmatan Google untuk mesej push"
+
+#: templates/pwa_snippet.html:61
+msgid "on Brave"
+msgstr "di Brave"
+
+#: templates/pwa_snippet.html:66
+msgid "extension"
+msgstr "sambungan"
+
+#: templates/pwa_snippet.html:68
+msgid "on Firefox"
+msgstr "di Firefox"
+
+#: templates/pwa_snippet.html:71
+msgid "You may try Chrome, Edge, Firefox with PWA add-on, Safari and more."
+msgstr "Anda boleh cuba Chrome, Edge, Firefox dengan add-on PWA, Safari dan lain-lain."
+
+#: templates/pwa_snippet.html:75
+msgid "Install QWIKGAME"
+msgstr "Pasang QWIKGAME"
+
+#: templates/pwa_snippet.html:80
+msgid "Install QWIKGAME:"
+msgstr "Pasang QWIKGAME:"
+
+#: templates/pwa_snippet.html:82
+msgid "Open Safari"
+msgstr "Buka Safari"
+
+#: templates/pwa_snippet.html:83
+msgid "Tap the Share button (box with an arrow)"
+msgstr "Tekan butang Kongsi (kotak dengan anak panah)"
+
+#: templates/pwa_snippet.html:84
+msgid "Select Add to Home Screen"
+msgstr "Pilih Tambah ke Skrin Utama"
+
+#: templates/pwa_snippet.html:85
+msgid "Select Add to Dock"
+msgstr "Pilih Tambah ke Dock"
+
+#: templates/pwa_snippet.html:86
+msgid "Tap Add"
+msgstr "Tekan Tambah"
+
+#: templates/pwa_snippet.html:88
+msgid "Enable QWIKGAME push notifications:"
+msgstr "Aktifkan pemberitahuan push QWIKGAME:"
+
+#: templates/pwa_snippet.html:90
+msgid "Go to Settings"
+msgstr "Pergi ke Tetapan"
+
+#: templates/pwa_snippet.html:91
+msgid "Open Notifications"
+msgstr "Buka Pemberitahuan"
+
+#: templates/pwa_snippet.html:92
+msgid "Select qwikgame"
+msgstr "Pilih qwikgame"
+
+#: templates/pwa_snippet.html:93
+msgid "Turn on Allow Notifications"
+msgstr "Hidupkan Benarkan Pemberitahuan"
+
+#: templates/qwik.html:41
+msgid "QwikGame"
+msgstr "QwikGame"
+
+#: templates/qwik.html:56
+msgid "Invitations"
+msgstr "Jemputan"
+
+#: templates/qwik.html:61
+msgid "Matches"
+msgstr "Perlawanan"
+
+#: templates/qwik.html:66
+msgid "Reviews"
+msgstr "Ulasan"
+
+#: templates/qwik.html:71
+msgid "Friends"
+msgstr "Rakan"
+
+#: templates/qwik.html:97
+msgid "Feedback"
+msgstr "Maklum Balas"
+
+#: templates/qwik.html:108
+msgid "Submit"
+msgstr "Hantar"
+
+#: templates/qwik.html:119
+#, python-format
+msgid ""
+"\n"
+"            This work by %(qwik_link)s is licensed under %(gpl_link)s.\n"
+msgstr ""
+"\n"
+"            Karya oleh %(qwik_link)s ini dilesenkan di bawah %(gpl_link)s.\n"
+
+#: templates/upgrade.html:7
+msgid "Learn more"
+msgstr "Ketahui lebih lanjut"
+
+#: templates/upgrade.html:8
+msgid "Unlock"
+msgstr "Buka kunci"
+
+#: templates/welcome.html:22
+msgid "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES."
+msgstr "QWIKGAME. CARI RAKAN BERMAIN. JADUALKAN PERLAWANAN."
+
+#: templates/welcome.html:31
+msgid "Find partner"
+msgstr "Cari rakan bermain"
+
+#: templates/welcome.html:36
+msgid "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE."
+msgstr "CARI RAKAN BERMAIN. JADUALKAN PERLAWANAN. BERMAIN LEBIH BANYAK."
+
+#: templates/welcome.html:39
+#, python-format
+msgid ""
+"\n"
+"                You play squash, tennis or paddel? Or may be chess, darts or "
+"pool? But you can't find partners? This is %(QWIK)sGAME! Now finding "
+"partners and arranging games is fast and easy. With %(QWIK)sGAME you have "
+"all match invitations in one place. Just pick one or post your own.\n"
+msgstr ""
+"\n"
+"                Anda bermain skuasy, tenis atau padel? Atau mungkin catur, "
+"darts atau pool? Tetapi sukar mencari rakan bermain? Inilah %(QWIK)sGAME! "
+"Kini mencari rakan dan mengatur permainan menjadi cepat dan mudah. Dengan "
+"%(QWIK)sGAME anda mempunyai semua jemputan perlawanan di satu tempat. "
+"Pilih sahaja satu atau hantar jemputan anda sendiri.\n"
+
+#: templates/welcome.html:45
+msgid "Organize A Match For Free!"
+msgstr "Atur Perlawanan Secara Percuma!"
+
+#: templates/welcome.html:57
+msgid "Badminton"
+msgstr "Badminton"
+
+#: templates/welcome.html:66
+msgid "Table Tennis"
+msgstr "Ping Pong"
+
+#: templates/welcome.html:75
+msgid "Darts"
+msgstr "Dart"
+
+#: templates/welcome.html:84
+msgid "Squash"
+msgstr "Skuasy"
+
+#: templates/welcome.html:93
+msgid "Chess"
+msgstr "Catur"
+
+#: templates/welcome.html:102
+msgid "Tennis"
+msgstr "Tenis"
+
+#: templates/welcome.html:111
+msgid "And more..."
+msgstr "Dan banyak lagi..."
+
+#: templates/welcome.html:121
+msgid "KEEN TO PLAY?"
+msgstr "BERMINAT UNTUK BERMAIN?"
+
+#: templates/welcome.html:129
+msgid "Try the Feed Invitations"
+msgstr "Cuba Jemputan Feed"
+
+#: templates/welcome.html:131
+#, python-format
+msgid ""
+"\n"
+"                            Other Players are looking for partners too!  "
+"Meet them in %(QWIK)sGAME. Scroll the %(QWIK)sFeed and pick an "
+"invitation ... or post your own!\n"
+msgstr ""
+"\n"
+"                            Pemain lain juga sedang mencari rakan bermain! "
+"Temui mereka di %(QWIK)sGAME. Tatal %(QWIK)sFeed dan pilih satu jemputan "
+"... atau siarkan jemputan anda sendiri!\n"
+
+#: templates/welcome.html:150
+msgid "Post new Match Invitation"
+msgstr "Hantar Jemputan Perlawanan Baharu"
+
+#: templates/welcome.html:152
+#, python-format
+msgid ""
+"\n"
+"                            You don't find a suitable invitation in the "
+"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"and the place. Confirm a match with a Rival of your preference. You "
+"choose! \n"
+msgstr ""
+"\n"
+"                            Tidak menemui jemputan yang sesuai di "
+"%(QWIK)sFeed? Hantar jemputan mengikut pilihan anda. Pilih permainan, "
+"jangka masa dan lokasi. Sahkan perlawanan dengan lawan pilihan anda. "
+"Andalah yang memilih!\n"
+
+#: templates/welcome.html:158
+msgid "Organize A Match"
+msgstr "Atur Perlawanan"
+
+#: templates/welcome.html:174
+msgid "SCHEDULE A MATCH QWIKLY. THEN JUST ENJOY THE GAME!"
+msgstr "JADUALKAN PERLAWANAN DENGAN CEPAT. KEMUDIAN NIKMATI PERMAINAN!"
+
+#: templates/welcome.html:178 templates/welcome.html:237
+msgid "Organize A Game Now"
+msgstr "Atur Permainan Sekarang"
+
+#: templates/welcome.html:187
+msgid "Accept Feed Invitation"
+msgstr "Terima Jemputan Feed"
+
+#: templates/welcome.html:191
+msgid "Post New Invitation"
+msgstr "Hantar Jemputan Baharu"
+
+#: templates/welcome.html:195
+msgid "Invite Friends Only"
+msgstr "Jemput Rakan Sahaja"
+
+#: templates/welcome.html:199
+msgid "Chat With Your Rival"
+msgstr "Sembang Dengan Lawan Anda"
+
+#: templates/welcome.html:203
+msgid "Leave A Review"
+msgstr "Tinggalkan Ulasan"
+
+#: templates/welcome.html:207
+msgid "Try New Games"
+msgstr "Cuba Permainan Baharu"
+
+#: templates/welcome.html:214
+msgid ""
+"FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
+"EASY."
+msgstr ""
+"MENCARI RAKAN BERMAIN DAN MENGATUR PERMAINAN TIDAK SEPATUTNYA SUKAR. "
+"KAMI MEMUDAHKANNYA."
+
+#: templates/welcome.html:218
+msgid "Find Your Partner"
+msgstr "Cari Rakan Bermain Anda"
+
+#: templates/welcome.html:233
+msgid "ALL 2-PLAYER REAL-LIFE GAME INVITATIONS IN 1 PLACE"
+msgstr "SEMUA JEMPUTAN PERMAINAN 2 PEMAIN DI DUNIA NYATA DALAM SATU TEMPAT"
+
+#: templates/welcome.html:245
+msgid "FREQUENTLY ASKED QUESTIONS"
+msgstr "SOALAN LAZIM"
+
+#: templates/welcome.html:248
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Apakah %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:255
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is an app which facilitates finding "
+"partners and arranging 2-player games.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME ialah aplikasi yang memudahkan pencarian "
+"rakan bermain dan pengaturan permainan 2 pemain.\n"
+
+#: templates/welcome.html:262
+#, python-format
+msgid ""
+"\n"
+"                For which games can I find partners on %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Untuk permainan apa saya boleh mencari rakan di %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:269
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME focuses on 2-player games only with "
+"ambitious plans for multi-player games in the future. Currently we have the "
+"most popular 2-player games like tennis, squash, table tennis, badminton, "
+"racquetball, but also chess, darts, backgammon, billiards and more.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME memberi tumpuan kepada permainan 2 pemain "
+"sahaja dengan rancangan besar untuk permainan berbilang pemain pada masa "
+"hadapan. Kini kami mempunyai permainan 2 pemain yang popular seperti tenis, "
+"skuasy, ping pong, badminton, racquetball, serta catur, dart, backgammon, "
+"biliard dan banyak lagi.\n"
+
+#: templates/welcome.html:276
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME paid?\n"
+msgstr ""
+"\n"
+"                Adakah %(QWIK)sGAME berbayar?\n"
+
+#: templates/welcome.html:283
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is free of charge.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME adalah percuma.\n"
+
+#: templates/welcome.html:290
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME available in my country?\n"
+msgstr ""
+"\n"
+"                Adakah %(QWIK)sGAME tersedia di negara saya?\n"
+
+#: templates/welcome.html:297
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME works anywhere in the world.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME boleh digunakan di mana-mana sahaja di dunia.\n"
+
+#: templates/welcome.html:304
+#, python-format
+msgid ""
+"\n"
+"                How do I find partner and schedule a match with "
+"%(QWIK)sGAME?\n"
+msgstr ""
+
+#: templates/welcome.html:311
+#, python-format
+msgid ""
+"\n"
+"                    To find a partner and organize a match start by sending "
+"an invitation for a match. Select the game, venue and a timeframe. It is "
+"recommended to call the venue and check if there are available playgrounds "
+"for your preferred timeframe. Your Match Invitation will be visible in the "
+"QWIKFeed to other Players. Multiple Players may respond to your Invitation. "
+"You get to choose the best offer and confirm the match. You can also reply "
+"to an existing invitation from the %(QWIK)sFeed by placing an offer for a "
+"particular hour from the given timeframe.\n"
+msgstr ""
+"\n"
+"                    Untuk mencari rakan dan mengatur perlawanan, mulakan "
+"dengan menghantar jemputan perlawanan. Pilih permainan, lokasi dan jangka "
+"masa. Adalah disyorkan untuk menghubungi lokasi dan menyemak sama ada "
+"terdapat gelanggang yang tersedia untuk jangka masa pilihan anda. "
+"Jemputan Perlawanan anda akan kelihatan di QWIKFeed kepada Pemain lain. "
+"Beberapa Pemain mungkin membalas jemputan anda. Anda boleh memilih tawaran "
+"terbaik dan mengesahkan perlawanan. Anda juga boleh membalas jemputan yang "
+"sedia ada daripada %(QWIK)sFeed dengan membuat tawaran untuk jam tertentu "
+"dalam jangka masa yang diberikan.\n"
+
+#: templates/welcome.html:318
+msgid ""
+"\n"
+"                How many invitations can I send?\n"
+msgstr ""
+
+#: templates/welcome.html:325
+msgid ""
+"\n"
+"                    You can post as many invitations as you wish every day "
+"and for any game, venue or timeframe.\n"
+msgstr ""
+"\n"
+"                    Anda boleh menyiarkan sebanyak mana jemputan yang anda "
+"inginkan setiap hari untuk sebarang permainan, lokasi atau jangka masa.\n"
+
+#: templates/welcome.html:332
+#, python-format
+msgid ""
+"\n"
+"                What is %(QWIK)sFeed?\n"
+msgstr ""
+"\n"
+"                Apakah %(QWIK)sFeed?\n"
+
+#: templates/welcome.html:339
+#, python-format
+msgid ""
+"\n"
+"                    You can find all current invitations in our "
+"%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
+msgstr ""
+"\n"
+"                    Anda boleh menemui semua jemputan semasa di "
+"%(QWIK)sFeed kami. Ia sentiasa dikemas kini dengan jemputan baharu yang "
+"dihantar oleh Pemain.\n"
+
+#: templates/welcome.html:346
+msgid ""
+"\n"
+"                Who books the court/playground?\n"
+msgstr ""
+"\n"
+"                Siapa yang menempah gelanggang/tempat bermain?\n"
+
+#: templates/welcome.html:353
+msgid ""
+"\n"
+"                    The Player who send the initial match invitation is "
+"responsible to call and book a court/playground once the match is confirmed. "
+"The Player is also recommended to call and check the venue availability "
+"before sending the invitation.\n"
+msgstr ""
+"\n"
+"                    Pemain yang menghantar jemputan perlawanan awal "
+"bertanggungjawab untuk menghubungi dan menempah gelanggang/tempat bermain "
+"apabila perlawanan telah disahkan. Pemain juga disyorkan untuk menghubungi "
+"dan menyemak ketersediaan lokasi sebelum menghantar jemputan.\n"
+
+#: templates/welcome.html:360
+#, python-format
+msgid ""
+"\n"
+"                Why can't I find %(QWIK)sGAME in the PlayStore and "
+"AppStore?\n"
+msgstr ""
+"\n"
+"                Mengapa saya tidak dapat menemui %(QWIK)sGAME di PlayStore "
+"dan AppStore?\n"
+
+#: templates/welcome.html:367
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is a Progressive Web App. It's the new "
+"generation of apps. No need to download nor install anything. Just save "
+"%(QWIK)sGAME on your Home screen. %(QWIK)sGAME PWA works on all operating "
+"systems and an Internet Browser is the only requirement.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME ialah Progressive Web App. Ia adalah "
+"generasi baharu aplikasi. Tidak perlu memuat turun atau memasang apa-apa. "
+"Hanya simpan %(QWIK)sGAME pada skrin utama anda. %(QWIK)sGAME PWA berfungsi "
+"pada semua sistem operasi dan hanya memerlukan pelayar internet.\n"
+
+#: templates/welcome.html:374
+#, python-format
+msgid ""
+"\n"
+"                Who owns %(QWIK)sGAME?\n"
+msgstr ""
+"\n"
+"                Siapakah pemilik %(QWIK)sGAME?\n"
+
+#: templates/welcome.html:381
+#, python-format
+msgid ""
+"\n"
+"                    %(QWIK)sGAME is managed by QWIKGAME Inc. registered in "
+"Victoria, Australia as a Not For Profit Association. All discussions and "
+"decisions regarding %(QWIK)sGAME are made online in the <a href=\"https://"
+"forum.qwikgame.org/\" target=\"_blank\">QWIK Forum</a>. Your assistance will "
+"be most welcome.\n"
+msgstr ""
+"\n"
+"                    %(QWIK)sGAME diuruskan oleh QWIKGAME Inc. yang "
+"berdaftar di Victoria, Australia sebagai Persatuan Bukan Untung. Semua "
+"perbincangan dan keputusan berkaitan %(QWIK)sGAME dibuat secara dalam talian "
+"di <a href=\"https://forum.qwikgame.org/\" target=\"_blank\">Forum QWIK</a>. "
+"Bantuan anda amat dialu-alukan.\n"
+
+#: templates/welcome.html:388
+#, python-format
+msgid ""
+"\n"
+"                Is %(QWIK)sGAME open-source?\n"
+msgstr ""
+"\n"
+"                Adakah %(QWIK)sGAME sumber terbuka?\n"
+
+#: templates/welcome.html:395
+#, python-format
+msgid ""
+"\n"
+"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
+"The latest code can be found on %(github_link)s. Your assistance will be "
+"most welcome.\n"
+msgstr ""
+"\n"
+"                    Ya! Perisian %(QWIK)sGAME adalah sepenuhnya sumber "
+"terbuka. Kod terkini boleh didapati di %(github_link)s. Bantuan anda amat "
+"dialu-alukan.\n"
+
+#: templates/welcome.html:414
+msgid "License"
+msgstr "Lesen"
+
+#: templates/welcome.html:418
+msgid "Privacy"
+msgstr "Privasi"
+
+#: templates/welcome.html:422
+msgid "Terms & Conditions"
+msgstr "Terma & Syarat"
+
+#: templates/welcome_header_snippet.html:12
+msgid "Sign In"
+msgstr "Log Masuk"
+
+#: templates/welcome_header_snippet.html:13
+msgid "Sign up"
+msgstr "Daftar"

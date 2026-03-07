@@ -1,0 +1,115 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: venue/forms.py:17
+msgid "SEARCH"
+msgstr "CARI"
+
+#: venue/forms.py:22
+msgid "restrict the search to a region"
+msgstr "hadkan carian kepada satu kawasan"
+
+#: venue/forms.py:23
+msgid "REGION"
+msgstr "KAWASAN"
+
+#: venue/forms.py:30
+msgid "Specify the Game for these Qwikgame Venues"
+msgstr "Tentukan permainan untuk lokasi Qwikgame ini"
+
+#: venue/forms.py:31
+msgid "GAME"
+msgstr "PERMAINAN"
+
+#: venue/forms.py:60
+msgid "Select Google Places to add as Qwikgame Venues"
+msgstr "Pilih Google Places untuk ditambah sebagai lokasi Qwikgame"
+
+#: venue/forms.py:61
+msgid "GOOGLE PLACES"
+msgstr "GOOGLE PLACES"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
+#: venue/templates/venue/venues.html:33
+msgid "Venues"
+msgstr "Lokasi"
+
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+msgid "Add Venue"
+msgstr "Tambah Lokasi"
+
+#: venue/templates/venue/venue.html:45
+msgid "ADDRESS"
+msgstr "ALAMAT"
+
+#: venue/templates/venue/venue.html:55
+msgid "WEBSITE"
+msgstr "LAMAN WEB"
+
+#: venue/templates/venue/venue.html:57
+msgid "PHONE"
+msgstr "TELEFON"
+
+#: venue/templates/venue/venue.html:59
+msgid "OPEN HOURS"
+msgstr "WAKTU OPERASI"
+
+#: venue/templates/venue/venue.html:61
+msgid "TIMEZONE"
+msgstr "ZON MASA"
+
+#: venue/templates/venue/venue.html:63
+msgid "NOTE"
+msgstr "CATATAN"
+
+#: venue/templates/venue/venue.html:65
+msgid "MANAGERS"
+msgstr "PENGURUS"
+
+#: venue/templates/venue/venue.html:69
+msgid "GAMES"
+msgstr "PERMAINAN"
+
+#: venue/templates/venue/venues.html:24
+msgid "Add"
+msgstr "Tambah"
+
+#: venue/templates/venue/venues.html:36
+msgid "Group by"
+msgstr "Kumpulkan mengikut"
+
+#: venue/templates/venue/venues.html:42
+msgid "game"
+msgstr "permainan"
+
+#: venue/templates/venue/venues.html:72
+msgid "No venues :-("
+msgstr "Tiada lokasi :-("
+
+#: venue/templates/venue/venues.html:85
+#, python-format
+msgid ""
+"\n"
+"                Get Venue details%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                Lihat butiran lokasi%(br)satau tambah yang baharu!\n"
+"    "

@@ -1,0 +1,236 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 16:15+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: authenticate/forms.py:86
+#, python-format
+msgid "The account is disabled for %(e)s"
+msgstr "Akaun ini dinyahaktifkan untuk %(e)s"
+
+#: authenticate/forms.py:90
+#, python-format
+msgid ""
+"There is no account for this email.%(br)sWould you like to "
+"%(a0)sregister%(a1)s?"
+msgstr ""
+"Tiada akaun untuk emel ini.%(br)sAdakah anda ingin "
+"%(a0)sdaftar%(a1)s?"
+
+#: authenticate/templates/authenticate/auth.html:33
+msgid "Welcome to Qwikgame"
+msgstr "Selamat datang ke Qwikgame"
+
+#: authenticate/templates/authenticate/email_validate_email.html:3
+#: authenticate/templates/authenticate/login_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"You're receiving this email because you requested access to your account at "
+"%(site_name)s.\n"
+msgstr ""
+"\n"
+"Anda menerima emel ini kerana anda meminta akses ke akaun anda di "
+"%(site_name)s.\n"
+
+#: authenticate/templates/authenticate/email_validate_email.html:8
+#: authenticate/templates/authenticate/login_email_text.html:11
+#: authenticate/templates/authenticate/register_email_text.html:11
+msgid "Please click on the following link to access your account:"
+msgstr "Sila klik pautan berikut untuk mengakses akaun anda:"
+
+#: authenticate/templates/authenticate/email_validate_email.html:13
+#: authenticate/templates/authenticate/login_email_text.html:4
+#: authenticate/templates/authenticate/register_email_text.html:4
+msgid "Welcome to qwikgame.org!"
+msgstr "Selamat datang ke qwikgame.org!"
+
+#: authenticate/templates/authenticate/email_validate_form.html:15
+msgid "We will send you a verification link to login."
+msgstr "Kami akan menghantar pautan pengesahan untuk anda log masuk."
+
+#: authenticate/templates/authenticate/email_validate_form.html:20
+msgid "Submit"
+msgstr "Hantar"
+
+#: authenticate/templates/authenticate/email_validate_sent.html:10
+#, python-format
+msgid ""
+"\n"
+"        An email has been sent to %(request.GET.to_email)s with a validation "
+"link.\n"
+"    "
+msgstr ""
+"\n"
+"        Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"pengesahan.\n"
+"    "
+
+#: authenticate/templates/authenticate/email_validate_sent.html:15
+#: authenticate/templates/authenticate/login_email_sent.html:14
+#: authenticate/templates/authenticate/register_email_sent.html:14
+msgid "You should receive it shortly."
+msgstr "Anda akan menerimanya tidak lama lagi."
+
+#: authenticate/templates/authenticate/email_validate_sent.html:18
+#: authenticate/templates/authenticate/login_email_sent.html:17
+#: authenticate/templates/authenticate/register_email_sent.html:17
+msgid "If you don’t receive an email, please check your spam folder."
+msgstr "Jika anda tidak menerima emel, sila semak folder spam anda."
+
+#: authenticate/templates/authenticate/email_validate_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"Account details for %(site_name)s\n"
+msgstr ""
+"\n"
+"Butiran akaun untuk %(site_name)s\n"
+
+#: authenticate/templates/authenticate/login_email_html.html:10
+#, python-format
+msgid ""
+"\n"
+"            You're receiving this email because you requested access to your "
+"account at %(site_name)s.\n"
+"        "
+msgstr ""
+"\n"
+"            Anda menerima emel ini kerana anda meminta akses ke akaun anda "
+"di %(site_name)s.\n"
+"        "
+
+#: authenticate/templates/authenticate/login_email_html.html:17
+#: authenticate/templates/authenticate/register_email_html.html:17
+msgid "Login"
+msgstr "Log masuk"
+
+#: authenticate/templates/authenticate/login_email_sent.html:9
+#, python-format
+msgid ""
+"\n"
+"            An email has been sent to %(request.GET.to_email)s with a login "
+"link. \n"
+"    "
+msgstr ""
+"\n"
+"            Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"log masuk. \n"
+"    "
+
+#: authenticate/templates/authenticate/login_email_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"Login details for %(site_name)s\n"
+msgstr ""
+"\n"
+"Butiran log masuk untuk %(site_name)s\n"
+
+#: authenticate/templates/authenticate/login_form.html:9
+msgid "Need a new account?"
+msgstr "Perlukan akaun baharu?"
+
+#: authenticate/templates/authenticate/login_form.html:10
+msgid "signup"
+msgstr "daftar"
+
+#: authenticate/templates/authenticate/login_form.html:19
+#: authenticate/templates/authenticate/register_form.html:19
+msgid "We will send you a verification link to login"
+msgstr "Kami akan menghantar pautan pengesahan untuk log masuk"
+
+#: authenticate/templates/authenticate/login_form.html:24
+msgid "Send login link"
+msgstr "Hantar pautan log masuk"
+
+#: authenticate/templates/authenticate/register_email_html.html:10
+#, python-format
+msgid ""
+"\n"
+"        You're receiving this email because you requested an account at "
+"%(site_name)s.\n"
+"    "
+msgstr ""
+"\n"
+"        Anda menerima emel ini kerana anda meminta akaun di "
+"%(site_name)s.\n"
+"    "
+
+#: authenticate/templates/authenticate/register_email_sent.html:9
+#, python-format
+msgid ""
+"\n"
+"            An email has been sent to %(request.GET.to_email)s with a "
+"registration link.\n"
+"    "
+msgstr ""
+"\n"
+"            Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"pendaftaran.\n"
+"    "
+
+#: authenticate/templates/authenticate/register_email_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"Registration details for %(site_name)s\n"
+msgstr ""
+"\n"
+"Butiran pendaftaran untuk %(site_name)s\n"
+
+#: authenticate/templates/authenticate/register_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"You're receiving this email because you requested an account at "
+"%(site_name)s.\n"
+msgstr ""
+"\n"
+"Anda menerima emel ini kerana anda meminta akaun di "
+"%(site_name)s.\n"
+
+#: authenticate/templates/authenticate/register_form.html:9
+msgid "Already have an account?"
+msgstr "Sudah mempunyai akaun?"
+
+#: authenticate/templates/authenticate/register_form.html:10
+msgid "login"
+msgstr "log masuk"
+
+#: authenticate/templates/authenticate/register_form.html:24
+msgid "Send verification link"
+msgstr "Hantar pautan pengesahan"
+
+#: authenticate/templates/authenticate/token_invalid.html:9
+msgid "Sorry that didn't work."
+msgstr "Maaf, itu tidak berjaya."
+
+#: authenticate/templates/authenticate/token_invalid.html:12
+msgid ""
+"The security token in that link has expired, or is invalid for some reason."
+msgstr ""
+"Token keselamatan dalam pautan tersebut telah tamat tempoh atau tidak sah."
+
+#: authenticate/templates/authenticate/token_invalid.html:16
+msgid "Login / Registration"
+msgstr "Log masuk / Pendaftaran"
+
+#: authenticate/templates/authenticate/token_invalid.html:17
+msgid " page."
+msgstr " halaman."

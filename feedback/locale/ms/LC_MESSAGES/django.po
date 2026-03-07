@@ -1,0 +1,93 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 16:15+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: feedback/forms.py:15
+msgid "Description"
+msgstr "Penerangan"
+
+#: feedback/forms.py:17
+msgid "thanks heaps for taking the time!"
+msgstr "Terima kasih banyak kerana meluangkan masa!"
+
+#: feedback/forms.py:18
+msgid "feedback"
+msgstr "maklum balas"
+
+#: feedback/models.py:13
+msgid "Bug"
+msgstr "Pepijat"
+
+#: feedback/models.py:14
+msgid "Something is not clear"
+msgstr "Sesuatu tidak jelas"
+
+#: feedback/models.py:15
+msgid "Something is too difficult"
+msgstr "Sesuatu terlalu sukar"
+
+#: feedback/models.py:16
+msgid "Something is really good"
+msgstr "Sesuatu sangat bagus"
+
+#: feedback/models.py:17
+msgid "Suggestion for improvement"
+msgstr "Cadangan penambahbaikan"
+
+#: feedback/models.py:18
+msgid "Translation issue"
+msgstr "Masalah terjemahan"
+
+#: feedback/models.py:19
+msgid "Venue issue"
+msgstr "Masalah lokasi"
+
+#: feedback/models.py:20
+msgid "Other"
+msgstr "Lain-lain"
+
+#: feedback/templates/feedback/feedback.html:7
+#: feedback/templates/feedback/feedback_list.html:7
+#: feedback/templates/feedback/feedback_list.html:19
+msgid "Feedback"
+msgstr "Maklum Balas"
+
+#: feedback/templates/feedback/feedback.html:41
+msgid "Version: "
+msgstr "Versi: "
+
+#: feedback/templates/feedback/feedback.html:44
+msgid "Issue:"
+msgstr "Isu:"
+
+#: feedback/templates/feedback/feedback.html:48
+msgid "None"
+msgstr "Tiada"
+
+#: feedback/templates/feedback/feedback.html:50
+msgid "create issue"
+msgstr "cipta isu"
+
+#: feedback/templates/feedback/feedback_list.html:33
+msgid "No feedback!"
+msgstr "Tiada maklum balas!"
+
+#: feedback/templates/feedback/feedback_list.html:47
+msgid "Select Feedback to see detail."
+msgstr "Pilih maklum balas untuk melihat butiran."

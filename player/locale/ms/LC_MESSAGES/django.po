@@ -1,0 +1,268 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: player/forms.py:24 player/models.py:462
+msgid "Any Game"
+msgstr "Sebarang Permainan"
+
+#: player/forms.py:25
+msgid "Only see invitations for a particular Game."
+msgstr "Hanya lihat jemputan untuk permainan tertentu."
+
+#: player/forms.py:26 player/forms.py:276
+#: player/templates/player/strength.html:84
+msgid "GAME"
+msgstr "PERMAINAN"
+
+#: player/forms.py:31
+msgid "Only see invitations for a particular Venue."
+msgstr "Hanya lihat jemputan untuk lokasi tertentu."
+
+#: player/forms.py:32
+msgid "PLACE"
+msgstr "LOKASI"
+
+#: player/forms.py:37
+msgid "Only see invitations at specific times in your week."
+msgstr "Hanya lihat jemputan pada masa tertentu dalam minggu anda."
+
+#: player/forms.py:38
+msgid "TIME"
+msgstr "MASA"
+
+#: player/forms.py:110
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "Maaf, pemilihan lokasi tersebut tidak berjaya. Sila cuba lagi."
+
+#: player/forms.py:143 player/forms.py:163 player/models.py:463
+msgid "Anywhere"
+msgstr "Di mana sahaja"
+
+#: player/forms.py:143
+msgid "Select from map"
+msgstr "Pilih dari peta"
+
+#: player/forms.py:186
+msgid "NO ACTIVE FILTERS"
+msgstr "TIADA PENAPIS AKTIF"
+
+#: player/forms.py:197
+#, python-format
+msgid "%(n)s ACTIVE FILTERS"
+msgstr "%(n)s PENAPIS AKTIF"
+
+#: player/forms.py:219
+msgid "FRIEND'S EMAIL ADDRESS"
+msgstr "ALAMAT EMEL RAKAN"
+
+#: player/forms.py:225
+msgid "NAME"
+msgstr "NAMA"
+
+#: player/forms.py:237
+msgid "Type email address"
+msgstr "Taip alamat emel"
+
+#: player/forms.py:238
+msgid "A screen name for your friend (optional)"
+msgstr "Nama paparan untuk rakan anda (pilihan)"
+
+#: player/forms.py:283
+msgid "RIVAL SKILL LEVEL"
+msgstr "TAHAP KEMAHIRAN LAWAN"
+
+#: player/models.py:392
+msgid "probably"
+msgstr "mungkin"
+
+#: player/models.py:393
+msgid "maybe"
+msgstr "mungkin"
+
+#: player/models.py:394
+msgid "unknown"
+msgstr "tidak diketahui"
+
+#: player/models.py:398 player/templates/player/strength.html:87
+msgid "much-weaker"
+msgstr "jauh lebih lemah"
+
+#: player/models.py:399 player/templates/player/strength.html:88
+msgid "weaker"
+msgstr "lebih lemah"
+
+#: player/models.py:400
+msgid "matched"
+msgstr "sepadan"
+
+#: player/models.py:401 player/templates/player/strength.html:90
+msgid "stronger"
+msgstr "lebih kuat"
+
+#: player/models.py:402
+msgid "much-stonger"
+msgstr "jauh lebih kuat"
+
+#: player/models.py:464
+msgid "Any Time"
+msgstr "Bila-bila Masa"
+
+#: player/templates/player/account_public_snippet.html:5
+msgid "YOUR QWIKGAME REPUTATION"
+msgstr "REPUTASI QWIKGAME ANDA"
+
+#: player/templates/player/account_public_snippet.html:10
+msgid "Based on feedback given by your rivals."
+msgstr "Berdasarkan maklum balas yang diberikan oleh lawan anda."
+
+#: player/templates/player/filter.html:45
+#: player/templates/player/filters.html:8
+msgid "Filter"
+msgstr "Penapis"
+
+#: player/templates/player/filter.html:64
+msgid "New Invitation Filter"
+msgstr "Penapis Jemputan Baharu"
+
+#: player/templates/player/filter.html:77
+msgid "Add Filter"
+msgstr "Tambah Penapis"
+
+#: player/templates/player/filters.html:27
+msgid "Invitation Filters"
+msgstr "Penapis Jemputan"
+
+#: player/templates/player/filters.html:31
+#: player/templates/player/friend_add.html:34
+#: player/templates/player/friends.html:25
+#: player/templates/player/strength.html:102
+msgid "Add"
+msgstr "Tambah"
+
+#: player/templates/player/filters.html:47
+msgid "Delete these Filters?"
+msgstr "Padam penapis ini?"
+
+#: player/templates/player/filters.html:49
+msgid "Remove"
+msgstr "Buang"
+
+#: player/templates/player/filters.html:53
+msgid "Apply"
+msgstr "Gunakan"
+
+#: player/templates/player/friend.html:7
+#: player/templates/player/friend_add.html:7
+#: player/templates/player/friends.html:8
+#: player/templates/player/friends.html:35
+#: player/templates/player/strength.html:7
+msgid "Friends"
+msgstr "Rakan"
+
+#: player/templates/player/friend.html:36
+msgid "Delete this Friend?"
+msgstr "Padam rakan ini?"
+
+#: player/templates/player/friend.html:38
+#: player/templates/player/friend.html:69
+#: player/templates/player/strength.html:43
+msgid "delete"
+msgstr "padam"
+
+#: player/templates/player/friend.html:51
+#: player/templates/player/friend_add.html:24
+#: player/templates/player/friends.html:93
+msgid "Add Friend"
+msgstr "Tambah Rakan"
+
+#: player/templates/player/friend.html:79
+#: player/templates/player/strength.html:75
+msgid "Submit"
+msgstr "Hantar"
+
+#: player/templates/player/friends.html:39
+msgid "Group by"
+msgstr "Kumpulkan mengikut"
+
+#: player/templates/player/friends.html:46
+msgid "game"
+msgstr "permainan"
+
+#: player/templates/player/friends.html:73
+msgid "No friends :-("
+msgstr "Tiada rakan :-("
+
+#: player/templates/player/friends.html:87
+#, python-format
+msgid ""
+"\n"
+"                Edit a Friend%(br)sor add a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                Edit rakan%(br)satau tambah yang baharu!\n"
+"    "
+
+#: player/templates/player/rival_stats_snippet.html:4
+msgid "MATCHES"
+msgstr "PERLAWANAN"
+
+#: player/templates/player/rival_stats_snippet.html:10
+msgid "GAMES"
+msgstr "PERMAINAN"
+
+#: player/templates/player/rival_stats_snippet.html:16
+msgid "VENUES"
+msgstr "LOKASI"
+
+#: player/templates/player/strength.html:61
+msgid "Important!"
+msgstr "Penting!"
+
+#: player/templates/player/strength.html:63
+msgid ""
+"Please take a little time to let qwikgame know how strong your Friend is. "
+"This will help qwikgame make better Matches for you, and your friend, and "
+"other qwikgame Players who know either of you."
+msgstr ""
+"Sila luangkan sedikit masa untuk memberitahu qwikgame tahap kekuatan rakan "
+"anda. Ini akan membantu qwikgame membuat perlawanan yang lebih baik untuk "
+"anda, rakan anda, dan pemain qwikgame lain yang mengenali salah seorang "
+"daripada anda."
+
+#: player/templates/player/strength.html:85
+msgid "STRENGTH"
+msgstr "KEKUATAN"
+
+#: player/templates/player/strength.html:89
+msgid "well-matched"
+msgstr "sepadan"
+
+#: player/templates/player/strength.html:91
+msgid "much-stronger"
+msgstr "jauh lebih kuat"
+
+#: player/templates/player/strength.html:96
+msgid "Cancel"
+msgstr "Batal"
+
+#: player/templates/player/strength.html:99
+msgid "Learn more"
+msgstr "Ketahui lebih lanjut"

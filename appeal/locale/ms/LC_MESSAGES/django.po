@@ -1,0 +1,211 @@
+# QWIKGAME Multilingual support https:/qwikgame.org/
+# Copyright (C) 2026
+# This file is distributed under GNU General Public License Version 3
+# John Brown <john@qwikgame.org>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Malay <ms>\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
+msgid "When are you keen to play?"
+msgstr "Bila anda berminat untuk bermain?"
+
+#: appeal/forms.py:58
+msgid "WHAT TIME WORKS FOR YOU?"
+msgstr "MASA APA YANG SESUAI UNTUK ANDA?"
+
+#: appeal/forms.py:109
+msgid "GAME"
+msgstr "PERMAINAN"
+
+#: appeal/forms.py:118
+msgid "TODAY"
+msgstr "HARI INI"
+
+#: appeal/forms.py:127
+msgid "TOMORROW"
+msgstr "ESOK"
+
+#: appeal/forms.py:135
+msgid "FRIENDS"
+msgstr "RAKAN"
+
+#: appeal/forms.py:213
+msgid "Please select at least one hour in today or tomorrow."
+msgstr "Sila pilih sekurang-kurangnya satu jam pada hari ini atau esok."
+
+#: appeal/forms.py:220 appeal/forms.py:236
+msgid "Sorry, that Venue selection did not work. Please try again."
+msgstr "Maaf, pemilihan lokasi tersebut tidak berjaya. Sila cuba lagi."
+
+#: appeal/forms.py:226
+msgid "Please invite at least one Friend."
+msgstr "Sila jemput sekurang-kurangnya seorang rakan."
+
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:88
+msgid "Invite Friends Only"
+msgstr "Jemput Rakan Sahaja"
+
+#: appeal/forms.py:243
+msgid ""
+"You don't have any added friends yet. Please add them from the Friends tab"
+msgstr ""
+"Anda belum menambah sebarang rakan. Sila tambah mereka melalui tab Rakan"
+
+#: appeal/forms.py:247
+msgid "Select from map"
+msgstr "Pilih dari peta"
+
+#: appeal/forms.py:251
+msgid "VENUE"
+msgstr "LOKASI"
+
+#: appeal/models.py:173
+#, python-format
+msgid "Proposed %(game)s at %(venue)s, %(date)s, %(time)s"
+msgstr "%(game)s dicadangkan di %(venue)s, %(date)s, %(time)s"
+
+#: appeal/models.py:180
+#, python-format
+msgid " with %(fiends)s"
+msgstr " dengan %(fiends)s"
+
+#: appeal/models.py:184
+msgid "Cancelled Invitation"
+msgstr "Jemputan Dibatalkan"
+
+#: appeal/models.py:189
+#, python-format
+msgid "This is the first QWIKGAME of %(game)s at this Venue."
+msgstr "Ini adalah QWIKGAME pertama untuk %(game)s di lokasi ini."
+
+#: appeal/models.py:191
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "Sila pastikan lokasi mempunyai semua yang anda perlukan untuk perlawanan."
+
+#: appeal/models.py:193
+#, python-format
+msgid "Updated hours: %(hours)s"
+msgstr "Jam dikemas kini: %(hours)s"
+
+#: appeal/models.py:332
+#, python-format
+msgid "Confirmed for %(hours)s with %(name)s"
+msgstr "Disahkan untuk %(hours)s dengan %(name)s"
+
+#: appeal/models.py:344
+#, python-format
+msgid "Offered %(hours)s"
+msgstr "Menawarkan %(hours)s"
+
+#: appeal/models.py:355
+#, python-format
+msgid "Declined %(hours)s with %(name)s"
+msgstr "Menolak %(hours)s dengan %(name)s"
+
+#: appeal/models.py:367
+msgid "bid expired"
+msgstr "tawaran tamat tempoh"
+
+#: appeal/models.py:376
+#, python-format
+msgid "withdrew %(hours)s"
+msgstr "menarik balik %(hours)s"
+
+#: appeal/templates/appeal/accept.html:53
+msgid "Cancel this Invitation?"
+msgstr "Batalkan jemputan ini?"
+
+#: appeal/templates/appeal/accept.html:55 appeal/templates/appeal/bid.html:78
+msgid "cancel"
+msgstr "batal"
+
+#: appeal/templates/appeal/accept.html:84
+msgid "decline"
+msgstr "tolak"
+
+#: appeal/templates/appeal/accept.html:125
+msgid ""
+"You are about to schedule a Match. A chat session will be opened with your "
+"rival. Continue?"
+msgstr ""
+"Anda akan menjadualkan satu perlawanan. Sesi sembang akan dibuka dengan "
+"lawan anda. Teruskan?"
+
+#: appeal/templates/appeal/appeals.html:7
+msgid "Feed"
+msgstr "Suapan"
+
+#: appeal/templates/appeal/appeals.html:24
+#: appeal/templates/appeal/appeals.html:156
+#: appeal/templates/appeal/keen.html:48 appeal/templates/appeal/keen.html:85
+msgid "Invite"
+msgstr "Jemput"
+
+#: appeal/templates/appeal/appeals.html:35
+#, python-format
+msgid ""
+" \n"
+"            Feed (%(appeals_length)s)\n"
+msgstr ""
+" \n"
+"            Suapan (%(appeals_length)s)\n"
+
+#: appeal/templates/appeal/appeals.html:41
+msgid "Filter"
+msgstr "Penapis"
+
+#: appeal/templates/appeal/appeals.html:46
+msgid "Participating"
+msgstr "Menyertai"
+
+#: appeal/templates/appeal/appeals.html:85
+msgid "Get involved by accepting an Invitation, or sending a new one."
+msgstr "Sertai dengan menerima jemputan atau menghantar yang baharu."
+
+#: appeal/templates/appeal/appeals.html:91
+msgid "All"
+msgstr "Semua"
+
+#: appeal/templates/appeal/appeals.html:95
+msgid "filtered"
+msgstr "ditapis"
+
+#: appeal/templates/appeal/appeals.html:132
+msgid "Unfortunately no Invitations match your Filters."
+msgstr "Malangnya tiada jemputan yang sepadan dengan penapis anda."
+
+#: appeal/templates/appeal/appeals.html:135
+msgid "Try deactivating a Filter or send out your own Invitation."
+msgstr "Cuba nyahaktifkan penapis atau hantar jemputan anda sendiri."
+
+#: appeal/templates/appeal/appeals.html:150
+#, python-format
+msgid ""
+"\n"
+"                Open an Invitation %(br)s or send a new one!\n"
+"    "
+msgstr ""
+"\n"
+"                Buka jemputan %(br)s atau hantar yang baharu!\n"
+"    "
+
+#: appeal/templates/appeal/bid.html:76
+msgid "Cancel this Offer?"
+msgstr "Batalkan tawaran ini?"
+
+#: appeal/templates/appeal/keen.html:69
+msgid "Keen To Play? Send Invitation?"
+msgstr "Berminat untuk bermain? Hantar jemputan?"

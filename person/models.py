@@ -172,7 +172,7 @@ class Alert(models.Model):
 class Person(models.Model):
     block = models.ManyToManyField('self', blank=True, symmetrical=False, through='Block')
     icon = models.CharField(max_length=32, default=rnd_icon)
-    language = models.CharField(max_length=2, choices=LANGUAGES, default='en',)
+    language = models.CharField(max_length=2, choices=LANGUAGES, default='',)
     location_auto = models.BooleanField(default=False)
     name = models.CharField(max_length=32, default="my qwikname")
     notify_email = models.CharField(max_length=64, default='kmpq')

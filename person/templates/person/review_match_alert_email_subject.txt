@@ -1,0 +1,8 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktranslate %}
+REVIEW {{ match.game }} at {{ match.venue }}
+{% endblocktranslate %}
+
+{% endautoescape %}

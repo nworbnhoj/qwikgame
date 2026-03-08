@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 15:29+1100\n"
+"POT-Creation-Date: 2026-03-09 07:45+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,6 +150,8 @@ msgstr ""
 #: person/templates/person/new_bid_alert_email_text.html:3
 #: person/templates/person/new_match_alert_email_html.html:7
 #: person/templates/person/new_match_alert_email_text.html:4
+#: person/templates/person/review_match_alert_email_html.html:7
+#: person/templates/person/review_match_alert_email_text.html:4
 #: person/templates/person/rival_invite_alert_email_html.html:7
 #: person/templates/person/rival_invite_alert_email_text.html:3
 msgid "Qwik Alert"
@@ -189,6 +191,7 @@ msgstr ""
 
 #: person/templates/person/cancel_bid_alert_email_text.html:10
 #: person/templates/person/decline_bid_alert_email_text.html:10
+#: person/templates/person/review_match_alert_email_text.html:14
 msgid "To review please go to:"
 msgstr ""
 
@@ -199,6 +202,7 @@ msgstr ""
 #: person/templates/person/filter_invite_alert_email_text.html:13
 #: person/templates/person/new_bid_alert_email_text.html:12
 #: person/templates/person/new_match_alert_email_text.html:13
+#: person/templates/person/review_match_alert_email_text.html:17
 #: person/templates/person/rival_invite_alert_email_text.html:12
 msgid "To change email notification settings, please go to:"
 msgstr ""
@@ -523,6 +527,85 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: person/templates/person/review_match_alert_email_html.html:13
+#, python-format
+msgid ""
+"\n"
+"            You are receiving this email to review your Qwikgame of "
+"<b>%(match.game)s</b> at <b>%(match.venue)s</b>.\n"
+"        "
+msgstr ""
+"\n"
+"            您收到此邮件是为了评价您在 <b>%(match.venue)s</b> 的 "
+"<b>%(match.game)s</b> Qwikgame。\n"
+"        "
+
+#: person/templates/person/review_match_alert_email_html.html:26
+msgid ""
+"\n"
+"            Every Review helps QWIKGAME improve your next Match.\n"
+"        "
+msgstr ""
+"\n"
+"            每一条评价都能帮助 QWIKGAME 改进您下一场比赛的体验。\n"
+"        "
+
+#: person/templates/person/review_match_alert_email_html.html:33
+#, python-format
+msgid ""
+"\n"
+"                Visit %(domain)s to review your Match\n"
+"            "
+msgstr ""
+"\n"
+"                访问 %(domain)s 评价您的比赛\n"
+"            "
+
+#: person/templates/person/review_match_alert_email_subject.txt:4
+#, python-format
+msgid ""
+"\n"
+"REVIEW %(match.game)s at %(match.venue)s\n"
+msgstr ""
+"\n"
+"评价 %(match.venue)s 的 %(match.game)s 比赛\n"
+
+#: person/templates/person/review_match_alert_email_text.html:6
+#, python-format
+msgid ""
+"\n"
+"\tYou are receiving this email to review your Qwikgame of %(match.game)s at "
+"%(match.venue)s.\n"
+msgstr ""
+"\n"
+"\t您收到此邮件是为了评价您在 %(match.venue)s 的 %(match.game)s Qwikgame。\n"
+
+#: person/templates/person/review_match_alert_email_text.html:10
+msgid ""
+"\n"
+"    Every Review helps QWIKGAME improve your next Match.\n"
+msgstr ""
+"\n"
+"    每一条评价都能帮助 QWIKGAME 改进您下一场比赛的体验。\n"
+
+#: person/templates/person/review_match_alert_notify_body.txt:3
+#, python-format
+msgid ""
+"\n"
+"\tPlease Review your %(match.game)s Match at %(match.venue)s.\n"
+msgstr ""
+"\n"
+"\t请评价您在 %(match.venue)s 的 %(match.game)s 比赛。\n"
+
+#: person/templates/person/review_match_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Review %(match.game)s Match\n"
+msgstr ""
+"\n"
+"评价 %(match.game)s 比赛\n"
+
 #: person/templates/person/rival_invite_alert_email_html.html:13
 #, python-format
 msgid ""
@@ -531,6 +614,10 @@ msgid ""
 "you to a  Qwikgame of <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            您收到此邮件是因为 <b>%(name)s</b> 邀请您在 <b>%(venue)s</b> "
+"进行一场 <b>%(game)s</b> Qwikgame。\n"
+"        "
 
 #: person/templates/person/rival_invite_alert_email_subject.txt:4
 #, python-format
@@ -538,6 +625,8 @@ msgid ""
 "\n"
 "Invitation to %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
+"\n"
+"%(name)s 邀请您在 %(venue)s 进行 %(game)s\n"
 
 #: person/templates/person/rival_invite_alert_email_text.html:5
 #, python-format
@@ -546,6 +635,8 @@ msgid ""
 "\tYou're receiving this email because %(name)s has Invited you to a Qwikgame "
 "of %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t您收到此邮件是因为 %(name)s 邀请您在 %(venue)s 进行 %(game)s Qwikgame。\n"
 
 #: person/templates/person/rival_invite_alert_notify_body.txt:3
 #, python-format
@@ -553,6 +644,8 @@ msgid ""
 "\n"
 "\t%(name)s has Invited you to %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"\t%(name)s 邀请您在 %(venue)s 进行 %(game)s。\n"
 
 #: person/templates/person/rival_invite_alert_notify_head.txt:4
 #, python-format
@@ -560,14 +653,16 @@ msgid ""
 "\n"
 "Invite to %(game)s\n"
 msgstr ""
+"\n"
+"%(game)s 邀请\n"
 
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
-msgstr ""
+msgstr "升级"
 
 #: person/templates/person/upgrade.html:23
 msgid "coming soon"
-msgstr ""
+msgstr "即将推出"
 
 #: person/templates/person/woo_invite_email_html.html:10
 #, python-format
@@ -577,6 +672,10 @@ msgid ""
 "%(site_name)s has invited you to play <b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
+"\n"
+"            您收到此邮件是因为 %(site_name)s 的 <b>%(name)s</b> 邀请您在 "
+"<b>%(venue)s</b> 进行 <b>%(game)s</b>。\n"
+"        "
 
 #: person/templates/person/woo_invite_email_html.html:24
 #, python-format
@@ -585,11 +684,14 @@ msgid ""
 "                Visit %(site_name)s to accept invitation\n"
 "            "
 msgstr ""
+"\n"
+"                访问 %(site_name)s 接受邀请\n"
+"            "
 
 #: person/templates/person/woo_invite_email_html.html:33
 #: person/templates/person/woo_invite_email_html.html:37
 msgid "email invitations from"
-msgstr ""
+msgstr "来自以下用户的邮件邀请"
 
 #: person/templates/person/woo_invite_email_subject.txt:4
 #, python-format
@@ -597,10 +699,12 @@ msgid ""
 "\n"
 "Invitation to play %(game)s with %(name)s at %(venue)s\n"
 msgstr ""
+"\n"
+"%(name)s 邀请您在 %(venue)s 一起进行 %(game)s\n"
 
 #: person/templates/person/woo_invite_email_text.html:5
 msgid "Welcome to qwikgame.org"
-msgstr ""
+msgstr "欢迎来到 qwikgame.org"
 
 #: person/templates/person/woo_invite_email_text.html:7
 #, python-format
@@ -609,28 +713,32 @@ msgid ""
 "You're receiving this email because %(name)s at %(site_name)s has invited "
 "you to play %(game)s at %(venue)s.\n"
 msgstr ""
+"\n"
+"您收到此邮件是因为 %(site_name)s 的 %(name)s 邀请您在 %(venue)s 进行 %(game)s。\n"
 
 #: person/templates/person/woo_invite_email_text.html:11
 msgid "Game"
-msgstr ""
+msgstr "游戏"
 
 #: person/templates/person/woo_invite_email_text.html:12
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: person/templates/person/woo_invite_email_text.html:13
 msgid "Time"
-msgstr ""
+msgstr "时间"
 
 #: person/templates/person/woo_invite_email_text.html:14
 msgid "Venue"
-msgstr ""
+msgstr "场地"
 
 #: person/templates/person/woo_invite_email_text.html:16
 msgid ""
 "\n"
 "Please click on the following link to accept the invitation:\n"
 msgstr ""
+"\n"
+"请点击以下链接接受邀请：\n"
 
 #: person/templates/person/woo_invite_email_text.html:21
 #, python-format
@@ -638,6 +746,8 @@ msgid ""
 "\n"
 "To block email invitations from %(name)s, please click :\n"
 msgstr ""
+"\n"
+"如需屏蔽来自 %(name)s 的邮件邀请，请点击：\n"
 
 #: person/templates/person/woo_invite_email_text.html:26
 #, python-format
@@ -646,3 +756,5 @@ msgid ""
 "To block email invitations from all Players at %(site_name)s, please "
 "click :\n"
 msgstr ""
+"\n"
+"如需屏蔽来自 %(site_name)s 所有玩家的邮件邀请，请点击：\n"

@@ -16,8 +16,8 @@ def rnd_icon():
     return 'fa-face-smile'
 
 
-ALERT_EMAIL_DEFAULT = 'bkmpq'
-ALERT_PUSH_DEFAULT = 'bcklmpqr'
+ALERT_EMAIL_DEFAULT = 'bkmpqs'
+ALERT_PUSH_DEFAULT = 'bcklmpqrs'
 
 
 class AlertEmail(EmailMultiAlternatives):
@@ -79,6 +79,7 @@ class Alert(models.Model):
         'p': 'new_match',
         'q': 'cancel_match',
         'r': 'chat_match',
+        's': 'review_match',
     }
     context = models.JSONField(encoder=DjangoJSONEncoder, default=dict)
     expires = models.DateTimeField()

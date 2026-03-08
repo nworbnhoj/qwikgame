@@ -1,6 +1,7 @@
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from game.models import Match, Review
+from qwikgame.settings import FQDN
 
 
 logger = logging.getLogger(__file__)
@@ -36,15 +37,24 @@ def match_review_init():
     for match in matches:
         for player in match.competitors.all():
             for rival in match.competitors.exclude(pk=player.pk).all():
-                Review.objects.get_or_create(
+                review, created = Review.objects.get_or_create(
                     match = match,
                     meta = {'seen': []},
                     player=player,
                     rival=rival,
                 )
-                player.alert('review')
-                match.mark_seen([])
-                stats['review'] = stats.get('review', 0) + 1
+                if created:
+                    player.alert(
+                        context = {
+                            'domain': FQDN,
+                            'match': match,
+                        },
+                        expires=datetime.now() + timedelta(days=3),
+                        type='s',
+                        url=f'/game/match/{match.pk}/',
+                    )
+                    match.mark_seen([])
+                    stats['review'] = stats.get('review', 0) + 1
         match.status = 'C'
         match.save()
     stats['match'] = matches.count()

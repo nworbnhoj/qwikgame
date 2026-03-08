@@ -1,0 +1,20 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% translate "Qwik Alert" %}
+
+{% blocktranslate %}
+	You are receiving this email to review your Qwikgame of {{ match.game }} at {{ match.venue }}.
+{% endblocktranslate %}
+
+{% blocktranslate %}
+    Every Review helps QWIKGAME improve your next Match.
+{% endblocktranslate %}
+
+{% translate "To review please go to:" %}
+http://{{ domain }}{% url 'match' match=match.pk %}
+
+{% translate "To change email notification settings, please go to:" %}
+http://{{ domain }}{% url 'private' %}
+
+{% endautoescape %}

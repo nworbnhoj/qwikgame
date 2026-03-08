@@ -1,0 +1,8 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% blocktranslate %}
+Review {{ match.game }} Match
+{% endblocktranslate %}
+
+{% endautoescape %}

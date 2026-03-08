@@ -1,0 +1,40 @@
+<!-- templates/game/review_match_alert_email_html.html -->
+{% extends "email_html.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% translate "Qwik Alert" %}
+{% endblock title %}
+
+{% block detail %}
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {% blocktranslate %}
+            You are receiving this email to review your Qwikgame of <b>{{ match.game }}</b> at <b>{{ match.venue }}</b>.
+        {% endblocktranslate %}
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {{ match.game }}<br>
+        {{ match.date_str }}<br>
+        {{ match.time_str }}<br>
+        {{ match.venue }}
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        {% blocktranslate %}
+            Every Review helps QWIKGAME improve your next Match.
+        {% endblocktranslate %}
+    </p>
+
+    <p style="margin: 0em; padding: 0.3em; text-align: center;">
+        <a style="align-items: center; background-color: #f5a600; border: 1px solid; border-color: #f5a600; border-radius: 0.3em; color: #333333; cursor: pointer; display: inline-block; font-weight: 550;  gap: 0.3em;  margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; width: 6e;" href="http://{{ domain }}{% url 'match' match=match.pk %} %}">
+        	{% blocktranslate %}
+                Visit {{ domain }} to review your Match
+            {% endblocktranslate %}
+        </a>
+    </p>
+
+{% endblock detail %}
+

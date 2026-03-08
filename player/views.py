@@ -31,9 +31,9 @@ class FilterView(AppealsView):
         context = super().context(request, *args, **kwargs)
         is_admin = self.user.is_admin
         context |= {
-            'onclick_place_marker': 'select' if is_admin else 'noop',
+            'onclick_place_marker': 'noop',
             'onclick_region_marker': 'select',
-            'onclick_search_marker': 'select',
+            'onclick_search_marker': 'noop',
             'onclick_venue_marker': 'select',
             'onhover_place_marker': 'info',
             'onhover_region_marker': 'info',

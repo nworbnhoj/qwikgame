@@ -276,7 +276,7 @@ class KeenView(AppealsView):
         context = super().context(request, *args, **kwargs)
         is_admin = self.user.is_admin
         context |= {
-            'onclick_place_marker': 'select' if is_admin else 'noop',
+            'onclick_place_marker': 'select',
             'onclick_region_marker': 'center',
             'onclick_search_marker': 'select',
             'onclick_venue_marker': 'select',

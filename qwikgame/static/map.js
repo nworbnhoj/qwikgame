@@ -230,6 +230,7 @@ function searchChangeHandler(places){
         // title: place.name+'\nyou are the first player!\n'+open
       });
       mark.marker = MARKER;
+      mark.marker.setVisible(SHOW_SEARCH_MARKERS);
       mark.marker.setIcon({ url: ICON_PLACE });
       SEARCH_MARKERS.push(MARKER);
       setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)

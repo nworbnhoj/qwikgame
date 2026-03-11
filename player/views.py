@@ -44,6 +44,7 @@ class FilterView(AppealsView):
             'onpress_search_marker': 'info',
             'onpress_venue_marker': 'info',
             'show_place_markers': 'false',
+            'show_search_markers': 'false',
         }
         self._context = context
         return self._context

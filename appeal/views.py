@@ -288,6 +288,7 @@ class KeenView(AppealsView):
             'onpress_region_marker': 'info',
             'onpress_search_marker': 'info',
             'onpress_venue_marker': 'info',
+            'show_place_markers': 'true',
         }
         self._context = context
         return self._context

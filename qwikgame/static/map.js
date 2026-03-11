@@ -352,8 +352,8 @@ function addPlaceMark(placeId){
       mark = markFromPlace(place);      
       mark.marker = new google.maps.Marker({
         position: mark.center,
-        visible:true,
-        map:qwikMap,
+        visible: SHOW_PLACE_MARKERS,
+        map: qwikMap,
       });
       mark.marker.setIcon({ url: ICON_PLACE });
       //var label_origin = new google.maps.Point(13,15)

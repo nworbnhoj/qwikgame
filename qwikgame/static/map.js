@@ -570,7 +570,7 @@ function showMarks(){
       MARK.marker.setVisible(false);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers
-      const SHOW = SHOW_VENUE_MARKERS if isVenue(KEY) else true;
+      const SHOW = SHOW_VENUE_MARKERS if isVenue(KEY) else SHOW_REGION_MARKERS;
       MARK.marker.setVisible(SHOW);
       hideSuperMarkers(KEY, KEYS);
       hideSubMarkers(KEY, KEYS);
@@ -820,7 +820,7 @@ function endowMark(key, mark){
     // mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
     setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
   } else {  // region Mark
-    mark.marker.setVisible(true);
+    mark.marker.setVisible(SHOW_REGION_MARKERS);
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:mark.num_venue.toString(), className:'qg_style_mark_label region', fontSize: 'large'});

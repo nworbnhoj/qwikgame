@@ -44,6 +44,7 @@ class FilterView(AppealsView):
             'onpress_search_marker': 'info',
             'onpress_venue_marker': 'info',
             'show_place_markers': 'false',
+            'show_region_markers': 'true',
             'show_search_markers': 'false',
             'show_venue_markers': 'true',
         }

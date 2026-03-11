@@ -289,6 +289,7 @@ class KeenView(AppealsView):
             'onpress_search_marker': 'info',
             'onpress_venue_marker': 'info',
             'show_place_markers': 'true',
+            'show_region_markers': 'true',
             'show_search_markers': 'true',
             'show_venue_markers': 'true',
         }

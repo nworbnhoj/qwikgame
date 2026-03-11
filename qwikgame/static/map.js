@@ -241,7 +241,7 @@ function searchChangeHandler(places){
 
 function clickHandler(event){
   if (event.placeId) {
-    markerFromPlaceId(event.placeId);
+    addPlaceMark(event.placeId);
     if (event.latLng){
       qwikMap.panTo(event.latLng);
     }
@@ -343,7 +343,7 @@ function markFromPlace(place){
 }
 
 
-function markerFromPlaceId(placeId){
+function addPlaceMark(placeId){
   const MAP = qwikMap;   
   const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
   const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components', 'utc_offset']};

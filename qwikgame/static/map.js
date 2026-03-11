@@ -570,7 +570,8 @@ function showMarks(){
       MARK.marker.setVisible(false);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers
-      MARK.marker.setVisible(true);
+      const SHOW = SHOW_VENUE_MARKERS if isVenue(KEY) else true;
+      MARK.marker.setVisible(SHOW);
       hideSuperMarkers(KEY, KEYS);
       hideSubMarkers(KEY, KEYS);
       visibleMarks.push(KEY);
@@ -810,18 +811,16 @@ function endowMark(key, mark){
   const MAP = qwikMap;
   mark.key = key;
   mark.center = gLatLng(mark.lat, mark.lng);
-
-  const OPTIONS = {position:mark.center, visible:false, map:MAP};
-  mark.marker = new google.maps.Marker(OPTIONS);
-  
+  mark.marker = new google.maps.Marker({position: mark.center, map: MAP});
   const K = key.split('|');
-  var onclick = 'noop';
   if(K.length === 4){  // venue Mark
+    mark.marker.setVisible(SHOW_VENUE_MARKERS);
     var label_origin = new google.maps.Point(13,15)
     mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
     // mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
     setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
   } else {  // region Mark
+    mark.marker.setVisible(true);
     var label_origin = new google.maps.Point(20,20)
     mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
     mark.marker.setLabel({text:mark.num_venue.toString(), className:'qg_style_mark_label region', fontSize: 'large'});

@@ -570,8 +570,7 @@ function showMarks(){
       MARK.marker.setVisible(false);
       visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
     } else {         // otherwise show this Marker and hide super & sub Markers
-      const SHOW = SHOW_VENUE_MARKERS if isVenue(KEY) else SHOW_REGION_MARKERS;
-      MARK.marker.setVisible(SHOW);
+      MARK.marker.setVisible(isVenue(KEY) ? SHOW_VENUE_MARKERS : SHOW_REGION_MARKERS);
       hideSuperMarkers(KEY, KEYS);
       hideSubMarkers(KEY, KEYS);
       visibleMarks.push(KEY);

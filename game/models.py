@@ -1,6 +1,5 @@
 import datetime, logging
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
 
@@ -108,7 +107,7 @@ class Match(models.Model):
         self.alert('q', instigator)
         self.status = 'X'
         self.meta['seen'] = [instigator.pk]
-        self.log_event('cancelled', instigator)
+        self.log_event('cancelled_match', instigator)
 
     def chat(self, instigator, text):
         self.alert('r', instigator, text)
@@ -186,34 +185,8 @@ class Match(models.Model):
             id = player.pk if player else '',
             klass = template,
             name = person.qwikname if person else SYSTEM_NAME,
-            text = text,
+            text = text if template == 'chat' else f'template_{template}',
         )
-        match template:
-            case 'book_prompt':
-                # link = f"<a href='{self.venue.url}' target='_blank'>{self.venue.url}</a>"
-                entry['text'] = _(
-                        "%(name)s, please contact venue to ensure availability on %(date)s : %(phone)s : %(url)s"
-                    ) % {
-                        'name': self.init_player().qwikname,
-                        'date': self.datetime_str,
-                        'phone': self.venue.phone,
-                        'url': self.venue.url,
-                    }
-            case 'cancelled':
-                entry['text'] = _('match cancelled')
-            case 'chat':
-                entry['text'] = text
-            case 'disabled':
-                entry['text'] = _('match chat disabled')
-            case 'first_game':
-                entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
-                entry['text'] += _('Please check that the Venue has everything you need for the Match.')
-            case 'scheduled':
-                entry['text'] = _('match scheduled')
-            case 'perished':
-                entry['text'] = _('match chat perished')
-            case _:
-                logger.warn(f'unknown template: {template}')
         self.log_entry(entry)
 
     def perish(self, dry_run=False):
@@ -276,7 +249,7 @@ class Review(models.Model):
                     id = self.player.pk,
                     klass= 'reviewed',
                     name = person.qwikname,
-                    text = _('reviewed the Match')
+                    text = f'template_{template}',
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

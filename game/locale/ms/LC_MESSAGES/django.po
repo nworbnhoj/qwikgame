@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:15+1100\n"
+"POT-Creation-Date: 2026-03-17 07:05+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -46,44 +46,6 @@ msgstr "KECEWA"
 msgid "Did anything go wrong?"
 msgstr "Adakah sesuatu tidak berjalan dengan baik?"
 
-#: game/models.py:195
-#, python-format
-msgid ""
-"%(name)s, please contact venue to ensure availability on %(date)s : "
-"%(phone)s : %(url)s"
-msgstr ""
-"%(name)s, sila hubungi lokasi untuk memastikan ketersediaan pada %(date)s : "
-"%(phone)s : %(url)s"
-
-#: game/models.py:203
-msgid "match cancelled"
-msgstr "perlawanan dibatalkan"
-
-#: game/models.py:207
-msgid "match chat disabled"
-msgstr "sembang perlawanan dinyahaktifkan"
-
-#: game/models.py:209
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "Ini adalah QWIKGAME pertama untuk %(game)s di lokasi ini."
-
-#: game/models.py:210
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr "Sila pastikan lokasi mempunyai semua yang anda perlukan untuk perlawanan."
-
-#: game/models.py:212
-msgid "match scheduled"
-msgstr "perlawanan dijadualkan"
-
-#: game/models.py:214
-msgid "match chat perished"
-msgstr "sembang perlawanan telah dipadam"
-
-#: game/models.py:279
-msgid "reviewed the Match"
-msgstr "menilai perlawanan"
-
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
 msgstr "Perlawanan"
@@ -112,28 +74,28 @@ msgstr "Perlawanan dibatalkan"
 msgid "unknown status"
 msgstr "status tidak diketahui"
 
-#: game/templates/game/match.html:143
+#: game/templates/game/match.html:133
 msgid "Show invitation history"
 msgstr "Tunjukkan sejarah jemputan"
 
-#: game/templates/game/match.html:146
+#: game/templates/game/match.html:136
 msgid "Hide invitation history"
 msgstr "Sembunyikan sejarah jemputan"
 
-#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "Ulasan"
 
-#: game/templates/game/match.html:191
+#: game/templates/game/match.html:181
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ emogi akan datang tidak lama lagi ☺"
 
-#: game/templates/game/match.html:205
+#: game/templates/game/match.html:195
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "Sembang akan dinyahaktifkan 24 jam selepas perlawanan."
 
-#: game/templates/game/match.html:208
+#: game/templates/game/match.html:198
 msgid "Chat will be deleted 1 week after Match."
 msgstr "Sembang akan dipadam 1 minggu selepas perlawanan."
 

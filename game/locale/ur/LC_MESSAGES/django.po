@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:50+1100\n"
+"POT-Creation-Date: 2026-03-17 07:05+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,45 +46,6 @@ msgstr ""
 msgid "Did anything go wrong?"
 msgstr "کیا کچھ غلط ہوا؟"
 
-#: game/models.py:195
-#, python-format
-msgid ""
-"%(name)s, please contact venue to ensure availability on %(date)s : "
-"%(phone)s : %(url)s"
-msgstr ""
-"%(name)s، براہ کرم %(date)s کو دستیابی یقینی بنانے کے لیے مقام سے رابطہ "
-"کریں: %(phone)s : %(url)s"
-
-#: game/models.py:203
-msgid "match cancelled"
-msgstr "میچ منسوخ ہو گیا"
-
-#: game/models.py:207
-msgid "match chat disabled"
-msgstr "میچ چیٹ غیر فعال کر دی گئی"
-
-#: game/models.py:209
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "یہ اس مقام پر %(game)s کا پہلا QWIKGAME ہے۔"
-
-#: game/models.py:210
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr ""
-"براہِ کرم تصدیق کریں کہ اس مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
-
-#: game/models.py:212
-msgid "match scheduled"
-msgstr "میچ طے ہو گیا"
-
-#: game/models.py:214
-msgid "match chat perished"
-msgstr "میچ چیٹ ختم ہو گئی"
-
-#: game/models.py:274
-msgid "reviewed the Match"
-msgstr "میچ کا جائزہ لیا"
-
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
 msgstr "میچ"
@@ -113,28 +74,28 @@ msgstr "میچ منسوخ ہو چکا ہے"
 msgid "unknown status"
 msgstr "نامعلوم حالت"
 
-#: game/templates/game/match.html:143
+#: game/templates/game/match.html:133
 msgid "Show invitation history"
 msgstr "دعوت کی تاریخ دکھائیں"
 
-#: game/templates/game/match.html:146
+#: game/templates/game/match.html:136
 msgid "Hide invitation history"
 msgstr "دعوت کی تاریخ چھپائیں"
 
-#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "جائزہ"
 
-#: game/templates/game/match.html:191
+#: game/templates/game/match.html:181
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ ایموجی جلد آ رہا ہے ☺"
 
-#: game/templates/game/match.html:205
+#: game/templates/game/match.html:195
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "میچ کے 24 گھنٹے بعد چیٹ غیر فعال کر دی جائے گی۔"
 
-#: game/templates/game/match.html:208
+#: game/templates/game/match.html:198
 msgid "Chat will be deleted 1 week after Match."
 msgstr "میچ کے 1 ہفتے بعد چیٹ حذف کر دی جائے گی۔"
 

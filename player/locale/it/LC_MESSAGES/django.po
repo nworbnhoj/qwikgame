@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-01 15:55+1100\n"
+"POT-Creation-Date: 2026-03-17 07:12+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,16 +132,88 @@ msgstr "LA TUA REPUTAZIONE QWIKGAME"
 msgid "Based on feedback given by your rivals."
 msgstr "Basata sui feedback forniti dai tuoi avversari."
 
-#: player/templates/player/filter.html:46
+#: player/templates/player/chat_bubble_snippet.html:11
+#, python-format
+msgid ""
+"\n"
+"                Proposed %(game)s at %(venue)s, %(date)s, %(time)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:15
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Edit a Friend%(br)sor add a new one!\n"
+#| "    "
+msgid ""
+"\n"
+"                with %(friends)s\n"
+"        "
+msgstr ""
+"\n"
+"                Modifica un amico%(br)soppure aggiungine uno nuovo!\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:22
+#, python-format
+msgid ""
+"\n"
+"                %(name)s, please contact venue to ensure availability on "
+"%(date)s : %(phone)s : %(url)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:27
+msgid "Cancelled Invitation"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:29
+msgid "Match cancelled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:31
+msgid "Match chat disabled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:34
+#, python-format
+msgid ""
+"\n"
+"                This is the first QWIKGAME of %(game)s at this Venue. \n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:41
+#, python-format
+msgid ""
+"\n"
+"                Updated hours: %(hours)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:45
+msgid "reviewed the Match"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:47
+msgid "Match scheduled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:49
+msgid "Match chat perished"
+msgstr ""
+
+#: player/templates/player/filter.html:49
 #: player/templates/player/filters.html:8
 msgid "Filter"
 msgstr "Filtro"
 
-#: player/templates/player/filter.html:65
+#: player/templates/player/filter.html:68
 msgid "New Invitation Filter"
 msgstr "Nuovo filtro inviti"
 
-#: player/templates/player/filter.html:78
+#: player/templates/player/filter.html:81
 msgid "Add Filter"
 msgstr "Aggiungi filtro"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:50+1100\n"
+"POT-Creation-Date: 2026-03-17 07:05+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,42 +45,6 @@ msgstr "失望"
 msgid "Did anything go wrong?"
 msgstr "是否发生了任何问题？"
 
-#: game/models.py:195
-#, python-format
-msgid ""
-"%(name)s, please contact venue to ensure availability on %(date)s : "
-"%(phone)s : %(url)s"
-msgstr "%(name)s，请联系场地确认 %(date)s 是否有空位：%(phone)s ：%(url)s"
-
-#: game/models.py:203
-msgid "match cancelled"
-msgstr "比赛已取消"
-
-#: game/models.py:207
-msgid "match chat disabled"
-msgstr "比赛聊天已禁用"
-
-#: game/models.py:209
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "这是该场地的第一场 %(game)s QWIKGAME。"
-
-#: game/models.py:210
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr "请确认该场地具备进行比赛所需的一切条件。"
-
-#: game/models.py:212
-msgid "match scheduled"
-msgstr "比赛已安排"
-
-#: game/models.py:214
-msgid "match chat perished"
-msgstr "比赛聊天已删除"
-
-#: game/models.py:274
-msgid "reviewed the Match"
-msgstr "已评价该比赛"
-
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
 msgstr "比赛"
@@ -109,28 +73,28 @@ msgstr "比赛已取消"
 msgid "unknown status"
 msgstr "未知状态"
 
-#: game/templates/game/match.html:143
+#: game/templates/game/match.html:133
 msgid "Show invitation history"
 msgstr "显示邀请历史"
 
-#: game/templates/game/match.html:146
+#: game/templates/game/match.html:136
 msgid "Hide invitation history"
 msgstr "隐藏邀请历史"
 
-#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "评价"
 
-#: game/templates/game/match.html:191
+#: game/templates/game/match.html:181
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ 表情功能即将推出 ☺"
 
-#: game/templates/game/match.html:205
+#: game/templates/game/match.html:195
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "比赛结束24小时后将禁用聊天。"
 
-#: game/templates/game/match.html:208
+#: game/templates/game/match.html:198
 msgid "Chat will be deleted 1 week after Match."
 msgstr "比赛结束1周后聊天将被删除。"
 

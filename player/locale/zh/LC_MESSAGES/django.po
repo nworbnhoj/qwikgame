@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 15:29+1100\n"
+"POT-Creation-Date: 2026-03-17 07:12+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,16 +131,88 @@ msgstr "您的 QWIKGAME 声誉"
 msgid "Based on feedback given by your rivals."
 msgstr "基于您的对手给予的反馈。"
 
-#: player/templates/player/filter.html:46
+#: player/templates/player/chat_bubble_snippet.html:11
+#, python-format
+msgid ""
+"\n"
+"                Proposed %(game)s at %(venue)s, %(date)s, %(time)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:15
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Edit a Friend%(br)sor add a new one!\n"
+#| "    "
+msgid ""
+"\n"
+"                with %(friends)s\n"
+"        "
+msgstr ""
+"\n"
+"                编辑好友%(br)s或添加新的好友！\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:22
+#, python-format
+msgid ""
+"\n"
+"                %(name)s, please contact venue to ensure availability on "
+"%(date)s : %(phone)s : %(url)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:27
+msgid "Cancelled Invitation"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:29
+msgid "Match cancelled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:31
+msgid "Match chat disabled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:34
+#, python-format
+msgid ""
+"\n"
+"                This is the first QWIKGAME of %(game)s at this Venue. \n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:41
+#, python-format
+msgid ""
+"\n"
+"                Updated hours: %(hours)s\n"
+"    "
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:45
+msgid "reviewed the Match"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:47
+msgid "Match scheduled"
+msgstr ""
+
+#: player/templates/player/chat_bubble_snippet.html:49
+msgid "Match chat perished"
+msgstr ""
+
+#: player/templates/player/filter.html:49
 #: player/templates/player/filters.html:8
 msgid "Filter"
 msgstr "筛选"
 
-#: player/templates/player/filter.html:65
+#: player/templates/player/filter.html:68
 msgid "New Invitation Filter"
 msgstr "新建邀请筛选"
 
-#: player/templates/player/filter.html:78
+#: player/templates/player/filter.html:81
 msgid "Add Filter"
 msgstr "添加筛选"
 
@@ -241,7 +313,8 @@ msgid ""
 "This will help qwikgame make better Matches for you, and your friend, and "
 "other qwikgame Players who know either of you."
 msgstr ""
-"请花一点时间告知 qwikgame 您好友的实力水平。这将帮助 qwikgame 为您、您的好友以及认识你们的其他玩家安排更合适的比赛。"
+"请花一点时间告知 qwikgame 您好友的实力水平。这将帮助 qwikgame 为您、您的好友"
+"以及认识你们的其他玩家安排更合适的比赛。"
 
 #: player/templates/player/strength.html:85
 msgid "STRENGTH"

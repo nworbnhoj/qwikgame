@@ -1,0 +1,40 @@
+<!-- qwikgame/templates/player/chat_bubble_snippet.html -->
+{% load static %}
+
+    <div class="chat_bubble">
+        <div class="row">
+            <span class="name">{{ entry.name }}</span>
+        </div>
+        <div class="row"> 
+{% if entry.text == 'template_book_prompt' %}
+            <span class="text">
+    {% blocktranslate %}
+                {{ name }}, please contact venue to ensure availability on {{ date }} : {{ phone }} : {{ url }}
+    {% endblocktranslate %}
+            </span>
+{% elif entry.text == 'template_cancelled_match' %}
+            <span class="text">{% translate 'Match cancelled'  %}</span>
+{% elif entry.text == 'template_disabled' %}
+            <span class="text">{% translate 'Match chat disabled'  %}</span>
+{% elif entry.text == 'template_first_game' %}
+            <span class="text">
+    {% blocktranslate %}
+                This is the first QWIKGAME of {{ game }} at this Venue. 
+    {% endblocktranslate %}
+                <br>
+                {{ translate 'Please check that the Venue has everything you need for the Match.' }}
+            </span>
+{% elif entry.text == 'template_review' %}
+            <span class="text">{% translate 'reviewed the Match' %}</span>
+{% elif entry.text == 'template_scheduled' %}
+            <span class="text">{% translate 'Match scheduled' %}</span>
+{% elif entry.text == 'template_perished' %}
+            <span class="text">{% translate 'Match chat perished' %}</span>
+{% else %}
+            <span class="text">{{ entry.text }}</span>
+{% endif %}
+        </div>
+        <div class="row">
+            <time datetime="{{ entry.created }}"></time>
+        </div>
+    </div>

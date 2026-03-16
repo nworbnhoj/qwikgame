@@ -102,12 +102,17 @@ class MatchView(MatchesView):
             rivals = list(match.competitors.all())
             rivals.remove(player)
             context |= {
+                'date': match.datetime_str,
                 'enable_chat': match.status in {'A','C','X'},
+                'game': match.game,
+                'name': match.init_player().qwikname,
                 'notify_off': person.alert_str(False, 'match'),
                 'notify_on': person.alert_str(True, 'match'),
+                'phone': match.venue.phone,
                 'rivals': rivals,
                 'match_log_start': match_log_start,
                 'review': review,
+                'url': match.venue.url,
             }
         return context
 

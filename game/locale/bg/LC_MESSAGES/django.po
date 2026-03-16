@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:50+1100\n"
+"POT-Creation-Date: 2026-03-17 07:05+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,44 +46,6 @@ msgstr "РАЗОЧАРОВАНИЕ"
 msgid "Did anything go wrong?"
 msgstr "Имаше ли нещо нередно?"
 
-#: game/models.py:195
-#, python-format
-msgid ""
-"%(name)s, please contact venue to ensure availability on %(date)s : "
-"%(phone)s : %(url)s"
-msgstr ""
-"%(name)s моля, свържете се с мястото на провеждане, за да се уверите в "
-"наличността в %(date)s : %(phone)s : %(url)s"
-
-#: game/models.py:203
-msgid "match cancelled"
-msgstr "Мачът е отменен"
-
-#: game/models.py:207
-msgid "match chat disabled"
-msgstr "Чатът за мачове е деактивиран"
-
-#: game/models.py:209
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "Това е първата QWIKGAME на %(game)s на това място."
-
-#: game/models.py:210
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr "Моля, проверете дали мястото разполага с всичко необходимо за мача."
-
-#: game/models.py:212
-msgid "match scheduled"
-msgstr "Мачът е насрочен"
-
-#: game/models.py:214
-msgid "match chat perished"
-msgstr "Чатът за мача загина"
-
-#: game/models.py:274
-msgid "reviewed the Match"
-msgstr "прегледа мача"
-
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
 msgstr "Мач"
@@ -112,28 +74,28 @@ msgstr "Мачът е отменен"
 msgid "unknown status"
 msgstr "неизвестен статус"
 
-#: game/templates/game/match.html:143
+#: game/templates/game/match.html:133
 msgid "Show invitation history"
 msgstr "Покажи историята на поканите"
 
-#: game/templates/game/match.html:146
+#: game/templates/game/match.html:136
 msgid "Hide invitation history"
 msgstr "Скрий историята на поканите"
 
-#: game/templates/game/match.html:181 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "Отзив"
 
-#: game/templates/game/match.html:191
+#: game/templates/game/match.html:181
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ емоджи скоро ☺"
 
-#: game/templates/game/match.html:205
+#: game/templates/game/match.html:195
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "Чатът ще бъде деактивиран 24 часа след мача."
 
-#: game/templates/game/match.html:208
+#: game/templates/game/match.html:198
 msgid "Chat will be deleted 1 week after Match."
 msgstr "Чатът ще бъде изтрит 1 седмица след мача."
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"POT-Creation-Date: 2026-03-17 07:31+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr "抱歉，场地选择未成功。请重试。"
 msgid "Please invite at least one Friend."
 msgstr "请至少邀请一位好友。"
 
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:88
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:92
 msgid "Invite Friends Only"
 msgstr "仅邀请好友"
 
@@ -70,56 +70,26 @@ msgstr "从地图选择"
 msgid "VENUE"
 msgstr "场地"
 
-#: appeal/models.py:173
-#, python-format
-msgid "Proposed %(game)s at %(venue)s, %(date)s, %(time)s"
-msgstr "提议在 %(date)s %(time)s 于 %(venue)s 进行 %(game)s"
-
-#: appeal/models.py:180
-#, python-format
-msgid " with %(fiends)s"
-msgstr " 与 %(fiends)s 一起"
-
-#: appeal/models.py:184
-#, fuzzy
-#| msgid "Cancel this Invitation?"
-msgid "Cancelled Invitation"
-msgstr "取消此邀请？"
-
-#: appeal/models.py:189
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "这是该场地的第一场 %(game)s QWIKGAME。"
-
-#: appeal/models.py:190
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr "请确认该场地具备进行比赛所需的一切条件。"
-
-#: appeal/models.py:192
-#, python-format
-msgid "Updated hours: %(hours)s"
-msgstr "更新时间：%(hours)s"
-
-#: appeal/models.py:331
+#: appeal/models.py:319
 #, python-format
 msgid "Confirmed for %(hours)s with %(name)s"
 msgstr "已确认 %(hours)s，与 %(name)s"
 
-#: appeal/models.py:343
+#: appeal/models.py:331
 #, python-format
 msgid "Offered %(hours)s"
 msgstr "已提供 %(hours)s"
 
-#: appeal/models.py:354
+#: appeal/models.py:342
 #, python-format
 msgid "Declined %(hours)s with %(name)s"
 msgstr "已拒绝 %(hours)s，与 %(name)s"
 
-#: appeal/models.py:366
+#: appeal/models.py:354
 msgid "bid expired"
 msgstr "出价已过期"
 
-#: appeal/models.py:375
+#: appeal/models.py:363
 #, python-format
 msgid "withdrew %(hours)s"
 msgstr "撤回 %(hours)s"
@@ -136,7 +106,7 @@ msgstr "取消"
 msgid "decline"
 msgstr "拒绝"
 
-#: appeal/templates/appeal/accept.html:125
+#: appeal/templates/appeal/accept.html:99
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
@@ -148,7 +118,7 @@ msgstr "动态"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:48 appeal/templates/appeal/keen.html:85
+#: appeal/templates/appeal/keen.html:52 appeal/templates/appeal/keen.html:89
 msgid "Invite"
 msgstr "邀请"
 
@@ -204,6 +174,6 @@ msgstr ""
 msgid "Cancel this Offer?"
 msgstr "取消此出价？"
 
-#: appeal/templates/appeal/keen.html:69
+#: appeal/templates/appeal/keen.html:73
 msgid "Keen To Play? Send Invitation?"
 msgstr "想玩吗？发送邀请？"

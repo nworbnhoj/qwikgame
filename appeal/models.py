@@ -77,7 +77,7 @@ class Appeal(models.Model):
             self.status = 'C'
             self.alert(self.player)
             self.meta['seen'] = [self.player.pk]
-            self.log_event('cancelled')
+            self.log_event('cancelled_invite')
         try:
             from api.models import Mark
             Mark.objects.get(game=self.game, place=self.venue).save()
@@ -167,32 +167,19 @@ class Appeal(models.Model):
             id = self.player.pk,
             klass= 'event',
             name = self.player.qwikname,
+            text = f'template_{template}',
         )
         match template:
             case 'appeal':
-                entry['text'] = _('Proposed %(game)s at %(venue)s, %(date)s, %(time)s') % {
-                    'game': self.game,
-                    'venue': self.venue,
-                    'date': self.venue.datetime(self.date).strftime("%b %d"),
-                    'time': self.hours24.as_str(),
-                }
-                if not self.is_open:
-                    entry['text'] += _(' with %(fiends)s') % {
-                        'friends': ', '.join(friend.name_best() for friend in self.invitees.all())
-                    }
+                pass
             case 'cancelled':
-                entry['text'] = _('Cancelled Invitation')
+                pass
             case 'first_game':
                 entry['hash'] = SYSTEM_HASH
                 entry['id'] = ''
                 entry['name'] = SYSTEM_NAME
-                entry['text'] = _('This is the first QWIKGAME of %(game)s at this Venue.') % {'game': self.game }
-                entry['text'] += ' '
-                entry['text'] += _('Please check that the Venue has everything you need for the Match.')
             case 'reappeal':
-                entry['text'] = _('Updated hours: %(hours)s') % {
-                    'hours': self.venue.datetime(self.date).strftime('%b %d')
-                }
+                pass
             case _:
                 logger.warn(f'unknown template: {template}')
         self.log_entry(entry)

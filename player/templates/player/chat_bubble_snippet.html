@@ -6,12 +6,25 @@
             <span class="name">{{ entry.name }}</span>
         </div>
         <div class="row"> 
-{% if entry.text == 'template_book_prompt' %}
+{% if entry.text == 'template_appeal' %}
+            <span class="text">
+    {% blocktranslate %}
+                Proposed {{ game }} at {{ venue }}, {{ date }}, {{ time }}
+    {% endblocktranslate %}
+    {% if friends %}
+        {% blocktranslate %}
+                with {{ friends }}
+        {% endblocktranslate %}
+    {% endif %}
+            </span>
+{% elif entry.text == 'template_book_prompt' %}
             <span class="text">
     {% blocktranslate %}
                 {{ name }}, please contact venue to ensure availability on {{ date }} : {{ phone }} : {{ url }}
     {% endblocktranslate %}
             </span>
+{% elif entry.text == 'template_cancelled_invite' %}
+            <span class="text">{% translate 'Cancelled Invitation'  %}</span>
 {% elif entry.text == 'template_cancelled_match' %}
             <span class="text">{% translate 'Match cancelled'  %}</span>
 {% elif entry.text == 'template_disabled' %}
@@ -24,6 +37,10 @@
                 <br>
                 {{ translate 'Please check that the Venue has everything you need for the Match.' }}
             </span>
+{% elif entry.text == 'template_reappeal' %}
+    {% blocktranslate %}
+                Updated hours: {{ hours }}
+    {% endblocktranslate %}
 {% elif entry.text == 'template_review' %}
             <span class="text">{% translate 'reviewed the Match' %}</span>
 {% elif entry.text == 'template_scheduled' %}

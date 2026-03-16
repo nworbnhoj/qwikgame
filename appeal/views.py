@@ -196,6 +196,11 @@ class BidView(AppealsView):
             next_up = appeal.status + ('B' if bid else '')
             context |= {
                 'appeal': appeal,
+                'bid': bid,
+                'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
+                'friends': ', '.join(friend.name_best() for friend in appeal.invitees.all()),
+                'game': appeal.game,
+                'hours': appeal.venue.datetime(appeal.date).strftime('%b %d'),
                 'log': log,
                 'next_up': NEXT_UP[next_up],
                 'notify_off': person.alert_str(False, 'bid'),
@@ -203,7 +208,8 @@ class BidView(AppealsView):
                 'rival': appeal.player,
                 'rival_name': player.name_rival(appeal.player),
                 'strength': player.strength_str(appeal.game, appeal.player),
-                'bid': bid,
+                'time': appeal.hours24.as_str(),
+                'venue': appeal.venue,
             }
         self._context = context
         return self._context

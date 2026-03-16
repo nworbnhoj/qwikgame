@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"POT-Creation-Date: 2026-03-17 07:31+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -54,7 +54,7 @@ msgstr "Spiacenti, la selezione della sede non ha funzionato. Riprova."
 msgid "Please invite at least one Friend."
 msgstr "Invita almeno un amico."
 
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:88
+#: appeal/forms.py:241 appeal/templates/appeal/keen.html:92
 msgid "Invite Friends Only"
 msgstr "Invita solo amici"
 
@@ -71,56 +71,26 @@ msgstr "Seleziona dalla mappa"
 msgid "VENUE"
 msgstr "SEDE"
 
-#: appeal/models.py:173
-#, python-format
-msgid "Proposed %(game)s at %(venue)s, %(date)s, %(time)s"
-msgstr "%(game)s proposto presso %(venue)s, %(date)s, %(time)s"
-
-#: appeal/models.py:180
-#, python-format
-msgid " with %(fiends)s"
-msgstr ""
-
-#: appeal/models.py:184
-#, fuzzy
-#| msgid "Cancel this Invitation?"
-msgid "Cancelled Invitation"
-msgstr "Annullare questo invito?"
-
-#: appeal/models.py:189
-#, python-format
-msgid "This is the first QWIKGAME of %(game)s at this Venue."
-msgstr "Questo è il primo QWIKGAME di %(game)s in questa struttura."
-
-#: appeal/models.py:190
-msgid "Please check that the Venue has everything you need for the Match."
-msgstr "Controlla che la struttura abbia tutto il necessario per la partita."
-
-#: appeal/models.py:192
-#, python-format
-msgid "Updated hours: %(hours)s"
-msgstr "Ore aggiornate: %(hours)s"
-
-#: appeal/models.py:331
+#: appeal/models.py:319
 #, python-format
 msgid "Confirmed for %(hours)s with %(name)s"
 msgstr "Confermato per %(hours)s con %(name)s"
 
-#: appeal/models.py:343
+#: appeal/models.py:331
 #, python-format
 msgid "Offered %(hours)s"
 msgstr "Offerte %(hours)s"
 
-#: appeal/models.py:354
+#: appeal/models.py:342
 #, python-format
 msgid "Declined %(hours)s with %(name)s"
 msgstr "Rifiutate %(hours)s con %(name)s"
 
-#: appeal/models.py:366
+#: appeal/models.py:354
 msgid "bid expired"
 msgstr "offerta scaduta"
 
-#: appeal/models.py:375
+#: appeal/models.py:363
 #, python-format
 msgid "withdrew %(hours)s"
 msgstr "ritirate %(hours)s"
@@ -137,7 +107,7 @@ msgstr "annulla"
 msgid "decline"
 msgstr "rifiuta"
 
-#: appeal/templates/appeal/accept.html:125
+#: appeal/templates/appeal/accept.html:99
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
@@ -151,7 +121,7 @@ msgstr "Feed"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:48 appeal/templates/appeal/keen.html:85
+#: appeal/templates/appeal/keen.html:52 appeal/templates/appeal/keen.html:89
 msgid "Invite"
 msgstr "Invita"
 
@@ -207,6 +177,6 @@ msgstr ""
 msgid "Cancel this Offer?"
 msgstr "Annullare questa offerta?"
 
-#: appeal/templates/appeal/keen.html:69
+#: appeal/templates/appeal/keen.html:73
 msgid "Keen To Play? Send Invitation?"
 msgstr "Hai voglia di giocare? Invia un invito?"

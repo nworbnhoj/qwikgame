@@ -88,17 +88,7 @@
                     <div class="identicon" data-hash="{{ entry.hash }}"></div>
                 </a>
     {% endif %}
-                <div class="chat_bubble">
-                    <div class="row">
-                        <span class="name">{{ entry.name }}</span>
-                    </div>
-                    <div class="row">
-                        <span class="text">{{ entry.text }}</span>
-                    </div>
-                    <div class="row">
-                        <time datetime="{{ entry.created }}"></time>
-                    </div>
-                </div>
+    {% include 'player/chat_bubble_snippet.html' %}
             </div>
 {% endfor %}
         </div>

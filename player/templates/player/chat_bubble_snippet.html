@@ -1,5 +1,6 @@
 <!-- qwikgame/templates/player/chat_bubble_snippet.html -->
 {% load static %}
+{% load i18n %}
 
     <div class="chat_bubble">
         <div class="row">
@@ -35,7 +36,7 @@
                 This is the first QWIKGAME of {{ game }} at this Venue. 
     {% endblocktranslate %}
                 <br>
-                {{ translate 'Please check that the Venue has everything you need for the Match.' }}
+                {% translate 'Please check that the Venue has everything you need for the Match.' %}
             </span>
 {% elif entry.text == 'template_reappeal' %}
     {% blocktranslate %}

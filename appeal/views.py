@@ -200,7 +200,7 @@ class BidView(AppealsView):
                 'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
                 'friends': ', '.join(friend.name_best() for friend in appeal.invitees.all()),
                 'game': appeal.game,
-                'hours': appeal.venue.datetime(appeal.date).strftime('%b %d'),
+                'hours': bid.hours24().as_str(),
                 'log': log,
                 'next_up': NEXT_UP[next_up],
                 'notify_off': person.alert_str(False, 'bid'),

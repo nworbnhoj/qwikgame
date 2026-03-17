@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 16:45+1100\n"
+"POT-Creation-Date: 2026-03-18 10:26+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,7 +132,7 @@ msgstr "ВАШАТА РЕПУТАЦИЯ В QWIKGAME"
 msgid "Based on feedback given by your rivals."
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:12
+#: player/templates/player/chat_bubble_snippet.html:16
 #, python-format
 msgid ""
 "\n"
@@ -143,7 +143,7 @@ msgstr ""
 "                Потвърдено за %(hours)s с %(rival_name)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:17
+#: player/templates/player/chat_bubble_snippet.html:21
 #, python-format
 msgid ""
 "\n"
@@ -154,7 +154,7 @@ msgstr ""
 "                Предложен %(game)s в %(venue)s, %(date)s, %(time)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:21
+#: player/templates/player/chat_bubble_snippet.html:25
 #, python-format
 msgid ""
 "\n"
@@ -165,18 +165,22 @@ msgstr ""
 "                с %(friends)s\n"
 "        "
 
-#: player/templates/player/chat_bubble_snippet.html:28
-#, python-format
+#: player/templates/player/chat_bubble_snippet.html:32
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Offered %(entry.hours)s\n"
+#| "    "
 msgid ""
 "\n"
-"                Offered %(hours)s\n"
+"                Offered %(entry.hours)s\n"
 "    "
 msgstr ""
 "\n"
 "                Предложени %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:34
+#: player/templates/player/chat_bubble_snippet.html:38
 #, python-format
 msgid ""
 "\n"
@@ -189,15 +193,15 @@ msgstr ""
 "наличността на %(date)s : %(phone)s : %(url)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:39
+#: player/templates/player/chat_bubble_snippet.html:43
 msgid "Cancelled Invitation"
 msgstr "Отменена покана"
 
-#: player/templates/player/chat_bubble_snippet.html:41
+#: player/templates/player/chat_bubble_snippet.html:45
 msgid "Match cancelled"
 msgstr "Мачът е отменен"
 
-#: player/templates/player/chat_bubble_snippet.html:44
+#: player/templates/player/chat_bubble_snippet.html:48
 #, python-format
 msgid ""
 "\n"
@@ -208,15 +212,15 @@ msgstr ""
 "                Отказани %(hours)s с %(rival_name)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:49
+#: player/templates/player/chat_bubble_snippet.html:53
 msgid "Match chat disabled"
 msgstr "Чатът за мача е деактивиран"
 
-#: player/templates/player/chat_bubble_snippet.html:51
+#: player/templates/player/chat_bubble_snippet.html:55
 msgid "Bid expired"
 msgstr "Офертата изтече"
 
-#: player/templates/player/chat_bubble_snippet.html:54
+#: player/templates/player/chat_bubble_snippet.html:58
 #, python-format
 msgid ""
 "\n"
@@ -227,11 +231,11 @@ msgstr ""
 "                Това е първата QWIKGAME на %(game)s на това място. \n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:58
+#: player/templates/player/chat_bubble_snippet.html:62
 msgid "Please check that the Venue has everything you need for the Match."
 msgstr "Моля, проверете дали мястото разполага с всичко необходимо за мача."
 
-#: player/templates/player/chat_bubble_snippet.html:61
+#: player/templates/player/chat_bubble_snippet.html:65
 #, python-format
 msgid ""
 "\n"
@@ -242,19 +246,19 @@ msgstr ""
 "                Актуализирани часове: %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:65
+#: player/templates/player/chat_bubble_snippet.html:69
 msgid "reviewed the Match"
 msgstr "прегледа мача"
 
-#: player/templates/player/chat_bubble_snippet.html:67
+#: player/templates/player/chat_bubble_snippet.html:71
 msgid "Match scheduled"
 msgstr "Мачът е насрочен"
 
-#: player/templates/player/chat_bubble_snippet.html:69
+#: player/templates/player/chat_bubble_snippet.html:73
 msgid "Match chat perished"
 msgstr "Чатът за мача е изтекъл"
 
-#: player/templates/player/chat_bubble_snippet.html:72
+#: player/templates/player/chat_bubble_snippet.html:76
 #, python-format
 msgid ""
 "\n"

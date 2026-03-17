@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 19:14+1100\n"
+"POT-Creation-Date: 2026-03-18 10:26+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,7 +133,7 @@ msgstr "آپ کی QWIKGAME ساکھ"
 msgid "Based on feedback given by your rivals."
 msgstr "آپ کے حریفوں کی دی گئی رائے پر مبنی۔"
 
-#: player/templates/player/chat_bubble_snippet.html:12
+#: player/templates/player/chat_bubble_snippet.html:16
 #, python-format
 msgid ""
 "\n"
@@ -144,7 +144,7 @@ msgstr ""
 "                %(rival_name)s کے ساتھ %(hours)s کے لیے تصدیق ہو گئی\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:17
+#: player/templates/player/chat_bubble_snippet.html:21
 #, python-format
 msgid ""
 "\n"
@@ -155,7 +155,7 @@ msgstr ""
 "                %(venue)s میں %(date)s، %(time)s پر %(game)s کی تجویز\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:21
+#: player/templates/player/chat_bubble_snippet.html:25
 #, python-format
 msgid ""
 "\n"
@@ -166,18 +166,22 @@ msgstr ""
 "                %(friends)s کے ساتھ\n"
 "        "
 
-#: player/templates/player/chat_bubble_snippet.html:28
-#, python-format
+#: player/templates/player/chat_bubble_snippet.html:32
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Offered %(hours)s\n"
+#| "    "
 msgid ""
 "\n"
-"                Offered %(hours)s\n"
+"                Offered %(entry.hours)s\n"
 "    "
 msgstr ""
 "\n"
-"                %(hours)s کی پیشکش کی گئی\n"
+"                %(entry.hours)s کی پیشکش کی گئی\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:34
+#: player/templates/player/chat_bubble_snippet.html:38
 #, python-format
 msgid ""
 "\n"
@@ -190,15 +194,15 @@ msgstr ""
 "لیے مقام سے رابطہ کریں : %(phone)s : %(url)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:39
+#: player/templates/player/chat_bubble_snippet.html:43
 msgid "Cancelled Invitation"
 msgstr "دعوت منسوخ کر دی گئی"
 
-#: player/templates/player/chat_bubble_snippet.html:41
+#: player/templates/player/chat_bubble_snippet.html:45
 msgid "Match cancelled"
 msgstr "میچ منسوخ ہو گیا"
 
-#: player/templates/player/chat_bubble_snippet.html:44
+#: player/templates/player/chat_bubble_snippet.html:48
 #, python-format
 msgid ""
 "\n"
@@ -209,15 +213,15 @@ msgstr ""
 "                %(rival_name)s کے ساتھ %(hours)s مسترد کر دیا گیا\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:49
+#: player/templates/player/chat_bubble_snippet.html:53
 msgid "Match chat disabled"
 msgstr "میچ چیٹ غیر فعال کر دی گئی"
 
-#: player/templates/player/chat_bubble_snippet.html:51
+#: player/templates/player/chat_bubble_snippet.html:55
 msgid "Bid expired"
 msgstr "پیشکش کی مدت ختم ہو گئی"
 
-#: player/templates/player/chat_bubble_snippet.html:54
+#: player/templates/player/chat_bubble_snippet.html:58
 #, python-format
 msgid ""
 "\n"
@@ -228,12 +232,12 @@ msgstr ""
 "                یہ اس مقام پر %(game)s کا پہلا QWIKGAME ہے۔ \n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:58
+#: player/templates/player/chat_bubble_snippet.html:62
 msgid "Please check that the Venue has everything you need for the Match."
 msgstr ""
 "براہِ کرم تصدیق کریں کہ مقام پر میچ کے لیے تمام ضروری سہولیات موجود ہیں۔"
 
-#: player/templates/player/chat_bubble_snippet.html:61
+#: player/templates/player/chat_bubble_snippet.html:65
 #, python-format
 msgid ""
 "\n"
@@ -244,19 +248,19 @@ msgstr ""
 "                اپ ڈیٹ شدہ اوقات: %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:65
+#: player/templates/player/chat_bubble_snippet.html:69
 msgid "reviewed the Match"
 msgstr "میچ کا جائزہ لیا"
 
-#: player/templates/player/chat_bubble_snippet.html:67
+#: player/templates/player/chat_bubble_snippet.html:71
 msgid "Match scheduled"
 msgstr "میچ طے ہو گیا"
 
-#: player/templates/player/chat_bubble_snippet.html:69
+#: player/templates/player/chat_bubble_snippet.html:73
 msgid "Match chat perished"
 msgstr "میچ چیٹ ختم ہو گئی"
 
-#: player/templates/player/chat_bubble_snippet.html:72
+#: player/templates/player/chat_bubble_snippet.html:76
 #, python-format
 msgid ""
 "\n"

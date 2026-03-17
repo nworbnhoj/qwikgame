@@ -111,8 +111,10 @@ class AcceptView(AppealsView):
                     if id != player.pk:
                         Entry(entry).rename(player)
                     if id in bids:
-                        entry['conduct'] = bids[id].conduct_stars
-                        entry['strength'] = bids[id].strength_str()
+                        bid = bids[id]
+                        entry['conduct'] = bid.conduct_stars
+                        entry['hours'] = bid.hours24().as_str()
+                        entry['strength'] = bid.strength_str()
             next_up = appeal.status + 'O'
             context |= {
                 'bids': bids,

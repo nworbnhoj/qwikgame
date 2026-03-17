@@ -6,8 +6,13 @@
         <div class="row">
             <span class="name">{{ entry.name }}</span>
         </div>
-        <div class="row"> 
-{% if entry.text == 'template_appeal' %}
+        <div class="row">
+{% if entry.text == 'template_accept' %}
+            <span class="text">
+    {% blocktranslate %}
+                Confirmed for {{ hours }} with {{ rival_name }}
+    {% endblocktranslate %}
+{% elif entry.text == 'template_appeal' %}
             <span class="text">
     {% blocktranslate %}
                 Proposed {{ game }} at {{ venue }}, {{ date }}, {{ time }}
@@ -17,6 +22,12 @@
                 with {{ friends }}
         {% endblocktranslate %}
     {% endif %}
+            </span>
+{% elif entry.text == 'template_bid' %}
+            <span class="text">
+    {% blocktranslate %}
+                Offered {{ hours }}
+    {% endblocktranslate %}
             </span>
 {% elif entry.text == 'template_book_prompt' %}
             <span class="text">
@@ -28,8 +39,16 @@
             <span class="text">{% translate 'Cancelled Invitation'  %}</span>
 {% elif entry.text == 'template_cancelled_match' %}
             <span class="text">{% translate 'Match cancelled'  %}</span>
+{% elif entry.text == 'template_decline' %}
+            <span class="text">
+    {% blocktranslate %}
+                Declined {{ hours }} with {{ rival_name }}
+    {% endblocktranslate %}
+            </span>
 {% elif entry.text == 'template_disabled' %}
             <span class="text">{% translate 'Match chat disabled'  %}</span>
+{% elif entry.text == 'template_expired' %}
+            <span class="text">{% translate 'Bid expired' %}</span>
 {% elif entry.text == 'template_first_game' %}
             <span class="text">
     {% blocktranslate %}
@@ -48,6 +67,12 @@
             <span class="text">{% translate 'Match scheduled' %}</span>
 {% elif entry.text == 'template_perished' %}
             <span class="text">{% translate 'Match chat perished' %}</span>
+{% elif entry.text == 'template_withdraw' %}
+            <span class="text">
+    {% blocktranslate %}
+                Withdrew {{ hours }}
+    {% endblocktranslate %}
+            </span>
 {% else %}
             <span class="text">{{ entry.text }}</span>
 {% endif %}

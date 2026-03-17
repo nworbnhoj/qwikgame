@@ -1,7 +1,6 @@
 import datetime, logging
 from django.db import models
 from django.utils.timezone import now
-from django.utils.translation import gettext_lazy as _
 from game.models import Match
 from player.models import Friend, Player, Strength
 from qwikgame.constants import SYSTEM_HASH, SYSTEM_NAME
@@ -316,10 +315,7 @@ class Bid(models.Model):
                     klass= 'event',
                     name = player.qwikname,
                     pk = self.pk,
-                    text = _('Confirmed for %(hours)s with %(name)s') % {
-                        'hours': self.hours24().as_str(),
-                        'name': rival.qwikname,
-                    }
+                    text = f'template_{template}',
                 )
             case 'bid':
                 entry = Entry(
@@ -328,9 +324,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = _('Offered %(hours)s') % {
-                        'hours': self.hours24().as_str()
-                    }
+                    text = f'template_{template}',
                 )
             case 'decline':
                 entry = Entry(
@@ -339,10 +333,7 @@ class Bid(models.Model):
                     klass= 'event',
                     name = player.qwikname,
                     pk = self.pk,
-                    text = _('Declined %(hours)s with %(name)s') % {
-                        'hours': self.hours24().as_str(),
-                        'name': rival.qwikname,                         
-                    }
+                    text = f'template_{template}',
                 )
             case 'expired':
                 entry = Entry(
@@ -351,7 +342,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = _('bid expired'),
+                    text = f'template_{template}',
                 )
             case 'withdraw':
                 entry = Entry(
@@ -360,9 +351,7 @@ class Bid(models.Model):
                     klass= 'event rival',
                     name = rival.qwikname,
                     pk = self.pk,
-                    text = _('withdrew %(hours)s') % {
-                       'hours': self.hours24().as_str()
-                    },
+                    text = f'template_{template}',
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

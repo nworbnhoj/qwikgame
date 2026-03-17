@@ -5,6 +5,10 @@
     <div class="chat_bubble">
         <div class="row">
             <span class="name">{{ entry.name }}</span>
+{% if entry.conduct %}
+    {% include 'player/conduct_stars_snippet.html' %}
+{% endif %}
+            {{ entry.strength }}
         </div>
         <div class="row">
 {% if entry.text == 'template_accept' %}

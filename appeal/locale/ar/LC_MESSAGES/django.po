@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:31+1100\n"
+"POT-Creation-Date: 2026-03-17 15:13+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -72,30 +72,6 @@ msgstr "اختر من الخريطة"
 msgid "VENUE"
 msgstr "المكان"
 
-#: appeal/models.py:319
-#, python-format
-msgid "Confirmed for %(hours)s with %(name)s"
-msgstr "تم التأكيد لمدة %(hours)s مع %(name)s"
-
-#: appeal/models.py:331
-#, python-format
-msgid "Offered %(hours)s"
-msgstr "تم تقديم عرض لمدة %(hours)s"
-
-#: appeal/models.py:342
-#, python-format
-msgid "Declined %(hours)s with %(name)s"
-msgstr "تم رفض %(hours)s مع %(name)s"
-
-#: appeal/models.py:354
-msgid "bid expired"
-msgstr "انتهت صلاحية العرض"
-
-#: appeal/models.py:363
-#, python-format
-msgid "withdrew %(hours)s"
-msgstr "سحب %(hours)s"
-
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"
 msgstr "إلغاء هذه الدعوة؟"
@@ -108,7 +84,7 @@ msgstr "إلغاء"
 msgid "decline"
 msgstr "رفض"
 
-#: appeal/templates/appeal/accept.html:99
+#: appeal/templates/appeal/accept.html:125
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"

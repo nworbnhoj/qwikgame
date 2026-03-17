@@ -94,8 +94,8 @@ class AcceptView(AppealsView):
         for bid in bids:
             bid.hour_str = bid.hours24().as_str()
             bid.name = player.name_rival(bid.rival)
-            bid.conduct_stars = bid.rival.conduct_stars 
-        return {str(bid.pk): bid for bid in bids}
+            bid.conduct_stars = bid.rival.conduct_stars
+        return {bid.rival.pk: bid for bid in bids}
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -104,17 +104,29 @@ class AcceptView(AppealsView):
         appeal = context.get('appeal')
         if appeal:
             log = appeal.log_filter(person.blocked())
+            bids = self._bids(appeal, player)
             for entry in log:
-                if 'id' in entry and entry['id'] != player.pk:
-                    Entry(entry).rename(player)
+                if 'id' in entry:
+                    id = entry['id']
+                    if id != player.pk:
+                        Entry(entry).rename(player)
+                    if id in bids:
+                        entry['conduct'] = bids[id].conduct_stars
+                        entry['strength'] = bids[id].strength_str()
             next_up = appeal.status + 'O'
             context |= {
+                'bids': bids,
+                'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
+                'friends': ', '.join(friend.name_best() for friend in appeal.invitees.all()),
+                'game': appeal.game,
+                'hours': appeal.venue.datetime(appeal.date).strftime('%b %d'),
                 'notify_off': person.alert_str(False, 'bid'),
                 'notify_on': person.alert_str(True, 'bid'),
                 'next_up': NEXT_UP[next_up],
-                'bids': self._bids(appeal, player),
                 'log': log,
                 'target': 'bid',
+                'time': appeal.hours24.as_str(),
+                'venue': appeal.venue,
             }
         self._context = context
         return self._context

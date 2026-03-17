@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:12+1100\n"
+"POT-Creation-Date: 2026-03-17 16:48+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,7 +132,18 @@ msgstr "LA TUA REPUTAZIONE QWIKGAME"
 msgid "Based on feedback given by your rivals."
 msgstr "Basata sui feedback forniti dai tuoi avversari."
 
-#: player/templates/player/chat_bubble_snippet.html:11
+#: player/templates/player/chat_bubble_snippet.html:12
+#, python-format
+msgid ""
+"\n"
+"                Confirmed for %(hours)s with %(rival_name)s\n"
+"    "
+msgstr ""
+"\n"
+"                Confermato per %(hours)s con %(rival_name)s\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:17
 #, python-format
 msgid ""
 "\n"
@@ -140,22 +151,29 @@ msgid ""
 "    "
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Edit a Friend%(br)sor add a new one!\n"
-#| "    "
+#: player/templates/player/chat_bubble_snippet.html:21
+#, python-format
 msgid ""
 "\n"
 "                with %(friends)s\n"
 "        "
 msgstr ""
 "\n"
-"                Modifica un amico%(br)soppure aggiungine uno nuovo!\n"
+"                con %(friends)s\n"
+"        "
+
+#: player/templates/player/chat_bubble_snippet.html:28
+#, python-format
+msgid ""
+"\n"
+"                Offered %(hours)s\n"
+"    "
+msgstr ""
+"\n"
+"                Offerto %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:22
+#: player/templates/player/chat_bubble_snippet.html:34
 #, python-format
 msgid ""
 "\n"
@@ -164,19 +182,34 @@ msgid ""
 "    "
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:27
+#: player/templates/player/chat_bubble_snippet.html:39
 msgid "Cancelled Invitation"
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:29
+#: player/templates/player/chat_bubble_snippet.html:41
 msgid "Match cancelled"
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:31
-msgid "Match chat disabled"
+#: player/templates/player/chat_bubble_snippet.html:44
+#, python-format
+msgid ""
+"\n"
+"                Declined %(hours)s with %(rival_name)s\n"
+"    "
 msgstr ""
+"\n"
+"                Rifiutato %(hours)s con %(rival_name)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:34
+#: player/templates/player/chat_bubble_snippet.html:49
+msgid "Match chat disabled"
+msgstr "Chat della partita disabilitata"
+
+#: player/templates/player/chat_bubble_snippet.html:51
+msgid "Bid expired"
+msgstr "Offerta scaduta"
+
+#: player/templates/player/chat_bubble_snippet.html:54
 #, python-format
 msgid ""
 "\n"
@@ -184,25 +217,43 @@ msgid ""
 "    "
 msgstr ""
 
-#: player/templates/player/chat_bubble_snippet.html:41
+#: player/templates/player/chat_bubble_snippet.html:58
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "Controlla che la sede abbia tutto il necessario per la partita."
+
+#: player/templates/player/chat_bubble_snippet.html:61
 #, python-format
 msgid ""
 "\n"
 "                Updated hours: %(hours)s\n"
 "    "
 msgstr ""
+"\n"
+"                Orari aggiornati: %(hours)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:45
+#: player/templates/player/chat_bubble_snippet.html:65
 msgid "reviewed the Match"
-msgstr ""
+msgstr "ha recensito la partita"
 
-#: player/templates/player/chat_bubble_snippet.html:47
+#: player/templates/player/chat_bubble_snippet.html:67
 msgid "Match scheduled"
-msgstr ""
+msgstr "Partita programmata"
 
-#: player/templates/player/chat_bubble_snippet.html:49
+#: player/templates/player/chat_bubble_snippet.html:69
 msgid "Match chat perished"
+msgstr "Chat della partita terminata"
+
+#: player/templates/player/chat_bubble_snippet.html:72
+#, python-format
+msgid ""
+"\n"
+"                Withdrew %(hours)s\n"
+"    "
 msgstr ""
+"\n"
+"                Ritirato %(hours)s\n"
+"    "
 
 #: player/templates/player/filter.html:49
 #: player/templates/player/filters.html:8

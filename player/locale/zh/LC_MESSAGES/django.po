@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:12+1100\n"
+"POT-Creation-Date: 2026-03-17 15:13+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,30 +131,51 @@ msgstr "您的 QWIKGAME 声誉"
 msgid "Based on feedback given by your rivals."
 msgstr "基于您的对手给予的反馈。"
 
-#: player/templates/player/chat_bubble_snippet.html:11
+#: player/templates/player/chat_bubble_snippet.html:12
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                Confirmed for %(hours)s with %(rival_name)s\n"
+"    "
+msgstr ""
+"\n"
+"                已确认 %(hours)s，与 %(rival_name)s\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:17
 #, python-format
 msgid ""
 "\n"
 "                Proposed %(game)s at %(venue)s, %(date)s, %(time)s\n"
 "    "
 msgstr ""
+"\n"
+"                提议在 %(date)s %(time)s 于 %(venue)s 进行 %(game)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:15
+#: player/templates/player/chat_bubble_snippet.html:21
 #, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Edit a Friend%(br)sor add a new one!\n"
-#| "    "
 msgid ""
 "\n"
 "                with %(friends)s\n"
 "        "
 msgstr ""
 "\n"
-"                编辑好友%(br)s或添加新的好友！\n"
+"                与 %(friends)s 一起\n"
+"        "
+
+#: player/templates/player/chat_bubble_snippet.html:28
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                Offered %(hours)s\n"
+"    "
+msgstr ""
+"\n"
+"                已提供 %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:22
+#: player/templates/player/chat_bubble_snippet.html:34
 #, python-format
 msgid ""
 "\n"
@@ -162,46 +183,84 @@ msgid ""
 "%(date)s : %(phone)s : %(url)s\n"
 "    "
 msgstr ""
+"\n"
+"                %(name)s，请联系场地确认 %(date)s 是否有空位：%(phone)s ：%(url)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:27
+#: player/templates/player/chat_bubble_snippet.html:39
 msgid "Cancelled Invitation"
-msgstr ""
+msgstr "已取消邀请"
 
-#: player/templates/player/chat_bubble_snippet.html:29
+#: player/templates/player/chat_bubble_snippet.html:41
 msgid "Match cancelled"
-msgstr ""
+msgstr "比赛已取消"
 
-#: player/templates/player/chat_bubble_snippet.html:31
+#: player/templates/player/chat_bubble_snippet.html:44
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                Declined %(hours)s with %(rival_name)s\n"
+"    "
+msgstr ""
+"\n"
+"                已拒绝 %(hours)s，与 %(rival_name)s\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:49
 msgid "Match chat disabled"
-msgstr ""
+msgstr "比赛聊天已禁用"
 
-#: player/templates/player/chat_bubble_snippet.html:34
+#: player/templates/player/chat_bubble_snippet.html:51
+msgid "Bid expired"
+msgstr "出价已过期"
+
+#: player/templates/player/chat_bubble_snippet.html:54
 #, python-format
 msgid ""
 "\n"
 "                This is the first QWIKGAME of %(game)s at this Venue. \n"
 "    "
 msgstr ""
+"\n"
+"                这是该场地的第一场 %(game)s QWIKGAME。\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:41
+#: player/templates/player/chat_bubble_snippet.html:58
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "请确认该场地具备进行比赛所需的一切条件。"
+
+#: player/templates/player/chat_bubble_snippet.html:61
 #, python-format
 msgid ""
 "\n"
 "                Updated hours: %(hours)s\n"
 "    "
 msgstr ""
+"\n"
+"                更新时间：%(hours)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:45
+#: player/templates/player/chat_bubble_snippet.html:65
 msgid "reviewed the Match"
-msgstr ""
+msgstr "已评价该比赛"
 
-#: player/templates/player/chat_bubble_snippet.html:47
+#: player/templates/player/chat_bubble_snippet.html:67
 msgid "Match scheduled"
-msgstr ""
+msgstr "比赛已安排"
 
-#: player/templates/player/chat_bubble_snippet.html:49
+#: player/templates/player/chat_bubble_snippet.html:69
 msgid "Match chat perished"
+msgstr "比赛聊天已删除"
+
+#: player/templates/player/chat_bubble_snippet.html:72
+#, fuzzy, python-format
+msgid ""
+"\n"
+"                Withdrew %(hours)s\n"
+"    "
 msgstr ""
+"\n"
+"                撤回 %(hours)s\n"
 
 #: player/templates/player/filter.html:49
 #: player/templates/player/filters.html:8

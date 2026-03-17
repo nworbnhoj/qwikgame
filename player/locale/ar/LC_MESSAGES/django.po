@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:12+1100\n"
+"POT-Creation-Date: 2026-03-17 16:48+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Arabic <ar@li.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgstr "أي لعبة"
 
 #: player/forms.py:25
 msgid "Only see invitations for a particular Game."
-msgstr "عرض الدعوات الخاصة بلعبة معينة فقط."
+msgstr "عرض الدعوات الخاصة بلعبة محددة فقط."
 
 #: player/forms.py:26 player/forms.py:276
 #: player/templates/player/strength.html:84
@@ -34,7 +34,7 @@ msgstr "اللعبة"
 
 #: player/forms.py:31
 msgid "Only see invitations for a particular Venue."
-msgstr "عرض الدعوات الخاصة بمكان معين فقط."
+msgstr "عرض الدعوات الخاصة بمكان محدد فقط."
 
 #: player/forms.py:32
 msgid "PLACE"
@@ -50,7 +50,7 @@ msgstr "الوقت"
 
 #: player/forms.py:110
 msgid "Sorry, that Venue selection did not work. Please try again."
-msgstr "عذرًا، لم تنجح عملية اختيار المكان. يرجى المحاولة مرة أخرى."
+msgstr "عذرًا، لم ينجح اختيار المكان. يرجى المحاولة مرة أخرى."
 
 #: player/forms.py:143 player/forms.py:163 player/models.py:463
 msgid "Anywhere"
@@ -62,16 +62,16 @@ msgstr "اختر من الخريطة"
 
 #: player/forms.py:186
 msgid "NO ACTIVE FILTERS"
-msgstr "لا توجد فلاتر نشطة"
+msgstr "لا توجد عوامل تصفية نشطة"
 
 #: player/forms.py:197
 #, python-format
 msgid "%(n)s ACTIVE FILTERS"
-msgstr "%(n)s فلاتر نشطة"
+msgstr "%(n)s عوامل تصفية نشطة"
 
 #: player/forms.py:219
 msgid "FRIEND'S EMAIL ADDRESS"
-msgstr "عنوان بريد الصديق الإلكتروني"
+msgstr "عنوان البريد الإلكتروني للصديق"
 
 #: player/forms.py:225
 msgid "NAME"
@@ -143,30 +143,55 @@ msgstr "سمعتك في QWIKGAME"
 msgid "Based on feedback given by your rivals."
 msgstr "بناءً على التقييمات المقدمة من منافسيك."
 
-#: player/templates/player/chat_bubble_snippet.html:11
+#: player/templates/player/chat_bubble_snippet.html:12
+#, python-format
+msgid ""
+"\n"
+"                Confirmed for %(hours)s with %(rival_name)s\n"
+"    "
+msgstr ""
+"\n"
+"                تم رفض %(hours)s مع %(rival_name)s\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:17
 #, python-format
 msgid ""
 "\n"
 "                Proposed %(game)s at %(venue)s, %(date)s, %(time)s\n"
 "    "
 msgstr ""
+"\n"
+"                اقتراح %(game)s في %(venue)s، %(date)s، %(time)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:15
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Edit a Friend%(br)sor add a new one!\n"
-#| "    "
+#: player/templates/player/chat_bubble_snippet.html:21
+#, python-format
 msgid ""
 "\n"
 "                with %(friends)s\n"
 "        "
 msgstr ""
 "\n"
-"                عدّل صديقًا%(br)sأو أضف صديقًا جديدًا!\n"
+"                مع %(friends)s\n"
+"        "
+
+#: player/templates/player/chat_bubble_snippet.html:28
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Updated hours: %(hours)s\n"
+#| "    "
+msgid ""
+"\n"
+"                Offered %(hours)s\n"
+"    "
+msgstr ""
+"\n"
+"                تم تحديث الساعات: %(hours)s\n"
 "    "
 
-#: player/templates/player/chat_bubble_snippet.html:22
+#: player/templates/player/chat_bubble_snippet.html:34
 #, python-format
 msgid ""
 "\n"
@@ -174,46 +199,86 @@ msgid ""
 "%(date)s : %(phone)s : %(url)s\n"
 "    "
 msgstr ""
+"\n"
+"                %(name)s، يرجى التواصل مع المكان للتأكد من التوفر في "
+"%(date)s : %(phone)s : %(url)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:27
+#: player/templates/player/chat_bubble_snippet.html:39
 msgid "Cancelled Invitation"
-msgstr ""
+msgstr "دعوة ملغاة"
 
-#: player/templates/player/chat_bubble_snippet.html:29
+#: player/templates/player/chat_bubble_snippet.html:41
 msgid "Match cancelled"
-msgstr ""
+msgstr "تم إلغاء المباراة"
 
-#: player/templates/player/chat_bubble_snippet.html:31
+#: player/templates/player/chat_bubble_snippet.html:44
+#, python-format
+msgid ""
+"\n"
+"                Declined %(hours)s with %(rival_name)s\n"
+"    "
+msgstr ""
+"\n"
+"                تم رفض %(hours)s مع %(rival_name)s\n"
+"    "
+
+#: player/templates/player/chat_bubble_snippet.html:49
 msgid "Match chat disabled"
-msgstr ""
+msgstr "تم تعطيل دردشة المباراة"
 
-#: player/templates/player/chat_bubble_snippet.html:34
+#: player/templates/player/chat_bubble_snippet.html:51
+msgid "Bid expired"
+msgstr "انتهت صلاحية العرض"
+
+#: player/templates/player/chat_bubble_snippet.html:54
 #, python-format
 msgid ""
 "\n"
 "                This is the first QWIKGAME of %(game)s at this Venue. \n"
 "    "
 msgstr ""
+"\n"
+"                هذه أول مباراة QWIKGAME للعبة %(game)s في هذا المكان.\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:41
+#: player/templates/player/chat_bubble_snippet.html:58
+msgid "Please check that the Venue has everything you need for the Match."
+msgstr "يرجى التأكد من أن المكان يحتوي على كل ما تحتاجه للمباراة."
+
+#: player/templates/player/chat_bubble_snippet.html:61
 #, python-format
 msgid ""
 "\n"
 "                Updated hours: %(hours)s\n"
 "    "
 msgstr ""
+"\n"
+"                تم تحديث الساعات: %(hours)s\n"
+"    "
 
-#: player/templates/player/chat_bubble_snippet.html:45
+#: player/templates/player/chat_bubble_snippet.html:65
 msgid "reviewed the Match"
-msgstr ""
+msgstr "قام بتقييم المباراة"
 
-#: player/templates/player/chat_bubble_snippet.html:47
+#: player/templates/player/chat_bubble_snippet.html:67
 msgid "Match scheduled"
-msgstr ""
+msgstr "تم جدولة المباراة"
 
-#: player/templates/player/chat_bubble_snippet.html:49
+#: player/templates/player/chat_bubble_snippet.html:69
 msgid "Match chat perished"
+msgstr "تم حذف دردشة المباراة"
+
+#: player/templates/player/chat_bubble_snippet.html:72
+#, python-format
+msgid ""
+"\n"
+"                Withdrew %(hours)s\n"
+"    "
 msgstr ""
+"\n"
+"                تم تحديث الساعات: %(hours)s\n"
+"    "
 
 #: player/templates/player/filter.html:49
 #: player/templates/player/filters.html:8
@@ -241,7 +306,7 @@ msgstr "إضافة"
 
 #: player/templates/player/filters.html:47
 msgid "Delete these Filters?"
-msgstr "حذف هذه المرشحات؟"
+msgstr "هل تريد حذف هذه المرشحات؟"
 
 #: player/templates/player/filters.html:49
 msgid "Remove"
@@ -261,7 +326,7 @@ msgstr "الأصدقاء"
 
 #: player/templates/player/friend.html:36
 msgid "Delete this Friend?"
-msgstr "حذف هذا الصديق؟"
+msgstr "هل تريد حذف هذا الصديق؟"
 
 #: player/templates/player/friend.html:38
 #: player/templates/player/friend.html:69

@@ -95,7 +95,7 @@ class AcceptView(AppealsView):
             bid.hour_str = bid.hours24().as_str()
             bid.name = player.name_rival(bid.rival)
             bid.conduct_stars = bid.rival.conduct_stars
-        return {bid.pk: bid for bid in bids}
+        return {str(bid.pk): bid for bid in bids}
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)

@@ -95,7 +95,7 @@ class AcceptView(AppealsView):
             bid.hour_str = bid.hours24().as_str()
             bid.name = player.name_rival(bid.rival)
             bid.conduct_stars = bid.rival.conduct_stars
-        return {bid.rival.pk: bid for bid in bids}
+        return {bid.pk: bid for bid in bids}
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
@@ -106,15 +106,13 @@ class AcceptView(AppealsView):
             log = appeal.log_filter(person.blocked())
             bids = self._bids(appeal, player)
             for entry in log:
-                if 'id' in entry:
-                    id = entry['id']
-                    if id != player.pk:
-                        Entry(entry).rename(player)
-                    if id in bids:
-                        bid = bids[id]
-                        entry['conduct'] = bid.conduct_stars
-                        entry['hours'] = bid.hours24().as_str()
-                        entry['strength'] = bid.strength_str()
+                if 'id' in entry and entry['id'] != player.pk:
+                    Entry(entry).rename(player)
+                if 'pk' in entry and entry['pk'] in bids:
+                    bid = bids[entry['pk']]
+                    entry['conduct'] = bid.conduct_stars
+                    entry['hours'] = bid.hours24().as_str()
+                    entry['strength'] = bid.strength_str()
             next_up = appeal.status + 'O'
             context |= {
                 'bids': bids,

@@ -167,18 +167,14 @@ msgstr ""
 "        "
 
 #: player/templates/player/chat_bubble_snippet.html:32
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "                Offered %(hours)s\n"
-#| "    "
+#, python-format
 msgid ""
 "\n"
-"                Offered %(entry.hours)s\n"
+"                Offered %(hours)s\n"
 "    "
 msgstr ""
 "\n"
-"                %(entry.hours)s کی پیشکش کی گئی\n"
+"                %(hours)s کی پیشکش کی گئی\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:38

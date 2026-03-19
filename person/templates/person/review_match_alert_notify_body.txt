@@ -1,5 +1,5 @@
 {% load i18n %}
 
 {% blocktranslate %}
-	Please Review your {{ match.game }} Match at {{ match.venue }}.
+	Please Review your {{ game }} Match at {{ venue }}.
 {% endblocktranslate %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 08:01+1100\n"
+"POT-Creation-Date: 2026-03-20 07:37+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -595,11 +595,11 @@ msgstr "محفوظ کریں"
 msgid ""
 "\n"
 "            You are receiving this email to review your Qwikgame of "
-"<b>%(match.game)s</b> at <b>%(match.venue)s</b>.\n"
+"<b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
 "\n"
-"            آپ کو یہ ای میل %(match.venue)s میں اپنے <b>%(match.game)s</b> "
+"            آپ کو یہ ای میل %(venue)s میں اپنے <b>%(game)s</b> "
 "Qwikgame کا جائزہ لینے کے لیے موصول ہوئی ہے۔\n"
 "        "
 
@@ -629,20 +629,20 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"REVIEW %(match.game)s at %(match.venue)s\n"
+"REVIEW %(game)s at %(venue)s\n"
 msgstr ""
 "\n"
-"%(match.venue)s میں %(match.game)s کا جائزہ لیں\n"
+"%(venue)s میں %(game)s کا جائزہ لیں\n"
 
 #: person/templates/person/review_match_alert_email_text.html:6
 #, python-format
 msgid ""
 "\n"
-"\tYou are receiving this email to review your Qwikgame of %(match.game)s at "
-"%(match.venue)s.\n"
+"\tYou are receiving this email to review your Qwikgame of %(game)s at "
+"%(venue)s.\n"
 msgstr ""
 "\n"
-"\tآپ کو یہ ای میل %(match.venue)s میں اپنے %(match.game)s Qwikgame کا جائزہ "
+"\tآپ کو یہ ای میل %(venue)s میں اپنے %(game)s Qwikgame کا جائزہ "
 "لینے کے لیے موصول ہوئی ہے۔\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
@@ -657,19 +657,19 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\tPlease Review your %(match.game)s Match at %(match.venue)s.\n"
+"\tPlease Review your %(game)s Match at %(venue)s.\n"
 msgstr ""
 "\n"
-"\tبراہِ کرم %(match.venue)s میں اپنے %(match.game)s میچ کا جائزہ دیں۔\n"
+"\tبراہِ کرم %(venue)s میں اپنے %(game)s میچ کا جائزہ دیں۔\n"
 
 #: person/templates/person/review_match_alert_notify_head.txt:4
 #, python-format
 msgid ""
 "\n"
-"Review %(match.game)s Match\n"
+"Review %(game)s Match\n"
 msgstr ""
 "\n"
-"%(match.game)s میچ کا جائزہ دیں\n"
+"%(game)s میچ کا جائزہ دیں\n"
 
 #: person/templates/person/rival_invite_alert_email_html.html:13
 #, python-format
@@ -701,8 +701,8 @@ msgid ""
 "of %(game)s at %(venue)s.\n"
 msgstr ""
 "\n"
-"\tآپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ %(name)s نے آپ کو %(venue)s میں "
-"%(game)s Qwikgame کے لیے دعوت دی ہے۔\n"
+"\tآپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ %(name)s نے آپ کو %(venue)s "
+"میں %(game)s Qwikgame کے لیے دعوت دی ہے۔\n"
 
 #: person/templates/person/rival_invite_alert_notify_body.txt:3
 #, python-format
@@ -740,7 +740,8 @@ msgid ""
 msgstr ""
 "\n"
 "            آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ %(site_name)s پر "
-"<b>%(name)s</b> نے آپ کو <b>%(venue)s</b> میں <b>%(game)s</b> کھیلنے کی دعوت دی ہے۔\n"
+"<b>%(name)s</b> نے آپ کو <b>%(venue)s</b> میں <b>%(game)s</b> کھیلنے کی دعوت "
+"دی ہے۔\n"
 "        "
 
 #: person/templates/person/woo_invite_email_html.html:24

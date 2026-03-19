@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 07:45+1100\n"
+"POT-Creation-Date: 2026-03-20 07:37+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -645,12 +645,12 @@ msgstr "Simpan"
 msgid ""
 "\n"
 "            You are receiving this email to review your Qwikgame of "
-"<b>%(match.game)s</b> at <b>%(match.venue)s</b>.\n"
+"<b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
 "\n"
 "            Anda menerima emel ini untuk mengulas Qwikgame anda bagi "
-"<b>%(match.game)s</b> di <b>%(match.venue)s</b>.\n"
+"<b>%(game)s</b> di <b>%(venue)s</b>.\n"
 "        "
 
 #: person/templates/person/review_match_alert_email_html.html:26
@@ -679,21 +679,21 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"REVIEW %(match.game)s at %(match.venue)s\n"
+"REVIEW %(game)s at %(venue)s\n"
 msgstr ""
 "\n"
-"ULASAN %(match.game)s di %(match.venue)s\n"
+"ULASAN %(game)s di %(venue)s\n"
 
 #: person/templates/person/review_match_alert_email_text.html:6
 #, python-format
 msgid ""
 "\n"
-"\tYou are receiving this email to review your Qwikgame of %(match.game)s at "
-"%(match.venue)s.\n"
+"\tYou are receiving this email to review your Qwikgame of %(game)s at "
+"%(venue)s.\n"
 msgstr ""
 "\n"
-"\tAnda menerima emel ini untuk mengulas Qwikgame anda bagi %(match.game)s "
-"di %(match.venue)s.\n"
+"\tAnda menerima emel ini untuk mengulas Qwikgame anda bagi %(game)s di "
+"%(venue)s.\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
 msgid ""
@@ -708,19 +708,19 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\tPlease Review your %(match.game)s Match at %(match.venue)s.\n"
+"\tPlease Review your %(game)s Match at %(venue)s.\n"
 msgstr ""
 "\n"
-"\tSila ulas Perlawanan %(match.game)s anda di %(match.venue)s.\n"
+"\tSila ulas Perlawanan %(game)s anda di %(venue)s.\n"
 
 #: person/templates/person/review_match_alert_notify_head.txt:4
 #, python-format
 msgid ""
 "\n"
-"Review %(match.game)s Match\n"
+"Review %(game)s Match\n"
 msgstr ""
 "\n"
-"Ulas Perlawanan %(match.game)s\n"
+"Ulas Perlawanan %(game)s\n"
 
 #: person/templates/person/rival_invite_alert_email_html.html:13
 #, python-format

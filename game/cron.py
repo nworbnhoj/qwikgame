@@ -46,8 +46,11 @@ def match_review_init():
                 if created:
                     player.alert(
                         context = {
+                            'date': match.date_str,
                             'domain': FQDN,
-                            'match': match,
+                            'game': match.game,
+                            'time':match.time_str,
+                            'venue': match.venue,
                         },
                         expires=datetime.now() + timedelta(days=3),
                         type='s',

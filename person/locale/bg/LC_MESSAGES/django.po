@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 07:45+1100\n"
+"POT-Creation-Date: 2026-03-20 07:37+1100\n"
 "PO-Revision-Date: 2026-02-22 15:05+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -638,12 +638,12 @@ msgstr "Запази"
 msgid ""
 "\n"
 "            You are receiving this email to review your Qwikgame of "
-"<b>%(match.game)s</b> at <b>%(match.venue)s</b>.\n"
+"<b>%(game)s</b> at <b>%(venue)s</b>.\n"
 "        "
 msgstr ""
 "\n"
 "            Получавате този имейл, за да прегледате вашата Qwikgame игра на "
-"<b>%(match.game)s</b> в <b>%(match.venue)s</b>.\n"
+"<b>%(game)s</b> в <b>%(venue)s</b>.\n"
 "        "
 
 #: person/templates/person/review_match_alert_email_html.html:26
@@ -671,21 +671,21 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"REVIEW %(match.game)s at %(match.venue)s\n"
+"REVIEW %(game)s at %(venue)s\n"
 msgstr ""
 "\n"
-"ПРЕГЛЕД НА %(match.game)s в %(match.venue)s\n"
+"ПРЕГЛЕД НА %(game)s в %(venue)s\n"
 
 #: person/templates/person/review_match_alert_email_text.html:6
 #, python-format
 msgid ""
 "\n"
-"\tYou are receiving this email to review your Qwikgame of %(match.game)s at "
-"%(match.venue)s.\n"
+"\tYou are receiving this email to review your Qwikgame of %(game)s at "
+"%(venue)s.\n"
 msgstr ""
 "\n"
 "\tПолучавате този имейл, за да прегледате вашата Qwikgame игра на "
-"%(match.game)s в %(match.venue)s.\n"
+"%(game)s в %(venue)s.\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
 msgid ""
@@ -699,19 +699,19 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\tPlease Review your %(match.game)s Match at %(match.venue)s.\n"
+"\tPlease Review your %(game)s Match at %(venue)s.\n"
 msgstr ""
 "\n"
-"\tМоля, прегледайте вашия %(match.game)s мач в %(match.venue)s.\n"
+"\tМоля, прегледайте вашия %(game)s мач в %(venue)s.\n"
 
 #: person/templates/person/review_match_alert_notify_head.txt:4
 #, python-format
 msgid ""
 "\n"
-"Review %(match.game)s Match\n"
+"Review %(game)s Match\n"
 msgstr ""
 "\n"
-"Преглед на %(match.game)s мач\n"
+"Преглед на %(game)s мач\n"
 
 #: person/templates/person/rival_invite_alert_email_html.html:13
 #, python-format

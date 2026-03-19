@@ -12,6 +12,6 @@
         </div>
     </div>
     <div class="plank">
-{% include 'player/conduct_stars_snippet.html' %}
+{% include 'player/conduct_stars_snippet.html' with stars=player.conduct_stars %}
     </div>
     {{ player_form }}

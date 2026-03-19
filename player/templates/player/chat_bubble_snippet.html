@@ -6,7 +6,7 @@
         <div class="row">
             <span class="name">{{ entry.name }}</span>
 {% if entry.conduct %}
-    {% include 'player/conduct_stars_snippet.html' %}
+    {% include 'player/conduct_stars_snippet.html' with stars=entry.conduct  %}
 {% endif %}
             {{ entry.strength }}
         </div>

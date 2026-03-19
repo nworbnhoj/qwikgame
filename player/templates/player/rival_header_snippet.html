@@ -5,7 +5,5 @@
        </a>
         <p class="name">{{ rival_name }}</p>  
         <p>{{ strength }}</p>
-{% with rival as player %}
-    {% include 'player/conduct_stars_snippet.html' %}
-{% endwith %}
+    {% include 'player/conduct_stars_snippet.html' with stars=rival.conduct_stars %}
     </div>

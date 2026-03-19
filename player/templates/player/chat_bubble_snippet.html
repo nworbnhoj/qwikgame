@@ -29,7 +29,7 @@
             </span>
 {% elif entry.text == 'template_bid' %}
             <span class="text">
-    {% blocktranslate with entry.hours as hours %}
+    {% blocktranslate with hours=entry.hours %}
                 Offered {{ hours }}
     {% endblocktranslate %}
             </span>
@@ -73,7 +73,7 @@
             <span class="text">{% translate 'Match chat perished' %}</span>
 {% elif entry.text == 'template_withdraw' %}
             <span class="text">
-    {% blocktranslate with entry.hours as hours %}
+    {% blocktranslate with hours=entry.hours %}
                 Withdrew {{ hours }}
     {% endblocktranslate %}
             </span>

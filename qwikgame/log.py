@@ -8,10 +8,10 @@ class Entry(dict):
     @property
     def player(self):
         if id in self:
-            return player.models.Player.objects.filter(pk=self['id']).first();
+            return player.models.Player.objects.filter(pk=self['id']).first()
 
     def rename(self, player):
         rival = self.player
         if rival:
-            self['name'] = player.name_rival(rival);
+            self['name'] = player.name_rival(rival)
 

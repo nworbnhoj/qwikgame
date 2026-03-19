@@ -108,8 +108,8 @@ class AcceptView(AppealsView):
             for entry in log:
                 if 'id' in entry and entry['id'] != player.pk:
                     Entry(entry).rename(player)
-                if 'pk' in entry and entry['pk'] in bids:
-                    bid = bids[entry['pk']]
+                if 'pk' in entry and str(entry['pk']) in bids:
+                    bid = bids[str(entry['pk'])]
                     entry['conduct'] = bid.conduct_stars
                     entry['hours'] = bid.hours24().as_str()
                     entry['strength'] = bid.strength_str()

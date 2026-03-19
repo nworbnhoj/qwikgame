@@ -317,6 +317,7 @@ class Bid(models.Model):
                     pk = self.pk,
                     text = f'template_{template}',
                 )
+                entry['rid'] = rival.hash
             case 'bid':
                 entry = Entry(
                     hash = rival.user.hash,
@@ -335,6 +336,7 @@ class Bid(models.Model):
                     pk = self.pk,
                     text = f'template_{template}',
                 )
+                entry['rid'] = rival.hash
             case 'expired':
                 entry = Entry(
                     hash = rival.user.hash,

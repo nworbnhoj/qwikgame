@@ -147,11 +147,11 @@ msgstr "بناءً على التقييمات المقدمة من منافسيك.
 #, python-format
 msgid ""
 "\n"
-"                Confirmed for %(hours)s with %(rival_name)s\n"
+"                Confirmed for %(hours)s with %(name)s\n"
 "    "
 msgstr ""
 "\n"
-"                تم رفض %(hours)s مع %(rival_name)s\n"
+"                تم رفض %(hours)s مع %(name)s\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:21
@@ -212,11 +212,11 @@ msgstr "تم إلغاء المباراة"
 #, python-format
 msgid ""
 "\n"
-"                Declined %(hours)s with %(rival_name)s\n"
+"                Declined %(hours)s with %(name)s\n"
 "    "
 msgstr ""
 "\n"
-"                تم رفض %(hours)s مع %(rival_name)s\n"
+"                تم رفض %(hours)s مع %(name)s\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:53

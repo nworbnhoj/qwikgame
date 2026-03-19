@@ -13,8 +13,8 @@
         <div class="row">
 {% if entry.text == 'template_accept' %}
             <span class="text">
-    {% blocktranslate %}
-                Confirmed for {{ hours }} with {{ rival_name }}
+    {% blocktranslate with name=entry.rival_name  %}
+                Confirmed for {{ hours }} with {{ name }}
     {% endblocktranslate %}
 {% elif entry.text == 'template_appeal' %}
             <span class="text">
@@ -45,8 +45,8 @@
             <span class="text">{% translate 'Match cancelled'  %}</span>
 {% elif entry.text == 'template_decline' %}
             <span class="text">
-    {% blocktranslate %}
-                Declined {{ hours }} with {{ rival_name }}
+    {% blocktranslate with name=entry.rival_name %}
+                Declined {{ hours }} with {{ name }}
     {% endblocktranslate %}
             </span>
 {% elif entry.text == 'template_disabled' %}

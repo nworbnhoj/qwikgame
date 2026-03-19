@@ -113,6 +113,10 @@ class AcceptView(AppealsView):
                     entry['conduct'] = bid.conduct_stars
                     entry['hours'] = bid.hours24().as_str()
                     entry['strength'] = bid.strength_str()
+                if 'rid' in entry:
+                    rival = Player.objects.filter(pk=entry['rid']).first()
+                    if rival:
+                        entry['rival_name'] = player.name_rival(rival)
             next_up = appeal.status + 'O'
             context |= {
                 'bids': bids,

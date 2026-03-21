@@ -6,6 +6,7 @@ from django.forms import CharField, HiddenInput
 from django.template import loader
 from django.utils.crypto import get_random_string
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from authenticate.models import User
 from qwikgame.settings import EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_PASSWORD, EMAIL_ACCOUNT_USER
 

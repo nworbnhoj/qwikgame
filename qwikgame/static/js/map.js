@@ -368,25 +368,26 @@ function addPlaceMark(placeId){
 }
 
 
-function setPlace(placeid, name, hours=OPEN_24X7, weekday='', hour='', phone='', url=''){
+function setPlace(mark){
+  const PLACEID = mark.placeid;        
   const PLACE_SELECT = document.getElementById('id_place');
-  let option = PLACE_SELECT.querySelector("[value='"+placeid+"']")
+  let option = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
   if (option){
-    PLACE_SELECT.value = placeid
+    PLACE_SELECT.value = PLACEID
   } else {
     PLACE_SELECT.value = "placeid"
     // populate the (hidden) placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');
-    PLACEID_INPUT.value = placeid;
+    PLACEID_INPUT.value = PLACEID;
     // configure the temporary placeid option in the place drop-down field
     option = PLACE_SELECT.querySelector("[value='placeid']");
-    option.textContent = name;
-    option.setAttribute('data-placeid', placeid);
-    option.setAttribute('data-hours', hours);
-    option.setAttribute('data-now_weekday', weekday);
-    option.setAttribute('data-now_hour', hour);
-    option.setAttribute('data-phone', phone);
-    option.setAttribute('data-url', url);
+    option.textContent = mark.name;
+    option.setAttribute('data-placeid', PLACEID);
+    option.setAttribute('data-hours', mark.hours);
+    option.setAttribute('data-now_weekday', mark.weekday);
+    option.setAttribute('data-now_hour', mark.hour);
+    option.setAttribute('data-phone', mark.phone);
+    option.setAttribute('data-url', mark.url);
   }
   updatePlaceHours(option)
   PLACE_SELECT.dispatchEvent(new Event('change'));
@@ -845,8 +846,8 @@ function setMarkListeners(mark, template, onclick, onhover, onpress){
         qwikMap.setCenter(mark.center);
         break;
       case 'select':
-         setPlace(mark.placeid, mark.name, mark.hours, mark.weekday, mark.hour, mark.phone, mark.url);
-         break;
+        setPlace(mark)
+        break;
       case 'info':
           showMarkInfo(mark, template);
         break;

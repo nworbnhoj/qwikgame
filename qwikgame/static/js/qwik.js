@@ -444,6 +444,28 @@ function showLoader(input, timeout=20000) {
   setTimeout(() => unLoader(label), timeout);
 }
 
+/******************************************************************************
+ * Make the Map Element (containing global qwikMap) visible/invisible
+ *
+ * show Boolean true to make map visible - invisible otherwise
+ * @global qwikMap google.maps.Map
+ * @return null
+ *
+ *****************************************************************************/
+function showMap(show=true){
+    let map = document.getElementById('map');
+    if (!map){
+        console.log("failed to show map");
+        return;  
+    }
+    if (show){
+        map.style.display = 'block';
+        map.focus();
+    } else {
+        map.style.display = 'none';
+    }
+}
+
 function unLoader(label){
   label.classList.remove("loader")
 }

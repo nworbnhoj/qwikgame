@@ -162,7 +162,7 @@ class ServiceWorkerView(TemplateView):
             'icon_512_url': static('img/qwik-icon.512x512.png'),
             'img_qwik_icon_url': static('img/qwik-icon.webp'),
             'img_qwik_logo_url': static('img/qwik-logo.webp'),
-            'js_map_url': static('map.js'),
+            'js_map_url': static('js/map.js'),
             'js_qwik_url': static('qwik.js'),
             'js_qwik_identicons_url': static('js/qwik-identicons.js'),
             'js_qwik_json_url': static('js/qwik-json.js'),

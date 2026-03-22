@@ -208,19 +208,10 @@ class ReviewView(ReviewsView):
         return {}
 
     def _updateVenueGames(self, valid, game, venue):
-        venue_has_game = game in venue.games.all()
-        if valid and not venue_has_game:
-            venue.games.add(game)
-            logger.info(f'Venue Game add: {game}')
-            venue.save()
-            mark = Mark(game=game, place=venue, num_player=1)
-            mark.save()
-            logger.info(f'Mark new {mark}')
-        if not valid and venue_has_game:
-            venue.games.remove(game)
-            logger.info(f'Venue Game removed: {game}')
-            venue.save()
-            Mark.objects.filter(game=game, place=venue.place).delete()
+        if valid:
+            venue.game_add(game)
+        else:
+            venue.game_del(game)
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)

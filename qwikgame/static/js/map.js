@@ -78,7 +78,7 @@ function venuesMap() {
     CLOSE.classList.add('map-close');
     CLOSE.classList.add('gmnoprint');
     CLOSE.addEventListener("click", () => {
-      setPlaceDefault();
+      closeMap();
     });
     const CLOSE_DIV = document.createElement("div");
     CLOSE_DIV.appendChild(CLOSE);
@@ -342,13 +342,6 @@ function addPlaceMark(placeId){
       console.log(status);
     }
   });
-}
-
-
-function setPlaceOption(placeid='placeid'){
-  const PLACE_SELECT = document.getElementById('id_place');
-  PLACE_SELECT.value = placeid
-  showMap(false);
 }
 
 

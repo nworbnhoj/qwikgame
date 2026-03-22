@@ -44,6 +44,8 @@ function setPlace(mark){
   showMap(false);
 }
 
-function setPlaceDefault(){
-    setPlaceOption("ANY");
+function closeMap(){
+  const PLACE_SELECT = document.getElementById('id_place');
+  PLACE_SELECT.value = 'ANY'
+  showMap(false);
 }

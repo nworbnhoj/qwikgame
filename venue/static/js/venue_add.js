@@ -54,3 +54,7 @@ function setPlace(mark){
   const PLACEID_INPUT = document.getElementById('id_placeid');
   PLACEID_INPUT.value = PLACEID;
 }
+
+function closeMap(){
+  alert('Please select a Place');
+}

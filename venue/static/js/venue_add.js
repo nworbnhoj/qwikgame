@@ -45,3 +45,12 @@ function changeGame(event){
     place_option.style.display = place_games.includes(GAME) ? 'block': 'none';
   }
 }
+
+function setPlace(mark){
+  const PLACEID = mark.placeid;        
+  const PLACE_INPUT = document.getElementById('id_place');
+  PLACE_INPUT.value = mark.name;
+  // populate the (hidden) placeid input with the new placeid
+  const PLACEID_INPUT = document.getElementById('id_placeid');
+  PLACEID_INPUT.value = PLACEID;
+}

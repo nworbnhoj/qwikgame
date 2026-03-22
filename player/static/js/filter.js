@@ -24,6 +24,25 @@ function changePlace(event){
   showMap(event.target.value === 'show-map');
 }
 
+function setPlace(mark){
+  const PLACEID = mark.placeid;        
+  const PLACE_SELECT = document.getElementById('id_place');
+  let option = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
+  if (option){
+    PLACE_SELECT.value = PLACEID
+  } else {
+    PLACE_SELECT.value = "placeid"
+    // populate the (hidden) placeid input with the new placeid
+    const PLACEID_INPUT = document.getElementById('id_placeid');
+    PLACEID_INPUT.value = PLACEID;
+    // configure the temporary placeid option in the place drop-down field
+    option = PLACE_SELECT.querySelector("[value='placeid']");
+    option.textContent = mark.name;
+    option.setAttribute('data-placeid', PLACEID);
+  }
+  PLACE_SELECT.dispatchEvent(new Event('change'));
+  showMap(false);
+}
 
 function setPlaceDefault(){
     setPlaceOption("ANY");

@@ -17,6 +17,7 @@
 {% block script %}
     {{ block.super }}
     <script defer src="{% static 'js/qwik-json.js' %}"></script>
+    <script defer src="{% static 'js/venue_add.js' %}"></script>
     <script defer src="{% static 'js/map.js' %}"></script>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&loading=async&callback=venuesMap&libraries=places">
     </script>
@@ -43,8 +44,6 @@
         const SHOW_VENUE_MARKERS = "{{ show_venue_markers }}" === "true";
         const SHOW_UNIT_REGION = false;
     </script>
-
-    <script defer src="{% static 'js/venue_add.js' %}"></script>
 {% endblock %}
 
 

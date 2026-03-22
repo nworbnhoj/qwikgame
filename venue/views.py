@@ -3,7 +3,7 @@ from api.models import Mark
 from django.shortcuts import redirect, render
 from game.models import Game
 from service.locate import Locate
-from venue.forms import GoogleSearchForm, GooglePlacesForm
+from venue.forms import GoogleSearchForm, GooglePlacesForm, VenueAddForm
 from venue.models import Place, Region, Venue
 from qwikgame.views import QwikView
 
@@ -90,6 +90,85 @@ class PlacesBulkView(QwikView):
         else:
             return redirect('places_bulk')
         return render(request, self.template_name, context)
+
+
+
+
+class VenueAddView(QwikView):
+    venue_add_form_class = VenueAddForm
+    venue_add_template = 'venue/venue_add.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        is_admin = self.user.is_admin
+        context |= {
+            'onclick_place_marker': 'select',
+            'onclick_region_marker': 'center',
+            'onclick_search_marker': 'select',
+            'onclick_venue_marker': 'select',
+            'onhover_place_marker': 'info',
+            'onhover_region_marker': 'info',
+            'onhover_search_marker': 'info',
+            'onhover_venue_marker': 'info',
+            'onpress_place_marker': 'info',
+            'onpress_region_marker': 'info',
+            'onpress_search_marker': 'info',
+            'onpress_venue_marker': 'info',
+            'show_place_markers': 'true',
+            'show_region_markers': 'true',
+            'show_search_markers': 'true',
+            'show_venue_markers': 'true',
+        }
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        context |= self.venue_add_form_class.get(
+            player = self.user.player,
+            game = kwargs.get('game'),
+        )
+        return render(request, self.venue_add_template, context)
+
+    def _getGame(self, gameid):
+        game = Game.objects.filter(pk=gameid).first()
+        if not game:
+            logger.warn(f'Game missing: {game}')
+        return game   
+
+    def _getVenue(self, placeid):
+        place, venue = None, None
+        if placeid:
+            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
+            if place:
+                venue = place.venue
+            else:  # then it must be a new Venue from a google POI
+                venue = Venue.from_placeid(placeid)
+                if venue:
+                    venue.save()
+                    logger.info(f'Venue new: {venue}')
+                    place = venue.place_ptr
+        if not venue:
+            logger.warn(f'Venue missing from Appeal: {placeid}')
+        return (place, venue)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        player = self.user.player 
+        context = self.keen_form_class.post(
+            request.POST,
+            player,
+        )
+        form = context.get('venue_add_form')
+        if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.keen_template, context)
+        place, venue = self._getVenue(context.get('placeid'))
+        game = self._getGame(context.get('game'))
+        if game and venue:
+            venue.game_add(game)
+        return HttpResponseRedirect(f'/add/')
 
 
 class VenuesView(QwikView):

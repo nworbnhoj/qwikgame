@@ -1,10 +1,10 @@
 import logging
 from django.core.exceptions import ValidationError
-from django.forms import CharField, CheckboxSelectMultiple, ChoiceField, Form, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
+from django.forms import CharField, CheckboxSelectMultiple, ChoiceField, DecimalField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect
 from django.utils.translation import gettext_lazy as _
 from game.models import Game
 from venue.models import Region, Venue
-from qwikgame.fields import WeekField
+from qwikgame.fields import DataSelect, WeekField
 from qwikgame.forms import QwikForm
 
 
@@ -83,3 +83,127 @@ class GooglePlacesForm(QwikForm):
             }
         return context
 
+
+class VenueAddForm(QwikForm):
+    game = ChoiceField(
+        choices = [(None, '')],
+        label = _('GAME'),
+        required = True,
+        template_name='field.html',
+    )
+    place = CharField(
+        template_name='field.html',
+        initial='Select from map',
+    )
+    lat = DecimalField(
+        decimal_places=6,
+        initial=-36.449786,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    lng = DecimalField(
+        decimal_places=6,
+        initial=146.430037,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    east = DecimalField(
+        decimal_places=6,
+        initial=180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    north = DecimalField(
+        decimal_places=6,
+        initial=80.0,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    south = DecimalField(
+        decimal_places=6,
+        initial=-80,
+        max_value=90.0,
+        min_value=-90.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    west = DecimalField(
+        decimal_places=6,
+        initial=-180.0,
+        max_value=180.0,
+        min_value=-180.0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    zoom = IntegerField(
+        initial=10,
+        max_value=20,
+        min_value=0,
+        required=False,
+        widget=HiddenInput(),
+    )
+    placeid = CharField(
+        required=False,
+        widget=HiddenInput(),
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data.get('place') == 'placeid':
+            if not cleaned_data.get('placeid'):
+                self.add_error(
+                    "place",
+                    _('Sorry, that Venue selection did not work. Please try again.')
+                )
+
+    def clean_place(self):
+        place_id = self.cleaned_data.get('place')
+        if place_id == 'placeid':
+            return place_id
+        if Venue.objects.filter(placeid=place_id).exists():
+            return place_id
+        raise ValidationError(
+            _('Sorry, that Venue selection did not work. Please try again.')
+        )
+
+    # Initializes a VenueAddForm
+    # Returns a context dict including 'venue_add_form'
+    @classmethod
+    def get(klass, player, game=None, venue=None):
+        form = klass(initial = {'game': game,},)
+        form.fields['game'].choices += Game.choices()
+        return { 'venue_add_form': form, }
+
+    @classmethod
+    def post(klass, request_post, player):
+        context = {}
+        form = klass(data=request_post)
+        form.fields['game'].choices += Game.choices()
+        if form.is_valid():
+            try:
+                context = {
+                    'game': form.cleaned_data['game'],
+                    'placeid': form.cleaned_data['placeid'],
+                    }
+                place_id = form.cleaned_data.get('place')
+                if place_id == 'placeid':
+                    context['placeid'] = form.cleaned_data['placeid']
+                else:
+                    context['placeid'] = form.cleaned_data['place']
+            except:
+                logger.exception('failed to parse VenueAddForm')
+        else:
+            logger.warn('invalid VenueAddForm')
+        context |= {'venue_add_form': form}
+        return context

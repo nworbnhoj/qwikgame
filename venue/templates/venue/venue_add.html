@@ -1,0 +1,91 @@
+<!-- venue/templates/venue/venue_add.html -->
+{% extends "venue/venues.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block refresh %}{% endblock refresh %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}">
+    <style type="text/css">
+            div.drop { justify-content: space-between; }
+    </style>
+{% endblock css %}
+
+
+{% block script %}
+    {{ block.super }}
+    <script defer src="{% static 'js/qwik-json.js' %}"></script>
+    <script defer src="{% static 'map.js' %}"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCF6_NfAtwVybWeEfgYM_EA7WoSJgIaScY&loading=async&callback=venuesMap&libraries=places">
+    </script>
+    <script>
+        const ICON_PLACE = "{% static 'img/qwik.add.svg' %}";
+        const ICON_REGION = "{% static 'img/qwik.region.svg' %}";
+        const ICON_SEARCH = "{% static 'img/qwik.add.svg' %}";
+        const ICON_VENUE = "{% static 'img/qwik.venue.svg' %}";
+        const ONCLICK_PLACE_MARKER = "{{ onclick_place_marker }}";
+        const ONCLICK_REGION_MARKER = "{{ onclick_region_marker }}";
+        const ONCLICK_SEARCH_MARKER = "{{ onclick_search_marker }}";
+        const ONCLICK_VENUE_MARKER = "{{ onclick_venue_marker }}";
+        const ONHOVER_PLACE_MARKER = "{{ onhover_place_marker }}";
+        const ONHOVER_REGION_MARKER = "{{ onhover_region_marker }}";
+        const ONHOVER_SEARCH_MARKER = "{{ onhover_search_marker }}";
+        const ONHOVER_VENUE_MARKER = "{{ onhover_venue_marker }}";
+        const ONPRESS_PLACE_MARKER = "{{ onpress_place_marker }}";
+        const ONPRESS_REGION_MARKER = "{{ onpress_region_marker }}";
+        const ONPRESS_SEARCH_MARKER = "{{ onpress_search_marker }}";
+        const ONPRESS_VENUE_MARKER = "{{ onpress_venue_marker }}";
+        const SHOW_PLACE_MARKERS = "{{ show_place_markers }}" === "true";
+        const SHOW_REGION_MARKERS = "{{ show_region_markers }}" === "true";
+        const SHOW_SEARCH_MARKERS = "{{ show_search_markers }}" === "true";
+        const SHOW_VENUE_MARKERS = "{{ show_venue_markers }}" === "true";
+        const SHOW_UNIT_REGION = false;
+    </script>
+
+    <script defer src="{% static 'js/venue_add.js' %}"></script>
+{% endblock %}
+
+
+{% block title %}
+    {% translate "Venue Add" %}
+{% endblock %}
+
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div class="icon selected">
+                <i class="fa-solid fa-user-group fa-2x"></i>
+            </div>
+            <h2>{% translate "Add Venue" %}</h2>
+        </div>
+        <div class="post available_edit {{ hide_edit }}">
+            <div class="post form">
+                <form action="{% url 'venue_add' %}" method="post">
+{% csrf_token %}
+{{ venue_add_form }}
+                    <div class="pillar">
+                        <label class="btn primary push_down">
+                            <input hidden type="submit" name="ADD">
+                            {% translate "Add" %}
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% include 'map.html' %}
+
+{% endblock detail %}

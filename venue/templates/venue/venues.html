@@ -2,6 +2,8 @@
 {% extends "content.html" %}
 {% load i18n %}
 
+{% block refresh %}{% endblock refresh %}
+
 
 {% block title %}
     {% translate "Venues" %}
@@ -10,7 +12,7 @@
 
 {% block cta_mobile %}
 {% if small_screen %}
-    <a class="btn special1 mobile" href="">
+    <a class="btn special1 mobile" href="{% url 'venue_add' %}">
     <i class="fa-solid fa-plus fa-3x"></i>
     </a>
 {% endif %}
@@ -19,7 +21,7 @@
 
 {% block cta_desktop %}
 {% if big_screen %}
-    <a class="btn special1" href="">
+    <a class="btn special1" href="{% url 'venue_add' %}">
         <i class="fa-solid fa-plus fa-xl"></i>
         {% translate "Add" %}
     </a>
@@ -80,13 +82,14 @@
 {% block detail %}
 {% if big_screen %}
     <div id="detail" class="detail">
+        <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">
             <div class="push_down">
     {% blocktranslate with br="<br>" %}
                 Get Venue details{{ br }}or add a new one!
     {% endblocktranslate %}
             </div>
-            <a class="btn special1 push_down" href="{% url 'friend_add' %}">
+            <a class="btn special1 push_down" href="{% url 'venue_add' %}">
                 <i class="fa-solid fa-plus fa-xl"></i>
                 {% translate "Add Venue" %}
             </a>

@@ -328,7 +328,7 @@ class KeenForm(QwikForm):
                     'game': form.cleaned_data['game'],
                     'today': today,
                     'tomorrow': tomorrow,
-                    'player_id': form.cleaned_data['placeid'],
+                    'placeid': form.cleaned_data['placeid'],
                     }
                 place_id = form.cleaned_data.get('place')
                 if place_id == 'placeid':

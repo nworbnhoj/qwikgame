@@ -265,20 +265,22 @@ class Venue(Place):
         return datetime.datetime.combine(date, time, self.tzinfo)
 
     def game_add(self, game):
-        if not game in venue.games.all():
+        from api.models import Mark
+        if not game in self.games.all():
             self.games.add(game)
             logger.info(f'Venue Game add: {game}')
             self.save()
-            mark = api.models.Mark(game=game, place=venue, num_player=1)
+            mark = Mark(game=game, place=self, num_player=1)
             mark.save()
             logger.info(f'Mark new {mark}')
 
     def game_del(self, game):
-        if game in venue.games.all():
+        from api.models import Mark
+        if game in self.games.all():
             self.games.remove(game)
             logger.info(f'Venue Game removed: {game}')
             self.save()
-            api.models.Mark.objects.filter(game=game, place=venue.place).delete()
+            Mark.objects.filter(game=game, place=self.place).delete()
 
     def mark(self):
         return {

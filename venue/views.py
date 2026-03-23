@@ -1,5 +1,7 @@
 import logging
 from api.models import Mark
+from django.db.models.functions import Lower
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from game.models import Game
 from service.locate import Locate
@@ -156,32 +158,40 @@ class VenueAddView(QwikView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         player = self.user.player 
-        context = self.keen_form_class.post(
+        context = self.venue_add_form_class.post(
             request.POST,
             player,
         )
         form = context.get('venue_add_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
-            return render(request, self.keen_template, context)
+            return render(request, self.venue_add_template, context)
         place, venue = self._getVenue(context.get('placeid'))
         game = self._getGame(context.get('game'))
         if game and venue:
             venue.game_add(game)
-        return HttpResponseRedirect(f'/add/')
+            return HttpResponseRedirect(f'/venue/{venue.pk}')
+        else:
+            logger.info(f'failed to add Venue: {context.get("placeid")}')
+        return HttpResponseRedirect('/venue/add/')
 
 
 class VenuesView(QwikView):
     template_name = 'venue/venues.html'
 
     def context(self, request, *args, **kwargs):
-        venue_pk = kwargs.get('venue')
-        venue= Venue.objects.get(pk=venue_pk)
-        kwargs['items'] = Venue.objects.filter(
-            country = venue.country,
-            admin1 = venue.admin1,
-            locality = venue.locality,
-        )
+        venue_qs = Venue.objects.all()
+        if 'venue' in kwargs:
+            venue = Venue.objects.filter(pk=kwargs.get('venue')).first()
+            if venue:
+                venue_qs.filter(
+                    country = venue.country,
+                    admin1 = venue.admin1,
+                    # locality = venue.locality,
+                )
+        if 'game' in kwargs:
+            venue_qs.filter(venue__games__contains=kwargs.get(game))
+        kwargs['items'] = venue_qs.order_by(Lower('name'))            
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('venue')
         context = super().context(request, *args, **kwargs)

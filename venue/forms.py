@@ -196,11 +196,6 @@ class VenueAddForm(QwikForm):
                     'game': form.cleaned_data['game'],
                     'placeid': form.cleaned_data['placeid'],
                     }
-                place_id = form.cleaned_data.get('place')
-                if place_id == 'placeid':
-                    context['placeid'] = form.cleaned_data['placeid']
-                else:
-                    context['placeid'] = form.cleaned_data['place']
             except:
                 logger.exception('failed to parse VenueAddForm')
         else:

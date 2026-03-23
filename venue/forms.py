@@ -158,27 +158,6 @@ class VenueAddForm(QwikForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        if cleaned_data.get('place') == 'placeid':
-            if not cleaned_data.get('placeid'):
-                self.add_error(
-                    "place",
-                    _('Sorry, that Venue selection did not work. Please try again.')
-                )
-
-    def clean_place(self):
-        place_id = self.cleaned_data.get('place')
-        if place_id == 'placeid':
-            return place_id
-        if Venue.objects.filter(placeid=place_id).exists():
-            return place_id
-        raise ValidationError(
-            _('Sorry, that Venue selection did not work. Please try again.')
-        )
-
-    # Initializes a VenueAddForm
-    # Returns a context dict including 'venue_add_form'
     @classmethod
     def get(klass, player, game=None, venue=None):
         form = klass(initial = {'game': game,},)

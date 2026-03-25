@@ -170,6 +170,9 @@ function nFormatter(num, digits) {
       form = element.closest('form');
       if (form){
         form.querySelectorAll('.open').forEach((open) => {
+            if (['LABEL','LEGEND'].includes(open.nodeName)){
+              field_label_update(open);
+            }
             open.classList.remove('open');
         });
       } else {
@@ -180,38 +183,50 @@ function nFormatter(num, digits) {
     }
   }
 
-  // add Event Listeners to all inputs that:
-  // 1. display the current value in the Field Label
-  // 2. close all fields in the form
-  function input_addEventListener(input){
+  // update the current value in the Field Label
+  function field_label_update(element){
+    field = element.closest('fieldset');
+    field = field ? field : element.closest('div.field');
+    if (field){
+      switch (field.querySelector('input').type){
+        case 'radio':
+          legend = field.querySelector('legend');
+          checked = field.querySelector("input[type='radio']:checked");
+          if (legend && checked){
+            let title = legend.textContent.split(':')[0] + ': ';
+            title += checked.labels[0].textContent;
+            legend.textContent = title;
+          }
+          break;
+        case 'text':
+          label = currentTarget.labels[0];
+          text = field.querySelector("input[type='text']");
+          if (label && text){
+            const title = label.textContent.split(':')[0] + ': ';
+            label.textContent = title + ': ' + text.value;
+          }
+          break;
+        default:
+          console.debug('WARNING: unsupported input type: ' + input.type);
+      }
+    }
+  }
+
+  // auto close Field when value is selected
+  function input_auto_close(input){
     switch (input.type){
       case 'radio':
         input.addEventListener('click', ({currentTarget}) => {
           form_shut(currentTarget);
-          fieldset = currentTarget.closest('fieldset');
-          if (fieldset){
-            legend = fieldset.querySelector('legend');
-            if (legend){
-              const title = legend.textContent.split(':')[0];
-              const value = currentTarget.labels[0].textContent;
-              legend.textContent = title + ': ' + value; 
-            }
-          }
         });
         break;
       case 'text':
         input.addEventListener('change', ({currentTarget}) => {
           form_shut(currentTarget);
-          label = currentTarget.labels[0];
-          if (label){
-            const title = label.textContent.split(':')[0];
-            const value = currentTarget.value;
-            label.textContent = title + ': ' + value; 
-          }
         });
         break;
       default:
-        console.debug('WARNING: unsupported input type: ' + input.type);
+        console.debug('INFO: no auto-close for input type: ' + input.type);
     }
   }
 
@@ -755,8 +770,8 @@ docReady(event => {
         field_focus(currentTarget.closest('fieldset'));
       });
     });
-  document.querySelectorAll("input").forEach(        
+  document.querySelectorAll("form input").forEach(        
     (input) => {
-      input_addEventListener(input);
+      input_auto_close(input);
     });
 });

@@ -136,6 +136,86 @@ function nFormatter(num, digits) {
 
 
 
+///////////////// Form Animation functions ///////////////////
+
+
+  // open one field in the form and close the others
+  function field_focus(field){
+    if (field instanceof HTMLElement) {
+      shut = !field.classList.contains('open');
+      form_shut(field);   
+      if (shut) {
+        field_open(field);
+      }
+    } else {
+      console.log('WARN: invalid parameter');
+    }
+  }
+
+  // open one field in the form
+  function field_open(field){
+    if (field instanceof HTMLElement) {
+      field.classList.add('open');    
+      for (const child of field.children){
+        child.classList.add('open');
+      }
+    } else {
+      console.log('WARN: invalid parameter');
+    }
+  }
+
+  // shut all field in the form containing the element
+  function form_shut(element){
+    if (element instanceof HTMLElement) {
+      form = element.closest('form');
+      if (form){
+        form.querySelectorAll('.open').forEach((open) => {
+            open.classList.remove('open');
+        });
+      } else {
+        console.log('WARN: missing form');
+      }
+    } else {
+      console.log('WARN: invalid parameter');
+    }
+  }
+
+  // add Event Listeners to all inputs that:
+  // 1. display the current value in the Field Label
+  // 2. close all fields in the form
+  function input_addEventListener(input){
+    switch (input.type){
+      case 'radio':
+        input.addEventListener('click', ({currentTarget}) => {
+          form_shut(currentTarget);
+          fieldset = currentTarget.closest('fieldset');
+          if (fieldset){
+            legend = fieldset.querySelector('legend');
+            if (legend){
+              const title = legend.textContent.split(':')[0];
+              const value = currentTarget.labels[0].textContent;
+              legend.textContent = title + ': ' + value; 
+            }
+          }
+        });
+        break;
+      case 'text':
+        input.addEventListener('change', ({currentTarget}) => {
+          form_shut(currentTarget);
+          label = currentTarget.labels[0];
+          if (label){
+            const title = label.textContent.split(':')[0];
+            const value = currentTarget.value;
+            label.textContent = title + ': ' + value; 
+          }
+        });
+        break;
+      default:
+        console.debug('WARNING: unsupported input type: ' + input.type);
+    }
+  }
+
+
 ////////////////  ////////////////////////////
 
 
@@ -663,4 +743,20 @@ docReady(event => {
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(element) {
     element.addEventListener('click', togglePreviousSibling);
   });
-})
+  document.querySelectorAll('div.field label').forEach(      
+    (label) => {
+      label.parentElement.addEventListener('click', ({currentTarget}) => {
+        field_focus(currentTarget.closest('div.field'));
+      });
+    });
+  document.querySelectorAll('fieldset legend').forEach(        
+    (legend) => {
+      legend.addEventListener('click', ({currentTarget}) => {
+        field_focus(currentTarget.closest('fieldset'));
+      });
+    });
+  document.querySelectorAll("input").forEach(        
+    (input) => {
+      input_addEventListener(input);
+    });
+});

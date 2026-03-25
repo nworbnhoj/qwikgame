@@ -105,10 +105,10 @@ class BidForm(QwikForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        choices = [(None, '')],
-        label = _('GAME'),
+        label = _('GAME: required'),
         required = True,
         template_name='field.html',
+        widget = RadioSelect,
     )
     place = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(

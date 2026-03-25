@@ -79,7 +79,7 @@ function changePlace(event){
 
 function changeGame(event){
   const GAME_SELECT = document.getElementById('id_game');
-  const SELECTED_OPTION = GAME_SELECT.querySelector('option:checked');
+  const SELECTED_OPTION = GAME_SELECT.querySelector("input[type='radio']:checked");
   const GAME = SELECTED_OPTION.value;
   const PLACE_SELECT = document.getElementById('id_place');
   for (var i = 3; i < PLACE_SELECT.options.length; i++) {

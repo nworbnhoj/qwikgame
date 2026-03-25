@@ -10,6 +10,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}">
     <style type="text/css">
             div.drop { justify-content: space-between; }
+        fieldset { border: 0px solid white; padding: 2em 0 0 0; position: relative; }
+        legend { left: 0px; padding: 0 0 1em 0; position: absolute; top: 0px; width: 100%; }
+        div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; padding-block: 0px; transition: max-height 1s ease; width: 100%; }
+        fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+        .open { max-height: 50em; }
+        div.field > *:not(div.label).open { max-height: 50em; }
+        div#map { top: 0px; }
     </style>
 {% endblock css %}
 

@@ -129,12 +129,7 @@ class KeenForm(QwikForm):
         required=False,
         template_name='field.html',
     )
-    friends = MultipleActionField(
-        action='invite:',
-        # help_text=_('Invite your friends to play this qwikgame.'),
-        label=_('FRIENDS'),
-        required=False,
-    )
+    friends = ChoiceField()    # placeholder for dynamic assignment below
     lat = DecimalField(
         decimal_places=6,
         initial=-36.449786,
@@ -261,6 +256,13 @@ class KeenForm(QwikForm):
                     'url': ['','',''] + [v.url for v in venues],
                 }
             )
+        )
+        self.fields['friends'] = ChoiceField(
+            choices = player.friend_choices(),
+            # help_text=_('Invite your friends to play this qwikgame.'),
+            label=_('INVITE FRIENDS: optional'),
+            required=False,
+            widget = CheckboxSelectMultiple,
         )
         region = player.region_favorite()
         if region:

@@ -189,6 +189,21 @@ function nFormatter(num, digits) {
     field = field ? field : element.closest('div.field');
     if (field){
       switch (field.querySelector('input').type){
+        case 'checkbox':
+          legend = field.querySelector('legend');
+          if (legend){
+            let title = legend.textContent.split(':')[0] + ': ';
+            let checked = field.querySelectorAll("input[type='checkbox']:checked");
+            if (checked.length === 0){
+              title += "None";
+            } else {
+              checked.forEach((checkbox) => {
+                title += checkbox.labels[0].textContent + ', ';
+              });
+            }
+            legend.textContent = title;
+          }
+          break;
         case 'radio':
           legend = field.querySelector('legend');
           checked = field.querySelector("input[type='radio']:checked");

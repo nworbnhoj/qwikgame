@@ -87,11 +87,13 @@ class GooglePlacesForm(QwikForm):
 class VenueAddForm(QwikForm):
     game = ChoiceField(
         choices = [(None, '')],
-        label = _('GAME'),
+        label = _('GAME: required'),
         required = True,
         template_name='field.html',
+        widget = RadioSelect,
     )
     place = CharField(
+        label = _('PLACE: required'),
         template_name='field.html',
         initial='Select from map',
     )

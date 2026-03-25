@@ -6,7 +6,7 @@ docReady(event => {
       const PLACE_INPUT =document.getElementById('id_place');
       const PLACE_FIELD = PLACE_INPUT.parentElement
       const MAP_ELEMENT = document.getElementById("map");
-      PLACE_FIELD.insertAdjacentElement('afterend', MAP_ELEMENT);
+      PLACE_FIELD.appendChild(MAP_ELEMENT);
     } catch (error) {
       console.log("Warning: failed to relocate map - missing map|form|game");
       return null;
@@ -36,7 +36,7 @@ function initPage(){
 
 function changeGame(event){
   const GAME_SELECT = document.getElementById('id_game');
-  const SELECTED_OPTION = GAME_SELECT.querySelector('option:checked');
+  const SELECTED_OPTION = GAME_SELECT.querySelector("input[type='radio']:checked");
   const GAME = SELECTED_OPTION.value;
 }
 

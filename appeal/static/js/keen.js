@@ -5,11 +5,13 @@ docReady(event => {
       GAME_SELECT.addEventListener('change', changeGame);
       const PLACE_SELECT = document.getElementById('id_place');
       PLACE_SELECT.addEventListener('change', changePlace);
-      const PLACE_FIELD = PLACE_SELECT.parentElement
       const MAP_ELEMENT = document.getElementById("map");
-      PLACE_FIELD.appendChild(MAP_ELEMENT);
+      const SHOWMAP_RADIO = document.getElementById('id_place_0');
+      const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
+      SHOWMAP_DIV.insertAdjacentElement('afterend', MAP_ELEMENT);
+      SHOWMAP_RADIO.removeEventListener('click', form_shut);
     } catch (error) {
-      console.log("Warning: failed to relocate map - missing map|form|game");
+      console.log(error);
       return null;
     }
 });
@@ -46,7 +48,7 @@ window.onload = function() {
     const PLACE_SELECT = document.getElementById('id_place');
     if (PLACE_SELECT){
         PLACE_SELECT.addEventListener("change", function(e) {
-          place = this.options[this.selectedIndex]
+          place = this.querySelector("input[type='radio']:checked");
           updatePlaceHours(place);
         });
     }
@@ -62,7 +64,7 @@ function changePlace(event){
   showMap(event.target.value === 'show-map');
   // insert Venue availability prompt
   const PLACE_SELECT = document.getElementById('id_place')
-  const SELECTED_OPTION = PLACE_SELECT.querySelector('option:checked')
+  const SELECTED_OPTION = PLACE_SELECT.querySelector("input[type='radio']:checked")
   const PHONE = SELECTED_OPTION.dataset.phone;
   const URL = SELECTED_OPTION.dataset.url
   const LINK = "<a href='" + URL + "' target='_blank'>" + URL + "</a>";
@@ -72,7 +74,7 @@ function changePlace(event){
   if (!promptElement){
     promptElement = document.createElement("p");
     promptElement.id = PROMPT_ELEMENT_ID
-    PLACE_SELECT.insertAdjacentElement('afterend', promptElement)
+    PLACE_SELECT.insertAdjacentElement('beforebegin', promptElement)
   }
   promptElement.innerHTML = PROMPT
 }
@@ -82,37 +84,51 @@ function changeGame(event){
   const SELECTED_OPTION = GAME_SELECT.querySelector("input[type='radio']:checked");
   const GAME = SELECTED_OPTION.value;
   const PLACE_SELECT = document.getElementById('id_place');
-  for (var i = 3; i < PLACE_SELECT.options.length; i++) {
-    var place_option = PLACE_SELECT.options[i]
-    var place_games = place_option.dataset.games;
-    place_option.style.display = place_games.includes(GAME) ? 'block': 'none';
-  }
+  let skipped = false;
+  PLACE_SELECT.querySelectorAll("input[type='radio']").forEach((option) => {
+    if (skipped){
+      const PLACE_GAMES = option.dataset.games;
+      const OPTION_DIV = option.parentElement.parentElement
+      OPTION_DIV.style.display = PLACE_GAMES.includes(GAME) ? 'block': 'none';
+    }
+    skipped = true;
+  });
 }
 
 function setPlace(mark){
   const PLACEID = mark.placeid;        
   const PLACE_SELECT = document.getElementById('id_place');
-  let option = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
-  if (option){
+  let radio = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
+  if (radio){
     PLACE_SELECT.value = PLACEID
   } else {
     PLACE_SELECT.value = "placeid"
     // populate the (hidden) placeid input with the new placeid
     const PLACEID_INPUT = document.getElementById('id_placeid');
     PLACEID_INPUT.value = PLACEID;
-    // configure the temporary placeid option in the place drop-down field
-    option = PLACE_SELECT.querySelector("[value='placeid']");
-    option.textContent = mark.name;
-    option.setAttribute('data-placeid', PLACEID);
-    option.setAttribute('data-hours', mark.hours);
-    option.setAttribute('data-now_weekday', mark.weekday);
-    option.setAttribute('data-now_hour', mark.hour);
-    option.setAttribute('data-phone', mark.phone);
-    option.setAttribute('data-url', mark.url);
+    // clone the SHOW_MAP option to accomodate the Map selected place
+    const SHOWMAP_RADIO = document.getElementById('id_place_0');
+    const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
+    const SHOWMAP_LABEL = SHOWMAP_DIV.querySelector('label');
+    const CLONE = SHOWMAP_DIV.cloneNode(true);
+    SHOWMAP_RADIO.id = 'id_place_showmap';
+    SHOWMAP_LABEL.setAttribute('for', SHOWMAP_RADIO.id);
+    SHOWMAP_DIV.parentElement.insertBefore(CLONE, SHOWMAP_DIV.nextElementSibling);
+    CLONE.querySelector('label').lastChild.data = mark.name;
+    radio = CLONE.querySelector("input[type='radio']");
+    radio.setAttribute('value', 'placeid');
+    radio.setAttribute('data-placeid', PLACEID);
+    radio.setAttribute('data-hours', mark.hours);
+    radio.setAttribute('data-now_weekday', mark.weekday);
+    radio.setAttribute('data-now_hour', mark.hour);
+    radio.setAttribute('data-phone', mark.phone);
+    radio.setAttribute('data-url', mark.url);
+    radio.addEventListener('click', form_shut);
   }
-  updatePlaceHours(option)
+  updatePlaceHours(radio);
   PLACE_SELECT.dispatchEvent(new Event('change'));
   showMap(false);
+  form_shut(PLACE_SELECT);
 }
 
 function closeMap(){

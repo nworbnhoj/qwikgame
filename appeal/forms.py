@@ -239,11 +239,11 @@ class KeenForm(QwikForm):
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(20).order_by('name').all()[:20]
-        choices = [(None, ''), ('show-map', _('Select from map')), ('placeid', '')]
+        choices = [('show-map', _('Select from map'))]
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,
-            label=_('VENUE'),
+            label=_('VENUE: required'),
             required = True,
             template_name='field.html', 
             widget=DataSelect(

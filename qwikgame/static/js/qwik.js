@@ -223,7 +223,7 @@ function nFormatter(num, digits) {
           }
           break;
         case 'text':
-          label = currentTarget.labels[0];
+          label = field.labels[0];
           text = field.querySelector("input[type='text']");
           if (label && text){
             const title = label.textContent.split(':')[0] + ': ';

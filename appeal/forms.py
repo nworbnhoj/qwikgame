@@ -105,7 +105,7 @@ class BidForm(QwikForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        label = _('GAME: required'),
+        label = _('GAME:'),
         required = True,
         template_name='field.html',
         widget = RadioSelect,
@@ -115,7 +115,7 @@ class KeenForm(QwikForm):
         help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TODAY: required and/or tomorrow'),
+        label=_('TODAY:'),
         offsetday='0',
         required=False,
         template_name='field.html',
@@ -124,7 +124,7 @@ class KeenForm(QwikForm):
         help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TOMORROW: required and/or today'),
+        label=_('TOMORROW:'),
         offsetday='1',
         required=False,
         template_name='field.html',
@@ -243,7 +243,7 @@ class KeenForm(QwikForm):
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,
-            label=_('VENUE: required'),
+            label=_('VENUE:'),
             required = True,
             template_name='field.html', 
             widget=DataSelect(
@@ -260,7 +260,7 @@ class KeenForm(QwikForm):
         self.fields['friends'] = ChoiceField(
             choices = player.friend_choices(),
             # help_text=_('Invite your friends to play this qwikgame.'),
-            label=_('INVITE FRIENDS: optional'),
+            label=_('INVITE FRIENDS:'),
             required=False,
             widget = CheckboxSelectMultiple,
         )

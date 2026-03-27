@@ -165,7 +165,12 @@ function nFormatter(num, digits) {
   }
 
   // shut all field in the form containing the element
-  function form_shut(element){
+  function form_shut(eventment){
+    if (eventment instanceof HTMLElement) {
+      element = eventment;
+    } else {
+      element = eventment.currentTarget;
+    }
     if (element instanceof HTMLElement) {
       form = element.closest('form');
       if (form){
@@ -173,6 +178,10 @@ function nFormatter(num, digits) {
             if (['LABEL','LEGEND'].includes(open.nodeName)){
               field_label_update(open);
             }
+            if (open.classList.contains('by_day')){
+              field_label_update(open);
+            }
+
             open.classList.remove('open');
         });
       } else {
@@ -231,14 +240,10 @@ function nFormatter(num, digits) {
   function input_auto_close(input){
     switch (input.type){
       case 'radio':
-        input.addEventListener('click', ({currentTarget}) => {
-          form_shut(currentTarget);
-        });
+        input.addEventListener('click', form_shut);
         break;
       case 'text':
-        input.addEventListener('change', ({currentTarget}) => {
-          form_shut(currentTarget);
-        });
+        input.addEventListener('change', form_shut);
         break;
       default:
         console.debug('INFO: no auto-close for input type: ' + input.type);

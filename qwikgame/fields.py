@@ -8,7 +8,7 @@ from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, Range
 logger = logging.getLogger(__file__)
 
 
-class DataSelect(Select):
+class DataSelect(RadioSelect):
     data_attr = {}
 
     def __init__(self, *args, **kwargs):

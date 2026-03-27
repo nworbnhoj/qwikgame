@@ -779,9 +779,9 @@ docReady(event => {
   document.querySelectorAll('.toggle_previous_sibling').forEach(function(element) {
     element.addEventListener('click', togglePreviousSibling);
   });
-  document.querySelectorAll('div.field label').forEach(      
-    (label) => {
-      label.parentElement.addEventListener('click', ({currentTarget}) => {
+  document.querySelectorAll('div.field div.label').forEach(      
+    (div_label) => {
+      div_label.addEventListener('click', ({currentTarget}) => {
         field_focus(currentTarget.closest('div.field'));
       });
     });

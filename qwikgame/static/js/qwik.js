@@ -199,9 +199,10 @@ function nFormatter(num, digits) {
     if (field){
       switch (field.querySelector('input').type){
         case 'checkbox':
-          legend = field.querySelector('legend');
-          if (legend){
-            let title = legend.textContent.split(':')[0] + ': ';
+          legabel = field.querySelector('legend');
+          legabel = legabel ? legabel : field.querySelector('label');
+          if (legabel){
+            let title = legabel.textContent.split(':')[0] + ': ';
             let checked = field.querySelectorAll("input[type='checkbox']:checked");
             if (checked.length === 0){
               title += "None";
@@ -210,7 +211,7 @@ function nFormatter(num, digits) {
                 title += checkbox.labels[0].textContent + ', ';
               });
             }
-            legend.textContent = title;
+            legabel.textContent = title;
           }
           break;
         case 'radio':

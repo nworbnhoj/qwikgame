@@ -64,6 +64,8 @@ function changePlace(event){
   showMap(event.target.value === 'show-map');
   // insert Venue availability prompt
   const PLACE_SELECT = document.getElementById('id_place')
+  const PLACE_FIELDSET = PLACE_SELECT.closest('fieldset')
+  const PLACE_LEGEND = PLACE_FIELDSET.querySelector('legend');
   const SELECTED_OPTION = PLACE_SELECT.querySelector("input[type='radio']:checked")
   const PHONE = SELECTED_OPTION.dataset.phone;
   const URL = SELECTED_OPTION.dataset.url
@@ -74,7 +76,7 @@ function changePlace(event){
   if (!promptElement){
     promptElement = document.createElement("p");
     promptElement.id = PROMPT_ELEMENT_ID
-    PLACE_SELECT.insertAdjacentElement('beforebegin', promptElement)
+    PLACE_LEGEND.append(promptElement);
   }
   promptElement.innerHTML = PROMPT
 }

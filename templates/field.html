@@ -9,7 +9,7 @@
 {% if field.use_fieldset %}
     <fieldset>
     {% if field.label %}
-        {{ field.legend_tag }}
+        {% include 'field_legend.html' %}
     {% endif %}
 {% else %}
     <div class="field">

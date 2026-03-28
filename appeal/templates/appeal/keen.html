@@ -9,19 +9,7 @@
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}">
     <style type="text/css">
-        .open { max-height: 50em; }
-        div#map { top: 0px; }
         div.drop { justify-content: space-between; }
-        div.field { padding: 0;  }
-        div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; padding-block: 0px; transition: max-height 1s ease; width: 100%; }
-        div.field > *:not(div.label).open { max-height: 50em; }
-        div.label { padding: 0;}
-        fieldset { border: 0px solid white; padding: 2em 0 0 0; position: relative; }
-        fieldset > div {margin : 2em 0 0 0 ;}
-        fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
-        form > div { min-height: 4em; }
-        legend { left: 0px; padding: 0 0 1em 0; position: absolute; top: 0px; width: 100%; }
-        legend p {padding-left: 1em; }
     </style>
 {% endblock css %}
 

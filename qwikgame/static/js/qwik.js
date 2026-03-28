@@ -193,7 +193,12 @@ function nFormatter(num, digits) {
   }
 
   // update the current value in the Field Label
-  function field_label_update(element){
+  function field_label_update(eventment){
+    if (eventment instanceof HTMLElement) {
+      element = eventment;
+    } else {
+      element = eventment.currentTarget;
+    }
     field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field){
@@ -240,6 +245,9 @@ function nFormatter(num, digits) {
   // auto close Field when value is selected
   function input_auto_close(input){
     switch (input.type){
+      case 'checkbox':
+        input.addEventListener('click', field_label_update);
+        break;
       case 'radio':
         input.addEventListener('click', form_shut);
         break;

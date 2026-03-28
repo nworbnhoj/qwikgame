@@ -193,47 +193,52 @@ function nFormatter(num, digits) {
   }
 
   // update the current value in the Field Label
-  function field_label_update(eventment){
-    if (eventment instanceof HTMLElement) {
-      element = eventment;
+  function field_label_update(event_or_element){
+    if (event_or_element instanceof HTMLElement) {
+      element = event_or_element;
     } else {
-      element = eventment.currentTarget;
+      element = event_or_element.currentTarget;
     }
     field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field){
       switch (field.querySelector('input').type){
         case 'checkbox':
-          legabel = field.querySelector('legend');
-          legabel = legabel ? legabel : field.querySelector('label');
-          if (legabel){
-            let title = legabel.textContent.split(':')[0] + ': ';
+          legend_or_label = field.querySelector('legend');
+          legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
+          if (legend_or_label){
+            let sub_text = legend_or_label.parentElement.querySelector('.sub_text')
             let checked = field.querySelectorAll("input[type='checkbox']:checked");
-            if (checked.length === 0){
-              title += "None";
-            } else {
-              checked.forEach((checkbox) => {
-                title += checkbox.labels[0].textContent + ', ';
-              });
+            if (sub_text && checked){
+              if (checked.length === 0){
+                sub_text.textContent = "None";
+              } else {
+                sub_text.textContent = "";
+                checked.forEach((checkbox) => {
+                  sub_text.textContent += checkbox.labels[0].textContent + ', ';
+                });
+              }
             }
-            legabel.textContent = title;
           }
           break;
         case 'radio':
           legend = field.querySelector('legend');
           checked = field.querySelector("input[type='radio']:checked");
           if (legend && checked){
-            let title = legend.textContent.split(':')[0] + ': ';
-            title += checked.labels[0].textContent;
-            legend.textContent = title;
+            sub_text = legend.querySelector('.sub_text')
+            if (sub_text){
+              sub_text.textContent = checked.labels[0].textContent;
+            }
           }
           break;
         case 'text':
           label = field.labels[0];
           text = field.querySelector("input[type='text']");
           if (label && text){
-            const title = label.textContent.split(':')[0] + ': ';
-            label.textContent = title + ': ' + text.value;
+            sub_text = label.querySelector('.sub_text');
+            if (sub_text){
+              sub_text.textContent = text.value;
+            }
           }
           break;
         default:

@@ -233,7 +233,9 @@ class FriendForm(QwikForm):
         form = klass()
         if friend:
             form.fields['email'].initial = friend.email
+            form.fields['email'].sub_text = friend.email
             form.fields['name'].initial = friend.name
+            form.fields['name'].sub_text = friend.name
         form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
         form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
         return { 'friend_form' : form, }

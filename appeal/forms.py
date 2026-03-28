@@ -232,10 +232,7 @@ class KeenForm(QwikForm):
         )
 
     def personalise(self, player):
-        self.fields['friends'].choices = player.friend_choices()
-        self.fields['friends'].reveal = _('Invite Friends Only')
-        if not self.fields['friends'].choices:
-            self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
+        self.fields['game'].sub_text = ' '
         self.fields['today'].sub_text = ' '
         self.fields['tomorrow'].sub_text = ' '
         venues = player.venue_suggestions(20).order_by('name').all()[:20]
@@ -243,7 +240,7 @@ class KeenForm(QwikForm):
         choices += [(v.placeid, v.name) for v in venues]
         self.fields['place'] = ChoiceField(
             choices = choices,
-            label=_('VENUE:'),
+            label =_('VENUE:'),
             required = True,
             template_name='field.html', 
             widget=DataSelect(
@@ -257,13 +254,22 @@ class KeenForm(QwikForm):
                 }
             )
         )
+        self.fields['place'].sub_text = ' ';
         self.fields['friends'] = ChoiceField(
             choices = player.friend_choices(),
             # help_text=_('Invite your friends to play this qwikgame.'),
-            label=_('INVITE FRIENDS:'),
-            required=False,
+            label = _('INVITE FRIENDS:'),
+            required = False,
+            template_name='field.html', 
             widget = CheckboxSelectMultiple,
         )
+        if self.fields['friends'].choices:
+            self.fields['friends'].sub_text = ' '
+        else:
+            self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
+
+
+        self.fields['friends'].sub_text = ' '
         region = player.region_favorite()
         if region:
             self.fields['lat'].initial = region.lat

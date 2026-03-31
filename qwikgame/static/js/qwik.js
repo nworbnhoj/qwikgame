@@ -165,17 +165,17 @@ function nFormatter(num, digits) {
   }
 
   // shut all field in the form containing the element
-  function form_shut(eventment){
-    if (eventment instanceof HTMLElement) {
-      element = eventment;
+  function form_shut(event_or_element){
+    if (event_or_element instanceof HTMLElement) {
+      element = event_or_element;
     } else {
-      element = eventment.currentTarget;
+      element = event_or_element.currentTarget;
     }
     if (element instanceof HTMLElement) {
       form = element.closest('form');
       if (form){
         form.querySelectorAll('.open').forEach((open) => {
-            if (['LABEL','LEGEND'].includes(open.nodeName)){
+            if (open.nodeName === 'LEGEND' || open.classList.contains('label')){
               field_label_update(open);
             }
             if (open.classList.contains('by_day')){
@@ -231,11 +231,31 @@ function nFormatter(num, digits) {
             }
           }
           break;
-        case 'text':
-          label = field.labels[0];
-          text = field.querySelector("input[type='text']");
-          if (label && text){
+        case 'email':
+          email = field.querySelector("input[type='email']");
+          label = email.labels[0];
+          if (label && email){
+            sub_text = label.parentElement.querySelector('.sub_text');
+            if (sub_text){
+              sub_text.textContent = email.value;
+            }
+          }
+          break;
+        case 'range':
+          range = field.querySelector("input[type='range']");
+          label = field.querySelector("div.label");
+          if (range && label){
             sub_text = label.querySelector('.sub_text');
+            if (sub_text){
+              sub_text.textContent = slider(range);
+            }
+          }
+          break;
+        case 'text':
+          text = field.querySelector("input[type='text']");
+          label = text.labels[0];
+          if (label && text){
+            sub_text = label.parentElement.querySelector('.sub_text');
             if (sub_text){
               sub_text.textContent = text.value;
             }
@@ -435,16 +455,21 @@ function previousDetail(event) {
   showDetail();
 }
 
-function range(slider) {
-  var options = slider.closest('div.field').querySelector('div.range_options')
-  for (let i = 0; i < options.length; i++) {
-    var option = options.item(i);
-    if (i == slider.value) {
+function slider(range) {
+  var label = range.value;
+  var options = range.closest('div.field').querySelector('div.range_options')
+  var i=0;
+  for ( const option of options.children) {
+    console.log(option)
+    if (i == range.value) {
       option.classList.remove('invisible');
+      label = option.textContent;
     } else {
       option.classList.add('invisible');
     }
+    i++;
   }
+  return label;
 }
 
 function setAllWeek(button, checked) {

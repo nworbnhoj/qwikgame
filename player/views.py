@@ -228,7 +228,9 @@ class FriendsView(QwikView):
 
 
 class FriendAddView(FriendsView):
-    form_class = FriendForm
+    friend_form_class = FriendForm
+    menu_form_class = MenuForm
+    strength_form_class = StrengthForm
     template_name = 'player/friend_add.html'
 
     def context(self, request, *args, **kwargs):
@@ -239,35 +241,57 @@ class FriendAddView(FriendsView):
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        context |= self.form_class.get()
+        context |= self.friend_form_class.get()
+        context |= self.strength_form_class.get()
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        context = self.context(request, *args, **kwargs)
-        form = context.get('form')
-        if form and not form.is_valid():
-            context |= self.form_class.post(request.POST)
-            return render(request, self.template_name, context)
+        player = self.user.player
+        context = self.menu_form_class.post(request.POST)
+        context |= self.friend_form_class.post(request.POST)
+        context |= self.strength_form_class.post(request.POST)
+        friend_form = context.get('friend_form')
+        strength_form = context.get('strength_form')
+        if friend_form and strength_form:
+            if not friend_form.is_valid() or not strength_form.is_valid():
+                context |= self.context(request, *args, **kwargs)
+                return render(request, self.template_name, context)
+        else:
+            logger.error('failed to post FriendForm or StrengthForm')
+        email = context.get('email')
+        name = context.get('name')
         try:
-            email = context.get('email','not@valid')
             rival, created = Player.objects.get_or_create(hash=Person.hash(email))
             friend, created = Friend.objects.update_or_create(
                 email = email,
-                player = self.user.player,
+                player = player,
                 rival = rival,
                 defaults = {"name" : context.get('name',email.split('@')[0])},
             )
+            game = Game.objects.get(pk=context.get('game','squ'))
+            strength, created = Strength.objects.update_or_create(
+                game = game,
+                player = player,
+                rival = friend.rival,
+                defaults = {
+                    'date': datetime.now(timezone.utc),
+                    'relative': context.get('strength','m'),
+                    'weight': 3
+                }
+            )
+            if created:
+                friend.strengths.add(strength)
+                friend.save()
+            return HttpResponseRedirect(f'/player/friend/{friend.pk}/')
         except:
-            logger.exception(f'failed add friend: {context}')
-        return HttpResponseRedirect(f'/player/friend/{friend.pk}/')
-
+            logger.exception(f'failed add friend with strength: {context}')
+        return HttpResponseRedirect(f'/player/friend/')
 
 
 class FriendView(FriendsView):
     friend_form_class = FriendForm
     menu_form_class = MenuForm
-    strength_form_class = StrengthForm
     template_name = 'player/friend.html'
 
     def context(self, request, *args, **kwargs):
@@ -282,9 +306,7 @@ class FriendView(FriendsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         friend = context.get('friend')
-        strength = friend.strengths.first() if friend else None
         context |= self.friend_form_class.get(friend)
-        context |= self.strength_form_class.get(strength)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -303,15 +325,10 @@ class FriendView(FriendsView):
                     logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
                 return HttpResponseRedirect(f'/player/friend/')
         context = self.friend_form_class.post(request.POST)
-        context |= self.strength_form_class.post(request.POST)
         friend_form = context.get('friend_form')
-        strength_form = context.get('strength_form')
-        if friend_form and strength_form:
-            if not friend_form.is_valid() or not strength_form.is_valid():
-                context |= self.context(request, *args, **kwargs)
-                return render(request, self.template_name, context)
-        else:
-            logger.error('failed to post FriendForm or StrengthForm')
+        if friend_form and not friend_form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
         friend_pk = kwargs.get('friend')
         
         if 'DELETE_STRENGTH' in context:
@@ -325,77 +342,38 @@ class FriendView(FriendsView):
             return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
         email = context.get('email')
         name = context.get('name')
-        if friend_pk:    # modifying an existing friend
-            try:
-                friend = Friend.objects.get(pk=friend_pk)
-                if email != friend.email:
-                    friend.email = email
-                    strengths = friend.strengths.all()
-                    rival, created = Player.objects.get_or_create(hash=Person.hash(email))
-                    friend.rival = rival
-                    friend.save()
-                    for strength in strengths:
-                        strength.rival = rival
-                        strength.save()
-                    friend_pk = friend.pk
-                if name != friend.name:
-                    friend.name = name
-                    friend.save()
-            except:
-                logger.exception(f'failed modify friend: {context}')
-        else:    # creating a new friend
-            try:
-                rival, created = Player.objects.get_or_create(hash=Person.hash(email))
-                friend, created = Friend.objects.update_or_create(
-                    email = email,
-                    player = player,
-                    rival = rival,
-                    defaults = {"name" : context.get('name',email.split('@')[0])},
-                )
-                friend_pk = friend.pk
-            except:
-                logger.exception(f'failed add friend: {context}')
-        try:    # 
+        try:
             friend = Friend.objects.get(pk=friend_pk)
-            game = Game.objects.get(pk=context.get('game','squ'))
-            strength, created = Strength.objects.update_or_create(
-                game = game,
-                player = player,
-                rival = friend.rival,
-                defaults = {
-                    'date': datetime.now(timezone.utc),
-                    'relative': context.get('strength','m'),
-                    'weight': 3
-                }
-            )
-            if created:
-                friend.strengths.add(strength)
+            if email != friend.email:
+                friend.email = email
+                strengths = friend.strengths.all()
+                rival, created = Player.objects.get_or_create(hash=Person.hash(email))
+                friend.rival = rival
+                friend.save()
+                for strength in strengths:
+                    strength.rival = rival
+                    strength.save()
+                friend_pk = friend.pk
+            if name != friend.name:
+                friend.name = name
                 friend.save()
         except:
-            logger.exception(f'failed add strength: {context}')
+            logger.exception(f'failed modify friend: {context}')
         return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
-
-
 
 
 class FriendStrengthView(FriendsView):
     form_class = StrengthForm
-    template_name = 'player/friend.html'
+    template_name = 'player/strength.html'
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
-        friend = context.get('friend')
-        if friend:
-            context['strengths'] = friend.strengths.all()
         self._context = context
         return self._context
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
-        friend = context.get('friend')
-        if not friend:
-            return HttpResponseRedirect(f'/player/friend/')
         context |= self.form_class.get()
         return render(request, self.template_name, context)
 
@@ -423,6 +401,7 @@ class FriendStrengthView(FriendsView):
             )
             if created:
                 friend.strengths.add(strength)
+                friend.save()
         except:
             logger.exception(f'failed add strength: {context}')
         return HttpResponseRedirect(f'/player/friend/{friend_pk}/')

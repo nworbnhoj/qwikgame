@@ -29,7 +29,7 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down right hidden">
-                        <form id="menu_form " action="{% url 'friend_add' %}" method="post">
+                        <form id="menu_form " action="{% url 'friend' %}" method="post">
     {% csrf_token %}
                             <label class="btn tertiary">
                                 <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(
@@ -60,6 +60,11 @@
 {% endif %}
 {% csrf_token %}
 {{ friend_form }}
+                <div class="grid_3_col">
+                    <h2></h2>
+                    <h2></h2>
+                  <a class="btn tertiary" href="{% url 'friend_strength' friend.pk %}">{% translate "Add Game" %}</a>
+                </div>
 {% for strength in strengths %}        
                 <div class="grid_3_col">
                     <h2>{{ strength.game }}</h2>
@@ -70,8 +75,6 @@
                     </label>
                 </div>
 {% endfor %}
-{% csrf_token %}
-{{ strength_form }}
                 <div class="pillar">
                     <div id="alert_form_submit" class="alert"></div>
                     <label class="btn secondary push_down">

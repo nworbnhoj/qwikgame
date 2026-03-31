@@ -249,6 +249,12 @@ class FriendForm(QwikForm):
                 'email': form.cleaned_data['email'],
                 'name': form.cleaned_data['name']
             }
+            if 'DELETE_STRENGTH' in request_post:
+                delete = request_post['DELETE_STRENGTH']
+                try:
+                    context['DELETE_STRENGTH'] = int(delete)
+                except:
+                    logger.warn(f'failed to convert DELETE_STRENGTH: {delete}')
         return context
 
 
@@ -278,18 +284,22 @@ class StrengthForm(QwikForm):
         label = _('GAME'),
         required = True,
         template_name='field.html',
+        widget = RadioSelect,
     )
     strength = SelectRangeField(
         choices = Strength.SCALE,
         initial = Strength.SCALE.get('m'),
         label = _('RIVAL SKILL LEVEL'),
         required = True,
+        template_name='field.html',
     )
 
     @classmethod
     def get(klass, strength=None):
         form = klass()
         form.fields['game'].choices = Game.choices()
+        form.fields['game'].sub_text = ' '
+        form.fields['strength'].sub_text = form.fields['strength'].initial
         if strength:
             form.fields['game'].initial = strength.game.code
             form.fields['strength'].initial = strength.relative
@@ -299,18 +309,14 @@ class StrengthForm(QwikForm):
     def post(klass, request_post):
         form = klass(data=request_post)
         form.fields['game'].choices = Game.choices()
-        context = {'strength_form': form}
+        form.fields['game'].sub_text = form.fields['game'].initial
+        form.fields['strength'].sub_text = form.fields['strength'].initial
+        context = {'form': form}
         if form.is_valid():
             context |= {
                 'game': form.cleaned_data['game'],
                 'strength': form.cleaned_data['strength']
             }
-            if 'DELETE_STRENGTH' in request_post:
-                delete = request_post['DELETE_STRENGTH']
-                try:
-                    context['DELETE_STRENGTH'] = int(delete)
-                except:
-                    logger.warn(f'failed to convert DELETE_STRENGTH: {delete}')
         return context
 
 

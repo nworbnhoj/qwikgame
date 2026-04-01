@@ -258,7 +258,17 @@ class KeenForm(QwikForm):
             choices = choices,
             label =_('VENUE'),
             required = True,
-            template_name='field.html',            
+            template_name='field.html',
+            widget=DataSelect(
+                data_attr={
+                    'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
+                    'hours': [''] + [v.open_7int_str() for v in venues],
+                    'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
+                    'now_hour': [''] + [v.now().hour for v in venues],
+                    'phone': [''] + [v.phone for v in venues],
+                    'url': [''] + [v.url for v in venues],
+                }
+            ),
         )
 
     def _init_regions(self):
@@ -288,16 +298,6 @@ class KeenForm(QwikForm):
         self.fields['game'].sub_text = ' '
 
     def _prep_place(self, venues):
-        self.fields['place'].widget=DataSelect(
-            data_attr={
-                'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
-                'hours': [''] + [v.open_7int_str() for v in venues],
-                'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
-                'now_hour': [''] + [v.now().hour for v in venues],
-                'phone': [''] + [v.phone for v in venues],
-                'url': [''] + [v.url for v in venues],
-            }
-        )
         self.fields['place'].sub_text = ' ';
 
     def _prep_regions(self, region):

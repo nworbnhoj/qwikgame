@@ -116,13 +116,20 @@ class PublicForm(QwikForm):
     )
 
     def __init__(self, *args, **kwargs):
-        social_urls = kwargs.pop('social_urls')
+        social_choices = kwargs.pop('social_choices')
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
         self.fields['social'].widget.attrs['placeholder'] = _('add a social media url')
-        self.fields['socials'].choices = social_urls
+        self.fields['socials'].choices = social_choices
         self.fields['socials'].widget.attrs['class'] = "post"
         self.fields['socials'].widget.option_template_name='option_delete.html'
+
+    @classmethod
+    def _social_choices(klass, user_id):
+        choices = {}
+        for url in Social.objects.filter(person__user__id=user_id):
+            choices[url.url] = url.url
+        return choices
 
     # Initializes a PublicForm for 'person'.
     # Returns a context dict including 'public_form'
@@ -130,10 +137,8 @@ class PublicForm(QwikForm):
     def get(klass, person):
         return {
             'public_form': klass(
-                    initial = {
-                        'name': person.qwikname,
-                    },
-                    social_urls = klass.social_urls(person.user.id),
+                    initial = { 'name': person.qwikname },
+                    social_choices = klass._social_choices(person.user.id),
                 ),
         }
 
@@ -142,7 +147,10 @@ class PublicForm(QwikForm):
     @classmethod
     def post(klass, request_post, person):
         context = {}
-        public_form = klass(data=request_post, social_urls = klass.social_urls(person.user.id))
+        public_form = klass(
+            data=request_post,
+            social_choices = klass._social_choices(person.user.id)
+        )
         if public_form.is_valid():
             person.name = public_form.cleaned_data["name"]
             person.save()            
@@ -156,12 +164,6 @@ class PublicForm(QwikForm):
             context = {'public_form': public_form}
         return context
 
-    @classmethod
-    def social_urls(klass, user_id):
-        urls = {}
-        for url in Social.objects.filter(person__user__id=user_id):
-            urls[url.url] = url.url
-        return urls
 
 
 class UnblockForm(QwikForm):

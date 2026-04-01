@@ -231,46 +231,76 @@ class KeenForm(QwikForm):
             _('Sorry, that Venue selection did not work. Please try again.')
         )
 
-    def personalise(self, player):
-        self.fields['game'].sub_text = ' '
-        self.fields['today'].sub_text = ' '
-        self.fields['tomorrow'].sub_text = ' '
-        venues = player.venue_suggestions(20).order_by('name').all()[:20]
-        choices = [('show-map', _('Select from map'))]
-        choices += [(v.placeid, v.name) for v in venues]
-        self.fields['place'] = ChoiceField(
-            choices = choices,
-            label =_('VENUE:'),
-            required = True,
-            template_name='field.html', 
-            widget=DataSelect(
-                data_attr={
-                    'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
-                    'hours': [''] + [v.open_7int_str() for v in venues],
-                    'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
-                    'now_hour': [''] + [v.now().hour for v in venues],
-                    'phone': [''] + [v.phone for v in venues],
-                    'url': [''] + [v.url for v in venues],
-                }
-            )
-        )
-        self.fields['place'].sub_text = ' ';
+    def _init_fields(self, player):
+        self._init_friends(player.friend_choices())
+        self._init_game()
+        self._init_place(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._init_today()
+        self._init_tomorrow()
+
+    def _init_friends(self, choices):
         self.fields['friends'] = ChoiceField(
-            choices = player.friend_choices(),
+            choices = choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
             label = _('INVITE FRIENDS:'),
             required = False,
             template_name='field.html', 
             widget = CheckboxSelectMultiple,
         )
+
+    def _init_game(self):
+        self.fields['game'].choices += Game.choices()
+
+    def _init_place(self, venues):
+        choices = [('show-map', _('Select from map'))]
+        choices += [(v.placeid, v.name) for v in venues]
+        self.fields['place'] = ChoiceField(
+            choices = choices,
+            label =_('VENUE'),
+            required = True,
+            template_name='field.html',            
+        )
+
+    def _init_regions(self):
+        pass
+
+    def _init_today(self):
+        pass
+
+    def _init_tomorrow(self):
+        pass
+
+    def _prep_fields(self, player, venue=None):
+        self._prep_friends()
+        self._prep_game()
+        self._prep_place(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._prep_today()
+        self._prep_tomorrow()
+        self._prep_regions(player.region_favorite())
+
+    def _prep_friends(self):
         if self.fields['friends'].choices:
             self.fields['friends'].sub_text = ' '
         else:
             self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
 
+    def _prep_game(self):
+        self.fields['game'].sub_text = ' '
 
-        self.fields['friends'].sub_text = ' '
-        region = player.region_favorite()
+    def _prep_place(self, venues):
+        self.fields['place'].widget=DataSelect(
+            data_attr={
+                'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
+                'hours': [''] + [v.open_7int_str() for v in venues],
+                'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
+                'now_hour': [''] + [v.now().hour for v in venues],
+                'phone': [''] + [v.phone for v in venues],
+                'url': [''] + [v.url for v in venues],
+            }
+        )
+        self.fields['place'].sub_text = ' ';
+
+    def _prep_regions(self, region):
         if region:
             self.fields['lat'].initial = region.lat
             self.fields['lng'].initial = region.lng
@@ -279,8 +309,20 @@ class KeenForm(QwikForm):
             self.fields['south'].initial = region.south
             self.fields['west'].initial = region.west
 
-    # Initializes an KeenForm for 'player'.
-    # Returns a context dict including 'keen_form'
+    def _prep_today(self, venue=None):
+        if venue:
+            today = venue.now()
+            self.fields['today'].sub_text = today.strftime('%A')
+        else:
+            self.fields['today'].sub_text = ' '
+
+    def _prep_tomorrow(self, venue=None):
+        if venue:
+            tomorrow = venue.now() + datetime.timedelta(days=1)
+            form.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
+        else:
+            self.fields['tomorrow'].sub_text = ' '
+        
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):
         form = klass(
@@ -292,25 +334,14 @@ class KeenForm(QwikForm):
                     'place': venue.placeid if venue else 'map',
                 },
             )
-        form.fields['game'].choices += Game.choices()
-        form.personalise(player)
-        if venue:
-            today = venue.now()
-            tomorrow = today + datetime.timedelta(days=1)
-            form.fields['today'].sub_text = today.strftime('%A')
-            form.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
-        return {
-            'keen_form': form,
-        }
+        form._init_fields(player)
+        form._prep_fields(player, venue)
+        return { 'keen_form': form }
 
-    # Initializes an KeenForm for 'player'.
-    # Returns a context dict including 'keen_form'
     @classmethod
     def post(klass, request_post, player):
-        context = {}
         form = klass(data=request_post)
-        form.fields['game'].choices += Game.choices()
-        form.personalise(player)
+        form._init_fields(player)
         if form.is_valid():
             try:
                 today = Hours24()
@@ -347,5 +378,5 @@ class KeenForm(QwikForm):
                 logger.exception('failed to parse KeenForm')
         else:
             logger.warn('invalid KeenForm')
-        context |= {'keen_form': form}
-        return context
+            form._prep_fields(player)
+        return {'keen_form': form}

@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, Select, URLField
+from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, RadioSelect, Select, URLField
 from django.utils.translation import gettext_lazy as _
 from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block, Person, Social
 from qwikgame.fields import MultipleActionField
@@ -50,7 +50,8 @@ class PrivateForm(QwikForm):
         choices = [('', _("Browser default"))] + LANGUAGES, 
         label=_('LANGUAGE'),
         required=False,
-        template_name='field.html', 
+        template_name='field.html',
+        widget = RadioSelect,
     )
     blocked = MultipleChoiceField(
         choices=(),

@@ -126,10 +126,7 @@ class PublicForm(QwikForm):
 
     @classmethod
     def _social_choices(klass, user_id):
-        choices = {}
-        for url in Social.objects.filter(person__user__id=user_id):
-            choices[url.url] = url.url
-        return choices
+        return [(s.pk, s) for s in Social.objects.filter(person__user__id=user_id)]
 
     # Initializes a PublicForm for 'person'.
     # Returns a context dict including 'public_form'
@@ -147,21 +144,19 @@ class PublicForm(QwikForm):
     @classmethod
     def post(klass, request_post, person):
         context = {}
-        public_form = klass(
+        form = klass(
             data=request_post,
             social_choices = klass._social_choices(person.user.id)
         )
-        if public_form.is_valid():
-            person.name = public_form.cleaned_data["name"]
-            person.save()            
-            for url in public_form.cleaned_data['socials']:
-                social = Social.objects.get(person=person, url=url)
-                social.delete()
-            social_url = public_form.cleaned_data['social']
+        context = {'public_form': form}
+        if form.is_valid():
+            context |= {
+                'name': form.cleaned_data['name'],
+                'del_social': form.cleaned_data['socials']
+            }
+            social_url = form.cleaned_data['social']
             if len(social_url) > 0:
                 Social.objects.create(person=person, url=social_url)
-        else:
-            context = {'public_form': public_form}
         return context
 
 

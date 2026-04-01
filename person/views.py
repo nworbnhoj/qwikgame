@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
-from person.models import Block, Person
+from person.models import Block, Person, Social
 from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
 from player.models import Player
 from qwikgame.settings import LANGUAGES, LANGUAGE_COOKIE_NAME
@@ -118,29 +118,41 @@ class PublicView(QwikView):
     public_form_class = PublicForm
     template_name = "person/public.html"
 
-    def get(self, request, *args, **kwargs):
-        super().get(request)
-        context = self.public_form_class.get(self.user.person)
-        if self.is_player:
-            context = context | {'player': self.user.player}
-        if self.is_manager:
-            manager = self.user.manager
-            context = context | {}
-        context = context | super().context(request)
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
         context |= {
             'account_tab': 'selected',
             'public_checked': 'checked',
         }
+        if self.is_player:
+            context = context | {'player': self.user.player}
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request)
+        context = self.context(request, *args, **kwargs)
+        context |= self.public_form_class.get(self.user.person)
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         super().post(request)
-        context = self.public_form_class.post(request.POST, self.user.person)
-        if self.is_player:
-            context = context | {'player': self.user.player}
-        if len(context) == 0:
-            return HttpResponseRedirect("/account/public/")
-        context = context | super().context(request)
+        context = self.context(request, *args, **kwargs)
+        context |= self.public_form_class.post(request.POST, self.user.person)
+        form = context.get('friend_form')
+        if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
+        person = context['person']
+        person.name = context['name']
+        person.save()
+        for del_pk in context.get('del_social'):
+            junk = Social.objects.get(pk=del_pk)
+            if junk:
+                logger.info(f'Deleting social: {junk}')
+                junk.delete()
+            else:
+                logger.warn(f'failed to delete social: {player} : {del_pk}')
         return render(request, self.template_name, context)
 
 

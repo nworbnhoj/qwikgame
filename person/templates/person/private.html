@@ -40,13 +40,6 @@
                 <div class="post form">
                     <form action="{% url 'private' %}" method="post" name="private">
                         <div class="post">
-                            <h3>
-                                {% translate "EMAIL ADDRESS" %}
-                                <div class="btn tertiary">
-                                    {% translate "Change (coming soon)" %}
-                                </div>
-                            </h3>
-                            <p>{{ email }}</p>
 {% csrf_token %}
 {{ private_form }}
                         </div>

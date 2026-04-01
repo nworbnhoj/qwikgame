@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, RadioSelect, Select, URLField
+from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, EmailField, Form, IntegerField, MultipleChoiceField, RadioSelect, Select, URLField
 from django.utils.translation import gettext_lazy as _
 from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block, Person, Social
 from qwikgame.fields import MultipleActionField
@@ -30,6 +30,13 @@ class BlockForm(QwikForm):
     
 
 class PrivateForm(QwikForm):
+    email = EmailField(
+        label = _("EMAIL ADDRESS"),
+        max_length=255,
+        required = True,
+        template_name = 'field.html',
+        widget=forms.TextInput(attrs={'disabled': 'disabled'}),
+    )
     notify_email = BooleanField(
         label=_('EMAIL NOTIFICATIONS'),
         required=False,
@@ -78,6 +85,7 @@ class PrivateForm(QwikForm):
         form = klass(
             blocked_choices = klass._blocked_choices(person),
             initial = {
+                'email': person.user.email,
                 'notify_email': bool(person.notify_email),
                 'notify_push': bool(person.notify_push),
                 'location_auto': person.location_auto,

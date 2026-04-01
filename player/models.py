@@ -126,7 +126,7 @@ class Player(models.Model):
 
     def friend_choices(self):
         friends = Friend.objects.filter(player=self).order_by('name')
-        return { f.rival.hash: f.name for f in friends }  
+        return [(f.rival.hash, f.name) for f in friends ]  
 
     def matches(self):
         return Match.objects.filter(competitors__in=[self])

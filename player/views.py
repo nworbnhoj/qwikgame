@@ -296,9 +296,6 @@ class FriendView(FriendsView):
 
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
-        friend = context.get('friend')
-        if friend:
-            context['strengths'] = friend.strengths.all()
         self._context = context
         return self._context
 
@@ -324,22 +321,22 @@ class FriendView(FriendsView):
                 except:
                     logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
                 return HttpResponseRedirect(f'/player/friend/')
-        context = self.friend_form_class.post(request.POST)
+        context = self.context(request, *args, **kwargs)
+        friend = context.get('friend')
+        context = self.friend_form_class.post(request.POST, friend)
         friend_form = context.get('friend_form')
         if friend_form and not friend_form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         friend_pk = kwargs.get('friend')
-        
-        if 'DELETE_STRENGTH' in context:
-            try:
-                delete_pk = context.get('DELETE_STRENGTH')
-                junk = Strength.objects.get(pk=delete_pk)
+        # delete strengths
+        for del_pk in context.get('del_strength'):
+            junk = Strength.objects.get(pk=del_pk)
+            if junk:
                 logger.info(f'Deleting strength: {junk}')
                 junk.delete()
-            except:
-                logger.exception('failed to delete strength: {} : {}'.format(player, delete_pk))
-            return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
+            else:
+                logger.warn(f'failed to delete strength: {player} : {delete_pk}')
         email = context.get('email')
         name = context.get('name')
         try:

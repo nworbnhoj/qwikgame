@@ -65,16 +65,6 @@
                     <h2></h2>
                   <a class="btn tertiary" href="{% url 'friend_strength' friend.pk %}">{% translate "Add Game" %}</a>
                 </div>
-{% for strength in strengths %}        
-                <div class="grid_3_col">
-                    <h2>{{ strength.game }}</h2>
-                    <h2>{{ strength.relative_str }}</h2>
-                    <label class="btn tertiary">
-                        <input hidden name="DELETE_STRENGTH" type="submit" value='{{ strength.pk }}'>
-                        {% translate "delete" %}
-                    </label>
-                </div>
-{% endfor %}
                 <div class="pillar">
                     <div id="alert_form_submit" class="alert"></div>
                     <label class="btn secondary push_down">

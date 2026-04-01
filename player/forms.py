@@ -227,10 +227,30 @@ class FriendForm(QwikForm):
         required=False,
         template_name = 'field.html',
     )
+    strengths = MultipleChoiceField(
+        choices=(),
+        label=_('GAMES'),
+        required=False,
+        template_name='field.html',
+        widget=CheckboxSelectMultiple()
+    )
+
+    def __init__(self, *args, **kwargs):
+        strength_choices = kwargs.pop('strength_choices')
+        super(QwikForm, self).__init__(*args, **kwargs)
+        self.fields['strengths'].choices = strength_choices
+        self.fields['strengths'].widget.attrs['class'] = "post"
+        self.fields['strengths'].widget.option_template_name='option_delete.html'
 
     @classmethod
-    def get(klass, friend=None):
-        form = klass()
+    def _strength_choices(klass, friend):
+        return [(s.pk, s) for s in friend.strengths.all()]
+
+    @classmethod
+    def get(klass, friend):
+        form = klass(
+                strength_choices = klass._strength_choices(friend),
+            )
         if friend:
             form.fields['email'].initial = friend.email
             form.fields['email'].sub_text = friend.email
@@ -241,20 +261,18 @@ class FriendForm(QwikForm):
         return { 'friend_form' : form, }
 
     @classmethod
-    def post(klass, request_post):
-        form = klass(data=request_post)
+    def post(klass, request_post, friend):
+        form = klass(
+            data = request_post,
+            strength_choices = klass._strength_choices(friend),
+        )
         context = {'friend_form': form}
         if form.is_valid():
             context |= {
                 'email': form.cleaned_data['email'],
-                'name': form.cleaned_data['name']
+                'name': form.cleaned_data['name'],
+                'del_strength': form.cleaned_data['strengths']
             }
-            if 'DELETE_STRENGTH' in request_post:
-                delete = request_post['DELETE_STRENGTH']
-                try:
-                    context['DELETE_STRENGTH'] = int(delete)
-                except:
-                    logger.warn(f'failed to convert DELETE_STRENGTH: {delete}')
         return context
 
 

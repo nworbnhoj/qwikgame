@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, Form, IntegerField, MultipleChoiceField, Select, URLField
 from django.utils.translation import gettext_lazy as _
-from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Person, Social
+from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block, Person, Social
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
@@ -52,15 +52,30 @@ class PrivateForm(QwikForm):
         required=False,
         template_name='field.html', 
     )
+    blocked = MultipleChoiceField(
+        choices=(),
+        help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
+        label=_('PEOPLE YOU HAVE BLOCKED'),
+        required=False,
+        template_name='field.html',
+        widget=CheckboxSelectMultiple()
+    )
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        blocked_choices = kwargs.pop('blocked_choices')
+        super(QwikForm, self).__init__(*args, **kwargs)
+        self.fields['blocked'].choices = blocked_choices
+        self.fields['blocked'].widget.attrs['class'] = "post"
+        self.fields['blocked'].widget.option_template_name='option_delete.html'
 
-    # Initializes a PrivateForm for 'person'.
-    # Returns a context dict including 'private_form'
+    @classmethod
+    def _blocked_choices(klass, person):
+        return [(b.pk, b.blocked.name) for b in Block.objects.filter(person=person)]
+
     @classmethod
     def get(klass, person):
         form = klass(
+            blocked_choices = klass._blocked_choices(person),
             initial = {
                 'notify_email': bool(person.notify_email),
                 'notify_push': bool(person.notify_push),
@@ -81,18 +96,20 @@ class PrivateForm(QwikForm):
     # Initializes a PrivateForm with 'request_post'.
     # Returns a context dict including 'private_form' if form is not valid
     @classmethod
-    def post(klass, request_post):
-        context = {}
-        private_form = klass(data=request_post)
-        if private_form.is_valid():
-            context = {
-                'notify_email': ALERT_EMAIL_DEFAULT if private_form.cleaned_data["notify_email"] else '',
-                'notify_push': ALERT_PUSH_DEFAULT if private_form.cleaned_data["notify_push"] else '',
-                'location_auto': private_form.cleaned_data["location_auto"],
-                'language': private_form.cleaned_data["language"],
+    def post(klass, request_post, person):
+        form = klass(
+            blocked_choices = klass._blocked_choices(person),
+            data=request_post
+        )
+        context = {'private_form': form}
+        if form.is_valid():
+            context |= {
+                'del_blocked': form.cleaned_data["blocked"],
+                'notify_email': ALERT_EMAIL_DEFAULT if form.cleaned_data["notify_email"] else '',
+                'notify_push': ALERT_PUSH_DEFAULT if form.cleaned_data["notify_push"] else '',
+                'location_auto': form.cleaned_data["location_auto"],
+                'language': form.cleaned_data["language"],
             }
-        else:
-            context = {'private_form': private_form}
         return context
 
 

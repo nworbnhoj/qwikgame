@@ -68,13 +68,11 @@ class NotifyEmailView(QwikView):
 
 class PrivateView(QwikView):
     private_form_class = PrivateForm
-    blocked_form_class = UnblockForm
     template_name = "person/private.html"
 
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = self.private_form_class.get(self.user.person)
-        context |= self.blocked_form_class.get(self.user.person)
         if self.is_player:
             player = self.user.player
             context = context | {}
@@ -93,14 +91,20 @@ class PrivateView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request)
-        if 'unblock' in request.POST:
-            context = self.blocked_form_class.post(request.POST, self.user.person)
-        else:
-            context = self.private_form_class.post(request.POST)
-        if 'private_form' in context or 'blocked_form' in context:
-            context = context | super().context(request)
-            return render(request, self.template_name, context)
         person = self.user.person
+        context = self.private_form_class.post(request.POST, person)
+        form = context.get('private_form')
+        if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
+        # delete blocked
+        for del_pk in context.get('del_blocked'):
+            junk = Block.objects.get(pk=del_pk)
+            if junk:
+                logger.info(f'Deleting block: {junk}')
+                junk.delete()
+            else:
+                logger.warn(f'failed to delete block: {person} : {del_pk}')
         person.notify_email = context["notify_email"]
         person.notify_push = context["notify_push"]
         person.location_auto = context["location_auto"]

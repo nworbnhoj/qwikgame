@@ -336,7 +336,7 @@ class FriendView(FriendsView):
                 logger.info(f'Deleting strength: {junk}')
                 junk.delete()
             else:
-                logger.warn(f'failed to delete strength: {player} : {delete_pk}')
+                logger.warn(f'failed to delete strength: {player} : {del_pk}')
         email = context.get('email')
         name = context.get('name')
         try:

@@ -202,7 +202,8 @@ function nFormatter(num, digits) {
     field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field){
-      switch (field.querySelector('input').type){
+      input = field.querySelector('input')
+      switch (input.type){
         case 'checkbox':
           legend_or_label = field.querySelector('legend');
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');

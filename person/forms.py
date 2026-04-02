@@ -136,16 +136,11 @@ class PublicForm(QwikForm):
         template_name='field.html',
         widget=CheckboxSelectMultiple()
     )
-    social = URLField(
-        required=False,
-        template_name="field_naked.html"
-    )
 
     def __init__(self, *args, **kwargs):
         social_choices = kwargs.pop('social_choices')
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
-        self.fields['social'].widget.attrs['placeholder'] = _('add a social media url')
         self.fields['socials'].choices = social_choices
         self.fields['socials'].widget.attrs['class'] = "post"
         self.fields['socials'].widget.option_template_name='option_delete.html'
@@ -180,11 +175,30 @@ class PublicForm(QwikForm):
                 'name': form.cleaned_data['name'],
                 'del_social': form.cleaned_data['socials']
             }
-            social_url = form.cleaned_data['social']
-            if len(social_url) > 0:
-                Social.objects.create(person=person, url=social_url)
         return context
 
+
+class SocialForm(QwikForm):
+    social = URLField(
+        required = True,
+        template_name='field.html',
+    )
+
+    @classmethod
+    def get(klass, strength=None):
+        form = klass()
+        form.fields['social'].sub_text = ' '
+        return { 'social_form' : form, }
+
+    @classmethod
+    def post(klass, request_post):
+        form = klass(data=request_post)
+        context = {'form': form}
+        if form.is_valid():
+            context |= {
+                'social': form.cleaned_data['social'],
+            }
+        return context
 
 
 class UnblockForm(QwikForm):

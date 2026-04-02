@@ -25,6 +25,11 @@
                     <form action="{% url 'public' %}" method="post">
 {% csrf_token %}
 {{ public_form }}
+                    <div class="grid_3_col">
+                        <h2></h2>
+                        <h2></h2>
+                      <a class="btn tertiary" href="{% url 'social_add' %}">{% translate "Add Social" %}</a>
+                    </div>
 {% include 'player/account_public_snippet.html' %}
 {% comment %}
 {% include 'manager/account_public_snippet.html' %}

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views import View
 from authenticate.models import User
 from person.models import Block, Person, Social
-from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm
+from person.forms import BlockForm, UnblockForm, PrivateForm, PublicForm, SocialForm
 from player.models import Player
 from qwikgame.settings import LANGUAGES, LANGUAGE_COOKIE_NAME
 from qwikgame.views import QwikView
@@ -170,6 +170,42 @@ class PWAView(QwikView):
             'pwa_checked': 'checked',
         }
         return render(request, "person/pwa.html", context)
+
+
+class SocialView(QwikView):
+    form_class = SocialForm
+    template_name = 'person/social.html'
+
+    def context(self, request, *args, **kwargs):
+        context = super().context(request, *args, **kwargs)
+        self._context = context
+        return self._context
+
+    def get(self, request, *args, **kwargs):
+        super().get(request, *args, **kwargs)
+        context = self.context(request, *args, **kwargs)
+        context |= self.form_class.get()
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+        context = self.form_class.post(request.POST)
+        form = context.get('form')
+        if form and not form.is_valid():
+            context |= self.context(request, *args, **kwargs)
+            return render(request, self.template_name, context)
+        try:
+            person = self.user.person
+            social, created = Social.objects.update_or_create(
+                person = person,
+                url = context.get('social')
+            )
+            if created:
+                person.social.add(social)
+                person.save()
+        except:
+            logger.exception(f'failed add social: {context}')
+        return HttpResponseRedirect("/account/public/")
 
 
 class UpgradeView(QwikView):

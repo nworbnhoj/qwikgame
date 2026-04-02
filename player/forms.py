@@ -232,14 +232,15 @@ class FriendForm(QwikForm):
         label=_('GAMES'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple()
+        widget=CheckboxSelectMultiple(
+            attrs = {'class': 'negate_sub_text post'},
+        )
     )
 
     def __init__(self, *args, **kwargs):
         strength_choices = kwargs.pop('strength_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['strengths'].choices = strength_choices
-        self.fields['strengths'].widget.attrs['class'] = "post"
         self.fields['strengths'].widget.option_template_name='option_delete.html'
 
     @classmethod
@@ -259,6 +260,7 @@ class FriendForm(QwikForm):
             form.fields['email'].sub_text = friend.email
             form.fields['name'].initial = friend.name
             form.fields['name'].sub_text = friend.name
+        form.fields['strengths'].sub_text = ' '
         form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
         form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
         return { 'friend_form' : form, }

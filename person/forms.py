@@ -62,14 +62,15 @@ class PrivateForm(QwikForm):
         label=_('PEOPLE YOU HAVE BLOCKED'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple()
+        widget=CheckboxSelectMultiple(
+            attrs = {'class': 'negate_sub_text post'},
+        )
     )
 
     def __init__(self, *args, **kwargs):
         blocked_choices = kwargs.pop('blocked_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['blocked'].choices = blocked_choices
-        self.fields['blocked'].widget.attrs['class'] = "post"
         self.fields['blocked'].widget.option_template_name='option_delete.html'
 
     @classmethod
@@ -127,7 +128,9 @@ class PublicForm(QwikForm):
         label=_('WEBSITE / SOCIAL MEDIA'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple()
+        widget=CheckboxSelectMultiple(
+            attrs = {'class': 'negate_sub_text post'},
+        )
     )
 
     def __init__(self, *args, **kwargs):
@@ -135,7 +138,6 @@ class PublicForm(QwikForm):
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
         self.fields['socials'].choices = social_choices
-        self.fields['socials'].widget.attrs['class'] = "post"
         self.fields['socials'].widget.option_template_name='option_delete.html'
 
     @classmethod

@@ -209,7 +209,8 @@ function nFormatter(num, digits) {
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
           if (legend_or_label){
             let sub_text = legend_or_label.parentElement.querySelector('.sub_text')
-            let checked = field.querySelectorAll("input[type='checkbox']:checked");
+            let check = input.closest('.negate_sub_text') ? ':not(:checked)' : ':checked';
+            let checked = field.querySelectorAll("input[type='checkbox']" + check);
             if (sub_text && checked){
               if (checked.length === 0){
                 sub_text.textContent = "None";

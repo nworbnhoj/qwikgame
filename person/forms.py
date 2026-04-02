@@ -146,12 +146,13 @@ class PublicForm(QwikForm):
     # Returns a context dict including 'public_form'
     @classmethod
     def get(klass, person):
-        return {
-            'public_form': klass(
-                    initial = { 'name': person.qwikname },
-                    social_choices = klass._social_choices(person.user.id),
-                ),
-        }
+        form = klass(
+            initial = { 'name': person.qwikname },
+            social_choices = klass._social_choices(person.user.id),
+        )
+        form.fields['name'].sub_text = ' '
+        form.fields['socials'].sub_text = ' '
+        return { 'public_form': form }
 
     # Initializes a PublicForm with 'request_post' for 'person'.
     # Returns a context dict including 'public_form' if form is not valid
@@ -162,7 +163,7 @@ class PublicForm(QwikForm):
             data=request_post,
             social_choices = klass._social_choices(person.user.id)
         )
-        context = {'public_form': form}
+        context = { 'public_form': form }
         if form.is_valid():
             context |= {
                 'name': form.cleaned_data['name'],

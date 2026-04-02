@@ -1,0 +1,43 @@
+<!-- qwikgame/person/templates/person/social.html -->
+{% extends "person/account.html" %}
+{% load i18n %}
+
+
+{% block title %}
+    {% translate "Add Social media link" %}
+{% endblock %}
+
+    
+{% block list_bar %}
+{% if big_screen %}
+    {{ block.super }}
+{% endif %}
+{% endblock %}
+
+
+{% block detail %}
+    <div id="detail" class="detail">
+        <div class="detail_head">
+            <div id="alert_detail_head" class="alert"></div>    
+            <div class="identicon" data-hash="{{ person.hash }}"></div>
+            <h2>{{ person.name }}</h2>
+        </div>
+        <div class="post">
+            <div class="post form">
+                <form action="{% url 'social_add' %}" method="post">
+{% csrf_token %}
+{{ social_form }}
+                    <div class="pillar">
+                        <label class="btn secondary push_down">
+                            <input hidden name="ADD" type="submit">
+                            {% translate "Submit" %}
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block map %}{% endblock map %}

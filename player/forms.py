@@ -244,10 +244,13 @@ class FriendForm(QwikForm):
 
     @classmethod
     def _strength_choices(klass, friend):
-        return [(s.pk, s) for s in friend.strengths.all()]
+        if friend:
+            return [(s.pk, s) for s in friend.strengths.all()]
+        else:
+            return []
 
     @classmethod
-    def get(klass, friend):
+    def get(klass, friend=None):
         form = klass(
                 strength_choices = klass._strength_choices(friend),
             )
@@ -261,7 +264,7 @@ class FriendForm(QwikForm):
         return { 'friend_form' : form, }
 
     @classmethod
-    def post(klass, request_post, friend):
+    def post(klass, request_post, friend=None):
         form = klass(
             data = request_post,
             strength_choices = klass._strength_choices(friend),

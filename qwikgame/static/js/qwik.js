@@ -834,5 +834,6 @@ docReady(event => {
   document.querySelectorAll("form input").forEach(        
     (input) => {
       input_auto_close(input);
+      field_label_update(input);
     });
 });

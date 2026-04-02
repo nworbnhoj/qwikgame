@@ -33,25 +33,21 @@ class PrivateForm(QwikForm):
     email = EmailField(
         label = _("EMAIL ADDRESS"),
         max_length=255,
-        required = True,
+        required = False,
         template_name = 'field.html',
         widget=forms.TextInput(attrs={'disabled': 'disabled'}),
-    )
-    notify_email = BooleanField(
-        label=_('EMAIL NOTIFICATIONS'),
+    )   
+    permissions = MultipleChoiceField(
+        choices=[
+            ('email', _('email notifications')),
+            ('push', _('push notifications')),
+            ('location', _('location access'))
+        ],
+        help_text=_('Your choice.'),
+        label=_('PERMISSIONS'),
         required=False,
-        template_name='input_checkbox.html'
-    )
-    notify_push = BooleanField(
-        label=_('WEB / APP NOTIFICATIONS'),
-        required=False,
-        template_name='input_webpush.html'
-    )
-    location_auto = BooleanField(
-        help_text=_("This will make finding a Venue nearby faster."),
-        label=_('ALLOW LOCATION ACCESS'),
-        required=False,
-        template_name="input_checkbox.html"
+        template_name='field.html',
+        widget=CheckboxSelectMultiple()
     )
     language = ChoiceField(
         choices = [('', _("Browser default"))] + LANGUAGES, 
@@ -86,24 +82,20 @@ class PrivateForm(QwikForm):
             blocked_choices = klass._blocked_choices(person),
             initial = {
                 'email': person.user.email,
-                'notify_email': bool(person.notify_email),
-                'notify_push': bool(person.notify_push),
-                'location_auto': person.location_auto,
                 'language': person.language,
+                'permissions': [
+                    'email' if person.notify_email else '',
+                    'push' if person.notify_push else '',
+                    'location' if person.location_auto else ''
+                    ],
             },
         )
-        form.fields['notify_email'].help_text = _("Receive Email for Bid %(bid)s and Match %(match)s") % {
-                "bid": Alert.str(True, ALERT_EMAIL_DEFAULT, 'bid', 'email'),
-                "match": Alert.str(True, ALERT_EMAIL_DEFAULT, 'match', 'email')
-            }
-        form.fields['notify_push'].help_text = _("See App Notifications for Bid %(bid)s and Match %(match)s)") % {
-                "bid": Alert.str(True, ALERT_PUSH_DEFAULT, 'bid', 'push'),
-                "match": Alert.str(True, ALERT_PUSH_DEFAULT, 'match', 'push')
-            }
+        form.fields['email'].sub_text = ' '
+        form.fields['permissions'].sub_text = ' '
+        form.fields['language'].sub_text = ' '
+        form.fields['blocked'].sub_text = ' '
         return {'private_form': form }
 
-    # Initializes a PrivateForm with 'request_post'.
-    # Returns a context dict including 'private_form' if form is not valid
     @classmethod
     def post(klass, request_post, person):
         form = klass(
@@ -112,11 +104,12 @@ class PrivateForm(QwikForm):
         )
         context = {'private_form': form}
         if form.is_valid():
+            permissions = form.cleaned_data['permissions']
             context |= {
                 'del_blocked': form.cleaned_data["blocked"],
-                'notify_email': ALERT_EMAIL_DEFAULT if form.cleaned_data["notify_email"] else '',
-                'notify_push': ALERT_PUSH_DEFAULT if form.cleaned_data["notify_push"] else '',
-                'location_auto': form.cleaned_data["location_auto"],
+                'notify_email': ALERT_EMAIL_DEFAULT if 'email' in permissions else '',
+                'notify_push': ALERT_PUSH_DEFAULT if 'push' in permissions else '',
+                'location_auto': 'location' in permissions,
                 'language': form.cleaned_data["language"],
             }
         return context

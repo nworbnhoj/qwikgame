@@ -26,6 +26,7 @@ class FilterForm(QwikForm):
         label = _('GAME'),
         required=True,
         template_name='field.html',
+        widget = RadioSelect,
     )
     place = ChoiceField(
         help_text=_('Only see invitations for a particular Venue.'),
@@ -118,9 +119,9 @@ class FilterForm(QwikForm):
 
     def _place_data_attr(self, places):
         return {
-            'hours': ['','',''] + [p.open_7int_str() if p.is_venue else open for p in places],
-            'now_weekday': ['','',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
-            'now_hour': ['','',''] + [p.now().hour if p.is_venue else '' for p in places],
+            'hours': ['',''] + [p.open_7int_str() if p.is_venue else open for p in places],
+            'now_weekday': ['',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
+            'now_hour': ['',''] + [p.now().hour if p.is_venue else '' for p in places],
         }
 
     # Initializes an FilterForm for 'player'.
@@ -140,10 +141,13 @@ class FilterForm(QwikForm):
             )
         form.fields['game'].choices += Game.choices()
         open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
-        choices = [('ANY',_('Anywhere')), ('show-map', _('Select from map')), ('placeid', '')]
+        choices = [('ANY',_('Anywhere')), ('show-map', _('Select from map'))]
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
         form.fields['place'].widget.data_attr = form._place_data_attr(places)
+        form.fields['game'].sub_text = ' '
+        form.fields['place'].sub_text = ' '
+        form.fields['hours'].sub_text = ' '
         region = player.region_favorite()
         if region:
             form.fields['lat'].initial = region.lat

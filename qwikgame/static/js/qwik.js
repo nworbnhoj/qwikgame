@@ -260,10 +260,10 @@ function nFormatter(num, digits) {
         case 'radio':
           legend = field.querySelector('legend');
           checked = field.querySelector("input[type='radio']:checked");
-          if (legend && checked){
+          if (legend){
             sub_text = legend.querySelector('.sub_text')
             if (sub_text){
-              sub_text.textContent = checked.labels[0].textContent;
+              sub_text.textContent = sum_input_radio(checked);
             }
           }
           break;
@@ -306,6 +306,13 @@ function nFormatter(num, digits) {
   function sum_input_email(email){
     if (email){
       return email.value;
+    }
+  }
+
+
+  function sum_input_radio(radio){
+    if (radio){
+      return radio.labels[0].textContent;
     }
   }
 

@@ -270,10 +270,10 @@ function nFormatter(num, digits) {
         case 'email':
           email = field.querySelector("input[type='email']");
           label = email.labels[0];
-          if (label && email){
+          if (label){
             sub_text = label.parentElement.querySelector('.sub_text');
             if (sub_text){
-              sub_text.textContent = email.value;
+              sub_text.textContent = sum_input_email(email);
             }
           }
           break;
@@ -301,6 +301,13 @@ function nFormatter(num, digits) {
           console.debug('WARNING: unsupported input type: ' + input.type);
       }
     }
+
+
+  function sum_input_email(email){
+    if (email){
+      return email.value;
+    }
+  }
 
 
   function sum_input_range(range){

@@ -6,7 +6,10 @@ docReady(event => {
       const PLACE_INPUT =document.getElementById('id_place');
       const PLACE_FIELD = PLACE_INPUT.parentElement
       const MAP_ELEMENT = document.getElementById("map");
-      PLACE_FIELD.appendChild(MAP_ELEMENT);
+      const SHOWMAP_RADIO = document.getElementById('id_place_1');
+      const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
+      SHOWMAP_DIV.insertAdjacentElement('afterend', MAP_ELEMENT);
+      SHOWMAP_RADIO.removeEventListener('click', form_shut);
       MAP_ELEMENT.addEventListener('change', (event)=>{event.stopPropagation()});
     } catch (error) {
       console.log("Warning: failed to relocate map - missing map|form|game");

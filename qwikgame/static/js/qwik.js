@@ -290,16 +290,22 @@ function nFormatter(num, digits) {
         case 'text':
           text = field.querySelector("input[type='text']");
           label = text.labels[0];
-          if (label && text){
+          if (label){
             sub_text = label.parentElement.querySelector('.sub_text');
             if (sub_text){
-              sub_text.textContent = text.value;
+              sub_text.textContent = sum_input_text(text);
             }
           }
           break;
         default:
           console.debug('WARNING: unsupported input type: ' + input.type);
       }
+    }
+
+
+  function sum_input_text(text){
+    if (text){
+      return text.value;
     }
   }
 

@@ -24,6 +24,7 @@ function winReady(callbackFunction){
 // A general DOM document ready function
 docReady(event => {
     dropInit();
+    field_focus_first();
 });
 
 
@@ -149,6 +150,39 @@ function nFormatter(num, digits) {
       }
     } else {
       console.log('WARN: invalid parameter');
+    }
+  }
+
+  function field_focus_first(){
+    const FORM = document.querySelector('form');
+    if (FORM){
+      FORM.querySelectorAll('div.required').forEach((field) => {
+        const FIELDSET = field.querySelector('fieldset')
+        if (FIELDSET){
+          for (const RADIO_OR_CHECKBOX of FIELDSET.elements){
+            if (RADIO_OR_CHECKBOX.checked){
+              break;
+            }
+          };
+          field_focus(FIELDSET);
+          return;
+        } else {
+          const INPUT = field.querySelector('input');
+          if (INPUT && INPUT.value === ''){
+            field_focus(INPUT.closest('div.field'));
+            return;
+          }
+        }
+      });
+      // fallback if no field is required
+      const INPUT = FORM.querySelector("input:not([type='hidden']):first-of-type");
+      if (INPUT){
+        let field = INPUT.closest('fieldset');
+        field = field ? field : INPUT.closest('div.field');
+        if (field){
+          field_focus(field);
+        }
+      }
     }
   }
 

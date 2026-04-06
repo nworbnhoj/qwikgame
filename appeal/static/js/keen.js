@@ -10,6 +10,7 @@ docReady(event => {
       const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
       SHOWMAP_DIV.insertAdjacentElement('afterend', MAP_ELEMENT);
       SHOWMAP_RADIO.removeEventListener('click', form_shut);
+      MAP_ELEMENT.addEventListener('change', (event)=>{event.stopPropagation()});
     } catch (error) {
       console.log(error);
       return null;

@@ -7,6 +7,7 @@ docReady(event => {
       const PLACE_FIELD = PLACE_INPUT.parentElement
       const MAP_ELEMENT = document.getElementById("map");
       PLACE_FIELD.appendChild(MAP_ELEMENT);
+      MAP_ELEMENT.addEventListener('change', (event)=>{event.stopPropagation()});
     } catch (error) {
       console.log("Warning: failed to relocate map - missing map|form|game");
       return null;

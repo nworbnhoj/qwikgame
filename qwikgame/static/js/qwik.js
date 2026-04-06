@@ -280,10 +280,10 @@ function nFormatter(num, digits) {
         case 'range':
           range = field.querySelector("input[type='range']");
           label = field.querySelector("div.label");
-          if (range && label){
+          if (label){
             sub_text = label.querySelector('.sub_text');
             if (sub_text){
-              sub_text.textContent = slider(range);
+              sub_text.textContent = sum_input_range(range);
             }
           }
           break;
@@ -301,6 +301,13 @@ function nFormatter(num, digits) {
           console.debug('WARNING: unsupported input type: ' + input.type);
       }
     }
+
+
+  function sum_input_range(range){
+    if (range){
+      return slider(range);
+    }
+  }
 
 
   function sum_input_text(text){

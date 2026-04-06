@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
 from person.models import Person
-from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
+from player.forms import FilterForm, FriendAddForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.forms import MenuForm
@@ -228,7 +228,7 @@ class FriendsView(QwikView):
 
 
 class FriendAddView(FriendsView):
-    friend_form_class = FriendForm
+    friend_form_class = FriendAddForm
     menu_form_class = MenuForm
     strength_form_class = StrengthForm
     template_name = 'player/friend_add.html'

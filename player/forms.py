@@ -285,6 +285,31 @@ class FriendForm(QwikForm):
         return context
 
 
+class FriendAddForm(FriendForm):
+
+    def __init__(self, *args, **kwargs):
+        super(QwikForm, self).__init__(*args, **kwargs)
+        self.fields.pop('strengths')
+
+    @classmethod
+    def get(klass, friend=None):
+        form = klass()
+        form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
+        form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
+        return { 'friend_form' : form, }
+
+    @classmethod
+    def post(klass, request_post, friend=None):
+        form = klass( data=request_post )
+        context = {'friend_form': form}
+        if form.is_valid():
+            context |= {
+                'email': form.cleaned_data['email'],
+                'name': form.cleaned_data['name'],
+            }
+        return context
+
+
 class InviteForm(RegisterForm):
 
     def __init__(self, to_email, email_context, *args, **kwargs):

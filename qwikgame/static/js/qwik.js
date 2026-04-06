@@ -244,16 +244,9 @@ function nFormatter(num, digits) {
           if (legend_or_label){
             let sub_text = legend_or_label.parentElement.querySelector('.sub_text')
             let check = input.closest('.negate_sub_text') ? ':not(:checked)' : ':checked';
-            let checked = field.querySelectorAll("input[type='checkbox']" + check);
-            if (sub_text && checked){
-              if (checked.length === 0){
-                sub_text.textContent = "None";
-              } else {
-                sub_text.textContent = "";
-                checked.forEach((checkbox) => {
-                  sub_text.textContent += checkbox.labels[0].textContent + ', ';
-                });
-              }
+            let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
+            if (sub_text){
+              sub_text.textContent = sum_input_checkbox(checkboxes);
             }
           }
           break;
@@ -299,8 +292,21 @@ function nFormatter(num, digits) {
           break;
         default:
           console.debug('WARNING: unsupported input type: ' + input.type);
+
+
+  function sum_input_checkbox(checkboxes){
+    if (checkboxes){
+      sum = '';
+      if (checkboxes.length === 0){
+        sum = "None";
+      } else {
+        checkboxes.forEach((checkbox) => {
+          sum += checkbox.labels[0].textContent + ', ';
+        });
       }
+      return sum;
     }
+  }
 
 
   function sum_input_email(email){

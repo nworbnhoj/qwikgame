@@ -105,26 +105,24 @@ class BidForm(QwikForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        label = _('GAME:'),
+        label = _('GAME'),
         required = True,
         template_name='field.html',
         widget = RadioSelect,
     )
     place = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(
-        help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TODAY:'),
+        label=_('TODAY'),
         offsetday='0',
         required=False,
         template_name='field.html',
     )
     tomorrow = DayMultiField(
-        help_text=_('When are you keen to play?'),
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TOMORROW:'),
+        label=_('TOMORROW'),
         offsetday='1',
         required=False,
         template_name='field.html',
@@ -242,7 +240,7 @@ class KeenForm(QwikForm):
         self.fields['friends'] = ChoiceField(
             choices = choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
-            label = _('INVITE FRIENDS:'),
+            label = _('NOTIFY FRIEND BY EMAIL'),
             required = False,
             template_name='field.html', 
             widget = CheckboxSelectMultiple,

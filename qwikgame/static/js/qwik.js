@@ -236,14 +236,27 @@ function nFormatter(num, digits) {
     field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field){
-      input = field.querySelector('input')
-      switch (input.type){
+      const INPUT = field.querySelector('input')
+      let by_input_name = true;
+      switch (INPUT.name){
+      case 'all_day':
+        label = field.querySelector('label');
+        sub_text = label.parentElement.querySelector('.sub_text');
+        setTimeout(() => {
+          sub_text.textContent = sum_input_by_day(INPUT.closest('.by_day'));
+        }, 1000);    // required to allow various Hour Day Week sync to complete
+        break;
+      default:
+        by_input_name = false;
+      }
+      if (by_input_name){ return; }
+      switch (INPUT.type){
         case 'checkbox':
           legend_or_label = field.querySelector('legend');
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
           if (legend_or_label){
             let sub_text = legend_or_label.parentElement.querySelector('.sub_text')
-            let check = input.closest('.negate_sub_text') ? ':not(:checked)' : ':checked';
+            let check = INPUT.closest('.negate_sub_text') ? ':not(:checked)' : ':checked';
             let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
             if (sub_text){
               sub_text.textContent = sum_input_checkbox(checkboxes);
@@ -291,7 +304,28 @@ function nFormatter(num, digits) {
           }
           break;
         default:
-          console.debug('WARNING: unsupported input type: ' + input.type);
+          console.debug('WARNING: unsupported input type: ' + INPUT.type);
+      }
+    }
+  }
+
+
+  function sum_input_by_day(by_day){
+    if (by_day){
+      const ALL_DAY = by_day.querySelector("input[name='all_day']")
+      if (ALL_DAY.checked){
+        return ALL_DAY.labels[0].textContent.trim();
+      } else {
+        let hrs = '';
+        by_day.querySelectorAll('label.hour').forEach((label_hour) => {
+          if (label_hour.querySelector("input[type='checkbox']").checked){
+            hrs += label_hour.textContent + ' ';
+          }
+        });
+        return hrs;
+      }
+    }
+  }
 
 
   function sum_input_checkbox(checkboxes){

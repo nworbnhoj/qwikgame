@@ -246,6 +246,13 @@ function nFormatter(num, digits) {
           sub_text.textContent = sum_input_by_day(INPUT.closest('.by_day'));
         }, 1000);    // required to allow various Hour Day Week sync to complete
         break;
+      case 'all_week':
+        label = field.querySelector('label');
+        sub_text = label.parentElement.querySelector('.sub_text');
+        setTimeout(() => {
+          sub_text.textContent = sum_input_by_week(INPUT.closest('.by_week'));
+        }, 1000);    // required to allow various Hour Day Week sync to complete
+        break;
       default:
         by_input_name = false;
       }
@@ -327,6 +334,33 @@ function nFormatter(num, digits) {
     }
   }
 
+
+  function sum_input_by_week(by_week){
+    if (by_week){
+      sum = '';
+      let has_digits = /\d/;
+      const ALL_WEEK = by_week.querySelector("input[name='all_week']");
+      if (ALL_WEEK.checked){
+        sum = ALL_WEEK.labels[0].textContent;
+      } else {
+        sum = ' ';
+        const DAY_BOX = by_week.nextElementSibling;
+        DAY_BOX.querySelectorAll('div.label').forEach((day_label) => {
+          let by_day = day_label.nextElementSibling.nextElementSibling;
+          s = sum_input_by_day(by_day);
+          if (s){
+            if (has_digits.test(s)){
+              let ddd = day_label.textContent.trim().substring(0,3)
+              sum +=  ` ${ddd} (${s}) `;
+            } else {
+              sum += day_label.textContent.trim() + ' ';
+            }
+          }
+        });
+      }
+      return sum;
+    }
+  }
 
   function sum_input_checkbox(checkboxes){
     if (checkboxes){

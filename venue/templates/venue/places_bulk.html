@@ -20,7 +20,7 @@
         </div>
 {% if places_form %}
         <hr><hr>
-        <div class="post form">
+        <div class="form">
             <form action="{% url 'places_bulk' %}" method="post">
 {% csrf_token %}
 {{ places_form }}

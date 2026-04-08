@@ -1,12 +1,12 @@
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display:none; }
-label:has( input[type=checkbox])::before { content: ''; border: 1px solid #ddd; color: #f3f3f3; display: inline-block;  height: 1.2em; line-height: 1em;  margin: 0.5em; text-align: center; vertical-align: middle; width: 1.2em; }
+label:has( input[type=checkbox])::before { content: ''; border: 1px solid #ddd; color: #f3f3f3; display: inline-block; font-size: 1.8em;  height: 1.2em; line-height: 1em;  margin: .2em .4em .2em 0; text-align: center; vertical-align: middle; width: 1.2em; }
 label:has( input[type=checkbox]:checked)::before { background-color: #2b78e4; content: "\2713"; }
 
 /* Over-ride std radio */
 input[type=radio] { display:none; }
-label:has( input[type=radio])::before { content: ''; border: 1px solid #ddd; border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; text-align: center; width: 1.2em;  margin-right: 10px;  vertical-align: middle; }
+label:has( input[type=radio])::before { content: ''; border: 1px solid #ddd; border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; margin: .2em .4em .2em 0;  text-align: center; width: 1.2em;   vertical-align: middle; }
 label:has( input[type=radio]:checked)::before { content: "\2022";  background-color: #2b78e4; content: "\2713"; }
 
 .align_center { align-self: center }
@@ -180,14 +180,14 @@ div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0; width: 100% }
 div.field.naked { padding: 0 }
-div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; padding-block: 0px; transition: max-height 1s ease; width: 100%; }
+div.field > *:not(div.label) { border: 0px solid white; margin: 2em 0 0 2em; max-height: 0; overflow: hidden; padding-block: 0px; transition: max-height 1s ease; width: 100%; }
 div.field > *:not(div.label).open { max-height: 50em; }
-div.form { gap: 1em }
+div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
 div.head {  display: flex; flex: auto; flex-direction: column; padding: 0 1em 0 1em; width: 50%  }
-div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 100% }
+div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 90% }
 div.hrs { border: 1px solid black; border-radius: 0.3em; height: 2em; justify-content: center }
 div.hrs.apm { background-color: #eeeeee; border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-content: center; border: 0px solid black; display: block; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
@@ -245,12 +245,14 @@ div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
 div.hidden { display: none }
-fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; margin: 1em 0 3em 0; padding: 2em 0 0 0; position: relative; width: 100%; }
+fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; position: relative; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
 fieldset div { display:block; }
-fieldset > div {margin : 2em 0 0 0 ;}
+fieldset > div {margin : 4em 0 0 0 ;}
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
-form > div { min-height: 4em; }
+form > div { margin: 1em 0 3em 0; min-height: 4em; }
+form label:has(input) { margin: 1em 0 0 2em; }
+form div.label + input { margin: 1em 0 0 2em; }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; margin: 0.5em 0; padding: 0 1em; }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; overflow: hidden;  text-align: left; }

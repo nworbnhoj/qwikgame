@@ -23,7 +23,7 @@
             <h2>{{ person.name }}</h2>
         </div>
         <div class="post">
-            <div class="post form">
+            <div class="form">
                 <form action="{% url 'social_add' %}" method="post">
 {% csrf_token %}
 {{ social_form }}

@@ -64,7 +64,7 @@
                     <div class="identicon" data-hash="{{ review.rival.user.hash }}" style="height:5em; width:5em;"></div>
                     <p>{{ review.rival.qwikname }}</p>
                 </div>
-                <div class="post form">
+                <div class="form">
                     <form action="{% url target review=review.id %}" method="post">
     {% csrf_token %}
     {{ review_form }}

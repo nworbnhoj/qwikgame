@@ -24,7 +24,7 @@
             <h2>{% translate "Add Friend" %}</h2>
         </div>
         <div class="post available_edit {{ hide_edit }}">
-            <div class="post form">
+            <div class="form">
                 <form action="{% url 'friend_add' %}" method="post">
 {% csrf_token %}
 {{ friend_form }}

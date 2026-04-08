@@ -37,12 +37,10 @@
                 <h2>{% translate "PRIVATE SETTINGS" %}</h2> 
             </div>
             <div class="post detail_body">
-                <div class="post form">
+                <div class="form">
                     <form action="{% url 'private' %}" method="post" name="private">
-                        <div class="post">
 {% csrf_token %}
 {{ private_form }}
-                        </div>
                         <div class="pillar">
                             <label class="btn primary push_down">
                                 <input hidden type="submit">

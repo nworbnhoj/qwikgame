@@ -69,7 +69,7 @@
             <h2>{% translate "Add Venue" %}</h2>
         </div>
         <div class="post available_edit {{ hide_edit }}">
-            <div class="post form">
+            <div class="form">
                 <form action="{% url 'venue_add' %}" method="post">
 {% csrf_token %}
 {{ venue_add_form }}

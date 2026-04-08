@@ -288,15 +288,15 @@ class KeenForm(QwikForm):
 
     def _prep_friends(self):
         if self.fields['friends'].choices:
-            self.fields['friends'].sub_text = ' '
+            self.fields['friends'].pending = ' '
         else:
-            self.fields['friends'].sub_text = _("You don't have any added friends yet. Please add them from the Friends tab")
+            self.fields['friends'].pending = _("You don't have any added friends yet. Please add them from the Friends tab")
 
     def _prep_game(self):
-        self.fields['game'].sub_text = ' '
+        self.fields['game'].pending = ' '
 
     def _prep_place(self, venues):
-        self.fields['place'].sub_text = ' ';
+        self.fields['place'].pending = ' ';
 
     def _prep_regions(self, region):
         if region:
@@ -310,16 +310,16 @@ class KeenForm(QwikForm):
     def _prep_today(self, venue=None):
         if venue:
             today = venue.now()
-            self.fields['today'].sub_text = today.strftime('%A')
+            self.fields['today'].pending = today.strftime('%A')
         else:
-            self.fields['today'].sub_text = ' '
+            self.fields['today'].pending = ' '
 
     def _prep_tomorrow(self, venue=None):
         if venue:
             tomorrow = venue.now() + datetime.timedelta(days=1)
-            form.fields['tomorrow'].sub_text = tomorrow.strftime('%A')
+            form.fields['tomorrow'].pending = tomorrow.strftime('%A')
         else:
-            self.fields['tomorrow'].sub_text = ' '
+            self.fields['tomorrow'].pending = ' '
         
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):

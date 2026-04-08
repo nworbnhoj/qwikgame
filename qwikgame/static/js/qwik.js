@@ -241,16 +241,16 @@ function nFormatter(num, digits) {
       switch (INPUT.name){
       case 'all_day':
         label = field.querySelector('label');
-        sub_text = label.parentElement.querySelector('.sub_text');
+        pending = label.parentElement.querySelector('.pending');
         setTimeout(() => {
-          sub_text.textContent = sum_input_by_day(INPUT.closest('.by_day'));
+          pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
         }, 1000);    // required to allow various Hour Day Week sync to complete
         break;
       case 'all_week':
         label = field.querySelector('label');
-        sub_text = label.parentElement.querySelector('.sub_text');
+        pending = label.parentElement.querySelector('.pending');
         setTimeout(() => {
-          sub_text.textContent = sum_input_by_week(INPUT.closest('.by_week'));
+          pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
         }, 1000);    // required to allow various Hour Day Week sync to complete
         break;
       default:
@@ -262,11 +262,11 @@ function nFormatter(num, digits) {
           legend_or_label = field.querySelector('legend');
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
           if (legend_or_label){
-            let sub_text = legend_or_label.parentElement.querySelector('.sub_text')
-            let check = INPUT.closest('.negate_sub_text') ? ':not(:checked)' : ':checked';
+            let pending = legend_or_label.parentElement.querySelector('.pending')
+            let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
             let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
-            if (sub_text){
-              sub_text.textContent = sum_input_checkbox(checkboxes);
+            if (pending){
+              pending.textContent = sum_input_checkbox(checkboxes);
             }
           }
           break;
@@ -274,9 +274,9 @@ function nFormatter(num, digits) {
           legend = field.querySelector('legend');
           checked = field.querySelector("input[type='radio']:checked");
           if (legend){
-            sub_text = legend.querySelector('.sub_text')
-            if (sub_text){
-              sub_text.textContent = sum_input_radio(checked);
+            pending = legend.querySelector('.pending')
+            if (pending){
+              pending.textContent = sum_input_radio(checked);
             }
           }
           break;
@@ -284,9 +284,9 @@ function nFormatter(num, digits) {
           email = field.querySelector("input[type='email']");
           label = email.labels[0];
           if (label){
-            sub_text = label.parentElement.querySelector('.sub_text');
-            if (sub_text){
-              sub_text.textContent = sum_input_email(email);
+            pending = label.parentElement.querySelector('.pending');
+            if (pending){
+              pending.textContent = sum_input_email(email);
             }
           }
           break;
@@ -294,9 +294,9 @@ function nFormatter(num, digits) {
           range = field.querySelector("input[type='range']");
           label = field.querySelector("div.label");
           if (label){
-            sub_text = label.querySelector('.sub_text');
-            if (sub_text){
-              sub_text.textContent = sum_input_range(range);
+            pending = label.querySelector('.pending');
+            if (pending){
+              pending.textContent = sum_input_range(range);
             }
           }
           break;
@@ -304,9 +304,9 @@ function nFormatter(num, digits) {
           text = field.querySelector("input[type='text']");
           label = text.labels[0];
           if (label){
-            sub_text = label.parentElement.querySelector('.sub_text');
-            if (sub_text){
-              sub_text.textContent = sum_input_text(text);
+            pending = label.parentElement.querySelector('.pending');
+            if (pending){
+              pending.textContent = sum_input_text(text);
             }
           }
           break;
@@ -659,9 +659,9 @@ function setDayFields(hours24x7, now_weekday, now_hour){
     if (Number.isInteger(weekday) && Number.isInteger(offset)){
       weekday = weekday % 7
       // set the week day in the DayField Field Label
-      sub_text = day.closest('div.field').querySelector('.sub_text')
-      if (sub_text){
-        sub_text.innerText = WEEKDAY[(now_weekday + offset) % 7];
+      pending = day.closest('div.field').querySelector('.pending')
+      if (pending){
+        pending.innerText = WEEKDAY[(now_weekday + offset) % 7];
       }
     }
     day.querySelectorAll(".hour_grid input").forEach(function(input) {

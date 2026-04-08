@@ -63,7 +63,7 @@ class PrivateForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple(
-            attrs = {'class': 'negate_sub_text post'},
+            attrs = {'class': 'negate_pending post'},
         )
     )
 
@@ -91,10 +91,10 @@ class PrivateForm(QwikForm):
                     ],
             },
         )
-        form.fields['email'].sub_text = ' '
-        form.fields['permissions'].sub_text = ' '
-        form.fields['language'].sub_text = ' '
-        form.fields['blocked'].sub_text = ' '
+        form.fields['email'].pending = ' '
+        form.fields['permissions'].pending = ' '
+        form.fields['language'].pending = ' '
+        form.fields['blocked'].pending = ' '
         return {'private_form': form }
 
     @classmethod
@@ -129,7 +129,7 @@ class PublicForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple(
-            attrs = {'class': 'negate_sub_text post'},
+            attrs = {'class': 'negate_pending post'},
         )
     )
 
@@ -152,8 +152,8 @@ class PublicForm(QwikForm):
             initial = { 'name': person.qwikname },
             social_choices = klass._social_choices(person.user.id),
         )
-        form.fields['name'].sub_text = ' '
-        form.fields['socials'].sub_text = ' '
+        form.fields['name'].pending = ' '
+        form.fields['socials'].pending = ' '
         return { 'public_form': form }
 
     # Initializes a PublicForm with 'request_post' for 'person'.
@@ -183,7 +183,7 @@ class SocialForm(QwikForm):
     @classmethod
     def get(klass, strength=None):
         form = klass()
-        form.fields['social'].sub_text = ' '
+        form.fields['social'].pending = ' '
         return { 'social_form' : form, }
 
     @classmethod

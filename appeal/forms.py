@@ -212,12 +212,6 @@ class KeenForm(QwikForm):
                     "place",
                     _('Sorry, that Venue selection did not work. Please try again.')
                 )
-        if 'reveal_friends' in self.data:
-            if len(cleaned_data['friends']) == 0:
-                self.add_error(
-                    'friends',
-                    _('Please invite at least one Friend.')
-                )
 
     def clean_place(self):
         place_id = self.cleaned_data.get('place')
@@ -350,17 +344,13 @@ class KeenForm(QwikForm):
                 if isinstance(form.cleaned_data['tomorrow'], list):
                     for hr in form.cleaned_data['tomorrow']:
                         tomorrow.set_hour(hr)
-                friends = []
-                if 'reveal_friends' in request_post:
-                    form.fields['friends'].reveal_checked = 'checked'
-                    friends = form.cleaned_data['friends']
                 context = {
                     'friends': [
                         Friend.objects.get(
                             player=player,
                             rival__hash=f
                         )
-                        for f in friends
+                        for f in form.cleaned_data['friends']
                     ],
                     'game': form.cleaned_data['game'],
                     'today': today,

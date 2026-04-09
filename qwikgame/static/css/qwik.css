@@ -290,8 +290,8 @@ label.option:has(input:checked) { color: #f5a600 }
 label.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
 label.reveal > input { display: none; }
 label.reveal:active { box-shadow: none; transform: none;  }
-label.reveal:has(input) ~ div.field { display: none; }
-label.reveal:has(input:checked) ~ div.field { display: flex; }
+label.reveal:has(input) ~ div { display: none; }
+label.reveal:has(input:checked) ~ div { display: flex; }
 label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
 label.switch input { display: none }

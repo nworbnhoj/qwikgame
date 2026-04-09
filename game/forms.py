@@ -77,8 +77,6 @@ class ReviewForm(QwikForm):
     @classmethod
     def get(klass, rivals):
         form = klass()
-        form.fields['dud'].reveal = _('Did anything go wrong?')
-        form.fields['dud'].reveal_css_classes = 'btn tertiary'
         form.fields['dud'].template_name = 'field.html'
         form.fields['dud'].widget.attrs = {'class': 'post',}
         form.fields['dud'].widget.use_fieldset = False

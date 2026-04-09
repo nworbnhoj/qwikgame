@@ -71,15 +71,9 @@ function changePlace(event){
   const PHONE = SELECTED_OPTION.dataset.phone;
   const URL = SELECTED_OPTION.dataset.url
   const LINK = "<a href='" + URL + "' target='_blank'>" + URL + "</a>";
-  const PROMPT = "Check Venue availability: " + PHONE + " " + LINK;
-  const PROMPT_ELEMENT_ID = "id_availability_prompt"
-  let promptElement = document.getElementById(PROMPT_ELEMENT_ID)
-  if (!promptElement){
-    promptElement = document.createElement("p");
-    promptElement.id = PROMPT_ELEMENT_ID
-    PLACE_LEGEND.append(promptElement);
-  }
-  promptElement.innerHTML = PROMPT
+  const INFO = "Check Venue availability: " + PHONE + " " + LINK;
+  const INFO_P = PLACE_LEGEND.querySelector('p.info');
+  INFO_P.innerHTML = INFO;
 }
 
 function changeGame(event){

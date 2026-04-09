@@ -240,14 +240,14 @@ function nFormatter(num, digits) {
       let by_input_name = true;
       switch (INPUT.name){
       case 'all_day':
-        label = field.querySelector('label');
+        label = field.querySelector('div.label');
         pending = label.parentElement.querySelector('.pending');
         setTimeout(() => {
           pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
         }, 1000);    // required to allow various Hour Day Week sync to complete
         break;
       case 'all_week':
-        label = field.querySelector('label');
+        label = field.querySelector('div.label');
         pending = label.parentElement.querySelector('.pending');
         setTimeout(() => {
           pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
@@ -659,9 +659,9 @@ function setDayFields(hours24x7, now_weekday, now_hour){
     if (Number.isInteger(weekday) && Number.isInteger(offset)){
       weekday = weekday % 7
       // set the week day in the DayField Field Label
-      pending = day.closest('div.field').querySelector('.pending')
-      if (pending){
-        pending.innerText = WEEKDAY[(now_weekday + offset) % 7];
+      label_sub = day.closest('div.field').querySelector('.label_sub')
+      if (label_sub){
+        label_sub.innerText = WEEKDAY[(now_weekday + offset) % 7];
       }
     }
     day.querySelectorAll(".hour_grid input").forEach(function(input) {

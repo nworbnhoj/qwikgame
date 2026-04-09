@@ -18,18 +18,7 @@ docReady(event => {
 });
 
 
-winReady(event => {
-  // https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible
-  respondToResize = function(element, callback) {
-    var options = { root: document.documentElement }
-    var observer = new ResizeObserver((entries, observer) => {
-      entries.forEach(entry => {
-        callback(entry.contentRect.width > 0);
-      });
-    }, options);
-    observer.observe(element);
-  }
-});
+winReady(event => {});
 
 
 

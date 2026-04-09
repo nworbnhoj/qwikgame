@@ -18,30 +18,7 @@ docReady(event => {
 });
 
 
-winReady(event => {
-  // https://stackoverflow.com/questions/1462138/event-listener-for-when-element-becomes-visible
-  respondToResize = function(element, callback) {
-    var options = { root: document.documentElement }
-    var observer = new ResizeObserver((entries, observer) => {
-      entries.forEach(entry => {
-        callback(entry.contentRect.width > 0);
-      });
-    }, options);
-    observer.observe(element);
-  }
-
-  const friends_field = document.getElementById("id_friends").closest("div.field")
-  respondToResize(friends_field, visible => {
-    const submit = document.getElementById("appeal_submit");
-    if(visible) {
-      submit.querySelector(".appeal_all").hidden = true;
-      submit.querySelector(".appeal_friends").hidden = false;
-     } else {
-      submit.querySelector(".appeal_all").hidden = false;
-      submit.querySelector(".appeal_friends").hidden = true;
-     }
-  });
-});
+winReady(event => {});
 
 
 window.onload = function() {

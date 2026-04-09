@@ -1,0 +1,22 @@
+<!-- qwikgame/templates/field_prompt.html -->
+{% load i18n %}
+<div class="prompt">
+{% if field.field.prompt_hash %}
+    <div class="identicon" data-hash="{{ field.field.prompt_hash }}"></div>
+{% else %}
+    <div></div>
+{% endif %}
+    <div>
+        <p class="prompt">
+            {{ field.field.prompt }}
+{% if field.field.prompt_url %}
+            <a href="{{field.field.prompt_url}}" target='_blank'>{% translate 'website' %} </a>
+{% endif %}
+        </p>
+{% if field.field.prompt_info %}
+        <p class="info">
+            {{ field.field.prompt_info }}
+        </p>
+{% endif %}
+    </div>
+</div>

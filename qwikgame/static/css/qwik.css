@@ -181,7 +181,7 @@ div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0; width: 100% }
 div.field.naked { padding: 0 }
-div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; padding-block: 0px; transition: max-height 1s ease; width: 100%; }
+div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; width: 100%; }
 div.field > *:not(div.label).open { max-height: 50em; }
 div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
 div.flex_space { flex-grow: 3 }
@@ -204,11 +204,11 @@ div.info.push_right .info_text { right: 0; text-align: right;  }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 9em; margin-left: -0.8em; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
-div.label { background-color: #e5e4f3; border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
-div.label div { display: flex; flex-direction: row;}
-div.label p { padding-left: 1em; }
-div.label div:first-child span { margin-left: 0.3em; }
-div.label div:first-child span:last-child { margin-left: auto; }
+div.field > div.label { background-image: linear-gradient(rgb(240, 240, 240)5px, rgb(255, 255, 255)20px); border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
+div.field > div.label > div { display: flex; flex-direction: row;}
+div.field > div.label p { padding-left: 1em; }
+div.field > div.label div:first-child span { margin-left: 0.3em; }
+div.field > div.label div:first-child span:last-child { margin-left: auto; }
 div.line { line-height: 1.6em; margin: 0em; overflow: hidden; padding-left: 0.5em; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
 div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
@@ -227,6 +227,12 @@ div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-co
 div.pillar { align-items: center; display: flex; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { display: flex; flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1em; width: 100% }
 div.pole { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+
+div.prompt { background-color: rgb(241, 241, 241); border: 1px solid rgb(240, 240, 240); border-radius: 0.3rem; margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
+div.prompt.hidden {display: none;}
+div.prompt div { color: rgb(59, 59, 59); flex-shrink: 1; min-width: 0; }
+div.prompt p.info { color: grey; font-size: 1rem; text-wrap: wrap;}
+div.prompt .identicon svg { height: 4em; }
 div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
@@ -255,9 +261,9 @@ fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color:
 fieldset div { display:block; }
 fieldset > div {margin : 9em 0 0 0 ;}
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
-form > div { margin: 2em 0 2em 0; min-height: 7em; }
+form > div { margin: 2em 0 2em 0; min-height: 10em; }
 form label:has(input) { margin: 1em 0 0 2em; }
-form div.label + input { margin: 1em 0 0 2em; }
+form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; margin: 0.5em 0; padding: 0 1em; }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; overflow: hidden;  text-align: left; }
@@ -296,11 +302,11 @@ label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-legend { background-color: #e5e4f3; border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em; position: absolute; top: 0px; width: 100%; }
-legend div { display: flex; flex-direction: row; }
+legend { background-image: linear-gradient(rgb(240, 240, 240)5px, rgb(255, 255, 255)20px); border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em 2em 0 2em; position: absolute; top: 0px; width: 100%; }
+legend > div { display: flex; flex-direction: row; }
 legend div:first-child span { margin-left: 0.3em; }
 legend div:first-child span:last-child { margin-left: auto; }
-legend p {padding-left: 1em; }
+legend p { padding-left: 1em; }
 ol { list-style: decimal; padding-left: 2em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }

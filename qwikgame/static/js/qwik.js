@@ -193,8 +193,27 @@ function nFormatter(num, digits) {
       for (const child of field.children){
         child.classList.add('open');
       }
+      field_prompt_show(field, false);
     } else {
       console.log('WARN: invalid parameter');
+    }
+  }
+
+  function field_prompt_show(field, show=true){
+    const PROMPT = field.querySelector('div.prompt');
+    if (PROMPT){
+      console.log(PROMPT)
+      const SELECTED_OPTION = field.querySelector("input[type='radio']:checked");
+      console.log(SELECTED_OPTION)
+      console.log(show);
+      if (SELECTED_OPTION && show){
+        console.log('here')
+        PROMPT.classList.remove('hidden');
+      } else {
+        PROMPT.classList.add('hidden');
+      }
+
+      console.log(PROMPT)
     }
   }
 
@@ -211,6 +230,7 @@ function nFormatter(num, digits) {
         form.querySelectorAll('.open').forEach((open) => {
             if (open.nodeName === 'LEGEND' || open.classList.contains('label')){
               field_label_update(open);
+              field_prompt_show(field);
             }
             if (open.classList.contains('by_day')){
               field_label_update(open);

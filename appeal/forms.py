@@ -6,6 +6,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
+from qwikgame.constants import SYSTEM_HASH
 from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
@@ -290,7 +291,11 @@ class KeenForm(QwikForm):
         self.fields['game'].pending = ' '
 
     def _prep_place(self, venues):
-        self.fields['place'].pending = ' ';
+        self.fields['place'].pending = 'qwerty'
+        self.fields['place'].prompt = _('Check Venue Availability')
+        self.fields['place'].prompt_hash = SYSTEM_HASH
+        self.fields['place'].prompt_info = _('QWIKGAME does not book courts')
+        self.fields['place'].prompt_url = ' '
 
     def _prep_regions(self, region):
         if region:

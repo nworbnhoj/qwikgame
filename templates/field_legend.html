@@ -6,10 +6,12 @@
 {% if field.errors %}
         <span class='error'>{{ field.errors }}</span>
 {% else %}
-        <span class='pending'></span>        
+        <span class='pending'>{{ field.pending }}</span>        
 {% endif %}
+        <span></span>
+        <!-- <span>▼</span> -->
     </div>
-    <div>
-        <p class='info'></p>
-    </div>
+{% if field.field.prompt %}
+    {% include 'field_prompt.html' %}
+{% endif %}
 </legend>

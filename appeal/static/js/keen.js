@@ -44,13 +44,16 @@ function changePlace(event){
   const PLACE_SELECT = document.getElementById('id_place')
   const PLACE_FIELDSET = PLACE_SELECT.closest('fieldset')
   const PLACE_LEGEND = PLACE_FIELDSET.querySelector('legend');
-  const SELECTED_OPTION = PLACE_SELECT.querySelector("input[type='radio']:checked")
-  const PHONE = SELECTED_OPTION.dataset.phone;
-  const URL = SELECTED_OPTION.dataset.url
-  const LINK = "<a href='" + URL + "' target='_blank'>" + URL + "</a>";
-  const INFO = "Check Venue availability: " + PHONE + " " + LINK;
-  const INFO_P = PLACE_LEGEND.querySelector('p.info');
-  INFO_P.innerHTML = INFO;
+  const PROMPT_DIV = PLACE_LEGEND.querySelector('div.prompt');
+  if (PROMPT_DIV){
+    const SELECTED_OPTION = PLACE_SELECT.querySelector("input[type='radio']:checked")
+    if (SELECTED_OPTION){    
+      const PHONE = SELECTED_OPTION.dataset.phone;
+      const URL = SELECTED_OPTION.dataset.url
+      const LINK_A = PROMPT_DIV.querySelector('a');
+      LINK_A.href= URL;
+    }
+  }
 }
 
 function changeGame(event){

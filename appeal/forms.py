@@ -339,6 +339,7 @@ class KeenForm(QwikForm):
     def post(klass, request_post, player):
         form = klass(data=request_post)
         form._init_fields(player)
+        context = {'keen_form': form}
         if form.is_valid():
             try:
                 today = Hours24()
@@ -372,4 +373,4 @@ class KeenForm(QwikForm):
         else:
             logger.warn('invalid KeenForm')
             form._prep_fields(player)
-        return {'keen_form': form}
+        return context

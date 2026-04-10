@@ -128,7 +128,7 @@ class KeenForm(QwikForm):
         required=False,
         template_name='field.html',
     )
-    friends = ChoiceField()    # placeholder for dynamic assignment below
+    friends = MultipleChoiceField()    # placeholder for dynamic assignment below
     lat = DecimalField(
         decimal_places=6,
         initial=-36.449786,
@@ -232,7 +232,7 @@ class KeenForm(QwikForm):
         self._init_tomorrow()
 
     def _init_friends(self, choices):
-        self.fields['friends'] = ChoiceField(
+        self.fields['friends'] = MultipleChoiceField(
             choices = choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
             label = _('NOTIFY FRIEND BY EMAIL'),

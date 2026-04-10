@@ -50,7 +50,7 @@ class Appeal(models.Model):
         for pk in recipients:
             player=Player.objects.filter(pk=pk).first()
             if player:
-                player.user.person.alert(type='appeal', expires=self.midnight())
+                player.user.person.alert(type='appeal', expires=self.last_hour)
 
     def accept(self, bid_pk):
         try:

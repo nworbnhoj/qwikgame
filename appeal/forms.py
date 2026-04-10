@@ -277,8 +277,8 @@ class KeenForm(QwikForm):
         self._prep_friends()
         self._prep_game()
         self._prep_place(player.venue_suggestions(20).order_by('name').all()[:20])
-        self._prep_today()
-        self._prep_tomorrow()
+        self._prep_today(venue)
+        self._prep_tomorrow(venue)
         self._prep_regions(player.region_favorite())
 
     def _prep_friends(self):

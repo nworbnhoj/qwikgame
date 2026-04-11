@@ -145,9 +145,6 @@ class FilterForm(QwikForm):
         choices += [(p.placeid, p.name) for p in places]
         form.fields['place'].choices = choices
         form.fields['place'].widget.data_attr = form._place_data_attr(places)
-        form.fields['game'].pending = ' '
-        form.fields['place'].pending = ' '
-        form.fields['hours'].pending = ' '
         region = player.region_favorite()
         if region:
             form.fields['lat'].initial = region.lat
@@ -264,7 +261,6 @@ class FriendForm(QwikForm):
             form.fields['email'].pending = friend.email
             form.fields['name'].initial = friend.name
             form.fields['name'].pending = friend.name
-        form.fields['strengths'].pending = ' '
         form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
         form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
         return { 'friend_form' : form, }
@@ -350,7 +346,6 @@ class StrengthForm(QwikForm):
     def get(klass, strength=None):
         form = klass()
         form.fields['game'].choices = Game.choices()
-        form.fields['game'].pending = ' '
         form.fields['strength'].pending = form.fields['strength'].initial
         if strength:
             form.fields['game'].initial = strength.game.code

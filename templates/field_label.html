@@ -3,13 +3,12 @@
     <div>
         <span class='label'>{{ field.label }}</span>
         <span class='label_sub'></span>:
+        <span class='pending'>{{ field.pending }}</span>
 {% if field.errors %}
         <span class='error'>{{ field.errors }}</span>
-{% else %}
-        <span class='pending'>{{ field.pending }}</span>        
 {% endif %}
-        <!-- <span>▼</span> -->
         <span></span>
+        <!-- <span>▼</span> -->
     </div>
 {% if field.field.prompt %}
     {% include 'field_prompt.html' %}

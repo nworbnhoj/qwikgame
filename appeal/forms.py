@@ -282,16 +282,12 @@ class KeenForm(QwikForm):
         self._prep_regions(player.region_favorite())
 
     def _prep_friends(self):
-        if self.fields['friends'].choices:
-            self.fields['friends'].pending = ' '
-        else:
-            self.fields['friends'].pending = _("You don't have any added friends yet. Please add them from the Friends tab")
+        pass
 
     def _prep_game(self):
-        self.fields['game'].pending = ' '
+        pass
 
     def _prep_place(self, venues):
-        self.fields['place'].pending = 'qwerty'
         self.fields['place'].prompt = _('Check Venue Availability')
         self.fields['place'].prompt_hash = SYSTEM_HASH
         self.fields['place'].prompt_info = _('QWIKGAME does not book courts')
@@ -311,14 +307,12 @@ class KeenForm(QwikForm):
             today = venue.now()
             self.fields['today'].pending = today.strftime('%A')
         else:
-            self.fields['today'].pending = ' '
+            pass
 
     def _prep_tomorrow(self, venue=None):
         if venue:
             tomorrow = venue.now() + datetime.timedelta(days=1)
             form.fields['tomorrow'].pending = tomorrow.strftime('%A')
-        else:
-            self.fields['tomorrow'].pending = ' '
         
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):

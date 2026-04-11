@@ -91,10 +91,6 @@ class PrivateForm(QwikForm):
                     ],
             },
         )
-        form.fields['email'].pending = ' '
-        form.fields['permissions'].pending = ' '
-        form.fields['language'].pending = ' '
-        form.fields['blocked'].pending = ' '
         return {'private_form': form }
 
     @classmethod
@@ -152,8 +148,6 @@ class PublicForm(QwikForm):
             initial = { 'name': person.qwikname },
             social_choices = klass._social_choices(person.user.id),
         )
-        form.fields['name'].pending = ' '
-        form.fields['socials'].pending = ' '
         return { 'public_form': form }
 
     # Initializes a PublicForm with 'request_post' for 'person'.
@@ -183,7 +177,6 @@ class SocialForm(QwikForm):
     @classmethod
     def get(klass, strength=None):
         form = klass()
-        form.fields['social'].pending = ' '
         return { 'social_form' : form, }
 
     @classmethod

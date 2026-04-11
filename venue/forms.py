@@ -164,8 +164,6 @@ class VenueAddForm(QwikForm):
     def get(klass, player, game=None, venue=None):
         form = klass(initial = {'game': game,},)
         form.fields['game'].choices += Game.choices()
-        form.fields['game'].pending = ' '
-        form.fields['place'].pending = ' '
         return { 'venue_add_form': form, }
 
     @classmethod
@@ -173,8 +171,6 @@ class VenueAddForm(QwikForm):
         context = {}
         form = klass(data=request_post)
         form.fields['game'].choices += Game.choices()
-        form.fields['game'].pending = ' '
-        form.fields['place'].pending = ' '
         if form.is_valid():
             try:
                 context = {

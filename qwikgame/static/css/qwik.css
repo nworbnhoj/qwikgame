@@ -182,7 +182,7 @@ div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0; width: 100% }
 div.field.naked { padding: 0 }
 div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; width: 100%; }
-div.field > *:not(div.label).open { max-height: 50em; }
+div.field.open > *:not(div.label) { max-height: 50em; }
 div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; width: 100% }
@@ -261,6 +261,7 @@ fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color:
 fieldset div { display:block; }
 fieldset > div {margin : 9em 0 0 0 ;}
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+fieldset.open > *:not(div.label) { max-height: 50em; }
 form > div { margin: 2em 0 2em 0; min-height: 10em; }
 form label:has(input) { margin: 1em 0 0 2em; }
 form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }

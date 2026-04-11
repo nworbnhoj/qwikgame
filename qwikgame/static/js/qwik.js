@@ -189,10 +189,7 @@ function nFormatter(num, digits) {
   // open one field in the form
   function field_open(field){
     if (field instanceof HTMLElement) {
-      field.classList.add('open');    
-      for (const child of field.children){
-        child.classList.add('open');
-      }
+      field.classList.add('open');
       field_prompt_show(field, false);
     } else {
       console.log('WARN: invalid parameter');
@@ -228,15 +225,9 @@ function nFormatter(num, digits) {
       form = element.closest('form');
       if (form){
         form.querySelectorAll('.open').forEach((open) => {
-            if (open.nodeName === 'LEGEND' || open.classList.contains('label')){
-              field_label_update(open);
-              field_prompt_show(field);
-            }
-            if (open.classList.contains('by_day')){
-              field_label_update(open);
-            }
-
             open.classList.remove('open');
+            field_label_update(open);
+            field_prompt_show(field);
         });
       } else {
         console.log('WARN: missing form');

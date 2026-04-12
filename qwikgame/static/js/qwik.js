@@ -204,18 +204,12 @@ function nFormatter(num, digits) {
   function field_prompt_show(field, show=true){
     const PROMPT = field.querySelector('div.prompt');
     if (PROMPT){
-      console.log(PROMPT)
       const SELECTED_OPTION = field.querySelector("input[type='radio']:checked");
-      console.log(SELECTED_OPTION)
-      console.log(show);
       if (SELECTED_OPTION && show){
-        console.log('here')
         PROMPT.classList.remove('hidden');
       } else {
         PROMPT.classList.add('hidden');
       }
-
-      console.log(PROMPT)
     }
   }
 
@@ -1014,6 +1008,7 @@ docReady(event => {
   document.querySelectorAll("form fieldset").forEach(        
     (fieldset) => {
       field_label_update(fieldset);
+      field_prompt_show(fieldset);
     });
   document.querySelectorAll("form div.field").forEach(        
     (div_field) => {

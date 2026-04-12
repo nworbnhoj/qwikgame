@@ -156,6 +156,11 @@ function nFormatter(num, digits) {
   function field_focus_first(){
     const FORM = document.querySelector('form');
     if (FORM){
+      const ERROR = FORM.querySelector('span.error');
+      if (ERROR) {
+        field_focus(ERROR.closest('div.field'));
+        return;        
+      }
       FORM.querySelectorAll('div.required').forEach((field) => {
         const FIELDSET = field.querySelector('fieldset')
         if (FIELDSET){

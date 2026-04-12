@@ -335,6 +335,9 @@ function nFormatter(num, digits) {
 
   function sum_input_by_day(by_day){
     if (by_day){
+      if(!by_day.querySelector('input:checked')){
+        return '';
+      }
       const ALL_DAY = by_day.querySelector("input[name='all_day']")
       if (ALL_DAY.checked){
         return ALL_DAY.labels[0].textContent.trim();
@@ -353,6 +356,9 @@ function nFormatter(num, digits) {
 
   function sum_input_by_week(by_week){
     if (by_week){
+      if(!by_week.querySelector('input:checked')){
+        return '';
+      }
       sum = '';
       let has_digits = /\d/;
       const ALL_WEEK = by_week.querySelector("input[name='all_week']");

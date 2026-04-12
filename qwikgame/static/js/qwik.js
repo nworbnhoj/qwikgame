@@ -980,6 +980,13 @@ docReady(event => {
   document.querySelectorAll("form input").forEach(        
     (input) => {
       input_auto_close(input);
-      field_label_update(input);
+    });
+  document.querySelectorAll("form fieldset").forEach(        
+    (fieldset) => {
+      field_label_update(fieldset);
+    });
+  document.querySelectorAll("form div.field").forEach(        
+    (div_field) => {
+      field_label_update(div_field);
     });
 });

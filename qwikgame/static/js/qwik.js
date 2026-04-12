@@ -252,36 +252,48 @@ function nFormatter(num, digits) {
     field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field){
+      error = field.querySelector('span.error');
+      const ERROR = error && error.textContent ? error : '';
       const INPUT = field.querySelector('input')
       let by_input_name = true;
       switch (INPUT.name){
-      case 'all_day':
-        label = field.querySelector('div.label');
-        pending = label.parentElement.querySelector('.pending');
-        setTimeout(() => {
-          pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
-        }, 1000);    // required to allow various Hour Day Week sync to complete
-        break;
-      case 'all_week':
-        label = field.querySelector('div.label');
-        pending = label.parentElement.querySelector('.pending');
-        setTimeout(() => {
-          pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
-        }, 1000);    // required to allow various Hour Day Week sync to complete
-        break;
-      default:
-        by_input_name = false;
+        case 'all_day':
+          label = field.querySelector('div.label');
+          pending = label.querySelector('span.pending');
+          setTimeout(() => {
+            pre_pending = pending.textContent;
+            pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
+            if (ERROR && (pending.textContent !== pre_pending)){
+              ERROR.textContent = '';
+            }
+          }, 1000);    // required to allow various Hour Day Week sync to complete
+          break;
+        case 'all_week':
+          label = field.querySelector('div.label');
+          pending = label.querySelector('span.pending');
+          setTimeout(() => {
+            pre_pending = pending.textContent;
+            pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
+            if (ERROR && (pending.textContent !== pre_pending)){
+              ERROR.textContent = '';
+            }
+          }, 1000);    // required to allow various Hour Day Week sync to complete
+         break;
+        default:
+          by_input_name = false;
       }
       if (by_input_name){ return; }
+      pre_pending = '';
       switch (INPUT.type){
         case 'checkbox':
           legend_or_label = field.querySelector('legend');
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
           if (legend_or_label){
-            let pending = legend_or_label.parentElement.querySelector('.pending')
+            pending = legend_or_label.querySelector('span.pending');
             let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
             let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
             if (pending){
+              pre_pending = pending.textContent;
               pending.textContent = sum_input_checkbox(checkboxes);
             }
           }
@@ -290,8 +302,9 @@ function nFormatter(num, digits) {
           legend = field.querySelector('legend');
           checked = field.querySelector("input[type='radio']:checked");
           if (legend){
-            pending = legend.querySelector('.pending')
+            pending = legend.querySelector('span.pending');
             if (pending){
+              pre_pending = pending.textContent;
               pending.textContent = sum_input_radio(checked);
             }
           }
@@ -300,8 +313,9 @@ function nFormatter(num, digits) {
           email = field.querySelector("input[type='email']");
           label = email.labels[0];
           if (label){
-            pending = label.parentElement.querySelector('.pending');
+            pending = label.parentElement.querySelector('span.pending');
             if (pending){
+              pre_pending = pending.textContent;
               pending.textContent = sum_input_email(email);
             }
           }
@@ -310,8 +324,9 @@ function nFormatter(num, digits) {
           range = field.querySelector("input[type='range']");
           label = field.querySelector("div.label");
           if (label){
-            pending = label.querySelector('.pending');
+            pending = label.querySelector('span.pending');
             if (pending){
+              pre_pending = pending.textContent;
               pending.textContent = sum_input_range(range);
             }
           }
@@ -320,14 +335,18 @@ function nFormatter(num, digits) {
           text = field.querySelector("input[type='text']");
           label = text.labels[0];
           if (label){
-            pending = label.parentElement.querySelector('.pending');
+            pending = label.parentElement.querySelector('span.pending');
             if (pending){
+              pre_pending = pending.textContent;
               pending.textContent = sum_input_text(text);
             }
           }
           break;
         default:
           console.debug('WARNING: unsupported input type: ' + INPUT.type);
+      }
+      if (ERROR && (pending.textContent !== pre_pending)){
+        ERROR.textContent = '';
       }
     }
   }

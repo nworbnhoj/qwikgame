@@ -7,7 +7,7 @@ from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
 from qwikgame.constants import SYSTEM_HASH
-from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, VenueField, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -111,7 +111,7 @@ class KeenForm(QwikForm):
         template_name='field.html',
         widget = RadioSelect,
     )
-    place = ChoiceField()    # placeholder for dynamic assignment below
+    venue = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
@@ -184,10 +184,6 @@ class KeenForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
-    placeid = CharField(
-        required=False,
-        widget=HiddenInput(),
-    )
     # strength = SelectRangeField(
     #     choices={'W':_('much-weaker'), 'w':_('weaker'), 'm':_('well-matched'), 's':_('stronger'), 'S':_('much-stronger')},
     #     help_text=_('Restrict this invitation to Rivals of a particular skill level.'),
@@ -207,27 +203,11 @@ class KeenForm(QwikForm):
                 msg = _('Please select at least one hour in today or tomorrow.')
                 self.add_error('today', msg)
                 self.add_error('tomorrow', msg)
-        if cleaned_data.get('place') == 'placeid':
-            if not cleaned_data.get('placeid'):
-                self.add_error(
-                    "place",
-                    _('Sorry, that Venue selection did not work. Please try again.')
-                )
-
-    def clean_place(self):
-        place_id = self.cleaned_data.get('place')
-        if place_id == 'placeid':
-            return place_id
-        if Venue.objects.filter(placeid=place_id).exists():
-            return place_id
-        raise ValidationError(
-            _('Sorry, that Venue selection did not work. Please try again.')
-        )
 
     def _init_fields(self, player):
         self._init_friends(player.friend_choices())
         self._init_game()
-        self._init_place(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._init_venue(player.venue_suggestions(20).order_by('name').all()[:20])
         self._init_today()
         self._init_tomorrow()
 
@@ -244,24 +224,12 @@ class KeenForm(QwikForm):
     def _init_game(self):
         self.fields['game'].choices += Game.choices()
 
-    def _init_place(self, venues):
-        choices = [('show-map', _('Select from map'))]
-        choices += [(v.placeid, v.name) for v in venues]
-        self.fields['place'] = ChoiceField(
-            choices = choices,
+    def _init_venue(self, venues):
+        self.fields['venue'] = VenueField(
             label =_('VENUE'),
             required = True,
             template_name='field.html',
-            widget=DataSelect(
-                data_attr={
-                    'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
-                    'hours': [''] + [v.open_7int_str() for v in venues],
-                    'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
-                    'now_hour': [''] + [v.now().hour for v in venues],
-                    'phone': [''] + [v.phone for v in venues],
-                    'url': [''] + [v.url for v in venues],
-                }
-            ),
+            venues = venues,
         )
 
     def _init_regions(self):
@@ -276,7 +244,7 @@ class KeenForm(QwikForm):
     def _prep_fields(self, player, venue=None):
         self._prep_friends()
         self._prep_game()
-        self._prep_place(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._prep_venue(player.venue_suggestions(20).order_by('name').all()[:20])
         self._prep_today(venue)
         self._prep_tomorrow(venue)
         self._prep_regions(player.region_favorite())
@@ -287,11 +255,11 @@ class KeenForm(QwikForm):
     def _prep_game(self):
         pass
 
-    def _prep_place(self, venues):
-        self.fields['place'].prompt = _('Check Venue Availability')
-        self.fields['place'].prompt_hash = SYSTEM_HASH
-        self.fields['place'].prompt_info = _('QWIKGAME does not book courts')
-        self.fields['place'].prompt_url = ' '
+    def _prep_venue(self, venues):
+        self.fields['venue'].prompt = _('Check Venue Availability')
+        self.fields['venue'].prompt_hash = SYSTEM_HASH
+        self.fields['venue'].prompt_info = _('QWIKGAME does not book courts')
+        self.fields['venue'].prompt_url = ' '
 
     def _prep_regions(self, region):
         if region:
@@ -322,7 +290,7 @@ class KeenForm(QwikForm):
                     # 'strength': strength,
                     'today': DAY_NONE,       # TODO extract today from hours
                     'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
-                    'place': venue.placeid if venue else 'map',
+                    'venue': venue.placeid if venue else 'map',
                 },
             )
         form._init_fields(player)
@@ -355,13 +323,8 @@ class KeenForm(QwikForm):
                     'game': form.cleaned_data['game'],
                     'today': today,
                     'tomorrow': tomorrow,
-                    'placeid': form.cleaned_data['placeid'],
+                    'placeid': form.cleaned_data['venue'],
                     }
-                place_id = form.cleaned_data.get('place')
-                if place_id == 'placeid':
-                    context['placeid'] = form.cleaned_data['placeid']
-                else:
-                    context['placeid'] = form.cleaned_data['place']
             except:
                 logger.exception('failed to parse KeenForm')
         else:

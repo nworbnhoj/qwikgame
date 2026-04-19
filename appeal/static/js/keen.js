@@ -76,13 +76,7 @@ function setPlace(mark){
   const PLACEID = mark.placeid;        
   const PLACE_SELECT = document.getElementById('id_place');
   let radio = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
-  if (radio){
-    PLACE_SELECT.value = PLACEID
-  } else {
-    PLACE_SELECT.value = "placeid"
-    // populate the (hidden) placeid input with the new placeid
-    const PLACEID_INPUT = document.getElementById('id_placeid');
-    PLACEID_INPUT.value = PLACEID;
+  if (!radio){
     // clone the SHOW_MAP option to accomodate the Map selected place
     const SHOWMAP_RADIO = document.getElementById('id_place_0');
     const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
@@ -93,7 +87,7 @@ function setPlace(mark){
     SHOWMAP_DIV.parentElement.insertBefore(CLONE, SHOWMAP_DIV.nextElementSibling);
     CLONE.querySelector('label').lastChild.data = mark.name;
     radio = CLONE.querySelector("input[type='radio']");
-    radio.setAttribute('value', 'placeid');
+    radio.setAttribute('value', PLACEID);
     radio.setAttribute('data-placeid', PLACEID);
     radio.setAttribute('data-hours', mark.hours);
     radio.setAttribute('data-now_weekday', mark.weekday);
@@ -102,6 +96,7 @@ function setPlace(mark){
     radio.setAttribute('data-url', mark.url);
     radio.addEventListener('click', form_shut);
   }
+  PLACE_SELECT.value = PLACEID
   updatePlaceHours(radio);
   PLACE_SELECT.dispatchEvent(new Event('change'));
   showMap(false);

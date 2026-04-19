@@ -149,7 +149,28 @@ class SelectRangeField(RangeField):
         try:
             return list(self.choices)[int(value)][0]
         except:
-            return None
+            return None    
+
+
+class VenueField(PlaceField):
+    template_name='field.html'
+
+    def __init__(self, venues=[], *args, **kwargs):
+        choices = [PlaceField.MAP_CHOICE]
+        choices += [(v.placeid, v.name) for v in venues]
+        data_attr = {
+            'games': [''] + [" ".join(list(v.games.all().values_list('pk', flat=True))) for v in venues],
+            'hours': [''] + [v.open_7int_str() for v in venues],
+            'now_weekday': [''] + [v.now().isoweekday() % 7 for v in venues],
+            'now_hour': [''] + [v.now().hour for v in venues],
+            'phone': [''] + [v.phone for v in venues],
+            'url': [''] + [v.url for v in venues],
+        }
+        super().__init__(
+            choices = choices,
+            data_attr=data_attr,
+            **kwargs
+        )
 
 
 class WeekField(MultiValueField):

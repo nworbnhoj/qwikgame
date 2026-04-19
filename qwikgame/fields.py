@@ -1,9 +1,12 @@
 import logging
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, Select, TypedChoiceField, TypedMultipleChoiceField
+from django.utils.translation import gettext_lazy as _
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
+from service.locate import Locate
+from venue.models import Place
 from qwikgame.widgets import ActionMultiple, MultiWidget
-from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput
+from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 
@@ -84,6 +87,39 @@ class MultiTabField(MultiValueField):
         for i in range(len(self.field_keys)):
             result[self.field_keys[i]] = data_list[i]
         return result
+
+
+class PlaceField(ChoiceField):
+    MAP_CHOICE = ('show-map', _('Select from map'))
+    template_name='field.html'
+
+    def __init__(self, choices=[], data_attr=None, places=None, *args, **kwargs):
+        if not choices:
+            choices=[PlaceField.MAP_CHOICE]
+        if places:
+            choices += [(p.placeid, p.name) for p in places]
+            if not data_attr:
+                padding = ['' for c in range(len(choices))]
+                open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
+                data_attr = {
+                    'hours': padding + [open for p in places],
+                    'now_weekday': padding + ['' for p in places],
+                    'now_hour': padding + ['' for p in places],
+                }
+        super().__init__(
+            choices = choices,
+            widget = DataSelect(data_attr=data_attr),
+            **kwargs)
+
+    def valid_value(self, value):
+        if super().valid_value(value):
+            return True
+        """Check to see if the provided value is a valid Google placeid."""
+        if Place.objects.filter(placeid=value, venue__isnull=False).first():
+            return True
+        if Locate.geodetails(value):
+            return True
+        return False
 
 
 class RangeField(ChoiceField):

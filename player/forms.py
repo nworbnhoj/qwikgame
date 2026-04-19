@@ -8,7 +8,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, RangeField, SelectRangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -28,12 +28,7 @@ class FilterForm(QwikForm):
         template_name='field.html',
         widget = RadioSelect,
     )
-    place = ChoiceField(
-        help_text=_('Only see invitations for a particular Venue.'),
-        label=_('PLACE'),
-        template_name='field.html',
-        widget=DataSelect,
-    )
+    place = ChoiceField() # place holder for dynamic assignment
     hours = WeekField(
         help_text=_('Only see invitations at specific times in your week.'),
         label=_('TIME'),
@@ -94,35 +89,15 @@ class FilterForm(QwikForm):
         required=False,
         widget=HiddenInput(),
     )
-    placeid = CharField(
-        required=False,
-        widget=HiddenInput(),
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        if not cleaned_data.get('place'):
-            if not cleaned_data.get('placeid'):
-                self.add_error(
-                    "place",
-                    _('Sorry, that Venue selection did not work. Please try again.')
-                )
 
     def clean_hours(self):
         hours = self.cleaned_data["hours"]
         if hours.as_bytes() == WEEK_NONE:
             raise ValidationError("You must select at least one hour in the week.")
         return hours
-
-    def _place_data_attr(self, places):
-        return {
-            'hours': ['',''] + [p.open_7int_str() if p.is_venue else open for p in places],
-            'now_weekday': ['',''] + [p.now().isoweekday() % 7 if p.is_venue else '' for p in places],
-            'now_hour': ['',''] + [p.now().hour if p.is_venue else '' for p in places],
-        }
 
     # Initializes an FilterForm for 'player'.
     # Returns a context dict including 'filter_form'
@@ -140,11 +115,12 @@ class FilterForm(QwikForm):
                 },
             )
         form.fields['game'].choices += Game.choices()
-        open = ','.join(map(str, Hours24x7(WEEK_ALL).as_7int()))
-        choices = [('ANY',_('Anywhere')), ('show-map', _('Select from map'))]
-        choices += [(p.placeid, p.name) for p in places]
-        form.fields['place'].choices = choices
-        form.fields['place'].widget.data_attr = form._place_data_attr(places)
+        form.fields['place'] = PlaceField(
+            choices = [('ANY',_('Anywhere')), PlaceField.MAP_CHOICE],
+            help_text=_('Only see invitations for a particular Venue.'),
+            label=_('PLACE'),
+            places = places,
+        )
         region = player.region_favorite()
         if region:
             form.fields['lat'].initial = region.lat
@@ -170,13 +146,8 @@ class FilterForm(QwikForm):
             context = {
                 'game': form.cleaned_data['game'],
                 'hours': form.cleaned_data['hours'],
+                'placeid': form.cleaned_data.get('place'),
             }
-            placeid = form.cleaned_data.get('place')
-            if placeid == 'ALL':
-                pass
-            elif placeid == 'placeid':
-                placeid = form.cleaned_data['placeid']
-            context['placeid'] = placeid
         else:
             logger.info(form)
         return context

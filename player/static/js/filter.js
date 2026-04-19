@@ -32,18 +32,20 @@ function setPlace(mark){
   const PLACEID = mark.placeid;        
   const PLACE_SELECT = document.getElementById('id_place');
   let option = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
-  if (option){
-    PLACE_SELECT.value = PLACEID
-  } else {
-    PLACE_SELECT.value = "placeid"
-    // populate the (hidden) placeid input with the new placeid
-    const PLACEID_INPUT = document.getElementById('id_placeid');
-    PLACEID_INPUT.value = PLACEID;
-    // configure the temporary placeid option in the place drop-down field
-    option = PLACE_SELECT.querySelector("[value='placeid']");
-    option.textContent = mark.name;
-    option.setAttribute('data-placeid', PLACEID);
+  if (!option){
+    // clone the SHOW_MAP option to accomodate the Map selected place
+    const SHOWMAP_RADIO = document.getElementById('id_place_0');
+    const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
+    const SHOWMAP_LABEL = SHOWMAP_DIV.querySelector('label');
+    const CLONE = SHOWMAP_DIV.cloneNode(true);
+    SHOWMAP_RADIO.id = 'id_place_showmap';
+    SHOWMAP_LABEL.setAttribute('for', SHOWMAP_RADIO.id);
+    SHOWMAP_DIV.parentElement.insertBefore(CLONE, SHOWMAP_DIV.nextElementSibling);
+    CLONE.querySelector('label').lastChild.data = mark.name;
+    radio = CLONE.querySelector("input[type='radio']");
+    radio.setAttribute('value', PLACEID);
   }
+  PLACE_SELECT.value = PLACEID
   PLACE_SELECT.dispatchEvent(new Event('change'));
   showMap(false);
 }

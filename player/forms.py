@@ -117,7 +117,7 @@ class FilterForm(QwikForm):
         form.fields['game'].choices += Game.choices()
         form.fields['place'] = PlaceField(
             choices = [('ANY',_('Anywhere')), PlaceField.MAP_CHOICE],
-            help_text=_('Only see invitations for a particular Venue.'),
+            help_text=_('Only see invitations for a particular Place.'),
             label=_('PLACE'),
             places = places,
         )
@@ -137,10 +137,12 @@ class FilterForm(QwikForm):
     def post(klass, request_post, places):
         form = klass(data=request_post)
         form.fields['game'].choices += Game.choices()
-        choices = [('ANY',_('Anywhere')), ('placeid', '')]
-        choices += [(p.placeid, p.name) for p in places]
-        form.fields['place'].choices = choices
-        form.fields['place'].widget.data_attr = form._place_data_attr(places)
+        form.fields['place'] = PlaceField(
+            choices = [('ANY',_('Anywhere')), PlaceField.MAP_CHOICE],
+            help_text=_('Only see invitations for a particular Place.'),
+            label=_('PLACE'),
+            places = places,
+        )
         context = { 'filter_form': form }
         if form.is_valid():
             context = {

@@ -52,7 +52,7 @@ class Player(models.Model):
                     qs = qs.filter(game=f.game)
                 if f.place:
                     if f.place.is_venue:
-                        qs = qs.filter(place__venue=f.place)
+                        qs = qs.filter(venue=f.place)
                     elif f.place.locality:
                         qs = qs.filter(venue__locality=f.place.locality)
                     elif f.place.admin1:

@@ -120,6 +120,7 @@ class FilterForm(QwikForm):
             help_text=_('Only see invitations for a particular Place.'),
             label=_('PLACE'),
             places = places,
+            template_name='field.html',
         )
         region = player.region_favorite()
         if region:

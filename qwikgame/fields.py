@@ -91,7 +91,6 @@ class MultiTabField(MultiValueField):
 
 class PlaceField(ChoiceField):
     MAP_CHOICE = ('show-map', _('Select from map'))
-    template_name='field.html'
 
     def __init__(self, choices=[], data_attr=None, places=None, *args, **kwargs):
         if not choices:
@@ -153,7 +152,6 @@ class SelectRangeField(RangeField):
 
 
 class VenueField(PlaceField):
-    template_name='field.html'
 
     def __init__(self, venues=[], *args, **kwargs):
         choices = [PlaceField.MAP_CHOICE]

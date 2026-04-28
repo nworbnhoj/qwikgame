@@ -34,7 +34,7 @@ function setPlace(mark){
   let option = PLACE_SELECT.querySelector("[value='"+PLACEID+"']")
   if (!option){
     // clone the SHOW_MAP option to accomodate the Map selected place
-    const SHOWMAP_RADIO = VENUE_SELECT.querySelector("[value='show-map']")
+    const SHOWMAP_RADIO = PLACE_SELECT.querySelector("[value='show-map']")
     const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
     const SHOWMAP_LABEL = SHOWMAP_DIV.querySelector('label');
     const CLONE = SHOWMAP_DIV.cloneNode(true);

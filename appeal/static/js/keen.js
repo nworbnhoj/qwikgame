@@ -78,7 +78,7 @@ function setPlace(mark){
   let radio = VENUE_SELECT.querySelector("[value='"+PLACEID+"']")
   if (!radio){
     // clone the SHOW_MAP option to accomodate the Map selected place
-    const SHOWMAP_RADIO = document.getElementById('id_venue_0');
+    const SHOWMAP_RADIO = VENUE_SELECT.querySelector("[value='show-map']")
     const SHOWMAP_DIV = SHOWMAP_RADIO.parentElement.parentElement;
     const SHOWMAP_LABEL = SHOWMAP_DIV.querySelector('label');
     const CLONE = SHOWMAP_DIV.cloneNode(true);

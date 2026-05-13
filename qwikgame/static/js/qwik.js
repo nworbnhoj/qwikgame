@@ -293,12 +293,13 @@ function nFormatter(num, digits) {
           }
           break;
         case 'radio':
-          legend = field.querySelector('legend');
-          checked = field.querySelector("input[type='radio']:checked");
-          if (legend){
-            pending = legend.querySelector('span.pending');
+          legend_or_label = field.querySelector('legend');
+          legend_or_label = legend_or_label ? legend_or_label : field.querySelector('div.label');
+          if (legend_or_label){
+            pending = legend_or_label.querySelector('span.pending');
             if (pending){
               pre_pending = pending.textContent;
+              checked = field.querySelector("input[type='radio']:checked");
               pending.textContent = sum_input_radio(checked);
             }
           }

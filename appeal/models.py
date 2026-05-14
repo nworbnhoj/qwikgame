@@ -305,56 +305,39 @@ class Bid(models.Model):
         return self.hours24.to_dips
 
     def log_event(self, template):
-        player = self.appeal.player
-        rival = self.rival
+        entry = Entry(
+            id = 'placeholder',
+            klass= 'event',
+            pk = self.pk,
+            text = f'template_{template}',
+        )
+        entry['hours'] = self.hours24().as_str()
         match template:
             case 'accept':
-                entry = Entry(
-                    hash = player.user.hash,
-                    id = player.pk,
-                    klass= 'event',
-                    name = player.qwikname,
-                    pk = self.pk,
-                    text = f'template_{template}',
-                )
-                entry['rid'] = rival.hash
+                entry['hash'] = self.player.user.hash
+                entry['id'] = self.player.pk
+                entry['name'] = self.player.qwikname
+                entry['rid'] = self.rival.hash
             case 'bid':
-                entry = Entry(
-                    hash = rival.user.hash,
-                    id = rival.pk,
-                    klass= 'event rival',
-                    name = rival.qwikname,
-                    pk = self.pk,
-                    text = f'template_{template}',
-                )
+                entry['hash'] = self.rival.user.hash
+                entry['id'] = self.rival.pk
+                entry['klass'] = 'event rival'
+                entry['name'] = self.rival.qwikname
             case 'decline':
-                entry = Entry(
-                    hash = player.user.hash,
-                    id = player.pk,
-                    klass= 'event',
-                    name = player.qwikname,
-                    pk = self.pk,
-                    text = f'template_{template}',
-                )
-                entry['rid'] = rival.hash
+                entry['hash'] = self.player.user.hash
+                entry['id'] = self.player.pk
+                entry['name'] = player.qwikname
+                entry['rid'] = self.rival.hash
             case 'expired':
-                entry = Entry(
-                    hash = rival.user.hash,
-                    id = rival.pk,
-                    klass= 'event rival',
-                    name = rival.qwikname,
-                    pk = self.pk,
-                    text = f'template_{template}',
-                )
+                entry['hash'] = self.rival.user.hash
+                entry['id'] = self.rival.pk
+                entry['klass'] = 'event rival'
+                entry['name'] = self.rival.qwikname
             case 'withdraw':
-                entry = Entry(
-                    hash = rival.user.hash,
-                    id = rival.pk,
-                    klass= 'event rival',
-                    name = rival.qwikname,
-                    pk = self.pk,
-                    text = f'template_{template}',
-                )
+                entry['hash'] = self.rival.user.hash
+                entry['id'] = self.rival.pk
+                entry['klass'] = 'event rival'
+                entry['name'] = self.rival.qwikname
             case _:
                 logger.warn(f'unknown template: {template}')
         self.appeal.log_entry(entry)

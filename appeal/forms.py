@@ -274,13 +274,18 @@ class KeenForm(QwikForm):
         if venue:
             today = venue.now()
             self.fields['today'].pending = today.strftime('%A')
-        else:
-            pass
+            hours = venue.open_date(today).as_list()
+            self.fields['today'].widget.set_hours_show(hours)
+            hours = [h for h in hours if h > today.hour]
+            self.fields['today'].widget.set_hours_enable(hours)
 
     def _prep_tomorrow(self, venue=None):
         if venue:
             tomorrow = venue.now() + datetime.timedelta(days=1)
-            form.fields['tomorrow'].pending = tomorrow.strftime('%A')
+            self.fields['tomorrow'].pending = tomorrow.strftime('%A')
+            hours = venue.open_date(tomorrow).as_list()
+            self.fields['tomorrow'].widget.set_hours_show(hours)
+            self.fields['tomorrow'].widget.set_hours_enable(hours)
         
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):
@@ -329,5 +334,8 @@ class KeenForm(QwikForm):
                 logger.exception('failed to parse KeenForm')
         else:
             logger.warn('invalid KeenForm')
-            form._prep_fields(player)
+            form._prep_fields(
+                player,
+                Venue.objects.filter(placeid=form.cleaned_data['venue']).first()
+            )
         return context

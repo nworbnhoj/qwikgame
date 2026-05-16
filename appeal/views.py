@@ -324,6 +324,7 @@ class KeenView(AppealsView):
         context |= self.keen_form_class.get(
             player = self.user.player,
             game = kwargs.get('game'),
+            venue = kwargs.get('venue'),
         )
         return render(request, self.keen_template, context)
 

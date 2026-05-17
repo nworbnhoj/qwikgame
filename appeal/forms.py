@@ -56,7 +56,7 @@ class AcceptForm(QwikForm):
 class BidForm(QwikForm):
     hour = DayRadioField(
         help_text=_('When are you keen to play?'),
-        label=_('WHAT TIME WORKS FOR YOU?'),
+        label =_ ('what time forks for you?'),
         required=False,
         template_name='field.html',
     )
@@ -106,7 +106,7 @@ class BidForm(QwikForm):
 
 class KeenForm(QwikForm):
     game = ChoiceField(
-        label = _('GAME'),
+        label=_('game'),
         required = True,
         template_name='field.html',
         widget = RadioSelect,
@@ -115,7 +115,7 @@ class KeenForm(QwikForm):
     today = DayMultiField(
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TODAY'),
+        label=_('today'),
         offsetday='0',
         required=False,
         template_name='field.html',
@@ -123,7 +123,7 @@ class KeenForm(QwikForm):
     tomorrow = DayMultiField(
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('TOMORROW'),
+        label=_('today'),
         offsetday='1',
         required=False,
         template_name='field.html',
@@ -215,7 +215,7 @@ class KeenForm(QwikForm):
         self.fields['friends'] = MultipleChoiceField(
             choices = choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
-            label = _('NOTIFY FRIEND BY EMAIL'),
+            label=_('notify friend by emailL'),
             required = False,
             template_name='field.html', 
             widget = CheckboxSelectMultiple,
@@ -226,7 +226,7 @@ class KeenForm(QwikForm):
 
     def _init_venue(self, venues):
         self.fields['venue'] = VenueField(
-            label =_('VENUE'),
+            label=_('venue'),
             required = True,
             template_name='field.html',
             venues = venues,

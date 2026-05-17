@@ -23,7 +23,7 @@ class FilterForm(QwikForm):
     game = ChoiceField(
         choices = [('ANY',_('Any Game'))],
         help_text=_('Only see invitations for a particular Game.'),
-        label = _('GAME'),
+        label=_('game'),
         required=True,
         template_name='field.html',
         widget = RadioSelect,
@@ -31,7 +31,7 @@ class FilterForm(QwikForm):
     place = ChoiceField() # place holder for dynamic assignment
     hours = WeekField(
         help_text=_('Only see invitations at specific times in your week.'),
-        label=_('TIME'),
+        label=_('time'),
         hours_enable=[*range(6,21)],
         hours_show=[*range(6,21)],
         required=True,
@@ -158,7 +158,7 @@ class FilterForm(QwikForm):
 
 class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
-        label=_('NO ACTIVE FILTERS'),
+        label=_('no active filters'),
         required=False,
         widget=CheckboxSelectMultiple,
     )
@@ -169,7 +169,7 @@ class FiltersForm(QwikForm):
         active = [ str(filter.id) for filter in filters.filter(active=True) ]
         choices = { str(filter.id) : filter for filter in filters}
         self.fields['filters'].choices = choices
-        self.fields['filters'].label = _("%(n)s ACTIVE FILTERS") % {'n': len(active)}
+        self.fields['filters'].label=_("%(n)s active filters") % {'n': len(active)}
         self.fields['filters'].initial = active
         # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
 
@@ -191,13 +191,13 @@ class FiltersForm(QwikForm):
 
 class FriendForm(QwikForm):
     email = EmailField(
-        label = _("FRIEND'S EMAIL ADDRESS"),
+        label=_("friend's email address"),
         max_length=255,
         required = True,
         template_name = 'field.html',
     )
     name = CharField(
-        label = _('NAME'),
+        label=_('name'),
         max_length=32,
         required=False,
         template_name = 'field.html',
@@ -303,7 +303,7 @@ class InviteForm(RegisterForm):
 
 class StrengthForm(QwikForm):
     game = ChoiceField(
-        label = _('GAME'),
+        label=_('game'),
         required = True,
         template_name='field.html',
         widget = RadioSelect,
@@ -311,7 +311,7 @@ class StrengthForm(QwikForm):
     strength = SelectRangeField(
         choices = Strength.SCALE,
         initial = Strength.SCALE.get('m'),
-        label = _('RIVAL SKILL LEVEL'),
+        label=_('rival skill level'),
         required = True,
         template_name='field.html',
     )

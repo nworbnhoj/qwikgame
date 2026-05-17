@@ -14,13 +14,13 @@ logger = logging.getLogger(__file__)
 class GoogleSearchForm(QwikForm):
     query = CharField(
         # help_text=_('Google Places search'),
-        label = _('SEARCH'),
+        label=_('search'),
         required = True,
     )
     region = ChoiceField(
         choices = Region.choices(),
         help_text=_('restrict the search to a region'),
-        label = _('REGION'),
+        label=_('region'),
         required = True,
         template_name='dropdown.html', 
         widget=RadioSelect(attrs={"class": "down left hidden"})
@@ -28,7 +28,7 @@ class GoogleSearchForm(QwikForm):
     game = ChoiceField(
         choices = Game.choices(),
         help_text = _('Specify the Game for these Qwikgame Venues'),
-        label = _('GAME'),
+        label=_('game'),
         required = True,
         template_name='field.html',
     )
@@ -58,7 +58,7 @@ class GooglePlacesForm(QwikForm):
     places = MultipleChoiceField(
         choices = {},
         help_text=_('Select Google Places to add as Qwikgame Venues'),
-        label=_('GOOGLE PLACES'),
+        label=_('google places'),
         required=True,
         widget=CheckboxSelectMultiple,
     )
@@ -87,13 +87,13 @@ class GooglePlacesForm(QwikForm):
 class VenueAddForm(QwikForm):
     game = ChoiceField(
         choices = [(None, '')],
-        label = _('GAME:'),
+        label=_('game'),
         required = True,
         template_name='field.html',
         widget = RadioSelect,
     )
     place = CharField(
-        label = _('PLACE:'),
+        label=_('place'),
         template_name='field.html',
         initial='Select from map',
     )

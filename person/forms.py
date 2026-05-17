@@ -11,7 +11,7 @@ class DeleteWidget(CheckboxSelectMultiple):
 
 class BlockForm(QwikForm):
     block = IntegerField(
-        label=_('Person to block'),
+        label=_('person to block'),
         required=True,
         )
 
@@ -31,7 +31,7 @@ class BlockForm(QwikForm):
 
 class PrivateForm(QwikForm):
     email = EmailField(
-        label = _("EMAIL ADDRESS"),
+        label=_("email address"),
         max_length=255,
         required = False,
         template_name = 'field.html',
@@ -44,14 +44,14 @@ class PrivateForm(QwikForm):
             ('location', _('location access'))
         ],
         help_text=_('Your choice.'),
-        label=_('PERMISSIONS'),
+        label=_('permissions'),
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple()
     )
     language = ChoiceField(
         choices = [('', _("Browser default"))] + LANGUAGES, 
-        label=_('LANGUAGE'),
+        label=_('language'),
         required=False,
         template_name='field.html',
         widget = RadioSelect,
@@ -59,7 +59,7 @@ class PrivateForm(QwikForm):
     blocked = MultipleChoiceField(
         choices=(),
         help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
-        label=_('PEOPLE YOU HAVE BLOCKED'),
+        label=_('people you have blocked'),
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple(
@@ -114,14 +114,14 @@ class PrivateForm(QwikForm):
 
 class PublicForm(QwikForm):
     name = CharField(
-        label=_('QWIK NAME'),
+        label=_('QWIK name'),
         max_length=32,
         required=False,
         template_name='field.html',
     )
     socials = MultipleChoiceField(
         choices=(),
-        label=_('WEBSITE / SOCIAL MEDIA'),
+        label=_('website / social media'),
         required=False,
         template_name='field.html',
         widget=CheckboxSelectMultiple(
@@ -193,7 +193,7 @@ class SocialForm(QwikForm):
 class UnblockForm(QwikForm):
     blocked = MultipleChoiceField(
         help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
-        label=_('PEOPLE YOU HAVE BLOCKED'),
+        label=_('people you have blocked'),
         widget=CheckboxSelectMultiple,
     )
         

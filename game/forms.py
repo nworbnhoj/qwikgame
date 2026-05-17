@@ -53,7 +53,7 @@ class ReviewForm(QwikForm):
     strength = SelectRangeField(
         choices = Strength.SCALE,
         initial = Strength.SCALE.get('m'),
-        label = _('RIVAL SKILL LEVEL'),
+        label=_('rival skill level'),
         required = True,
     )
     dud = MultipleChoiceField(
@@ -62,7 +62,7 @@ class ReviewForm(QwikForm):
             'poor':_('rival showed poor sportsmanship'),
             'noshow': _('rival did not show up'),
         },
-        label = _('DISSAPOINTMENT'),
+        label=_('dissapointment'),
 
         required = False,
         widget = CheckboxSelectMultiple,

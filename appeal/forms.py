@@ -336,6 +336,6 @@ class KeenForm(QwikForm):
             logger.warn('invalid KeenForm')
             form._prep_fields(
                 player,
-                Venue.objects.filter(placeid=form.cleaned_data['venue']).first()
+                Venue.objects.filter(placeid=form.cleaned_data.get('venue')).first()
             )
         return context

@@ -2,7 +2,7 @@ root {
   /* --- Colors --- */
   --color-active: #e09900;
   --color-backdrop: #f0f0f0;
-  --color-disabled: #aaaaaa;
+  --color-disabled-bdr: #cccccc;
   --color-disabled-txt: #999999;
   --color-error: #ff0000;
   --color-qwik: #f5a600;
@@ -37,14 +37,14 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.primary { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #333333;  }
 .btn.primary:active { background-color: var(--color-active); border-color: var(--color-active); }
 .btn.primary:has(input:checked) {}
-.btn.primary:has(input:disabled) {background-color: #cccccc; border-color: #cccccc; color: var(--color-disabled-txt); cursor: default; }
-.btn.primary:disabled { background-color: #cccccc; border-color: #cccccc; color: var(--color-disabled-txt);}
+.btn.primary:has(input:disabled) {background-color: #cccccc; border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt); cursor: default; }
+.btn.primary:disabled { background-color: #cccccc; border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt);}
 
 .btn.secondary { border-color: #333333; color: #333333; }
 .btn.secondary:active { border-color: #c6d2e6 }
-.btn.secondary:disabled { border-color: #cccccc; color: var(--color-disabled-txt);}
+.btn.secondary:disabled { border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt);}
 .btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed; box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
-.btn.secondary:has(input:disabled) { border-color: #cccccc; color: var(--color-disabled-txt);}
+.btn.secondary:has(input:disabled) { border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt);}
 
 .btn.tertiary { align-content: center; border-color: var(--color-backdrop); color: #2b78e4; display: block; min-height: 2em; padding: 0.3em; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
@@ -56,14 +56,14 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  z-index: 10; }
 .btn.special1:active { background-color: var(--color-active); border-color: var(--color-active);  color: #ffffff }
 .btn.special1:has(input:checked) {}
-.btn.special1:has(input:disabled) { border-color: #cccccc; color: #cccccc; }
-.btn.special1:disabled { background-color: #cccccc; border-color: #cccccc; }
+.btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: #cccccc; }
+.btn.special1:disabled { background-color: #cccccc; border-color: var(--color-disabled-bdr); }
 
 .btn.special2 { border-color: var(--color-backdrop); color: #333333; flex: 0 1 auto; margin: 0px; padding: 0.5em 0.5em; position: relative; text-decoration: none; }
 .btn.special2:active { background-color: #c6d2e6; border-color: c6d2e6; }
 .btn.special2:has(i:only-child) { aspect-ratio: 1; flex: 0 0 auto; }
 .btn.special2:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
-.btn.special2:has(input:disabled) { border-color: #cccccc; color: var(--color-disabled-txt);}
+.btn.special2:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
 .btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1em;}
 .btn.special2 .identicon { height: 2.6em; width: 2.6em; }
@@ -93,7 +93,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 
 .color { color: var(--color-qwik); }
 .cta_desktop { padding: 1em; width: 100% }
-.disabled { border-color: var(--color-disabled); color: var(--color-disabled-txt); }
+.disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .errorlist { color: var(--color-error); }
 .head_back { order: 40 }
 .head_fwd { order: 50 }
@@ -188,7 +188,7 @@ div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
 div.drop { width: 100% }
 div.drop_up {}
-div.disabled { border-color: var(--color-disabled); color: var(--color-disabled-txt); }
+div.disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }

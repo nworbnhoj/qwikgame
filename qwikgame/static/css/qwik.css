@@ -1,6 +1,7 @@
 root {
   /* --- Colors --- */
   --color-backdrop: #f0f0f0;
+  --color-disabled: #aaaaaa;
   --color-error: #ff0000;
   --color-qwik: #f5a600;
 
@@ -90,7 +91,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 
 .color { color: var(--color-qwik); }
 .cta_desktop { padding: 1em; width: 100% }
-.disabled { border-color: #aaaaaa; color: #aaaaaa }
+.disabled { border-color: var(--color-disabled); color: var(--color-disabled) }
 .errorlist { color: var(--color-error); }
 .head_back { order: 40 }
 .head_fwd { order: 50 }
@@ -185,7 +186,7 @@ div.drop_down.icon div.down { top: 3em; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
 div.drop { width: 100% }
 div.drop_up {}
-div.disabled { border-color: #aaaaaa; color: #aaaaaa }
+div.disabled { border-color: var(--color-disabled); color: var(--color-disabled) }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }

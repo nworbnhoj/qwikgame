@@ -141,7 +141,7 @@ div.banner.xancelled { background-color: yellow; }
 
 .btn.auto { height: auto; width: 100%; }
 
-div.by_day { margin: 2em 0 0 0; }
+div.by_day { margin: 0 0 0 2em; }
 div.chat_bubble { display: flex; background-color: #eeeeee; border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
 div.chat_bubble .row {display: flex; flex-direction: row; gap: 1em; justify-content: space-between; } 
 div.chat_bubble .text {  }
@@ -181,8 +181,8 @@ div.drop { width: 100% }
 div.drop_up {}
 div.disabled { border-color: #aaaaaa; color: #aaaaaa }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
-div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0; width: 100% }
-div.field span.label { text-transform: capitalize; }
+div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
+div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
 div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; width: 100%; }
 div.field.open > *:not(div.label) { max-height: 50em; }
@@ -207,7 +207,8 @@ div.info.push_right .info_text { right: 0; text-align: right;  }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 9em; margin-left: -0.8em; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: #eeeeee; justify-content: flex-start; margin: 0.3em; padding: 0.3em }
-div.field > div.label { background-image: linear-gradient(rgb(240, 240, 240)5px, rgb(255, 255, 255)20px); border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
+div.field:hover { background-color: #eeeeee; }
+div.field > div.label { font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
 div.field > div.label > div { display: flex; flex-direction: row;}
 div.field > div.label p { padding-left: 1em; }
 div.field > div.label div:first-child span { margin-left: 0.3em; }
@@ -231,16 +232,16 @@ div.pillar { align-items: center; display: flex; flex-direction: column; justify
 div.plank { display: flex; flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1em; width: 100% }
 div.pole { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; width: 100% }
 
-div.prompt { background-color: rgb(241, 241, 241); border: 1px solid rgb(240, 240, 240); margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
+div.prompt { background-color: #f0f0f0; border: 1px solid #f0f0f0; box-shadow: 0 0 10px 3px rgba(0,0,0, .10); color: #3b3b3b; margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
 div.prompt.hidden {display: none;}
-div.prompt div { color: rgb(59, 59, 59); flex-shrink: 1; min-width: 0; }
+div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
 div.prompt p.info { color: grey; font-size: 1rem; text-wrap: wrap;}
 div.prompt .identicon svg { height: 4em; }
 div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1em 0 1em 0; padding: 1em 0 1em 2em; }
 div.post { align-items: stretch; display: flex; flex-direction: column; justify-content: start; width: 100% }
-div.radio_block { display: grid; gap: 1em; margin: 0 0 1em 0 }
+div.radio_block { display: grid; gap: 1em; margin: 1em; }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3em; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }
@@ -259,14 +260,16 @@ div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
 div.hidden { display: none }
-fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; position: relative; width: 100%; }
+fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
 fieldset.disabled { background-color: #eeeeee; border: 0px solid #eeeeee; color: #bbbbbb }
+fieldset:hover {  background-color: #eeeeee; }
 fieldset div { display:block; }
-fieldset > div {margin : 9em 0 0 0 ;}
+fieldset > div {margin : 6em 0 0 0 ;}
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
-fieldset span.label { text-transform: capitalize; }
+fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50em; }
-form > div { background-color: #ffffff; margin: 0.5rem 0 0.5rem 0; min-height: 10rem; }
+form > div { background-color: #ffffff; box-shadow: 0 0 10px 3px rgba(0,0,0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
+form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1em 0 0 2em; }
 form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; margin: 0.5em 0; padding: 0 1em; }
@@ -307,7 +310,7 @@ label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-legend { background-image: linear-gradient(rgb(240, 240, 240)5px, rgb(255, 255, 255)20px); border-radius: 0.3rem; font-size: 1.25rem; left: 0px; padding: 2em 2em 0 2em; position: absolute; top: 0px; width: 100%; }
+legend { font-size: 1.25rem; left: 0px; padding: 2em 2em 0 2em; position: absolute; top: 0px; width: 100%; }
 legend > div { display: flex; flex-direction: row; }
 legend div:first-child span { margin-left: 0.3em; }
 legend div:first-child span:last-child { margin-left: auto; }

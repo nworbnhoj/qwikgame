@@ -3,6 +3,7 @@ root {
   --color-active: #e09900;
   --color-backdrop: #f0f0f0;
   --color-disabled-bdr: #cccccc;
+  --color-disabled-bkg: #cccccc;
   --color-disabled-txt: #999999;
   --color-error: #ff0000;
   --color-qwik: #f5a600;
@@ -37,8 +38,8 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.primary { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #333333;  }
 .btn.primary:active { background-color: var(--color-active); border-color: var(--color-active); }
 .btn.primary:has(input:checked) {}
-.btn.primary:has(input:disabled) {background-color: #cccccc; border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt); cursor: default; }
-.btn.primary:disabled { background-color: #cccccc; border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt);}
+.btn.primary:has(input:disabled) {background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt); cursor: default; }
+.btn.primary:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr);; color: var(--color-disabled-txt);}
 
 .btn.secondary { border-color: #333333; color: #333333; }
 .btn.secondary:active { border-color: #c6d2e6 }
@@ -57,7 +58,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special1:active { background-color: var(--color-active); border-color: var(--color-active);  color: #ffffff }
 .btn.special1:has(input:checked) {}
 .btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: #cccccc; }
-.btn.special1:disabled { background-color: #cccccc; border-color: var(--color-disabled-bdr); }
+.btn.special1:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); }
 
 .btn.special2 { border-color: var(--color-backdrop); color: #333333; flex: 0 1 auto; margin: 0px; padding: 0.5em 0.5em; position: relative; text-decoration: none; }
 .btn.special2:active { background-color: #c6d2e6; border-color: c6d2e6; }

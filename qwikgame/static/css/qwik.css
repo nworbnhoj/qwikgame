@@ -1,5 +1,6 @@
 root {
   /* --- Colors --- */
+  --color-error: #ff0000;
   --color-qwik: #f5a600;
 
 }
@@ -89,7 +90,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .color { color: var(--color-qwik); }
 .cta_desktop { padding: 1em; width: 100% }
 .disabled { border-color: #aaaaaa; color: #aaaaaa }
-.errorlist { color: red; }
+.errorlist { color: var(--color-error); }
 .head_back { order: 40 }
 .head_fwd { order: 50 }
 .head_icon { order: 10 }

@@ -13,6 +13,7 @@
   --color-grey-3: #333333;
   --color-grey-c: #cccccc;
   --color-qwik: #f5a600;
+  --color-qwik-dn: #d8dfed;
   --color-qwik-up: #ffb10a;
 
 }
@@ -78,11 +79,11 @@ label.btn:has( input[type=radio])::before { content: none; }
 
 @media (hover: hover) {
   .btn.primary:hover { background-color: var(--color-qwik-up); border-color: var(--color-qwik-up); }
-  .btn.secondary:hover { background-color: #d8dfed; border-color: var(--color-grey-3); }
+  .btn.secondary:hover { background-color: var(--color-qwik-dn); border-color: var(--color-grey-3); }
   .btn.secondary:hover:has(input:disabled) { background-color: var(--color-disabled-bkg); }
   .btn.tertiary:hover { font-weight: bold; }
   .btn.special1:hover { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #ffffff }
-  .btn.special2:hover { background-color: #d8dfed; border-color: #d8dfed; }
+  .btn.special2:hover { background-color: var(--color-qwik-dn); border-color: var(--color-qwik-dn); }
 }
 
 .btn.hour { height: 3em; width: 3em; }

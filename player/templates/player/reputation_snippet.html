@@ -1,0 +1,12 @@
+<!-- qwikgame/player/templates/player/reputation_snippet.html -->
+{% load i18n %}
+<div class="grid_2_col">
+    <div>
+        <h4>{% translate "Your QWIKGAME reputation" %}</h4>
+        <p class="hidden">
+            {% translate "Based on feedback given by your rivals." %}
+        </p>
+    </div>
+{% include 'player/conduct_stars_snippet.html' with stars=player.conduct_stars %}
+</div>
+{{ player_form }}

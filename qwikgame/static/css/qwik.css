@@ -13,6 +13,7 @@
   --color-grey-3: #333333;
   --color-grey-c: #cccccc;
   --color-qwik: #f5a600;
+  --color-qwik-up: #ffb10a;
 
 }
 * { border-radius: 0.3rem; }
@@ -76,7 +77,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special2 .identicon { height: 2.6em; width: 2.6em; }
 
 @media (hover: hover) {
-  .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
+  .btn.primary:hover { background-color: var(--color-qwik-up); border-color: var(--color-qwik-up); }
   .btn.secondary:hover { background-color: #d8dfed; border-color: var(--color-grey-3); }
   .btn.secondary:hover:has(input:disabled) { background-color: var(--color-disabled-bkg); }
   .btn.tertiary:hover { font-weight: bold; }

@@ -8,6 +8,7 @@
   --color-disabled-bkg: #cccccc;
   --color-disabled-txt: #999999;
   --color-error: #ff0000;
+  --color-grey-3: #333333;
   --color-qwik: #f5a600;
 
 }
@@ -37,13 +38,13 @@ label:has( input[type=radio]:checked)::before { content: "\2022";  background-co
 label.btn:has( input[type=checkbox])::before { content: none; }
 label.btn:has( input[type=radio])::before { content: none; }
 
-.btn.primary { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #333333;  }
+.btn.primary { background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-grey-3);  }
 .btn.primary:active { background-color: var(--color-active-1); border-color: var(--color-active-1); }
 .btn.primary:has(input:checked) {}
 .btn.primary:has(input:disabled) {background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); cursor: default; }
 .btn.primary:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
 
-.btn.secondary { border-color: #333333; color: #333333; }
+.btn.secondary { border-color: var(--color-grey-3); color: var(--color-grey-3); }
 .btn.secondary:active { border-color: var(--color-active-2) }
 .btn.secondary:disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.secondary:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked); box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
@@ -62,7 +63,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.special1:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); }
 
-.btn.special2 { border-color: var(--color-backdrop); color: #333333; flex: 0 1 auto; margin: 0px; padding: 0.5em 0.5em; position: relative; text-decoration: none; }
+.btn.special2 { border-color: var(--color-backdrop); color: var(--color-grey-3); flex: 0 1 auto; margin: 0px; padding: 0.5em 0.5em; position: relative; text-decoration: none; }
 .btn.special2:active { background-color: var(--color-active-2); border-color: var(--color-active-2); }
 .btn.special2:has(i:only-child) { aspect-ratio: 1; flex: 0 0 auto; }
 .btn.special2:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked) }
@@ -73,7 +74,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 
 @media (hover: hover) {
   .btn.primary:hover { background-color: #ffb10a; border-color: #ffb10a; }
-  .btn.secondary:hover { background-color: #d8dfed; border-color: #333333; }
+  .btn.secondary:hover { background-color: #d8dfed; border-color: var(--color-grey-3); }
   .btn.secondary:hover:has(input:disabled) { background-color: var(--color-disabled-bkg); }
   .btn.tertiary:hover { font-weight: bold; }
   .btn.special1:hover { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #ffffff }
@@ -329,9 +330,9 @@ legend p { padding-left: 1em; }
 ol { list-style: decimal; padding-left: 2em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }
-p.large { color: #666666; font-size: large }
+p.large { color: var(--color-grey-3); font-size: large }
 p.line { line-height: 1.6em; margin: 0em; max-height: 1.6em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-p.small { color: #666666; font-size: small }
+p.small { color: var(--color-grey-3); font-size: small }
 select { display: block; font-size: 1.13em; height: 3em; width: 100% }
 span.brick { display: inline-block; white-space: nowrap; width: auto; }
 span.chat_show { }

@@ -399,7 +399,7 @@ class Strength(models.Model):
         'w': _('weaker'),
         'm': _('matched'),
         's': _('stronger'),
-        'S': _('much-stonger')
+        'S': _('much-stronger')
     }
     SCALEZ = SCALE | {'z': 'unknown' }
     KEY = list(SCALE.keys())

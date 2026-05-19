@@ -215,7 +215,7 @@ class KeenForm(QwikForm):
         self.fields['friends'] = MultipleChoiceField(
             choices = choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
-            label=_('notify friend by emailL'),
+            label=_('notify friend by email'),
             required = False,
             template_name='field.html', 
             widget = CheckboxSelectMultiple,

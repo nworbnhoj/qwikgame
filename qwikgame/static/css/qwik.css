@@ -15,6 +15,7 @@
   --color-qwik: #f5a600;
   --color-qwik-dn: #d8dfed;
   --color-qwik-up: #ffb10a;
+  --color-stencil: white;
 
 }
 * { border-radius: 0.3rem; }
@@ -63,7 +64,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 
 .btn.special1 { border-color: var(--color-qwik); color: var(--color-qwik); font-weight: bold; }
 .btn.special1.mobile { border-radius: 50%; bottom: 4em; height: 6em; position: fixed; right: 2em; width: 6em;  z-index: 10; }
-.btn.special1:active { background-color: var(--color-active-1); border-color: var(--color-active-1);  color: #ffffff }
+.btn.special1:active { background-color: var(--color-active-1); border-color: var(--color-active-1);  color: var(--color-stencil) }
 .btn.special1:has(input:checked) {}
 .btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.special1:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); }
@@ -82,7 +83,7 @@ label.btn:has( input[type=radio])::before { content: none; }
   .btn.secondary:hover { background-color: var(--color-qwik-dn); border-color: var(--color-grey-3); }
   .btn.secondary:hover:has(input:disabled) { background-color: var(--color-disabled-bkg); }
   .btn.tertiary:hover { font-weight: bold; }
-  .btn.special1:hover { background-color: var(--color-qwik); border-color: var(--color-qwik); color: #ffffff }
+  .btn.special1:hover { background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-stencil) }
   .btn.special2:hover { background-color: var(--color-qwik-dn); border-color: var(--color-qwik-dn); }
 }
 
@@ -142,7 +143,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .push_right { margin-left: auto }
 .round { aspect-ratio: 1/1; border-radius: 50%;}
 .selected { color: var(--color-qwik); }
-.stripes { background: repeating-linear-gradient(45deg, var(--color-qwik), var(--color-qwik), 2px, #ffffff 3px, #ffffff 10px); }
+.stripes { background: repeating-linear-gradient(45deg, var(--color-qwik), var(--color-qwik), 2px, var(--color-stencil) 3px, var(--color-stencil) 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1em; justify-content: center; }
@@ -285,7 +286,7 @@ fieldset > div {margin : 6em 0 0 0 ;}
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50em; }
-form > div { background-color: #ffffff; box-shadow: 0 0 10px 3px rgba(0,0,0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
+form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0,0,0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
 form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1em 0 0 2em; }
 form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
@@ -318,7 +319,7 @@ label.option div.btn { height: 1em }
 label.option:has( input[type=checkbox])::before { content: none; }
 label.option:has( input[type=checkbox]:checked) { display: none; }
 label.option:has(input:checked) { color: var(--color-qwik); }
-label.reveal { border-color: #ffffff; margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
+label.reveal { border-color: var(--color-stencil); margin: 3em 0 0 0; padding: 1em 1em 1em 0em;}
 label.reveal > input { display: none; }
 label.reveal:active { box-shadow: none; transform: none;  }
 label.reveal:has(input) ~ div { display: none; }

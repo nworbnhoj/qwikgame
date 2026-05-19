@@ -3,6 +3,7 @@ root {
   --color-active-1: #e09900;
   --color-active-2: #c6d2e6;
   --color-backdrop: #f0f0f0;
+  --color-checked: #d8dfed;
   --color-disabled-bdr: #cccccc;
   --color-disabled-bkg: #cccccc;
   --color-disabled-txt: #999999;
@@ -45,7 +46,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.secondary { border-color: #333333; color: #333333; }
 .btn.secondary:active { border-color: var(--color-active-2) }
 .btn.secondary:disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
-.btn.secondary:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed; box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
+.btn.secondary:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked); box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn.secondary:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
 
 .btn.tertiary { align-content: center; border-color: var(--color-backdrop); color: #2b78e4; display: block; min-height: 2em; padding: 0.3em; text-decoration: underline; }
@@ -64,9 +65,9 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special2 { border-color: var(--color-backdrop); color: #333333; flex: 0 1 auto; margin: 0px; padding: 0.5em 0.5em; position: relative; text-decoration: none; }
 .btn.special2:active { background-color: var(--color-active-2); border-color: var(--color-active-2); }
 .btn.special2:has(i:only-child) { aspect-ratio: 1; flex: 0 0 auto; }
-.btn.special2:has(input:checked) { background-color: #d8dfed; border-color: #d8dfed }
+.btn.special2:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked) }
 .btn.special2:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
-.btn.special2.selected { background-color: #d8dfed; border-color: #d8dfed; font-weight: bold; }
+.btn.special2.selected { background-color: var(--color-checked); border-color: var(--color-checked); font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1em;}
 .btn.special2 .identicon { height: 2.6em; width: 2.6em; }
 

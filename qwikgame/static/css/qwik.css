@@ -154,7 +154,7 @@ div { }
 div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center; z-index: 20; }
 div.banner.active { background-color: var(--color-qwik); }
-div.banner.complete { background-color: lightgrey; }
+div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
 
 .btn.auto { height: auto; width: 100%; }
@@ -253,7 +253,7 @@ div.pole { align-items: start; display: flex; flex: auto; flex-direction: column
 div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); box-shadow: 0 0 10px 3px rgba(0,0,0, .10); color: #3b3b3b; margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
 div.prompt.hidden {display: none;}
 div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
-div.prompt p.info { color: grey; font-size: 1rem; text-wrap: wrap;}
+div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap;}
 div.prompt .identicon svg { height: 4em; }
 div.range_options { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; padding: 1em 0 0 0 ; width: 100% }
 div.range_options .option { text-align: center }

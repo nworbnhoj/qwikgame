@@ -4,6 +4,7 @@
   --color-active-2: #c6d2e6;
   --color-alert: yellow;
   --color-backdrop: #f0f0f0;
+  --color-blue: #2b78e4;
   --color-checked: #d8dfed;
   --color-disabled-bdr: #cccccc;
   --color-disabled-bkg: #cccccc;
@@ -19,12 +20,12 @@
 /* Over-ride std checkbox */
 input[type=checkbox] { display:none; }
 label:has( input[type=checkbox])::before { content: ''; border: 1px solid var(--color-grey-c); color: #f3f3f3; display: inline-block; font-size: 1.8em;  height: 1.2em; line-height: 1em;  margin: .2em .4em .2em 0; text-align: center; vertical-align: middle; width: 1.2em; }
-label:has( input[type=checkbox]:checked)::before { background-color: #2b78e4; content: "\2713"; }
+label:has( input[type=checkbox]:checked)::before { background-color: var(--color-blue); content: "\2713"; }
 
 /* Over-ride std radio */
 input[type=radio] { display:none; }
 label:has( input[type=radio])::before { content: ''; border: 1px solid var(--color-grey-c); border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em;  height: 1.2em; line-height: 1em; margin: .2em .4em .2em 0;  text-align: center; width: 1.2em;   vertical-align: middle; }
-label:has( input[type=radio]:checked)::before { content: "\2022";  background-color: #2b78e4; content: "\2713"; }
+label:has( input[type=radio]:checked)::before { content: "\2022";  background-color: var(--color-blue); content: "\2713"; }
 
 .align_center { align-self: center }
 .align_end { justify-content: end; }
@@ -52,7 +53,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.secondary:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked); box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn.secondary:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
 
-.btn.tertiary { align-content: center; border-color: var(--color-backdrop); color: #2b78e4; display: block; min-height: 2em; padding: 0.3em; text-decoration: underline; }
+.btn.tertiary { align-content: center; border-color: var(--color-backdrop); color: var(--color-blue); display: block; min-height: 2em; padding: 0.3em; text-decoration: underline; }
 .btn.tertiary.menu { text-decoration: none; }
 .btn.tertiary:active { background-color: var(--color-active-2); border-color: var(--color-active-2); }
 .btn.tertiary:has(input:checked) {}
@@ -71,7 +72,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .btn.special2:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked) }
 .btn.special2:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt);}
 .btn.special2.selected { background-color: var(--color-checked); border-color: var(--color-checked); font-weight: bold; }
-.btn.special2 .dot { aspect-ratio: 1; background-color: DeepSkyBlue; border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1em;}
+.btn.special2 .dot { aspect-ratio: 1; background-color: var(--color-blue); border-radius: 50%;  justify-content: center; position: absolute; right: 0em; top: 0em; width: 1em;}
 .btn.special2 .identicon { height: 2.6em; width: 2.6em; }
 
 @media (hover: hover) {
@@ -141,7 +142,7 @@ label.btn:has( input[type=radio])::before { content: none; }
 .selected { color: var(--color-qwik); }
 .stripes { background: repeating-linear-gradient(45deg, var(--color-qwik), var(--color-qwik), 2px, #ffffff 3px, #ffffff 10px); }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
-.todo { display: none; border: 3px dotted SkyBlue }
+.todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1em; justify-content: center; }
 a.btn {position: relative;}
 a:has(input:disabled) { pointer-events: none; }
@@ -268,7 +269,7 @@ div.tab_area div.areas div.area { width: 100%;}
 div.tabs { z-index: 1 }
 div.tabs div.tab { float: left; border: none; outline: none; padding: 14px 16px; transition: 0.3s; }
 div.tabs div.tab.active { background-color: white; border: 1px solid black; border-bottom: none; position: relative; right: 1px; top: 4px; z-index: 1 }
-div.todo { display: none; border: 3px dotted SkyBlue }
+div.todo { display: none; border: 3px dotted var(--color-blue) }
 div.qwikgame { align-items: center; display: flex; flex-direction: row; font-size: 30px; font-family: AstroSpace; padding: 1em; }
 div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }

@@ -75,19 +75,18 @@ label:has(input[type=checkbox]:checked)::before { color: var(--color-qwik); cont
 input[type=radio] { display: none; }
 label:has(input[type=radio])::before { content: ''; border: 1px solid var(--color-grey-c); border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2em; height: 1.2em; line-height: 1em; margin: .2em .4em .2em 0; text-align: center; width: 1.2em; vertical-align: middle; }
 label:has(input[type=radio]:checked)::before { content: "\2022"; color: var(--color-qwik); content: "\2714"; }
-.align_center { align-self: center }
-.align_end { justify-content: end; }
-.align_start { align-self: flex-start }
+
+/* --- Buttons --- */
 .btn { align-items: center; border: 1px solid; border-radius: var(--dim-ease); color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis; }
+
+/* hide custom checkbox/radio behaviour for label.btn (used extensively) */
+label.btn:has(input[type=checkbox])::before { content: none; }
+label.btn:has(input[type=radio])::before { content: none; }
 
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) { box-shadow: none; transform: none; }
 .btn:has(input.hidden) { display: none }
-
-/* hide custom checkbox/radio behaviour for label.btn (used extensively) */
-label.btn:has(input[type=checkbox])::before { content: none; }
-label.btn:has(input[type=radio])::before { content: none; }
 .btn.primary { background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-grey-3); }
 .btn.primary:active { background-color: var(--color-active-1); border-color: var(--color-active-1); }
 .btn.primary:has(input:checked) { }
@@ -125,6 +124,7 @@ label.btn:has(input[type=radio])::before { content: none; }
   .btn.special1:hover { background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-stencil) }
   .btn.special2:hover { background-color: var(--color-qwik-dn); border-color: var(--color-qwik-dn); }
 }
+.btn.auto { height: auto; width: 100%; }
 .btn.hour { height: 3em; width: 3em; }
 .btn.large { font-size: 1.13em; }
 .btn.loader { color: transparent; }
@@ -135,6 +135,11 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.tiny { height: 1em; padding: 0.8em; min-height: 1em; width: 1em; }
 .btn.replicate { background-color: var(--color-backdrop); border-radius: 50%; border-width: 0; color: var(--color-qwik); height: 3em; padding: 0.3em; width: 3em; }
 .btn.sml { height: 1.5em; width: 1.5em; }
+a.btn { position: relative; }
+a:has(input:disabled) { pointer-events: none; }
+.align_center { align-self: center }
+.align_end { justify-content: end; }
+.align_start { align-self: flex-start }
 .color { color: var(--color-qwik); }
 .cta_desktop { padding: 1em; width: 100% }
 .disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
@@ -170,14 +175,11 @@ label.btn:has(input[type=radio])::before { content: none; }
 .sml { height: 1.5em; min-height: 0; min-width: 0; width: 1.5em; }
 .todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1em; justify-content: center; }
-a.btn { position: relative; }
-a:has(input:disabled) { pointer-events: none; }
 div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center; z-index: 20; }
 div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
-.btn.auto { height: auto; width: 100%; }
 div.by_day { margin: 0 0 0 2em; }
 div.chat_bubble { display: flex; background-color: var(--color-backdrop); border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
 div.chat_bubble .row { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; }

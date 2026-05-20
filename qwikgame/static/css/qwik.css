@@ -1,6 +1,10 @@
+/* --- Overall --- */
 :root {  /* --- Colors --- */
 --color-active-1:#e09900; --color-active-2:#c6d2e6; --color-alert: yellow; --color-backdrop: #f0f0f0; --color-blue: #2b78e4; --color-checked: #d8dfed; --color-disabled-bdr: #cccccc; --color-disabled-bkg: #cccccc; --color-disabled-txt: #999999; --color-error: #ff0000; --color-grey-3:#333333; --color-grey-c: #cccccc; --color-qwik: #f5a600; --color-qwik-dn: #d8dfed; --color-qwik-up: #ffb10a; --color-stencil: white;  /* --- Dimensions --- */ --dim-ease: 0.3rem; }
 * { }
+html { height: 100%; }
+body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
+div { }
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display: none; }
@@ -108,8 +112,6 @@ label.btn:has(input[type=radio])::before { content: none; }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1em; justify-content: center; }
 a.btn { position: relative; }
 a:has(input:disabled) { pointer-events: none; }
-body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
-div { }
 div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
 div.banner { align-items: center; display: flex; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4em; margin: 0 -1em 0 -1em; padding: 1em; text-align: center; z-index: 20; }
 div.banner.active { background-color: var(--color-qwik); }
@@ -256,7 +258,6 @@ h4 span.caption { align-self: flex-start; font-size: 0.8em; margin-left: 3em }
 h5 { align-items: center; color: black; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; padding: 0 1em; }
 h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: var(--color-backdrop); border-width: 1px; margin: 0.3em 0 0.3em 0; width: 99% }
-html { height: 100%; }
 img.logo { display: block; height: 2.54em; padding: 0.1em }
 input[type=checkbox] { margin: 0em 1em 0em 1em; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }

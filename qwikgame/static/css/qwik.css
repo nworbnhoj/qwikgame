@@ -6,6 +6,54 @@ html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
 div { }
 
+
+/* --- Forms --- */
+form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
+form > div:last-child { background-color: inherit; box-shadow: none; }
+form label:has(input) { margin: 1em 0 0 2em; }
+form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
+div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
+div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
+div.field span.label { font-weight: bold; text-transform: capitalize; }
+div.field.naked { padding: 0 }
+div.field:hover { background-color: var(--color-backdrop); }
+div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+div.field > div.label { font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
+div.field > div.label > div { display: flex; flex-direction: row; }
+div.field > div.label p { padding-left: 1em; }
+div.field > div.label div:first-child span { margin-left: 0.3em; }
+div.field > div.label div:first-child span:last-child { margin-left: auto; }
+div.field.open > *:not(div.label) { max-height: 50em; }
+fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
+fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
+fieldset:hover { background-color: var(--color-backdrop); }
+fieldset div { display: block; }
+fieldset > div { margin: 6em 0 0 0; }
+fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+fieldset span.label { font-weight: bold; text-transform: capitalize; }
+fieldset.open > *:not(div.label) { max-height: 50em; }
+label p { flex: auto; }
+label.hidden { display: none }
+label.large { border: 1px solid var(--color-backdrop); padding: 1em; width: 100% }
+label.option { display: flex; align-items: center; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
+label.option div.btn { height: 1em }
+label.option:has(input[type=checkbox])::before { content: none; }
+label.option:has(input[type=checkbox]:checked) { display: none; }
+label.option:has(input:checked) { color: var(--color-qwik); }
+label.reveal { border-color: var(--color-stencil); margin: 3em 0 0 0; padding: 1em 1em 1em 0em; }
+label.reveal > input { display: none; }
+label.reveal:active { box-shadow: none; transform: none; }
+label.reveal:has(input) ~ div { display: none; }
+label.reveal:has(input:checked) ~ div { display: flex; }
+label.reveal { display: inline-block; }
+label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
+label.switch input { display: none }
+label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
+legend { font-size: 1.25rem; left: 0px; padding: 2em 2em 0 2em; position: absolute; top: 0px; width: 100%; }
+legend > div { display: flex; flex-direction: row; }
+legend div:first-child span { margin-left: 0.3em; }
+legend div:first-child span:last-child { margin-left: auto; }
+legend p { padding-left: 1em; }
 /* Over-ride std checkbox */
 input[type=checkbox] { display: none; }
 label:has(input[type=checkbox])::before { content: ''; border: 1px solid var(--color-grey-c); color: #f3f3f3; display: inline-block; font-size: 1.8em; height: 1.2em; line-height: 1em; margin: .2em .4em .2em 0; text-align: center; vertical-align: middle; width: 1.2em; }
@@ -158,12 +206,6 @@ div.drop { width: 100% }
 div.drop_up { }
 div.disabled { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.fat { transform: scaleX(1.6); padding: 0 0.2em 0 0.2em }
-div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
-div.field span.label { font-weight: bold; text-transform: capitalize; }
-div.field.naked { padding: 0 }
-div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; width: 100%; }
-div.field.open > *:not(div.label) { max-height: 50em; }
-div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1em; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; justify-items: center; margin: 0.3em; padding: 1em 0 0 0; width: 100% }
@@ -184,12 +226,6 @@ div.info.push_right .info_text { right: 0; text-align: right; }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 9em; margin-left: -0.8em; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: var(--color-backdrop); justify-content: flex-start; margin: 0.3em; padding: 0.3em }
-div.field:hover { background-color: var(--color-backdrop); }
-div.field > div.label { font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
-div.field > div.label > div { display: flex; flex-direction: row; }
-div.field > div.label p { padding-left: 1em; }
-div.field > div.label div:first-child span { margin-left: 0.3em; }
-div.field > div.label div:first-child span:last-child { margin-left: auto; }
 div.line { line-height: 1.6em; margin: 0em; overflow: hidden; padding-left: 0.5em; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
 div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
@@ -236,18 +272,6 @@ div.slide_labels { gap: 1em; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }
 div.upgrade { border: 1px solid black; padding: 1em }
 div.hidden { display: none }
-fieldset { background-color: inherit; border: 0px solid white; display: flex; flex-direction: column; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
-fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
-fieldset:hover { background-color: var(--color-backdrop); }
-fieldset div { display: block; }
-fieldset > div { margin: 6em 0 0 0; }
-fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
-fieldset span.label { font-weight: bold; text-transform: capitalize; }
-fieldset.open > *:not(div.label) { max-height: 50em; }
-form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
-form > div:last-child { background-color: inherit; box-shadow: none; }
-form label:has(input) { margin: 1em 0 0 2em; }
-form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
 h1 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 3em; font-family: AstroSpace; justify-content: center; line-height: 1.4em; margin: 0.5em 0; padding: 0 1em; }
 h2 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; text-align: left; margin: 0.3em; overflow: hidden; width: 100% }
 h3 { align-items: center; color: black; display: flex; flex-direction: row; font-size: 1.13em; justify-content: start; gap: 1em; margin: 3em 0 1em 0; overflow: hidden; text-align: left; }
@@ -268,28 +292,6 @@ input[type=range] {accent-color: var(--color-qwik); display: flex; flex: 1 1 100
 input.btn { position: relative; }
 input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
 input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }
-label p { flex: auto; }
-label.hidden { display: none }
-label.large { border: 1px solid var(--color-backdrop); padding: 1em; width: 100% }
-label.option { display: flex; align-items: center; gap: 1em; padding: 0.3em 0 0.3em 0; text-align: center }
-label.option div.btn { height: 1em }
-label.option:has(input[type=checkbox])::before { content: none; }
-label.option:has(input[type=checkbox]:checked) { display: none; }
-label.option:has(input:checked) { color: var(--color-qwik); }
-label.reveal { border-color: var(--color-stencil); margin: 3em 0 0 0; padding: 1em 1em 1em 0em; }
-label.reveal > input { display: none; }
-label.reveal:active { box-shadow: none; transform: none; }
-label.reveal:has(input) ~ div { display: none; }
-label.reveal:has(input:checked) ~ div { display: flex; }
-label.reveal { display: inline-block; }
-label.switch { display: inline-block; height: 2.6em; margin-right: 3em; position: relative; width: 4em }
-label.switch input { display: none }
-label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-legend { font-size: 1.25rem; left: 0px; padding: 2em 2em 0 2em; position: absolute; top: 0px; width: 100%; }
-legend > div { display: flex; flex-direction: row; }
-legend div:first-child span { margin-left: 0.3em; }
-legend div:first-child span:last-child { margin-left: auto; }
-legend p { padding-left: 1em; }
 ol { list-style: decimal; padding-left: 2em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }

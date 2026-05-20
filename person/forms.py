@@ -6,10 +6,8 @@ from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block,
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
+from qwikgame.widgets import CheckboxList
 
-class CheckboxList(CheckboxSelectMultiple):
-    template_name = "checkbox_list.html"
-    option_template_name = "option_delete.html"
 
 class BlockForm(QwikForm):
     block = IntegerField(

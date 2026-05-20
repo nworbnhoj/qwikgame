@@ -16,6 +16,11 @@ class ActionMultiple(CheckboxSelectMultiple):
     attrs = {"class": "down left hidden"}
     use_fieldset=False
 
+    
+class CheckboxList(CheckboxSelectMultiple):
+    template_name = "checkbox_list.html"
+    option_template_name = "option_delete.html"
+
 
 class DayInputMulti(CheckboxSelectMultiple):
     option_template_name = 'input_hour.html'

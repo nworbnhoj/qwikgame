@@ -54,6 +54,18 @@ legend > div { display: flex; flex-direction: row; }
 legend div:first-child span { margin-left: 0.3em; }
 legend div:first-child span:last-child { margin-left: auto; }
 legend p { padding-left: 1em; }
+
+/* --- Inputs --- */
+input[type=checkbox] { margin: 0em 1em 0em 1em; }
+input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
+input[type=text] { flex: 1 1 auto; font-size: inherit }
+input:checked + .slider { background-color: #66bb6a; }
+input:checked + .slider:before { transform: translateX(3em); }
+input[type=range] { accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
+input.btn { position: relative; }
+input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
+input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }
+
 /* Over-ride std checkbox */
 input[type=checkbox] { display: none; }
 label:has(input[type=checkbox])::before { content: ''; border: 1px solid var(--color-grey-c); color: #f3f3f3; display: inline-block; font-size: 1.8em; height: 1.2em; line-height: 1em; margin: .2em .4em .2em 0; text-align: center; vertical-align: middle; width: 1.2em; }
@@ -283,15 +295,6 @@ h5 { align-items: center; color: black; font-size: 3em; font-family: AstroSpace;
 h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: var(--color-backdrop); border-width: 1px; margin: 0.3em 0 0.3em 0; width: 99% }
 img.logo { display: block; height: 2.54em; padding: 0.1em }
-input[type=checkbox] { margin: 0em 1em 0em 1em; }
-input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3em; justify-content: center; text-align: center }
-input[type=text] { flex: 1 1 auto; font-size: inherit }
-input:checked + .slider { background-color: #66bb6a; }
-input:checked + .slider:before { transform: translateX(3em); }
-input[type=range] {accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
-input.btn { position: relative; }
-input.strength { display: flex; flex: 1 1 100%; height: 2em; margin: 1em 0 1em 0; width: 100% }
-input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }
 ol { list-style: decimal; padding-left: 2em; }
 p { margin: 0em; padding: 0.3em; text-align: left }
 p.bold { font-weight: bold }

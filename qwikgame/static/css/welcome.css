@@ -1,4 +1,5 @@
 /************COMMON***************/
+:root { --dim-ease: 0.3rem; }
 body { display: flex; flex-direction: column; height: 100%; }
 button { font-family: Arial; }
 html { height: 100%; }
@@ -42,7 +43,7 @@ header { background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 
 /************GridCardContainer***************/
 .card { align-items: center; backdrop-filter: blur (30px); background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 0.3rem; color: rgb(23, 23, 23); display: flex; flex-direction: column; justify-content: center; padding: 1em; /*background needs to have some degree of transparency to have the blur effect working*/ }
 .card:hover { background: rgba(255, 255, 255, 0.5); border: 2px solid rgba(255, 255, 255, 1); scale: 1.09; transition: 0.2s ease; }
-.card_button { background: rgb(255, 255, 255); border: 1px solid white; border-radius: 0.3em; color: #262626; font-size: 1rem; font-weight: 600; margin-top: 2em; padding: 0.8em 2.4em; transition: 0.1s ease; }
+.card_button { background: rgb(255, 255, 255); border: 1px solid white; border-radius: var(--dim-ease); color: #262626; font-size: 1rem; font-weight: 600; margin-top: 2em; padding: 0.8em 2.4em; transition: 0.1s ease; }
 .card_button:hover { background-color: #f5a600; border: 1px solid #f5a600; color: white; cursor: pointer; }
 .gridcontainer { background-color: #f5a600; display: grid; gap: 2em; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); justify-content: center; padding: 5em 5em; /*1fr seems to be 1fr from the SCREEN and if there is a margin btw the screen and the end of the gridcontainer, then the grid boxes still go OVER the end of the grid container. So we have no margin, 1fr is regarding the entire screen, not the Parent Container*/ }
 .image { border: 3px solid white; border-radius: 3rem; height: 150px; width: 150px; margin-top: 1em; margin-bottom: 2em; padding: 0.5em; }
@@ -77,7 +78,7 @@ header { background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 
 
 /* https://www.codegenes.net/blog/show-hide-div-on-click-with-css/ */
 .toggle-input { border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
-.toggle-trigger.faq { background-color: white; border: 0.01rem solid #8a8a8a; border-radius: 0.3rem; border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-family: "Arial"; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
+.toggle-trigger.faq { background-color: white; border: 0.01rem solid #8a8a8a; border-radius: var(--dim-ease); border-width: 1px; color: rgb(0, 0, 0); cursor: pointer; font-family: "Arial"; font-size: 1.25rem; font-weight: 550; padding: 1.5rem; text-align: left; width: 100%; }
 .toggle-trigger:hover {/*background-color: #f5a600;*/scale: 1.05; }
 .toggle-content { display: none; font-size: 1.25rem; overflow: hidden; padding-bottom: 2rem; padding-left: 2rem; text-align: left; width: 90%; }
 .toggle-input:checked + .toggle-content { display: block; }
@@ -89,7 +90,7 @@ header { background-image: linear-gradient(rgb(255, 255, 255)80%, rgb(230, 230, 
 .questions { display: flex; flex-direction: column; gap: 1em; margin: 5em auto; width: 50%; }
 
 /***************************FOOTER ***************************/
-.column1 { background-color: white; border: none; border-radius: 0.3rem; padding: 3em; text-align: center; width: 50%; }
+.column1 { background-color: white; border: none; border-radius: var(--dim-ease); padding: 3em; text-align: center; width: 50%; }
 .column2 { align-items: center; }
 .footer { background-color: #f5a600; margin-top: 5em; padding-top: 5em; }
 .footer_link { text-decoration: none; }

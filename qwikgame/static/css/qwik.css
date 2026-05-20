@@ -1,6 +1,6 @@
 :root {  /* --- Colors --- */
---color-active-1:#e09900; --color-active-2:#c6d2e6; --color-alert: yellow; --color-backdrop: #f0f0f0; --color-blue: #2b78e4; --color-checked: #d8dfed; --color-disabled-bdr: #cccccc; --color-disabled-bkg: #cccccc; --color-disabled-txt: #999999; --color-error: #ff0000; --color-grey-3:#333333; --color-grey-c: #cccccc; --color-qwik: #f5a600; --color-qwik-dn: #d8dfed; --color-qwik-up: #ffb10a; --color-stencil: white; }
-* { border-radius: 0.3rem; }
+--color-active-1:#e09900; --color-active-2:#c6d2e6; --color-alert: yellow; --color-backdrop: #f0f0f0; --color-blue: #2b78e4; --color-checked: #d8dfed; --color-disabled-bdr: #cccccc; --color-disabled-bkg: #cccccc; --color-disabled-txt: #999999; --color-error: #ff0000; --color-grey-3:#333333; --color-grey-c: #cccccc; --color-qwik: #f5a600; --color-qwik-dn: #d8dfed; --color-qwik-up: #ffb10a; --color-stencil: white;  /* --- Dimensions --- */ --dim-ease: 0.3rem; }
+* { }
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display: none; }
@@ -14,7 +14,7 @@ label:has(input[type=radio]:checked)::before { content: "\2022"; color: var(--co
 .align_center { align-self: center }
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }
-.btn { align-items: center; border: 1px solid; color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis; }
+.btn { align-items: center; border: 1px solid; border-radius: var(--dim-ease); color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3em; justify-content: center; margin: 0.3em; min-height: 3em; padding: 1.25em 1.5em; text-decoration: none; text-overflow: ellipsis; }
 
 /*.btn:focus { outline: 0.2em solid #fffb00; }*/
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
@@ -169,7 +169,7 @@ div.head { display: flex; flex: auto; flex-direction: column; padding: 0 1em 0 1
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3em, max-content)); justify-content: left; width: 90% }
 div.hrs { border: 1px solid black; height: 2em; justify-content: center }
 div.hrs.apm { background-color: var(--color-backdrop); border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
-div.icon { align-content: center; border: 0px solid black; display: block; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
+div.icon { align-content: center; border-radius: var(--dim-ease); border: 0px solid black; display: block; flex: 0 0 auto; height: 3em; justify-content: center; width: 2em }
 div.icon.badge { border: 0.2em solid var(--color-qwik); color: var(--color-qwik); border-radius: 50%; height: 2.5em; padding: 0.3em; width: 2.5em; }
 div.icon.info { border-width: 0.3em; border-radius: 50%; padding: 0.3em }
 div.icon.medium { height: 3em; width: 3em }
@@ -177,7 +177,7 @@ div.icon.small { border-width: 0.2em; height: 2em; width: 2em }
 div.icon.tiny { border-width: 0.1em; height: 1em; width: 1em }
 div.icon .btn.drop { justify-content: center; }
 div.info { position: relative }
-div.info .info_text { background-color: white; border: 1px solid black; font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -9em; text-align: left; top: 150%; width: 20em; z-index: 2 }
+div.info .info_text { background-color: white; border: 1px solid black; border-radius: var(--dim-ease); font-size: 0.8em; justify-content: center; opacity: 1; padding: 0.3em; position: absolute; right: -9em; text-align: left; top: 150%; width: 20em; z-index: 2 }
 div.info.push_right .info_text { right: 0; text-align: right; }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8em; bottom: 100%; content: " "; position: absolute; right: 9em; margin-left: -0.8em; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
@@ -201,12 +201,12 @@ div.log_entry.match { }
 div.logo { font-size: 1.27em; font-family: AstroSpace; font-weight: bold; padding: 0.1em; }
 div.nextup { align-items: center; display: flex; flex: auto; flex-direction: column; justify-content: start; margin: 4em 0 0 0; padding: 1em }
 div.option { display: flex; align-items: center; flex-direction: row; justify-content: space-between; }
-div.options { align-items: stretch; background-color: white; border: 1px solid var(--color-grey-c); flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
+div.options { align-items: stretch; background-color: white; border: 1px solid var(--color-grey-c); border-radius: var(--dim-ease); flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3em; position: relative; width: 100% }
 div.paver { display: flex; flex: auto; flex-direction: row; gap: 2em; justify-content: center; padding: 1em; }
 div.pillar { align-items: center; display: flex; flex-direction: column; justify-content: start; padding: 1em }
 div.plank { display: flex; flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1em; width: 100% }
 div.pole { align-items: start; display: flex; flex: auto; flex-direction: column; justify-content: start; width: 100% }
-div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
+div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 0.5em; max-width: 75%; padding: 0.5em; text-wrap: wrap; }
 div.prompt.hidden { display: none; }
 div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
 div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }

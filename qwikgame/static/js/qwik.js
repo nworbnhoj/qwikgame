@@ -272,7 +272,20 @@ function nFormatter(num, digits) {
               ERROR.textContent = '';
             }
           }, 1000);    // required to allow various Hour Day Week sync to complete
-         break;
+        break;
+        case 'socials':
+          let legend = field.querySelector('legend');
+          let pending = legend.querySelector('span.pending');
+          let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
+          let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
+          if (legend && pending && check && checkboxes){
+            pre_pending = pending.textContent;
+            pending.textContent = sum_url_checkbox(checkboxes);
+          }
+          if (ERROR && (pending.textContent !== pre_pending)){
+            ERROR.textContent = '';
+          }
+        break;
         default:
           by_input_name = false;
       }
@@ -406,6 +419,24 @@ function nFormatter(num, digits) {
       } else {
         checkboxes.forEach((checkbox) => {
           sum += checkbox.labels[0].textContent + ', ';
+        });
+      }
+      return sum;
+    }
+  }
+
+
+  function sum_url_checkbox(checkboxes){
+    console.log('here')
+    if (checkboxes){
+      sum = '';
+      if (checkboxes.length === 0){
+        sum = "None";
+      } else {
+        console.log('there')
+        checkboxes.forEach((checkbox) => {
+          url = new URL(checkbox.labels[0].textContent);
+          sum += url.host + ' ';
         });
       }
       return sum;

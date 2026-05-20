@@ -1,13 +1,15 @@
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, EmailField, Form, IntegerField, MultipleChoiceField, RadioSelect, Select, URLField
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block, Person, Social
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
 
-class DeleteWidget(CheckboxSelectMultiple):
-    option_template_name="input_delete.html"
+class CheckboxList(CheckboxSelectMultiple):
+    template_name = "checkbox_list.html"
+    option_template_name = "option_delete.html"
 
 class BlockForm(QwikForm):
     block = IntegerField(
@@ -62,7 +64,7 @@ class PrivateForm(QwikForm):
         label=_('people you have blocked'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple(
+        widget=CheckboxList(
             attrs = {'class': 'negate_pending post'},
         )
     )
@@ -71,7 +73,6 @@ class PrivateForm(QwikForm):
         blocked_choices = kwargs.pop('blocked_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['blocked'].choices = blocked_choices
-        self.fields['blocked'].widget.option_template_name='option_delete.html'
 
     @classmethod
     def _blocked_choices(klass, person):
@@ -124,7 +125,7 @@ class PublicForm(QwikForm):
         label=_('website / social media'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple(
+        widget=CheckboxList(
             attrs = {'class': 'negate_pending post'},
         )
     )
@@ -134,7 +135,8 @@ class PublicForm(QwikForm):
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
         self.fields['socials'].choices = social_choices
-        self.fields['socials'].widget.option_template_name='option_delete.html'
+        if (len(social_choices) < 3):
+            self.fields['socials'].widget.attrs['add_url'] = reverse('social_add')
 
     @classmethod
     def _social_choices(klass, user_id):

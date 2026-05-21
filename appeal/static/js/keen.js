@@ -66,7 +66,7 @@ function changeGame(event){
     if (skipped){
       const PLACE_GAMES = option.dataset.games;
       const OPTION_DIV = option.parentElement.parentElement
-      OPTION_DIV.style.display = PLACE_GAMES.includes(GAME) ? 'block': 'none';
+      OPTION_DIV.style.display = PLACE_GAMES.includes(GAME) ? '': 'none';
     }
     skipped = true;
   });

@@ -36,8 +36,7 @@ div.field.open > *:not(div.label) { max-height: 50rem; }
 fieldset { background-color: inherit; border: 0px solid white; flex-direction: column; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 fieldset:hover { background-color: var(--color-backdrop); }
-fieldset div { display: block; }
-fieldset > div { margin: 6rem 0 0 0; }
+fieldset > div { flex-direction: column; margin: 6rem 0 0 0; }
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50rem; }
@@ -46,6 +45,7 @@ label.hidden { display: none }
 label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
 label.option { display: flex; align-items: center; gap: 1rem; padding: 0.3rem 0 0.3rem 0; text-align: center }
 label.option div.btn { height: 1rem }
+label.option:first-child { flex-grow: 1; }
 label.option:has(input[type=checkbox])::before { content: none; }
 label.option:has(input[type=checkbox]:checked) { display: none; }
 label.option:has(input:checked) { color: var(--color-qwik); }

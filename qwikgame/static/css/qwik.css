@@ -11,13 +11,13 @@ div { }
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
 form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1em 0 0 2em; }
-form div.label + input { margin: 0 0 0 2em; padding-top: 2em; }
+form div.label + input { margin: 0 2rem 0 2rem }
 div.form { gap: 1em; align-items: stretch; display: flex; flex-direction: column; justify-content: space-between; width: 100%; }
 div.field { align-items: stretch; display: flex; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
 div.field:hover { background-color: var(--color-backdrop); }
-div.field > *:not(div.label) { border: 0px solid white; max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+div.field > *:not(div.label) { border: 0px solid white; overflow: hidden; transition: max-height 1s ease; }
 div.field > div.label { font-size: 1.25rem; left: 0px; padding: 2em; width: 100%; }
 div.field > div.label > div { display: flex; flex-direction: row; }
 div.field > div.label p { padding-left: 1em; }
@@ -181,7 +181,7 @@ div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
 div.by_day { margin: 0 0 0 2em; }
-div.chat_bubble { display: flex; background-color: var(--color-backdrop); border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
+div.chat_bubble { display: flex; background-color: var(--color-stencil); border-radius: 2em; flex-direction: column; gap: 1em; max-width: 66%; min-width: 10em; padding: 1em; }
 div.chat_bubble .row { display: flex; flex-direction: row; gap: 1em; justify-content: space-between; }
 div.chat_bubble .text { }
 div.chat_bubble time { margin-left: auto }
@@ -244,7 +244,7 @@ div.line { line-height: 1.6em; margin: 0em; overflow: hidden; padding-left: 0.5e
 div.list { align-items: stretch; border-width: 0 0.1em 0 0; display: flex; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1em; width: 100% }
 div.list_bar { border-width: 0 0.1em 0 0; border-style: solid; display: flex; align-items: start; display: flex; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1em 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1em 0 -1em; padding: 1em }
-div.log_entry { align-items: center; border: 0 solid black; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em; width: 100%; }
+div.log_entry { align-items: center; background-color: var(--color-backdrop); border: 0 solid black; box-shadow: none; display: flex; flex: auto; flex-direction: row; gap: 0.3em; margin: 0em; padding: 0.3em; width: 100%; }
 div.log_entry .icon { height: auto; width: auto; }
 div.log_entry .stars { padding: 0; }
 div.log_entry.chat { }

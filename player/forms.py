@@ -3,6 +3,7 @@ from authenticate.forms import RegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from game.models import Game, Match
 from person.models import Person
@@ -14,7 +15,7 @@ from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
 from qwikgame.settings import EMAIL_ALERT_USER
 from qwikgame.utils import str_to_hours24
-from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
+from qwikgame.widgets import CheckboxList, DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
@@ -207,7 +208,7 @@ class FriendForm(QwikForm):
         label=_('GAMES'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple(
+        widget=CheckboxList(
             attrs = {'class': 'negate_pending post'},
         )
     )
@@ -216,7 +217,6 @@ class FriendForm(QwikForm):
         strength_choices = kwargs.pop('strength_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['strengths'].choices = strength_choices
-        self.fields['strengths'].widget.option_template_name='option_delete.html'
 
     @classmethod
     def _strength_choices(klass, friend):
@@ -237,6 +237,7 @@ class FriendForm(QwikForm):
             form.fields['name'].pending = friend.name
         form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
         form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
+        form.fields['strengths'].widget.attrs['add_url'] = reverse('friend_strength', args=[friend.pk])
         return { 'friend_form' : form, }
 
     @classmethod

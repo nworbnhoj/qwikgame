@@ -4,16 +4,16 @@
 * { }
 html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
-div { display: flex; }
+div { display: flex; flex-direction: column; }
 
 /* --- Structure --- */
 #content { align-items: stretch; flex: 1 0 auto; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
-#detail { align-items: stretch; flex: 0 1 68.75%; flex-direction: column; gap: 1rem; padding: 0 1rem 10rem 1rem; width: 68.75% }
+#detail { align-items: stretch; flex: 0 1 68.75%; gap: 1rem; padding: 0 1rem 10rem 1rem; width: 68.75% }
 #feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: 1200px; padding: 0em 3em; }
 #feedback:has(input:checked) { max-height: 40em; }
 #feedback label { margin: 1em 0 0 0; }
-#filler { flex-direction: column; flex-grow: 1; }
-#footer { flex-direction: column; font-size: small; justify-content: end; }
+#filler { flex-grow: 1; }
+#footer { font-size: small; justify-content: end; }
 #tab_bar { align-items: center; border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
@@ -21,8 +21,8 @@ form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rg
 form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1rem 0 0 2rem; }
 form div.label + input { margin: 0 2rem 0 2rem }
-div.form { gap: 1rem; align-items: stretch; flex-direction: column; justify-content: space-between; width: 100%; }
-div.field { align-items: stretch; flex: auto; flex-direction: column; justify-content: start; padding: 0 0 2rem 0; width: 100% }
+div.form { gap: 1rem; align-items: stretch; justify-content: space-between; width: 100%; }
+div.field { align-items: stretch; flex: auto; justify-content: start; padding: 0 0 2rem 0; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
 div.field:hover { background-color: var(--color-backdrop); }
@@ -33,10 +33,10 @@ div.field > div.label p { padding-left: 1rem; }
 div.field > div.label div:first-child span { margin-left: 0.3rem; }
 div.field > div.label div:first-child span:last-child { margin-left: auto; }
 div.field.open > *:not(div.label) { max-height: 50rem; }
-fieldset { background-color: inherit; border: 0px solid white; flex-direction: column; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
+fieldset { background-color: inherit; border: 0px solid white; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 fieldset:hover { background-color: var(--color-backdrop); }
-fieldset > div { flex-direction: column; margin: 6rem 0 0 0; }
+fieldset > div { margin: 6rem 0 0 0; }
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50rem; }
@@ -161,10 +161,10 @@ a:has(input:disabled) { pointer-events: none; }
 .hidden { display: none }
 .ellipsis { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .identicon { height: 100%; width: auto; }
-.item { align-items: start; display: flex; flex-flow: row wrap; justify-content: center; padding: 0.3rem 0.3rem 0.9rem 0; }
-.item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; flex-direction: column; height: 100%; width: 20% }
+.item { align-items: start; display: flex; flex-flow: row wrap; justify-content: center; padding: 0.3rem 0.3rem 0.3rem 0; }
+.item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; height: 100%; width: 20% }
 .item .badges time { margin-top: auto; }
-.item .lines { display: flex; flex: auto; flex-direction: column; width: 75% }
+.item .lines { display: flex; flex: auto; width: 75% }
 .item div.note { width: 100% }
 .item div.notes { flex: 1 1 0; overflow: hidden; text-overflow: ellipsis; }
 .item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
@@ -184,13 +184,13 @@ a:has(input:disabled) { pointer-events: none; }
 .sml { height: 1.5rem; min-height: 0; min-width: 0; width: 1.5rem; }
 .todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-div.alert { align-items: center; display: none; flex: auto; flex-direction: column; justify-content: start; margin: 0; }
-div.banner { align-items: center; flex: none; flex-direction: column; position: -webkit-sticky; position: sticky; top: 4rem; margin: 0 -1rem 0 -1rem; padding: 1rem; text-align: center; z-index: 20; }
+div.alert { align-items: center; display: none; flex: auto; justify-content: start; margin: 0; }
+div.banner { align-items: center; flex: none; position: -webkit-sticky; position: sticky; top: 4rem; margin: 0 -1rem 0 -1rem; padding: 1rem; text-align: center; z-index: 20; }
 div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
 div.by_day { margin: 0 0 0 2rem; }
-div.chat_bubble { background-color: var(--color-stencil); border-radius: 2rem; flex-direction: column; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
+div.chat_bubble { background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
 div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
 div.chat_bubble .text { }
 div.chat_bubble time { margin-left: auto }
@@ -211,7 +211,7 @@ div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.
 div.detail_head .identicon { height: 4rem; position: relative; top: 0.7rem; width: 4rem; }
 div.detail_n { flex: 0 0 auto; gap: 1rem; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
-div.down { align-items: start; background-color: white; border: 1px solid var(--color-grey-c); flex-direction: column; gap: 0.5rem; margin: 0.3rem; min-width: 100%; opacity: 1.0; padding: 0.3rem 1rem 0.3rem 1rem; position: absolute; top: 3.2rem; white-space: nowrap; z-index: 10 }
+div.down { align-items: start; background-color: white; border: 1px solid var(--color-grey-c); gap: 0.5rem; margin: 0.3rem; min-width: 100%; opacity: 1.0; padding: 0.3rem 1rem 0.3rem 1rem; position: absolute; top: 3.2rem; white-space: nowrap; z-index: 10 }
 div.down.left { left: 0; }
 div.down.right { right: 0; }
 div.down div { justify-content: space-between; padding: 0.3rem; width: 100% }
@@ -220,7 +220,7 @@ div.down label { align-items: stretch; gap: 1rem; justify-content: space-between
 div.down label:has(input:checked) { color: var(--color-qwik); }
 div.down label:has(input[type=checkbox])::before { content: none; }
 div.down label:has(input[type=radio])::before { content: none; }
-div.drop_down { flex-direction: column; position: relative; right: 0.3rem; }
+div.drop_down { position: relative; right: 0.3rem; }
 div.drop_down:has(div.down:empty) { display: none; }
 div.drop_down.icon div.down { top: 3rem; width: auto }
 div.drop_down.icon div.drop { border-width: 0px; height: auto; }
@@ -231,7 +231,7 @@ div.fat { transform: scaleX(1.6); padding: 0 0.2rem 0 0.2rem }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; justify-items: center; margin: 0.3rem; padding: 1rem 0 0 0; width: 100% }
-div.head { flex: auto; flex-direction: column; padding: 0 1rem 0 1rem; width: 50% }
+div.head { flex: auto; padding: 0 1rem 0 1rem; width: 50% }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; width: 90% }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 div.hrs.apm { background-color: var(--color-backdrop); border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
@@ -249,8 +249,8 @@ div.info .info_text::after { border-color: transparent transparent black transpa
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: var(--color-backdrop); justify-content: flex-start; margin: 0.3rem; padding: 0.3rem }
 div.line { line-height: 1.6rem; margin: 0; overflow: hidden; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
-div.list { align-items: stretch; border-width: 0 0.1rem 0 0; flex: 1 1 100%; flex-direction: column; justify-content: flex-start; overflow: hidden; padding: 1rem; width: 100% }
-div.list_bar { border-width: 0 0.1rem 0 0; border-style: solid; align-items: start; flex: 0 1 auto; flex-direction: column; justify-content: start; width: 31.25%; }
+div.list { align-items: stretch; border-width: 0 0.1rem 0 0; flex: 1 1 100%; justify-content: flex-start; overflow: hidden; padding: 1rem; width: 100% }
+div.list_bar { border-width: 0 0.1rem 0 0; border-style: solid; align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1rem 0; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1rem 0 -1rem; padding: 1rem }
 div.log_entry { align-items: center; background-color: var(--color-backdrop); border: 0 solid black; box-shadow: none; flex: auto; flex-direction: row; gap: 0.3rem; margin: 0; padding: 0.3rem; width: 100%; }
 div.log_entry .icon { height: auto; width: auto; }
@@ -259,13 +259,13 @@ div.log_entry.chat { }
 div.log_entry.event { }
 div.log_entry.match { }
 div.logo { font-size: 1.27rem; font-family: AstroSpace; font-weight: bold; padding: 0.1rem; }
-div.nextup { align-items: center; flex: auto; flex-direction: column; justify-content: start; margin: 4rem 0 0 0; padding: 1rem }
+div.nextup { align-items: center; flex: auto; justify-content: start; margin: 4rem 0 0 0; padding: 1rem }
 div.option { align-items: center; flex-direction: row; justify-content: space-between; }
-div.options { align-items: stretch; background-color: white; border: 1px solid var(--color-grey-c); border-radius: var(--dim-ease); flex-direction: column; justify-content: flex-start; opacity: 1.0; padding: 0.3rem; position: relative; width: 100% }
+div.options { align-items: stretch; background-color: white; border: 1px solid var(--color-grey-c); border-radius: var(--dim-ease); justify-content: flex-start; opacity: 1.0; padding: 0.3rem; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2rem; justify-content: center; padding: 1rem; }
-div.pillar { align-items: center; flex-direction: column; justify-content: start; padding: 1rem }
+div.pillar { align-items: center; justify-content: start; padding: 1rem }
 div.plank { flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1rem; width: 100% }
-div.pole { align-items: start; flex: auto; flex-direction: column; justify-content: start; width: 100% }
+div.pole { align-items: start; flex: auto; justify-content: start; width: 100% }
 div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 0.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
 div.prompt.hidden { display: none; }
 div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
@@ -274,7 +274,7 @@ div.prompt .identicon svg { height: 4rem; }
 div.range_options { flex-direction: row; gap: 1rem; justify-content: space-between; padding: 1rem 0 0 0; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1rem 0 1rem 0; padding: 1rem 0 1rem 2rem; }
-div.post { align-items: stretch; flex-direction: column; justify-content: start; width: 100% }
+div.post { align-items: stretch; justify-content: start; width: 100% }
 div.radio_block { display: grid; gap: 1rem; margin: 1rem; }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3rem; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }

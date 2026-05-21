@@ -30,6 +30,7 @@ div.field > *:not(div.label) { border: 0px solid white; overflow: hidden; transi
 div.field > div.label { font-size: 1.25rem; left: 0px; padding: 2rem; width: 100%; }
 div.field > div.label > div { 0 flex-direction: row; }
 div.field > div.label p { padding-left: 1rem; }
+div.field > div.label div { flex-direction: row; }
 div.field > div.label div:first-child span { margin-left: 0.3rem; }
 div.field > div.label div:first-child span:last-child { margin-left: auto; }
 div.field.open > *:not(div.label) { max-height: 50rem; }
@@ -248,7 +249,7 @@ div.info.push_right .info_text { right: 0; text-align: right; }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8rem; bottom: 100%; content: " "; position: absolute; right: 9rem; margin-left: -0.8rem; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { align-items: center; background-color: var(--color-backdrop); justify-content: flex-start; margin: 0.3rem; padding: 0.3rem }
-div.line { line-height: 1.6rem; margin: 0; overflow: hidden; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
+div.line { align-items: center; flex-direction: row; line-height: 1.6rem; margin: 0; overflow: hidden; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
 div.list { align-items: stretch; border-width: 0 0.1rem 0 0; flex: 1 1 100%; justify-content: flex-start; overflow: hidden; padding: 1rem; width: 100% }
 div.list_bar { border-width: 0 0.1rem 0 0; border-style: solid; align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
 div.list_head { align-items: center; border: 1px solid black; border-width: 0 0 0.1rem 0; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1rem 0 -1rem; padding: 1rem }
@@ -282,7 +283,7 @@ div.schedule_body { display: grid }
 div.slider { background-color: #ccc; border-radius: 2.5rem; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; width: 5.6rem; }
 div.slider:before { aspect-ratio: 1/1; background-color: #fff; border-radius: 50%; bottom: 0.2rem; content: ""; left: 0.2rem; position: absolute; transition: .4s; width: 2.2rem }
 div.splash { align-items: center; height: 100%; justify-content: center; }
-div.stars { padding: 1rem; }
+div.stars { flex-direction: row; padding: 1rem; }
 div.tab_area div.areas { width: 100%; }
 div.tab_area div.areas div.area { width: 100%; }
 div.tabs { z-index: 1 }
@@ -309,7 +310,7 @@ ol { list-style: decimal; padding-left: 2rem; }
 p { margin: 0; padding: 0.3rem; text-align: left }
 p.bold { font-weight: bold }
 p.large { color: var(--color-grey-3); font-size: large }
-p.line { line-height: 1.6rem; margin: 0; max-height: 1.6rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+p.line { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 p.small { color: var(--color-grey-3); font-size: small }
 select { display: block; font-size: 1.13rem; height: 3rem; width: 100% }
 span.brick { display: inline-block; white-space: nowrap; width: auto; }
@@ -317,7 +318,6 @@ span.chat_show { }
 span.flip { transform: rotate(180deg) }
 span.icon { border-width: 0px; display: inline-block; text-align: center; width: 2rem }
 span.identicon { border-width: 0px; display: inline-block; text-align: center; width: 2rem }
-span.identicon svg { position: relative; top: 0.6rem; }
 span.on { color: lightseagreen; }
 span.off { color: indianred; }
 span.qwik { color: var(--color-qwik); }

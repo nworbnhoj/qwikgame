@@ -6,6 +6,15 @@ html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
 div { }
 
+/* --- Structure --- */
+#content { align-items: stretch; display: flex; flex: 1 0 auto; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
+#detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1rem; padding: 0 1rem 10rem 1rem; width: 68.75% }
+#feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: 1200px; padding: 0em 3em; }
+#feedback:has(input:checked) { max-height: 40em; }
+#feedback label { margin: 1em 0 0 0; }
+#filler { display: flex; flex-direction: column; flex-grow: 1; }
+#footer { display: flex; flex-direction: column; font-size: small; justify-content: end; }
+#tab_bar { align-items: center; border-width: 0 0 1px 0; border-style: solid; display: flex; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
@@ -196,7 +205,6 @@ div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
 div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
 div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
 div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
-div.detail { align-items: stretch; display: flex; flex: 0 1 68.75%; flex-direction: column; gap: 1rem; padding: 0 1rem 10rem 1rem; width: 68.75% }
 div.detail_body { }
 div.detail_form { }
 div.detail_head { align-items: center; border-style: solid; border-width: 0 0 0.1rem 0; display: flex; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1rem 0 -1rem; padding: 1rem }

@@ -73,23 +73,21 @@
                 </h2>
             </div>
         </div>
-        <div class="post">
-            <div class="form">
-                <div id="alert_form_start" class="alert"></div>
-                <form action="{% url 'keen' %}" method="post"  novalidate>
+        <div class="form">
+            <div id="alert_form_start" class="alert"></div>
+            <form action="{% url 'keen' %}" method="post"  novalidate>
 {% csrf_token %}
 {{ keen_form }}
-                    <div class="pillar">
-                        <div id="alert_form_submit" class="alert"></div>
-                        <label id="appeal_submit" class="btn primary push_down">
-                            <input hidden type="submit">
-                            <i class="fa-solid fa-paper-plane fa-xl"></i>
-                            {% translate "Post Invitation" %}
-                        </label>
-                    </div>
-                </form>
-                <div id="alert_form_end" class="alert"></div>
-            </div>
+                <div class="pillar">
+                    <div id="alert_form_submit" class="alert"></div>
+                    <label id="appeal_submit" class="btn primary push_down">
+                        <input hidden type="submit">
+                        <i class="fa-solid fa-paper-plane fa-xl"></i>
+                        {% translate "Post Invitation" %}
+                    </label>
+                </div>
+            </form>
+            <div id="alert_form_end" class="alert"></div>
         </div>
         <div id="alert_detail_end" class="alert"></div>
     </div>

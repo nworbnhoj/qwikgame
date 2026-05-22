@@ -20,9 +20,10 @@ div { align-items: center; display: flex; flex-direction: column; }
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); margin: 0.5rem 0 0.5rem 0; min-height: 6rem; }
 form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1rem 0 0 2rem; }
+form div.label { align-items: start; }
 form div.label + input { margin: 0 2rem 0 2rem }
 div.form { gap: 1rem; align-items: stretch; justify-content: space-between; width: 100%; }
-div.field { align-items: stretch; flex: auto; justify-content: start; padding: 0 0 2rem 0; width: 100% }
+div.field { align-items: stretch; flex: auto; justify-content: start; padding: 2rem; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
 div.field:hover { background-color: var(--color-backdrop); }
@@ -37,7 +38,7 @@ div.field.open > *:not(div.label) { max-height: 50rem; }
 fieldset { background-color: inherit; border: 0px solid white; padding: 0 0 2rem 2rem; position: relative; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 fieldset:hover { background-color: var(--color-backdrop); }
-fieldset > div { margin: 6rem 0 0 0; }
+fieldset > div { align-items: start; margin: 6rem 0 0 0; }
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50rem; }
@@ -165,7 +166,7 @@ a:has(input:disabled) { pointer-events: none; }
 .item { align-items: start; display: flex; flex-flow: row wrap; justify-content: center; padding: 0.3rem 0.3rem 0.3rem 0; }
 .item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; height: 100%; width: 20% }
 .item .badges time { margin-top: auto; }
-.item .lines { display: flex; flex: auto; width: 75% }
+.item .lines { align-items: start; display: flex; flex: auto; overflow: hidden; width: 75% }
 .item div.note { width: 100% }
 .item div.notes { flex: 1 1 0; overflow: hidden; text-overflow: ellipsis; }
 .item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }

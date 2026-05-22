@@ -274,10 +274,10 @@ function nFormatter(num, digits) {
           }, 1000);    // required to allow various Hour Day Week sync to complete
         break;
         case 'socials':
-          let legend = field.querySelector('legend');
-          let pending = legend.querySelector('span.pending');
-          let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
-          let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
+          legend = field.querySelector('legend');
+          pending = legend.querySelector('span.pending');
+          check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
+          checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
           if (legend && pending && check && checkboxes){
             pre_pending = pending.textContent;
             pending.textContent = sum_url_checkbox(checkboxes);
@@ -297,8 +297,8 @@ function nFormatter(num, digits) {
           legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
           if (legend_or_label){
             pending = legend_or_label.querySelector('span.pending');
-            let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
-            let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
+            check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
+            checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
             if (pending){
               pre_pending = pending.textContent;
               pending.textContent = sum_input_checkbox(checkboxes);

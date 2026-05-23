@@ -200,9 +200,10 @@ div.by_day { }
 div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
 div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
 div.chat_bubble .text { }
-div.chat_bubble time { margin-left: auto }
+div.chat_bubble .row:has(time) { margin-left: auto }
 div.chat_input { flex-direction: row; gap: 0.3rem; justify-content: stretch; width: 100% }
 div.chat_input div:not([class]) { flex-grow: 1; }
+div.chat_input input { width: 97% }
 div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10rem }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }

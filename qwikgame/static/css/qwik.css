@@ -25,7 +25,7 @@ form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1rem 0 0 2rem; }
 form div.label { align-items: start; }
 form div.label + input { margin: 0 2rem 0 2rem }
-div.field { padding: 2rem; width: 100% }
+div.field { align-items: start; padding: 2rem; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
 div.field > *:not(div.label) { max-height: 0; transition: max-height 1s ease; }
@@ -197,7 +197,7 @@ div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
 div.by_day { }
-div.chat_bubble { background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
+div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
 div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
 div.chat_bubble .text { }
 div.chat_bubble time { margin-left: auto }
@@ -238,7 +238,7 @@ div.fat { transform: scaleX(1.6); padding: 0 0.2rem 0 0.2rem }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; justify-items: center; margin: 0.3rem; padding: 1rem 0 0 0; width: 100% }
-div.head { flex: auto; padding: 0 1rem 0 1rem; width: 50% }
+div.head { align-items: start; flex: auto; padding: 0 1rem 0 1rem; width: 50% }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; width: 90% }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 div.hrs.apm { background-color: var(--color-backdrop); border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }

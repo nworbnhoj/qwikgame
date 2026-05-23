@@ -160,7 +160,7 @@ class ServiceWorkerView(TemplateView):
             'icon_152_url': static('img/qwik-icon.152x152.png'),
             'icon_192_url': static('img/qwik-icon.192x192.png'),
             'icon_512_url': static('img/qwik-icon.512x512.png'),
-            'img_qwik_icon_url': static('img/qwik-icon.webp'),
+            'img_qwik_icon_url': static('img/qwik-icon.svg'),
             'img_qwik_logo_url': static('img/qwik-logo.webp'),
             'js_map_url': static('js/map.js'),
             'js_qwik_url': static('js/qwik.js'),

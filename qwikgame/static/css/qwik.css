@@ -306,7 +306,7 @@ h4 span.caption { align-self: flex-start; font-size: 0.8rem; margin-left: 3rem }
 h5 { color: black; font-size: 3rem; font-family: AstroSpace; justify-content: center; line-height: 1.4rem; padding: 0 1rem; }
 h6 { font-size: x-large; overflow: hidden; text-align: center; }
 hr { color: var(--color-backdrop); border-width: 1px; margin: 0.3rem 0 0.3rem 0; width: 99% }
-img.logo { display: block; height: 2.54rem; padding: 0.1rem }
+img.logo { display: block; height: 5rem; padding: 0.1rem }
 ol { list-style: decimal; padding-left: 2rem; }
 p { margin: 0; padding: 0.3rem; text-align: left }
 p.bold { font-weight: bold }

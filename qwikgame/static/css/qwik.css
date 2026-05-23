@@ -5,6 +5,7 @@
 html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
 div { align-items: center; display: flex; flex-direction: column; overflow: hidden; }
+div[hidden] { display: none !important; }
 
 /* --- Structure --- */
 #content { align-items: stretch; flex: 1 0 auto; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }

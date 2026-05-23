@@ -336,12 +336,14 @@ ul.leaders span + span { background: white; float: right; padding-left: 0.33rem;
   90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
 }
 @media only screen and (max-width:600px) {
+  #detail { flex-basis: 100%; }
   div.flex_space { display: none }
   span.fat { display: none }
   span.full_day { display: none }
   span.mid_day { display: none }
 }
 @media only screen and (min-width:600px) {
+  #detail { flex-basis: 100%; }
   div.flex_space { display: none }
   span.fat { display: none }
   span.full_day { display: none }

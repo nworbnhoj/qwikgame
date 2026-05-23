@@ -93,7 +93,7 @@ label:has(input[type=radio])::before { content: ''; border: 1px solid var(--colo
 label:has(input[type=radio]:checked)::before { content: "\2022"; color: var(--color-qwik); content: "\2714"; }
 
 /* --- Buttons --- */
-.btn { border: 1px solid; border-radius: var(--dim-ease); color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3rem; justify-content: center; margin: 0.3rem; min-height: 3rem; padding: 1.25rem 1.5rem; text-decoration: none; text-overflow: ellipsis; }
+.btn { align-items: center; border: 1px solid var(--color-grey-3); border-radius: var(--dim-ease); color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3rem; justify-content: center; margin: 0.3rem; min-height: 3rem; padding: 1.25rem 1.5rem; text-decoration: none; text-overflow: ellipsis; }
 
 /* hide custom checkbox/radio behaviour for label.btn (used extensively) */
 label.btn:has(input[type=checkbox])::before { content: none; }
@@ -130,7 +130,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.special2:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked) }
 .btn.special2:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.special2.selected { background-color: var(--color-checked); border-color: var(--color-checked); font-weight: bold; }
-.btn.special2 .dot { aspect-ratio: 1; background-color: var(--color-blue); border-radius: 50%; justify-content: center; position: absolute; right: 0; top: 0; width: 1rem; }
+.btn.special2 .dot { aspect-ratio: 1; background-color: var(--color-blue); border-radius: 50%; position: absolute; right: 0; top: 0; width: 1rem; }
 .btn.special2 .identicon { height: 2.6rem; width: 2.6rem; }
 @media (hover:hover) {
   .btn.primary:hover { background-color: var(--color-qwik-up); border-color: var(--color-qwik-up); }

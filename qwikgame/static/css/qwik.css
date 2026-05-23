@@ -17,28 +17,32 @@ div { align-items: center; display: flex; flex-direction: column; }
 #tab_bar { border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
-form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); min-height: 6rem; }
+form { display: flex; gap: 1rem; flex-direction: column; align-items: stretch; justify-content: space-between; width: 100%; }
+form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); min-height: 1rem; }
+form > div:hover { background-color: var(--color-backdrop); }
 form > div:last-child { background-color: inherit; box-shadow: none; }
 form label:has(input) { margin: 1rem 0 0 2rem; }
 form div.label { align-items: start; }
 form div.label + input { margin: 0 2rem 0 2rem }
-form { display: flex; gap: 1rem; flex-direction: column; align-items: stretch; justify-content: space-between; width: 100%; }
-div.field { align-items: stretch; flex: auto; justify-content: start; padding: 2rem; width: 100% }
+div.field { padding: 2rem; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
-div.field:hover { background-color: var(--color-backdrop); }
-div.field > *:not(div.label) { border: 0px solid white; overflow: hidden; transition: max-height 1s ease; }
-div.field > div.label { font-size: 1.25rem; left: 0px; width: 100%; }
-div.field > div.label > div { 0 flex-direction: row; }
+div.field > *:not(div.label) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+div.field > div.label { font-size: 1.25rem; width: 100%; }
+div.field > div.label > div { flex-direction: row; }
 div.field > div.label p { padding-left: 1rem; }
 div.field > div.label div { flex-direction: row; }
 div.field > div.label div:first-child span { margin-left: 0.3rem; }
 div.field > div.label div:first-child span:last-child { margin-left: auto; }
 div.field.open > *:not(div.label) { max-height: 50rem; }
-fieldset { background-color: inherit; border: 0px solid white; padding: 2rem; position: relative; width: 100%; }
+div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
+div.prompt.hidden { display: none; }
+div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
+div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
+div.prompt .identicon svg { height: 4rem; }
+fieldset { margin-top: -0.6rem; padding: 3rem 2rem 2rem 2rem; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
-fieldset:hover { background-color: var(--color-backdrop); }
-fieldset > div { align-items: start; margin: 6rem 0 0 0; }
+fieldset > div { align-items: start; }
 fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50rem; }
@@ -60,7 +64,7 @@ label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6rem; margin-right: 3rem; position: relative; width: 4rem }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-legend { font-size: 1.25rem; left: 0px; padding: 2rem 2rem 0 2rem; position: absolute; top: 0px; width: 100%; }
+legend { font-size: 1.25rem; position: relative; top: 2em; width: 100%; }
 legend > div { flex-direction: row; }
 legend div:first-child span { margin-left: 0.3rem; }
 legend div:first-child span:last-child { margin-left: auto; }
@@ -268,11 +272,6 @@ div.paver { flex: auto; flex-direction: row; gap: 2rem; justify-content: center;
 div.pillar { justify-content: start; padding: 1rem }
 div.plank { flex: 0 0 0; flex-direction: row; justify-content: space-around; padding: 1rem; width: 100% }
 div.pole { align-items: start; flex: auto; justify-content: start; width: 100% }
-div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 0.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
-div.prompt.hidden { display: none; }
-div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
-div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
-div.prompt .identicon svg { height: 4rem; }
 div.range_options { flex-direction: row; gap: 1rem; justify-content: space-between; padding: 1rem 0 0 0; width: 100% }
 div.range_options .option { text-align: center }
 div.replicate { border: 1px solid black; margin: 1rem 0 1rem 0; padding: 1rem 0 1rem 2rem; }

@@ -4,7 +4,7 @@
 * { }
 html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
-div { align-items: center; display: flex; flex-direction: column; }
+div { align-items: center; display: flex; flex-direction: column; overflow: hidden; }
 
 /* --- Structure --- */
 #content { align-items: stretch; flex: 1 0 auto; flex-direction: row; justify-content: stretch; margin: 4em 0 0 0; max-width: 1200px; width: 100% }
@@ -27,7 +27,7 @@ form div.label + input { margin: 0 2rem 0 2rem }
 div.field { padding: 2rem; width: 100% }
 div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
-div.field > *:not(div.label) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+div.field > *:not(div.label) { max-height: 0; transition: max-height 1s ease; }
 div.field > div.label { font-size: 1.25rem; width: 100%; }
 div.field > div.label > div { flex-direction: row; }
 div.field > div.label p { padding-left: 1rem; }
@@ -43,7 +43,7 @@ div.prompt .identicon svg { height: 4rem; }
 fieldset { margin-top: -0.6rem; padding: 3rem 2rem 2rem 2rem; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 fieldset > div { align-items: start; }
-fieldset > *:not(legend) { max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+fieldset > *:not(legend) { max-height: 0; transition: max-height 1s ease; }
 fieldset span.label { font-weight: bold; text-transform: capitalize; }
 fieldset.open > *:not(div.label) { max-height: 50rem; }
 label p { flex: auto; }
@@ -165,16 +165,16 @@ a:has(input:disabled) { pointer-events: none; }
 .head_more { order: 30 }
 .head_txt { order: 20 }
 .hidden { display: none }
-.ellipsis { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ellipsis { display: block; text-overflow: ellipsis; white-space: nowrap; }
 .identicon { height: 100%; width: auto; }
 .item { align-items: start; display: flex; flex-flow: row wrap; justify-content: center; padding: 0.3rem 0.3rem 0.3rem 0; }
 .item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; height: 100%; width: 20% }
 .item .badges time { margin-top: auto; }
-.item .lines { align-items: start; display: flex; flex: auto; overflow: hidden; width: 75% }
+.item .lines { align-items: start; display: flex; flex: auto; width: 75% }
 .item div.note { width: 100% }
-.item div.notes { flex: 1 1 0; overflow: hidden; text-overflow: ellipsis; }
-.item p { display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: auto }
-.item span.note { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.item div.notes { flex: 1 1 0; text-overflow: ellipsis; }
+.item p { display: inline-block; text-overflow: ellipsis; white-space: nowrap; width: auto }
+.item span.note { text-overflow: ellipsis; white-space: nowrap }
 .item.unseen { border-left-color: var(--color-qwik); border-left-width: 0.5rem; font-weight: bold }
 .item.unseen div.icon { color: var(--color-qwik); }
 .invisible { visibility: hidden }
@@ -254,8 +254,8 @@ div.info.push_right .info_text { right: 0; text-align: right; }
 div.info .info_text::after { border-color: transparent transparent black transparent; border-width: 0.8rem; bottom: 100%; content: " "; position: absolute; right: 9rem; margin-left: -0.8rem; border-style: solid }
 div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { background-color: var(--color-backdrop); justify-content: flex-start; margin: 0.3rem; padding: 0.3rem }
-div.line { flex-direction: row; line-height: 1.6rem; margin: 0; overflow: hidden; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
-div.list { align-items: stretch; border-width: 0 0.1rem 0 0; flex: 1 1 100%; justify-content: flex-start; overflow: hidden; padding: 1rem; width: 100% }
+div.line { flex-direction: row; line-height: 1.6rem; margin: 0; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
+div.list { align-items: stretch; border-width: 0 0.1rem 0 0; flex: 1 1 100%; justify-content: flex-start; padding: 1rem; width: 100% }
 div.list_bar { border-width: 0 0.1rem 0 0; border-style: solid; align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
 div.list_head { border: 1px solid black; border-width: 0 0 0.1rem 0; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1rem 0 -1rem; padding: 1rem }
 div.log_entry { background-color: var(--color-backdrop); border: 0 solid black; box-shadow: none; flex: auto; flex-direction: row; gap: 0.3rem; margin: 0; padding: 0.3rem; width: 100%; }

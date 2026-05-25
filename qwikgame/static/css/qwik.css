@@ -18,39 +18,36 @@ div[hidden] { display: none !important; }
 #tab_bar { border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
-form { display: flex; gap: 1rem; flex-direction: column; align-items: stretch; justify-content: space-between; width: 100%; }
-form > div { background-color: var(--color-stencil); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); min-height: 1rem; }
+form { display: flex; gap: 0; flex-direction: column; align-items: stretch; width: 100%; }
+form > div { background-color: var(--color-stencil); box-shadow: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .10); margin: 0.4rem; min-height: 1rem; }
 form > div:hover { background-color: var(--color-backdrop); }
 form > div:last-child { background-color: inherit; box-shadow: none; }
-form label:has(input) { margin: 1rem 0 0 2rem; }
-form div.label { align-items: start; }
+
+/* position legend identical to div.label */
+legend { position: relative; top: 1.6em; }
+
+/* div.field and fieldset are treated in identical fashion */
+div.field, fieldset { align-items: start; padding: 2rem; width: 100% }
+div.field > div, fieldset > div { align-items: start; gap: 1em; }
+div.field > div.label, fieldset > legend { font-size: 1.25rem; width: 100%; }
+div.field > *:not(div.label), fieldset > *:not(legend) { margin-left: 2rem; max-height: 0; transition: margin-top 1s, max-height 1s ease; }
+div.field.open > *:not(div.label), fieldset.open > *:not(legend) { margin-top: 2rem; max-height: 50rem; }
+div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
+div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
+
 form div.label + input { margin: 0 2rem 0 2rem }
-div.field { align-items: start; padding: 2rem; width: 100% }
-div.field span.label { font-weight: bold; text-transform: capitalize; }
 div.field.naked { padding: 0 }
-div.field > *:not(div.label) { max-height: 0; transition: max-height 1s ease; }
-div.field > div.label { font-size: 1.25rem; width: 100%; }
-div.field > div.label > div { flex-direction: row; }
-div.field > div.label p { padding-left: 1rem; }
-div.field > div.label div { flex-direction: row; }
-div.field > div.label div:first-child span { margin-left: 0.3rem; }
-div.field > div.label div:first-child span:last-child { margin-left: auto; }
-div.field.open > *:not(div.label) { max-height: 50rem; }
 div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
 div.prompt.hidden { display: none; }
 div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
 div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
 div.prompt .identicon svg { height: 4rem; }
-fieldset { margin-top: -0.6rem; padding: 3rem 2rem 2rem 2rem; width: 100%; }
 fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
-fieldset > div { align-items: start; }
-fieldset > *:not(legend) { max-height: 0; transition: max-height 1s ease; }
-fieldset span.label { font-weight: bold; text-transform: capitalize; }
-fieldset.open > *:not(div.label) { max-height: 50rem; }
+
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
-label.option { display: flex; gap: 1rem; padding: 0.3rem 0 0.3rem 0; text-align: center }
+label.option { align-items: center; display: flex; gap: 2rem; width: 100%; }
 label.option div.btn { height: 1rem }
 label.option:first-child { flex-grow: 1; }
 label.option:has(input[type=checkbox])::before { content: none; }
@@ -65,11 +62,6 @@ label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6rem; margin-right: 3rem; position: relative; width: 4rem }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
-legend { font-size: 1.25rem; position: relative; top: 2em; width: 100%; }
-legend > div { flex-direction: row; }
-legend div:first-child span { margin-left: 0.3rem; }
-legend div:first-child span:last-child { margin-left: auto; }
-legend p { padding-left: 1rem; }
 
 /* --- Inputs --- */
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
@@ -180,7 +172,6 @@ a:has(input:disabled) { pointer-events: none; }
 .item.unseen div.icon { color: var(--color-qwik); }
 .invisible { visibility: hidden }
 .name { color: var(--color-qwik); font-weight: bold; }
-.open { max-height: 50rem; }
 .loader::after { align-self: center; position: absolute; content: ""; width: 2rem; aspect-ratio: 1; --_g: no-repeat radial-gradient(farthest-side, #999999 90%, #0000); background: var(--_g), var(--_g), var(--_g), var(--_g); background-size: 40% 40%; animation: l46 1s infinite; }
 .push_down { margin-top: 4rem; }
 .push_left { margin-right: auto }
@@ -240,7 +231,7 @@ div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; justify-items: center; margin: 0.3rem; padding: 1rem 0 0 0; width: 100% }
 div.head { align-items: start; flex: auto; padding: 0 1rem 0 1rem; width: 50% }
-div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; width: 90% }
+div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; overflow: visible; width: 90% }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 div.hrs.apm { background-color: var(--color-backdrop); border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-content: center; border-radius: var(--dim-ease); border: 0px solid black; display: block; flex: 0 0 auto; height: 3rem; justify-content: center; width: 2rem }

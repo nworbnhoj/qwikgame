@@ -2,7 +2,7 @@ import datetime, logging
 from authenticate.forms import RegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
-from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
+from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TypedChoiceField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from game.models import Game, Match
@@ -15,7 +15,7 @@ from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
 from qwikgame.settings import EMAIL_ALERT_USER
 from qwikgame.utils import str_to_hours24
-from qwikgame.widgets import CheckboxList, DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
+from qwikgame.widgets import CheckboxList, DAY_ALL, DAY_NONE, TextInput, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
@@ -196,12 +196,14 @@ class FriendForm(QwikForm):
         max_length=255,
         required = True,
         template_name = 'field.html',
+        widget = TextInput()
     )
     name = CharField(
         label=_('name'),
         max_length=32,
         required=False,
         template_name = 'field.html',
+        widget = TextInput()
     )
     strengths = MultipleChoiceField(
         choices=(),

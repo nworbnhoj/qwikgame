@@ -1,11 +1,11 @@
 import logging
-from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, RadioSelect, Select, TypedChoiceField, TypedMultipleChoiceField
+from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Select, TypedChoiceField, TypedMultipleChoiceField
 from django.utils.translation import gettext_lazy as _
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from service.locate import Locate
 from venue.models import Place
-from qwikgame.widgets import ActionMultiple, MultiWidget
+from qwikgame.widgets import ActionMultiple
 from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)

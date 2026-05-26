@@ -6,7 +6,7 @@ from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block,
 from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
-from qwikgame.widgets import CheckboxList
+from qwikgame.widgets import CheckboxList, TextInput
 
 
 class BlockForm(QwikForm):
@@ -35,7 +35,7 @@ class PrivateForm(QwikForm):
         max_length=255,
         required = False,
         template_name = 'field.html',
-        widget=forms.TextInput(attrs={'disabled': 'disabled'}),
+        widget=TextInput(attrs={'disabled': 'disabled'}),
     )   
     permissions = MultipleChoiceField(
         choices=[
@@ -117,6 +117,7 @@ class PublicForm(QwikForm):
         max_length=32,
         required=False,
         template_name='field.html',
+        widget = TextInput()
     )
     socials = MultipleChoiceField(
         choices=(),

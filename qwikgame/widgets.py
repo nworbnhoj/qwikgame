@@ -1,5 +1,5 @@
 import logging
-from django.forms import CheckboxInput, CheckboxSelectMultiple, MultiWidget, RadioSelect
+from django import forms
 from django.forms.widgets import Input, Select
 from qwikgame.constants import WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
@@ -12,17 +12,17 @@ WEEK_ALL = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xf
 WEEK_NONE = bytes(21)
 
 
-class ActionMultiple(CheckboxSelectMultiple):
+class ActionMultiple(forms.CheckboxSelectMultiple):
     attrs = {"class": "down left hidden"}
     use_fieldset=False
 
     
-class CheckboxList(CheckboxSelectMultiple):
+class CheckboxList(forms.CheckboxSelectMultiple):
     template_name = "checkbox_list.html"
     option_template_name = "option_delete.html"
 
 
-class DayInputMulti(CheckboxSelectMultiple):
+class DayInputMulti(forms.CheckboxSelectMultiple):
     option_template_name = 'input_hour.html'
     template_name='input_day.html'
     use_fieldset = False
@@ -62,7 +62,7 @@ class DayInputMulti(CheckboxSelectMultiple):
 
 
 
-class HourInput(CheckboxInput):
+class HourInput(forms.CheckboxInput):
     template_name='input_hour.html'
     require_all_fields=False,
     label=''
@@ -79,7 +79,7 @@ class HourInput(CheckboxInput):
         return context
 
 
-class DayInputRadio(RadioSelect):
+class DayInputRadio(forms.RadioSelect):
     data_attrs = {}
     hours_enable = [*range(24)]
     hours_show = [*range(24)]
@@ -115,7 +115,7 @@ class DayInputRadio(RadioSelect):
         return super().render(name, value, attrs, renderer)
 
 
-class IconSelectMultiple(CheckboxSelectMultiple):
+class IconSelectMultiple(forms.CheckboxSelectMultiple):
     option_template_name='option_game.html'
     use_fieldset=False
 
@@ -149,7 +149,7 @@ class SelectRangeInput(RangeInput):
     template_name='select_range.html'
 
 
-class TabInput(MultiWidget):
+class TabInput(forms.MultiWidget):
     template_name='input_tab.html'
     use_fieldset=False
 
@@ -159,7 +159,11 @@ class TabInput(MultiWidget):
         return [True for tab in self.widgets]
 
 
-class WeekInput(MultiWidget):
+class TextInput(forms.TextInput):
+    template_name = 'input_text.html'
+
+
+class WeekInput(forms.MultiWidget):
     CHOICES = [(str(hr),str(hr)) for hr in range(24)]
     template_name='input_week.html'
     use_fieldset=False

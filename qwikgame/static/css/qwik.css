@@ -15,7 +15,7 @@ div[hidden] { display: none !important; }
 #feedback label { margin: 1em 0 0 0; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
-#tab_bar { border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
+#tab_bar { background-color: var(--color-backdrop); border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
 form { display: flex; gap: 0; flex-direction: column; align-items: stretch; width: 100%; }

@@ -31,8 +31,8 @@ div.field, fieldset { align-items: start; padding: 2rem; width: 100% }
 div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.field > div, fieldset > div { align-items: start; gap: 1rem; width: 100%; }
 div.field > div.label, fieldset > legend { font-size: 1.25rem; }
-div.field > *:not(div.label), fieldset > *:not(legend) { padding: 0 2rem; max-height: 0; transition: max-height 1s, margin-top 1s ease; }
-div.field.open > *:not(div.label), fieldset.open > *:not(legend) { margin-top: 2rem; max-height: 100rem; }
+div.field > *:not(div.label), fieldset > *:not(legend) { padding: 0 2rem; max-height: 0; transition: max-height 1s ease; }
+div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
 

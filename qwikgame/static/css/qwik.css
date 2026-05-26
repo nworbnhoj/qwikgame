@@ -28,31 +28,33 @@ legend { position: relative; top: 1.6em; }
 
 /* div.field and fieldset are treated in identical fashion */
 div.field, fieldset { align-items: start; padding: 2rem; width: 100% }
-div.field > div, fieldset > div { align-items: start; gap: 1em; }
-div.field > div.label, fieldset > legend { font-size: 1.25rem; width: 100%; }
-div.field > *:not(div.label), fieldset > *:not(legend) { margin-left: 2rem; max-height: 0; transition: margin-top 1s, max-height 1s ease; }
-div.field.open > *:not(div.label), fieldset.open > *:not(legend) { margin-top: 2rem; max-height: 50rem; }
+div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
+div.field > div, fieldset > div { align-items: start; gap: 1rem; width: 100%; }
+div.field > div.label, fieldset > legend { font-size: 1.25rem; }
+div.field > *:not(div.label), fieldset > *:not(legend) { padding: 0 2rem; max-height: 0; transition: max-height 1s, margin-top 1s ease; }
+div.field.open > *:not(div.label), fieldset.open > *:not(legend) { margin-top: 2rem; max-height: 100rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
 
-form div.label + input { margin: 0 2rem 0 2rem }
-div.field.naked { padding: 0 }
-div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
-div.prompt.hidden { display: none; }
-div.prompt div { color: #3b3b3b; flex-shrink: 1; min-width: 0; }
-div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
-div.prompt .identicon svg { height: 4rem; }
-fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
-
-label p { flex: auto; }
-label.hidden { display: none }
-label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
-label.option { align-items: center; display: flex; gap: 2rem; width: 100%; }
-label.option div.btn { height: 1rem }
-label.option:first-child { flex-grow: 1; }
+/* label.option used in CheckboxList Widget */
+label.option { align-items: center; display: flex; flex-direction: row; gap: 2rem; width: 100%; }
 label.option:has(input[type=checkbox])::before { content: none; }
 label.option:has(input[type=checkbox]:checked) { display: none; }
 label.option:has(input:checked) { color: var(--color-qwik); }
+
+/* div.prompt to prompt Player to book Venue in KeenForm */
+div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
+div.prompt.hidden { display: none; }
+div.prompt div { color: #3b3b3b; flex-direction: column; flex-shrink: 1; min-width: 0; }
+div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
+div.prompt .identicon svg { height: 4rem; }
+
+
+
+div.field.naked { padding: 0 }
+label p { flex: auto; }
+label.hidden { display: none }
+label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
 label.reveal { border-color: var(--color-stencil); margin: 3rem 0 0 0; padding: 1rem 1rem 1rem 0; }
 label.reveal > input { display: none; }
 label.reveal:active { box-shadow: none; transform: none; }
@@ -66,7 +68,7 @@ label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0;
 /* --- Inputs --- */
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
-input[type=text] { flex: 1 1 auto; font-size: inherit }
+input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; width: 100%; }
 input:checked + .slider { background-color: #66bb6a; }
 input:checked + .slider:before { transform: translateX(3rem); }
 input[type=range] { accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }

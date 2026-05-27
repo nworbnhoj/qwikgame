@@ -38,42 +38,7 @@
 </head>
 <body>
     <div id="alert_body_start" class="alert"></div>
-{% block tab_bar %}
-    <div id="tab_bar" class="tab_bar">
-        <div id="alert_icon_start" class="alert"></div>
-        <a id='logo_tab' href="{% url 'appeal' %}">
-            <img class="logo href" src="{% static 'img/qwik-icon.svg' %}" >
-        </a>
-        <div class="flex_space"></div>
-        <a class="btn special2 {{ appeals_tab }}" href="{% url 'appeal' %}">
-            <i class="fa-solid fa-house fa-2x"></i>
-            <span class="fat">{% translate "Invitations" %}</span>
-            <div {{ appeal_alert }} class="dot"></div>
-        </a>
-        <a class="btn special2 {{ match_tab }}" href="{% url 'matches' %}">
-            <i class="fa-solid fa-calendar-days fa-2x"></i>
-            <span class="fat">{% translate "Matches" %}</span>
-            <div {{ match_alert }} class="dot"></div>
-        </a>
-        <a class="btn special2 {{ review_tab }}" href="{% url 'review' %}">
-            <i class="fa-solid fa-thumbs-up fa-2x"></i>
-            <span class="fat">{% translate "Reviews" %}</span>
-            <div {{ review_alert }} class="dot"></div>
-        </a>
-        <a class="btn special2 {{ friend_tab }}" href="{% url 'friend' %}">
-            <i class="fa-solid fa-user-group fa-2x"></i>
-            <span class="fat">{% translate "Friends" %}</span>
-            <div {{ friend_alert }} class="dot"></div>
-        </a>
-        <div class="flex_space"></div>
-        <a class="btn special2 {{ account_tab }}" href="{% url 'account' %}">
-            <div class="identicon" data-hash="{{ user.hash }}"></div>
-            <span class="fat">{% block name %}{{ qwikname }}{% endblock %}</span>
-            <div {{ account_alert }} class="dot"></div>
-        </a>
-        <div id="alert_icon_end" class="alert"></div>
-    </div>
-{% endblock tab_bar %}
+    {% include 'tab_bar.html' %}
 {% block content %}
     <div id="content" class="content">
         <div id="alert_content_start" class="alert"></div>

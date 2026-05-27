@@ -18,6 +18,33 @@ div[hidden] { display: none !important; }
 #list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; }
 #tab_bar { align-items: center; background-color: var(--color-backdrop); border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-between; max-width: var(--dim-max-width); opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
+/* --- Responsive media rules --- */
+@media only screen and (max-width:600px) {
+  #detail { flex-basis: 100%; }
+  #logo_tab { display: none; }
+  div.flex_space { display: none }
+  span.fat { display: none }
+  span.full_day { display: none }
+  span.mid_day { display: none }
+}
+@media only screen and (min-width:600px) {
+  #detail { flex-basis: 100%; }
+  #logo_tab { display: none; }
+  div.flex_space { display: none }
+  span.fat { display: none }
+  span.full_day { display: none }
+  span.mid_day { display: inline-block }
+}
+@media only screen and (min-width:768px) {
+  #logo_tab { display: block; }
+  div.flex_space { display: block }
+  span.fat { display: block }
+  span.full_day { display: inline-block }
+  span.mid_day { display: inline-block }
+}
+@media only screen and (min-width:992px) { }
+@media only screen and (min-width:1200px) { }
+
 /* --- Forms --- */
 form { align-items: stretch; display: flex; gap: 0; flex-direction: column; }
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .10); margin: 0.4rem; min-height: 1rem; }
@@ -333,28 +360,3 @@ ul.leaders span + span { background: white; float: right; padding-left: 0.33rem;
   40%, 50% { background-position: 100% 100%, 100% 0, 0    0, 0 100% }
   90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
 }
-@media only screen and (max-width:600px) {
-  #detail { flex-basis: 100%; }
-  #logo_tab { display: none; }
-  div.flex_space { display: none }
-  span.fat { display: none }
-  span.full_day { display: none }
-  span.mid_day { display: none }
-}
-@media only screen and (min-width:600px) {
-  #detail { flex-basis: 100%; }
-  #logo_tab { display: none; }
-  div.flex_space { display: none }
-  span.fat { display: none }
-  span.full_day { display: none }
-  span.mid_day { display: inline-block }
-}
-@media only screen and (min-width:768px) {
-  #logo_tab { display: block; }
-  div.flex_space { display: block }
-  span.fat { display: block }
-  span.full_day { display: inline-block }
-  span.mid_day { display: inline-block }
-}
-@media only screen and (min-width:992px) { }
-@media only screen and (min-width:1200px) { }

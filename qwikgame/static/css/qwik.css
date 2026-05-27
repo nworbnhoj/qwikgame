@@ -186,6 +186,15 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.sml { height: 1.5rem; width: 1.5rem; }
 a.btn { position: relative; }
 a:has(input:disabled) { pointer-events: none; }
+
+/* --- Loader --- */
+.loader::after { align-self: center; position: absolute; content: ""; width: 2rem; aspect-ratio: 1; --_g: no-repeat radial-gradient(farthest-side, #999999 90%, #0000); background: var(--_g), var(--_g), var(--_g), var(--_g); background-size: 40% 40%; animation: l46 1s infinite; }
+@keyframes l46 {
+  0% { background-position: 0 0, 100% 0, 100% 100%, 0 100% }
+  40%, 50% { background-position: 100% 100%, 100% 0, 0    0, 0 100% }
+  90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
+}
+
 .align_center { align-self: center }
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }
@@ -213,7 +222,6 @@ a:has(input:disabled) { pointer-events: none; }
 .item.unseen div.icon { color: var(--color-qwik); }
 .invisible { visibility: hidden }
 .name { color: var(--color-qwik); font-weight: bold; }
-.loader::after { align-self: center; position: absolute; content: ""; width: 2rem; aspect-ratio: 1; --_g: no-repeat radial-gradient(farthest-side, #999999 90%, #0000); background: var(--_g), var(--_g), var(--_g), var(--_g); background-size: 40% 40%; animation: l46 1s infinite; }
 .push_down { margin-top: 4rem; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
@@ -355,8 +363,4 @@ ul.leaders span:first-child { background: white; padding-right: 0.33rem; }
 ul.leaders span + span { background: white; float: right; padding-left: 0.33rem; }
 #infowindow_mark_place { overflow: hidden; }
 #license { flex-shrink: 0; }
-@keyframes l46 {
-  0% { background-position: 0 0, 100% 0, 100% 100%, 0 100% }
-  40%, 50% { background-position: 100% 100%, 100% 0, 0    0, 0 100% }
-  90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
-}
+

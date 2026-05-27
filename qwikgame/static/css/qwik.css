@@ -8,13 +8,14 @@ div { align-items: stretch; display: flex; flex-direction: column; overflow: hid
 div[hidden] { display: none !important; }
 
 /* --- Structure --- */
-#content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: 1200px; }
-#detail { flex: 0 1 68.75%; gap: 1rem; padding: 0 1rem 10rem 1rem; width: 68.75% }
+#content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: 80rem; }
+#detail { flex: 2 40rem; gap: 1rem; padding: 0 1rem 10rem 1rem; }
 #feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: 1200px; padding: 0em 3em; }
 #feedback:has(input:checked) { max-height: 40em; }
 #feedback label { margin: 1em 0 0 0; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
+#list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; }
 #tab_bar { align-items: center; background-color: var(--color-backdrop); border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-around; left: 0; opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Forms --- */
@@ -252,7 +253,6 @@ div.info.push_right .info_text::after { right: 0; }
 div.info_bubble { background-color: var(--color-backdrop); justify-content: flex-start; margin: 0.3rem; padding: 0.3rem }
 div.line { flex-direction: row; line-height: 1.6rem; margin: 0; padding-left: 0.5rem; text-overflow: ellipsis; vertical-align: middle; white-space: nowrap; }
 div.list { border-width: 0 0.1rem 0 0; flex: 1 1 100%; justify-content: flex-start; padding: 1rem; width: 100% }
-div.list_bar { border-width: 0 0.1rem 0 0; border-style: solid; align-items: start; flex: 0 1 auto; justify-content: start; width: 31.25%; }
 div.list_head { border: 1px solid black; border-width: 0 0 0.1rem 0; flex: 0 0 auto; flex-direction: row; justify-content: space-between; margin: 0 -1rem 0 -1rem; padding: 1rem }
 div.log_entry { align-items: center; background-color: var(--color-backdrop); border: 0 solid black; box-shadow: none; flex: auto; flex-direction: row; gap: 0.3rem; margin: 0; padding: 0.3rem; width: 100%; }
 div.log_entry .icon { height: auto; width: auto; }

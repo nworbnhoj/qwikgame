@@ -164,7 +164,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.special2:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.special2.selected { background-color: var(--color-checked); border-color: var(--color-checked); font-weight: bold; }
 .btn.special2 .dot { aspect-ratio: 1; background-color: var(--color-blue); border-radius: 50%; position: absolute; right: 0; top: 0; width: 1rem; }
-.btn.special2 .identicon { height: 2.6rem; width: 2.6rem; }
+.btn.special2 .identicon { height: 3.6rem; width: 3.6rem; }
 @media (hover:hover) {
   .btn.primary:hover { background-color: var(--color-qwik-up); border-color: var(--color-qwik-up); }
   .btn.secondary:hover { background-color: var(--color-qwik-dn); border-color: var(--color-grey-3); }

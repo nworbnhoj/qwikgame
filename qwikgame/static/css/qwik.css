@@ -23,6 +23,9 @@ form { align-items: stretch; display: flex; gap: 0; flex-direction: column; }
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .10); margin: 0.4rem; min-height: 1rem; }
 form > div:hover { background-color: var(--color-backdrop); }
 form > div:last-child { align-items: center; background-color: inherit; box-shadow: none; }
+form > div:with(field.naked) { background-color: inherit; box-shadow: none; }
+form.plank { flex-direction: row; }
+form.plank > div { background-color: inherit; box-shadow: none; flex-direction: row; gap: 0.3rem; flex-wrap: nowrap; justify-content: stretch; }
 
 /* position legend identical to div.label */
 legend { position: relative; top: 1.6em; }
@@ -50,9 +53,16 @@ div.prompt div { color: #3b3b3b; flex-direction: column; flex-shrink: 1; min-wid
 div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }
 div.prompt .identicon svg { height: 4rem; }
 
+/* match chat */
+div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
+div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
+div.chat_bubble .text { }
+div.chat_bubble .row:has(time) { margin-left: auto }
+div.chat_input { flex: 2;  }
+div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; padding: 0; }
 
 
-div.field.naked { padding: 0 }
+
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
@@ -67,10 +77,10 @@ label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
 
 /* --- Inputs --- */
-div:has(> input) { align-self: stretch; }
+div:has(> input) { align-self: stretch; justify-content: stretch; }
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
-input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; width: 100%; }
+input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }
 input:checked + .slider { background-color: #66bb6a; }
 input:checked + .slider:before { transform: translateX(3rem); }
 input[type=range] { accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }
@@ -192,13 +202,6 @@ div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
 div.by_day { }
-div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
-div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
-div.chat_bubble .text { }
-div.chat_bubble .row:has(time) { margin-left: auto }
-div.chat_input { flex-direction: row; gap: 0.3rem; justify-content: stretch; width: 100% }
-div.chat_input div:not([class]) { flex-grow: 1; }
-div.chat_input input { width: 97% }
 div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10rem }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }

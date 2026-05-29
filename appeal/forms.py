@@ -56,7 +56,7 @@ class AcceptForm(QwikForm):
 class BidForm(QwikForm):
     hour = DayRadioField(
         help_text=_('When are you keen to play?'),
-        label =_ ('what time forks for you?'),
+        label =_ ('what time works for you?'),
         required=False,
         template_name='field.html',
     )

@@ -293,8 +293,8 @@ function nFormatter(num, digits) {
       pre_pending = '';
       switch (INPUT.type){
         case 'checkbox':
-          legend_or_label = field.querySelector('legend');
-          legend_or_label = legend_or_label ? legend_or_label : field.querySelector('label');
+          legend_or_label = field.querySelector(':scope > legend');
+          legend_or_label = legend_or_label ? legend_or_label : field.querySelector(':scope > div.label');
           if (legend_or_label){
             pending = legend_or_label.querySelector('span.pending');
             check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
@@ -306,8 +306,8 @@ function nFormatter(num, digits) {
           }
           break;
         case 'radio':
-          legend_or_label = field.querySelector('legend');
-          legend_or_label = legend_or_label ? legend_or_label : field.querySelector('div.label');
+          legend_or_label = field.querySelector(':scope > legend');
+          legend_or_label = legend_or_label ? legend_or_label : field.querySelector(':scope > div.label');
           if (legend_or_label){
             pending = legend_or_label.querySelector('span.pending');
             if (pending){

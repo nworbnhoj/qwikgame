@@ -845,13 +845,17 @@ function showInfo(event) {
 }
 
 function slide(slider) {
-  var words = slider.previousElementSibling.children;
-  for (let i = 0; i < words.length; i++) {
-    var word = words.item(i);
-    if (i == slider.value) {
-      word.classList.remove('invisible');
-    } else {
-      word.classList.add('invisible');
+  const FIELD = slider.closest('.field');
+  const OPTIONS = FIELD.querySelector('.range_options');
+  if (OPTIONS) {
+    WORDS = OPTIONS.children;
+    for (let i = 0; i < WORDS.length; i++) {
+      var word = WORDS.item(i);
+      if (i == slider.value) {
+        word.classList.remove('invisible');
+      } else {
+        word.classList.add('invisible');
+      }
     }
   }
 }

@@ -319,7 +319,7 @@ function nFormatter(num, digits) {
           break;
         case 'email':
           email = field.querySelector("input[type='email']");
-          label = email.labels[0];
+          label = field.querySelector("div.label");
           if (label){
             pending = label.parentElement.querySelector('span.pending');
             if (pending){
@@ -341,7 +341,7 @@ function nFormatter(num, digits) {
           break;
         case 'text':
           text = field.querySelector("input[type='text']");
-          label = text.labels[0];
+          label = field.querySelector("div.label");
           if (label){
             pending = label.parentElement.querySelector('span.pending');
             if (pending){

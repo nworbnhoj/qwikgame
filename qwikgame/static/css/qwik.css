@@ -9,7 +9,7 @@ div[hidden] { display: none !important; }
 
 /* --- Structure --- */
 #content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: var(--dim-max-width); width: 100%; }
-#detail { flex: 2 40rem; gap: 1rem; padding: 0 1rem 10rem 1rem; }
+#detail { flex: 2 40rem; gap: 1rem; padding: 0 0 10rem 0; }
 #feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 0em 3em; }
 #feedback:has(input:checked) { max-height: 40em; }
 #feedback label { margin: 1em 0 0 0; }
@@ -252,10 +252,10 @@ div.day.sun { grid-column: 1 / 1; grid-row: 7 / 7 }
 div.day.thu { grid-column: 1 / 1; grid-row: 4 / 4 }
 div.day.tue { grid-column: 1 / 1; grid-row: 2 / 2 }
 div.day.wed { grid-column: 1 / 1; grid-row: 3 / 3 }
-div.detail_body { }
+div.detail_body { padding: 1rem; }
 div.detail_form { }
-div.detail_head { border-style: solid; border-width: 0 0 0.1rem 0; flex: 0 0 auto; flex-direction: row; justify-content: start; margin: 0 -1rem 0 -1rem; padding: 1rem }
-div.detail_head .identicon { height: 4rem; position: relative; top: 0.7rem; width: 4rem; }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 1px 0; flex: 0 0 auto; flex-direction: row; justify-content: start; padding: 1rem }
+div.detail_head .identicon { aspect-ratio: 1; width: 4rem; }
 div.detail_n { flex: 0 0 auto; gap: 1rem; }
 div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
 div.down { align-items: start; background-color: white; border: 1px solid var(--color-grey-c); gap: 0.5rem; margin: 0.3rem; min-width: 100%; opacity: 1.0; padding: 0.3rem 1rem 0.3rem 1rem; position: absolute; top: 3.2rem; white-space: nowrap; z-index: 10 }

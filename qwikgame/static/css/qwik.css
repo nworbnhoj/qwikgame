@@ -108,8 +108,6 @@ div:has(> input) { align-self: stretch; justify-content: stretch; }
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }
-input:checked + .slider { background-color: #66bb6a; }
-input:checked + .slider:before { transform: translateX(3rem); }
 input.btn { position: relative; }
 input.strength { display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }
 input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }
@@ -125,10 +123,10 @@ label:has(input[type=radio])::before { content: ''; border: 1px solid var(--colo
 label:has(input[type=radio]:checked)::before { content: "\2022"; color: var(--color-qwik); content: "\2714"; }
 
 /* range slider */
-input[type=range] { accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }
-div.range_options { flex-direction: row; gap: 1rem; justify-content: space-between; padding: 1rem 0 0 0; width: 100% }
+input[type=range] { align-self: stretch; accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; }
+div.range_options { align-self: stretch; flex-direction: row; gap: 1rem; justify-content: space-between; padding: 1rem 0 0 0; }
 div.range_options .option { text-align: center }
-div.slider { background-color: #ccc; border-radius: 2.5rem; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; width: 5.6rem; }
+div.slider { background-color: var(--color-grey-c); border-radius: 2.5rem; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; width: 5.6rem; }
 div.slider:before { aspect-ratio: 1/1; background-color: #fff; border-radius: 50%; bottom: 0.2rem; content: ""; left: 0.2rem; position: absolute; transition: .4s; width: 2.2rem }
 div.slide_labels { gap: 1rem; justify-content: space-between; width: 100% }
 div.slide_label { text-align: center }

@@ -1,4 +1,4 @@
-body { font-size: 13px }
+html { font-size: 13px; }
 div.button { font-size: 1.07em }
 div.detail { flex: 1 1 auto }
 div.head_back { order: 5 }

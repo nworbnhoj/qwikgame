@@ -1,17 +1,17 @@
 html { font-size: 13px; }
-div.button { font-size: 1.07em }
+div.button { font-size: 1.07rem }
 div.detail { flex: 1 1 auto }
 div.head_back { order: 5 }
 div.head_icon { display: none }
 div.icon_caption { display: none }
 div.list_bar { flex: 1 1 auto }
-div.slide_labels { font-size: 0.94em }
-h1 { font-size: 3em }
-h2 { font-size: 1.14em }
-h3 { font-size: 1.07em }
-h4 { font-size: 1.03em }
-label { font-size: 1.07em }
+div.slide_labels { font-size: 0.94rem }
+h1 { font-size: 3rem }
+h2 { font-size: 1.14rem }
+h3 { font-size: 1.07rem }
+h4 { font-size: 1.03rem }
+label { font-size: 1.07rem }
 label.toggle:has(input[name="list"]) { color: inherit }
 p.fat { display: none }
-p.name { font-size: 1.07em }
+p.name { font-size: 1.07rem }
 #logo_tab { display: none }

@@ -4,7 +4,7 @@
 * { }
 html { height: 100%; }
 body { align-items: center; background-color: var(--color-backdrop); display: flex; flex-direction: column; font-family: NotoSans; height: 100vh; padding: 0; }
-div { align-items: stretch; display: flex; flex-direction: column; overflow: hidden; }
+div { align-items: stretch; display: flex; flex-direction: column; }
 div[hidden] { display: none !important; }
 
 /* --- Structure --- */
@@ -15,7 +15,7 @@ div[hidden] { display: none !important; }
 #feedback label { margin: 1em 0 0 0; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
-#list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; }
+#list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; overflow: hidden; }
 #tab_bar { align-items: center; background-color: var(--color-backdrop); border-width: 0 0 1px 0; border-style: solid; flex-direction: row; gap: 1em; height: 4em; justify-content: space-between; max-width: var(--dim-max-width); opacity: 1.0; position: fixed; top: 0; width: 100%; z-index: 100; }
 
 /* --- Responsive media rules --- */
@@ -58,11 +58,11 @@ form.plank > div { background-color: inherit; box-shadow: none; flex-direction: 
 legend { position: relative; top: 1.6em; }
 
 /* div.field and fieldset are treated in identical fashion */
-div.field, fieldset { align-items: start; padding: 2rem; }
+div.field, fieldset { align-items: start; overflow: hidden; padding: 2rem; }
 div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.field > div, fieldset > div { align-items: start; gap: 1rem; }
 div.field > div.label, fieldset > legend { font-size: 1.25rem; }
-div.field > *:not(div.label), fieldset > *:not(legend) { padding: 0 2rem; max-height: 0; transition: max-height 1s ease; }
+div.field > *:not(div.label), fieldset > *:not(legend) { margin: 0 2rem; max-height: 0; overflow: hidden; transition: max-height 1s ease; }
 div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
@@ -219,7 +219,7 @@ a:has(input:disabled) { pointer-events: none; }
 .item { align-items: start; display: flex; flex-flow: row wrap; justify-content: center; padding: 0.3rem 0.3rem 0.3rem 0; }
 .item .badges { align-items: flex-end; display: flex; flex: 0 0 auto; height: 100%; width: 20% }
 .item .badges time { margin-top: auto; }
-.item .lines { align-items: start; display: flex; flex: auto; width: 75% }
+.item .lines { align-items: start; display: flex; flex: auto; overflow: hidden; width: 75% }
 .item div.note { width: 100% }
 .item div.notes { flex: 1 1 0; text-overflow: ellipsis; }
 .item p { display: inline-block; text-overflow: ellipsis; white-space: nowrap; width: auto }
@@ -238,7 +238,7 @@ a:has(input:disabled) { pointer-events: none; }
 .todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 div.alert { display: none; flex: auto; justify-content: start; margin: 0; }
-div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; margin: 0 -1rem 0 -1rem; padding: 1rem; text-align: center; z-index: 20; }
+div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; padding: 1rem; text-align: center; z-index: 20; }
 div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }

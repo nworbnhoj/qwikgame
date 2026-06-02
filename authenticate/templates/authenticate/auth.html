@@ -26,9 +26,9 @@
 {% block list_bar %}{% endblock list_bar %}
 
 {% block content %}
-<div class="pillar">
-    <fieldset style="text-align: center;">
-        <legend><img class="logo href" src="{% static 'img/qwik-icon.svg' %}"></legend>
+<div id="detail" class="detail">
+    <div id="alert_detail_start" class="alert"></div>
+        <img class="logo href" src="{% static 'img/qwik-icon.svg' %}">
         <div class="pillar">
             <h6>{% translate "Welcome to Qwikgame" %}</h6>
 {% if hash %}         
@@ -36,6 +36,6 @@
 {% endif %}
     {% block detail %}{% endblock detail %}
         </div>
-    </fieldset>
+    <div id="alert_detail_end" class="alert"></div>
 </div>
 {% endblock content %}

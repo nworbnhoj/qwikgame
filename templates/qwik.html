@@ -38,7 +38,11 @@
 </head>
 <body>
     <div id="alert_body_start" class="alert"></div>
+
+{% block tab_bar %}
     {% include 'tab_bar.html' %}
+{% endblock tab_bar %}
+
 {% block content %}
     <div id="content" class="content">
         <div id="alert_content_start" class="alert"></div>

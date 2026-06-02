@@ -163,7 +163,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.special1:has(input:checked) { }
 .btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 .btn.special1:disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); }
-.btn.special2 { border-color: var(--color-backdrop); color: var(--color-grey-3); flex: 0 1 auto; margin: 0px; padding: 0.5rem 0.5rem; position: relative; text-decoration: none; }
+.btn.special2 { border-color: var(--color-backdrop); color: var(--color-grey-3); flex: 0 1 auto; margin: 0px; padding: 0.5rem 0.5rem; padding: 0px 0.5rem; position: relative; text-decoration: none; }
 .btn.special2:active { background-color: var(--color-active-2); border-color: var(--color-active-2); }
 .btn.special2:has(i:only-child) { aspect-ratio: 1; flex: 0 0 auto; }
 .btn.special2:has(input:checked) { background-color: var(--color-checked); border-color: var(--color-checked) }

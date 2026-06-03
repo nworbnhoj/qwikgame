@@ -29,7 +29,7 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down right hidden">
-                        <form id="menu_form " action="{% url 'friend' %}" method="post">
+                        <form id="menu_form " action="{% url target friend=friend.pk %}" method="post">
     {% csrf_token %}
                             <label class="btn tertiary">
                                 <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(

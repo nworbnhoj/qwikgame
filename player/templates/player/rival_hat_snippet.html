@@ -13,7 +13,9 @@
                     <form id="menu_form " action="{{ request.path }}" method="post">
 {% csrf_token %}
                         <label class="btn tertiary">
-                            <input hidden name="BLOCK" type="submit" value='{{ rival.pk }}' onclick="return confirm('Block this Player?')">
+                            <input hidden name="BLOCK" type="submit" value='{{ rival.pk }}' onclick="return confirm(
+                                '{% translate 'Block this Player?' %}'
+                            )">
                             block
                         </label>
                     </form>

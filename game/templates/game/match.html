@@ -62,7 +62,7 @@
         {% csrf_token %}
                                 <label class="btn tertiary">
                                     <input hidden name="CANCEL" type="submit" value='{{ match.pk }}' onclick="return confirm(
-                                        {% translate 'Cancel this Match?' %}
+                                        '{% translate 'Cancel this Match?' %}'
                                     )">
                                     {% translate "cancel" %}
                                 </label>
@@ -168,7 +168,7 @@
 {% csrf_token %}
                 <div class="chat_input">
                     <div hidden class="btn naked" onclick="return alert(
-                        {% translate '☺ emogi coming soon ☺' %}
+                        '{% translate '☺ emogi coming soon ☺' %}'
                     )">
                         <i class="fa-regular fa-face-smile fa-xl"></i>
                     </div>

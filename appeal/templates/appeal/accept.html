@@ -50,7 +50,7 @@
     {% if player == appeal.player %}
                         <label class="btn tertiary">
                             <input hidden form="form" name="CANCEL" type="submit" value='{{ appeal.pk }}' onclick="return confirm(
-                                {% translate 'Cancel this Invitation?' %}
+                                '{% translate 'Cancel this Invitation?' %}'
                             )">
                             {% translate "cancel" %}
                         </label>
@@ -96,7 +96,7 @@
         {% if bids|get_item:entry.pk %}
                 <label class="btn primary small round">
                     <input hidden type="submit" name='accept' value='{{ entry.pk }}' onclick="return confirm(
-                        {% translate 'You are about to schedule a Match. A chat session will be opened with your rival. Continue?' %}
+                        '{% translate 'You are about to schedule a Match. A chat session will be opened with your rival. Continue?' %}'
                     )">
                     <i class="fa-solid fa-right-long fa-xl"></i>
                 </label>

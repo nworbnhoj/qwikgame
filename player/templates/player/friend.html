@@ -33,7 +33,7 @@
     {% csrf_token %}
                             <label class="btn tertiary">
                                 <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(
-                                    {% translate 'Delete this Friend?' %}
+                                    '{% translate 'Delete this Friend?' %}'
                                 )">
                                 {% translate "delete" %}
                             </label>

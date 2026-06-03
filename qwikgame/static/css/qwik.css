@@ -10,9 +10,9 @@ div[hidden] { display: none !important; }
 /* --- Structure --- */
 #content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: var(--dim-max-width); width: 100%; }
 #detail { flex: 2 40rem; gap: 1rem; padding: 0 0 10rem 0; }
-#feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 0em 3em; }
+#feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 1em 3em; }
 #feedback:has(input:checked) { max-height: 60em; }
-#feedback label { margin: 1em 0 0 0; }
+#feedback label { margin: 1em 1em; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
 #list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; overflow: hidden; }
@@ -85,7 +85,7 @@ div.chat_bubble { align-items: start; background-color: var(--color-stencil); bo
 div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
 div.chat_bubble .text { }
 div.chat_bubble .row:has(time) { margin-left: auto }
-div.chat_input { flex: 2;  }
+div.chat_input { flex: 2; }
 div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; padding: 0; }
 
 
@@ -105,13 +105,14 @@ label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0;
 
 /* --- Inputs --- */
 div:has(> input) { align-self: stretch; justify-content: stretch; }
-div:has(> textarea) { width: 100%; }
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }
 input.btn { position: relative; }
 input.strength { display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }
 input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }
+div:has(> textarea) { width: 100%; }
+textarea { border-color: var(--color-grey-c); width: 100%; }
 
 /* Over-ride std checkbox */
 input[type=checkbox] { display: none; }
@@ -201,7 +202,6 @@ a:has(input:disabled) { pointer-events: none; }
   40%, 50% { background-position: 100% 100%, 100% 0, 0    0, 0 100% }
   90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
 }
-
 .align_center { align-self: center }
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }
@@ -356,7 +356,6 @@ span.identicon { border-width: 0px; display: inline-block; text-align: center; w
 span.on { color: lightseagreen; }
 span.off { color: indianred; }
 span.qwik { color: var(--color-qwik); }
-textarea { border: 1px solid black; display: block }
 time { color: var(--color-grey-c); font-size: small; text-align: right; }
 ul.leaders { line-height: 2rem; list-style: none; max-width: 40rem; overflow-x: hidden; padding: 0; width: 100%; }
 ul.leaders li:before { float: left; width: 0; white-space: nowrap; content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "; }
@@ -364,4 +363,3 @@ ul.leaders span:first-child { background: white; padding-right: 0.33rem; }
 ul.leaders span + span { background: white; float: right; padding-left: 0.33rem; }
 #infowindow_mark_place { overflow: hidden; }
 #license { flex-shrink: 0; }
-

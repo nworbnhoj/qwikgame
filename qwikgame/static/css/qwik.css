@@ -12,7 +12,6 @@ div[hidden] { display: none !important; }
 #detail { flex: 2 40rem; gap: 1rem; padding: 0 0 10rem 0; }
 #feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 1em 3em; }
 #feedback:has(input:checked) { max-height: 60em; }
-#feedback label { margin: 1em 1em; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
 #list_bar { align-items: start; border-style: solid; border-width: 0 0.1rem 0 0; flex: 1 20rem; justify-content: start; overflow: hidden; }
@@ -93,12 +92,6 @@ div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; pad
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }
-label.reveal { border-color: var(--color-stencil); margin: 3rem 0 0 0; padding: 1rem 1rem 1rem 0; }
-label.reveal > input { display: none; }
-label.reveal:active { box-shadow: none; transform: none; }
-label.reveal:has(input) ~ div { display: none; }
-label.reveal:has(input:checked) ~ div { display: flex; }
-label.reveal { display: inline-block; }
 label.switch { display: inline-block; height: 2.6rem; margin-right: 3rem; position: relative; width: 4rem }
 label.switch input { display: none }
 label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0 }
@@ -202,6 +195,14 @@ a:has(input:disabled) { pointer-events: none; }
   40%, 50% { background-position: 100% 100%, 100% 0, 0    0, 0 100% }
   90%, 100% { background-position: 100% 100%, 0 100%, 0    0, 100% 0 }
 }
+
+/* --- Reveal --- */
+label.reveal > input { display: none; }
+label.reveal:active { box-shadow: none; transform: none; }
+label.reveal:has(input) ~ div { display: none; }
+label.reveal:has(input:checked) ~ div { display: flex; }
+
+/* --- classes --- */
 .align_center { align-self: center }
 .align_end { justify-content: end; }
 .align_start { align-self: flex-start }

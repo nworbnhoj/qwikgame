@@ -248,6 +248,20 @@ function nFormatter(num, digits) {
     if (field){
       error = field.querySelector('span.error');
       const ERROR = error && error.textContent ? error : '';
+      const TEXTAREA = field.querySelector('textarea')
+      if (TEXTAREA){
+        label = field.querySelector("div.label");
+        if (label){
+          pending = label.parentElement.querySelector('span.pending');
+          if (pending){
+            pre_pending = pending.textContent;
+            text = TEXTAREA.value.slice(0,30);
+            ellipsis = TEXTAREA.value.length > text.length ? '...' : '' 
+            pending.textContent = text + ellipsis;
+          }
+        }
+        return;
+      }
       const INPUT = field.querySelector('input')
       let by_input_name = true;
       switch (INPUT.name){

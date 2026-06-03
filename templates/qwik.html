@@ -54,12 +54,12 @@
     <div id="filler"></div>
 
 {% block feedback %}
-    <div id='feedback' class='post field'>
+    <div id='feedback' class='post'>
         <label class="btn tertiary reveal">
             <input name="reveal_feedback" type="checkbox">
                 {% translate "Feedback" %}
         </label>
-        <div class='post field'>
+        <div class='post'>
             <div id="feedback_form_start" class="alert"></div>
             <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
     {% csrf_token %}

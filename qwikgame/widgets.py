@@ -129,6 +129,10 @@ class IconSelectMultiple(forms.CheckboxSelectMultiple):
         return option
 
 
+class RadioSelect(forms.RadioSelect):
+    template_name='input_radio.html'
+
+
 class RangeInput(Input):
     checked_attribute = {"checked": True}
     input_type='range'
@@ -157,6 +161,10 @@ class TabInput(forms.MultiWidget):
         if value:
             return [val for val in value]
         return [True for tab in self.widgets]
+
+
+class TextArea(forms.Textarea):
+    template_name = 'input_textarea.html'
 
 
 class TextInput(forms.TextInput):

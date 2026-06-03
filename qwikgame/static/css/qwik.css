@@ -11,7 +11,7 @@ div[hidden] { display: none !important; }
 #content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: var(--dim-max-width); width: 100%; }
 #detail { flex: 2 40rem; gap: 1rem; padding: 0 0 10rem 0; }
 #feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 0em 3em; }
-#feedback:has(input:checked) { max-height: 40em; }
+#feedback:has(input:checked) { max-height: 60em; }
 #feedback label { margin: 1em 0 0 0; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }
@@ -62,7 +62,7 @@ div.field, fieldset { align-items: start; overflow: hidden; padding: 2rem; }
 div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.field > div, fieldset > div { align-items: start; gap: 1rem; }
 div.field > div.label, fieldset > legend { font-size: 1.25rem; }
-div.field > *:not(div.label), fieldset > *:not(legend) { margin: 0 2rem; max-height: 0; overflow: hidden; transition: max-height 1s ease; }
+div.field > *:not(div.label), fieldset > *:not(legend) { max-height: 0; overflow: hidden; padding: 0 2rem; transition: max-height 1s ease; }
 div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
@@ -105,6 +105,7 @@ label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0;
 
 /* --- Inputs --- */
 div:has(> input) { align-self: stretch; justify-content: stretch; }
+div:has(> textarea) { width: 100%; }
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
 input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }

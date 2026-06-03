@@ -1,7 +1,8 @@
 import logging
-from django.forms import ModelForm, Select, Textarea
+from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 from feedback.models import Feedback
+from qwikgame.widgets import TextArea, RadioSelect
 
 
 logger = logging.getLogger(__file__)
@@ -13,14 +14,23 @@ class FeedbackForm(ModelForm):
         model = Feedback
         fields = ['type', 'text']
         labels = { 'text': _('Description') }
+        localized_fields = [ '__all__']
         widgets = {
-            'text': Textarea(attrs={'placeholder': _('thanks heaps for taking the time!')}),
-            'type': Select(attrs={'class': _('feedback')}),
+            'text': TextArea(attrs={
+                'class': _('feedback'),
+                'placeholder': _('thanks heaps for taking the time!')
+            }),
+            'type': RadioSelect(attrs={
+                'class': _('feedback')
+            }),
         }
 
     @classmethod
     def get(klass):
-        return { 'feedback_form': klass() }
+        form = klass()
+        form.fields['text'].template_name = 'field.html'
+        form.fields['type'].template_name = 'field.html'
+        return { 'feedback_form': form }
 
     @classmethod
     def post(klass, request_post):

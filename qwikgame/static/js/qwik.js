@@ -268,13 +268,11 @@ function nFormatter(num, digits) {
         case 'all_day':
           label = field.querySelector('div.label');
           pending = label.querySelector('span.pending');
-          setTimeout(() => {
-            pre_pending = pending.textContent;
-            pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
-            if (ERROR && (pending.textContent !== pre_pending)){
-              ERROR.textContent = '';
-            }
-          }, 1000);    // required to allow various Hour Day Week sync to complete
+          pre_pending = pending.textContent;
+          pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
+          if (ERROR && (pending.textContent !== pre_pending)){
+            ERROR.textContent = '';
+          }
           break;
         case 'all_week':
           label = field.querySelector('div.label');
@@ -375,7 +373,11 @@ function nFormatter(num, digits) {
 
 
   function sum_input_by_day(by_day){
-    if (by_day){
+    if (!by_day){
+      console.warn("sum_input_by_day(null)")
+      return;
+    }
+    updateAllDay(by_day).then(() => {
       if(!by_day.querySelector('input:checked')){
         return '';
       }
@@ -391,7 +393,7 @@ function nFormatter(num, digits) {
         });
         return hrs;
       }
-    }
+    });
   }
 
 

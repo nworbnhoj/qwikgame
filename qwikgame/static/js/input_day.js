@@ -5,21 +5,30 @@ if (typeof toggleAllDay == "undefined") {
   // update an AllDay toggle to be consistent with the Hour checkboxes
   function updateAllDay(all_day) {
     if (!all_day) {
+      console.warn("updateAllDay(null)")
       return;
     }
-    try {
-      // check all_day if every hour is checked
-      let hours = all_day.closest('div.by_day').querySelector('div.radio_block').children;
-      for (hour of hours) {
-        var checkbox = hour.firstElementChild;
-        if (!checkbox.disabled && !checkbox.checked) {
-          return;
-        }
-      }
-      toggle_check(all_day);
-    } catch (e) {
-      console.log(e);
+    if ('updatePromise' in all_day) {
+      return all_day.updatePromise;
     }
+    all_day.updatePromise = new Promise((resolve, reject) => {
+      try {
+        // check all_day if every hour is checked
+        let hours = all_day.closest('div.by_day').querySelector('div.radio_block').children;
+        for (hour of hours) {
+          var checkbox = hour.firstElementChild;
+          if (!checkbox.disabled && !checkbox.checked) {
+            resolve(false);
+          }
+        }
+        toggle_check(all_day);
+        resolve(true);
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    all_day.updatePromise.then(() => { delete all_day.updatePromise });
+      return all_day.updatePromise;
   }
 
   // promote a change in an Hour checkbox up to the AllDay toggle

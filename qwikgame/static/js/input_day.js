@@ -65,7 +65,7 @@ if (typeof toggleAllDay == "undefined") {
     }
   }
 
-  window.addEventListener("load", function() {
+  window.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
       updateAllDay(all_day)
       all_day.addEventListener("click", toggleAllDay);

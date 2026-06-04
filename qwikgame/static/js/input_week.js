@@ -86,7 +86,7 @@ if (typeof toggleAllWeek == "undefined") {
     }
   }
 
-  window.addEventListener("load", function() {
+  window.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
       all_week.addEventListener("click", toggleAllWeek);
       the_week = all_week.closest('.by_week').nextElementSibling;

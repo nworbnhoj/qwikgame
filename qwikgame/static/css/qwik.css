@@ -53,16 +53,13 @@ form > div:with(field.naked) { background-color: inherit; box-shadow: none; }
 form.plank { flex-direction: row; }
 form.plank > div { background-color: inherit; box-shadow: none; flex-direction: row; gap: 0.3rem; flex-wrap: nowrap; justify-content: stretch; }
 
-/* position legend identical to div.label */
-legend { position: relative; top: 1.6em; }
-
 /* div.field and fieldset are treated in identical fashion */
-div.field, fieldset { align-items: start; overflow: hidden; padding: 2rem; }
+div.field, fieldset { align-items: start; overflow: hidden; }
 div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }
 div.field > div, fieldset > div { align-items: start; gap: 1rem; }
-div.field > div.label, fieldset > legend { font-size: 1.25rem; }
+div.field > div.label, fieldset > legend { font-size: 1.25rem; padding: 1.5rem; width: 100%; }
 div.field > *:not(div.label), fieldset > *:not(legend) { max-height: 0; overflow: hidden; padding: 0 2rem; transition: max-height 1s ease; }
-div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; }
+div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; padding: 2rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
 

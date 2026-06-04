@@ -70,7 +70,7 @@ label.option:has(input[type=checkbox]:checked) { display: none; }
 label.option:has(input:checked) { color: var(--color-qwik); }
 
 /* div.prompt to prompt Player to book Venue in KeenForm */
-div.prompt { background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; max-width: 75%; padding: 0.5rem; text-wrap: wrap; }
+div.prompt { align-self: stretch; background-color: var(--color-backdrop); border: 1px solid var(--color-backdrop); border-radius: var(--dim-ease); box-shadow: 0 0 10px 3px rgba(0, 0, 0, .10); color: #3b3b3b; margin: 1.5rem; text-wrap: wrap; }
 div.prompt.hidden { display: none; }
 div.prompt div { color: #3b3b3b; flex-direction: column; flex-shrink: 1; min-width: 0; }
 div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap; }

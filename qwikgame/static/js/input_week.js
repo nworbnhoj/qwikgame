@@ -5,20 +5,30 @@ if (typeof toggleAllWeek == "undefined") {
   // update an AllWeek toggle to be consistent with the AllDay toggles
   function updateAllWeek(all_week) {
     if (!all_week) {
+      console.warn("updateAllWeek(null)")
       return;
     }
-    try {
-      // check all_week if every all_day is checked
-      let days = all_week.closest('div.field').querySelectorAll("label.toggle.all_day");
-      for (day of days) {
-        if (!toggle_disabled(day) && !toggle_checked(day)) {
-          return;
-        }
-      }
-      toggle_check(all_week);
-    } catch (e) {
-      console.log(e);
+    if ('updatePromise' in all_week) {
+      return all_week.updatePromise;
     }
+    all_week.updatePromise = new Promise((resolve, reject) => {
+      try {
+        // check all_week if every all_day is checked
+        let days = all_week.closest('div.field').querySelectorAll("label.toggle.all_day");
+        for (day of days) {
+          if (!toggle_disabled(day) && !toggle_checked(day)) {
+            resolve(false);
+          }
+        }
+        toggle_check(all_week);
+        resolve(true);
+      } catch (e) {
+        console.log(e);
+        reject(e);
+      }
+    });
+    all_week.updatePromise.then(() => { delete all_week.updatePromise });
+    return all_week.updatePromise;
   }
 
   // promote a change in an Hour up to the AllWeek toggle

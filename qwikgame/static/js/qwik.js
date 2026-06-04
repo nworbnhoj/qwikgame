@@ -277,13 +277,11 @@ function nFormatter(num, digits) {
         case 'all_week':
           label = field.querySelector('div.label');
           pending = label.querySelector('span.pending');
-          setTimeout(() => {
-            pre_pending = pending.textContent;
-            pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
-            if (ERROR && (pending.textContent !== pre_pending)){
-              ERROR.textContent = '';
-            }
-          }, 1000);    // required to allow various Hour Day Week sync to complete
+          pre_pending = pending.textContent;
+          pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
+          if (ERROR && (pending.textContent !== pre_pending)){
+            ERROR.textContent = '';
+          }
         break;
         case 'socials':
           legend = field.querySelector('legend');
@@ -398,7 +396,11 @@ function nFormatter(num, digits) {
 
 
   function sum_input_by_week(by_week){
-    if (by_week){
+    if (!by_week){
+      console.warn("sum_input_by_week(null)")
+      return;
+    }
+    updateAllWeek(by_week).then(() => {
       if(!by_week.querySelector('input:checked')){
         return '';
       }
@@ -406,7 +408,7 @@ function nFormatter(num, digits) {
       let has_digits = /\d/;
       const ALL_WEEK = by_week.querySelector("input[name='all_week']");
       if (ALL_WEEK.checked){
-        sum = ALL_WEEK.labels[0].textContent;
+        sum = ALL_WEEK.labels[0].textContent.trim();
       } else {
         sum = ' ';
         const DAY_BOX = by_week.nextElementSibling;
@@ -424,7 +426,7 @@ function nFormatter(num, digits) {
         });
       }
       return sum;
-    }
+    });
   }
 
   function sum_input_checkbox(checkboxes){

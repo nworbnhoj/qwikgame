@@ -241,7 +241,7 @@ div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; 
 div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
-div.by_day { }
+div.by_hour { align-self: stretch; }
 div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10rem }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }

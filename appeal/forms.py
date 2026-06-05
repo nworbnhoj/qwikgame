@@ -123,7 +123,7 @@ class KeenForm(QwikForm):
     tomorrow = DayMultiField(
         hours_enable=[*range(6,22)],
         hours_show=[*range(6,22)],
-        label=_('today'),
+        label=_('tomorrow'),
         offsetday='1',
         required=False,
         template_name='field.html',

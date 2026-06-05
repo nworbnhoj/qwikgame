@@ -154,7 +154,7 @@ function nFormatter(num, digits) {
   }
 
   function field_focus_first(){
-    const FORM = document.querySelector('form');
+    const FORM = document.querySelector('div.detail form');
     if (FORM){
       const ERROR = FORM.querySelector('span.error');
       if (ERROR) {

@@ -11,7 +11,7 @@ from venue.models import Venue
 from qwikgame.forms import QwikForm
 from qwikgame.fields import ActionMultiple, RangeField, SelectRangeField, MultipleActionField, WeekField
 from qwikgame.log import Entry
-from qwikgame.widgets import IconSelectMultiple
+from qwikgame.widgets import IconSelectMultiple, TextInput
 
 logger = logging.getLogger(__file__)
 
@@ -19,7 +19,8 @@ logger = logging.getLogger(__file__)
 class MatchForm(QwikForm):
     txt = CharField(
         required = False,
-        template_name = 'field_naked.html' #'input_chat.html'
+        template_name = 'field_naked.html', #'input_chat.html'
+        widget = TextInput(),
     )
 
     # Initializes a ChatForm for a 'match'.

@@ -173,6 +173,7 @@ class SocialForm(QwikForm):
     social = URLField(
         required = True,
         template_name='field.html',
+        widget = TextInput(),
     )
 
     @classmethod

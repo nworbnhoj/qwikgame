@@ -1,15 +1,13 @@
 <!-- qwikgame/templates/field_legend.html -->
 <legend>
-    <div>
-        <span class='label'>{{ field.label }}</span>
-        <span class='label_sub'></span>:
-        <span class='pending'>{{ field.pending }}</span>
+    <span class='label'>{{ field.label }}</span>
+    <span class='label_sub'></span>:
+    <span class='pending'>{{ field.pending }}</span>
 {% if field.errors %}
-        <span class='error'>{{ field.errors }}</span>
+    <span class='error'>{{ field.errors }}</span>
 {% endif %}
-        <span></span>
-        <!-- <span>▼</span> -->
-    </div>
+    <span></span>
+    <!-- <span>▼</span> -->
 {% if field.field.prompt %}
     {% include 'field_prompt.html' %}
 {% endif %}

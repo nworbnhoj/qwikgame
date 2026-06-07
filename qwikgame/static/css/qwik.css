@@ -84,9 +84,7 @@ div.chat_bubble .row:has(time) { margin-left: auto }
 div.chat_input { flex: 2; }
 div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; padding: 0; }
 
-/* required field */
-div.required span.reqd { color: var(--color-qwik); }
-span.reqd { color: var(--color-stencil);  font: 2rem bold; }
+
 
 label p { flex: auto; }
 label.hidden { display: none }

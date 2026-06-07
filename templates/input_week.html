@@ -3,10 +3,7 @@
 {% load i18n %}
 <script defer src="{% static 'js/input_week.js' %}"></script>
 
-<div class="by_week grid_2_col">
-    <div class="btn tertiary show-next-parent-sibling">
-        {% translate "Select Days and Time" %}
-    </div>
+<div class="post by_week">
 {% with id=widget.attrs.id %}
     <label class="btn secondary wide toggle all_week" {% if id %} for="{{ id }}_all"{% endif %}>
         <input type="checkbox" name="all_week" {% if id %} id="{{ id }}_all"{% endif %}>
@@ -15,8 +12,6 @@
         </span>
     </label>
 {% endwith %}
-</div>
-<div class="post hidden">
 {% spaceless %}
 {% for widget in widget.subwidgets %}
     {% include 'label_widget.html' %}

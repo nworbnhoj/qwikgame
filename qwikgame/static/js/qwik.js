@@ -21,12 +21,6 @@ function winReady(callbackFunction){
 }
 
 
-// A general DOM document ready function
-docReady(event => {
-    dropInit();
-    field_focus_first();
-});
-
 // adds an event Listener with callback on a NodeList or HTMLCollection 
 function addListeners(elements, event, callback){
     const array = [...elements];
@@ -34,7 +28,6 @@ function addListeners(elements, event, callback){
         element.addEventListener(event, callback, false);
     });
 }
-
 
 
 ///////////////// DOM helper functions ///////////////////
@@ -1060,6 +1053,8 @@ docReady(event => {
     (fieldset) => {
       field_prompt_show(fieldset);
     });
+  dropInit();
+  field_focus_first(); 
 });
 
 

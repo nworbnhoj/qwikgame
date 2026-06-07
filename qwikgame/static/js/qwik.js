@@ -846,6 +846,18 @@ function unLoader(label){
   label.classList.remove("loader")
 }
 
+function showNextParentSibling(event) {
+  let button = event.currentTarget;
+  let next_sibling = button.parentNode.nextElementSibling;
+  next_sibling.classList.toggle('hidden');
+}
+
+function showNextSibling(event) {
+  let button = event.currentTarget;
+  let next_sibling = button.nextElementSibling;
+  next_sibling.classList.toggle('hidden');
+}
+
 function showInfo(event) {
   event.currentTarget.parentElement.querySelector('div.info_text').classList.toggle('hidden');
 }
@@ -978,6 +990,12 @@ docReady(event => {
   });
   document.querySelectorAll('.show_group').forEach(function(element) {
     element.addEventListener('click', showGroup);
+  });
+  document.querySelectorAll('div.show-next-parent-sibling').forEach(function(element) {
+    element.addEventListener('click', showNextParentSibling);
+  });
+  document.querySelectorAll('div.show-next-sibling').forEach(function(element) {
+    element.addEventListener('click', showNextSibling);
   });
   document.querySelectorAll('div.closer').forEach(function(element) {
     element.addEventListener('click', close);

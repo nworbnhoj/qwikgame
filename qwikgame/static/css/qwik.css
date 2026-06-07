@@ -242,7 +242,7 @@ div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; 
 div.banner.active { background-color: var(--color-qwik); }
 div.banner.complete { background-color: var(--color-grey-c); }
 div.banner.xancelled { background-color: var(--color-alert); }
-div.by_hour { align-self: stretch; margin: 0.3rem; }
+div.by_hour { align-self: stretch; }
 div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10rem }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.day.fri { grid-column: 1 / 1; grid-row: 5 / 5 }
@@ -279,7 +279,7 @@ div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; justify-items: center; margin: 0.3rem; padding: 1rem 0 0 0; width: 100% }
 div.head { align-items: start; flex: auto; padding: 0 1rem 0 1rem; width: 50% }
-div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; overflow: visible; }
+div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; overflow: visible; width: 90% }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 div.hrs.apm { background-color: var(--color-backdrop); border: 0px solid black; color: white; flex: auto; font-size: xx-large; justify-content: center }
 div.icon { align-content: center; border-radius: var(--dim-ease); border: 0px solid black; display: block; flex: 0 0 auto; height: 3rem; justify-content: center; width: 2rem }
@@ -314,7 +314,7 @@ div.plank { flex: 0 0 0; flex-direction: row; justify-content: space-around; pad
 div.pole { align-items: start; flex: auto; justify-content: start; width: 100% }
 div.replicate { border: 1px solid black; margin: 1rem 0 1rem 0; padding: 1rem 0 1rem 2rem; }
 div.post { align-items: stretch; justify-content: start; width: 100% }
-div.radio_block { display: grid; gap: 1rem; }
+div.radio_block { display: grid; gap: 1rem; margin: 1rem; }
 div.rival_rate_grid { grid-template-columns: 1fr 1fr; flex-direction: row }
 div.schedule { display: grid; flex: 1 1 100%; gap: 0.3rem; grid-template-columns: repeat(17, 1fr); grid-template-rows: repeat(7, auto); justify-items: stretch; width: 100% }
 div.schedule_body { display: grid }

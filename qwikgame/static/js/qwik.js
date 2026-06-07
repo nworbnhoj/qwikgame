@@ -27,11 +27,6 @@ docReady(event => {
     field_focus_first();
 });
 
-
-// A general DOM Window ready function
-winReady(event => {});
-
-
 // adds an event Listener with callback on a NodeList or HTMLCollection 
 function addListeners(elements, event, callback){
     const array = [...elements];
@@ -1063,11 +1058,14 @@ docReady(event => {
     });
   document.querySelectorAll("form fieldset").forEach(        
     (fieldset) => {
-      field_label_update(fieldset);
       field_prompt_show(fieldset);
     });
-  document.querySelectorAll("form div.field").forEach(        
-    (div_field) => {
-      field_label_update(div_field);
+});
+
+
+winReady(event => {
+  document.querySelectorAll("form fieldset, form div.field").forEach(        
+    (field) => {
+      field_label_update(field);
     });
 });

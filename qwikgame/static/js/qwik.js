@@ -876,12 +876,14 @@ function slide(slider) {
 
 // toggle the check in a label.toggle
 function toggle (toggle) {
-  let input = toggle.firstElementChild;
-  if (toggle_checked(toggle)) {
-    toggle_uncheck(toggle);
-  } else {
-    toggle_check(toggle);
+  if (toggle && toggle.tagName === 'LABEL') {
+    if (toggle_checked(toggle)) {
+      return toggle_uncheck(toggle);
+    } else {
+      return toggle_check(toggle);
+    }
   }
+  console.warn("toggle() called with " + toggle);
 }
 
 // validate the html structure of a label.toggle
@@ -905,23 +907,37 @@ function toggle_valid(toggle) {
 
 // return true if the label.toggle is checked
 function toggle_checked(toggle) {
-  return toggle.firstElementChild.checked;
+  if (toggle && toggle.tagName === 'LABEL') {
+    return toggle.firstElementChild.checked;
+  }
+  console.warn("toggle_checked() called with " + toggle);
 }
 
 // check the label.toggle
 function toggle_check(toggle) {
-  toggle.firstElementChild.checked = "checked";
+  if (toggle && toggle.tagName === 'LABEL') {
+    toggle.firstElementChild.checked = "checked";
+    return true;
+  }
+  console.warn("toggle_check() called with " + toggle);
 }
 
 // uncheck the label.toggle
 function toggle_uncheck(toggle) {
-  toggle.firstElementChild.checked = null;
+  if (toggle && toggle.tagName === 'LABEL') {
+    toggle.firstElementChild.checked = null;
+    return false;
+  }
+  console.warn("toggle_check() called with " + toggle);
 }
 
 
 // return true if the label.toggle is disabled
 function toggle_disabled(toggle) {
-  return toggle.firstElementChild.disabled;
+  if (toggle && toggle.tagName === 'LABEL') {
+    return toggle.firstElementChild.disabled;
+  }
+  console.warn("toggle_disabled() called with " + toggle);
 }
 
 

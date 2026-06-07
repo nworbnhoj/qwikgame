@@ -263,6 +263,7 @@ function nFormatter(num, digits) {
         return;
       }
       const INPUT = field.querySelector('input')
+      const REQUIRED = INPUT.closest('div.required');
       let by_input_name = true;
       switch (INPUT.name){
         case 'all_day':
@@ -311,7 +312,8 @@ function nFormatter(num, digits) {
             checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
             if (pending){
               pre_pending = pending.textContent;
-              pending.textContent = sum_input_checkbox(checkboxes);
+              optional = REQUIRED ? '' : 'optional';
+              pending.textContent = checkboxes.length > 0 ? sum_input_checkbox(checkboxes) : optional;
             }
           }
           break;

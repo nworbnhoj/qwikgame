@@ -202,12 +202,9 @@ label.reveal:has(input:checked) ~ div { display: flex; }
 /* --- Time Hour/Day/Week Inputs --- */
 .btn.hour { height: 3rem; width: 3rem; }
 div.by_hour { align-self: stretch; margin: 0.3rem; }
-div.by_week > div.label { margin-top: 2em; }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; overflow: visible; }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
-label.all_week { align-self: stretch; }
-
 /* --- classes --- */
 .align_center { align-self: center }
 .align_end { justify-content: end; }

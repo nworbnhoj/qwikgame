@@ -10,9 +10,7 @@
 {% with id=widget.attrs.id %}
     <label class="btn secondary wide toggle all_week" {% if id %} for="{{ id }}_all"{% endif %}>
         <input type="checkbox" name="all_week" {% if id %} id="{{ id }}_all"{% endif %}>
-        <span class="stop-prop">
-            {% translate "Any Time" %}
-        </span>
+        {% translate "Any Time" %}
     </label>
 {% endwith %}
 </div>

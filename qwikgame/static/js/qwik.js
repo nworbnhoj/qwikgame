@@ -1022,11 +1022,6 @@ docReady(event => {
       document.querySelector("input[type='text']").value = query;
     };
   });
-  document.querySelectorAll('label.toggle span.stop-prop').forEach(function(element) {
-    element.addEventListener('click', (event) => {
-      event.stopPropagation()
-    });
-  });
   document.querySelectorAll('div.unread').forEach(function(element) {
     element.addEventListener('click', unreadRemove);
   });

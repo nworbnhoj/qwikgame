@@ -12,9 +12,7 @@
             <label class="btn secondary wide toggle all_day" 
             {% if id %} for="{{ id }}_all"{% endif %}>
                 <input type="checkbox" name="all_day" {% if id %} id="{{ id }}_all"{% endif %}>
-                <span class="stop-prop">
-                    {% translate "All Day" %}
-                </span>
+                {% translate "All Day" %}
             </label>
 {% endwith %}
         </div>

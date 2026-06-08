@@ -151,7 +151,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.tertiary:has(input:checked) { }
 .btn.tertiary:has(input:disabled) { }
 .btn.special1 { border-color: var(--color-qwik); color: var(--color-qwik); font-weight: bold; }
-.btn.special1.mobile { border-radius: 50%; bottom: 4rem; height: 6rem; position: fixed; right: 2rem; width: 6rem; z-index: 10; }
+.btn.special1.mobile { background-color: var(--color-qwik); border-radius: 50%; bottom: 4rem; color: var(--color-stencil); height: 6rem; position: fixed; right: 2rem; width: 6rem; z-index: 10; }
 .btn.special1:active { background-color: var(--color-active-1); border-color: var(--color-active-1); color: var(--color-stencil) }
 .btn.special1:has(input:checked) { }
 .btn.special1:has(input:disabled) { border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); }

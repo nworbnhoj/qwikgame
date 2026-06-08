@@ -110,7 +110,7 @@
             <form id='form' action="{% url 'bid' appeal.pk %}" method="post">
     {% csrf_token %}
     {{ bid_form }}
-            <div class="paver">
+            <div>
                 <div id="alert_form_submit" class="alert"></div>
     {% if appeal.status == 'A' %}
                 <label class="btn primary push_down">

@@ -2,15 +2,16 @@
 
 if (typeof toggleAllWeek == "undefined") {
 
+  function isAllWeek(all_week) {
+    if ('updatePromise' in all_week){
+      return all_week.updatePromise;
+    } 
+    console.warn("isAllWeek() called before init");
+    return Promise.resolve(false);
+  }
+
   // update an AllWeek toggle to be consistent with the AllDay toggles
   function updateAllWeek(all_week) {
-    if (!all_week || all_week.tagName !== 'LABEL') {
-      console.warn("updateAllWeek() called with " + all_week);
-      return;
-    }
-    if ('updatePromise' in all_week) {
-      return all_week.updatePromise;
-    }
     all_week.updatePromise = new Promise((resolve, reject) => {
       try {
         const FIELD = all_week.closest('div.field');
@@ -27,7 +28,6 @@ if (typeof toggleAllWeek == "undefined") {
         reject(e);
       }
     });
-    all_week.updatePromise.then(() => { delete all_week.updatePromise });
     return all_week.updatePromise;
   }
 
@@ -40,6 +40,7 @@ if (typeof toggleAllWeek == "undefined") {
       FIELD.querySelectorAll("input[type='checkbox']:not(:disabled)").forEach((day) => {
         day.checked = ALL_WEEK_CHECKED;
       });
+      ALL_WEEK.updatePromise = Promise.resolve(ALL_WEEK_CHECKED);
     } catch (e) {
       console.log(e);
     }

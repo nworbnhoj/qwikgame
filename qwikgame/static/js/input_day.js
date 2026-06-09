@@ -2,15 +2,16 @@
 
 if (typeof toggleAllDay == "undefined") {
 
-  // update an AllDay toggle to be consistent with the Hour checkboxes
-  function updateAllDay(all_day) {
-    if (!all_day || all_day.tagName !== 'LABEL') {
-      console.warn("updateAllDay() called with " + all_day);
-      return;
-    }
-    if ('updatePromise' in all_day) {
+  function isAllDay(all_day) {
+    if ('updatePromise' in all_day){
       return all_day.updatePromise;
     }
+    console.warn("isAllDay() called before init");
+    return Promise.resolve(false);
+  }
+
+  // update an AllDay toggle to be consistent with the Hour checkboxes
+  function updateAllDay(all_day) {
     all_day.updatePromise = new Promise((resolve, reject) => {
       try {
         const FIELD = all_day.closest('div.field');
@@ -26,11 +27,10 @@ if (typeof toggleAllDay == "undefined") {
         console.log(e);
       }
     });
-    all_day.updatePromise.then(() => { delete all_day.updatePromise });
     return all_day.updatePromise;
   }
 
-  // cascade a change in the AllDay toggle DOWN to the Hour checkboxes
+  // update the Hour toggles to be consistent with the AllDay toggle
   function toggleAllDay(event) {
     try {
       const ALL_DAY = event.currentTarget;
@@ -40,6 +40,7 @@ if (typeof toggleAllDay == "undefined") {
       BY_HOUR.querySelectorAll("input[type='checkbox']:not(:disabled)").forEach((hour) => {
         hour.checked = ALL_DAY_CHECKED;
       });
+      ALL_DAY.updatePromise = Promise.resolve(ALL_DAY_CHECKED);
     } catch (e) {
       console.log(e);
     }

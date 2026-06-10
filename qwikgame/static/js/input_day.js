@@ -46,18 +46,18 @@ if (typeof toggleAllDay == "undefined") {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", () => {
     // initialize all label.toggle.all_day
-    document.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
+    document.querySelectorAll('label.toggle.all_day').forEach((all_day) => {
       updateAllDay(all_day)
     });
     // setup event listeners to keep Hours & Days in sync
-    document.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
+    document.querySelectorAll('label.toggle.all_day').forEach((all_day) => {
       // propagate a click on an AllDay toggle DOWN to the Hour toggles
       all_day.addEventListener("click", toggleAllDay);
-      on_day = all_day.closest('.on_day');
+      const ON_DAY = all_day.closest('.on_day');
       // propagate a click on an Hour toggle UP to the AllDay toggle
-      on_day.querySelectorAll('label.toggle.hour').forEach(function(hour) {
+      ON_DAY.querySelectorAll('label.toggle.hour').forEach((hour) => {
         hour.addEventListener("click", () => { updateAllDay(all_day); });
       });
     });

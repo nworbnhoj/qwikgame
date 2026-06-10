@@ -51,12 +51,12 @@ if (typeof toggleAllWeek == "undefined") {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", () => {
     // initialize all label.toggle.all_week
-    document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
+    document.querySelectorAll('label.toggle.all_week').forEach((all_week) => {
       const FIELD = all_week.closest('div.field');
       let allDayPromises = [];
-      FIELD.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
+      FIELD.querySelectorAll('label.toggle.all_day').forEach((all_day) => {
         allDayPromises.push(updateAllDay(all_day));
       });
       Promise.all(allDayPromises).then((values) => {
@@ -64,20 +64,20 @@ if (typeof toggleAllWeek == "undefined") {
       });
     });
     // setup event listeners to keep Days & Weeks in sync
-    document.querySelectorAll('label.toggle.all_week').forEach(function(all_week) {
+    document.querySelectorAll('label.toggle.all_week').forEach((all_week) => {
       // propagate a click on an AllWeek toggle DOWN to the AllDay toggles
       all_week.addEventListener("click", toggleAllWeek);
-      field = all_week.closest('div.field');
+      const FIELD = all_week.closest('div.field');
       // propagate a click on the AllDay toggle UP to the AllWeek toggle
-      field.querySelectorAll('label.toggle.all_day').forEach(function(all_day) {
+      FIELD.querySelectorAll('label.toggle.all_day').forEach((all_day) => {
         all_day.addEventListener("click", () => {
           updateAllWeek(all_week);
         });
       });
       // propagate a click on an Hour toggle UP to the AllWeek toggle
-      field.querySelectorAll('.by_day').forEach(function(by_day) {
+      FIELD.querySelectorAll('.by_day').forEach((by_day) => {
         let all_day = by_day.querySelector('label.toggle.all_day');
-        by_day.querySelectorAll('label.toggle.hour').forEach(function(hour) {
+        by_day.querySelectorAll('label.toggle.hour').forEach((hour) => {
           hour.addEventListener("click", () => {
             updateAllDay(all_day).then(updateAllWeek(all_week));
           });

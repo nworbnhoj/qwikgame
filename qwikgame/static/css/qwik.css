@@ -135,7 +135,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) { box-shadow: none; transform: none; }
 .btn:has(input.hidden) { display: none }
-.btn.primary { align-self: stretch; background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-grey-3); }
+.btn.primary { align-self: stretch; background-color: var(--color-qwik); border-color: var(--color-qwik); color: var(--color-grey-3); margin-left: 0; margin-right: 0; }
 .btn.primary:active { background-color: var(--color-active-1); border-color: var(--color-active-1); }
 .btn.primary:has(input:checked) { }
 .btn.primary:has(input:disabled) { background-color: var(--color-disabled-bkg); border-color: var(--color-disabled-bdr); color: var(--color-disabled-txt); cursor: default; }

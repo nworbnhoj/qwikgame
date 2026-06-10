@@ -483,10 +483,10 @@ function nFormatter(num, digits) {
   }
 
   // auto close Field when value is selected
-  function input_auto_close(input){
+  function form_input_auto(input){
     switch (input.type){
       case 'checkbox':
-        input.addEventListener('click', field_label_update);
+        input.addEventListener('change', field_label_update);
         break;
       case 'radio':
         input.addEventListener('click', form_shut);
@@ -1061,7 +1061,7 @@ docReady(event => {
     });
   document.querySelectorAll("form input").forEach(        
     (input) => {
-      input_auto_close(input);
+      form_input_auto(input);
     });
   document.querySelectorAll("form fieldset").forEach(        
     (fieldset) => {

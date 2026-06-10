@@ -37,8 +37,13 @@ if (typeof toggleAllWeek == "undefined") {
       const ALL_WEEK = event.currentTarget;
       const ALL_WEEK_CHECKED = toggle_checked(ALL_WEEK);
       const FIELD = ALL_WEEK.closest('div.field');
-      FIELD.querySelectorAll("input[type='checkbox']:not(:disabled)").forEach((day) => {
-        day.checked = ALL_WEEK_CHECKED;
+      FIELD.querySelectorAll("label.toggle.all_day").forEach((all_day) => {
+        all_day.querySelector("input[type='checkbox']:not(:disabled)").checked = ALL_WEEK_CHECKED;
+        all_day.updatePromise = Promise.resolve(ALL_WEEK_CHECKED);
+        const BY_HOUR = all_day.closest('div.on_day').querySelector('div.by_hour');
+        BY_HOUR.querySelectorAll("input[type='checkbox']:not(:disabled)").forEach((hour) => {
+          hour.checked = ALL_WEEK_CHECKED;
+        });
       });
       ALL_WEEK.updatePromise = Promise.resolve(ALL_WEEK_CHECKED);
     } catch (e) {

@@ -268,7 +268,8 @@ function nFormatter(num, digits) {
           label = field.querySelector('div.label');
           pending = label.querySelector('span.pending');
           pre_pending = pending.textContent;
-          pending.textContent = sum_input_by_week(INPUT.closest('.by_week'));
+          const BY_WEEK = INPUT.closest('.by_week');
+          sum_input_by_week(BY_WEEK).then((sum) => {pending.textContent = sum});
           if (ERROR && (pending.textContent !== pre_pending)){
             ERROR.textContent = '';
           }
@@ -384,38 +385,42 @@ function nFormatter(num, digits) {
 
 
   function sum_input_by_week(by_week){
-    if (!by_week){
-      console.warn("sum_input_by_week(null)")
+    if (!by_week || !by_week.classList.contains('by_week')) {
+      console.warn("updateAllWeek() called with " + by_week);
       return;
     }
-    updateAllWeek(by_week).then(() => {
-      if(!by_week.querySelector('input:checked')){
-        return '';
-      }
-      sum = '';
-      let has_digits = /\d/;
-      const ALL_WEEK = by_week.querySelector("input[name='all_week']");
-      if (ALL_WEEK.checked){
-        sum = ALL_WEEK.labels[0].textContent.trim();
+    const ALL_WEEK = by_week.querySelector("label.toggle.all_week");
+    return isAllWeek(ALL_WEEK).then((checked) => {
+      if (checked) {
+        return ALL_WEEK.textContent.trim();
       } else {
-        sum = ' ';
+        const HAS_DIGITS = /\d/;
+        let allDayPromises = new Array(7);
+        let labels = new Array(7);
         const DAY_BOX = by_week.nextElementSibling;
-        DAY_BOX.querySelectorAll('div.label').forEach((day_label) => {
+        DAY_BOX.querySelectorAll('div.label').forEach((day_label, d) => {
+          labels[d] = day_label.textContent.trim();
           let by_day = day_label.nextElementSibling.nextElementSibling;
-          s = sum_input_by_day(by_day);
-          if (s){
-            if (has_digits.test(s)){
-              let ddd = day_label.textContent.trim().substring(0,3)
-              sum +=  ` ${ddd} (${s}) `;
+          allDayPromises[d] = sum_input_by_day(by_day);
+        });
+        return Promise.all(allDayPromises).then((sums) => {
+          let summary = ' ';
+          sums.forEach((sum, s) => {
+            if (sum.trim().length == 0) {
+              // noop
+            } else if (HAS_DIGITS.test(sum)){
+              let ddd = labels[s].substring(0,3);
+              summary +=  ` ${ddd} (${sum}) `;
             } else {
-              sum += day_label.textContent.trim() + ' ';
+              summary += labels[s] + ' ';
             }
-          }
+          });
+          return summary;
         });
       }
-      return sum;
     });
   }
+
 
   function sum_input_checkbox(checkboxes){
     if (checkboxes){

@@ -258,7 +258,8 @@ function nFormatter(num, digits) {
           label = field.querySelector('div.label');
           pending = label.querySelector('span.pending');
           pre_pending = pending.textContent;
-          pending.textContent = sum_input_by_day(INPUT.closest('.by_day'));
+          const BY_DAY = INPUT.closest('.by_day');
+          sum_input_by_day(BY_DAY).then((sum) => {pending.textContent = sum});
           if (ERROR && (pending.textContent !== pre_pending)){
             ERROR.textContent = '';
           }
@@ -361,23 +362,20 @@ function nFormatter(num, digits) {
 
 
   function sum_input_by_day(by_day){
-    if (!by_day){
-      console.warn("sum_input_by_day(null)")
+    if (!by_day || !by_day.classList.contains('by_day')) {
+      console.warn("sum_input_by_day() called with " + by_day);
       return;
     }
-    updateAllDay(by_day).then(() => {
-      if(!by_day.querySelector('input:checked')){
-        return '';
-      }
-      const ALL_DAY = by_day.querySelector("input[name='all_day']")
-      if (ALL_DAY.checked){
-        return ALL_DAY.labels[0].textContent.trim();
+    let ALL_DAY = by_day.querySelector("label.toggle.all_day");
+    return isAllDay(ALL_DAY).then((checked) => {
+      if (checked) {
+        return ALL_DAY.textContent.trim();
       } else {
         let hrs = '';
         by_day.querySelectorAll('label.hour').forEach((label_hour) => {
-          if (label_hour.querySelector("input[type='checkbox']").checked){
-            hrs += label_hour.textContent + ' ';
-          }
+          label_hour.querySelectorAll("input[type='checkbox']:checked:not(:disabled)").forEach(() => {
+            hrs += label_hour.textContent.trim() + ' ';
+          });
         });
         return hrs;
       }

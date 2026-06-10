@@ -9,7 +9,7 @@
             <form action="{% url 'places_bulk' %}" method="post">
 {% csrf_token %}
 {{ search_form }}
-                <div class="pillar">
+                <div>
                     <label class="btn primary push_down">
                         <input type="submit" name='search'>
                         Search
@@ -24,7 +24,7 @@
             <form action="{% url 'places_bulk' %}" method="post">
 {% csrf_token %}
 {{ places_form }}
-                <div class="pillar">
+                <div>
                     <h6 style='text-transform: uppercase;'> {{ game }} VENUES</h6>
 
                     <label class="btn primary push_down">

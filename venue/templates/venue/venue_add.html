@@ -73,7 +73,7 @@
                 <form action="{% url 'venue_add' %}" method="post">
 {% csrf_token %}
 {{ venue_add_form }}
-                    <div class="pillar">
+                    <div>
                         <label class="btn primary push_down">
                             <input hidden type="submit" name="ADD">
                             {% translate "Add" %}

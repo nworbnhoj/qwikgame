@@ -41,7 +41,7 @@
                     <form action="{% url 'private' %}" method="post" name="private">
 {% csrf_token %}
 {{ private_form }}
-                        <div class="pillar">
+                        <div>
                             <label class="btn primary push_down">
                                 <input hidden type="submit">
                                 {% translate "Save" %}

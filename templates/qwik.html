@@ -59,7 +59,7 @@
             <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
     {% csrf_token %}
     {{ feedback_form }}
-                <div class="pillar">
+                <div>
                     <div id="fedback_form_submit" class="alert"></div>
                     <label id="feedback_submit" class="btn primary push_down">
                         <input hidden type="submit">

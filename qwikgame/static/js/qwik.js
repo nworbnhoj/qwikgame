@@ -284,6 +284,18 @@ function nFormatter(num, digits) {
             ERROR.textContent = '';
           }
         break;
+        case 'strengths':
+          legend = field.querySelector('legend');
+          pending = legend.querySelector('span.pending');
+          checkboxes = field.querySelectorAll("input[type='checkbox']");
+          if (legend && pending && check && checkboxes){
+            pre_pending = pending.textContent;
+            pending.textContent = sum_strength_checkbox(checkboxes);
+          }
+          if (ERROR && (pending.textContent !== pre_pending)){
+            ERROR.textContent = '';
+          }
+        break;
         default:
           by_input_name = false;
       }
@@ -429,6 +441,28 @@ function nFormatter(num, digits) {
           sum += checkbox.labels[0].textContent + ', ';
         });
       }
+      return sum;
+    }
+  }
+
+
+  function sum_strength_checkbox(checkboxes){
+    if (checkboxes){
+      sum = '';
+      if (checkboxes.length === 0){
+        sum = "None";
+      } else {
+        checkboxes.forEach((checkbox) => {
+          sum += checkbox.labels[0].textContent.trim() + ', ';
+          // sum += '|' +checkbox.labels[0].textContent.trim();
+          });
+      }
+      sum = sum.replaceAll(/([\s\w]+)(: [\w\s]+)/g, ' $1');
+      // sum = sum.replaceAll(/\|([\s\w]+): much-stronger/g, ' ++$1++');
+      // sum = sum.replaceAll(/\|([\s\w]+): stronger/g, ' +$1+');
+      // sum = sum.replaceAll(/\|([\s\w]+): matched/g, ' =$1=');
+      // sum = sum.replaceAll(/\|([\s\w]+): weaker/g, ' -$1-');
+      // sum = sum.replaceAll(/\|([\s\w]+): much-weaker/g, ' --$1--');
       return sum;
     }
   }

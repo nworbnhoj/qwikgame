@@ -171,6 +171,7 @@ class PublicForm(QwikForm):
 
 class SocialForm(QwikForm):
     social = URLField(
+        label=_('Add URL'),
         required = True,
         template_name='field.html',
         widget = TextInput(),

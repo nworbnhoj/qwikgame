@@ -27,8 +27,8 @@
                 <form action="{% url 'social_add' %}" method="post">
 {% csrf_token %}
 {{ social_form }}
-                    <div class="pillar">
-                        <label class="btn secondary push_down">
+                    <div>
+                        <label class="btn primary push_down">
                             <input hidden name="ADD" type="submit">
                             {% translate "Submit" %}
                         </label>

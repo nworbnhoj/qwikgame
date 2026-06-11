@@ -149,24 +149,21 @@ function nFormatter(num, digits) {
         field_focus(ERROR.closest('div.field'));
         return;        
       }
-      FORM.querySelectorAll('div.required').forEach((field) => {
-        const FIELDSET = field.querySelector('fieldset')
+      for (const FIELD of FORM.querySelectorAll('div.required')) {
+        const FIELDSET = FIELD.querySelector('fieldset')
         if (FIELDSET){
-          for (const RADIO_OR_CHECKBOX of FIELDSET.elements){
-            if (RADIO_OR_CHECKBOX.checked){
-              break;
-            }
-          };
-          field_focus(FIELDSET);
-          return;
+          if (!FIELDSET.querySelectorAll("input[type='checkbox']:checked, input[type='radio']:checked")){
+            field_focus(FIELDSET);
+            return;
+          }
         } else {
-          const INPUT = field.querySelector('input');
+          const INPUT = FIELD.querySelector('input');
           if (INPUT && INPUT.value === ''){
             field_focus(INPUT.closest('div.field'));
             return;
           }
         }
-      });
+      };
       // fallback if no field is required
       const INPUT = FORM.querySelector("input:not([type='hidden']):first-of-type");
       if (INPUT){

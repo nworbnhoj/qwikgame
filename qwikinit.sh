@@ -14,7 +14,7 @@ fi
 # python3 -m venv venv
 # source venv/bin/activate
 # python3 -m pip install --upgrade pip setuptools wheel
-# python3 -m pip install django django-crontab django-webpush dotenv gunicorn pipreqs psycopg2-binary python-dateutil requests
+# python3 -m pip install django django-crontab django-responsive2 django-webpush dotenv gunicorn pipreqs psycopg2-binary python-dateutil requests
 
 echo " ====== SETUP POSTGRESQL ======"
 sudo systemctl start postgresql

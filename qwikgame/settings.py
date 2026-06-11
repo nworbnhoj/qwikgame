@@ -111,6 +111,11 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'responsive.context_processors.device',
+)
+
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'qwikgame.wsgi.application'

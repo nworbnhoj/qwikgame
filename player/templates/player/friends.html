@@ -10,7 +10,7 @@
 
 
 {% block cta_mobile %}
-{% if small_screen %}
+{% if mobile_screen %}
     <a class="btn special1 mobile" href="{% url 'friend_add' %}">
     <i class="fa-solid fa-plus fa-3x"></i>
     </a>
@@ -19,7 +19,7 @@
 
 
 {% block cta_desktop %}
-{% if big_screen %}
+{% if pc_screen %}
     <a class="btn special1" href="{% url 'friend_add' %}">
         <i class="fa-solid fa-plus fa-xl"></i>
         {% translate "Add" %}
@@ -79,7 +79,7 @@
 
 
 {% block detail %}
-{% if big_screen %}
+{% if pc_screen %}
     <div id="detail" class="detail">
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">

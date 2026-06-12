@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'player.apps.PlayerConfig',
     'service.apps.ServiceConfig',
     'venue.apps.VenueConfig',
-    'responsive.conf.ResponsiveAppConf',
+    'django_user_agents',
     'modeltranslation',    # must be before admin
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,7 +86,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'responsive.middleware.ResponsiveMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'qwikgame.urls'
@@ -105,7 +105,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'responsive.context_processors.device',
             ],
         },
     },
@@ -252,65 +251,6 @@ LOGGING = {
         },
     },
 }
-
-
-
-"""
-While there are several different items we can query on,
-the ones used for django-responsive2 are min-width, max-width, min-height and max-height.
-
-min_width -- Rules applied for any device width over the value defined in the config.
-max_width -- Rules applied for any device width under the value defined in the config.
-min_height -- Rules applied for any device height over the value defined in the config.
-max_height -- Rules applied for any device height under the value defined in the config.
-pixel_ratio -- Rules applied for any device with devicePixelRatio defined in the config.
-
-Usage
-------
-    {% load 'responsive' %}
-
-    {% renderblockif 'small' 'medium' %}
-        [...]
-    {% endrenderblockif %}
-
-"""
-RESPONSIVE_CACHE_PREFIX = 'responsive_'
-RESPONSIVE_CACHE_DURATION = 60 * 60 * 24 * 356  # 1 year
-RESPONSIVE_COOKIE_NAME = 'clientinfo'
-RESPONSIVE_COOKIE_AGE = 365  # days
-RESPONSIVE_DEFAULT_HEIGHT = 0
-RESPONSIVE_DEFAULT_WIDTH = 0
-RESPONSIVE_DEFAULT_PIXEL_RATIO = 1
-# Borrowed from ZURB Foundation framework.
-# See http://foundation.zurb.com/docs/media-queries.html
-RESPONSIVE_MEDIA_QUERIES = {
-    'small': {
-        # 'verbose_name': _('Small screens'),
-        'min_width': None,
-        'max_width': 640,
-    },
-    'medium': {
-        # 'verbose_name': _('Medium screens'),
-        'min_width': 641,
-        'max_width': 1024,
-    },
-    'large': {
-        # 'verbose_name': _('Large screens'),
-        'min_width': 1025,
-        'max_width': 1440,
-    },
-    'xlarge': {
-        # 'verbose_name': _('XLarge screens'),
-        'min_width': 1441,
-        'max_width': 1920,
-    },
-    'xxlarge': {
-        # 'verbose_name': _('XXLarge screens'),
-        'min_width': 1921,
-        'max_width': None,
-    }
-}
-RESPONSIVE_VARIABLE_NAME = 'device'
 
 # Email Settings
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND','django.core.mail.backends.console.EmailBackend')

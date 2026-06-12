@@ -32,27 +32,17 @@ class BaseView(View):
         return None
 
     def context(self, request, *args, **kwargs):
-        small = self.small_screen(request.device)
         context = {
             'account_alert': 'hidden',
             'appeal_alert': 'hidden',
             'friend_alert': 'hidden',
             'match_alert': 'hidden',
             'review_alert': 'hidden',
-            'big_screen': not small,
-            'small_screen': small,
+            'pc_screen': request.user_agent.is_pc,
+            'mobile_screen': request.user_agent.is_mobile,
         }
         context |= self.feedback_form_class.get()
         return context
-
-    def small_screen(self, device):
-        if device.is_landscape and device.width >= 768:
-            return False
-        elif device.width >= 1024:
-            return False
-        else:
-            return True
-
 
 
 class QwikView(BaseView):
@@ -148,7 +138,7 @@ class ServiceWorkerView(TemplateView):
             'css_map_url': static('css/map.css'),
             'css_qwik_url': static('css/qwik.css'),
             'css_reset_url': static('css/reset.css'),
-            'css_small_screen_url': static('css/small_screen.css'),
+            'css_mobile_screen_url': static('css/mobile_screen.css'),
             'favicon_url': static('img/favicon.ico'),
             'font_astrospace_url': static('font/AstroSpace-eZ2Bg.ttf'),
             'font_fa_brands_url': static('font/fa-brands-400.woff2'),

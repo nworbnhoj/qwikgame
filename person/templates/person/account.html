@@ -18,7 +18,7 @@
 
 
 {% block cta_mobile %}
-{% if small_screen %}
+{% if mobile_screen %}
     <a class="btn special1 mobile" href="{% url 'upgrade' %}">
     <i class="fa-solid fa-trophy fa-3x"></i>
     </a>
@@ -27,7 +27,7 @@
 
 
 {% block cta_desktop %}
-{% if big_screen %}
+{% if pc_screen %}
     <a class="btn special1" href="{% url 'upgrade' %}">
         <i class="fa-solid fa-trophy fa-xl"></i>
         {% translate "Upgrade" %}

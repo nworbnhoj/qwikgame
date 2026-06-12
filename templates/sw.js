@@ -57,7 +57,7 @@ if (workbox) {
       '{{ css_map_url }}',
       '{{ css_qwik_url }}',
       '{{ css_reset_url }}',
-      '{{ css_small_screen_url }}',
+      '{{ css_mobile_screen_url }}',
       '{{ favicon_url }}',
       '{{ font_astrospace_url }}',
       '{{ font_fa_brands_url }}',

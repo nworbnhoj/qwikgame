@@ -11,7 +11,7 @@
 
 
 {% block cta_mobile %}
-{% if small_screen %}
+{% if mobile_screen %}
     <a class="btn special1 mobile" href="{% url 'review' %}">
         <input {{ cta_disabled }} type="hidden" name="">
     <i class="fa-solid fa-thumbs-up fa-3x"></i>
@@ -21,7 +21,7 @@
 
 
 {% block cta_desktop %}
-{% if big_screen %}
+{% if pc_screen %}
     <a class="btn special1" href="{% url 'review' %}">
         <input {{ cta_disabled }} type="hidden" name="">
         <i class="fa-solid fa-thumbs-up fa-xl"></i>
@@ -92,7 +92,7 @@
 
 
 {% block detail %}
-{% if big_screen %}
+{% if pc_screen %}
     <div id="detail" class="detail">
         <div id="alert_detail_start" class="alert"></div>
         <div class="pillar push_down">

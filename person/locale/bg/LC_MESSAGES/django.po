@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-20 07:37+1100\n"
+"POT-Creation-Date: 2026-06-12 18:14+1000\n"
 "PO-Revision-Date: 2026-02-22 15:05+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,69 +20,71 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 
 #: person/forms.py:14
-msgid "Person to block"
+#, fuzzy
+#| msgid "Person to block"
+msgid "person to block"
 msgstr "Човек за блокиране"
 
 #: person/forms.py:34
-msgid "EMAIL NOTIFICATIONS"
-msgstr "ИМЕЙЛ ИЗВЕСТИЯ"
+msgid "email address"
+msgstr "имейл адрес"
 
-#: person/forms.py:39
-msgid "WEB / APP NOTIFICATIONS"
-msgstr "УЕБ / ПРИЛОЖЕНИЕ ИЗВЕСТИЯ"
+#: person/forms.py:42
+#, fuzzy
+#| msgid "email invitations from"
+msgid "email notifications"
+msgstr "имейл покани от"
+
+#: person/forms.py:43
+msgid "push notifications"
+msgstr "push известия"
 
 #: person/forms.py:44
-msgid "This will make finding a Venue nearby faster."
-msgstr "Това ще ускори намирането на място наблизо."
+msgid "location access"
+msgstr "достъп до местоположението"
 
-#: person/forms.py:45
-msgid "ALLOW LOCATION ACCESS"
-msgstr "РАЗРЕШИ ДОСТЪП ДО МЕСТОПОЛОЖЕНИЕ"
+#: person/forms.py:46
+msgid "Your choice."
+msgstr "Вашият избор."
 
-#: person/forms.py:50
+#: person/forms.py:47
+msgid "permissions"
+msgstr "разрешения"
+
+#: person/forms.py:53
 msgid "Browser default"
 msgstr "По подразбиране на браузъра"
 
-#: person/forms.py:51
-msgid "LANGUAGE"
-msgstr "ЕЗИК"
+#: person/forms.py:54
+msgid "language"
+msgstr "език"
 
-#: person/forms.py:71
-#, python-format
-msgid "Receive Email for Bid %(bid)s and Match %(match)s"
-msgstr "Получаване на имейл за оферта %(bid)s и мач %(match)s"
+#: person/forms.py:61 person/forms.py:198
+msgid "When you block a person, neither of you will see the other on qwikgame."
+msgstr "Когато блокирате човек, никой от вас няма да вижда другия в qwikgame."
+"Когато блокирате човек, нито един от вас няма да вижда другия в qwikgame."
 
-#: person/forms.py:75
-#, python-format
-msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr "Показване на известия в приложението за оферта %(bid)s и мач %(match)s"
+#: person/forms.py:62 person/forms.py:199
+msgid "people you have blocked"
+msgstr "хора, които сте блокирали"
 
-#: person/forms.py:101
+#: person/forms.py:116
+msgid "QWIK name"
+msgstr "QWIK име"
+
+#: person/forms.py:124
 #, fuzzy
-#| msgid "QWIKGAME App"
-msgid "QWIK NAME"
-msgstr "QWIK ИМЕ"
+#| msgid "add a social media url"
+msgid "website / social media"
+msgstr "добавете URL на социална мрежа"
 
-#: person/forms.py:108
-msgid "WEBSITE / SOCIAL MEDIA"
-msgstr "УЕБСАЙТ / СОЦИАЛНИ МРЕЖИ"
-
-#: person/forms.py:121
+#: person/forms.py:135
 msgid "your qwikgame screen name"
 msgstr "вашето екранно име в qwikgame"
 
-#: person/forms.py:122
-msgid "add a social media url"
-msgstr "добавете URL на социална мрежа"
-
-#: person/forms.py:169
-msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr ""
-"Когато блокирате човек, нито един от вас няма да вижда другия в qwikgame."
-
-#: person/forms.py:170
-msgid "PEOPLE YOU HAVE BLOCKED"
-msgstr "ХОРА, КОИТО СТЕ БЛОКИРАЛИ"
+#: person/forms.py:174
+msgid "Add URL"
+msgstr "Добави URL"
 
 #: person/templates/person/account.html:16
 msgid "Account"
@@ -613,25 +615,14 @@ msgstr ""
 msgid "PRIVATE SETTINGS"
 msgstr "ЛИЧНИ НАСТРОЙКИ"
 
-#: person/templates/person/private.html:44
-msgid "EMAIL ADDRESS"
-msgstr "ИМЕЙЛ АДРЕС"
-
-#: person/templates/person/private.html:46
-msgid "Change (coming soon)"
-msgstr "Промяна (скоро)"
-
-#: person/templates/person/private.html:61
-msgid "UnBlock"
-msgstr "Деблокирай"
+#: person/templates/person/private.html:47
+#: person/templates/person/public.html:36
+msgid "Save"
+msgstr "Запази"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
 msgstr "ПУБЛИЧЕН ПРОФИЛ"
-
-#: person/templates/person/public.html:35
-msgid "Save"
-msgstr "Запази"
 
 #: person/templates/person/review_match_alert_email_html.html:13
 #, python-format
@@ -684,8 +675,8 @@ msgid ""
 "%(venue)s.\n"
 msgstr ""
 "\n"
-"\tПолучавате този имейл, за да прегледате вашата Qwikgame игра на "
-"%(game)s в %(venue)s.\n"
+"\tПолучавате този имейл, за да прегледате вашата Qwikgame игра на %(game)s в "
+"%(venue)s.\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
 msgid ""
@@ -763,6 +754,16 @@ msgid ""
 msgstr ""
 "\n"
 "Покана за %(game)s\n"
+
+#: person/templates/person/social.html:7
+#, fuzzy
+#| msgid "add a social media url"
+msgid "Add Social media link"
+msgstr "добавете URL на социална мрежа"
+
+#: person/templates/person/social.html:33
+msgid "Submit"
+msgstr "Изпрати"
 
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
@@ -868,3 +869,47 @@ msgstr ""
 "\n"
 "За да блокирате имейл покани от всички играчи в %(site_name)s, моля "
 "кликнете:\n"
+
+#~ msgid "EMAIL NOTIFICATIONS"
+#~ msgstr "ИМЕЙЛ ИЗВЕСТИЯ"
+
+#~ msgid "WEB / APP NOTIFICATIONS"
+#~ msgstr "УЕБ / ПРИЛОЖЕНИЕ ИЗВЕСТИЯ"
+
+#~ msgid "This will make finding a Venue nearby faster."
+#~ msgstr "Това ще ускори намирането на място наблизо."
+
+#~ msgid "ALLOW LOCATION ACCESS"
+#~ msgstr "РАЗРЕШИ ДОСТЪП ДО МЕСТОПОЛОЖЕНИЕ"
+
+#~ msgid "LANGUAGE"
+#~ msgstr "ЕЗИК"
+
+#, python-format
+#~ msgid "Receive Email for Bid %(bid)s and Match %(match)s"
+#~ msgstr "Получаване на имейл за оферта %(bid)s и мач %(match)s"
+
+#, python-format
+#~ msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
+#~ msgstr ""
+#~ "Показване на известия в приложението за оферта %(bid)s и мач %(match)s"
+
+#, fuzzy
+#~| msgid "QWIKGAME App"
+#~ msgid "QWIK NAME"
+#~ msgstr "QWIK ИМЕ"
+
+#~ msgid "WEBSITE / SOCIAL MEDIA"
+#~ msgstr "УЕБСАЙТ / СОЦИАЛНИ МРЕЖИ"
+
+#~ msgid "PEOPLE YOU HAVE BLOCKED"
+#~ msgstr "ХОРА, КОИТО СТЕ БЛОКИРАЛИ"
+
+#~ msgid "EMAIL ADDRESS"
+#~ msgstr "ИМЕЙЛ АДРЕС"
+
+#~ msgid "Change (coming soon)"
+#~ msgstr "Промяна (скоро)"
+
+#~ msgid "UnBlock"
+#~ msgstr "Деблокирай"

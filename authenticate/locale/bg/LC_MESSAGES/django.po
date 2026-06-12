@@ -3,34 +3,32 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-23 11:07+1100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2026-06-12 18:14+1000\n"
+"PO-Revision-Date: 2026-06-12 00:00+0000"
+"Last-Translator: Bulgarian Localization Review"
+"Language-Team: Bulgarian"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "Акаунтът за %(e)s е деактивиран."
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
 msgstr ""
-"Няма акаунт с този имейл.%(br)sИскате ли да се "
-"%(a0)sрегистрирате%(a1)s?"
+"Няма акаунт с този имейл.%(br)sИскате ли да се %(a0)sрегистрирате%(a1)s?"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -217,21 +215,21 @@ msgstr "вход"
 msgid "Send verification link"
 msgstr "Изпрати линк за потвърждение"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "Съжаляваме, това не проработи."
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr ""
 "Токенът за сигурност в този линк е изтекъл или е невалиден по някаква "
 "причина."
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "Вход / Регистрация"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " страница."

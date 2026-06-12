@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-18 10:26+1100\n"
+"POT-Creation-Date: 2026-06-12 18:14+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,79 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: player/forms.py:24 player/models.py:462
+#: player/forms.py:25 player/models.py:462
 msgid "Any Game"
 msgstr "Всяка игра"
 
-#: player/forms.py:25
+#: player/forms.py:26
 msgid "Only see invitations for a particular Game."
 msgstr "Показвай само покани за определена игра."
 
-#: player/forms.py:26 player/forms.py:276
-#: player/templates/player/strength.html:84
-msgid "GAME"
-msgstr "ИГРА"
+#: player/forms.py:27 player/forms.py:310
+#: player/templates/player/friends.html:46
+msgid "game"
+msgstr "игра"
 
-#: player/forms.py:31
-msgid "Only see invitations for a particular Venue."
-msgstr "Показвай само покани за определено място."
-
-#: player/forms.py:32
-msgid "PLACE"
-msgstr "МЯСТО"
-
-#: player/forms.py:37
+#: player/forms.py:34
 msgid "Only see invitations at specific times in your week."
 msgstr "Показвай само покани в определени часове от седмицата."
 
-#: player/forms.py:38
-msgid "TIME"
-msgstr "ВРЕМЕ"
+#: player/forms.py:35
+msgid "time"
+msgstr "време"
 
-#: player/forms.py:110
-msgid "Sorry, that Venue selection did not work. Please try again."
-msgstr "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
+#: player/forms.py:120 player/forms.py:143
+#, fuzzy
+#| msgid "Any Game"
+msgid "Any Place"
+msgstr "Всяка игра"
 
-#: player/forms.py:143 player/forms.py:163 player/models.py:463
-msgid "Anywhere"
-msgstr "Навсякъде"
+#: player/forms.py:121 player/forms.py:144
+#, fuzzy
+#| msgid "Only see invitations for a particular Game."
+msgid "Only see invitations for a particular Place."
+msgstr "Показвай само покани за определена игра."
 
-#: player/forms.py:143
-msgid "Select from map"
-msgstr "Избери от картата"
+#: player/forms.py:122 player/forms.py:145
+msgid "place"
+msgstr "място"
 
-#: player/forms.py:186
-msgid "NO ACTIVE FILTERS"
-msgstr "НЯМА АКТИВНИ ФИЛТРИ"
+#: player/forms.py:162
+#, fuzzy
+#| msgid "Invitation Filters"
+msgid "no active filters"
+msgstr "Филтри за покани"
 
-#: player/forms.py:197
+#: player/forms.py:174
 #, python-format
-msgid "%(n)s ACTIVE FILTERS"
-msgstr "%(n)s АКТИВНИ ФИЛТРИ"
+msgid "%(n)s active filters"
+msgstr "%(n)s активни филтри"
 
-#: player/forms.py:219
-msgid "FRIEND'S EMAIL ADDRESS"
-msgstr "ИМЕЙЛ АДРЕС НА ПРИЯТЕЛ"
+#: player/forms.py:196
+#, fuzzy
+#| msgid "Type email address"
+msgid "friend's email address"
+msgstr "Въведете имейл адрес"
 
-#: player/forms.py:225
-msgid "NAME"
-msgstr "ИМЕ"
+#: player/forms.py:203
+msgid "name"
+msgstr "име"
 
-#: player/forms.py:237
+#: player/forms.py:211 player/templates/player/rival_stats_snippet.html:10
+msgid "GAMES"
+msgstr "ИГРИ"
+
+#: player/forms.py:241 player/forms.py:271
 msgid "Type email address"
 msgstr "Въведете имейл адрес"
 
-#: player/forms.py:238
+#: player/forms.py:242 player/forms.py:272
 msgid "A screen name for your friend (optional)"
 msgstr "Екранно име за вашия приятел (по избор)"
 
-#: player/forms.py:283
-msgid "RIVAL SKILL LEVEL"
-msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
+#: player/forms.py:318
+msgid "rival skill level"
+msgstr "ниво на уменията на съперника"
 
 #: player/models.py:392
 msgid "probably"
@@ -100,11 +104,11 @@ msgstr "може би"
 msgid "unknown"
 msgstr "неизвестен"
 
-#: player/models.py:398 player/templates/player/strength.html:87
+#: player/models.py:398
 msgid "much-weaker"
 msgstr "Много по-слаб"
 
-#: player/models.py:399 player/templates/player/strength.html:88
+#: player/models.py:399
 msgid "weaker"
 msgstr "По-слаб"
 
@@ -112,25 +116,21 @@ msgstr "По-слаб"
 msgid "matched"
 msgstr "Равностоен"
 
-#: player/models.py:401 player/templates/player/strength.html:90
+#: player/models.py:401
 msgid "stronger"
 msgstr "По-силен"
 
 #: player/models.py:402
-msgid "much-stonger"
+msgid "much-stronger"
 msgstr "Много по-силен"
+
+#: player/models.py:463
+msgid "Anywhere"
+msgstr "Навсякъде"
 
 #: player/models.py:464
 msgid "Any Time"
 msgstr "Всяка игра"
-
-#: player/templates/player/account_public_snippet.html:5
-msgid "YOUR QWIKGAME REPUTATION"
-msgstr "ВАШАТА РЕПУТАЦИЯ В QWIKGAME"
-
-#: player/templates/player/account_public_snippet.html:10
-msgid "Based on feedback given by your rivals."
-msgstr ""
 
 #: player/templates/player/chat_bubble_snippet.html:16
 #, python-format
@@ -265,16 +265,16 @@ msgstr ""
 "                Оттегли %(hours)s\n"
 "    "
 
-#: player/templates/player/filter.html:49
+#: player/templates/player/filter.html:48
 #: player/templates/player/filters.html:8
 msgid "Filter"
 msgstr "Филтър"
 
-#: player/templates/player/filter.html:68
+#: player/templates/player/filter.html:67
 msgid "New Invitation Filter"
 msgstr "Нов филтър за покани"
 
-#: player/templates/player/filter.html:81
+#: player/templates/player/filter.html:79
 msgid "Add Filter"
 msgstr "Добави филтър"
 
@@ -282,22 +282,21 @@ msgstr "Добави филтър"
 msgid "Invitation Filters"
 msgstr "Филтри за покани"
 
-#: player/templates/player/filters.html:31
-#: player/templates/player/friend_add.html:34
+#: player/templates/player/filters.html:30
+#: player/templates/player/friend_add.html:35
 #: player/templates/player/friends.html:25
-#: player/templates/player/strength.html:102
 msgid "Add"
 msgstr "Добави"
 
-#: player/templates/player/filters.html:47
+#: player/templates/player/filters.html:44
 msgid "Delete these Filters?"
 msgstr "Изтриване на тези филтри?"
 
-#: player/templates/player/filters.html:49
+#: player/templates/player/filters.html:46
 msgid "Remove"
 msgstr "Премахни"
 
-#: player/templates/player/filters.html:53
+#: player/templates/player/filters.html:50
 msgid "Apply"
 msgstr "Приложи"
 
@@ -314,8 +313,6 @@ msgid "Delete this Friend?"
 msgstr "Изтриване на този приятел?"
 
 #: player/templates/player/friend.html:38
-#: player/templates/player/friend.html:69
-#: player/templates/player/strength.html:43
 msgid "delete"
 msgstr "изтрий"
 
@@ -325,18 +322,14 @@ msgstr "изтрий"
 msgid "Add Friend"
 msgstr "Добави приятел"
 
-#: player/templates/player/friend.html:79
-#: player/templates/player/strength.html:75
+#: player/templates/player/friend.html:67
+#: player/templates/player/strength.html:33
 msgid "Submit"
 msgstr "Изпрати"
 
 #: player/templates/player/friends.html:39
 msgid "Group by"
 msgstr "Групирай по"
-
-#: player/templates/player/friends.html:46
-msgid "game"
-msgstr "игра"
 
 #: player/templates/player/friends.html:73
 msgid "No friends :-("
@@ -353,48 +346,87 @@ msgstr ""
 "                Редактирайте приятел%(br)sили добавете нов!\n"
 "    "
 
+#: player/templates/player/reputation_snippet.html:5
+msgid "Your QWIKGAME reputation"
+msgstr "Вашата репутация в QWIKGAME"
+
+#: player/templates/player/reputation_snippet.html:7
+msgid "Based on feedback given by your rivals."
+msgstr "Въз основа на обратната връзка от вашите съперници."
+
+#: player/templates/player/rival_hat_snippet.html:18
+msgid "Block this Player?"
+msgstr "Блокиране на този играч?"
+
 #: player/templates/player/rival_stats_snippet.html:4
 msgid "MATCHES"
 msgstr "МАЧОВЕ"
-
-#: player/templates/player/rival_stats_snippet.html:10
-msgid "GAMES"
-msgstr "ИГРИ"
 
 #: player/templates/player/rival_stats_snippet.html:16
 msgid "VENUES"
 msgstr "МЕСТА"
 
-#: player/templates/player/strength.html:61
-msgid "Important!"
-msgstr "Важно!"
+#~ msgid "GAME"
+#~ msgstr "ИГРА"
 
-#: player/templates/player/strength.html:63
-msgid ""
-"Please take a little time to let qwikgame know how strong your Friend is. "
-"This will help qwikgame make better Matches for you, and your friend, and "
-"other qwikgame Players who know either of you."
-msgstr ""
-"Моля, отделете малко време, за да уведомите qwikgame колко силен е вашият "
-"приятел. Това ще помогне на qwikgame да създава по-добри мачове за вас, "
-"вашия приятел и други qwikgame играчи, които познават някой от вас."
+#~ msgid "Only see invitations for a particular Venue."
+#~ msgstr "Показвай само покани за определено място."
 
-#: player/templates/player/strength.html:85
-msgid "STRENGTH"
-msgstr "СИЛА"
+#~ msgid "PLACE"
+#~ msgstr "МЯСТО"
 
-#: player/templates/player/strength.html:89
-msgid "well-matched"
-msgstr "Равностоен"
+#~ msgid "TIME"
+#~ msgstr "ВРЕМЕ"
 
-#: player/templates/player/strength.html:91
-msgid "much-stronger"
-msgstr "Много по-силен"
+#~ msgid "Sorry, that Venue selection did not work. Please try again."
+#~ msgstr ""
+#~ "Съжаляваме, изборът на място не беше успешен. Моля, опитайте отново."
 
-#: player/templates/player/strength.html:96
-msgid "Cancel"
-msgstr "Отказ"
+#~ msgid "Select from map"
+#~ msgstr "Избери от картата"
 
-#: player/templates/player/strength.html:99
-msgid "Learn more"
-msgstr "Научете повече"
+#~ msgid "NO ACTIVE FILTERS"
+#~ msgstr "НЯМА АКТИВНИ ФИЛТРИ"
+
+#, python-format
+#~ msgid "%(n)s ACTIVE FILTERS"
+#~ msgstr "%(n)s АКТИВНИ ФИЛТРИ"
+
+#~ msgid "FRIEND'S EMAIL ADDRESS"
+#~ msgstr "ИМЕЙЛ АДРЕС НА ПРИЯТЕЛ"
+
+#~ msgid "NAME"
+#~ msgstr "ИМЕ"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "НИВО НА УМЕНИЯТА НА СЪПЕРНИКА"
+
+#~ msgid "much-stonger"
+#~ msgstr "Много по-силен"
+
+#~ msgid "YOUR QWIKGAME REPUTATION"
+#~ msgstr "ВАШАТА РЕПУТАЦИЯ В QWIKGAME"
+
+#~ msgid "Important!"
+#~ msgstr "Важно!"
+
+#~ msgid ""
+#~ "Please take a little time to let qwikgame know how strong your Friend is. "
+#~ "This will help qwikgame make better Matches for you, and your friend, and "
+#~ "other qwikgame Players who know either of you."
+#~ msgstr ""
+#~ "Моля, отделете малко време, за да уведомите qwikgame колко силен е вашият "
+#~ "приятел. Това ще помогне на qwikgame да създава по-добри мачове за вас, "
+#~ "вашия приятел и други qwikgame играчи, които познават някой от вас."
+
+#~ msgid "STRENGTH"
+#~ msgstr "СИЛА"
+
+#~ msgid "well-matched"
+#~ msgstr "Равностоен"
+
+#~ msgid "Cancel"
+#~ msgstr "Отказ"
+
+#~ msgid "Learn more"
+#~ msgstr "Научете повече"

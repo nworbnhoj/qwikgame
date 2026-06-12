@@ -10,7 +10,7 @@ div[hidden] { display: none !important; }
 /* --- Structure --- */
 #content { align-items: right; flex: 1 0 auto; flex-direction: row; justify-content: center; margin: 4em 0 0 0; max-width: var(--dim-max-width); width: 100%; }
 #detail { flex: 2 40rem; gap: 1rem; padding: 0 0 10rem 0; }
-#feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 1em 3em; }
+#feedback { align-items: center; border: 1px dashed var(--color-qwik); flex: 0 0 auto; margin: 0.3em 0.3em 4em 0.3em; max-height: 4em; max-width: var(--dim-max-width); padding: 1em 3em; }
 #feedback:has(input:checked) { max-height: 60em; }
 #filler { flex-grow: 1; }
 #footer { font-size: small; justify-content: end; }

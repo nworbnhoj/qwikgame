@@ -44,6 +44,20 @@ div[hidden] { display: none !important; }
 @media only screen and (min-width:992px) { }
 @media only screen and (min-width:1200px) { }
 
+/* --- Detail panel --- */
+div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; padding: 1rem; text-align: center; z-index: 20; }
+div.banner.active { background-color: var(--color-qwik); }
+div.banner.complete { background-color: var(--color-grey-c); }
+div.banner.xancelled { background-color: var(--color-alert); }
+div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; }
+div.detail_body { padding: 1rem; }
+div.detail_form { }
+div.detail_head { align-items: center; border-style: solid; border-width: 0 0 1px 0; flex: 0 0 auto; flex-direction: row; justify-content: space-between; padding: 1rem }
+div.detail_head .identicon { aspect-ratio: 1; width: 4rem; }
+div.detail_n { flex: 0 0 auto; gap: 1rem; }
+div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
+div.head { flex: 1 1 auto; flex-direction: column; overflow: hidden; padding: 0 1rem 0 1rem; width: 0px; }
+
 /* --- Forms --- */
 form { align-items: stretch; display: flex; gap: 0; flex-direction: column; }
 form > div { background-color: var(--color-stencil); box-shadow: 0 0 0.6rem 0.2rem rgba(0, 0, 0, .10); margin: 0.4rem; min-height: 1rem; }
@@ -244,17 +258,6 @@ div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 .todo { display: none; border: 3px dotted var(--color-blue) }
 .wall { display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem; justify-content: center; }
 div.alert { display: none; flex: auto; justify-content: start; margin: 0; }
-div.banner { flex: none; position: -webkit-sticky; position: sticky; top: 4rem; padding: 1rem; text-align: center; z-index: 20; }
-div.banner.active { background-color: var(--color-qwik); }
-div.banner.complete { background-color: var(--color-grey-c); }
-div.banner.xancelled { background-color: var(--color-alert); }
-div.context_menu { flex: 0 0 auto; flex-direction: row; justify-content: end; width: 10rem }
-div.detail_body { padding: 1rem; }
-div.detail_form { }
-div.detail_head { align-items: center; border-style: solid; border-width: 0 0 1px 0; flex: 0 0 auto; flex-direction: row; justify-content: start; padding: 1rem }
-div.detail_head .identicon { aspect-ratio: 1; width: 4rem; }
-div.detail_n { flex: 0 0 auto; gap: 1rem; }
-div.detail_rival { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100% }
 div.down { align-items: start; background-color: white; border: 1px solid var(--color-grey-c); gap: 0.5rem; margin: 0.3rem; min-width: 100%; opacity: 1.0; padding: 0.3rem 1rem 0.3rem 1rem; position: absolute; top: 3.2rem; white-space: nowrap; z-index: 10 }
 div.down.left { left: 0; }
 div.down.right { right: 0; }
@@ -275,7 +278,6 @@ div.fat { transform: scaleX(1.6); padding: 0 0.2rem 0 0.2rem }
 div.flex_space { flex-grow: 3 }
 div.grid_2_col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; justify-items: center; width: 100% }
 div.grid_3_col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; justify-items: center; margin: 0.3rem; padding: 1rem 0 0 0; width: 100% }
-div.head { align-items: start; flex: auto; padding: 0 1rem 0 1rem; width: 50% }
 div.icon { align-content: center; border-radius: var(--dim-ease); border: 0px solid black; display: block; flex: 0 0 auto; height: 3rem; justify-content: center; width: 2rem }
 div.icon.badge { border: 0.2rem solid var(--color-qwik); color: var(--color-qwik); border-radius: 50%; height: 2.5rem; padding: 0.3rem; width: 2.5rem; }
 div.icon.info { border-width: 0.3rem; border-radius: 50%; padding: 0.3rem }

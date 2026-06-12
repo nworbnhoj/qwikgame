@@ -457,7 +457,7 @@ function nFormatter(num, digits) {
           // sum += '|' +checkbox.labels[0].textContent.trim();
           });
       }
-      sum = sum.replaceAll(/([\s\w]+)(: [\w\s]+)/g, ' $1');
+      sum = sum.replaceAll(/([\s\w]+)(:.+?,)/g, ' $1,');
       // sum = sum.replaceAll(/\|([\s\w]+): much-stronger/g, ' ++$1++');
       // sum = sum.replaceAll(/\|([\s\w]+): stronger/g, ' +$1+');
       // sum = sum.replaceAll(/\|([\s\w]+): matched/g, ' =$1=');

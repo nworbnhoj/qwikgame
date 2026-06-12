@@ -271,6 +271,18 @@ function nFormatter(num, digits) {
             ERROR.textContent = '';
           }
         break;
+        case 'filters':
+          legend = field.querySelector('legend');
+          pending = legend.querySelector('span.pending');
+          checkboxes = field.querySelectorAll("input[type='checkbox']:checked");
+          if (legend && pending && check && checkboxes){
+            pre_pending = pending.textContent;
+            pending.textContent = sum_filters_checkbox(checkboxes);
+          }
+          if (ERROR && (pending.textContent !== pre_pending)){
+            ERROR.textContent = '';
+          }
+        break;
         case 'socials':
           legend = field.querySelector('legend');
           pending = legend.querySelector('span.pending');
@@ -367,6 +379,26 @@ function nFormatter(num, digits) {
       if (ERROR && (pending.textContent !== pre_pending)){
         ERROR.textContent = '';
       }
+    }
+  }
+
+
+  function sum_filters_checkbox(checkboxes){
+    if (checkboxes){
+      summary = '';
+      checkboxes.forEach((checkbox) => {
+        sum = checkbox.labels[0].textContent.trim();
+        parts = sum.split(' + ');
+        console.log(parts)
+        parts[0] = parts[0].replace('Any Game', '');
+        parts[1] = parts[1].replace('Anywhere', '');
+        parts[1] = parts[1].split(',')[0];
+        parts[2] = parts[2].replace('Any Time', '');
+        parts = parts.filter(item => item !== '');
+        sum = parts.join(" + ");
+        summary += '[' + sum + '] ';
+        });
+      return summary;
     }
   }
 

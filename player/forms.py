@@ -161,6 +161,7 @@ class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
         label=_('no active filters'),
         required=False,
+        template_name='field.html',
         widget=CheckboxSelectMultiple,
     )
 

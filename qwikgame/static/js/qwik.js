@@ -435,7 +435,7 @@ function nFormatter(num, digits) {
     if (checkboxes){
       sum = '';
       if (checkboxes.length === 0){
-        sum = "None";
+        sum = "";
       } else {
         checkboxes.forEach((checkbox) => {
           sum += checkbox.labels[0].textContent + ', ';
@@ -469,13 +469,11 @@ function nFormatter(num, digits) {
 
 
   function sum_url_checkbox(checkboxes){
-    console.log('here')
     if (checkboxes){
       sum = '';
       if (checkboxes.length === 0){
         sum = "None";
       } else {
-        console.log('there')
         checkboxes.forEach((checkbox) => {
           url = new URL(checkbox.labels[0].textContent);
           sum += url.host + ' ';
@@ -706,7 +704,6 @@ function slider(range) {
   var options = range.closest('div.field').querySelector('div.range_options')
   var i=0;
   for ( const option of options.children) {
-    console.log(option)
     if (i == range.value) {
       option.classList.remove('invisible');
       label = option.textContent;

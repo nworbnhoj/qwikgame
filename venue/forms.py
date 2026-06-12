@@ -22,7 +22,7 @@ class GoogleSearchForm(QwikForm):
         help_text=_('restrict the search to a region'),
         label=_('region'),
         required = True,
-        template_name='dropdown.html', 
+        template_name='field.html', 
         widget=RadioSelect(attrs={"class": "down left hidden"})
     )
     game = ChoiceField(
@@ -31,6 +31,7 @@ class GoogleSearchForm(QwikForm):
         label=_('game'),
         required = True,
         template_name='field.html',
+        widget = RadioSelect,
     )
 
     @classmethod

@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:32+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -517,11 +516,11 @@ msgstr "كيريباتي"
 
 #: qwikgame/constants.py:177
 msgid "Korea, Democratic People's Republic of"
-msgstr "كوريا، جمهورية كوريا الديمقراطية الشعبية"
+msgstr "جمهورية كوريا الشعبية الديمقراطية"
 
 #: qwikgame/constants.py:178
 msgid "Korea, Republic of"
-msgstr "كوريا، جمهورية كوريا"
+msgstr "جمهورية كوريا"
 
 #: qwikgame/constants.py:179
 msgid "Kuwait"
@@ -621,11 +620,11 @@ msgstr "المكسيك"
 
 #: qwikgame/constants.py:203
 msgid "Micronesia, Federated States of"
-msgstr "ميكرونيزيا، الولايات المتحدة"
+msgstr "ولايات ميكرونيزيا المتحدة"
 
 #: qwikgame/constants.py:204
 msgid "Moldova, Republic of"
-msgstr "مولدوفا، جمهورية"
+msgstr "جمهورية مولدوفا"
 
 #: qwikgame/constants.py:205
 msgid "Monaco"
@@ -773,7 +772,7 @@ msgstr "رومانيا"
 
 #: qwikgame/constants.py:241
 msgid "Russian Federation"
-msgstr "روسيا الاتحادية"
+msgstr "الاتحاد الروسي"
 
 #: qwikgame/constants.py:242
 msgid "Rwanda"
@@ -1038,6 +1037,10 @@ msgstr "زامبيا"
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "زيمبابوي"
+
+#: qwikgame/fields.py:93
+msgid "Select from map"
+msgstr "اختر من الخريطة"
 
 #~ msgid "English"
 #~ msgstr "الإنجليزية"

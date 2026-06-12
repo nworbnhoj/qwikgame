@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 11:58+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,15 +47,19 @@ msgstr "إنشاء حساب"
 msgid "Welcome to Qwikgame"
 msgstr "مرحبًا بك في Qwikgame"
 
+#: templates/field_prompt.html:13
+msgid "website"
+msgstr "الموقع الإلكتروني"
+
 #: templates/input_day.html:9
 msgid "Pick time"
 msgstr "اختر الوقت"
 
-#: templates/input_day.html:14
+#: templates/input_day.html:15
 msgid "All Day"
 msgstr "طوال اليوم"
 
-#: templates/input_day.html:24
+#: templates/input_day.html:25
 msgid "The Venue is closed."
 msgstr "المكان مغلق."
 
@@ -71,11 +75,11 @@ msgstr "في أي وقت"
 msgid "QWIKGAME License"
 msgstr "رخصة QWIKGAME"
 
-#: templates/license.html:31
+#: templates/license.html:28
 msgid "Open Source Software"
 msgstr "برمجيات مفتوحة المصدر"
 
-#: templates/license.html:35
+#: templates/license.html:32
 msgid ""
 "Qwikgame is released as Open-Source software, and is grateful for the use of "
 "many other great Open-Source software projects."
@@ -83,11 +87,11 @@ msgstr ""
 "تم إصدار Qwikgame كبرنامج مفتوح المصدر، وهو ممتن لاستخدام العديد من مشاريع "
 "البرمجيات المفتوحة المصدر الرائعة الأخرى."
 
-#: templates/license.html:40
+#: templates/license.html:37
 msgid "Software"
 msgstr "البرنامج"
 
-#: templates/license.html:41
+#: templates/license.html:38
 msgid "Licence"
 msgstr "الرخصة"
 
@@ -240,44 +244,26 @@ msgid "Open Notifications"
 msgstr "افتح الإشعارات"
 
 #: templates/pwa_snippet.html:92
-#, fuzzy
-#| msgid "Welcome to Qwikgame"
 msgid "Select qwikgame"
-msgstr "مرحبًا بك في Qwikgame"
+msgstr "اختر QWIKGAME"
 
 #: templates/pwa_snippet.html:93
 msgid "Turn on Allow Notifications"
 msgstr "قم بتفعيل السماح بالإشعارات"
 
-#: templates/qwik.html:41
+#: templates/qwik.html:30
 msgid "QwikGame"
 msgstr "QwikGame"
 
-#: templates/qwik.html:56
-msgid "Invitations"
-msgstr "الدعوات"
-
-#: templates/qwik.html:61
-msgid "Matches"
-msgstr "المباريات"
-
-#: templates/qwik.html:66
-msgid "Reviews"
-msgstr "التقييمات"
-
-#: templates/qwik.html:71
-msgid "Friends"
-msgstr "الأصدقاء"
-
-#: templates/qwik.html:97
+#: templates/qwik.html:55
 msgid "Feedback"
 msgstr "الملاحظات"
 
-#: templates/qwik.html:108
+#: templates/qwik.html:66
 msgid "Submit"
 msgstr "إرسال"
 
-#: templates/qwik.html:119
+#: templates/qwik.html:77
 #, python-format
 msgid ""
 "\n"
@@ -285,6 +271,22 @@ msgid ""
 msgstr ""
 "\n"
 "            هذا العمل من %(qwik_link)s مرخّص بموجب %(gpl_link)s.\n"
+
+#: templates/tab_bar.html:13
+msgid "Invitations"
+msgstr "الدعوات"
+
+#: templates/tab_bar.html:18
+msgid "Matches"
+msgstr "المباريات"
+
+#: templates/tab_bar.html:23
+msgid "Reviews"
+msgstr "التقييمات"
+
+#: templates/tab_bar.html:28
+msgid "Friends"
+msgstr "الأصدقاء"
 
 #: templates/upgrade.html:7
 msgid "Learn more"
@@ -296,7 +298,7 @@ msgstr "فتح"
 
 #: templates/welcome.html:22
 msgid "QWIKGAME. FIND PARTNERS. SCHEDULE MATCHES."
-msgstr "QWIKGAME. اعثر على شركاء. جدولة المباريات."
+msgstr "QWIKGAME. اعثر على شركاء. نسّق المباريات."
 
 #: templates/welcome.html:31
 msgid "Find partner"
@@ -304,7 +306,7 @@ msgstr "اعثر على شريك"
 
 #: templates/welcome.html:36
 msgid "FIND PARTNERS. SCHEDULE MATCHES. PLAY MORE."
-msgstr "اعثر على شركاء. جدولة المباريات. العب أكثر."
+msgstr "اعثر على شركاء. نسّق المباريات. العب أكثر."
 
 #: templates/welcome.html:39
 #, python-format
@@ -378,18 +380,19 @@ msgid "Post new Match Invitation"
 msgstr "انشر دعوة مباراة جديدة"
 
 #: templates/welcome.html:152
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                            You don't find a suitable invitation in the "
+#| "%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+#| "and the place. Confirm a match with a Rival of your preference. You "
+#| "choose! \n"
 msgid ""
 "\n"
-"                            You don't find a suitable invitation in the "
-"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
-"and the place. Confirm a match with a Rival of your preference. You "
-"choose! \n"
+"                            You don't find a suitable invitation in the %(QWIK)sFeed? Post invitation on your terms. Pick the game, the timeframe and the place. Confirm a match with a Rival of your preference. You choose! \n"
 msgstr ""
 "\n"
-"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ أرسل دعوة "
-"وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره "
-"أنت. القرار لك! \n"
+"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ انشر دعوة وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره أنت. القرار لك!\n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -686,29 +689,22 @@ msgstr ""
 "                    نعم! برنامج %(QWIK)sGAME مفتوح المصدر بالكامل. يمكن "
 "العثور على أحدث الشيفرة عبر %(github_link)s. مساهمتك مرحب بها للغاية.\n"
 
-#: templates/welcome.html:414
-msgid "License"
-msgstr "الرخصة"
-
-#: templates/welcome.html:418
-msgid "Privacy"
-msgstr "الخصوصية"
-
-#: templates/welcome.html:422
-msgid "Terms & Conditions"
-msgstr "الشروط والأحكام"
-
 #: templates/welcome_header_snippet.html:12
-#, fuzzy
-#| msgid "Sign UP"
 msgid "Sign In"
-msgstr "إنشاء حساب"
+msgstr "تسجيل الدخول"
 
 #: templates/welcome_header_snippet.html:13
-#, fuzzy
-#| msgid "Sign UP"
 msgid "Sign up"
 msgstr "إنشاء حساب"
+
+#~ msgid "License"
+#~ msgstr "الرخصة"
+
+#~ msgid "Privacy"
+#~ msgstr "الخصوصية"
+
+#~ msgid "Terms & Conditions"
+#~ msgstr "الشروط والأحكام"
 
 #~ msgid "search"
 #~ msgstr "بحث"

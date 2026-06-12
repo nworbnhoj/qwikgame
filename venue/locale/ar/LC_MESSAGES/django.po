@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:32+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: venue/forms.py:17
-msgid "SEARCH"
+msgid "search"
 msgstr "بحث"
 
 #: venue/forms.py:22
@@ -28,33 +28,36 @@ msgid "restrict the search to a region"
 msgstr "تقييد البحث بمنطقة معينة"
 
 #: venue/forms.py:23
-msgid "REGION"
+msgid "region"
 msgstr "المنطقة"
 
 #: venue/forms.py:30
 msgid "Specify the Game for these Qwikgame Venues"
 msgstr "حدد اللعبة لهذه الأماكن في Qwikgame"
 
-#: venue/forms.py:31
-#, fuzzy
-#| msgid "GAMES"
-msgid "GAME"
+#: venue/forms.py:31 venue/forms.py:91 venue/templates/venue/venues.html:44
+msgid "game"
 msgstr "اللعبة"
 
-#: venue/forms.py:60
+#: venue/forms.py:61
 msgid "Select Google Places to add as Qwikgame Venues"
 msgstr "اختر أماكن Google لإضافتها كأماكن في Qwikgame"
 
-#: venue/forms.py:61
-msgid "GOOGLE PLACES"
-msgstr "أماكن Google"
+#: venue/forms.py:62
+msgid "google places"
+msgstr "أماكن جوجل"
 
-#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
-#: venue/templates/venue/venues.html:33
+#: venue/forms.py:97
+msgid "place"
+msgstr "المكان"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:9
+#: venue/templates/venue/venues.html:35
 msgid "Venues"
 msgstr "الأماكن"
 
-#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venue_add.html:69
+#: venue/templates/venue/venues.html:94
 msgid "Add Venue"
 msgstr "إضافة مكان"
 
@@ -90,23 +93,23 @@ msgstr "المديرون"
 msgid "GAMES"
 msgstr "الألعاب"
 
-#: venue/templates/venue/venues.html:24
+#: venue/templates/venue/venue_add.html:51
+msgid "Venue Add"
+msgstr "إضافة مكان"
+
+#: venue/templates/venue/venue_add.html:79 venue/templates/venue/venues.html:26
 msgid "Add"
 msgstr "إضافة"
 
-#: venue/templates/venue/venues.html:36
+#: venue/templates/venue/venues.html:38
 msgid "Group by"
 msgstr "تجميع حسب"
 
-#: venue/templates/venue/venues.html:42
-msgid "game"
-msgstr "اللعبة"
-
-#: venue/templates/venue/venues.html:72
+#: venue/templates/venue/venues.html:74
 msgid "No venues :-("
 msgstr "لا توجد أماكن :-("
 
-#: venue/templates/venue/venues.html:85
+#: venue/templates/venue/venues.html:88
 #, python-format
 msgid ""
 "\n"
@@ -116,3 +119,17 @@ msgstr ""
 "\n"
 "                اعرض تفاصيل المكان%(br)sأو أضف مكانًا جديدًا!\n"
 "    "
+
+#~ msgid "SEARCH"
+#~ msgstr "بحث"
+
+#~ msgid "REGION"
+#~ msgstr "المنطقة"
+
+#, fuzzy
+#~| msgid "GAMES"
+#~ msgid "GAME"
+#~ msgstr "اللعبة"
+
+#~ msgid "GOOGLE PLACES"
+#~ msgstr "أماكن Google"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 15:13+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,58 +19,45 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
+#: appeal/forms.py:58
 msgid "When are you keen to play?"
 msgstr "متى ترغب في اللعب؟"
 
-#: appeal/forms.py:58
-msgid "WHAT TIME WORKS FOR YOU?"
+#: appeal/forms.py:59
+msgid "what time works for you?"
 msgstr "ما الوقت المناسب لك؟"
 
 #: appeal/forms.py:109
-msgid "GAME"
+msgid "game"
 msgstr "اللعبة"
 
 #: appeal/forms.py:118
-msgid "TODAY"
+msgid "today"
 msgstr "اليوم"
 
-#: appeal/forms.py:127
-msgid "TOMORROW"
+#: appeal/forms.py:126
+msgid "tomorrow"
 msgstr "غدًا"
 
-#: appeal/forms.py:135
-msgid "FRIENDS"
-msgstr "الأصدقاء"
-
-#: appeal/forms.py:213
+#: appeal/forms.py:203
 msgid "Please select at least one hour in today or tomorrow."
 msgstr "يرجى اختيار ساعة واحدة على الأقل لليوم أو غدًا."
 
-#: appeal/forms.py:220 appeal/forms.py:236
-msgid "Sorry, that Venue selection did not work. Please try again."
-msgstr "عذرًا، لم تنجح عملية اختيار المكان. يرجى المحاولة مرة أخرى."
+#: appeal/forms.py:218
+msgid "notify friend by email"
+msgstr "إشعار الصديق عبر البريد الإلكتروني"
 
-#: appeal/forms.py:226
-msgid "Please invite at least one Friend."
-msgstr "يرجى دعوة صديق واحد على الأقل."
-
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:92
-msgid "Invite Friends Only"
-msgstr "دعوة الأصدقاء فقط"
-
-#: appeal/forms.py:243
-msgid ""
-"You don't have any added friends yet. Please add them from the Friends tab"
-msgstr "ليس لديك أي أصدقاء مضافين بعد. يرجى إضافتهم من تبويب الأصدقاء"
-
-#: appeal/forms.py:247
-msgid "Select from map"
-msgstr "اختر من الخريطة"
-
-#: appeal/forms.py:251
-msgid "VENUE"
+#: appeal/forms.py:229
+msgid "venue"
 msgstr "المكان"
+
+#: appeal/forms.py:259
+msgid "Check Venue Availability"
+msgstr "تحقق من توفر المكان"
+
+#: appeal/forms.py:261
+msgid "QWIKGAME does not book courts"
+msgstr "QWIKGAME لا يقوم بحجز الملاعب"
 
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"
@@ -84,7 +71,7 @@ msgstr "إلغاء"
 msgid "decline"
 msgstr "رفض"
 
-#: appeal/templates/appeal/accept.html:125
+#: appeal/templates/appeal/accept.html:99
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
@@ -97,9 +84,8 @@ msgstr "الخلاصة"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:52 appeal/templates/appeal/keen.html:89
-msgid "Invite"
-msgstr "دعوة"
+msgid "New Invitation"
+msgstr "دعوة جديدة"
 
 #: appeal/templates/appeal/appeals.html:35
 #, python-format
@@ -153,6 +139,48 @@ msgstr ""
 msgid "Cancel this Offer?"
 msgstr "إلغاء هذا العرض؟"
 
-#: appeal/templates/appeal/keen.html:73
-msgid "Keen To Play? Send Invitation?"
-msgstr "هل ترغب في اللعب؟ إرسال دعوة؟"
+#: appeal/templates/appeal/keen.html:51
+#: appeal/templates/appeal/keen.html:86
+msgid "Post Invitation"
+msgstr "نشر دعوة"
+
+#: appeal/templates/appeal/keen.html:72
+msgid "Keen To Play? Post Invitation?"
+msgstr "هل ترغب في اللعب؟ انشر دعوة!"
+
+#~ msgid "WHAT TIME WORKS FOR YOU?"
+#~ msgstr "ما الوقت المناسب لك؟"
+
+#~ msgid "GAME"
+#~ msgstr "اللعبة"
+
+#~ msgid "TODAY"
+#~ msgstr "اليوم"
+
+#~ msgid "TOMORROW"
+#~ msgstr "غدًا"
+
+#~ msgid "FRIENDS"
+#~ msgstr "الأصدقاء"
+
+#~ msgid "Sorry, that Venue selection did not work. Please try again."
+#~ msgstr "عذرًا، لم تنجح عملية اختيار المكان. يرجى المحاولة مرة أخرى."
+
+#~ msgid "Please invite at least one Friend."
+#~ msgstr "يرجى دعوة صديق واحد على الأقل."
+
+#~ msgid "Invite Friends Only"
+#~ msgstr "دعوة الأصدقاء فقط"
+
+#~ msgid ""
+#~ "You don't have any added friends yet. Please add them from the Friends tab"
+#~ msgstr "ليس لديك أي أصدقاء مضافين بعد. يرجى إضافتهم من تبويب الأصدقاء"
+
+#~ msgid "Select from map"
+#~ msgstr "اختر من الخريطة"
+
+#~ msgid "VENUE"
+#~ msgstr "المكان"
+
+#~ msgid "Invite"
+#~ msgstr "دعوة"

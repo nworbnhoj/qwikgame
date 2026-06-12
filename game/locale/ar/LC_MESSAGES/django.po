@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:05+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,33 +19,29 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: game/forms.py:30
+#: game/forms.py:31
 msgid "Chat here with your rival"
 msgstr "تحدث هنا مع خصمك"
 
-#: game/forms.py:56
-msgid "RIVAL SKILL LEVEL"
+#: game/forms.py:57
+msgid "rival skill level"
 msgstr "مستوى مهارة الخصم"
 
-#: game/forms.py:61
+#: game/forms.py:62
 msgid "venue not suitable for game"
 msgstr "المكان غير مناسب للعبة"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival showed poor sportsmanship"
 msgstr "أظهر المنافس سلوكًا رياضيًا سيئًا"
 
-#: game/forms.py:63
+#: game/forms.py:64
 msgid "rival did not show up"
 msgstr "لم يحضر المنافس"
 
-#: game/forms.py:65
-msgid "DISSAPOINTMENT"
+#: game/forms.py:66
+msgid "dissapointment"
 msgstr "خيبة الأمل"
-
-#: game/forms.py:80
-msgid "Did anything go wrong?"
-msgstr "هل حدث أي خطأ؟"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
@@ -83,20 +79,20 @@ msgstr "عرض سجل الدعوات"
 msgid "Hide invitation history"
 msgstr "إخفاء سجل الدعوات"
 
-#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "مراجعة"
 
-#: game/templates/game/match.html:181
+#: game/templates/game/match.html:171
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ الرموز التعبيرية قريبًا ☺"
 
-#: game/templates/game/match.html:195
+#: game/templates/game/match.html:187
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "سيتم تعطيل الدردشة بعد 24 ساعة من انتهاء المباراة."
 
-#: game/templates/game/match.html:198
+#: game/templates/game/match.html:190
 msgid "Chat will be deleted 1 week after Match."
 msgstr "سيتم حذف الدردشة بعد أسبوع من انتهاء المباراة."
 
@@ -155,9 +151,10 @@ msgstr ""
 "            لا توجد مباريات معلّقة%(br)sهل ترغب في اللعب؟\n"
 "        "
 
-#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "دعوة"
+#: game/templates/game/matches.html:158
+#: game/templates/game/reviews.html:110
+msgid "New Invitation"
+msgstr "دعوة جديدة"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
@@ -186,3 +183,15 @@ msgstr ""
 #: game/templates/game/rival.html:7
 msgid "Rival"
 msgstr "المنافس"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "مستوى مهارة الخصم"
+
+#~ msgid "DISSAPOINTMENT"
+#~ msgstr "خيبة الأمل"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "هل حدث أي خطأ؟"
+
+#~ msgid "Invite"
+#~ msgstr "دعوة"

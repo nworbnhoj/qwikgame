@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-20 07:37+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,66 +20,66 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #: person/forms.py:14
-msgid "Person to block"
+#, fuzzy
+#| msgid "Person to block"
+msgid "person to block"
 msgstr "الشخص المراد حظره"
 
 #: person/forms.py:34
-msgid "EMAIL NOTIFICATIONS"
+msgid "email address"
+msgstr "عنوان البريد الإلكتروني"
+
+#: person/forms.py:42
+msgid "email notifications"
 msgstr "إشعارات البريد الإلكتروني"
 
-#: person/forms.py:39
-msgid "WEB / APP NOTIFICATIONS"
-msgstr "إشعارات الويب / التطبيق"
+#: person/forms.py:43
+msgid "push notifications"
+msgstr "الإشعارات الفورية"
 
 #: person/forms.py:44
-msgid "This will make finding a Venue nearby faster."
-msgstr "سيجعل ذلك العثور على مكان قريب أسرع."
+msgid "location access"
+msgstr "الوصول إلى الموقع"
 
-#: person/forms.py:45
-msgid "ALLOW LOCATION ACCESS"
-msgstr "السماح بالوصول إلى الموقع"
+#: person/forms.py:46
+msgid "Your choice."
+msgstr "خيارك."
 
-#: person/forms.py:50
+#: person/forms.py:47
+msgid "permissions"
+msgstr "الأذونات"
+
+#: person/forms.py:53
 msgid "Browser default"
 msgstr "الإعداد الافتراضي للمتصفح"
 
-#: person/forms.py:51
-msgid "LANGUAGE"
+#: person/forms.py:54
+msgid "language"
 msgstr "اللغة"
 
-#: person/forms.py:71
-#, python-format
-msgid "Receive Email for Bid %(bid)s and Match %(match)s"
-msgstr "استلام بريد إلكتروني للعرض %(bid)s والمباراة %(match)s"
-
-#: person/forms.py:75
-#, python-format
-msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr "عرض إشعارات التطبيق للعرض %(bid)s والمباراة %(match)s)"
-
-#: person/forms.py:101
-msgid "QWIK NAME"
-msgstr "اسم QWIK"
-
-#: person/forms.py:108
-msgid "WEBSITE / SOCIAL MEDIA"
-msgstr "الموقع الإلكتروني / وسائل التواصل الاجتماعي"
-
-#: person/forms.py:121
-msgid "your qwikgame screen name"
-msgstr "اسم العرض الخاص بك في qwikgame"
-
-#: person/forms.py:122
-msgid "add a social media url"
-msgstr "أضف رابط وسيلة تواصل اجتماعي"
-
-#: person/forms.py:169
+#: person/forms.py:61 person/forms.py:198
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr "عند حظر شخص، لن يتمكن أي منكما من رؤية الآخر على qwikgame."
 
-#: person/forms.py:170
-msgid "PEOPLE YOU HAVE BLOCKED"
+#: person/forms.py:62 person/forms.py:199
+msgid "people you have blocked"
 msgstr "الأشخاص الذين قمت بحظرهم"
+
+#: person/forms.py:116
+msgid "QWIK name"
+msgstr "اسم QWIK"
+
+#: person/forms.py:124
+msgid "website / social media"
+msgstr "الموقع الإلكتروني / وسائل التواصل الاجتماعي"
+
+#: person/forms.py:135
+msgid "your qwikgame screen name"
+msgstr "اسم العرض الخاص بك في qwikgame"
+
+#: person/forms.py:174
+msgid "Add URL"
+msgstr "إضافة رابط"
 
 #: person/templates/person/account.html:16
 msgid "Account"
@@ -232,15 +232,6 @@ msgstr ""
 "\n"
 "\t%(name)s قام بسحب عرضه على %(game)s في %(venue)s.\n"
 
-#: person/templates/person/cancel_bid_alert_notify_head.txt:4
-#, python-format
-msgid ""
-"\n"
-"Bid on %(game)s withdrawn\n"
-msgstr ""
-"\n"
-"تم رفض العرض على %(game)s\n"
-
 #: person/templates/person/cancel_match_alert_email_html.html:13
 #, python-format
 msgid ""
@@ -359,6 +350,8 @@ msgid ""
 "\n"
 "\t%(text)s\n"
 msgstr ""
+"\n"
+"\t%(text)s\n"
 
 #: person/templates/person/chat_match_alert_notify_head.txt:4
 #, python-format
@@ -614,25 +607,14 @@ msgstr ""
 msgid "PRIVATE SETTINGS"
 msgstr "الإعدادات الخاصة"
 
-#: person/templates/person/private.html:44
-msgid "EMAIL ADDRESS"
-msgstr "عنوان البريد الإلكتروني"
-
-#: person/templates/person/private.html:46
-msgid "Change (coming soon)"
-msgstr "تغيير (قريبًا)"
-
-#: person/templates/person/private.html:61
-msgid "UnBlock"
-msgstr "إلغاء الحظر"
+#: person/templates/person/private.html:47
+#: person/templates/person/public.html:36
+msgid "Save"
+msgstr "حفظ"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
 msgstr "الملف العام"
-
-#: person/templates/person/public.html:35
-msgid "Save"
-msgstr "حفظ"
 
 #: person/templates/person/review_match_alert_email_html.html:13
 #, fuzzy, python-format
@@ -643,8 +625,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            تصلك هذه الرسالة لمراجعة مباراتك في Qwikgame للعبة "
-"<b>%(game)s</b> في <b>%(venue)s</b>.\n"
+"            تصلك هذه الرسالة لمراجعة مباراتك في Qwikgame للعبة <b>%(game)s</"
+"b> في <b>%(venue)s</b>.\n"
 "        "
 
 #: person/templates/person/review_match_alert_email_html.html:26
@@ -685,8 +667,7 @@ msgid ""
 "%(venue)s.\n"
 msgstr ""
 "\n"
-"\tتصلك هذه الرسالة لمراجعة مباراتك في Qwikgame للعبة %(game)s في "
-"%(venue)s.\n"
+"\tتصلك هذه الرسالة لمراجعة مباراتك في Qwikgame للعبة %(game)s في %(venue)s.\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
 msgid ""
@@ -754,16 +735,17 @@ msgid ""
 "\t%(name)s has Invited you to %(game)s at %(venue)s.\n"
 msgstr ""
 "\n"
-"\t%(name)s رسالة دردشة بخصوص %(game)s في %(venue)s\n"
+"\t%(name)s دعاك للعب %(game)s في %(venue)s.\n"
 
-#: person/templates/person/rival_invite_alert_notify_head.txt:4
-#, python-format
-msgid ""
-"\n"
-"Invite to %(game)s\n"
-msgstr ""
-"\n"
-"تم رفض العرض على %(game)s\n"
+#: person/templates/person/social.html:7
+#, fuzzy
+#| msgid "add a social media url"
+msgid "Add Social media link"
+msgstr "أضف رابط وسيلة تواصل اجتماعي"
+
+#: person/templates/person/social.html:33
+msgid "Submit"
+msgstr "إرسال"
 
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
@@ -799,7 +781,7 @@ msgstr ""
 #: person/templates/person/woo_invite_email_html.html:33
 #: person/templates/person/woo_invite_email_html.html:37
 msgid "email invitations from"
-msgstr ""
+msgstr "دعوات البريد الإلكتروني من"
 
 #: person/templates/person/woo_invite_email_subject.txt:4
 #, python-format
@@ -868,3 +850,44 @@ msgstr ""
 "\n"
 "لحظر دعوات البريد الإلكتروني من جميع اللاعبين في %(site_name)s، يرجى النقر "
 "على:\n"
+
+#~ msgid "EMAIL NOTIFICATIONS"
+#~ msgstr "إشعارات البريد الإلكتروني"
+
+#~ msgid "WEB / APP NOTIFICATIONS"
+#~ msgstr "إشعارات الويب / التطبيق"
+
+#~ msgid "This will make finding a Venue nearby faster."
+#~ msgstr "سيجعل ذلك العثور على مكان قريب أسرع."
+
+#~ msgid "ALLOW LOCATION ACCESS"
+#~ msgstr "السماح بالوصول إلى الموقع"
+
+#~ msgid "LANGUAGE"
+#~ msgstr "اللغة"
+
+#, python-format
+#~ msgid "Receive Email for Bid %(bid)s and Match %(match)s"
+#~ msgstr "استلام بريد إلكتروني للعرض %(bid)s والمباراة %(match)s"
+
+#, python-format
+#~ msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
+#~ msgstr "عرض إشعارات التطبيق للعرض %(bid)s والمباراة %(match)s)"
+
+#~ msgid "QWIK NAME"
+#~ msgstr "اسم QWIK"
+
+#~ msgid "WEBSITE / SOCIAL MEDIA"
+#~ msgstr "الموقع الإلكتروني / وسائل التواصل الاجتماعي"
+
+#~ msgid "PEOPLE YOU HAVE BLOCKED"
+#~ msgstr "الأشخاص الذين قمت بحظرهم"
+
+#~ msgid "EMAIL ADDRESS"
+#~ msgstr "عنوان البريد الإلكتروني"
+
+#~ msgid "Change (coming soon)"
+#~ msgstr "تغيير (قريبًا)"
+
+#~ msgid "UnBlock"
+#~ msgstr "إلغاء الحظر"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 17:32+1100\n"
+"POT-Creation-Date: 2026-06-12 17:18+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,23 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "تم تعطيل الحساب الخاص بـ %(e)s"
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
 msgstr ""
-"لا يوجد حساب لهذا البريد الإلكتروني.%(br)sهل ترغب في "
-"%(a0)sالتسجيل%(a1)s؟"
+"لا يوجد حساب لهذا البريد الإلكتروني.%(br)sهل ترغب في %(a0)sالتسجيل%(a1)s؟"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
-msgstr "مرحبًا بك في Qwikgame"
+msgstr "أهلًا بك في Qwikgame"
 
 #: authenticate/templates/authenticate/email_validate_email.html:3
 #: authenticate/templates/authenticate/login_email_text.html:6
@@ -218,19 +217,19 @@ msgstr "تسجيل الدخول"
 msgid "Send verification link"
 msgstr "إرسال رابط التحقق"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "عذرًا، لم تنجح العملية."
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr "رمز الأمان في ذلك الرابط منتهي الصلاحية أو غير صالح لسبب ما."
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "تسجيل الدخول / التسجيل"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " الصفحة."

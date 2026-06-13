@@ -91,15 +91,12 @@ div.prompt p.info { color: var(--color-grey-3); font-size: 1rem; text-wrap: wrap
 div.prompt .identicon svg { height: 4rem; }
 
 /* match chat */
-div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; padding: 1rem; }
+div.chat_bubble { align-items: start; background-color: var(--color-stencil); border-radius: 2rem; gap: 1rem; max-width: 66%; min-width: 10rem; overflow: hidden; padding: 1rem; }
 div.chat_bubble .row { flex-direction: row; gap: 1rem; justify-content: space-between; }
 div.chat_bubble .text { }
 div.chat_bubble .row:has(time) { margin-left: auto }
 div.chat_input { flex: 2; }
 div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; padding: 0; }
-
-
-
 label p { flex: auto; }
 label.hidden { display: none }
 label.large { border: 1px solid var(--color-backdrop); padding: 1rem; width: 100% }

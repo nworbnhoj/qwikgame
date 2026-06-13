@@ -1,87 +1,76 @@
 ///////////////// Service Worker functions //////////////////
-
 const REFRESH_FAST = 60; // every minute
 const REFRESH_SLOW = 900; // every 15 minutes
 const CHIME = "/static/chime.mp3"
-
-
 // Registering Service Worker
-if('serviceWorker' in navigator) {
-
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(registration => {
-      console.log("serviceWorker registered");
-      if ('PushManager' in window) {
-        if (Notification.permission === 'granted') {
-          registration.pushManager.getSubscription().then(subscription => {
-            if (subscription) {
-              console.log("WebPush subscribed");
-              setMetaRefresh(REFRESH_SLOW);
-            } else if (typeof subscribe === 'function') {
-              subscribe(registration);
-              console.log("WebPush subscription underway");
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+            console.log("serviceWorker registered");
+            if ('PushManager' in window) {
+                if (Notification.permission === 'granted') {
+                    registration.pushManager.getSubscription().then(subscription => {
+                        if (subscription) {
+                            console.log("WebPush subscribed");
+                            setMetaRefresh(REFRESH_SLOW);
+                        } else if (typeof subscribe === 'function') {
+                            subscribe(registration);
+                            console.log("WebPush subscription underway");
+                        }
+                    });
+                } else {
+                    console.log("WebPush unauthorised");
+                    setMetaRefresh(REFRESH_FAST);
+                }
+            } else {
+                console.log("WebPush unsupported");
+                setMetaRefresh(REFRESH_FAST);
             }
-          });
-        } else {
-          console.log("WebPush unauthorised");
-          setMetaRefresh(REFRESH_FAST);
-        }
-      } else {
-        console.log("WebPush unsupported");
-        setMetaRefresh(REFRESH_FAST);
-      }
-    }, function(err) {
-      console.log("WARNING: serviceWorker registration failed.");
+        }, function(err) {
+            console.log("WARNING: serviceWorker registration failed.");
+        });
     });
-  });
-
-  window.addEventListener('focus', () => {
-    navigator.serviceWorker.getRegistration("/webpush/service-worker.js").then((registration) => {
-      if (registration) {
-        closeNotifications(registration);
-      }
+    window.addEventListener('focus', () => {
+        navigator.serviceWorker.getRegistration("/webpush/service-worker.js").then((registration) => {
+            if (registration) {
+                closeNotifications(registration);
+            }
+        });
     });
-  });
-  
 };
 
-
 function closeNotifications(registration) {
-  registration.getNotifications().then((notifications) => {
-    for (notification in notifications) {
-      try {
-        notification.close();
-      } catch (e) {
-        console.info("failed to close notifications");
-        break;
-      }
-    }
-  });
+    registration.getNotifications().then((notifications) => {
+        for (notification in notifications) {
+            try {
+                notification.close();
+            } catch (e) {
+                console.info("failed to close notifications");
+                break;
+            }
+        }
+    });
 }
-
 
 function setMetaRefresh(seconds) {
-  for (var refresh of document.querySelectorAll("meta[http-equiv='refresh'")) {
-    refresh.content = seconds;
-  }
+    for (var refresh of document.querySelectorAll("meta[http-equiv='refresh'")) {
+        refresh.content = seconds;
+    }
 }
-
-
 navigator.serviceWorker.addEventListener("message", (event) => {
-  console.log("ServiceWorker msg received: ", event.data.type);
-  switch(event.data.type) {
-      case "chime":
-        playSound(CHIME);
-        break;
-      default:
-        console.log("noop msg:", event.data.type);
-  }
+    console.log("ServiceWorker msg received: ", event.data.type);
+    switch (event.data.type) {
+        case "chime":
+            playSound(CHIME);
+            break;
+        default:
+            console.log("noop msg:", event.data.type);
+    }
 });
 
-
 function playSound(url) {
-  const audio = new Audio(url);
-  audio.play().catch(error => {
-    console.error('Audio play failed:', error);
-  });
+    const audio = new Audio(url);
+    audio.play().catch(error => {
+        console.error('Audio play failed:', error);
+    });
 }

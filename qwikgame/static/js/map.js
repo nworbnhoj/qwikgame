@@ -10,26 +10,28 @@
  *****************************************************************************/
 // TODO extend QWIK_MARKS to be Game:Map(Mark) to avoid clearMarks() on Game change
 const QWIK_MARKS = new Map();
-const QWIK_REGION = new Map();                  // regionKey:Set(subKeys)
-const MAP_REGION = new Map();               // observable subset of QWIK_REGION
+const QWIK_REGION = new Map(); // regionKey:Set(subKeys)
+const MAP_REGION = new Map(); // observable subset of QWIK_REGION
 const SEARCH_MARKERS = [];
-const OPEN_24H = 16777215;                  // 24 least-significant-bits set
+const OPEN_24H = 16777215; // 24 least-significant-bits set
 const OPEN_24X7 = Array(7).fill(OPEN_24H);
-
 var qwikMap;
 var qwikInfowindow;
+var infowindow = null;
 var mapCenterIdle = null;
-    
 
 function venuesMap() {
-    if (typeof google == 'undefined'){
+    if (typeof google == 'undefined') {
         console.log('failed to initiate Venue Map: google undefined');
         return;
     }
     const MAP_ELEMENT = document.getElementById('map');
     const LAT = parseFloat(document.getElementById('id_lat').value);
     const LNG = parseFloat(document.getElementById('id_lng').value);
-    const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {lat: LAT, lng: LNG} : MSqC;
+    const CENTER = (!isNaN(LAT) && !isNaN(LNG)) ? {
+        lat: LAT,
+        lng: LNG
+    } : MSqC;
     const EAST = parseFloat(document.getElementById('id_east').value);
     const NORTH = parseFloat(document.getElementById('id_north').value);
     const SOUTH = parseFloat(document.getElementById('id_south').value);
@@ -37,28 +39,29 @@ function venuesMap() {
     const BOUNDS = gBounds(gLatLng(SOUTH, WEST), gLatLng(NORTH, EAST));
     const ZOOM = parseFloat(document.getElementById('id_zoom').value);
     const GOOGLE_MAP_OPTIONS = {
-      fullscreenControl: true,
-      // fullscreenControlOptions: {
-      //     position: google.maps.ControlPosition.RIGHT_BOTTOM,
-      //   },
-      mapTypeID: 'ROADMAP',
-      mapTypeControl: false,
-      streetViewControl: false,
-      zoom: isNaN(ZOOM) ? 10 : ZOOM,
-      zoomControl: true
+        fullscreenControl: true,
+        // fullscreenControlOptions: {
+        //     position: google.maps.ControlPosition.RIGHT_BOTTOM,
+        //   },
+        mapTypeID: 'ROADMAP',
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoom: isNaN(ZOOM) ? 10 : ZOOM,
+        zoomControl: true
     };
     qwikMap = new google.maps.Map(MAP_ELEMENT, GOOGLE_MAP_OPTIONS);
-    qwikInfowindow = new google.maps.InfoWindow({content: "<div></div>"});
+    qwikInfowindow = new google.maps.InfoWindow({
+        content: "<div></div>"
+    });
     const MAP = qwikMap;
     const INFOWINDOW = qwikInfowindow;
-    if (BOUNDS){
-      MAP.fitBounds(BOUNDS);
+    if (BOUNDS) {
+        MAP.fitBounds(BOUNDS);
     } else {
-      MAP.setCenter(CENTER);
+        MAP.setCenter(CENTER);
     }
     const GAME_SELECT = document.getElementById('id_game');
     GAME_SELECT.addEventListener('change', changeMarks);
-
     // setup Places search box in map
     const INPUT = document.getElementById("map-search");
     const SEARCHBOX = new google.maps.places.SearchBox(INPUT);
@@ -69,7 +72,6 @@ function venuesMap() {
     SEARCHBOX.addListener("places_changed", () => {
         searchChangeHandler(SEARCHBOX.getPlaces());
     });
-
     //setup Close button in map
     const CLOSE = document.createElement("button");
     CLOSE.textContent = 'X';
@@ -78,7 +80,7 @@ function venuesMap() {
     CLOSE.classList.add('map-close');
     CLOSE.classList.add('gmnoprint');
     CLOSE.addEventListener("click", () => {
-      closeMap();
+        closeMap();
     });
     const CLOSE_DIV = document.createElement("div");
     CLOSE_DIV.appendChild(CLOSE);
@@ -88,18 +90,16 @@ function venuesMap() {
     });
     MAP.addListener('click', (event) => {
         clickHandler(event)
-    });    
+    });
     MAP.addListener('bounds_changed', () => {
         updateMapRegion();
         fetchSubKeys(Array.from(MAP_REGION.keys()), game());
         showMarks();
-    });    
+    });
     MAP.addListener('zoom_changed', () => {
         INFOWINDOW.close();
     });
 }
-
-
 /******************************************************************************
  * Clears all Marks from globals QWIK_MARKS and QWIK_REGION and removes all
  * Markers from qwikMap.
@@ -108,243 +108,240 @@ function venuesMap() {
  * @global QWIK_REGION Map(marker-key : Set(marker-sub-keys)
  * @return null
  *****************************************************************************/
-function clearMarks(){
-  for(const [KEY, MARK] of QWIK_MARKS){
-    MARK.marker.setMap(null);    
-  }
-  QWIK_MARKS.clear();
-  QWIK_REGION.clear();
+function clearMarks() {
+    for (const [KEY, MARK] of QWIK_MARKS) {
+        MARK.marker.setMap(null);
+    }
+    QWIK_MARKS.clear();
+    QWIK_REGION.clear();
 }
-
-
 /******************************************************************************
  * Discovers the Game of the Form above the Map. (ie the currently Map game)
  *
  * @return the current Game.
  *****************************************************************************/
-function game(){
-  try {
-    const MAP_ELEMENT = document.getElementById("map");
-    const FORM = MAP_ELEMENT.closest("form");
-    const GAME = FORM.querySelector("[name=game]:checked").value;
-    return GAME;
-  }
-  catch (error) {
-    return;
-  }
-}
-
-
-function mapIdleHandler(){
-  const MAP = qwikMap;
-  const GAME = game();
-  if(typeof MAP === 'undefined' || typeof GAME === 'undefined'){ return; }
-  if(updateMapCenterIdle(MAP.getCenter())){
-    const CENTER = mapCenterIdle;
-    const REGIONS = getRegions(CENTER);
-    if (REGIONS.length == 0){
-      fetchMarks(GAME, CENTER, null, REGIONS.join(":"));
-    } else {
-      REGIONS.sort((a,b) => b.split("|").length - a.split("|").length);
-      REGION = REGIONS[0];
-      if (REGION.split("|").length < 3){
-        const SUB_REGIONS = Array.from(QWIK_REGION.get(REGION));
-        fetchSubKeys(SUB_REGIONS, game());
-      }
+function game() {
+    try {
+        const MAP_ELEMENT = document.getElementById("map");
+        const FORM = MAP_ELEMENT.closest("form");
+        const GAME = FORM.querySelector("[name=game]:checked").value;
+        return GAME;
+    } catch (error) {
+        return;
     }
-  }
 }
 
-
-function updateMapCenterIdle(center){
-  const CENTER = gLatLng(center.lat(), center.lng(), 3); // round to approx 100m at equator 
-  if (!CENTER.equals(mapCenterIdle)){
-    mapCenterIdle = CENTER;
-    return true;
-  }
-  return false;
-}
-
-
-function searchChangeHandler(places){
-  const MAP = qwikMap;
-  if (places.length == 0) { return; }
-  
-  SEARCH_MARKERS.forEach(marker => {
-    marker.setMap(null);
-  });
-  SEARCH_MARKERS.length = 0;
-
-  const KNOWN_PLACES = [];
-  QWIK_MARKS.forEach( mark => {
-    KNOWN_PLACES.push(mark.placeid)
-  })
-  
-  // For each place, get the icon, name and location.
-  const BOUNDS = new google.maps.LatLngBounds(null, null);
-  places.forEach(place => {
-
-    if (place.geometry.viewport) { // Only geocodes have viewport.
-      BOUNDS.union(place.geometry.viewport);
-    } else {
-      BOUNDS.extend(place.geometry.location);
+function mapIdleHandler() {
+    const MAP = qwikMap;
+    const GAME = game();
+    if (typeof MAP === 'undefined' || typeof GAME === 'undefined') {
+        return;
     }
-
-    if (!KNOWN_PLACES.includes(place.place_id)) {
-      var mark = markFromPlace(place);
-
-      // neither open_hours or tz_offset are available in search results
-      // so default to 24x7 and irrelevent weekday and hour
-      mark.hours = OPEN_24X7;
-      mark.weekday = 0;
-      mark.hour = 0;
-
-      const MARKER = new google.maps.Marker({
-        // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
-        // label: {text:'0', className:'qg_style_mark_label place'},
-        map: MAP,
-        position: place.geometry.location,
-        // title: place.name+'\nyou are the first player!\n'+open
-      });
-      mark.marker = MARKER;
-      mark.marker.setVisible(SHOW_SEARCH_MARKERS);
-      mark.marker.setIcon({ url: ICON_PLACE });
-      SEARCH_MARKERS.push(MARKER);
-      setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
+    if (updateMapCenterIdle(MAP.getCenter())) {
+        const CENTER = mapCenterIdle;
+        const REGIONS = getRegions(CENTER);
+        if (REGIONS.length == 0) {
+            fetchMarks(GAME, CENTER, null, REGIONS.join(":"));
+        } else {
+            REGIONS.sort((a, b) => b.split("|").length - a.split("|").length);
+            REGION = REGIONS[0];
+            if (REGION.split("|").length < 3) {
+                const SUB_REGIONS = Array.from(QWIK_REGION.get(REGION));
+                fetchSubKeys(SUB_REGIONS, game());
+            }
+        }
     }
-  });
-  MAP.fitBounds(BOUNDS);
 }
 
-
-function clickHandler(event){
-  if (event.placeId) {
-    addPlaceMark(event.placeId);
-    if (event.latLng){
-      qwikMap.panTo(event.latLng);
+function updateMapCenterIdle(center) {
+    const CENTER = gLatLng(center.lat(), center.lng(), 3); // round to approx 100m at equator 
+    if (!CENTER.equals(mapCenterIdle)) {
+        mapCenterIdle = CENTER;
+        return true;
     }
-    event.stop();
-  }
+    return false;
 }
 
-
-function changeMarks(){
-  clearMarks();
-  fetchMarks(game(), mapCenterIdle, null, '');
-}
-
-
-function showMarkInfo(mark, template){
-  const INFOWINDOW = qwikInfowindow;
-  const MAP = qwikMap;
-  const TEMPLATE_NAME = "infowindow_mark_"+template;
-  const TEMPLATE = document.getElementById(TEMPLATE_NAME);
-  const FRAG = TEMPLATE.content.cloneNode(true);
-  switch (template){
-    case 'region':
-      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
-      FRAG.getElementById("map_mark_info_size").textContent = mark.num_venue.toString();
-      var pixelOffset = new google.maps.Size(0,-30)
-      break;
-    case 'place':
-      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
-      FRAG.getElementById("map_mark_info_status").textContent = mark.status;
-      var href = 'https://duckduckgo.com/?q='+mark.name+' '+mark.address;
-      FRAG.getElementById("map_mark_info_search").setAttribute('href', href);
-      // FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
-      var pixelOffset = new google.maps.Size(0,-45)
-      break;
-    case 'venue':
-      FRAG.getElementById("map_mark_info_name").textContent = mark.name;
-      FRAG.getElementById("map_mark_info_address").textContent = mark.address;
-      FRAG.getElementById("map_mark_info_open").textContent = mark.open;
-      FRAG.getElementById("map_mark_info_size").textContent = mark.num_player.toString();
-      var pixelOffset = new google.maps.Size(0,-45)
-      break;
-  }
-  INFOWINDOW.setOptions({
-    content: FRAG.firstElementChild,
-    maxWidth: 300,
-    position: mark.center,
-    pixelOffset: pixelOffset,
-  });
-  INFOWINDOW.open(MAP);
-}
-
-
-function vid(address_components, name){
-  var vid = [name,'locality','admin1','XX'];
-  if (Array.isArray(address_components)){
-    for (i = 0; i < address_components.length; i++) {
-      address_component = address_components[i];
-      types = address_component.types;
-      if(types.includes('locality')){
-        vid[1] = address_component.short_name;
-      } else if(types.includes('administrative_area_level_1')){
-        vid[2] = address_component.short_name;
-      } else if(types.includes('country')){
-        vid[3] = address_component.short_name;
-      }
+function searchChangeHandler(places) {
+    const MAP = qwikMap;
+    if (places.length == 0) {
+        return;
     }
-  }
-  return vid.join('|');
+    SEARCH_MARKERS.forEach(marker => {
+        marker.setMap(null);
+    });
+    SEARCH_MARKERS.length = 0;
+    const KNOWN_PLACES = [];
+    QWIK_MARKS.forEach(mark => {
+        KNOWN_PLACES.push(mark.placeid)
+    })
+    // For each place, get the icon, name and location.
+    const BOUNDS = new google.maps.LatLngBounds(null, null);
+    places.forEach(place => {
+        if (place.geometry.viewport) { // Only geocodes have viewport.
+            BOUNDS.union(place.geometry.viewport);
+        } else {
+            BOUNDS.extend(place.geometry.location);
+        }
+        if (!KNOWN_PLACES.includes(place.place_id)) {
+            var mark = markFromPlace(place);
+            // neither open_hours or tz_offset are available in search results
+            // so default to 24x7 and irrelevent weekday and hour
+            mark.hours = OPEN_24X7;
+            mark.weekday = 0;
+            mark.hour = 0;
+            const MARKER = new google.maps.Marker({
+                // icon: { url: ICON_SEARCH, labelOrigin: label_origin },
+                // label: {text:'0', className:'qg_style_mark_label place'},
+                map: MAP,
+                position: place.geometry.location,
+                // title: place.name+'\nyou are the first player!\n'+open
+            });
+            mark.marker = MARKER;
+            mark.marker.setVisible(SHOW_SEARCH_MARKERS);
+            mark.marker.setIcon({
+                url: ICON_PLACE
+            });
+            SEARCH_MARKERS.push(MARKER);
+            setMarkListeners(mark, 'place', ONCLICK_SEARCH_MARKER, ONHOVER_SEARCH_MARKER, ONPRESS_SEARCH_MARKER)
+        }
+    });
+    MAP.fitBounds(BOUNDS);
 }
 
-
-function getPlaceOffset(place){
-  if (place.hasOwnProperty('utc_offset_minutes')){
-    var here = new Date();
-    var here_offset = here.getTimezoneOffset();
-    var place_offset = place.utc_offset_minutes;
-    var offset_diff = here_offset + place_offset;
-    var there = new Date(here.getTime() + (offset_diff * 60000));
-    return { 'weekday': there.getDay(), 'hour': there.getHours() };
-  }
-  return {}
+function clickHandler(event) {
+    if (event.placeId) {
+        addPlaceMark(event.placeId);
+        if (event.latLng) {
+            qwikMap.panTo(event.latLng);
+        }
+        event.stop();
+    }
 }
 
-
-function markFromPlace(place){
-  if (!place || !place.geometry) { return; }
-  mark = {
-    address: place.formatted_address,
-    center: place.geometry.location,
-    hours: OPEN_24X7,
-    name: place.name,
-    open: place.opening_hours ? 'open now' : 'closed',
-    placeid: place.place_id,
-    status: place.business_status,
-  }
-  offset = getPlaceOffset(place)
-  mark = {...mark, ...offset}
-  return mark
+function changeMarks() {
+    clearMarks();
+    fetchMarks(game(), mapCenterIdle, null, '');
 }
 
-
-function addPlaceMark(placeId){
-  const MAP = qwikMap;   
-  const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
-  const REQUEST = { placeId: placeId, fields: ['place_id', 'name', 'geometry', 'address_components', 'utc_offset']};
-  PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
-    if (status === "OK") {
-      mark = markFromPlace(place);      
-      mark.marker = new google.maps.Marker({
+function showMarkInfo(mark, template) {
+    const INFOWINDOW = qwikInfowindow;
+    const MAP = qwikMap;
+    const TEMPLATE_NAME = "infowindow_mark_" + template;
+    const TEMPLATE = document.getElementById(TEMPLATE_NAME);
+    const FRAG = TEMPLATE.content.cloneNode(true);
+    switch (template) {
+        case 'region':
+            FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+            FRAG.getElementById("map_mark_info_size").textContent = mark.num_venue.toString();
+            var pixelOffset = new google.maps.Size(0, -30)
+            break;
+        case 'place':
+            FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+            FRAG.getElementById("map_mark_info_status").textContent = mark.status;
+            var href = 'https://duckduckgo.com/?q=' + mark.name + ' ' + mark.address;
+            FRAG.getElementById("map_mark_info_search").setAttribute('href', href);
+            // FRAG.getElementById("map_mark_info_create").setAttribute('onclick', '');
+            var pixelOffset = new google.maps.Size(0, -45)
+            break;
+        case 'venue':
+            FRAG.getElementById("map_mark_info_name").textContent = mark.name;
+            FRAG.getElementById("map_mark_info_address").textContent = mark.address;
+            FRAG.getElementById("map_mark_info_open").textContent = mark.open;
+            FRAG.getElementById("map_mark_info_size").textContent = mark.num_player.toString();
+            var pixelOffset = new google.maps.Size(0, -45)
+            break;
+    }
+    INFOWINDOW.setOptions({
+        content: FRAG.firstElementChild,
+        maxWidth: 300,
         position: mark.center,
-        visible: SHOW_PLACE_MARKERS,
-        map: qwikMap,
-      });
-      mark.marker.setIcon({ url: ICON_PLACE });
-      //var label_origin = new google.maps.Point(13,15)
-      //mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
-      // mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
-      setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER, ONPRESS_PLACE_MARKER)
-    } else {
-      console.log(status);
-    }
-  });
+        pixelOffset: pixelOffset,
+    });
+    INFOWINDOW.open(MAP);
+    return INFOWINDOW;
 }
 
+function vid(address_components, name) {
+    var vid = [name, 'locality', 'admin1', 'XX'];
+    if (Array.isArray(address_components)) {
+        for (i = 0; i < address_components.length; i++) {
+            address_component = address_components[i];
+            types = address_component.types;
+            if (types.includes('locality')) {
+                vid[1] = address_component.short_name;
+            } else if (types.includes('administrative_area_level_1')) {
+                vid[2] = address_component.short_name;
+            } else if (types.includes('country')) {
+                vid[3] = address_component.short_name;
+            }
+        }
+    }
+    return vid.join('|');
+}
 
+function getPlaceOffset(place) {
+    if (place.hasOwnProperty('utc_offset_minutes')) {
+        var here = new Date();
+        var here_offset = here.getTimezoneOffset();
+        var place_offset = place.utc_offset_minutes;
+        var offset_diff = here_offset + place_offset;
+        var there = new Date(here.getTime() + (offset_diff * 60000));
+        return {
+            'weekday': there.getDay(),
+            'hour': there.getHours()
+        };
+    }
+    return {}
+}
+
+function markFromPlace(place) {
+    if (!place || !place.geometry) {
+        return;
+    }
+    mark = {
+        address: place.formatted_address,
+        center: place.geometry.location,
+        hours: OPEN_24X7,
+        name: place.name,
+        open: place.opening_hours ? 'open now' : 'closed',
+        placeid: place.place_id,
+        status: place.business_status,
+    }
+    offset = getPlaceOffset(place)
+    mark = { ...mark,
+        ...offset
+    }
+    return mark
+}
+
+function addPlaceMark(placeId) {
+    const MAP = qwikMap;
+    const PLACE_SERVICES = new google.maps.places.PlacesService(MAP);
+    const REQUEST = {
+        placeId: placeId,
+        fields: ['place_id', 'name', 'geometry', 'address_components', 'utc_offset']
+    };
+    PLACE_SERVICES.getDetails(REQUEST, (place, status) => {
+        if (status === "OK") {
+            mark = markFromPlace(place);
+            mark.marker = new google.maps.Marker({
+                position: mark.center,
+                visible: SHOW_PLACE_MARKERS,
+                map: qwikMap,
+            });
+            mark.marker.setIcon({
+                url: ICON_PLACE
+            });
+            //var label_origin = new google.maps.Point(13,15)
+            //mark.marker.setIcon({ url: ICON_PLACE, labelOrigin: label_origin });
+            // mark.marker.setLabel({text:'\u2139', className:'qg_style_mark_label place'});
+            setMarkListeners(mark, 'place', ONCLICK_PLACE_MARKER, ONHOVER_PLACE_MARKER, ONPRESS_PLACE_MARKER)
+        } else {
+            console.log(status);
+        }
+    });
+}
 /******************************************************************************
  * Responds to a click on the Pin icon on a qwikgame record.
  * The Map is relocated to below the Form containing the Pin, a new Venue
@@ -353,23 +350,15 @@ function addPlaceMark(placeId){
  *
  * @return null
  *****************************************************************************/
-function clickMapIcon(event){
-  const ELEMENT = event.target;
-  const KEY = ELEMENT.dataset.vid;   
-  const GAME = ELEMENT.dataset.game;
-  fetchMarks(GAME, null, superKey(KEY), '');
-  showMapBelowForm(ELEMENT);
-  addVenueMark(
-    KEY,
-    ELEMENT.dataset.lat,
-    ELEMENT.dataset.lng,
-    ELEMENT.dataset.size,
-    GAME
-  );
-  focusOnMark(KEY, GAME);
+function clickMapIcon(event) {
+    const ELEMENT = event.target;
+    const KEY = ELEMENT.dataset.vid;
+    const GAME = ELEMENT.dataset.game;
+    fetchMarks(GAME, null, superKey(KEY), '');
+    showMapBelowForm(ELEMENT);
+    addVenueMark(KEY, ELEMENT.dataset.lat, ELEMENT.dataset.lng, ELEMENT.dataset.size, GAME);
+    focusOnMark(KEY, GAME);
 }
-
-
 /******************************************************************************
  * Fetches Marks for keys missing from the QWIK_REGION keySet.
  * @global QWIK_MARKS Map(marker-keys : Marks)
@@ -377,86 +366,85 @@ function clickMapIcon(event){
  * @game
  * @return null
  *****************************************************************************/
-function fetchSubKeys(keys, game){
-  for(const KEY of keys){
-    if(!QWIK_REGION.has(KEY) && isRegion(KEY)){
-      fetchMarks(game, null, KEY, superKey(KEY));
+function fetchSubKeys(keys, game) {
+    for (const KEY of keys) {
+        if (!QWIK_REGION.has(KEY) && isRegion(KEY)) {
+            fetchMarks(game, null, KEY, superKey(KEY));
+        }
     }
-  }
 }
-
-
 /******************************************************************************
  * An Array of known regions that include the lat-lng coords.
  * @param LatLng coordinates used to filter regions 
  * @return Array of regions (locality|admin1|country)
  *****************************************************************************/
-function getRegions(lat, lng){
-  if(!lat || !lng){ return []; }
-  const REGIONS = new Set();
-  for(const [KEY, SUB_KEYS] of QWIK_REGION){
-      const MARK = QWIK_MARKS.get(KEY);
-      if (MARK
-      && MARK.bounds
-      && MARK.bounds.contains(latlng)){
-        REGIONS.add(KEY);
-      }
-  }
-  return Array.from(REGIONS);
+function getRegions(lat, lng) {
+    if (!lat || !lng) {
+        return [];
+    }
+    const REGIONS = new Set();
+    for (const [KEY, SUB_KEYS] of QWIK_REGION) {
+        const MARK = QWIK_MARKS.get(KEY);
+        if (MARK && MARK.bounds && MARK.bounds.contains(latlng)) {
+            REGIONS.add(KEY);
+        }
+    }
+    return Array.from(REGIONS);
 }
-
-
 /******************************************************************************
  * Updates and returns MAP_REGION - the observable portion of the QWIK_REGION.
  * @global QWIK_REGION Map(marker-keys : Set(sub-marker-keys))
  * @return String Map(marker-keys : Set(sub-marker-keys)) for observable Marks
  *****************************************************************************/
-function updateMapRegion(){
-  const OBSERVABLE = new Map();
-  const MAP = qwikMap;
-  const BOUNDS = MAP.getBounds();
-  // survey all QWIK_REGIONs for those within MAP BOUNDS
-  for (const [SUPER_KEY, SUB_KEYS] of QWIK_REGION){
-    for (const KEY of SUB_KEYS){
-      if(!QWIK_MARKS.has(KEY)){ continue; }
-      const MARK = QWIK_MARKS.get(KEY);
-      if(BOUNDS.contains(MARK.center)){
-        if(!OBSERVABLE.has(SUPER_KEY)){ OBSERVABLE.set(SUPER_KEY, new Set()); }
-        OBSERVABLE.get(SUPER_KEY).add(KEY);
-        if(!OBSERVABLE.has(KEY) && isRegion(KEY)){
-          OBSERVABLE.set(KEY, new Set()); // include un-fetched regions in OBSERVABLE
+function updateMapRegion() {
+    const OBSERVABLE = new Map();
+    const MAP = qwikMap;
+    const BOUNDS = MAP.getBounds();
+    // survey all QWIK_REGIONs for those within MAP BOUNDS
+    for (const [SUPER_KEY, SUB_KEYS] of QWIK_REGION) {
+        for (const KEY of SUB_KEYS) {
+            if (!QWIK_MARKS.has(KEY)) {
+                continue;
+            }
+            const MARK = QWIK_MARKS.get(KEY);
+            if (BOUNDS.contains(MARK.center)) {
+                if (!OBSERVABLE.has(SUPER_KEY)) {
+                    OBSERVABLE.set(SUPER_KEY, new Set());
+                }
+                OBSERVABLE.get(SUPER_KEY).add(KEY);
+                if (!OBSERVABLE.has(KEY) && isRegion(KEY)) {
+                    OBSERVABLE.set(KEY, new Set()); // include un-fetched regions in OBSERVABLE
+                }
+            }
         }
-      }
     }
-  }
-  
-  // SORT REGIONS from largest to smallest
-  const KEYS = Array.from(OBSERVABLE.keys());
-  KEYS.sort(function(a,b){
-    if (QWIK_MARKS.has(a) & QWIK_MARKS.has(b)) {
-      const A = QWIK_MARKS.get(a).num_player;
-      const B = QWIK_MARKS.get(b).num_player;
-      if (A==B){
-        if (a.includes(b)) { return 0.1; }
-        if (b.includes(a)) { return -0.1; }    
-      } else {
-        return B - A;
-      }
+    // SORT REGIONS from largest to smallest
+    const KEYS = Array.from(OBSERVABLE.keys());
+    KEYS.sort(function(a, b) {
+        if (QWIK_MARKS.has(a) & QWIK_MARKS.has(b)) {
+            const A = QWIK_MARKS.get(a).num_player;
+            const B = QWIK_MARKS.get(b).num_player;
+            if (A == B) {
+                if (a.includes(b)) {
+                    return 0.1;
+                }
+                if (b.includes(a)) {
+                    return -0.1;
+                }
+            } else {
+                return B - A;
+            }
+        }
+        return 0;
+    });
+    // clear MAP_REGION and replace with sorted OBSERVABLE (Map retains insertion order)
+    MAP_REGION.clear();
+    for (i = 0; i < KEYS.length; i++) {
+        const KEY = KEYS[i];
+        MAP_REGION.set(KEY, OBSERVABLE.get(KEY));
     }
-    return 0;
-  });
-  
-  // clear MAP_REGION and replace with sorted OBSERVABLE (Map retains insertion order)
-  MAP_REGION.clear();
-  for(i=0; i<KEYS.length; i++){
-    const KEY = KEYS[i];
-    MAP_REGION.set(KEY, OBSERVABLE.get(KEY));
-  }
-  
-  return MAP_REGION;
+    return MAP_REGION;
 }
-
-
 /******************************************************************************
  * Shows Markers on the Map representing qwikgame Venues and Venue clusters.
  * The basic idea is to preferentially show the cluster markers that represent
@@ -486,44 +474,45 @@ function updateMapRegion(){
  * @global MAP_REGION a Map of marker-keys to a Set of sub-marker-keys
  * @return Array[key] Keys of visible markers
  *****************************************************************************/
-function showMarks(){
-  const GAME = game();
-  let visibleMarks = [];
-  const MAP = qwikMap;
-  // Use the diagonal distance across the Map as a proxy of Map area
-  const MAP_BOUNDS = MAP.getBounds();
-  if (!MAP_BOUNDS){ return visibleMarks; }
-  const NE = MAP_BOUNDS.getNorthEast();
-  const SW = MAP_BOUNDS.getSouthWest();
-  const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
-  
-  // create a Set of Region Keys, sorted by the number of sub-Regions within  
-  const OBSERVABLE = MAP_REGION;          // a sorted Map of observable regions
-  const KEYS = Array.from(OBSERVABLE.keys());    // sorted keys
-  while (KEYS.length > 0) {
-    const KEY = KEYS.shift();
-    const MARK = QWIK_MARKS.get(KEY);
-    if(!MARK) { continue; }
-    const SUB_KEYS = OBSERVABLE.get(KEY);
-    const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
-    if(2*REGION_AREA > MAP_AREA){             // should the subMarkers be shown? 
-      MARK.marker.setVisible(false);
-      hideSuperMarkers(KEY, KEYS);
-      visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
-    } else if(!SHOW_UNIT_REGION & SUB_KEYS.size === 1){    // is there only 1 subMarker?
-      MARK.marker.setVisible(false);
-      visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
-    } else {         // otherwise show this Marker and hide super & sub Markers
-      MARK.marker.setVisible(isVenue(KEY) ? SHOW_VENUE_MARKERS : SHOW_REGION_MARKERS);
-      hideSuperMarkers(KEY, KEYS);
-      hideSubMarkers(KEY, KEYS);
-      visibleMarks.push(KEY);
+function showMarks() {
+    const GAME = game();
+    let visibleMarks = [];
+    const MAP = qwikMap;
+    // Use the diagonal distance across the Map as a proxy of Map area
+    const MAP_BOUNDS = MAP.getBounds();
+    if (!MAP_BOUNDS) {
+        return visibleMarks;
     }
-  }
-  return visibleMarks;
+    const NE = MAP_BOUNDS.getNorthEast();
+    const SW = MAP_BOUNDS.getSouthWest();
+    const MAP_AREA = haversineDistance(NE.lat(), NE.lng(), SW.lat(), SW.lng());
+    // create a Set of Region Keys, sorted by the number of sub-Regions within  
+    const OBSERVABLE = MAP_REGION; // a sorted Map of observable regions
+    const KEYS = Array.from(OBSERVABLE.keys()); // sorted keys
+    while (KEYS.length > 0) {
+        const KEY = KEYS.shift();
+        const MARK = QWIK_MARKS.get(KEY);
+        if (!MARK) {
+            continue;
+        }
+        const SUB_KEYS = OBSERVABLE.get(KEY);
+        const REGION_AREA = haversineDistance(MARK.n, MARK.e, MARK.s, MARK.w);
+        if (2 * REGION_AREA > MAP_AREA) { // should the subMarkers be shown? 
+            MARK.marker.setVisible(false);
+            hideSuperMarkers(KEY, KEYS);
+            visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
+        } else if (!SHOW_UNIT_REGION & SUB_KEYS.size === 1) { // is there only 1 subMarker?
+            MARK.marker.setVisible(false);
+            visibleMarks.concat(showSubMarkers(SUB_KEYS, GAME, MAP_BOUNDS));
+        } else { // otherwise show this Marker and hide super & sub Markers
+            MARK.marker.setVisible(isVenue(KEY) ? SHOW_VENUE_MARKERS : SHOW_REGION_MARKERS);
+            hideSuperMarkers(KEY, KEYS);
+            hideSubMarkers(KEY, KEYS);
+            visibleMarks.push(KEY);
+        }
+    }
+    return visibleMarks;
 }
-
-
 /******************************************************************************
  * Shows Markers from the supplied Set of Mark keys.
  * Iterates thru the Marks:
@@ -535,73 +524,65 @@ function showMarks(){
  * @global QWIK_REGION a Map of marker-keys to a Set of sub-marker-keys
  * @return Array[key] Visible Markers
  *****************************************************************************/
-function showSubMarkers(keys, game, bounds){
-  if(!keys) { return; }
-  const VISIBLE = [];
-  for(const KEY of keys){
-    const MARK = QWIK_MARKS.get(KEY);
-    if(MARK
-    && MARK.marker
-    && MARK.center
-    && bounds.contains(MARK.center)){
-      MARK.marker.setVisible(true);
-      if (!QWIK_REGION.has(KEY) && isRegion(KEY)){
-        fetchMarks(game, null, KEY, superKey(KEY));
-      }
-      VISIBLE.push(KEY);
+function showSubMarkers(keys, game, bounds) {
+    if (!keys) {
+        return;
     }
-  }
-  return VISIBLE;
+    const VISIBLE = [];
+    for (const KEY of keys) {
+        const MARK = QWIK_MARKS.get(KEY);
+        if (MARK && MARK.marker && MARK.center && bounds.contains(MARK.center)) {
+            MARK.marker.setVisible(true);
+            if (!QWIK_REGION.has(KEY) && isRegion(KEY)) {
+                fetchMarks(game, null, KEY, superKey(KEY));
+            }
+            VISIBLE.push(KEY);
+        }
+    }
+    return VISIBLE;
 }
-
-
 /******************************************************************************
  * Hides all superMarkers of key.
  * Removes key from observableKeys and hides the Marker
  * @param key for which superKeys are to be hidden
  * @param observableKeys list yet to be processed by showKeys()
  *****************************************************************************/
-function hideSuperMarkers(key, observableKeys){
-  do {
-    key = superKey(key);
-    if(removeVal(key, observableKeys)){     // if this super-key was observable
-      if (QWIK_MARKS.has(key)){             // hide the super-Marker
-        QWIK_MARKS.get(key).marker.setVisible(false);
-      }
-    }
-  } while (key.length > 0);
+function hideSuperMarkers(key, observableKeys) {
+    do {
+        key = superKey(key);
+        if (removeVal(key, observableKeys)) { // if this super-key was observable
+            if (QWIK_MARKS.has(key)) { // hide the super-Marker
+                QWIK_MARKS.get(key).marker.setVisible(false);
+            }
+        }
+    } while (key.length > 0);
 }
-
-
 // hide all subMarkers of key and remove each key from keys
-function hideSubMarkers(key, keys){
-  if(!QWIK_REGION.has(key)){ return; }
-  for (const K of QWIK_REGION.get(key)){
-    removeVal(K, keys);
-    const MARK = QWIK_MARKS.get(K);
-    if (MARK){
-      MARK.marker.setVisible(false);
+function hideSubMarkers(key, keys) {
+    if (!QWIK_REGION.has(key)) {
+        return;
     }
-    hideSubMarkers(K, keys);
-  }
+    for (const K of QWIK_REGION.get(key)) {
+        removeVal(K, keys);
+        const MARK = QWIK_MARKS.get(K);
+        if (MARK) {
+            MARK.marker.setVisible(false);
+        }
+        hideSubMarkers(K, keys);
+    }
 }
 
-
-function removeVal(val, array){
-  let i = array.indexOf(val);
-  if(i > -1){
-    array.splice(i,1);
-    return true;
-  }
-  return false;
+function removeVal(val, array) {
+    let i = array.indexOf(val);
+    if (i > -1) {
+        array.splice(i, 1);
+        return true;
+    }
+    return false;
 }
-
-
 /******************************************************************************
-*************************** JSON FUNCTIONS ************************************
-******************************************************************************/
-
-
+ *************************** JSON FUNCTIONS ************************************
+ ******************************************************************************/
 /******************************************************************************
  * Initiates a JSON call to obtain Map Markers for Venues in the locality
  * indicated by the lat-lng coordinates or region.
@@ -618,30 +599,42 @@ function removeVal(val, array){
  * @param regions   String
  * @return 
  *****************************************************************************/
-function fetchMarks(game, center, region, regions){
-  if(game === null || typeof game === 'undefined'){ return; }  
-  if(region !== null && !isRegion(region)){ return; }
-  if(region !== null && regions.includes(region)){ return; }
-  if(region === null && center === null){ return; }
-  const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
-  const PARAMS = region === null ? 
-                 {game:game, lat:center.lat(), lng:center.lng(), avoidable:regions} :
-                 {game:game, region:region, avoidable:regions} ;              
-  const ESC = encodeURIComponent;
-  const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
-  const PATH = 'api/venue_marks/';
-  qwikJSON(PATH, PARAMS, TOKEN, receiveMarks);
-  // report to console
-  const LOC = region ? region : center;
-  console.log("fetching marks for "+LOC+" # "+regions);
-    
-  if(region !== null
-    && !QWIK_REGION.has(region)){
-    QWIK_REGION.set(region, new Set()); // a placeholder to prevent duplication
-  }
+function fetchMarks(game, center, region, regions) {
+    if (game === null || typeof game === 'undefined') {
+        return;
+    }
+    if (region !== null && !isRegion(region)) {
+        return;
+    }
+    if (region !== null && regions.includes(region)) {
+        return;
+    }
+    if (region === null && center === null) {
+        return;
+    }
+    const TOKEN = document.getElementsByName('csrfmiddlewaretoken').item(0).value;
+    const PARAMS = region === null ? {
+        game: game,
+        lat: center.lat(),
+        lng: center.lng(),
+        avoidable: regions
+    } : {
+        game: game,
+        region: region,
+        avoidable: regions
+    };
+    const ESC = encodeURIComponent;
+    const QUERY = Object.keys(PARAMS).map(k => ESC(k) + '=' + ESC(PARAMS[k])).join('&');
+    const PATH = 'api/venue_marks/';
+    qwikJSON(PATH, PARAMS, TOKEN, receiveMarks);
+    // report to console
+    const LOC = region ? region : center;
+    console.log("fetching marks for " + LOC + " # " + regions);
+    console.log(PARAMS)
+    if (region !== null && !QWIK_REGION.has(region)) {
+        QWIK_REGION.set(region, new Set()); // a placeholder to prevent duplication
+    }
 }
-
-
 /******************************************************************************
  * A callback function to process the JSON response to fetchMarks().
  * A placeholder added to QWIK_MARKS in fetchMarks() is replaced here in
@@ -649,96 +642,102 @@ function fetchMarks(game, center, region, regions){
  * @param json
  * @return null
  *****************************************************************************/
-function receiveMarks(json){
-  if(typeof json.status === 'undefined' || json.status === null){ return; }
-  const COUNTRY = json.country ? json.country : '';
-  const ADMIN1 = json.admin1 ? json.admin1+'|' : '';
-  const LOCALITY = json.locality ? json.locality+'|' : '';
-  const REGION = LOCALITY+ADMIN1+COUNTRY;
-  switch (json.status){
-    case 'OK':
-      if(typeof json.game === 'undefined' || json.game === null){ return ; }
-      if(typeof json.marks === 'undefined' || json.marks === null){ return; }
-      const GAME = game();
-      if(json.game !== GAME){ return; }
-      const MAP = qwikMap;
-      const NEW_MARKS = new Map(Object.entries(json.marks));
-      console.log("received "+NEW_MARKS.size+" marks for "+REGION);
-      for(let [key, mark] of NEW_MARKS){
-        addToRegion(key, QWIK_REGION);
-        addToRegion(key, MAP_REGION);
-        if(!QWIK_MARKS.has(key)){
-          addMark(key, mark);
-        }
-      }
-      updateMapRegion()
-      const VISIBLE = showMarks();
-      fetchSubKeys(VISIBLE, GAME);    // prepare for possible zoom-in
-      break;
-    case 'NO_RESULTS':
-      // TODO initiate google search for Game Name in this area
-      // alert("no results: "+REGION);
-      // alert(QWIK_REGION.get(REGION));
-      QWIK_REGION.set(REGION, new Set());
-      MAP_REGION.set(REGION, new Set());
-      break;
-    default:
-  }
+function receiveMarks(json) {
+    console.log(json)
+    if (typeof json.status === 'undefined' || json.status === null) {
+        return;
+    }
+    const COUNTRY = json.country ? json.country : '';
+    const ADMIN1 = json.admin1 ? json.admin1 + '|' : '';
+    const LOCALITY = json.locality ? json.locality + '|' : '';
+    const REGION = LOCALITY + ADMIN1 + COUNTRY;
+    switch (json.status) {
+        case 'OK':
+            if (typeof json.game === 'undefined' || json.game === null) {
+                return;
+            }
+            if (typeof json.marks === 'undefined' || json.marks === null) {
+                return;
+            }
+            const GAME = game();
+            if (json.game !== GAME) {
+                return;
+            }
+            const MAP = qwikMap;
+            const NEW_MARKS = new Map(Object.entries(json.marks));
+            console.log("received " + NEW_MARKS.size + " marks for " + REGION);
+            for (let [key, mark] of NEW_MARKS) {
+                addToRegion(key, QWIK_REGION);
+                addToRegion(key, MAP_REGION);
+                if (!QWIK_MARKS.has(key)) {
+                    addMark(key, mark);
+                }
+            }
+            updateMapRegion()
+            const VISIBLE = showMarks();
+            fetchSubKeys(VISIBLE, GAME); // prepare for possible zoom-in
+            break;
+        case 'NO_RESULTS':
+            // TODO initiate google search for Game Name in this area
+            // alert("no results: "+REGION);
+            // alert(QWIK_REGION.get(REGION));
+            QWIK_REGION.set(REGION, new Set());
+            MAP_REGION.set(REGION, new Set());
+            break;
+        default:
+    }
 }
 
-
-
-function addMark(key, mark){
-  if (typeof key === 'undefined' || typeof mark === 'undefined'){
-    console.log("Warning: addMark() called without required parameters "+key+" "+mark);
-    return;
-  }
-  if (!mark){ return; }
-  if(QWIK_MARKS.has(key)){ return; }
-  if (!isNumeric(mark.lat) || !isNumeric(mark.lng)){
-    console.log("Warning: Received mark without lat-lng "+key);
-    return;
-  }  
-  QWIK_MARKS.set(key, mark);
-  endowMark(key, mark);
-  return mark;
+function addMark(key, mark) {
+    if (typeof key === 'undefined' || typeof mark === 'undefined') {
+        console.log("Warning: addMark() called without required parameters " + key + " " + mark);
+        return;
+    }
+    if (!mark) {
+        return;
+    }
+    if (QWIK_MARKS.has(key)) {
+        return;
+    }
+    if (!isNumeric(mark.lat) || !isNumeric(mark.lng)) {
+        console.log("Warning: Received mark without lat-lng " + key);
+        return;
+    }
+    QWIK_MARKS.set(key, mark);
+    endowMark(key, mark);
+    return mark;
 }
 
-
-function addToRegion(key, region=QWIK_REGION){
-  const SUPER_KEY = superKey(key);
-  if(!region.has(SUPER_KEY)){ 
-    region.set(SUPER_KEY, new Set());
-  }
-  region.get(SUPER_KEY).add(key);
+function addToRegion(key, region = QWIK_REGION) {
+    const SUPER_KEY = superKey(key);
+    if (!region.has(SUPER_KEY)) {
+        region.set(SUPER_KEY, new Set());
+    }
+    region.get(SUPER_KEY).add(key);
 }
 
-
-function disposeMark(key){
-  const MARK = QWIK_MARKS.get(key);
-  if(typeof MARK !== 'undefined'){
-    MARK.marker.setMap(null);
-  }
+function disposeMark(key) {
+    const MARK = QWIK_MARKS.get(key);
+    if (typeof MARK !== 'undefined') {
+        MARK.marker.setMap(null);
+    }
 }
 
-
-function superKey(key){
-  if (typeof key === 'undefined'){ return ''; }
-  let i = key.indexOf("|");
-  return (i>0) ? key.slice(i+1) : '';
+function superKey(key) {
+    if (typeof key === 'undefined') {
+        return '';
+    }
+    let i = key.indexOf("|");
+    return (i > 0) ? key.slice(i + 1) : '';
 }
 
-
-function isRegion(key){
-  return typeof key === 'string' && key.split("|").length < 4;
+function isRegion(key) {
+    return typeof key === 'string' && key.split("|").length < 4;
 }
 
-
-function isVenue(key){
-  return  typeof key === 'string' && key.split("|").length === 4;
+function isVenue(key) {
+    return typeof key === 'string' && key.split("|").length === 4;
 }
-
-
 /******************************************************************************
  * Endows a raw Mark received by JSON withn additions required to organize and 
  * show map Markers.
@@ -750,185 +749,206 @@ function isVenue(key){
  * @param mark the Mark to be endowed
  * @return Mark
  *****************************************************************************/
-function endowMark(key, mark){
-  const MAP = qwikMap;
-  mark.key = key;
-  mark.center = gLatLng(mark.lat, mark.lng);
-  mark.marker = new google.maps.Marker({position: mark.center, map: MAP});
-  const K = key.split('|');
-  if(K.length === 4){  // venue Mark
-    mark.marker.setVisible(SHOW_VENUE_MARKERS);
-    var label_origin = new google.maps.Point(13,15)
-    mark.marker.setIcon({ url: ICON_VENUE, labelOrigin: label_origin });
-    // mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
-    setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
-  } else {  // region Mark
-    mark.marker.setVisible(SHOW_REGION_MARKERS);
-    var label_origin = new google.maps.Point(20,20)
-    mark.marker.setIcon({ url: ICON_REGION, labelOrigin: label_origin });
-    mark.marker.setLabel({text:mark.num_venue.toString(), className:'qg_style_mark_label region', fontSize: 'large'});
-    mark.bounds = markBounds(mark);
-    mark.area = degArea(mark.bounds);
-    setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER, ONPRESS_REGION_MARKER)
-  }
-  return mark;
+function endowMark(key, mark) {
+    const MAP = qwikMap;
+    mark.key = key;
+    mark.center = gLatLng(mark.lat, mark.lng);
+    mark.marker = new google.maps.Marker({
+        position: mark.center,
+        map: MAP
+    });
+    const K = key.split('|');
+    if (K.length === 4) { // venue Mark
+        mark.marker.setVisible(SHOW_VENUE_MARKERS);
+        var label_origin = new google.maps.Point(13, 15)
+        mark.marker.setIcon({
+            url: ICON_VENUE,
+            labelOrigin: label_origin
+        });
+        // mark.marker.setLabel({text:mark.num_player.toString(), className:'qg_style_mark_label venue'});
+        setMarkListeners(mark, 'venue', ONCLICK_VENUE_MARKER, ONHOVER_VENUE_MARKER, ONPRESS_VENUE_MARKER)
+    } else { // region Mark
+        mark.marker.setVisible(SHOW_REGION_MARKERS);
+        var label_origin = new google.maps.Point(20, 20)
+        mark.marker.setIcon({
+            url: ICON_REGION,
+            labelOrigin: label_origin
+        });
+        mark.marker.setLabel({
+            text: mark.num_venue.toString(),
+            className: 'qg_style_mark_label region',
+            fontSize: 'large'
+        });
+        mark.bounds = markBounds(mark);
+        mark.area = degArea(mark.bounds);
+        setMarkListeners(mark, 'region', ONCLICK_REGION_MARKER, ONHOVER_REGION_MARKER, ONPRESS_REGION_MARKER)
+    }
+    return mark;
 }
-
 var onpress_timeout_id = 0;
 var onpress_detected = false;
 
-function setMarkListeners(mark, template, onclick, onhover, onpress){
-  google.maps.event.addListener(mark.marker, 'click', () => {
-    if (onpress_detected){
-      onpress_detected = false;
-      return;
-    }
-    switch (onclick){
-      case 'center':
-        qwikMap.setZoom(qwikMap.getZoom()+1);
-        qwikMap.setCenter(mark.center);
-        break;
-      case 'select':
-        setPlace(mark)
-        break;
-      case 'info':
-          showMarkInfo(mark, template);
-        break;
-      case 'noop':
-        break;
-      default: 
-        console.log('error: invalid ONCLICK: '+onclick)
-    }
-  });
-  google.maps.event.addListener(mark.marker, 'mouseover', () => {
-    switch (onhover){
-      case 'info':
-          showMarkInfo(mark, template);
-        break;
-      case 'noop':
-        break;
-      default: 
-        console.log('error: invalid ONHOVER: '+onclick)
-    }
-  });
-  if (onpress){
-    google.maps.event.addListener(mark.marker, 'mousedown', () => {
-      onpress_timeout_id = setTimeout(check, 500);
-      function check() {
-        onpress_detected = true;
-        switch (onpress){
-          case 'info':
-              showMarkInfo(mark, template);
-            break;
-          case 'noop':
-            break;
-          default: 
-            console.log('error: invalid ONLONGPRESS: '+onlongpress)
+function setMarkListeners(mark, template, onclick, onhover, onpress) {
+    google.maps.event.addListener(mark.marker, 'click', () => {
+        if (onpress_detected) {
+            onpress_detected = false;
+            return;
         }
-      }
+        switch (onclick) {
+            case 'center':
+                qwikMap.setZoom(qwikMap.getZoom() + 1);
+                qwikMap.setCenter(mark.center);
+                break;
+            case 'select':
+                setPlace(mark)
+                break;
+            case 'info':
+                infowindow = showMarkInfo(mark, template);
+                break;
+            case 'noop':
+                break;
+            default:
+                console.log('error: invalid ONCLICK: ' + onclick)
+        }
     });
-    google.maps.event.addListener(mark.marker, 'mouseup', () => {
-      clearTimeout(onpress_timeout_id);
+    google.maps.event.addListener(mark.marker, 'mouseover', () => {
+        switch (onhover) {
+            case 'info':
+                infowindow = showMarkInfo(mark, template);
+                break;
+            case 'noop':
+                break;
+            default:
+                console.log('error: invalid ONHOVER: ' + onclick)
+        }
     });
-    google.maps.event.addListener(mark.marker, 'mouseout', () => {
-      clearTimeout(onpress_timeout_id);
-    });
-  }
+    if (onpress) {
+        google.maps.event.addListener(mark.marker, 'mousedown', () => {
+            onpress_timeout_id = setTimeout(check, 500);
+
+            function check() {
+                onpress_detected = true;
+                switch (onpress) {
+                    case 'info':
+                        infowindow = showMarkInfo(mark, template);
+                        break;
+                    case 'noop':
+                        break;
+                    default:
+                        console.log('error: invalid ONLONGPRESS: ' + onlongpress)
+                }
+            }
+        });
+        google.maps.event.addListener(mark.marker, 'mouseup', () => {
+            clearTimeout(onpress_timeout_id);
+        });
+        google.maps.event.addListener(mark.marker, 'mouseout', () => {
+            clearTimeout(onpress_timeout_id);
+            if (infowindow && template === 'venue') {
+                infowindow.close();
+                infowindow = null;
+            }
+        });
+    }
 }
 
-
-function addVenueMark(key, lat, lng, size, game){
-  fetchMarks(game, null, key, '');
-  const SUPER_KEY = superKey(key);
-  if (!QWIK_REGION.has(SUPER_KEY)){
-    addRegionMark(SUPER_KEY, lat, lng, game);
-  }
-  const NAME = key.split("|")[0];  
-  const MARK = {lat:lat, lng:lng, name:NAME, size: size};
-  addMark(key, MARK, game);
-  return MARK;
+function addVenueMark(key, lat, lng, size, game) {
+    fetchMarks(game, null, key, '');
+    const SUPER_KEY = superKey(key);
+    if (!QWIK_REGION.has(SUPER_KEY)) {
+        addRegionMark(SUPER_KEY, lat, lng, game);
+    }
+    const NAME = key.split("|")[0];
+    const MARK = {
+        lat: lat,
+        lng: lng,
+        name: NAME,
+        size: size
+    };
+    addMark(key, MARK, game);
+    return MARK;
 }
 
-
-function addRegionMark(key, lat, lng, game){
-  const SUPER_KEY = superKey(key);
-  if (!QWIK_REGION.has(SUPER_KEY)){
-    addRegionMark(SUPER_KEY, lat, lng, game);
-  }
-  const NAME = key.split("|")[0];
-  const N = Math.round(lat) + 1;
-  const E = Math.round(lng) + 1;
-  const S = Math.round(lat) - 1;
-  const W = Math.round(lng) - 1;
-  const MARK = {lat:lat, lng:lng, name:NAME, size: 1, n:N, e:E, s:S, w:W};
-  addMark(key, MARK, game);
-  return MARK;
+function addRegionMark(key, lat, lng, game) {
+    const SUPER_KEY = superKey(key);
+    if (!QWIK_REGION.has(SUPER_KEY)) {
+        addRegionMark(SUPER_KEY, lat, lng, game);
+    }
+    const NAME = key.split("|")[0];
+    const N = Math.round(lat) + 1;
+    const E = Math.round(lng) + 1;
+    const S = Math.round(lat) - 1;
+    const W = Math.round(lng) - 1;
+    const MARK = {
+        lat: lat,
+        lng: lng,
+        name: NAME,
+        size: 1,
+        n: N,
+        e: E,
+        s: S,
+        w: W
+    };
+    addMark(key, MARK, game);
+    return MARK;
 }
 
-
-function focusOnMark(key, game){
-  const MARK = QWIK_MARKS.get(key);
-  const CENTER = MARK.center;
-  if(CENTER){
-    MARK.marker.setVisible(true);
-    const MAP = qwikMap;
-    MAP.setCenter(CENTER);
-    MAP.setZoom(15);
-    showMarks(game);
-  }
+function focusOnMark(key, game) {
+    const MARK = QWIK_MARKS.get(key);
+    const CENTER = MARK.center;
+    if (CENTER) {
+        MARK.marker.setVisible(true);
+        const MAP = qwikMap;
+        MAP.setCenter(CENTER);
+        MAP.setZoom(15);
+        showMarks(game);
+    }
 }
-
-
-
-
-
 /******************************************************************************
-********************* GEO HELPER FUNCTIONS ************************************
-******************************************************************************/
-
+ ********************* GEO HELPER FUNCTIONS ************************************
+ ******************************************************************************/
 const round = (number, precision) => {
-  const factor = Math.pow(10, precision);
-  return Math.round(number * factor) / factor;
+    const factor = Math.pow(10, precision);
+    return Math.round(number * factor) / factor;
 }
 
-
-function gLatLng(lat, lng, precision = 5){ // approx 1m at equator
-  if(!isNumeric(lat) || !isNumeric(lng)){ return null; }
-  const LAT = round(Number(lat), precision);
-  const LNG = round(Number(lng), precision);
-  return new google.maps.LatLng(LAT, LNG);
+function gLatLng(lat, lng, precision = 5) { // approx 1m at equator
+    if (!isNumeric(lat) || !isNumeric(lng)) {
+        return null;
+    }
+    const LAT = round(Number(lat), precision);
+    const LNG = round(Number(lng), precision);
+    return new google.maps.LatLng(LAT, LNG);
 }
 
-
-function gBounds(sw, ne){
-  if (!sw || !ne){ return null; }
-  return new google.maps.LatLngBounds(sw, ne);
+function gBounds(sw, ne) {
+    if (!sw || !ne) {
+        return null;
+    }
+    return new google.maps.LatLngBounds(sw, ne);
 }
 
-
-function markBounds(mark){
-  let ne = gLatLng(mark.n, mark.e);
-  let sw = gLatLng(mark.s, mark.w);
-  return gBounds(sw, ne);
+function markBounds(mark) {
+    let ne = gLatLng(mark.n, mark.e);
+    let sw = gLatLng(mark.s, mark.w);
+    return gBounds(sw, ne);
 }
 
-
-function degDiff(degA, degB, short=true){
-  let diff = Math.abs(degA-degB);
-  return short ? diff : 360-diff;
+function degDiff(degA, degB, short = true) {
+    let diff = Math.abs(degA - degB);
+    return short ? diff : 360 - diff;
 }
 
-
-function degArea(bounds){
-  if(!bounds){ return 0; }
-  let ne = bounds.getNorthEast();
-  let sw = bounds.getSouthWest();
-  let width = degDiff(ne.lng(), sw.lng());	
-  let height = degDiff(ne.lat(), sw.lat());
-  return width * height;
+function degArea(bounds) {
+    if (!bounds) {
+        return 0;
+    }
+    let ne = bounds.getNorthEast();
+    let sw = bounds.getSouthWest();
+    let width = degDiff(ne.lng(), sw.lng());
+    let height = degDiff(ne.lat(), sw.lat());
+    return width * height;
 }
-
- 
 /**
  * Calculates the haversine distance between point A, and B.
  * @param google.maps.LatLng latlngA point A
@@ -936,25 +956,16 @@ function degArea(bounds){
  * https://stackoverflow.com/a/48805273/1438864
  */
 const haversineDistance = (latA, lngA, latB, lngB) => {
-  const toRadian = angle => (Math.PI / 180) * angle;
-  const distance = (a, b) => (Math.PI / 180) * (a - b);
-  const RADIUS_OF_EARTH_IN_KM = 6371;
-
-  const dLat = distance(latB, latA);
-  const dLng = distance(lngB, lngA);
-
-  latA = toRadian(latA);
-  latB = toRadian(latB);
-
-  // Haversine Formula
-  const a =
-    Math.pow(Math.sin(dLat / 2), 2) +
-    Math.pow(Math.sin(dLng / 2), 2) * Math.cos(latA) * Math.cos(latB);
-  const c = 2 * Math.asin(Math.sqrt(a));
-
-  let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
-
-  return finalDistance;
+    const toRadian = angle => (Math.PI / 180) * angle;
+    const distance = (a, b) => (Math.PI / 180) * (a - b);
+    const RADIUS_OF_EARTH_IN_KM = 6371;
+    const dLat = distance(latB, latA);
+    const dLng = distance(lngB, lngA);
+    latA = toRadian(latA);
+    latB = toRadian(latB);
+    // Haversine Formula
+    const a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLng / 2), 2) * Math.cos(latA) * Math.cos(latB);
+    const c = 2 * Math.asin(Math.sqrt(a));
+    let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
+    return finalDistance;
 };
-
-

@@ -408,23 +408,49 @@
                     <img class="logo_footer"; src="{% static 'img/qwik-logo.webp' %}" alt="logo of 2 linked wonky smilies over QWIKGAME">
                 </div>
                 <div class="column2">
-                    <a href="https://forum.qwikgame.org/" class="footer_link" target="_blank">QWIKForum</a>
-                    <br>
-                    <a href="/about/license" class="footer_link">
-                        {% translate "License" %}
-                    </a>
-                    <br>
-                    <a href="/about/privacy" class="footer_link">
-                        {% translate "Privacy" %}
-                    </a>
-                    <br>
-                    <a href="/about/terms" class="footer_link">
-                        {% translate "Terms & Conditions" %}
-                    </a>
+                    <div class="footer_lists">
+                        <ul class="footer_list1">
+                            <li class="footer_item">
+                                <a href="/about/terms" class="footer_link">
+                                   {% translate "Terms & Conditions" %}
+                                </a>
+                            </li>
+                            <li class="footer_item">
+                                <a href="/about/privacy" class="footer_link">
+                                   {% translate "Privacy" %}
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="footer_list2">
+                            <li class="footer_item">
+                                <a href="https://forum.qwikgame.org/" class="footer_link" target="_blank">
+                                    QWIKForum
+                                </a>
+                            </li>
+                            <li class="footer_item">
+                                <a href="/about/license" class="footer_link">
+                                    {% translate "License" %}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <div class="footer_socialmedia">
+                        <a href="https://www.facebook.com/qwikgame">
+                            <img src="{% static 'img/logo-Facebook.png' %}"  height="50px" alt="QWIKGAME_Facebook_link">
+                        </a>
+                        <a href="https://www.instagram.com/qwikgame/">
+                            <img src="{% static 'img/logo-Instagram.png' %}"  height="50px" alt="QWIKGAME_Instagram_link">
+                        </a>
+                        <a href="https://x.com/qwikgame">
+                            <img src="{% static 'img/logo-X.png' %}"  height="50px" alt="QWIKGAME_X/Twitter_link">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
+    
 {% endblock content %}
 
 

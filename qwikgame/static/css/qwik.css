@@ -198,6 +198,7 @@ label.btn:has(input[type=radio])::before { content: none; }
 .btn.sml { height: 1.5rem; width: 1.5rem; }
 a.btn { position: relative; }
 a:has(input:disabled) { pointer-events: none; }
+.btn.round { align-self: center; aspect-ratio: 1/1; border-radius: 50%; }
 
 /* --- Loader --- */
 .loader::after { align-self: center; position: absolute; content: ""; width: 2rem; aspect-ratio: 1; --_g: no-repeat radial-gradient(farthest-side, #999999 90%, #0000); background: var(--_g), var(--_g), var(--_g), var(--_g); background-size: 40% 40%; animation: l46 1s infinite; }
@@ -251,7 +252,6 @@ div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 .push_down { margin-top: 4rem; }
 .push_left { margin-right: auto }
 .push_right { margin-left: auto }
-.round { aspect-ratio: 1/1; border-radius: 50%; }
 .selected { color: var(--color-qwik); }
 .stripes { background: repeating-linear-gradient(45deg, var(--color-qwik), var(--color-qwik), 2px, var(--color-stencil) 3px, var(--color-stencil) 10px); }
 .sml { height: 1.5rem; min-height: 0; min-width: 0; width: 1.5rem; }

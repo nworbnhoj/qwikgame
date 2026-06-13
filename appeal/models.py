@@ -314,9 +314,9 @@ class Bid(models.Model):
         entry['hours'] = self.hours24().as_str()
         match template:
             case 'accept':
-                entry['hash'] = self.player.user.hash
-                entry['id'] = self.player.pk
-                entry['name'] = self.player.qwikname
+                entry['hash'] = self.appeal.player.user.hash
+                entry['id'] = self.appeal.player.pk
+                entry['name'] = self.appeal.player.qwikname
                 entry['rid'] = self.rival.hash
             case 'bid':
                 entry['hash'] = self.rival.user.hash
@@ -324,8 +324,8 @@ class Bid(models.Model):
                 entry['klass'] = 'event rival'
                 entry['name'] = self.rival.qwikname
             case 'decline':
-                entry['hash'] = self.player.user.hash
-                entry['id'] = self.player.pk
+                entry['hash'] = self.appeal.player.user.hash
+                entry['id'] = self.appeal.player.pk
                 entry['name'] = player.qwikname
                 entry['rid'] = self.rival.hash
             case 'expired':

@@ -91,7 +91,7 @@ if (PWA_INSTALL) {
         const isActive = window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: minimal-ui)').matches || window.matchMedia('(display-mode: fullscreen)').matches || (typeof navigator !== 'undefined' && navigator.standalone);
         if (isActive) return 'active_pwa';
         // Check for an installed related App
-        const hasInstalledRelatedApps = !!(await navigator.getInstalledRelatedApps ? .()) ? .length;
+        const hasInstalledRelatedApps = !!(await navigator.getInstalledRelatedApps?.())?.length;
         if (hasInstalledRelatedApps) return 'installed_pwa';
         // Check for uninstalled PWA (installable)
         const hasManifest = document.querySelector('link[rel="manifest"]') !== null;

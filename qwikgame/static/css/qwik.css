@@ -111,7 +111,7 @@ label.toggle input { position: absolute; opacity: 0; cursor: pointer; height: 0;
 div:has(> input) { align-self: stretch; justify-content: stretch; }
 input[type=checkbox] { margin: 0 1rem 0 1rem; }
 input[type=submit] { cursor: pointer; flex: 0 0 auto; flex-direction: row; gap: 0.3rem; justify-content: center; text-align: center }
-input[type=text] { flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }
+input[type=text] { align-self: stretch; flex: 1 1 auto; font-size: inherit; padding: 0 0.5rem; }
 input.btn { position: relative; }
 input.strength { display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 0 1rem 0; width: 100% }
 input.disabled { background-color: var(--color-disabled-bkg); color: var(--color-disabled-txt); }

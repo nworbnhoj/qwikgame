@@ -126,7 +126,7 @@ function game(){
   try {
     const MAP_ELEMENT = document.getElementById("map");
     const FORM = MAP_ELEMENT.closest("form");
-    const GAME = FORM.querySelector("[name=game]").value;
+    const GAME = FORM.querySelector("[name=game]:checked").value;
     return GAME;
   }
   catch (error) {

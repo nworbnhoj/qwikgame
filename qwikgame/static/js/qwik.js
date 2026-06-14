@@ -207,20 +207,20 @@ function field_label_update(event_or_element) {
     } else {
         element = event_or_element.currentTarget;
     }
-    field = element.closest('fieldset');
+    let field = element.closest('fieldset');
     field = field ? field : element.closest('div.field');
     if (field) {
-        error = field.querySelector('span.error');
+        let error = field.querySelector('span.error');
         const ERROR = error && error.textContent ? error : '';
         const TEXTAREA = field.querySelector('textarea')
         if (TEXTAREA) {
-            label = field.querySelector("div.label");
+            let label = field.querySelector("div.label");
             if (label) {
-                pending = label.parentElement.querySelector('span.pending');
+                let pending = label.parentElement.querySelector('span.pending');
                 if (pending) {
                     pre_pending = pending.textContent;
-                    text = TEXTAREA.value.slice(0, 30);
-                    ellipsis = TEXTAREA.value.length > text.length ? '...' : ''
+                    let text = TEXTAREA.value.slice(0, 30);
+                    let ellipsis = TEXTAREA.value.length > text.length ? '...' : ''
                     pending.textContent = text + ellipsis;
                 }
             }
@@ -230,9 +230,9 @@ function field_label_update(event_or_element) {
         const REQUIRED = INPUT.closest('div.required');
         let by_input_name = true;
         switch (INPUT.name) {
-            case 'all_day':
-                label = field.querySelector('div.label');
-                pending = label.querySelector('span.pending');
+            case 'all_day': {
+                let label = field.querySelector('div.label');
+                let pending = label.querySelector('span.pending');
                 pre_pending = pending.textContent;
                 const BY_DAY = INPUT.closest('.by_day');
                 sum_input_by_day(BY_DAY).then((sum) => {
@@ -242,22 +242,25 @@ function field_label_update(event_or_element) {
                     ERROR.textContent = '';
                 }
                 break;
-            case 'all_week':
-                label = field.querySelector('div.label');
-                pending = label.querySelector('span.pending');
+            }
+            case 'all_week': {
+                let label = field.querySelector('div.label');
+                let pending = label.querySelector('span.pending');
                 pre_pending = pending.textContent;
                 const BY_WEEK = INPUT.closest('.by_week');
                 sum_input_by_week(BY_WEEK).then((sum) => {
+                    // for some weird reason this assignment doe not stick on first call
                     pending.textContent = sum
                 });
                 if (ERROR && (pending.textContent !== pre_pending)) {
                     ERROR.textContent = '';
                 }
                 break;
-            case 'filters':
-                legend = field.querySelector('legend');
-                pending = legend.querySelector('span.pending');
-                checkboxes = field.querySelectorAll("input[type='checkbox']:checked");
+            }
+            case 'filters': {
+                let legend = field.querySelector('legend');
+                let pending = legend.querySelector('span.pending');
+                let checkboxes = field.querySelectorAll("input[type='checkbox']:checked");
                 if (legend && pending && check && checkboxes) {
                     pre_pending = pending.textContent;
                     pending.textContent = sum_filters_checkbox(checkboxes);
@@ -266,11 +269,12 @@ function field_label_update(event_or_element) {
                     ERROR.textContent = '';
                 }
                 break;
-            case 'socials':
-                legend = field.querySelector('legend');
-                pending = legend.querySelector('span.pending');
-                check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
-                checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
+            }
+            case 'socials': {
+                let legend = field.querySelector('legend');
+                let pending = legend.querySelector('span.pending');
+                let check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
+                let checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
                 if (legend && pending && check && checkboxes) {
                     pre_pending = pending.textContent;
                     pending.textContent = sum_url_checkbox(checkboxes);
@@ -279,10 +283,11 @@ function field_label_update(event_or_element) {
                     ERROR.textContent = '';
                 }
                 break;
-            case 'strengths':
-                legend = field.querySelector('legend');
-                pending = legend.querySelector('span.pending');
-                checkboxes = field.querySelectorAll("input[type='checkbox']");
+            }
+            case 'strengths': {
+                let legend = field.querySelector('legend');
+                let pending = legend.querySelector('span.pending');
+                let checkboxes = field.querySelectorAll("input[type='checkbox']");
                 if (legend && pending && check && checkboxes) {
                     pre_pending = pending.textContent;
                     pending.textContent = sum_strength_checkbox(checkboxes);
@@ -291,6 +296,7 @@ function field_label_update(event_or_element) {
                     ERROR.textContent = '';
                 }
                 break;
+            }
             default:
                 by_input_name = false;
         }
@@ -299,11 +305,11 @@ function field_label_update(event_or_element) {
         }
         pre_pending = '';
         switch (INPUT.type) {
-            case 'checkbox':
-                legend_or_label = field.querySelector(':scope > legend');
+            case 'checkbox': {
+                let legend_or_label = field.querySelector(':scope > legend');
                 legend_or_label = legend_or_label ? legend_or_label : field.querySelector(':scope > div.label');
                 if (legend_or_label) {
-                    pending = legend_or_label.querySelector('span.pending');
+                    let pending = legend_or_label.querySelector('span.pending');
                     check = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
                     checkboxes = field.querySelectorAll("input[type='checkbox']" + check);
                     if (pending) {
@@ -313,51 +319,56 @@ function field_label_update(event_or_element) {
                     }
                 }
                 break;
-            case 'radio':
-                legend_or_label = field.querySelector(':scope > legend');
+            }
+            case 'radio': {
+                let legend_or_label = field.querySelector(':scope > legend');
                 legend_or_label = legend_or_label ? legend_or_label : field.querySelector(':scope > div.label');
                 if (legend_or_label) {
-                    pending = legend_or_label.querySelector('span.pending');
+                    let pending = legend_or_label.querySelector('span.pending');
                     if (pending) {
                         pre_pending = pending.textContent;
-                        checked = field.querySelector("input[type='radio']:checked");
+                        let checked = field.querySelector("input[type='radio']:checked");
                         pending.textContent = sum_input_radio(checked);
                     }
                 }
                 break;
-            case 'email':
-                email = field.querySelector("input[type='email']");
-                label = field.querySelector("div.label");
+            }
+            case 'email': {
+                let email = field.querySelector("input[type='email']");
+                let label = field.querySelector("div.label");
                 if (label) {
-                    pending = label.parentElement.querySelector('span.pending');
+                    let pending = label.parentElement.querySelector('span.pending');
                     if (pending) {
                         pre_pending = pending.textContent;
                         pending.textContent = sum_input_email(email);
                     }
                 }
                 break;
-            case 'range':
-                range = field.querySelector("input[type='range']");
-                label = field.querySelector("div.label");
+            }
+            case 'range': {
+                let range = field.querySelector("input[type='range']");
+                let label = field.querySelector("div.label");
                 if (label) {
-                    pending = label.querySelector('span.pending');
+                    let pending = label.querySelector('span.pending');
                     if (pending) {
                         pre_pending = pending.textContent;
                         pending.textContent = sum_input_range(range);
                     }
                 }
                 break;
-            case 'text':
-                text = field.querySelector("input[type='text']");
-                label = field.querySelector("div.label");
+            }
+            case 'text': {
+                let text = field.querySelector("input[type='text']");
+                let label = field.querySelector("div.label");
                 if (label) {
-                    pending = label.parentElement.querySelector('span.pending');
+                    let pending = label.parentElement.querySelector('span.pending');
                     if (pending) {
                         pre_pending = pending.textContent;
                         pending.textContent = sum_input_text(text);
                     }
                 }
                 break;
+            }
             default:
                 console.debug('WARNING: unsupported input type: ' + INPUT.type);
         }

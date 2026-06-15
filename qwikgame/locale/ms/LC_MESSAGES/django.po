@@ -689,14 +689,6 @@ msgstr "Niger"
 msgid "Nigeria"
 msgstr "Nigeria"
 
-#: qwikgame/constants.py:219
-msgid "Niger"
-msgstr "Niger"
-
-#: qwikgame/constants.py:220
-msgid "Nigeria"
-msgstr "Nigeria"
-
 #: qwikgame/constants.py:221
 msgid "Niue"
 msgstr "Niue"

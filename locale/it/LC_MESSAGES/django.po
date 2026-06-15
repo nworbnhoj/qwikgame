@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 05:12+1000\n"
+"POT-Creation-Date: 2026-06-16 07:59+1000\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -395,8 +395,9 @@ msgid ""
 msgstr ""
 "\n"
 "                            Non trovi un invito adatto nel %(QWIK)sFeed? "
-"Pubblica un invito alle tue condizioni. Scegli il gioco, la fascia oraria e il "
-"luogo. Conferma una partita con un avversario di tua preferenza. Decidi tu! \n"
+"Pubblica un invito alle tue condizioni. Scegli il gioco, la fascia oraria e "
+"il luogo. Conferma una partita con un avversario di tua preferenza. Decidi "
+"tu! \n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -689,17 +690,6 @@ msgid ""
 msgstr ""
 "\n"
 "                %(QWIK)sGAME è open source?\n"
-
-#: templates/welcome.html:395
-#, python-format
-msgid ""
-"\n"
-"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
-"The latest code can be found on %(github_link)s. Your assistance will be "
-"most welcome.\n"
-msgstr ""
-"\n"
-"                    Sì! Il software %(QWIK)sGAME è completamente open
 
 #: templates/welcome.html:395
 #, python-format

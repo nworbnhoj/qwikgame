@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 05:12+1000\n"
+"POT-Creation-Date: 2026-06-16 07:58+1000\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -93,7 +93,6 @@ msgid "GAMES"
 msgstr "GIOCHI"
 
 #: venue/templates/venue/venue_add.html:51
-#| msgid "Venues"
 msgid "Venue Add"
 msgstr "Aggiungi sede"
 

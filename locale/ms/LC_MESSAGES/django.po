@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"POT-Creation-Date: 2026-06-16 07:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -46,15 +45,19 @@ msgstr "Daftar"
 msgid "Welcome to Qwikgame"
 msgstr "Selamat datang ke Qwikgame"
 
-#: templates/input_day.html:9
-msgid "Pick time"
-msgstr "Pilih masa"
+#: templates/field_prompt.html:13
+msgid "website"
+msgstr "laman web"
 
-#: templates/input_day.html:14
+#: templates/input_day.html:9
+msgid "Pick hours"
+msgstr "Pilih jam"
+
+#: templates/input_day.html:15
 msgid "All Day"
 msgstr "Sepanjang hari"
 
-#: templates/input_day.html:24
+#: templates/input_day.html:25
 msgid "The Venue is closed."
 msgstr "Lokasi ditutup."
 
@@ -70,11 +73,11 @@ msgstr "Bila-bila masa"
 msgid "QWIKGAME License"
 msgstr "Lesen QWIKGAME"
 
-#: templates/license.html:31
+#: templates/license.html:28
 msgid "Open Source Software"
 msgstr "Perisian Sumber Terbuka"
 
-#: templates/license.html:35
+#: templates/license.html:32
 msgid ""
 "Qwikgame is released as Open-Source software, and is grateful for the use of "
 "many other great Open-Source software projects."
@@ -82,11 +85,11 @@ msgstr ""
 "Qwikgame dikeluarkan sebagai perisian Sumber Terbuka dan berterima kasih "
 "atas penggunaan banyak projek perisian Sumber Terbuka yang hebat."
 
-#: templates/license.html:40
+#: templates/license.html:37
 msgid "Software"
 msgstr "Perisian"
 
-#: templates/license.html:41
+#: templates/license.html:38
 msgid "Licence"
 msgstr "Lesen"
 
@@ -116,7 +119,8 @@ msgstr "Maaf, anda nampaknya sedang luar talian sekarang."
 
 #: templates/pwa_snippet.html:7
 msgid "BETTER THAN NATIVE MOBILE APPS. THIS IS PROGRESSIVE WEB APP."
-msgstr "LEBIH BAIK DARIPADA APLIKASI MUDAH ALIH ASLI. INI ADALAH PROGRESSIVE WEB APP."
+msgstr ""
+"LEBIH BAIK DARIPADA APLIKASI MUDAH ALIH ASLI. INI ADALAH PROGRESSIVE WEB APP."
 
 #: templates/pwa_snippet.html:10
 msgid "Install QWIKGAME app in seconds."
@@ -192,7 +196,9 @@ msgstr "di Firefox"
 
 #: templates/pwa_snippet.html:71
 msgid "You may try Chrome, Edge, Firefox with PWA add-on, Safari and more."
-msgstr "Anda boleh cuba Chrome, Edge, Firefox dengan add-on PWA, Safari dan lain-lain."
+msgstr ""
+"Anda boleh cuba Chrome, Edge, Firefox dengan add-on PWA, Safari dan lain-"
+"lain."
 
 #: templates/pwa_snippet.html:75
 msgid "Install QWIKGAME"
@@ -242,35 +248,19 @@ msgstr "Pilih qwikgame"
 msgid "Turn on Allow Notifications"
 msgstr "Hidupkan Benarkan Pemberitahuan"
 
-#: templates/qwik.html:41
+#: templates/qwik.html:30
 msgid "QwikGame"
 msgstr "QwikGame"
 
-#: templates/qwik.html:56
-msgid "Invitations"
-msgstr "Jemputan"
-
-#: templates/qwik.html:61
-msgid "Matches"
-msgstr "Perlawanan"
-
-#: templates/qwik.html:66
-msgid "Reviews"
-msgstr "Ulasan"
-
-#: templates/qwik.html:71
-msgid "Friends"
-msgstr "Rakan"
-
-#: templates/qwik.html:97
+#: templates/qwik.html:55
 msgid "Feedback"
 msgstr "Maklum Balas"
 
-#: templates/qwik.html:108
+#: templates/qwik.html:66
 msgid "Submit"
 msgstr "Hantar"
 
-#: templates/qwik.html:119
+#: templates/qwik.html:77
 #, python-format
 msgid ""
 "\n"
@@ -278,6 +268,22 @@ msgid ""
 msgstr ""
 "\n"
 "            Karya oleh %(qwik_link)s ini dilesenkan di bawah %(gpl_link)s.\n"
+
+#: templates/tab_bar.html:13
+msgid "Invitations"
+msgstr "Jemputan"
+
+#: templates/tab_bar.html:18
+msgid "Matches"
+msgstr "Perlawanan"
+
+#: templates/tab_bar.html:23
+msgid "Reviews"
+msgstr "Ulasan"
+
+#: templates/tab_bar.html:28
+msgid "Friends"
+msgstr "Rakan"
 
 #: templates/upgrade.html:7
 msgid "Learn more"
@@ -312,8 +318,8 @@ msgstr ""
 "                Anda bermain skuasy, tenis atau padel? Atau mungkin catur, "
 "darts atau pool? Tetapi sukar mencari rakan bermain? Inilah %(QWIK)sGAME! "
 "Kini mencari rakan dan mengatur permainan menjadi cepat dan mudah. Dengan "
-"%(QWIK)sGAME anda mempunyai semua jemputan perlawanan di satu tempat. "
-"Pilih sahaja satu atau hantar jemputan anda sendiri.\n"
+"%(QWIK)sGAME anda mempunyai semua jemputan perlawanan di satu tempat. Pilih "
+"sahaja satu atau hantar jemputan anda sendiri.\n"
 
 #: templates/welcome.html:45
 msgid "Organize A Match For Free!"
@@ -365,27 +371,33 @@ msgid ""
 msgstr ""
 "\n"
 "                            Pemain lain juga sedang mencari rakan bermain! "
-"Temui mereka di %(QWIK)sGAME. Tatal %(QWIK)sFeed dan pilih satu jemputan "
-"... atau siarkan jemputan anda sendiri!\n"
+"Temui mereka di %(QWIK)sGAME. Tatal %(QWIK)sFeed dan pilih satu jemputan ... "
+"atau siarkan jemputan anda sendiri!\n"
 
 #: templates/welcome.html:150
 msgid "Post new Match Invitation"
 msgstr "Hantar Jemputan Perlawanan Baharu"
 
 #: templates/welcome.html:152
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                            You don't find a suitable invitation in the "
+#| "%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+#| "and the place. Confirm a match with a Rival of your preference. You "
+#| "choose! \n"
 msgid ""
 "\n"
 "                            You don't find a suitable invitation in the "
-"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"%(QWIK)sFeed? Post invitation on your terms. Pick the game, the timeframe "
 "and the place. Confirm a match with a Rival of your preference. You "
 "choose! \n"
 msgstr ""
 "\n"
 "                            Tidak menemui jemputan yang sesuai di "
-"%(QWIK)sFeed? Hantar jemputan mengikut pilihan anda. Pilih permainan, "
-"jangka masa dan lokasi. Sahkan perlawanan dengan lawan pilihan anda. "
-"Andalah yang memilih!\n"
+"%(QWIK)sFeed? Hantar jemputan mengikut pilihan anda. Pilih permainan, jangka "
+"masa dan lokasi. Sahkan perlawanan dengan lawan pilihan anda. Andalah yang "
+"memilih!\n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -428,8 +440,8 @@ msgid ""
 "FINDING PARTNERS AND ORGANIZING GAMES SHOULDN'T BE A STRUGGLE. WE MAKE THIS "
 "EASY."
 msgstr ""
-"MENCARI RAKAN BERMAIN DAN MENGATUR PERMAINAN TIDAK SEPATUTNYA SUKAR. "
-"KAMI MEMUDAHKANNYA."
+"MENCARI RAKAN BERMAIN DAN MENGATUR PERMAINAN TIDAK SEPATUTNYA SUKAR. KAMI "
+"MEMUDAHKANNYA."
 
 #: templates/welcome.html:218
 msgid "Find Your Partner"
@@ -470,7 +482,8 @@ msgid ""
 "                For which games can I find partners on %(QWIK)sGAME?\n"
 msgstr ""
 "\n"
-"                Untuk permainan apa saya boleh mencari rakan di %(QWIK)sGAME?\n"
+"                Untuk permainan apa saya boleh mencari rakan di "
+"%(QWIK)sGAME?\n"
 
 #: templates/welcome.html:269
 #, python-format
@@ -522,7 +535,8 @@ msgid ""
 "                    %(QWIK)sGAME works anywhere in the world.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME boleh digunakan di mana-mana sahaja di dunia.\n"
+"                    %(QWIK)sGAME boleh digunakan di mana-mana sahaja di "
+"dunia.\n"
 
 #: templates/welcome.html:304
 #, python-format
@@ -549,12 +563,12 @@ msgstr ""
 "                    Untuk mencari rakan dan mengatur perlawanan, mulakan "
 "dengan menghantar jemputan perlawanan. Pilih permainan, lokasi dan jangka "
 "masa. Adalah disyorkan untuk menghubungi lokasi dan menyemak sama ada "
-"terdapat gelanggang yang tersedia untuk jangka masa pilihan anda. "
-"Jemputan Perlawanan anda akan kelihatan di QWIKFeed kepada Pemain lain. "
-"Beberapa Pemain mungkin membalas jemputan anda. Anda boleh memilih tawaran "
-"terbaik dan mengesahkan perlawanan. Anda juga boleh membalas jemputan yang "
-"sedia ada daripada %(QWIK)sFeed dengan membuat tawaran untuk jam tertentu "
-"dalam jangka masa yang diberikan.\n"
+"terdapat gelanggang yang tersedia untuk jangka masa pilihan anda. Jemputan "
+"Perlawanan anda akan kelihatan di QWIKFeed kepada Pemain lain. Beberapa "
+"Pemain mungkin membalas jemputan anda. Anda boleh memilih tawaran terbaik "
+"dan mengesahkan perlawanan. Anda juga boleh membalas jemputan yang sedia ada "
+"daripada %(QWIK)sFeed dengan membuat tawaran untuk jam tertentu dalam jangka "
+"masa yang diberikan.\n"
 
 #: templates/welcome.html:318
 msgid ""
@@ -589,9 +603,9 @@ msgid ""
 "%(QWIK)sFeed. It is contantly updated with new invitations sent by Players.\n"
 msgstr ""
 "\n"
-"                    Anda boleh menemui semua jemputan semasa di "
-"%(QWIK)sFeed kami. Ia sentiasa dikemas kini dengan jemputan baharu yang "
-"dihantar oleh Pemain.\n"
+"                    Anda boleh menemui semua jemputan semasa di %(QWIK)sFeed "
+"kami. Ia sentiasa dikemas kini dengan jemputan baharu yang dihantar oleh "
+"Pemain.\n"
 
 #: templates/welcome.html:346
 msgid ""
@@ -661,10 +675,10 @@ msgid ""
 "be most welcome.\n"
 msgstr ""
 "\n"
-"                    %(QWIK)sGAME diuruskan oleh QWIKGAME Inc. yang "
-"berdaftar di Victoria, Australia sebagai Persatuan Bukan Untung. Semua "
-"perbincangan dan keputusan berkaitan %(QWIK)sGAME dibuat secara dalam talian "
-"di <a href=\"https://forum.qwikgame.org/\" target=\"_blank\">Forum QWIK</a>. "
+"                    %(QWIK)sGAME diuruskan oleh QWIKGAME Inc. yang berdaftar "
+"di Victoria, Australia sebagai Persatuan Bukan Untung. Semua perbincangan "
+"dan keputusan berkaitan %(QWIK)sGAME dibuat secara dalam talian di <a "
+"href=\"https://forum.qwikgame.org/\" target=\"_blank\">Forum QWIK</a>. "
 "Bantuan anda amat dialu-alukan.\n"
 
 #: templates/welcome.html:388
@@ -689,17 +703,17 @@ msgstr ""
 "terbuka. Kod terkini boleh didapati di %(github_link)s. Bantuan anda amat "
 "dialu-alukan.\n"
 
-#: templates/welcome.html:414
-msgid "License"
-msgstr "Lesen"
+#: templates/welcome.html:415
+msgid "Terms & Conditions"
+msgstr "Terma & Syarat"
 
-#: templates/welcome.html:418
+#: templates/welcome.html:420
 msgid "Privacy"
 msgstr "Privasi"
 
-#: templates/welcome.html:422
-msgid "Terms & Conditions"
-msgstr "Terma & Syarat"
+#: templates/welcome.html:432
+msgid "License"
+msgstr "Lesen"
 
 #: templates/welcome_header_snippet.html:12
 msgid "Sign In"
@@ -708,3 +722,6 @@ msgstr "Log Masuk"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "Daftar"
+
+#~ msgid "Pick time"
+#~ msgstr "Pilih masa"

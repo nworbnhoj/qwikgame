@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-20 07:37+1100\n"
+"POT-Creation-Date: 2026-06-16 07:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,69 +18,72 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: person/forms.py:14
-msgid "Person to block"
+#, fuzzy
+#| msgid "Person to block"
+msgid "person to block"
 msgstr "Orang untuk disekat"
 
 #: person/forms.py:34
-msgid "EMAIL NOTIFICATIONS"
-msgstr "PEMBERITAHUAN EMEL"
+msgid "email address"
+msgstr "alamat e-mel"
 
-#: person/forms.py:39
-msgid "WEB / APP NOTIFICATIONS"
-msgstr "PEMBERITAHUAN WEB / APLIKASI"
+#: person/forms.py:42
+#, fuzzy
+#| msgid "email invitations from"
+msgid "email notifications"
+msgstr "jemputan emel daripada"
+
+#: person/forms.py:43
+msgid "push notifications"
+msgstr "pemberitahuan tolak"
 
 #: person/forms.py:44
-msgid "This will make finding a Venue nearby faster."
-msgstr "Ini akan mempercepatkan pencarian lokasi berdekatan."
+msgid "location access"
+msgstr "akses lokasi"
 
-#: person/forms.py:45
-msgid "ALLOW LOCATION ACCESS"
-msgstr "BENARKAN AKSES LOKASI"
+#: person/forms.py:46
+msgid "Your choice."
+msgstr "Pilihan anda."
 
-#: person/forms.py:50
+#: person/forms.py:47
+msgid "permissions"
+msgstr "Kebenaran"
+
+#: person/forms.py:53
 msgid "Browser default"
 msgstr "Tetapan lalai pelayar"
 
-#: person/forms.py:51
-msgid "LANGUAGE"
-msgstr "BAHASA"
+#: person/forms.py:54
+msgid "language"
+msgstr "Bahasa"
 
-#: person/forms.py:71
-#, python-format
-msgid "Receive Email for Bid %(bid)s and Match %(match)s"
-msgstr "Terima emel untuk Bidaan %(bid)s dan Perlawanan %(match)s"
-
-#: person/forms.py:75
-#, python-format
-msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr ""
-"Lihat pemberitahuan aplikasi untuk Bidaan %(bid)s dan Perlawanan %(match)s)"
-
-#: person/forms.py:101
-msgid "QWIK NAME"
-msgstr "NAMA QWIK"
-
-#: person/forms.py:108
-msgid "WEBSITE / SOCIAL MEDIA"
-msgstr "LAMAN WEB / MEDIA SOSIAL"
-
-#: person/forms.py:121
-msgid "your qwikgame screen name"
-msgstr "nama paparan qwikgame anda"
-
-#: person/forms.py:122
-msgid "add a social media url"
-msgstr "tambah URL media sosial"
-
-#: person/forms.py:169
+#: person/forms.py:61 person/forms.py:198
 msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr ""
+msgstr "Apabila anda menyekat seseorang, anda berdua tidak akan dapat melihat satu sama lain di Qwikgame."
 "Apabila anda menyekat seseorang, anda berdua tidak akan melihat satu sama "
 "lain di qwikgame."
 
-#: person/forms.py:170
-msgid "PEOPLE YOU HAVE BLOCKED"
-msgstr "ORANG YANG ANDA SEKAT"
+#: person/forms.py:62 person/forms.py:199
+msgid "people you have blocked"
+msgstr "orang yang telah anda sekat"
+
+#: person/forms.py:116
+msgid "QWIK name"
+msgstr "nama QWIK"
+
+#: person/forms.py:124
+#, fuzzy
+#| msgid "add a social media url"
+msgid "website / social media"
+msgstr "tambah URL media sosial"
+
+#: person/forms.py:135
+msgid "your qwikgame screen name"
+msgstr "nama paparan qwikgame anda"
+
+#: person/forms.py:174
+msgid "Add URL"
+msgstr "Tambah URL"
 
 #: person/templates/person/account.html:16
 msgid "Account"
@@ -620,25 +622,14 @@ msgstr ""
 msgid "PRIVATE SETTINGS"
 msgstr "TETAPAN PERIBADI"
 
-#: person/templates/person/private.html:44
-msgid "EMAIL ADDRESS"
-msgstr "ALAMAT EMEL"
-
-#: person/templates/person/private.html:46
-msgid "Change (coming soon)"
-msgstr "Tukar (akan datang)"
-
-#: person/templates/person/private.html:61
-msgid "UnBlock"
-msgstr "Nyahsekat"
+#: person/templates/person/private.html:47
+#: person/templates/person/public.html:36
+msgid "Save"
+msgstr "Simpan"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
 msgstr "PROFIL AWAM"
-
-#: person/templates/person/public.html:35
-msgid "Save"
-msgstr "Simpan"
 
 #: person/templates/person/review_match_alert_email_html.html:13
 #, python-format
@@ -773,6 +764,16 @@ msgstr ""
 "\n"
 "Jemputan ke %(game)s\n"
 
+#: person/templates/person/social.html:7
+#, fuzzy
+#| msgid "add a social media url"
+msgid "Add Social media link"
+msgstr "tambah URL media sosial"
+
+#: person/templates/person/social.html:33
+msgid "Submit"
+msgstr "Hantar"
+
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
 msgstr "NAIK TARAF"
@@ -877,3 +878,46 @@ msgstr ""
 "\n"
 "Untuk menyekat jemputan emel daripada semua pemain di %(site_name)s, sila "
 "klik :\n"
+
+#~ msgid "EMAIL NOTIFICATIONS"
+#~ msgstr "PEMBERITAHUAN EMEL"
+
+#~ msgid "WEB / APP NOTIFICATIONS"
+#~ msgstr "PEMBERITAHUAN WEB / APLIKASI"
+
+#~ msgid "This will make finding a Venue nearby faster."
+#~ msgstr "Ini akan mempercepatkan pencarian lokasi berdekatan."
+
+#~ msgid "ALLOW LOCATION ACCESS"
+#~ msgstr "BENARKAN AKSES LOKASI"
+
+#~ msgid "LANGUAGE"
+#~ msgstr "BAHASA"
+
+#, python-format
+#~ msgid "Receive Email for Bid %(bid)s and Match %(match)s"
+#~ msgstr "Terima emel untuk Bidaan %(bid)s dan Perlawanan %(match)s"
+
+#, python-format
+#~ msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
+#~ msgstr ""
+#~ "Lihat pemberitahuan aplikasi untuk Bidaan %(bid)s dan Perlawanan "
+#~ "%(match)s)"
+
+#~ msgid "QWIK NAME"
+#~ msgstr "NAMA QWIK"
+
+#~ msgid "WEBSITE / SOCIAL MEDIA"
+#~ msgstr "LAMAN WEB / MEDIA SOSIAL"
+
+#~ msgid "PEOPLE YOU HAVE BLOCKED"
+#~ msgstr "ORANG YANG ANDA SEKAT"
+
+#~ msgid "EMAIL ADDRESS"
+#~ msgstr "ALAMAT EMEL"
+
+#~ msgid "Change (coming soon)"
+#~ msgstr "Tukar (akan datang)"
+
+#~ msgid "UnBlock"
+#~ msgstr "Nyahsekat"

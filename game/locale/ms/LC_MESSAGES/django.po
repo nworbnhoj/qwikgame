@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:05+1100\n"
+"POT-Creation-Date: 2026-06-16 07:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -18,33 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: game/forms.py:30
+#: game/forms.py:31
 msgid "Chat here with your rival"
 msgstr "Sembang di sini dengan lawan anda"
 
-#: game/forms.py:56
-msgid "RIVAL SKILL LEVEL"
-msgstr "TAHAP KEMAHIRAN LAWAN"
+#: game/forms.py:57
+msgid "rival skill level"
+msgstr "tahap kemahiran lawan"
 
-#: game/forms.py:61
+#: game/forms.py:62
 msgid "venue not suitable for game"
 msgstr "lokasi tidak sesuai untuk permainan"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival showed poor sportsmanship"
 msgstr "lawan menunjukkan semangat kesukanan yang lemah"
 
-#: game/forms.py:63
+#: game/forms.py:64
 msgid "rival did not show up"
 msgstr "lawan tidak hadir"
 
-#: game/forms.py:65
-msgid "DISSAPOINTMENT"
-msgstr "KECEWA"
-
-#: game/forms.py:80
-msgid "Did anything go wrong?"
-msgstr "Adakah sesuatu tidak berjalan dengan baik?"
+#: game/forms.py:66
+msgid "dissapointment"
+msgstr "kekecewaan"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
@@ -82,20 +77,20 @@ msgstr "Tunjukkan sejarah jemputan"
 msgid "Hide invitation history"
 msgstr "Sembunyikan sejarah jemputan"
 
-#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "Ulasan"
 
-#: game/templates/game/match.html:181
+#: game/templates/game/match.html:171
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ emogi akan datang tidak lama lagi ☺"
 
-#: game/templates/game/match.html:195
+#: game/templates/game/match.html:187
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "Sembang akan dinyahaktifkan 24 jam selepas perlawanan."
 
-#: game/templates/game/match.html:198
+#: game/templates/game/match.html:190
 msgid "Chat will be deleted 1 week after Match."
 msgstr "Sembang akan dipadam 1 minggu selepas perlawanan."
 
@@ -155,8 +150,8 @@ msgstr ""
 "        "
 
 #: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "Jemput"
+msgid "New Invitation"
+msgstr "Jemputan Baharu"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
@@ -178,9 +173,22 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"                Semua ulasan perlawanan telah selesai - terima kasih%(br)sBerminat untuk bermain?\n"
+"                Semua ulasan perlawanan telah selesai - terima "
+"kasih%(br)sBerminat untuk bermain?\n"
 "        "
 
 #: game/templates/game/rival.html:7
 msgid "Rival"
 msgstr "Lawan"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "TAHAP KEMAHIRAN LAWAN"
+
+#~ msgid "DISSAPOINTMENT"
+#~ msgstr "KECEWA"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "Adakah sesuatu tidak berjalan dengan baik?"
+
+#~ msgid "Invite"
+#~ msgstr "Jemput"

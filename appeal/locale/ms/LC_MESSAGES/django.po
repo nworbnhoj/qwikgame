@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 15:13+1100\n"
+"POT-Creation-Date: 2026-06-16 07:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -18,59 +18,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
+#: appeal/forms.py:58
 msgid "When are you keen to play?"
 msgstr "Bila anda berminat untuk bermain?"
 
-#: appeal/forms.py:58
-msgid "WHAT TIME WORKS FOR YOU?"
-msgstr "MASA APA YANG SESUAI UNTUK ANDA?"
+#: appeal/forms.py:59
+msgid "what time works for you?"
+msgstr "masa apa yang sesuai untuk anda?"
 
 #: appeal/forms.py:109
-msgid "GAME"
-msgstr "PERMAINAN"
+msgid "game"
+msgstr "permainan"
 
 #: appeal/forms.py:118
-msgid "TODAY"
-msgstr "HARI INI"
+msgid "today"
+msgstr "hari ini"
 
-#: appeal/forms.py:127
-msgid "TOMORROW"
-msgstr "ESOK"
+#: appeal/forms.py:126
+msgid "tomorrow"
+msgstr "esok"
 
-#: appeal/forms.py:135
-msgid "FRIENDS"
-msgstr "RAKAN"
-
-#: appeal/forms.py:213
+#: appeal/forms.py:203
 msgid "Please select at least one hour in today or tomorrow."
 msgstr "Sila pilih sekurang-kurangnya satu jam pada hari ini atau esok."
 
-#: appeal/forms.py:220 appeal/forms.py:236
-msgid "Sorry, that Venue selection did not work. Please try again."
-msgstr "Maaf, pemilihan lokasi tersebut tidak berjaya. Sila cuba lagi."
+#: appeal/forms.py:218
+msgid "notify friend by email"
+msgstr "maklumkan rakan melalui emel"
 
-#: appeal/forms.py:226
-msgid "Please invite at least one Friend."
-msgstr "Sila jemput sekurang-kurangnya seorang rakan."
+#: appeal/forms.py:229
+msgid "venue"
+msgstr "lokasi"
 
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:92
-msgid "Invite Friends Only"
-msgstr "Jemput Rakan Sahaja"
+#: appeal/forms.py:259
+msgid "Check Venue Availability"
+msgstr "Semak Ketersediaan Lokasi"
 
-#: appeal/forms.py:243
-msgid ""
-"You don't have any added friends yet. Please add them from the Friends tab"
-msgstr ""
-"Anda belum menambah sebarang rakan. Sila tambah mereka melalui tab Rakan"
-
-#: appeal/forms.py:247
-msgid "Select from map"
-msgstr "Pilih dari peta"
-
-#: appeal/forms.py:251
-msgid "VENUE"
-msgstr "LOKASI"
+#: appeal/forms.py:261
+msgid "QWIKGAME does not book courts"
+msgstr "QWIKGAME tidak menempah gelanggang"
 
 #: appeal/templates/appeal/accept.html:53
 msgid "Cancel this Invitation?"
@@ -84,11 +70,13 @@ msgstr "batal"
 msgid "decline"
 msgstr "tolak"
 
-#: appeal/templates/appeal/accept.html:125
+#: appeal/templates/appeal/accept.html:99
 msgid ""
 "You are about to schedule a Match. A chat session will be opened with your "
 "rival. Continue?"
 msgstr ""
+"Anda akan menjadualkan satu perlawanan. Sesi sembang akan dibuka dengan "
+"lawan anda. Teruskan?"
 "Anda akan menjadualkan satu perlawanan. Sesi sembang akan dibuka dengan "
 "lawan anda. Teruskan?"
 
@@ -98,9 +86,10 @@ msgstr "Suapan"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:52 appeal/templates/appeal/keen.html:89
-msgid "Invite"
-msgstr "Jemput"
+#, fuzzy
+#| msgid "Cancel this Invitation?"
+msgid "New Invitation"
+msgstr "Batalkan jemputan ini?"
 
 #: appeal/templates/appeal/appeals.html:35
 #, python-format
@@ -108,6 +97,8 @@ msgid ""
 " \n"
 "            Feed (%(appeals_length)s)\n"
 msgstr ""
+" \n"
+"            Suapan (%(appeals_length)s)\n"
 " \n"
 "            Suapan (%(appeals_length)s)\n"
 
@@ -149,11 +140,60 @@ msgstr ""
 "\n"
 "                Buka jemputan %(br)s atau hantar yang baharu!\n"
 "    "
+"\n"
+"                Buka jemputan %(br)s atau hantar yang baharu!\n"
+"    "
 
 #: appeal/templates/appeal/bid.html:76
 msgid "Cancel this Offer?"
 msgstr "Batalkan tawaran ini?"
 
-#: appeal/templates/appeal/keen.html:73
-msgid "Keen To Play? Send Invitation?"
+#: appeal/templates/appeal/keen.html:51 appeal/templates/appeal/keen.html:86
+#, fuzzy
+#| msgid "Cancel this Invitation?"
+msgid "Post Invitation"
+msgstr "Batalkan jemputan ini?"
+
+#: appeal/templates/appeal/keen.html:72
+#, fuzzy
+#| msgid "Keen To Play? Send Invitation?"
+msgid "Keen To Play? Post Invitation?"
 msgstr "Berminat untuk bermain? Hantar jemputan?"
+
+#~ msgid "WHAT TIME WORKS FOR YOU?"
+#~ msgstr "MASA APA YANG SESUAI UNTUK ANDA?"
+
+#~ msgid "GAME"
+#~ msgstr "PERMAINAN"
+
+#~ msgid "TODAY"
+#~ msgstr "HARI INI"
+
+#~ msgid "TOMORROW"
+#~ msgstr "ESOK"
+
+#~ msgid "FRIENDS"
+#~ msgstr "RAKAN"
+
+#~ msgid "Sorry, that Venue selection did not work. Please try again."
+#~ msgstr "Maaf, pemilihan lokasi tersebut tidak berjaya. Sila cuba lagi."
+
+#~ msgid "Please invite at least one Friend."
+#~ msgstr "Sila jemput sekurang-kurangnya seorang rakan."
+
+#~ msgid "Invite Friends Only"
+#~ msgstr "Jemput Rakan Sahaja"
+
+#~ msgid ""
+#~ "You don't have any added friends yet. Please add them from the Friends tab"
+#~ msgstr ""
+#~ "Anda belum menambah sebarang rakan. Sila tambah mereka melalui tab Rakan"
+
+#~ msgid "Select from map"
+#~ msgstr "Pilih dari peta"
+
+#~ msgid "VENUE"
+#~ msgstr "LOKASI"
+
+#~ msgid "Invite"
+#~ msgstr "Jemput"

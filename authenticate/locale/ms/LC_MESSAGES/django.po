@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:15+1100\n"
+"POT-Creation-Date: 2026-06-16 07:02+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -18,19 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "Akaun ini dinyahaktifkan untuk %(e)s"
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
-msgstr ""
-"Tiada akaun untuk emel ini.%(br)sAdakah anda ingin "
-"%(a0)sdaftar%(a1)s?"
+msgstr "Tiada akaun untuk emel ini.%(br)sAdakah anda ingin %(a0)sdaftar%(a1)s?"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -168,8 +165,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Anda menerima emel ini kerana anda meminta akaun di "
-"%(site_name)s.\n"
+"        Anda menerima emel ini kerana anda meminta akaun di %(site_name)s.\n"
 "    "
 
 #: authenticate/templates/authenticate/register_email_sent.html:9
@@ -202,8 +198,7 @@ msgid ""
 "%(site_name)s.\n"
 msgstr ""
 "\n"
-"Anda menerima emel ini kerana anda meminta akaun di "
-"%(site_name)s.\n"
+"Anda menerima emel ini kerana anda meminta akaun di %(site_name)s.\n"
 
 #: authenticate/templates/authenticate/register_form.html:9
 msgid "Already have an account?"
@@ -217,20 +212,20 @@ msgstr "log masuk"
 msgid "Send verification link"
 msgstr "Hantar pautan pengesahan"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "Maaf, itu tidak berjaya."
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr ""
 "Token keselamatan dalam pautan tersebut telah tamat tempoh atau tidak sah."
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "Log masuk / Pendaftaran"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " halaman."

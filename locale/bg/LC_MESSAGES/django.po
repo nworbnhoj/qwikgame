@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 18:14+1000\n"
+"POT-Creation-Date: 2026-06-16 04:51+1000\n"
 "PO-Revision-Date: 2026-02-22 14:48+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -52,8 +52,8 @@ msgid "website"
 msgstr "уебсайт"
 
 #: templates/input_day.html:9
-msgid "Pick time"
-msgstr "Изберете час"
+msgid "Pick hours"
+msgstr "Изберете часове"
 
 #: templates/input_day.html:15
 msgid "All Day"
@@ -702,6 +702,18 @@ msgstr ""
 "Последният код може да бъде намерен в %(github_link)s. Вашата помощ ще бъде "
 "много добре дошла.\n"
 
+#: templates/welcome.html:415
+msgid "Terms & Conditions"
+msgstr "Общи условия"
+
+#: templates/welcome.html:420
+msgid "Privacy"
+msgstr "Поверителност"
+
+#: templates/welcome.html:432
+msgid "License"
+msgstr "Лиценз"
+
 #: templates/welcome_header_snippet.html:12
 msgid "Sign In"
 msgstr "Вход"
@@ -710,14 +722,8 @@ msgstr "Вход"
 msgid "Sign up"
 msgstr "Регистрация"
 
-#~ msgid "License"
-#~ msgstr "Лиценз"
-
-#~ msgid "Privacy"
-#~ msgstr "Поверителност"
-
-#~ msgid "Terms & Conditions"
-#~ msgstr "Общи условия"
+#~ msgid "Pick time"
+#~ msgstr "Изберете час"
 
 #~ msgid "search"
 #~ msgstr "търсене"

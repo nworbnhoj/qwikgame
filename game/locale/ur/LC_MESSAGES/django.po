@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:05+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,33 +17,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game/forms.py:30
+#: game/forms.py:31
 msgid "Chat here with your rival"
 msgstr "اپنے حریف کے ساتھ یہاں چیٹ کریں"
 
-#: game/forms.py:56
-msgid "RIVAL SKILL LEVEL"
+#: game/forms.py:57
+msgid "rival skill level"
 msgstr "حریف کی مہارت کی سطح"
 
-#: game/forms.py:61
+#: game/forms.py:62
 msgid "venue not suitable for game"
 msgstr "مقام کھیل کے لیے موزوں نہیں ہے۔"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival showed poor sportsmanship"
 msgstr "غیر کھیلانہ رویہ"
 
-#: game/forms.py:63
+#: game/forms.py:64
 msgid "rival did not show up"
 msgstr "حاضر نہیں ہوا"
 
-#: game/forms.py:65
-msgid "DISSAPOINTMENT"
-msgstr ""
-
-#: game/forms.py:80
-msgid "Did anything go wrong?"
-msgstr "کیا کچھ غلط ہوا؟"
+#: game/forms.py:66
+msgid "dissapointment"
+msgstr "مایوسی"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
@@ -82,20 +77,20 @@ msgstr "دعوت کی تاریخ دکھائیں"
 msgid "Hide invitation history"
 msgstr "دعوت کی تاریخ چھپائیں"
 
-#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "جائزہ"
 
-#: game/templates/game/match.html:181
+#: game/templates/game/match.html:171
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ ایموجی جلد آ رہا ہے ☺"
 
-#: game/templates/game/match.html:195
+#: game/templates/game/match.html:187
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "میچ کے 24 گھنٹے بعد چیٹ غیر فعال کر دی جائے گی۔"
 
-#: game/templates/game/match.html:198
+#: game/templates/game/match.html:190
 msgid "Chat will be deleted 1 week after Match."
 msgstr "میچ کے 1 ہفتے بعد چیٹ حذف کر دی جائے گی۔"
 
@@ -153,10 +148,13 @@ msgstr ""
 "\n"
 "            کوئی زیر التواء میچ نہیں%(br)sکھیلنے کے خواہشمند ہیں؟\n"
 "        "
+"\n"
+"            کوئی زیر التواء میچ نہیں%(br)sکھیلنے کے خواہشمند ہیں؟\n"
+"        "
 
 #: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "دعوت دیں"
+msgid "New Invitation"
+msgstr "نئی دعوت"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
@@ -178,6 +176,9 @@ msgid ""
 "        "
 msgstr ""
 "\n"
+"                تمام میچ جائزے مکمل ہو چکے ہیں — شکریہ%(br)sکھیلنے کے خواہشمند ہیں؟\n"
+"        "
+"\n"
 "                تمام میچ جائزے مکمل ہو گئے - شکریہ%(br)sکھیلنے کے خواہشمند "
 "ہیں؟\n"
 "        "
@@ -185,3 +186,12 @@ msgstr ""
 #: game/templates/game/rival.html:7
 msgid "Rival"
 msgstr "حریف"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "حریف کی مہارت کی سطح"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "کیا کچھ غلط ہوا؟"
+
+#~ msgid "Invite"
+#~ msgstr "دعوت دیں"

@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 09:27+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +17,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: feedback/forms.py:15
+#: feedback/forms.py:16
 msgid "Description"
 msgstr "تفصیل"
 
-#: feedback/forms.py:17
-msgid "thanks heaps for taking the time!"
-msgstr "وقت نکالنے کا بے حد شکریہ!"
-
-#: feedback/forms.py:18
+#: feedback/forms.py:20 feedback/forms.py:24
 msgid "feedback"
 msgstr "رائے"
+
+#: feedback/forms.py:21
+msgid "thanks heaps for taking the time!"
+msgstr "وقت نکالنے کا بے حد شکریہ!"
 
 #: feedback/models.py:13
 msgid "Bug"

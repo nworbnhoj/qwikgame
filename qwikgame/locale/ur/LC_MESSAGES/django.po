@@ -1,4 +1,4 @@
-## QWIKGAME Multilingual support https:/qwikgame.org/
+# # QWIKGAME Multilingual support https:/qwikgame.org/
 # Copyright (C) 2026
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1037,3 +1037,7 @@ msgstr "زامبیا"
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "زمبابوے"
+
+#: qwikgame/fields.py:93
+msgid "Select from map"
+msgstr "نقشے سے منتخب کریں"

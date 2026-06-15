@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,39 +18,44 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: venue/forms.py:17
-msgid "SEARCH"
+msgid "search"
 msgstr "تلاش"
 
 #: venue/forms.py:22
 msgid "restrict the search to a region"
-msgstr "تلاش کو کسی مخصوص علاقے تک محدود کریں"
+msgstr "تلاش کو ایک علاقے تک محدود کریں"
 
 #: venue/forms.py:23
-msgid "REGION"
+msgid "region"
 msgstr "علاقہ"
 
 #: venue/forms.py:30
 msgid "Specify the Game for these Qwikgame Venues"
 msgstr "ان Qwikgame مقامات کے لیے کھیل منتخب کریں"
 
-#: venue/forms.py:31
-msgid "GAME"
+#: venue/forms.py:31 venue/forms.py:91 venue/templates/venue/venues.html:44
+msgid "game"
 msgstr "کھیل"
 
-#: venue/forms.py:60
+#: venue/forms.py:61
 msgid "Select Google Places to add as Qwikgame Venues"
 msgstr "Qwikgame مقامات کے طور پر شامل کرنے کے لیے Google Places منتخب کریں"
 
-#: venue/forms.py:61
-msgid "GOOGLE PLACES"
-msgstr "گوگل پلیسز"
+#: venue/forms.py:62
+msgid "google places"
+msgstr "گوگل مقامات"
 
-#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
-#: venue/templates/venue/venues.html:33
+#: venue/forms.py:97
+msgid "place"
+msgstr "مقام"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:9
+#: venue/templates/venue/venues.html:35
 msgid "Venues"
 msgstr "مقامات"
 
-#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venue_add.html:69
+#: venue/templates/venue/venues.html:94
 msgid "Add Venue"
 msgstr "مقام شامل کریں"
 
@@ -84,32 +88,134 @@ msgid "MANAGERS"
 msgstr "منتظمین"
 
 #: venue/templates/venue/venue.html:69
+#, fuzzy
+#| msgid "GAME"
 msgid "GAMES"
 msgstr "کھیل"
 
-#: venue/templates/venue/venues.html:24
+#: venue/templates/venue/venue_add.html:51
+msgid "Venue Add"
+msgstr "مقام شامل کریں"
+
+#: venue/templates/venue/venue_add.html:79 venue/templates/venue/venues.html:26
 msgid "Add"
 msgstr "شامل کریں"
 
-#: venue/templates/venue/venues.html:36
+#: venue/templates/venue/venues.html:38
 msgid "Group by"
 msgstr "گروپ کریں بذریعہ"
 
-#: venue/templates/venue/venues.html:42
-msgid "game"
-msgstr "کھیل"
-
-#: venue/templates/venue/venues.html:72
+#: venue/templates/venue/venues.html:74
 msgid "No venues :-("
-msgstr "کوئی مقام موجود نہیں :-("
+msgstr "کوئی مقام نہیں :-("
 
-#: venue/templates/venue/venues.html:85
-#, python-format
+#: venue/templates/venue/venues.html:88
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                Open an Invitation %(br)s or send a new one!\n"
+#| "    "
 msgid ""
 "\n"
 "                Get Venue details%(br)sor add a new one!\n"
 "    "
 msgstr ""
 "\n"
-"                مقام کی تفصیلات دیکھیں%(br)sیا نیا شامل کریں!\n"
+"                ایک دعوت کھولیں %(br)s یا نئی بھیجیں!\n"
 "    "
+
+#~ msgid "When are you keen to play?"
+#~ msgstr "آپ کب کھیلنے کے خواہشمند ہیں؟"
+
+#~ msgid "WHAT TIME WORKS FOR YOU?"
+#~ msgstr "آپ کے لیے کون سا وقت موزوں ہے؟"
+
+#~ msgid "TODAY"
+#~ msgstr "آج"
+
+#~ msgid "TOMORROW"
+#~ msgstr "کل"
+
+#~ msgid "FRIENDS"
+#~ msgstr "دوست"
+
+#~ msgid "Please select at least one hour in today or tomorrow."
+#~ msgstr "براہ کرم آج یا کل میں کم از کم ایک گھنٹہ منتخب کریں۔"
+
+#~ msgid "Sorry, that Venue selection did not work. Please try again."
+#~ msgstr "معذرت، مقام کا انتخاب کامیاب نہیں ہوا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#~ msgid "Please invite at least one Friend."
+#~ msgstr "براہ کرم کم از کم ایک دوست کو مدعو کریں۔"
+
+#~ msgid "Invite Friends Only"
+#~ msgstr "صرف دوستوں کو مدعو کریں"
+
+#~ msgid ""
+#~ "You don't have any added friends yet. Please add them from the Friends tab"
+#~ msgstr ""
+#~ "آپ نے ابھی تک کوئی دوست شامل نہیں کیے۔ براہ کرم فرینڈز ٹیب سے انہیں شامل "
+#~ "کریں"
+
+#~ msgid "Select from map"
+#~ msgstr "نقشے سے منتخب کریں"
+
+#~ msgid "VENUE"
+#~ msgstr "مقام"
+
+#~ msgid "Cancel this Invitation?"
+#~ msgstr "کیا آپ اس دعوت کو منسوخ کرنا چاہتے ہیں؟"
+
+#~ msgid "cancel"
+#~ msgstr "منسوخ کریں"
+
+#~ msgid "decline"
+#~ msgstr "انکار کریں"
+
+#~ msgid ""
+#~ "You are about to schedule a Match. A chat session will be opened with "
+#~ "your rival. Continue?"
+#~ msgstr ""
+#~ "آپ ایک میچ طے کرنے والے ہیں۔ آپ کے حریف کے ساتھ چیٹ سیشن کھول دیا جائے "
+#~ "گا۔ کیا جاری رکھنا چاہتے ہیں؟"
+
+#~ msgid "Feed"
+#~ msgstr "فیڈ"
+
+#~ msgid "Invite"
+#~ msgstr "دعوت دیں"
+
+#, python-format
+#~ msgid ""
+#~ " \n"
+#~ "            Feed (%(appeals_length)s)\n"
+#~ msgstr ""
+#~ " \n"
+#~ "            فیڈ (%(appeals_length)s)\n"
+
+#~ msgid "Filter"
+#~ msgstr "فلٹر"
+
+#~ msgid "Participating"
+#~ msgstr "شرکت کر رہے ہیں"
+
+#~ msgid "Get involved by accepting an Invitation, or sending a new one."
+#~ msgstr "دعوت قبول کر کے یا نئی دعوت بھیج کر شامل ہوں۔"
+
+#~ msgid "All"
+#~ msgstr "سب"
+
+#~ msgid "filtered"
+#~ msgstr "فلٹر شدہ"
+
+#~ msgid "Unfortunately no Invitations match your Filters."
+#~ msgstr "بدقسمتی سے کوئی دعوت آپ کے فلٹرز سے مطابقت نہیں رکھتی۔"
+
+#~ msgid "Try deactivating a Filter or send out your own Invitation."
+#~ msgstr "کسی فلٹر کو غیر فعال کریں یا اپنی دعوت بھیجیں۔"
+
+#~ msgid "Cancel this Offer?"
+#~ msgstr "کیا آپ اس پیشکش کو منسوخ کرنا چاہتے ہیں؟"
+
+#~ msgid "Keen To Play? Send Invitation?"
+#~ msgstr "کھیلنے کے خواہشمند ہیں؟ دعوت بھیجیں؟"

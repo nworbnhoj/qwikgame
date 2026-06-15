@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-20 07:37+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,68 +19,72 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: person/forms.py:14
-msgid "Person to block"
+#, fuzzy
+#| msgid "Person to block"
+msgid "person to block"
 msgstr "بلاک کرنے والا شخص"
 
 #: person/forms.py:34
-msgid "EMAIL NOTIFICATIONS"
-msgstr "ای میل نوٹیفکیشنز"
+msgid "email address"
+msgstr "ای میل پتہ"
 
-#: person/forms.py:39
-msgid "WEB / APP NOTIFICATIONS"
-msgstr "ویب / ایپ نوٹیفکیشنز"
+#: person/forms.py:42
+#, fuzzy
+#| msgid "email invitations from"
+msgid "email notifications"
+msgstr "ای میل دعوتیں بذریعہ"
+
+#: person/forms.py:43
+msgid "push notifications"
+msgstr "پش نوٹیفکیشنز"
 
 #: person/forms.py:44
-msgid "This will make finding a Venue nearby faster."
-msgstr "اس سے قریبی مقام تلاش کرنا تیز ہو جائے گا۔"
+msgid "location access"
+msgstr "مقام تک رسائی"
 
-#: person/forms.py:45
-msgid "ALLOW LOCATION ACCESS"
-msgstr "لوکیشن تک رسائی کی اجازت دیں"
+#: person/forms.py:46
+msgid "Your choice."
+msgstr "آپ کی پسند۔"
 
-#: person/forms.py:50
+#: person/forms.py:47
+msgid "permissions"
+msgstr "اجازتیں"
+
+#: person/forms.py:53
 msgid "Browser default"
 msgstr "براؤزر کی طے شدہ ترتیب"
 
-#: person/forms.py:51
-msgid "LANGUAGE"
+#: person/forms.py:54
+msgid "language"
 msgstr "زبان"
 
-#: person/forms.py:71
-#, python-format
-msgid "Receive Email for Bid %(bid)s and Match %(match)s"
-msgstr "Bid %(bid)s اور میچ %(match)s کے لیے ای میل وصول کریں"
-
-#: person/forms.py:75
-#, python-format
-msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr "Bid %(bid)s اور میچ %(match)s کے لیے ایپ نوٹیفکیشن دیکھیں"
-
-#: person/forms.py:101
-msgid "QWIK NAME"
-msgstr "QWIK نام"
-
-#: person/forms.py:108
-msgid "WEBSITE / SOCIAL MEDIA"
-msgstr "ویب سائٹ / سوشل میڈیا"
-
-#: person/forms.py:121
-msgid "your qwikgame screen name"
-msgstr "آپ کا qwikgame اسکرین نام"
-
-#: person/forms.py:122
-msgid "add a social media url"
-msgstr "سوشل میڈیا کا URL شامل کریں"
-
-#: person/forms.py:169
+#: person/forms.py:61 person/forms.py:198
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr ""
 "جب آپ کسی شخص کو بلاک کرتے ہیں تو آپ دونوں qwikgame پر ایک دوسرے کو نہیں "
 "دیکھ سکیں گے۔"
 
-#: person/forms.py:170
-msgid "PEOPLE YOU HAVE BLOCKED"
+#: person/forms.py:62 person/forms.py:199
+msgid "people you have blocked"
 msgstr "جن لوگوں کو آپ نے بلاک کیا ہے"
+
+#: person/forms.py:116
+msgid "QWIK name"
+msgstr "QWIK نام"
+
+#: person/forms.py:124
+#, fuzzy
+#| msgid "add a social media url"
+msgid "website / social media"
+msgstr "سوشل میڈیا کا URL شامل کریں"
+
+#: person/forms.py:135
+msgid "your qwikgame screen name"
+msgstr "آپ کا qwikgame اسکرین نام"
+
+#: person/forms.py:174
+msgid "Add URL"
+msgstr "URL شامل کریں"
 
 #: person/templates/person/account.html:16
 msgid "Account"
@@ -160,7 +164,7 @@ msgstr "بلاک شدہ پلیئر ID"
 #: person/templates/person/rival_invite_alert_email_html.html:7
 #: person/templates/person/rival_invite_alert_email_text.html:3
 msgid "Qwik Alert"
-msgstr ""
+msgstr "Qwik اطلاع"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:13
 #, python-format
@@ -570,25 +574,14 @@ msgstr ""
 msgid "PRIVATE SETTINGS"
 msgstr "نجی ترتیبات"
 
-#: person/templates/person/private.html:44
-msgid "EMAIL ADDRESS"
-msgstr "ای میل پتہ"
-
-#: person/templates/person/private.html:46
-msgid "Change (coming soon)"
-msgstr "تبدیل کریں (جلد آرہا ہے)"
-
-#: person/templates/person/private.html:61
-msgid "UnBlock"
-msgstr "ان بلاک کریں"
+#: person/templates/person/private.html:47
+#: person/templates/person/public.html:36
+msgid "Save"
+msgstr "محفوظ کریں"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
 msgstr "عوامی پروفائل"
-
-#: person/templates/person/public.html:35
-msgid "Save"
-msgstr "محفوظ کریں"
 
 #: person/templates/person/review_match_alert_email_html.html:13
 #, python-format
@@ -599,8 +592,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            آپ کو یہ ای میل %(venue)s میں اپنے <b>%(game)s</b> "
-"Qwikgame کا جائزہ لینے کے لیے موصول ہوئی ہے۔\n"
+"            آپ کو یہ ای میل %(venue)s میں اپنے <b>%(game)s</b> Qwikgame کا "
+"جائزہ لینے کے لیے موصول ہوئی ہے۔\n"
 "        "
 
 #: person/templates/person/review_match_alert_email_html.html:26
@@ -642,8 +635,8 @@ msgid ""
 "%(venue)s.\n"
 msgstr ""
 "\n"
-"\tآپ کو یہ ای میل %(venue)s میں اپنے %(game)s Qwikgame کا جائزہ "
-"لینے کے لیے موصول ہوئی ہے۔\n"
+"\tآپ کو یہ ای میل %(venue)s میں اپنے %(game)s Qwikgame کا جائزہ لینے کے لیے "
+"موصول ہوئی ہے۔\n"
 
 #: person/templates/person/review_match_alert_email_text.html:10
 msgid ""
@@ -721,6 +714,16 @@ msgid ""
 msgstr ""
 "\n"
 "%(game)s کے لیے دعوت\n"
+
+#: person/templates/person/social.html:7
+#, fuzzy
+#| msgid "add a social media url"
+msgid "Add Social media link"
+msgstr "سوشل میڈیا کا URL شامل کریں"
+
+#: person/templates/person/social.html:33
+msgid "Submit"
+msgstr "جمع کریں"
 
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
@@ -827,3 +830,44 @@ msgstr ""
 "\n"
 "%(site_name)s پر تمام کھلاڑیوں کی ای میل دعوتیں بلاک کرنے کے لیے یہاں کلک "
 "کریں:\n"
+
+#~ msgid "EMAIL NOTIFICATIONS"
+#~ msgstr "ای میل نوٹیفکیشنز"
+
+#~ msgid "WEB / APP NOTIFICATIONS"
+#~ msgstr "ویب / ایپ نوٹیفکیشنز"
+
+#~ msgid "This will make finding a Venue nearby faster."
+#~ msgstr "اس سے قریبی مقام تلاش کرنا تیز ہو جائے گا۔"
+
+#~ msgid "ALLOW LOCATION ACCESS"
+#~ msgstr "لوکیشن تک رسائی کی اجازت دیں"
+
+#~ msgid "LANGUAGE"
+#~ msgstr "زبان"
+
+#, python-format
+#~ msgid "Receive Email for Bid %(bid)s and Match %(match)s"
+#~ msgstr "Bid %(bid)s اور میچ %(match)s کے لیے ای میل وصول کریں"
+
+#, python-format
+#~ msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
+#~ msgstr "Bid %(bid)s اور میچ %(match)s کے لیے ایپ نوٹیفکیشن دیکھیں"
+
+#~ msgid "QWIK NAME"
+#~ msgstr "QWIK نام"
+
+#~ msgid "WEBSITE / SOCIAL MEDIA"
+#~ msgstr "ویب سائٹ / سوشل میڈیا"
+
+#~ msgid "PEOPLE YOU HAVE BLOCKED"
+#~ msgstr "جن لوگوں کو آپ نے بلاک کیا ہے"
+
+#~ msgid "EMAIL ADDRESS"
+#~ msgstr "ای میل پتہ"
+
+#~ msgid "Change (coming soon)"
+#~ msgstr "تبدیل کریں (جلد آرہا ہے)"
+
+#~ msgid "UnBlock"
+#~ msgstr "ان بلاک کریں"

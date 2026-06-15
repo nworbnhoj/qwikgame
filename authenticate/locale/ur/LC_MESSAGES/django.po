@@ -3,12 +3,11 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 14:22+1100\n"
+"POT-Creation-Date: 2026-06-16 06:17+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "%(e)s کے لیے اکاؤنٹ غیر فعال ہے"
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
 msgstr ""
-"اس ای میل کے لیے کوئی اکاؤنٹ موجود نہیں ہے۔%(br)sکیا آپ "
-"%(a0)sرجسٹر%(a1)s کرنا چاہیں گے؟"
+"اس ای میل کے لیے کوئی اکاؤنٹ موجود نہیں ہے۔%(br)sکیا آپ %(a0)sرجسٹر%(a1)s "
+"کرنا چاہیں گے؟"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -45,7 +44,8 @@ msgid ""
 "%(site_name)s.\n"
 msgstr ""
 "\n"
-"آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اپنے اکاؤنٹ تک رسائی کی درخواست کی تھی۔\n"
+"آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اپنے "
+"اکاؤنٹ تک رسائی کی درخواست کی تھی۔\n"
 
 #: authenticate/templates/authenticate/email_validate_email.html:8
 #: authenticate/templates/authenticate/login_email_text.html:11
@@ -76,7 +76,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        %(request.GET.to_email)s پر ایک تصدیقی لنک کے ساتھ ای میل بھیج دی گئی ہے۔\n"
+"        %(request.GET.to_email)s پر ایک تصدیقی لنک کے ساتھ ای میل بھیج دی "
+"گئی ہے۔\n"
 "    "
 
 #: authenticate/templates/authenticate/email_validate_sent.html:15
@@ -109,7 +110,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اپنے اکاؤنٹ تک رسائی کی درخواست کی تھی۔\n"
+"            آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s "
+"پر اپنے اکاؤنٹ تک رسائی کی درخواست کی تھی۔\n"
 "        "
 
 #: authenticate/templates/authenticate/login_email_html.html:17
@@ -126,7 +128,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"            %(request.GET.to_email)s پر لاگ ان لنک کے ساتھ ایک ای میل بھیج دی گئی ہے۔ \n"
+"            %(request.GET.to_email)s پر لاگ ان لنک کے ساتھ ایک ای میل بھیج "
+"دی گئی ہے۔ \n"
 "    "
 
 #: authenticate/templates/authenticate/login_email_subject.txt:4
@@ -164,7 +167,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اکاؤنٹ کی درخواست کی تھی۔\n"
+"        آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر "
+"اکاؤنٹ کی درخواست کی تھی۔\n"
 "    "
 
 #: authenticate/templates/authenticate/register_email_sent.html:9
@@ -176,7 +180,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"            %(request.GET.to_email)s پر رجسٹریشن لنک کے ساتھ ایک ای میل بھیج دی گئی ہے۔\n"
+"            %(request.GET.to_email)s پر رجسٹریشن لنک کے ساتھ ایک ای میل بھیج "
+"دی گئی ہے۔\n"
 "    "
 
 #: authenticate/templates/authenticate/register_email_subject.txt:4
@@ -196,7 +201,8 @@ msgid ""
 "%(site_name)s.\n"
 msgstr ""
 "\n"
-"آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اکاؤنٹ کی درخواست کی تھی۔\n"
+"آپ کو یہ ای میل اس لیے موصول ہوئی ہے کیونکہ آپ نے %(site_name)s پر اکاؤنٹ کی "
+"درخواست کی تھی۔\n"
 
 #: authenticate/templates/authenticate/register_form.html:9
 msgid "Already have an account?"
@@ -210,20 +216,21 @@ msgstr "لاگ ان"
 msgid "Send verification link"
 msgstr "تصدیقی لنک بھیجیں"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "معذرت، یہ کام نہیں کر سکا۔"
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr ""
-"اس لنک میں موجود سیکیورٹی ٹوکن کی مدت ختم ہو چکی ہے یا کسی وجہ سے یہ درست نہیں ہے۔"
+"اس لنک میں موجود سیکیورٹی ٹوکن کی مدت ختم ہو چکی ہے یا کسی وجہ سے یہ درست "
+"نہیں ہے۔"
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "لاگ ان / رجسٹریشن"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " صفحہ۔"

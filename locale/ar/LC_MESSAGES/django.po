@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:18+1000\n"
+"POT-Creation-Date: 2026-06-16 04:46+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,8 +52,8 @@ msgid "website"
 msgstr "الموقع الإلكتروني"
 
 #: templates/input_day.html:9
-msgid "Pick time"
-msgstr "اختر الوقت"
+msgid "Pick hours"
+msgstr "اختر الساعات"
 
 #: templates/input_day.html:15
 msgid "All Day"
@@ -389,10 +389,15 @@ msgstr "انشر دعوة مباراة جديدة"
 #| "choose! \n"
 msgid ""
 "\n"
-"                            You don't find a suitable invitation in the %(QWIK)sFeed? Post invitation on your terms. Pick the game, the timeframe and the place. Confirm a match with a Rival of your preference. You choose! \n"
+"                            You don't find a suitable invitation in the "
+"%(QWIK)sFeed? Post invitation on your terms. Pick the game, the timeframe "
+"and the place. Confirm a match with a Rival of your preference. You "
+"choose! \n"
 msgstr ""
 "\n"
-"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ انشر دعوة وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره أنت. القرار لك!\n"
+"                            لم تجد دعوة مناسبة في %(QWIK)sFeed؟ انشر دعوة "
+"وفق شروطك. اختر اللعبة والفترة الزمنية والمكان. أكّد مباراة مع خصم تختاره "
+"أنت. القرار لك!\n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -689,6 +694,18 @@ msgstr ""
 "                    نعم! برنامج %(QWIK)sGAME مفتوح المصدر بالكامل. يمكن "
 "العثور على أحدث الشيفرة عبر %(github_link)s. مساهمتك مرحب بها للغاية.\n"
 
+#: templates/welcome.html:415
+msgid "Terms & Conditions"
+msgstr "الشروط والأحكام"
+
+#: templates/welcome.html:420
+msgid "Privacy"
+msgstr "الخصوصية"
+
+#: templates/welcome.html:432
+msgid "License"
+msgstr "الرخصة"
+
 #: templates/welcome_header_snippet.html:12
 msgid "Sign In"
 msgstr "تسجيل الدخول"
@@ -697,14 +714,8 @@ msgstr "تسجيل الدخول"
 msgid "Sign up"
 msgstr "إنشاء حساب"
 
-#~ msgid "License"
-#~ msgstr "الرخصة"
-
-#~ msgid "Privacy"
-#~ msgstr "الخصوصية"
-
-#~ msgid "Terms & Conditions"
-#~ msgstr "الشروط والأحكام"
+#~ msgid "Pick time"
+#~ msgstr "اختر الوقت"
 
 #~ msgid "search"
 #~ msgstr "بحث"

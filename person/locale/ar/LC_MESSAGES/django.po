@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:18+1000\n"
+"POT-Creation-Date: 2026-06-16 04:46+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,6 +231,15 @@ msgid ""
 msgstr ""
 "\n"
 "\t%(name)s قام بسحب عرضه على %(game)s في %(venue)s.\n"
+
+#: person/templates/person/cancel_bid_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Bid on %(game)s withdrawn\n"
+msgstr ""
+"\n"
+"تم رفض العرض على %(game)s\n"
 
 #: person/templates/person/cancel_match_alert_email_html.html:13
 #, python-format
@@ -736,6 +745,15 @@ msgid ""
 msgstr ""
 "\n"
 "\t%(name)s دعاك للعب %(game)s في %(venue)s.\n"
+
+#: person/templates/person/rival_invite_alert_notify_head.txt:4
+#, python-format
+msgid ""
+"\n"
+"Invite to %(game)s\n"
+msgstr ""
+"\n"
+"تم رفض العرض على %(game)s\n"
 
 #: person/templates/person/social.html:7
 #, fuzzy

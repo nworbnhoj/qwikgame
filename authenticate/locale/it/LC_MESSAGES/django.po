@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 05:42+1100\n"
+"POT-Creation-Date: 2026-06-16 05:12+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -18,19 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "L’account è disabilitato per %(e)s"
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
 msgstr ""
-"Non esiste alcun account per questa email.%(br)sVuoi "
-"%(a0)sregistrarti%(a1)s?"
+"Non esiste alcun account per questa email.%(br)sVuoi %(a0)sregistrarti%(a1)s?"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -202,8 +201,7 @@ msgid ""
 "%(site_name)s.\n"
 msgstr ""
 "\n"
-"Ricevi questa email perché hai richiesto un account su "
-"%(site_name)s.\n"
+"Ricevi questa email perché hai richiesto un account su %(site_name)s.\n"
 
 #: authenticate/templates/authenticate/register_form.html:9
 msgid "Already have an account?"
@@ -217,20 +215,19 @@ msgstr "accedi"
 msgid "Send verification link"
 msgstr "Invia link di verifica"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "Spiacenti, non ha funzionato."
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
-msgstr ""
-"Il token di sicurezza in quel link è scaduto oppure non è valido."
+msgstr "Il token di sicurezza in quel link è scaduto oppure non è valido."
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "Accesso / Registrazione"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " pagina."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-05 11:58+1100\n"
+"POT-Creation-Date: 2026-06-16 05:12+1000\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -46,15 +46,19 @@ msgstr "Registrati"
 msgid "Welcome to Qwikgame"
 msgstr "Benvenuto in Qwikgame"
 
-#: templates/input_day.html:9
-msgid "Pick time"
-msgstr "Scegli orario"
+#: templates/field_prompt.html:13
+msgid "website"
+msgstr "sito web"
 
-#: templates/input_day.html:14
+#: templates/input_day.html:9
+msgid "Pick hours"
+msgstr "Scegli orari"
+
+#: templates/input_day.html:15
 msgid "All Day"
 msgstr "Tutto il giorno"
 
-#: templates/input_day.html:24
+#: templates/input_day.html:25
 msgid "The Venue is closed."
 msgstr "La sede è chiusa."
 
@@ -70,11 +74,11 @@ msgstr "Qualsiasi orario"
 msgid "QWIKGAME License"
 msgstr "Licenza QWIKGAME"
 
-#: templates/license.html:31
+#: templates/license.html:28
 msgid "Open Source Software"
 msgstr "Software open source"
 
-#: templates/license.html:35
+#: templates/license.html:32
 msgid ""
 "Qwikgame is released as Open-Source software, and is grateful for the use of "
 "many other great Open-Source software projects."
@@ -82,11 +86,11 @@ msgstr ""
 "Qwikgame è rilasciato come software open source ed è grato per l'utilizzo di "
 "molti altri eccellenti progetti open source."
 
-#: templates/license.html:40
+#: templates/license.html:37
 msgid "Software"
 msgstr "Software"
 
-#: templates/license.html:41
+#: templates/license.html:38
 msgid "Licence"
 msgstr "Licenza"
 
@@ -243,35 +247,19 @@ msgstr "Seleziona qwikgame"
 msgid "Turn on Allow Notifications"
 msgstr "Attiva Consenti notifiche"
 
-#: templates/qwik.html:41
+#: templates/qwik.html:30
 msgid "QwikGame"
 msgstr "QwikGame"
 
-#: templates/qwik.html:56
-msgid "Invitations"
-msgstr "Inviti"
-
-#: templates/qwik.html:61
-msgid "Matches"
-msgstr "Partite"
-
-#: templates/qwik.html:66
-msgid "Reviews"
-msgstr "Recensioni"
-
-#: templates/qwik.html:71
-msgid "Friends"
-msgstr "Amici"
-
-#: templates/qwik.html:97
+#: templates/qwik.html:55
 msgid "Feedback"
 msgstr "Feedback"
 
-#: templates/qwik.html:108
+#: templates/qwik.html:66
 msgid "Submit"
 msgstr "Invia"
 
-#: templates/qwik.html:119
+#: templates/qwik.html:77
 #, python-format
 msgid ""
 "\n"
@@ -280,6 +268,22 @@ msgstr ""
 "\n"
 "            Quest'opera di %(qwik_link)s è concessa in licenza sotto "
 "%(gpl_link)s.\n"
+
+#: templates/tab_bar.html:13
+msgid "Invitations"
+msgstr "Inviti"
+
+#: templates/tab_bar.html:18
+msgid "Matches"
+msgstr "Partite"
+
+#: templates/tab_bar.html:23
+msgid "Reviews"
+msgstr "Recensioni"
+
+#: templates/tab_bar.html:28
+msgid "Friends"
+msgstr "Amici"
 
 #: templates/upgrade.html:7
 msgid "Learn more"
@@ -375,18 +379,24 @@ msgid "Post new Match Invitation"
 msgstr "Pubblica un nuovo invito alla partita"
 
 #: templates/welcome.html:152
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "\n"
+#| "                            You don't find a suitable invitation in the "
+#| "%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+#| "and the place. Confirm a match with a Rival of your preference. You "
+#| "choose! \n"
 msgid ""
 "\n"
 "                            You don't find a suitable invitation in the "
-"%(QWIK)sFeed? Send invitation on your terms. Pick the game, the timeframe "
+"%(QWIK)sFeed? Post invitation on your terms. Pick the game, the timeframe "
 "and the place. Confirm a match with a Rival of your preference. You "
 "choose! \n"
 msgstr ""
 "\n"
 "                            Non trovi un invito adatto nel %(QWIK)sFeed? "
-"Invia un invito alle tue condizioni. Scegli il gioco, la fascia oraria e il "
-"luogo. Conferma una partita con un rivale di tua preferenza. Decidi tu! \n"
+"Pubblica un invito alle tue condizioni. Scegli il gioco, la fascia oraria e il "
+"luogo. Conferma una partita con un avversario di tua preferenza. Decidi tu! \n"
 
 #: templates/welcome.html:158
 msgid "Organize A Match"
@@ -414,7 +424,7 @@ msgstr "Invita solo amici"
 
 #: templates/welcome.html:199
 msgid "Chat With Your Rival"
-msgstr "Chatta con il tuo rivale"
+msgstr "Chatta con il tuo avversario"
 
 #: templates/welcome.html:203
 msgid "Leave A Review"
@@ -532,7 +542,8 @@ msgid ""
 "%(QWIK)sGAME?\n"
 msgstr ""
 "\n"
-"                Per quali giochi posso trovare partner su %(QWIK)sGAME?\n"
+"                Come trovo un partner e organizzo una partita con "
+"%(QWIK)sGAME?\n"
 
 #: templates/welcome.html:311
 #, python-format
@@ -551,11 +562,11 @@ msgstr ""
 "                    Per trovare un partner e organizzare una partita inizia "
 "inviando un invito. Seleziona il gioco, il luogo e una fascia oraria. È "
 "consigliato chiamare la struttura per verificare la disponibilità dei campi "
-"nell’orario preferito. Il tuo invito alla partita sarà visibile nel QWIKFeed "
+"nell'orario preferito. Il tuo invito alla partita sarà visibile nel QWIKFeed "
 "agli altri giocatori. Più giocatori possono rispondere al tuo invito. Potrai "
-"scegliere l’offerta migliore e confermare la partita. Puoi anche rispondere "
+"scegliere l'offerta migliore e confermare la partita. Puoi anche rispondere "
 "a un invito esistente dal %(QWIK)sFeed proponendo un orario specifico "
-"all’interno della fascia indicata.\n"
+"all'interno della fascia indicata.\n"
 
 #: templates/welcome.html:318
 msgid ""
@@ -582,7 +593,7 @@ msgid ""
 "                What is %(QWIK)sFeed?\n"
 msgstr ""
 "\n"
-"                Cos’è %(QWIK)sFeed?\n"
+"                Cos'è %(QWIK)sFeed?\n"
 
 #: templates/welcome.html:339
 #, python-format
@@ -613,10 +624,10 @@ msgid ""
 "before sending the invitation.\n"
 msgstr ""
 "\n"
-"                    Il giocatore che invia l’invito iniziale è responsabile "
+"                    Il giocatore che invia l'invito iniziale è responsabile "
 "di chiamare e prenotare il campo una volta che la partita è confermata. Si "
 "consiglia inoltre di verificare la disponibilità della struttura prima di "
-"inviare l’invito.\n"
+"inviare l'invito.\n"
 
 #: templates/welcome.html:360
 #, python-format
@@ -626,7 +637,7 @@ msgid ""
 "AppStore?\n"
 msgstr ""
 "\n"
-"                Perché non trovo %(QWIK)sGAME nel Play Store o nell’App "
+"                Perché non trovo %(QWIK)sGAME nel Play Store o nell'App "
 "Store?\n"
 
 #: templates/welcome.html:367
@@ -688,21 +699,32 @@ msgid ""
 "most welcome.\n"
 msgstr ""
 "\n"
+"                    Sì! Il software %(QWIK)sGAME è completamente open
+
+#: templates/welcome.html:395
+#, python-format
+msgid ""
+"\n"
+"                    Yes! The %(QWIK)sGAME software is entirely open-source. "
+"The latest code can be found on %(github_link)s. Your assistance will be "
+"most welcome.\n"
+msgstr ""
+"\n"
 "                    Sì! Il software %(QWIK)sGAME è completamente open "
 "source. L’ultima versione del codice è disponibile su %(github_link)s. Il "
 "tuo contributo sarà molto apprezzato.\n"
 
-#: templates/welcome.html:414
-msgid "License"
-msgstr "Licenza"
+#: templates/welcome.html:415
+msgid "Terms & Conditions"
+msgstr "Termini e condizioni"
 
-#: templates/welcome.html:418
+#: templates/welcome.html:420
 msgid "Privacy"
 msgstr "Privacy"
 
-#: templates/welcome.html:422
-msgid "Terms & Conditions"
-msgstr "Termini e condizioni"
+#: templates/welcome.html:432
+msgid "License"
+msgstr "Licenza"
 
 #: templates/welcome_header_snippet.html:12
 msgid "Sign In"
@@ -711,6 +733,9 @@ msgstr "Registrati"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "Registrati"
+
+#~ msgid "Pick time"
+#~ msgstr "Scegli orario"
 
 #~ msgid "search"
 #~ msgstr "cerca"

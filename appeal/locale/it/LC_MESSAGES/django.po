@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 15:13+1100\n"
+"POT-Creation-Date: 2026-06-16 05:12+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -18,141 +18,177 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: appeal/forms.py:57 appeal/forms.py:115 appeal/forms.py:124
-msgid "When are you keen to play?"
-msgstr "Quando hai voglia di giocare?"
+#: game/forms.py:31
+msgid "Chat here with your rival"
+msgstr "Chatta qui con il tuo avversario"
 
-#: appeal/forms.py:58
-msgid "WHAT TIME WORKS FOR YOU?"
-msgstr "CHE ORARIO FA PER TE?"
+#: game/forms.py:57
+msgid "rival skill level"
+msgstr "livello di abilità dell'avversario"
 
-#: appeal/forms.py:109
-msgid "GAME"
-msgstr "PARTITA"
+#: game/forms.py:62
+msgid "venue not suitable for game"
+msgstr "luogo non adatto al gioco"
 
-#: appeal/forms.py:118
-msgid "TODAY"
-msgstr "OGGI"
+#: game/forms.py:63
+msgid "rival showed poor sportsmanship"
+msgstr "l'avversario ha mostrato scarso fair play"
 
-#: appeal/forms.py:127
-msgid "TOMORROW"
-msgstr "DOMANI"
+#: game/forms.py:64
+msgid "rival did not show up"
+msgstr "l'avversario non si è presentato"
 
-#: appeal/forms.py:135
-msgid "FRIENDS"
-msgstr "AMICI"
+#: game/forms.py:66
+msgid "dissapointment"
+msgstr "delusione"
 
-#: appeal/forms.py:213
-msgid "Please select at least one hour in today or tomorrow."
-msgstr "Seleziona almeno un'ora per oggi o domani."
+#: game/templates/game/match.html:13 game/templates/game/matches.html:7
+msgid "Match"
+msgstr "Partita"
 
-#: appeal/forms.py:220 appeal/forms.py:236
-msgid "Sorry, that Venue selection did not work. Please try again."
-msgstr "Spiacenti, la selezione della sede non ha funzionato. Riprova."
+#: game/templates/game/match.html:65
+msgid "Cancel this Match?"
+msgstr "Annullare questa partita?"
 
-#: appeal/forms.py:226
-msgid "Please invite at least one Friend."
-msgstr "Invita almeno un amico."
-
-#: appeal/forms.py:241 appeal/templates/appeal/keen.html:92
-msgid "Invite Friends Only"
-msgstr "Invita solo amici"
-
-#: appeal/forms.py:243
-msgid ""
-"You don't have any added friends yet. Please add them from the Friends tab"
-msgstr "Non hai ancora aggiunto nessun amico. Aggiungili dalla scheda Amici"
-
-#: appeal/forms.py:247
-msgid "Select from map"
-msgstr "Seleziona dalla mappa"
-
-#: appeal/forms.py:251
-msgid "VENUE"
-msgstr "SEDE"
-
-#: appeal/templates/appeal/accept.html:53
-msgid "Cancel this Invitation?"
-msgstr "Annullare questo invito?"
-
-#: appeal/templates/appeal/accept.html:55 appeal/templates/appeal/bid.html:78
+#: game/templates/game/match.html:67
 msgid "cancel"
 msgstr "annulla"
 
-#: appeal/templates/appeal/accept.html:84
-msgid "decline"
-msgstr "rifiuta"
+#: game/templates/game/match.html:82
+msgid "Match is scheduled"
+msgstr "La partita è programmata"
 
-#: appeal/templates/appeal/accept.html:125
-msgid ""
-"You are about to schedule a Match. A chat session will be opened with your "
-"rival. Continue?"
-msgstr ""
-"Stai per programmare una partita. Verrà aperta una chat con il tuo "
-"avversario. Continuare?"
+#: game/templates/game/match.html:83
+msgid "Match is complete"
+msgstr "La partita è completata"
 
-#: appeal/templates/appeal/appeals.html:7
-msgid "Feed"
-msgstr "Feed"
+#: game/templates/game/match.html:84
+msgid "Match is cancelled"
+msgstr "La partita è annullata"
 
-#: appeal/templates/appeal/appeals.html:24
-#: appeal/templates/appeal/appeals.html:156
-#: appeal/templates/appeal/keen.html:52 appeal/templates/appeal/keen.html:89
-msgid "Invite"
-msgstr "Invita"
+#: game/templates/game/match.html:85
+msgid "unknown status"
+msgstr "stato sconosciuto"
 
-#: appeal/templates/appeal/appeals.html:35
-#, python-format
-msgid ""
-" \n"
-"            Feed (%(appeals_length)s)\n"
-msgstr ""
-" \n"
-"            Feed (%(appeals_length)s)\n"
+#: game/templates/game/match.html:133
+msgid "Show invitation history"
+msgstr "Mostra cronologia inviti"
 
-#: appeal/templates/appeal/appeals.html:41
-msgid "Filter"
-msgstr "Filtro"
+#: game/templates/game/match.html:136
+msgid "Hide invitation history"
+msgstr "Nascondi cronologia inviti"
 
-#: appeal/templates/appeal/appeals.html:46
-msgid "Participating"
-msgstr "Partecipazione"
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
+#: game/templates/game/reviews.html:28
+msgid "Review"
+msgstr "Recensione"
 
-#: appeal/templates/appeal/appeals.html:85
-msgid "Get involved by accepting an Invitation, or sending a new one."
-msgstr "Partecipa accettando un invito o inviandone uno nuovo."
+#: game/templates/game/match.html:171
+msgid "☺ emogi coming soon ☺"
+msgstr "☺ emoji in arrivo ☺"
 
-#: appeal/templates/appeal/appeals.html:91
-msgid "All"
-msgstr "Tutti"
+#: game/templates/game/match.html:187
+msgid "Chat will be disabled 24 hours after Match."
+msgstr "La chat verrà disabilitata 24 ore dopo la partita."
 
-#: appeal/templates/appeal/appeals.html:95
-msgid "filtered"
-msgstr "filtrato"
+#: game/templates/game/match.html:190
+msgid "Chat will be deleted 1 week after Match."
+msgstr "La chat verrà eliminata una settimana dopo la partita."
 
-#: appeal/templates/appeal/appeals.html:132
-msgid "Unfortunately no Invitations match your Filters."
-msgstr "Purtroppo nessun invito corrisponde ai tuoi filtri."
+#: game/templates/game/matches.html:26
+msgid "Chat"
+msgstr "Chat"
 
-#: appeal/templates/appeal/appeals.html:135
-msgid "Try deactivating a Filter or send out your own Invitation."
-msgstr "Prova a disattivare un filtro o invia il tuo invito."
+#: game/templates/game/matches.html:36
+msgid "Matches"
+msgstr "Partite"
 
-#: appeal/templates/appeal/appeals.html:150
+#: game/templates/game/matches.html:39 game/templates/game/reviews.html:41
+msgid "Group by"
+msgstr "Raggruppa per"
+
+#: game/templates/game/matches.html:45 game/templates/game/reviews.html:47
+msgid "date"
+msgstr "data"
+
+#: game/templates/game/matches.html:49 game/templates/game/reviews.html:51
+msgid "game"
+msgstr "gioco"
+
+#: game/templates/game/matches.html:53 game/templates/game/reviews.html:55
+msgid "venue"
+msgstr "sede"
+
+#: game/templates/game/matches.html:60
+msgid "Upcoming"
+msgstr "In arrivo"
+
+#: game/templates/game/matches.html:95
+msgid "No pending Matches"
+msgstr "Nessuna partita in sospeso"
+
+#: game/templates/game/matches.html:101
+msgid "History"
+msgstr "Storico"
+
+#: game/templates/game/matches.html:134
+msgid "No history yet!"
+msgstr "Nessuno storico disponibile!"
+
+#: game/templates/game/matches.html:149
+msgid "Select a Match to Chat."
+msgstr "Seleziona una partita per chattare."
+
+#: game/templates/game/matches.html:151
 #, python-format
 msgid ""
 "\n"
-"                Open an Invitation %(br)s or send a new one!\n"
-"    "
+"            No pending Matches%(br)sKeen to play?\n"
+"        "
 msgstr ""
 "\n"
-"                Apri un invito %(br)s o inviane uno nuovo!\n"
-"    "
+"            Nessuna partita in sospeso%(br)sHai voglia di giocare?\n"
+"        "
 
-#: appeal/templates/appeal/bid.html:76
-msgid "Cancel this Offer?"
-msgstr "Annullare questa offerta?"
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
+msgid "New Invitation"
+msgstr "Nuovo invito"
 
-#: appeal/templates/appeal/keen.html:73
-msgid "Keen To Play? Send Invitation?"
-msgstr "Hai voglia di giocare? Invia un invito?"
+#: game/templates/game/review.html:8 game/templates/game/reviews.html:38
+msgid "Reviews"
+msgstr "Recensioni"
+
+#: game/templates/game/review.html:74
+msgid "Submit"
+msgstr "Invia"
+
+#: game/templates/game/reviews.html:101
+msgid "Select a Match to Review."
+msgstr "Seleziona una partita da recensire."
+
+#: game/templates/game/reviews.html:103
+#, python-format
+msgid ""
+"\n"
+"                All Match reviews complete - thank you%(br)sKeen to play?\n"
+"        "
+msgstr ""
+"\n"
+"                Tutte le recensioni delle partite sono complete - grazie%(br)sHai voglia di giocare?\n"
+"        "
+
+#: game/templates/game/rival.html:7
+msgid "Rival"
+msgstr "Avversario"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "LIVELLO DI ABILITÀ DELL'AVVERSARIO"
+
+#~ msgid "DISSAPOINTMENT"
+#~ msgstr "DELUSIONE"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "È andato storto qualcosa?"
+
+#~ msgid "Invite"
+#~ msgstr "Invita"

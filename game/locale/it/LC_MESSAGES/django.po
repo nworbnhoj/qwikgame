@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:05+1100\n"
+"POT-Creation-Date: 2026-06-16 05:12+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -18,33 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game/forms.py:30
+#: game/forms.py:31
 msgid "Chat here with your rival"
 msgstr "Chatta qui con il tuo avversario"
 
-#: game/forms.py:56
-msgid "RIVAL SKILL LEVEL"
-msgstr "LIVELLO DI ABILITÀ DELL’AVVERSARIO"
+#: game/forms.py:57
+msgid "rival skill level"
+msgstr ""
 
-#: game/forms.py:61
+#: game/forms.py:62
 msgid "venue not suitable for game"
 msgstr "luogo non adatto al gioco"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival showed poor sportsmanship"
 msgstr "l'avversario ha mostrato scarso fair play"
 
-#: game/forms.py:63
+#: game/forms.py:64
 msgid "rival did not show up"
 msgstr "l'avversario non si è presentato"
 
-#: game/forms.py:65
-msgid "DISSAPOINTMENT"
-msgstr "DELUSIONE"
-
-#: game/forms.py:80
-msgid "Did anything go wrong?"
-msgstr "È andato storto qualcosa?"
+#: game/forms.py:66
+msgid "dissapointment"
+msgstr ""
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
@@ -82,20 +78,20 @@ msgstr "Mostra cronologia inviti"
 msgid "Hide invitation history"
 msgstr "Nascondi cronologia inviti"
 
-#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "Recensione"
 
-#: game/templates/game/match.html:181
+#: game/templates/game/match.html:171
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ emoji in arrivo ☺"
 
-#: game/templates/game/match.html:195
+#: game/templates/game/match.html:187
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "La chat verrà disabilitata 24 ore dopo la partita."
 
-#: game/templates/game/match.html:198
+#: game/templates/game/match.html:190
 msgid "Chat will be deleted 1 week after Match."
 msgstr "La chat verrà eliminata una settimana dopo la partita."
 
@@ -155,8 +151,8 @@ msgstr ""
 "        "
 
 #: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "Invita"
+msgid "New Invitation"
+msgstr ""
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
@@ -185,3 +181,15 @@ msgstr ""
 #: game/templates/game/rival.html:7
 msgid "Rival"
 msgstr "Avversario"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "LIVELLO DI ABILITÀ DELL’AVVERSARIO"
+
+#~ msgid "DISSAPOINTMENT"
+#~ msgstr "DELUSIONE"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "È andato storto qualcosa?"
+
+#~ msgid "Invite"
+#~ msgstr "Invita"

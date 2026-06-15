@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-01 15:55+1100\n"
+"POT-Creation-Date: 2026-06-16 05:12+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1037,3 +1037,7 @@ msgstr "Zambia"
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
+
+#: qwikgame/fields.py:93
+msgid "Select from map"
+msgstr "Seleziona dalla mappa"

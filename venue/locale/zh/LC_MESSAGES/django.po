@@ -3,54 +3,59 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 15:29+1100\n"
+"POT-Creation-Date: 2026-06-17 04:29+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: venue/forms.py:17
-msgid "SEARCH"
-msgstr "搜索"
+msgid "search"
+msgstr ""
 
 #: venue/forms.py:22
 msgid "restrict the search to a region"
 msgstr "将搜索限制在某个区域"
 
 #: venue/forms.py:23
-msgid "REGION"
-msgstr "区域"
+msgid "region"
+msgstr ""
 
 #: venue/forms.py:30
 msgid "Specify the Game for these Qwikgame Venues"
 msgstr "为这些 Qwikgame 场地指定运动项目"
 
-#: venue/forms.py:31
-msgid "GAME"
+#: venue/forms.py:31 venue/forms.py:91 venue/templates/venue/venues.html:44
+msgid "game"
 msgstr "运动项目"
 
-#: venue/forms.py:60
+#: venue/forms.py:61
 msgid "Select Google Places to add as Qwikgame Venues"
 msgstr "选择 Google 地点以添加为 Qwikgame 场地"
 
-#: venue/forms.py:61
-msgid "GOOGLE PLACES"
-msgstr "Google 地点"
+#: venue/forms.py:62
+msgid "google places"
+msgstr ""
 
-#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
-#: venue/templates/venue/venues.html:33
+#: venue/forms.py:97
+msgid "place"
+msgstr ""
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:9
+#: venue/templates/venue/venues.html:35
 msgid "Venues"
 msgstr "场地"
 
-#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venue_add.html:69
+#: venue/templates/venue/venues.html:94
 msgid "Add Venue"
 msgstr "添加场地"
 
@@ -86,23 +91,24 @@ msgstr "管理者"
 msgid "GAMES"
 msgstr "运动项目"
 
-#: venue/templates/venue/venues.html:24
+#: venue/templates/venue/venue_add.html:51
+#| msgid "Venues"
+msgid "Venue Add"
+msgstr "场地"
+
+#: venue/templates/venue/venue_add.html:79 venue/templates/venue/venues.html:26
 msgid "Add"
 msgstr "添加"
 
-#: venue/templates/venue/venues.html:36
+#: venue/templates/venue/venues.html:38
 msgid "Group by"
 msgstr "分组方式"
 
-#: venue/templates/venue/venues.html:42
-msgid "game"
-msgstr "运动项目"
-
-#: venue/templates/venue/venues.html:72
+#: venue/templates/venue/venues.html:74
 msgid "No venues :-("
 msgstr "暂无场地 :-("
 
-#: venue/templates/venue/venues.html:85
+#: venue/templates/venue/venues.html:88
 #, python-format
 msgid ""
 "\n"
@@ -112,3 +118,15 @@ msgstr ""
 "\n"
 "                查看场地详情%(br)s或添加新的场地！\n"
 "    "
+
+#~ msgid "SEARCH"
+#~ msgstr "搜索"
+
+#~ msgid "REGION"
+#~ msgstr "区域"
+
+#~ msgid "GAME"
+#~ msgstr "运动项目"
+
+#~ msgid "GOOGLE PLACES"
+#~ msgstr "Google 地点"

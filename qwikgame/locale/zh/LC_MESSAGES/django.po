@@ -3,19 +3,19 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-01 15:55+1100\n"
+"POT-Creation-Date: 2026-06-17 04:29+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: qwikgame/constants.py:9
 msgid "SUNDAY"
@@ -1036,3 +1036,7 @@ msgstr "赞比亚"
 #: qwikgame/constants.py:307
 msgid "Zimbabwe"
 msgstr "津巴布韦"
+
+#: qwikgame/fields.py:93
+msgid "Select from map"
+msgstr ""

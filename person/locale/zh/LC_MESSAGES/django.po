@@ -3,81 +3,82 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-20 07:37+1100\n"
+"POT-Creation-Date: 2026-06-17 04:29+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: person/forms.py:14
-msgid "Person to block"
+#| msgid "Person to block"
+msgid "person to block"
 msgstr "要屏蔽的用户"
 
 #: person/forms.py:34
-msgid "EMAIL NOTIFICATIONS"
-msgstr "电子邮件通知"
+msgid "email address"
+msgstr "电子邮件地址"
 
-#: person/forms.py:39
-msgid "WEB / APP NOTIFICATIONS"
-msgstr "网页 / 应用通知"
+#: person/forms.py:42
+#| msgid "email invitations from"
+msgid "email notifications"
+msgstr "来自以下用户的邮件邀请"
+
+#: person/forms.py:43
+msgid "push notifications"
+msgstr "推送通知"
 
 #: person/forms.py:44
-msgid "This will make finding a Venue nearby faster."
-msgstr "这将帮助您更快找到附近的场地。"
+msgid "location access"
+msgstr "位置访问权限"
 
-#: person/forms.py:45
-msgid "ALLOW LOCATION ACCESS"
-msgstr "允许位置访问"
+#: person/forms.py:46
+msgid "Your choice."
+msgstr "由您选择。"
 
-#: person/forms.py:50
+#: person/forms.py:47
+msgid "permissions"
+msgstr "权限"
+
+#: person/forms.py:53
 msgid "Browser default"
 msgstr "浏览器默认"
 
-#: person/forms.py:51
-msgid "LANGUAGE"
+#: person/forms.py:54
+msgid "language"
 msgstr "语言"
 
-#: person/forms.py:71
-#, python-format
-msgid "Receive Email for Bid %(bid)s and Match %(match)s"
-msgstr "接收关于出价 %(bid)s 和比赛 %(match)s 的邮件通知"
-
-#: person/forms.py:75
-#, python-format
-msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
-msgstr "接收关于出价 %(bid)s 和比赛 %(match)s 的应用通知"
-
-#: person/forms.py:101
-msgid "QWIK NAME"
-msgstr "QWIK 名称"
-
-#: person/forms.py:108
-msgid "WEBSITE / SOCIAL MEDIA"
-msgstr "网站 / 社交媒体"
-
-#: person/forms.py:121
-msgid "your qwikgame screen name"
-msgstr "您的 qwikgame 显示名称"
-
-#: person/forms.py:122
-msgid "add a social media url"
-msgstr "添加社交媒体链接"
-
-#: person/forms.py:169
+#: person/forms.py:61 person/forms.py:198
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr "当您屏蔽某人后，双方将无法在 qwikgame 上看到彼此。"
 
-#: person/forms.py:170
-msgid "PEOPLE YOU HAVE BLOCKED"
+#: person/forms.py:62 person/forms.py:199
+msgid "people you have blocked"
 msgstr "您已屏蔽的用户"
+
+#: person/forms.py:116
+msgid "QWIK name"
+msgstr "QWIK名称"
+
+#: person/forms.py:124
+#| msgid "add a social media url"
+msgid "website / social media"
+msgstr "添加社交媒体链接"
+
+#: person/forms.py:135
+msgid "your qwikgame screen name"
+msgstr "您的 qwikgame 显示名称"
+
+#: person/forms.py:174
+msgid "Add URL"
+msgstr "添加网址"
 
 #: person/templates/person/account.html:16
 msgid "Account"
@@ -130,11 +131,11 @@ msgstr ""
 #: person/templates/person/block_done.html:19
 #: person/templates/person/notify_email_done.html:19
 msgid "Have a great day."
-msgstr ""
+msgstr "祝您愉快。"
 
 #: person/templates/person/block_done.html:24
 msgid "blocked Player ID"
-msgstr ""
+msgstr "已屏蔽的玩家ID"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:7
 #: person/templates/person/cancel_bid_alert_email_text.html:4
@@ -155,7 +156,7 @@ msgstr ""
 #: person/templates/person/rival_invite_alert_email_html.html:7
 #: person/templates/person/rival_invite_alert_email_text.html:3
 msgid "Qwik Alert"
-msgstr ""
+msgstr "Qwik提醒"
 
 #: person/templates/person/cancel_bid_alert_email_html.html:13
 #, python-format
@@ -193,7 +194,7 @@ msgstr ""
 #: person/templates/person/decline_bid_alert_email_text.html:10
 #: person/templates/person/review_match_alert_email_text.html:14
 msgid "To review please go to:"
-msgstr ""
+msgstr "如需评价，请前往："
 
 #: person/templates/person/cancel_bid_alert_email_text.html:13
 #: person/templates/person/cancel_match_alert_email_text.html:13
@@ -205,7 +206,7 @@ msgstr ""
 #: person/templates/person/review_match_alert_email_text.html:17
 #: person/templates/person/rival_invite_alert_email_text.html:12
 msgid "To change email notification settings, please go to:"
-msgstr ""
+msgstr "如需更改电子邮件通知设置，请前往："
 
 #: person/templates/person/cancel_bid_alert_notify_body.txt:3
 #, python-format
@@ -259,7 +260,7 @@ msgstr ""
 #: person/templates/person/chat_match_alert_email_text.html:14
 #: person/templates/person/new_match_alert_email_text.html:10
 msgid "To chat please go to:"
-msgstr ""
+msgstr "如需聊天，请前往："
 
 #: person/templates/person/cancel_match_alert_notify_body.txt:3
 #, python-format
@@ -404,7 +405,7 @@ msgstr ""
 #: person/templates/person/new_bid_alert_email_text.html:9
 #: person/templates/person/rival_invite_alert_email_text.html:9
 msgid "To accept please go to:"
-msgstr ""
+msgstr "如需接受，请前往："
 
 #: person/templates/person/filter_invite_alert_notify_body.txt:3
 #, python-format
@@ -505,27 +506,16 @@ msgstr ""
 
 #: person/templates/person/private.html:37
 msgid "PRIVATE SETTINGS"
-msgstr ""
+msgstr "隐私设置"
 
-#: person/templates/person/private.html:44
-msgid "EMAIL ADDRESS"
-msgstr ""
-
-#: person/templates/person/private.html:46
-msgid "Change (coming soon)"
-msgstr ""
-
-#: person/templates/person/private.html:61
-msgid "UnBlock"
-msgstr ""
+#: person/templates/person/private.html:47
+#: person/templates/person/public.html:36
+msgid "Save"
+msgstr "保存"
 
 #: person/templates/person/public.html:21
 msgid "PUBLIC PROFILE"
-msgstr ""
-
-#: person/templates/person/public.html:35
-msgid "Save"
-msgstr ""
+msgstr "公开资料"
 
 #: person/templates/person/review_match_alert_email_html.html:13
 #, python-format
@@ -536,8 +526,8 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"            您收到此邮件是为了评价您在 <b>%(venue)s</b> 的 "
-"<b>%(game)s</b> Qwikgame。\n"
+"            您收到此邮件是为了评价您在 <b>%(venue)s</b> 的 <b>%(game)s</b> "
+"Qwikgame。\n"
 "        "
 
 #: person/templates/person/review_match_alert_email_html.html:26
@@ -656,6 +646,15 @@ msgstr ""
 "\n"
 "%(game)s 邀请\n"
 
+#: person/templates/person/social.html:7
+#| msgid "add a social media url"
+msgid "Add Social media link"
+msgstr "添加社交媒体链接"
+
+#: person/templates/person/social.html:33
+msgid "Submit"
+msgstr "提交"
+
 #: person/templates/person/upgrade.html:21
 msgid "UPGRADE"
 msgstr "升级"
@@ -759,3 +758,35 @@ msgid ""
 msgstr ""
 "\n"
 "如需屏蔽来自 %(site_name)s 所有玩家的邮件邀请，请点击：\n"
+
+#~ msgid "EMAIL NOTIFICATIONS"
+#~ msgstr "电子邮件通知"
+
+#~ msgid "WEB / APP NOTIFICATIONS"
+#~ msgstr "网页 / 应用通知"
+
+#~ msgid "This will make finding a Venue nearby faster."
+#~ msgstr "这将帮助您更快找到附近的场地。"
+
+#~ msgid "ALLOW LOCATION ACCESS"
+#~ msgstr "允许位置访问"
+
+#~ msgid "LANGUAGE"
+#~ msgstr "语言"
+
+#, python-format
+#~ msgid "Receive Email for Bid %(bid)s and Match %(match)s"
+#~ msgstr "接收关于出价 %(bid)s 和比赛 %(match)s 的邮件通知"
+
+#, python-format
+#~ msgid "See App Notifications for Bid %(bid)s and Match %(match)s)"
+#~ msgstr "接收关于出价 %(bid)s 和比赛 %(match)s 的应用通知"
+
+#~ msgid "QWIK NAME"
+#~ msgstr "QWIK 名称"
+
+#~ msgid "WEBSITE / SOCIAL MEDIA"
+#~ msgstr "网站 / 社交媒体"
+
+#~ msgid "PEOPLE YOU HAVE BLOCKED"
+#~ msgstr "您已屏蔽的用户"

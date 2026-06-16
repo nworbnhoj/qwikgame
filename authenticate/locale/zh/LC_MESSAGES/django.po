@@ -3,33 +3,31 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-02 15:29+1100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"PO-Revision-Date: 2026-06-17 00:00+0000\n"
+"Last-Translator: OpenAI ChatGPT\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: authenticate/forms.py:86
+#: authenticate/forms.py:87
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "该账户已被禁用：%(e)s"
 
-#: authenticate/forms.py:90
+#: authenticate/forms.py:91
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
 "%(a0)sregister%(a1)s?"
-msgstr ""
-"此邮箱没有关联的账户。%(br)s您是否想要"
-"%(a0)s注册%(a1)s？"
+msgstr "此邮箱没有关联的账户。%(br)s您是否想要%(a0)s注册%(a1)s？"
 
 #: authenticate/templates/authenticate/auth.html:33
 msgid "Welcome to Qwikgame"
@@ -209,19 +207,19 @@ msgstr "登录"
 msgid "Send verification link"
 msgstr "发送验证链接"
 
-#: authenticate/templates/authenticate/token_invalid.html:9
+#: authenticate/templates/authenticate/token_invalid.html:10
 msgid "Sorry that didn't work."
 msgstr "抱歉，未能成功。"
 
-#: authenticate/templates/authenticate/token_invalid.html:12
+#: authenticate/templates/authenticate/token_invalid.html:13
 msgid ""
 "The security token in that link has expired, or is invalid for some reason."
 msgstr "该链接中的安全令牌已过期，或因某种原因无效。"
 
-#: authenticate/templates/authenticate/token_invalid.html:16
+#: authenticate/templates/authenticate/token_invalid.html:17
 msgid "Login / Registration"
 msgstr "登录 / 注册"
 
-#: authenticate/templates/authenticate/token_invalid.html:17
+#: authenticate/templates/authenticate/token_invalid.html:18
 msgid " page."
 msgstr " 页面。"

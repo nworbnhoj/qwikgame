@@ -3,47 +3,43 @@
 # This file is distributed under GNU General Public License Version 3
 # John Brown <john@qwikgame.org>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-17 07:05+1100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"PO-Revision-Date: 2026-06-17 00:00+0000\n"
+"Last-Translator: OpenAI ChatGPT\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
-#: game/forms.py:30
+#: game/forms.py:31
 msgid "Chat here with your rival"
 msgstr "在此与您的对手聊天"
 
-#: game/forms.py:56
-msgid "RIVAL SKILL LEVEL"
-msgstr "对手技能水平"
+#: game/forms.py:57
+msgid "rival skill level"
+msgstr "对手技术水平"
 
-#: game/forms.py:61
+#: game/forms.py:62
 msgid "venue not suitable for game"
 msgstr "场地不适合进行游戏"
 
-#: game/forms.py:62
+#: game/forms.py:63
 msgid "rival showed poor sportsmanship"
 msgstr "对手表现出缺乏体育精神"
 
-#: game/forms.py:63
+#: game/forms.py:64
 msgid "rival did not show up"
 msgstr "对手没有出现"
 
-#: game/forms.py:65
-msgid "DISSAPOINTMENT"
+#: game/forms.py:66
+msgid "dissapointment"
 msgstr "失望"
-
-#: game/forms.py:80
-msgid "Did anything go wrong?"
-msgstr "是否发生了任何问题？"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"
@@ -81,20 +77,20 @@ msgstr "显示邀请历史"
 msgid "Hide invitation history"
 msgstr "隐藏邀请历史"
 
-#: game/templates/game/match.html:171 game/templates/game/reviews.html:9
+#: game/templates/game/match.html:161 game/templates/game/reviews.html:9
 #: game/templates/game/reviews.html:28
 msgid "Review"
 msgstr "评价"
 
-#: game/templates/game/match.html:181
+#: game/templates/game/match.html:171
 msgid "☺ emogi coming soon ☺"
 msgstr "☺ 表情功能即将推出 ☺"
 
-#: game/templates/game/match.html:195
+#: game/templates/game/match.html:187
 msgid "Chat will be disabled 24 hours after Match."
 msgstr "比赛结束24小时后将禁用聊天。"
 
-#: game/templates/game/match.html:198
+#: game/templates/game/match.html:190
 msgid "Chat will be deleted 1 week after Match."
 msgstr "比赛结束1周后聊天将被删除。"
 
@@ -154,8 +150,8 @@ msgstr ""
 "        "
 
 #: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
-msgid "Invite"
-msgstr "邀请"
+msgid "New Invitation"
+msgstr "新邀请"
 
 #: game/templates/game/review.html:8 game/templates/game/reviews.html:38
 msgid "Reviews"
@@ -183,3 +179,15 @@ msgstr ""
 #: game/templates/game/rival.html:7
 msgid "Rival"
 msgstr "对手"
+
+#~ msgid "RIVAL SKILL LEVEL"
+#~ msgstr "对手技能水平"
+
+#~ msgid "DISSAPOINTMENT"
+#~ msgstr "失望"
+
+#~ msgid "Did anything go wrong?"
+#~ msgstr "是否发生了任何问题？"
+
+#~ msgid "Invite"
+#~ msgstr "邀请"

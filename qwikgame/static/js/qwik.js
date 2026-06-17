@@ -191,7 +191,7 @@ function form_shut(event_or_element) {
             form.querySelectorAll('.open').forEach((open) => {
                 open.classList.remove('open');
                 field_label_update(open);
-                field_prompt_show(field);
+                field_prompt_show(open);
             });
         } else {
             console.log('WARN: missing form');

@@ -250,6 +250,7 @@ class Person(models.Model):
         blockee = Person.objects.filter(block__in=[self]).all()
         return list(blocker | blockee)
 
+    @property
     def facet(self):
         return Person.hash(self.user.email)[:3].upper()
 
@@ -268,7 +269,7 @@ class Person(models.Model):
     def qwikname(self):
         if self.name:
             return self.name
-        return self.facet()
+        return self.facet
 
 
 class Block(models.Model):

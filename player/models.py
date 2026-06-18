@@ -121,6 +121,7 @@ class Player(models.Model):
     def conduct_stars(self):
         return round (5 * self.conduct_rep())
 
+    @property
     def facet(self):
         return self.hash[:3].upper()
 
@@ -183,7 +184,7 @@ class Player(models.Model):
         if self.user is not None:
             if self.user.person is not None:
                 return self.user.person.qwikname
-        return self.facet()
+        return self.facet
 
     # returns the favorite locality in region_favorites()
     # step thru region_favorites and select the first country, and then the

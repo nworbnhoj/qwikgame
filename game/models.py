@@ -50,7 +50,7 @@ class Match(models.Model):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        names = [player.qwikname for player in self.competitors.all()]
+        names = [player.facet for player in self.competitors.all()]
         return f'{self.game} {names} {self.datetime_str} {self.venue}'
 
     @classmethod
@@ -236,7 +236,7 @@ class Review(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.player}: {self.rival} {self.match}"
+        return f"{self.player.facet}: {self.rival.facet} {self.match}"
 
     def log_event(self, template):
         match template:

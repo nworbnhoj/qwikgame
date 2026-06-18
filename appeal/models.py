@@ -38,7 +38,7 @@ class Appeal(models.Model):
         ]
 
     def __str__(self):
-        return "{} {} {} {}".format(self.player, self.game, self.venue, self.date)
+        return "{} {} {} {}".format(self.player.facet, self.game, self.venue, self.date)
 
     # Alert player and rivals of change to this Appeal
     # ( optionally omitting the Player causing the change )
@@ -236,7 +236,7 @@ class Bid(models.Model):
     str_conf = models.CharField(max_length=1, choices=Strength.CONFIDENCE, default='z')
 
     def __str__(self):
-        return "{} {} {}".format(self.rival, self.appeal.game, self.appeal.venue)
+        return "{} {} {}".format(self.rival.facet, self.appeal.game, self.appeal.venue)
 
     def accepted(self):
         return self.hours is not None

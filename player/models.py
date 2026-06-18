@@ -383,7 +383,7 @@ class Player(models.Model):
        
 
     def __str__(self):
-        return self.hash if self.user is None else self.user.email
+        return self.facet
 
 
 
@@ -486,7 +486,7 @@ class Friend(models.Model):
         ]
 
     def __str__(self):
-        return "{} knows {}".format(self.player, self.rival)
+        return "{} knows {}".format(self.player.facet, self.rival.facet)
 
     def alert(self,
         type,

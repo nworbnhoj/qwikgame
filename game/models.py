@@ -1,6 +1,6 @@
 import datetime, logging
 from django.db import models
-from qwikgame.constants import DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
+from qwikgame.constants import DELAY_MATCH_CHAT, DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
 
 logger = logging.getLogger(__file__)

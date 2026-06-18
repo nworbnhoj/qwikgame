@@ -53,14 +53,14 @@ class AlertEmail(EmailMultiAlternatives):
 
     @classmethod
     @property
-    def timeout():
+    def timeout(klass):
         connection = AlertEmail._open_connection
         if connection and now() > AlertEmail._timeout_connection:
             AlertEmail._open_connection = None
             connection.close()
             logger.info(f'SMTP connection closed')
-            return true
-        return false
+            return True
+        return False
 
 
 class Alert(models.Model):
@@ -117,7 +117,6 @@ class Alert(models.Model):
         return False;
 
     def _push(self):
-        logger.info(f'Alert._push(): {self.person.hash}')
         try:
             alert_type = Alert.TYPE[self.type]
             head_template_name = f'person/{alert_type}_alert_notify_head.txt',

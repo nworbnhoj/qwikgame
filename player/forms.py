@@ -9,7 +9,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, RangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry

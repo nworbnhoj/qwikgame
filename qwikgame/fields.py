@@ -6,7 +6,7 @@ from qwikgame.hourbits import Hours24, Hours24x7
 from service.locate import Locate
 from venue.models import Place
 from qwikgame.widgets import ActionMultiple
-from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, RangeInput, SelectRangeInput, TabInput, WeekInput, WEEK_ALL
+from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TabInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 
@@ -119,18 +119,6 @@ class PlaceField(ChoiceField):
         if Locate.geodetails(value):
             return True
         return False
-
-
-class RangeField(ChoiceField):
-    template_name='field.html'
-    widget=RangeInput(attrs={'type': 'range'})
-
-    def __init__(self, max_value=None, min_value=None, step_size=None, **kwargs):
-        self.max_value, self.min_value, self.step_size = max_value, min_value, step_size
-        super().__init__(
-            **kwargs
-        )
-        self.widget.attrs.update({'max':self.max_value, 'min':self.min_value})
 
 
 class VenueField(PlaceField):

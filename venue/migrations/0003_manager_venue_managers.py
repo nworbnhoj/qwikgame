@@ -16,12 +16,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Manager',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('icon', models.CharField(max_length=16)),
                 ('location_auto', models.BooleanField()),
                 ('notify_email', models.BooleanField()),
                 ('notify_web', models.BooleanField()),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(

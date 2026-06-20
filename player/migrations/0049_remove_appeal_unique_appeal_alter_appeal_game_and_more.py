@@ -20,31 +20,37 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='appeal',
             name='game',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='game.game'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='+', to='game.game'),
         ),
         migrations.AlterField(
             model_name='appeal',
             name='invitees',
-            field=models.ManyToManyField(related_name='invitees_migration', to='player.player'),
+            field=models.ManyToManyField(
+                related_name='invitees_migration', to='player.player'),
         ),
         migrations.AlterField(
             model_name='appeal',
             name='player',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='player.player'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='+', to='player.player'),
         ),
         migrations.AlterField(
             model_name='appeal',
             name='rivals',
-            field=models.ManyToManyField(related_name='rivals_migration', through='player.Bid', to='player.player'),
+            field=models.ManyToManyField(
+                related_name='rivals_migration', through='player.Bid', to='player.player'),
         ),
         migrations.AlterField(
             model_name='appeal',
             name='venue',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='venue.venue'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='+', to='venue.venue'),
         ),
         migrations.AlterField(
             model_name='bid',
             name='rival',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='player.player'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='+', to='player.player'),
         ),
     ]

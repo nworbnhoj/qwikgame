@@ -13,9 +13,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Place',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('lat', models.DecimalField(decimal_places=6, default=-36.449786, max_digits=9)),
-                ('lng', models.DecimalField(decimal_places=6, default=146.430037, max_digits=9)),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
+                ('lat', models.DecimalField(
+                    decimal_places=6, default=-36.449786, max_digits=9)),
+                ('lng', models.DecimalField(
+                    decimal_places=6, default=146.430037, max_digits=9)),
                 ('placeid', models.TextField()),
             ],
         ),

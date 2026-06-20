@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='bid',
             name='str_conf',
-            field=models.CharField(choices=[('a', ''), ('b', 'probably'), ('c', 'maybe'), ('z', 'unknown')], default='z', max_length=1),
+            field=models.CharField(choices=[('a', ''), ('b', 'probably'), (
+                'c', 'maybe'), ('z', 'unknown')], default='z', max_length=1),
         ),
         migrations.AlterField(
             model_name='strength',
             name='relative',
-            field=models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'), ('m', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1),
+            field=models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'),
+                                            ('m', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1),
         ),
     ]

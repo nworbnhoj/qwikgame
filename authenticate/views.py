@@ -34,7 +34,7 @@ class EmailValidateView(FormView):
     success_url = reverse_lazy("email_validate_done")
     template_name = "authenticate/email_validate_form.html"
     title = "Email validate"
-    token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
+    token_generator = default_token_generator  # see PASSWORD_RESET_TIMEOUT
 
     @method_decorator(csrf_protect)
     def dispatch(self, request, *args, **kwargs):
@@ -70,11 +70,12 @@ class EmailValidateDoneView(TemplateView):
 HOUR_SECONDS = 60 * 60
 DAY_SECONDS = 24 * HOUR_SECONDS
 
+
 class EmailValidateHandleView(PasswordResetConfirmView):
     fail_url = reverse_lazy('welcome')
     session_time = 7 * DAY_SECONDS
     success_url = reverse_lazy("appeal")
-    token_generator = default_token_generator # see PASSWORD_RESET_TIMEOUT
+    token_generator = default_token_generator  # see PASSWORD_RESET_TIMEOUT
     token_invalid_url = reverse_lazy('token_invalid')
 
     def prep_user(self):
@@ -140,7 +141,7 @@ class RegisterView(EmailValidateView):
     success_url = reverse_lazy("register_sent")
     template_name = "authenticate/register_form.html"
     title = "Register"
-    
+
 
 class RegisterSentView(TemplateView):
     template_name = "authenticate/register_email_sent.html"
@@ -169,7 +170,7 @@ class RegisterHandleView(EmailValidateHandleView):
         else:
             logger.info(f'linked existing Person to user: {person.pk}')
         player, created = Player.objects.get_or_create(
-            hash = self.user.hash
+            hash=self.user.hash
         )
         if created:
             logger.info(f'created Player: {player.pk}')

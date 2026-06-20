@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='available',
-            constraint=models.UniqueConstraint(fields=('game', 'player', 'venue'), name='unique_availability'),
+            constraint=models.UniqueConstraint(
+                fields=('game', 'player', 'venue'), name='unique_availability'),
         ),
     ]

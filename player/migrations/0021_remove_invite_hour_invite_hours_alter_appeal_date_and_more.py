@@ -38,6 +38,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='appeal',
-            constraint=models.UniqueConstraint(fields=('date', 'game', 'player', 'venue'), name='unique_appeal'),
+            constraint=models.UniqueConstraint(
+                fields=('date', 'game', 'player', 'venue'), name='unique_appeal'),
         ),
     ]

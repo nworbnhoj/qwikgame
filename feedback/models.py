@@ -30,4 +30,4 @@ class Feedback(models.Model):
 
     @property
     def type_str(self):
-    	return Feedback.TYPE[self.type]
+        return Feedback.TYPE[self.type]

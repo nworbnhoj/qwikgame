@@ -38,18 +38,18 @@ def match_review_init():
         for player in match.competitors.all():
             for rival in match.competitors.exclude(pk=player.pk).all():
                 review, created = Review.objects.get_or_create(
-                    match = match,
-                    meta = {'seen': []},
+                    match=match,
+                    meta={'seen': []},
                     player=player,
                     rival=rival,
                 )
                 if created:
                     player.alert(
-                        context = {
+                        context={
                             'date': match.date_str,
                             'domain': FQDN,
                             'game': match.game,
-                            'time':match.time_str,
+                            'time': match.time_str,
                             'venue': match.venue,
                         },
                         expires=datetime.now() + timedelta(days=3),

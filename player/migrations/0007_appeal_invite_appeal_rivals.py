@@ -16,27 +16,36 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Appeal',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField()),
                 ('hours', models.IntegerField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.game')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player.player')),
-                ('venue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
+                ('game', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='game.game')),
+                ('player', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='player.player')),
+                ('venue', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
             ],
         ),
         migrations.CreateModel(
             name='Invite',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('hour', models.SmallIntegerField(blank=True)),
-                ('strength', models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'), ('M', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1)),
-                ('appeal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player.appeal')),
-                ('rival', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player.player')),
+                ('strength', models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'), (
+                    'M', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1)),
+                ('appeal', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='player.appeal')),
+                ('rival', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='player.player')),
             ],
         ),
         migrations.AddField(
             model_name='appeal',
             name='rivals',
-            field=models.ManyToManyField(through='player.Invite', to='player.appeal'),
+            field=models.ManyToManyField(
+                through='player.Invite', to='player.appeal'),
         ),
     ]

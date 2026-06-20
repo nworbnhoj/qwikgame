@@ -21,7 +21,8 @@ class MatchesView(QwikView):
     matches_template = 'game/matches.html'
 
     def context(self, request, *args, **kwargs):
-        kwargs['items'] = Match.objects.filter(competitors__in=[self.user.player]).order_by('date').reverse()
+        kwargs['items'] = Match.objects.filter(
+            competitors__in=[self.user.player]).order_by('date').reverse()
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('match')
         context = super().context(request, *args, **kwargs)
@@ -103,7 +104,7 @@ class MatchView(MatchesView):
             rivals.remove(player)
             context |= {
                 'date': match.datetime_str,
-                'enable_chat': match.status in {'A','C','X'},
+                'enable_chat': match.status in {'A', 'C', 'X'},
                 'game': match.game,
                 'name': match.init_player().qwikname,
                 'notify_off': person.alert_str(False, 'match'),
@@ -144,7 +145,8 @@ class MatchView(MatchesView):
                 match = Match.objects.get(pk=cancel_pk)
                 match.cancel(player)
             except:
-                logger.exception('failed to cancel match: {} : {}'.format(player, cancel_pk))
+                logger.exception(
+                    'failed to cancel match: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/game/match/{cancel_pk}/')
         txt = context.get('txt')
         if txt:
@@ -170,7 +172,8 @@ class ReviewsView(QwikView):
         context = super().context(request, *args, **kwargs)
         player = self.user.player
         player.alert_del(type='')
-        reviews = context.get('items', Review.objects.none()).order_by('match__date')
+        reviews = context.get(
+            'items', Review.objects.none()).order_by('match__date')
         for review in reviews:
             seen = player.pk in review.meta.get('seen', [])
             review.seen = '' if seen else 'unseen'
@@ -197,14 +200,14 @@ class ReviewView(ReviewsView):
     def context(self, request, *args, **kwargs):
         context = super().context(request, *args, **kwargs)
         # TODO refine matches to unreviewed Matches
-        context['target']='review'
+        context['target'] = 'review'
         return context
 
     def _rivals(self, review):
         if review:
             player = self.user.player
             competitors = review.match.competitors.all()
-            return {p.pk:'name' for p in competitors if p != player}
+            return {p.pk: 'name' for p in competitors if p != player}
         return {}
 
     def _updateVenueGames(self, valid, game, venue):
@@ -243,10 +246,10 @@ class ReviewView(ReviewsView):
             rival.conduct_add(not context.get('conduct_bad', False))
             rival.save()
             Strength.objects.update_or_create(
-                game = review.match.game,
-                player = player,
-                rival = rival,
-                defaults = {
+                game=review.match.game,
+                player=player,
+                rival=rival,
+                defaults={
                     'date': review.match.date,
                     'relative': context.get('strength', 'm'),
                     'weight': 3
@@ -301,7 +304,6 @@ class RivalView(MatchesView):
             return HttpResponseRedirect(back)
         return render(request, self.stats_template, context)
 
-
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.menu_form_class.post(request.POST)
@@ -314,6 +316,7 @@ class RivalView(MatchesView):
                     self.user.person.block_rival(rival.user.person)
                     logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')
                 except:
-                    logger.exception("Block failed: {player} blocked {rival_pk}")
+                    logger.exception(
+                        "Block failed: {player} blocked {rival_pk}")
         back = '/'.join((request.path).split('/')[:-2])
         return HttpResponseRedirect(back)

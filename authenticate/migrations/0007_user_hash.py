@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='hash',
-            field=models.CharField(db_index=True, default=authenticate.models.uuid4_hex, max_length=32, null=True),
+            field=models.CharField(
+                db_index=True, default=authenticate.models.uuid4_hex, max_length=32, null=True),
         ),
     ]

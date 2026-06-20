@@ -16,11 +16,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Available',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('week', models.BinaryField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.game')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player.player')),
-                ('venue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
+                ('game', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='game.game')),
+                ('player', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='player.player')),
+                ('venue', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
             ],
         ),
     ]

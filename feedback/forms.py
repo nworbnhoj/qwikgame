@@ -13,8 +13,8 @@ class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
         fields = ['type', 'text']
-        labels = { 'text': _('Description') }
-        localized_fields = [ '__all__']
+        labels = {'text': _('Description')}
+        localized_fields = ['__all__']
         widgets = {
             'text': TextArea(attrs={
                 'class': _('feedback'),
@@ -30,12 +30,12 @@ class FeedbackForm(ModelForm):
         form = klass()
         form.fields['text'].template_name = 'field.html'
         form.fields['type'].template_name = 'field.html'
-        return { 'feedback_form': form }
+        return {'feedback_form': form}
 
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = { 'feedback_form': form }
+        context = {'feedback_form': form}
         if form.is_valid():
-            context |= { k:v for k,v in form.cleaned_data.items() }
+            context |= {k: v for k, v in form.cleaned_data.items()}
         return context

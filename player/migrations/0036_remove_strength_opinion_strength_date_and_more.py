@@ -25,13 +25,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='strength',
             name='player',
-            field=models.ForeignKey(default='59f843d7df3f5afd981439181c647b20', on_delete=django.db.models.deletion.CASCADE, related_name='basis', to='player.player'),
+            field=models.ForeignKey(default='59f843d7df3f5afd981439181c647b20',
+                                    on_delete=django.db.models.deletion.CASCADE, related_name='basis', to='player.player'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='strength',
             name='rival',
-            field=models.ForeignKey(default='6e84b88cdec077a5661134f46d571ccf', on_delete=django.db.models.deletion.CASCADE, related_name='relative', to='player.player'),
+            field=models.ForeignKey(default='6e84b88cdec077a5661134f46d571ccf',
+                                    on_delete=django.db.models.deletion.CASCADE, related_name='relative', to='player.player'),
             preserve_default=False,
         ),
         migrations.AlterField(

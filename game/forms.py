@@ -18,9 +18,9 @@ logger = logging.getLogger(__file__)
 
 class MatchForm(QwikForm):
     txt = CharField(
-        required = False,
-        template_name = 'field_naked.html', #'input_chat.html'
-        widget = TextInput(),
+        required=False,
+        template_name='field_naked.html',  # 'input_chat.html'
+        widget=TextInput(),
     )
 
     # Initializes a ChatForm for a 'match'.
@@ -28,7 +28,8 @@ class MatchForm(QwikForm):
     @classmethod
     def get(klass):
         form = klass()
-        form.fields['txt'].widget.attrs = { 'placeholder': _('Chat here with your rival')}
+        form.fields['txt'].widget.attrs = {
+            'placeholder': _('Chat here with your rival')}
         return {
             'match_form': form,
         }
@@ -38,7 +39,7 @@ class MatchForm(QwikForm):
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = { 'match_form': form }
+        context = {'match_form': form}
         if form.is_valid():
             context['txt'] = form.cleaned_data['txt']
             if 'CANCEL' in request_post:
@@ -52,27 +53,27 @@ class MatchForm(QwikForm):
 
 class ReviewForm(QwikForm):
     strength = ChoiceField(
-        choices = Strength.SCALE,
-        initial = Strength.SCALE.get('m'),
+        choices=Strength.SCALE,
+        initial=Strength.SCALE.get('m'),
         label=_('rival skill level'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
     dud = MultipleChoiceField(
-        choices = {
+        choices={
             'nogame': _('venue not suitable for game'),
-            'poor':_('rival showed poor sportsmanship'),
+            'poor': _('rival showed poor sportsmanship'),
             'noshow': _('rival did not show up'),
         },
         label=_('dissapointment'),
 
-        required = False,
-        widget = CheckboxSelectMultiple,
+        required=False,
+        widget=CheckboxSelectMultiple,
     )
     rival = ChoiceField(
-        choices = {},
-        widget = HiddenInput,
+        choices={},
+        widget=HiddenInput,
     )
 
     # Initializes a ReviewForm for a 'match'.
@@ -81,7 +82,7 @@ class ReviewForm(QwikForm):
     def get(klass, rivals):
         form = klass()
         form.fields['dud'].template_name = 'field.html'
-        form.fields['dud'].widget.attrs = {'class': 'post',}
+        form.fields['dud'].widget.attrs = {'class': 'post', }
         form.fields['dud'].widget.use_fieldset = False
         form.fields['rival'].choices = rivals
         form.fields['rival'].initial = next(iter(rivals))
@@ -93,7 +94,7 @@ class ReviewForm(QwikForm):
     def post(klass, request_post, rivals):
         form = klass(data=request_post)
         form.fields['rival'].choices = rivals
-        context = { 'review_form': form }
+        context = {'review_form': form}
         if form.is_valid():
             context['conduct_bad'] = False
             if form.cleaned_data['dud']:

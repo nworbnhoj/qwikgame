@@ -1,4 +1,6 @@
-import datetime, logging, random
+import datetime
+import logging
+import random
 from appeal.models import Appeal, Bid
 from authenticate.models import User
 from django.db.models import Count
@@ -36,15 +38,16 @@ def bid_perish():
 # CRONJOBS = [('11 * * * *', 'appeal.cron.murmur', [], {'appeal_min':30, 'bid_rate':0.08}, '>> /var/log/django_cron_alpha.log')]
 # parameters
 # appeal_min: Maintain this minimum number of Appeals on qwikgame
-# bid_rate: Bid on each murmer Appeal with this probability on each run [0.0 .. 1.0] 
+# bid_rate: Bid on each murmer Appeal with this probability on each run [0.0 .. 1.0]
 def murmur(appeal_min=50, bid_rate=0.06):
     FAIL_MAX = 10
-    CROWD_PKS = list(User.objects.filter(email__regex="demo\\d\\d@qwikgame.org").values_list('pk', flat=True))
+    CROWD_PKS = list(User.objects.filter(
+        email__regex="demo\\d\\d@qwikgame.org").values_list('pk', flat=True))
     if len(CROWD_PKS) == 0:
         logger.warn(f'CRON: murmur missing demo users')
-        return;
-    venues =  Venue.objects.annotate(match_count=Count('match'))
-    maiden_venues=venues.filter(match_count__exact=0)
+        return
+    venues = Venue.objects.annotate(match_count=Count('match'))
+    maiden_venues = venues.filter(match_count__exact=0)
     VENUE_PKS = list(maiden_venues.values_list('pk', flat=True))
     QWIK_DAY = Hours24(DAY_QWIK)
     fail_count, appeal_count = 0, 0
@@ -52,7 +55,7 @@ def murmur(appeal_min=50, bid_rate=0.06):
     while Appeal.objects.count() <= appeal_min and fail_count < FAIL_MAX:
         player = User.objects.get(pk=random.choice(CROWD_PKS)).player
         venue = Venue.objects.get(pk=random.choice(VENUE_PKS))
-        date=venue.now() + datetime.timedelta(days=random.choice([0,1]))
+        date = venue.now() + datetime.timedelta(days=random.choice([0, 1]))
         hours24 = Hours24(random.randint(0, DAY_MAX_INT)) & QWIK_DAY
         valid_hours = venue.open_date(date) & hours24
         if valid_hours.is_none:
@@ -75,7 +78,7 @@ def murmur(appeal_min=50, bid_rate=0.06):
     # generate Bids #####################################
     bid_count = 0
     appeals = Appeal.objects.filter(
-        player__user__pk__in=CROWD_PKS, 
+        player__user__pk__in=CROWD_PKS,
         status='A'
     )
     # randomly Bid on Appeals with probability bid_rate
@@ -98,9 +101,7 @@ def murmur(appeal_min=50, bid_rate=0.06):
                     continue
             fail_count += 1
             if fail_count > FAIL_MAX:
-                break;
+                break
     logger.info(f'CRON: murmur created {bid_count} Bids')
     if fail_count >= FAIL_MAX:
         logger.warn(f'CRON: murmur failed')
-
-        

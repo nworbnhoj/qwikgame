@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='alert',
             name='mode',
-            field=models.CharField(choices=[('E', 'Email'), ('P', 'Push'), ('U', 'UI')], max_length=1),
+            field=models.CharField(
+                choices=[('E', 'Email'), ('P', 'Push'), ('U', 'UI')], max_length=1),
         ),
     ]

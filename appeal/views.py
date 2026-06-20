@@ -23,7 +23,7 @@ from qwikgame.widgets import DAY_ALL, DAY_NONE, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
-# NEXT_UP key is Appeal.status + Player_role 
+# NEXT_UP key is Appeal.status + Player_role
 NEXT_UP = {
     'A': '',
     'AB': 'Awaiting Confirmation',
@@ -59,13 +59,13 @@ class AppealsView(QwikView):
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
         appeals = appeals.exclude(pk__in=participate)
-        appeals_list = list(appeals)  
+        appeals_list = list(appeals)
         appeals_list.sort(key=lambda x: x.last_hour)
         appeals_list.sort(key=lambda x: x.date)
         for appeal in appeals_list:
             seen = player.pk in appeal.meta.get('seen', [])
             appeal.seen = '' if seen else 'unseen'
-        context |= {  
+        context |= {
             'appeal': context.get('item'),
             'appeals': appeals_list[:100],
             'appeals_tab': 'selected',
@@ -182,7 +182,8 @@ class AcceptView(AppealsView):
                 # mark this Appeal seen by this Player only
                 appeal.meta['seen'] = [player.pk]
                 appeal.save()
-                mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+                mark = Mark.objects.filter(
+                    game=appeal.game, place=appeal.venue).first()
                 if mark:
                     mark.save()
             return HttpResponseRedirect(f'/appeal/{appeal.pk}/')
@@ -200,8 +201,8 @@ class BidView(AppealsView):
         appeal = context.get('appeal')
         if appeal:
             bid = Bid.objects.filter(
-                appeal = appeal,
-                rival = self.user.player,
+                appeal=appeal,
+                rival=self.user.player,
             ).first()
             player = self.user.player
             person = self.user.person
@@ -264,10 +265,12 @@ class BidView(AppealsView):
                 bid.cancel(player)
                 bid.delete()
             except:
-                logger.exception('failed to cancel bid: {} : {}'.format(player, cancel_pk))
+                logger.exception(
+                    'failed to cancel bid: {} : {}'.format(player, cancel_pk))
             return HttpResponseRedirect(f'/appeal/{appeal.pk}/')
         if appeal.status == 'A':
-            strength, confidence = appeal.player.strength_est(appeal.game, player)
+            strength, confidence = appeal.player.strength_est(
+                appeal.game, player)
             bid = Bid.objects.create(
                 appeal=context.get('accept'),
                 hours=context.get('hour', DAY_NONE).as_bytes(),
@@ -282,12 +285,11 @@ class BidView(AppealsView):
                 if match:
                     return HttpResponseRedirect(f'/game/match/{match.id}/')
             # update the Mark size
-            mark = Mark.objects.filter(game=appeal.game, place=appeal.venue).first()
+            mark = Mark.objects.filter(
+                game=appeal.game, place=appeal.venue).first()
             if mark:
                 mark.save()
         return HttpResponseRedirect(f'/appeal/{appeal.id}/')
-
-
 
 
 class KeenView(AppealsView):
@@ -322,9 +324,9 @@ class KeenView(AppealsView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         context |= self.keen_form_class.get(
-            player = self.user.player,
-            game = kwargs.get('game'),
-            venue = kwargs.get('venue'),
+            player=self.user.player,
+            game=kwargs.get('game'),
+            venue=kwargs.get('venue'),
         )
         return render(request, self.keen_template, context)
 
@@ -387,29 +389,31 @@ class KeenView(AppealsView):
             Q(game__isnull=True)
         )
         qs = qs.filter(
-            Q(place=appeal.venue) | 
-            Q(place__venue__isnull=True, place__locality=appeal.venue.locality) | 
-            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1=appeal.venue.admin1) | 
-            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1__isnull=True, place__country=appeal.venue.country) | 
+            Q(place=appeal.venue) |
+            Q(place__venue__isnull=True, place__locality=appeal.venue.locality) |
+            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1=appeal.venue.admin1) |
+            Q(place__venue__isnull=True, place__locality__isnull=True, place__admin1__isnull=True, place__country=appeal.venue.country) |
             Q(place__isnull=True)
         )
         # TODO filter by Filter.hours
         qs = qs.order_by('player').distinct('player')
         qs = qs.exclude(player=appeal.player)
         qs = qs.exclude(player__in=appeal.invitee_players)
-        qs = qs.exclude(player__user__person__in=appeal.player.user.person.blocked())
+        qs = qs.exclude(
+            player__user__person__in=appeal.player.user.person.blocked())
         return qs
 
     def _getGame(self, gameid):
         game = Game.objects.filter(pk=gameid).first()
         if not game:
             logger.warn(f'Game missing from Appeal: {game}')
-        return game   
+        return game
 
     def _getVenue(self, placeid):
         place, venue = None, None
         if placeid:
-            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
+            place = Place.objects.filter(
+                placeid=placeid, venue__isnull=False).first()
             if place:
                 venue = place.venue
             else:  # then it must be a new Venue from a google POI
@@ -427,7 +431,7 @@ class KeenView(AppealsView):
         for friend in invitees:
             appeal.invitees.add(friend)
             current_site = get_current_site(self.request)
-            context={
+            context = {
                 'appeal': appeal,
                 'date': appeal.venue.datetime(appeal.date).strftime("%b %d"),
                 'game': appeal.game,
@@ -448,7 +452,7 @@ class KeenView(AppealsView):
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        player = self.user.player 
+        player = self.user.player
         context = self.keen_form_class.post(
             request.POST,
             player,
@@ -530,7 +534,6 @@ class RivalView(AppealsView):
             return HttpResponseRedirect(back)
         return render(request, self.stats_template, context)
 
-
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.menu_form_class.post(request.POST)
@@ -543,7 +546,8 @@ class RivalView(AppealsView):
                     self.user.person.block_rival(rival.user.person)
                     logger.info(f'Blocked: {self.user.person} blocked {rival.user.person}')
                 except:
-                    logger.exception("Block failed: {player} blocked {rival_pk}")
+                    logger.exception(
+                        "Block failed: {player} blocked {rival_pk}")
         back = '/'.join((request.path).split('/')[:-2])
         logger.warn(back)
         return HttpResponseRedirect(back)

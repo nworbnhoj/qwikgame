@@ -1,9 +1,11 @@
 from django.utils.timezone import now
 
+
 class Entry(dict):
 
     def __init__(self, id, hash=None, klass=None, name=None, pk=None, text=None):
-        dict.__init__(self, id=id, created=now().strftime("%Y-%m-%d %H:%M:%S%z"), hash=hash, klass=klass, name=name, pk=pk, text=text)
+        dict.__init__(self, id=id, created=now().strftime(
+            "%Y-%m-%d %H:%M:%S%z"), hash=hash, klass=klass, name=name, pk=pk, text=text)
 
     @property
     def player(self):
@@ -14,4 +16,3 @@ class Entry(dict):
         rival = self.player
         if rival:
             self['name'] = player.name_rival(rival)
-

@@ -14,11 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='opinion',
             name='player',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviewer', to='player.player'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='reviewer', to='player.player'),
         ),
         migrations.AlterField(
             model_name='opinion',
             name='rival',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviewee', to='player.player'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='reviewee', to='player.player'),
         ),
     ]

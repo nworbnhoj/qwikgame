@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='appeal',
             name='invitees',
-            field=models.ManyToManyField(related_name='invitees', to='player.player'),
+            field=models.ManyToManyField(
+                related_name='invitees', to='player.player'),
         ),
     ]

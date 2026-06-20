@@ -1,4 +1,5 @@
-import logging, sys
+import logging
+import sys
 from django.db import models
 from django.db.models import Sum
 from django.db.models.signals import post_save
@@ -12,7 +13,8 @@ logger = logging.getLogger(__file__)
 
 
 class Mark(models.Model):
-    game = models.ForeignKey('game.Game', on_delete=models.CASCADE, blank=True, null=True)
+    game = models.ForeignKey(
+        'game.Game', on_delete=models.CASCADE, blank=True, null=True)
     num_player = models.PositiveIntegerField(default=0)
     num_venue = models.PositiveIntegerField(default=0)
     place = models.ForeignKey('venue.Place', on_delete=models.CASCADE)
@@ -21,7 +23,7 @@ class Mark(models.Model):
         self.update_num_player()
         self.update_num_venue()
         super().save(**kwargs)
-        logger.debug(f'Mark save: {self}')       
+        logger.debug(f'Mark save: {self}')
 
     def __str__(self):
         if self.place.is_venue:
@@ -108,24 +110,25 @@ class Mark(models.Model):
         return key
 
     def mark(self):
-        mark = { NUM_PLAYER: self.num_player }
+        mark = {NUM_PLAYER: self.num_player}
         if self.game:
-            mark |= { GAME: self.game.code }
+            mark |= {GAME: self.game.code}
         if self.place.is_venue:
             mark |= self.place.venue.mark()
         elif self.place.is_region:
             mark |= self.place.region.mark()
-            mark |= { NUM_VENUE: self.num_venue }
+            mark |= {NUM_VENUE: self.num_venue}
         else:
             logger.warn('Mark not venue or region:'.format(self.id))
             return None
-        return mark;
+        return mark
 
     def non_game_mark(self):
         if not self.game:
             return self
         place = self.place
-        mark_qs = Mark.objects.filter(game__isnull=True, place__country=place.country)
+        mark_qs = Mark.objects.filter(
+            game__isnull=True, place__country=place.country)
         if place.admin1:
             mark_qs = mark_qs.filter(place__admin1=place.admin1)
         else:
@@ -137,7 +140,8 @@ class Mark(models.Model):
         return mark_qs.first()
 
     def parent(self):
-        mark_qs = Mark.objects.filter(game=self.game, place__country=self.place.country)
+        mark_qs = Mark.objects.filter(
+            game=self.game, place__country=self.place.country)
         mark_qs = mark_qs.select_related('place__region')
         mark_qs = mark_qs.filter(place__region__isnull=False)
         if self.place.is_venue:
@@ -152,13 +156,12 @@ class Mark(models.Model):
         return None
 
     def place_dict(self):
-        place = { COUNTRY: self.country }
+        place = {COUNTRY: self.country}
         if self.admin1:
             place[ADMIN1] = self.admin1
         if self.locality:
             place[LOCALITY] = self.locality
         return place
-
 
     def update_num_venue(self):
         old_num_venue = self.num_venue
@@ -185,9 +188,9 @@ class Mark(models.Model):
                     mark.save()
                 else:
                     logger.warn(f'failed to update non-game Mark: {self}')
-    
 
     # TODO call update_num_player() on add/delete Filter and add Match
+
     def update_num_player(self):
         old_num_player = self.num_player
         place = self.place
@@ -219,25 +222,28 @@ class Mark(models.Model):
                     mark.save()
                 else:
                     logger.warn(f'failed to update non-game Mark: {self}')
-    
+
+
 @receiver(post_save, sender=Mark, dispatch_uid="create_parent_mark")
 def update_parent_mark(sender, instance, **kwargs):
-        try:
-            parent = None
-            if instance.place.is_venue:
-                parent = instance.place.venue.region
-            elif instance.place.is_region:
-                parent = instance.place.region.parent
-            if parent:
-                mark, created = Mark.objects.get_or_create(game=instance.game, place=parent)
-                if created:
-                    logger.info(f'Mark created parent {mark}')
-                else:
-                    mark.save()
-                mark, created = Mark.objects.get_or_create(game__isnull=True, place=parent)
-                if created:
-                    logger.info(f'Mark created parent {mark}')
-                else:
-                    mark.save()
-        except:
-            logger.exception('failed to created parent Mark')
+    try:
+        parent = None
+        if instance.place.is_venue:
+            parent = instance.place.venue.region
+        elif instance.place.is_region:
+            parent = instance.place.region.parent
+        if parent:
+            mark, created = Mark.objects.get_or_create(
+                game=instance.game, place=parent)
+            if created:
+                logger.info(f'Mark created parent {mark}')
+            else:
+                mark.save()
+            mark, created = Mark.objects.get_or_create(
+                game__isnull=True, place=parent)
+            if created:
+                logger.info(f'Mark created parent {mark}')
+            else:
+                mark.save()
+    except:
+        logger.exception('failed to created parent Mark')

@@ -15,10 +15,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Review',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('match', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.match')),
-                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviewer', to='player.player')),
-                ('rival', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reviewee', to='player.player')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
+                ('match', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='game.match')),
+                ('player', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                             related_name='reviewer', to='player.player')),
+                ('rival', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                            related_name='reviewee', to='player.player')),
             ],
         ),
     ]

@@ -1,4 +1,5 @@
-import logging, string
+import logging
+import string
 from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.validators import ValidationError
@@ -13,15 +14,17 @@ from qwikgame.settings import EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_PASSWORD, EMAIL_
 
 logger = logging.getLogger(__file__)
 
+
 class AccountEmail(EmailMultiAlternatives):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.connection = get_connection(
             fail_silently=False,
-            username = EMAIL_ACCOUNT_USER,
-            password = EMAIL_ACCOUNT_PASSWORD,
+            username=EMAIL_ACCOUNT_USER,
+            password=EMAIL_ACCOUNT_PASSWORD,
         )
-        self.from_email = "{}<{}>".format(EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_USER);
+        self.from_email = "{}<{}>".format(
+            EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_USER)
 
 
 class EmailValidateForm(PasswordResetForm):
@@ -31,7 +34,7 @@ class EmailValidateForm(PasswordResetForm):
     password = CharField(
         required=False,
         widget=HiddenInput(),
-        )
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -64,7 +67,8 @@ class EmailValidateForm(PasswordResetForm):
 
         email_message = AccountEmail(subject, body, from_email, [to_email])
         if html_email_template_name is not None:
-            html_email = loader.render_to_string(html_email_template_name, context)
+            html_email = loader.render_to_string(
+                html_email_template_name, context)
             email_message.attach_alternative(html_email, "text/html")
 
         try:
@@ -100,9 +104,9 @@ class RegisterForm(EmailValidateForm):
 
     def rnd_pwd(self):
         return get_random_string(
-                20,
-                allowed_chars=string.ascii_uppercase + string.digits
-            )
+            20,
+            allowed_chars=string.ascii_uppercase + string.digits
+        )
 
     def get_users(self, email):
         """Override to create a preliminary user for this email"""
@@ -111,4 +115,4 @@ class RegisterForm(EmailValidateForm):
             user.set_password(self.rnd_pwd())
             user.save(update_fields=['password'])
             logger.info(f'Created User: {user.pk}')
-        return ( user, )
+        return (user, )

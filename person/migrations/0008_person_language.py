@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='person',
             name='language',
-            field=models.CharField(choices=[('bg', 'български'), ('en', 'English'), ('es', 'Español'), ('zh', '中文'), ('ru', 'русский'), ('fr', 'Français'), ('hi', 'हिंदी'), ('ar', 'اللغة العربية'), ('jp', '日本語')], default='en', max_length=2),
+            field=models.CharField(choices=[('bg', 'български'), ('en', 'English'), ('es', 'Español'), ('zh', '中文'), ('ru', 'русский'), (
+                'fr', 'Français'), ('hi', 'हिंदी'), ('ar', 'اللغة العربية'), ('jp', '日本語')], default='en', max_length=2),
         ),
     ]

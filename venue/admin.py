@@ -4,9 +4,11 @@ from django.contrib import admin
 
 from .models import Manager, Place, Region, Venue
 
+
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'lat', 'lng']
     list_filter = ['country', 'admin1', 'locality']
+
 
 class RegionAdmin(admin.ModelAdmin):
     list_filter = ['country', 'admin1', 'locality']
@@ -15,7 +17,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 class VenueAdmin(admin.ModelAdmin):
     formfield_overrides = {
-            BitField: {'widget': BitFieldCheckboxSelectMultiple},
+        BitField: {'widget': BitFieldCheckboxSelectMultiple},
     }
     list_display = ['pk', 'name', 'open_week', 'tz']
     list_filter = ['games', 'country', 'admin1', 'locality']

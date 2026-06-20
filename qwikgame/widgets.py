@@ -14,9 +14,9 @@ WEEK_NONE = bytes(21)
 
 class ActionMultiple(forms.CheckboxSelectMultiple):
     attrs = {"class": "down left hidden"}
-    use_fieldset=False
+    use_fieldset = False
 
-    
+
 class CheckboxList(forms.CheckboxSelectMultiple):
     template_name = "checkbox_list.html"
     option_template_name = "option_delete.html"
@@ -24,7 +24,7 @@ class CheckboxList(forms.CheckboxSelectMultiple):
 
 class DayInputMulti(forms.CheckboxSelectMultiple):
     option_template_name = 'input_hour.html'
-    template_name='input_day.html'
+    template_name = 'input_day.html'
     use_fieldset = False
 
     def __init__(self, attrs=None, choices=(), hours_enable=[*range(24)], hours_show=[*range(24)], label=''):
@@ -55,22 +55,21 @@ class DayInputMulti(forms.CheckboxSelectMultiple):
         return context
 
     def set_hours_enable(self, hours):
-        self.hours_enable = hours;
+        self.hours_enable = hours
 
     def set_hours_show(self, hours):
-        self.hours_show = hours;
-
+        self.hours_show = hours
 
 
 class HourInput(forms.CheckboxInput):
-    template_name='input_hour.html'
-    require_all_fields=False,
-    label=''
+    template_name = 'input_hour.html'
+    require_all_fields = False,
+    label = ''
     input_type = 'radio'
 
     def __init__(self, input_type='checkbox', label='hr', **kwargs):
         self.input_type = input_type
-        self.label=label
+        self.label = label
         super().__init__(**kwargs)
 
     def get_context(self, name, value, attrs):
@@ -84,11 +83,11 @@ class DayInputRadio(forms.RadioSelect):
     hours_enable = [*range(24)]
     hours_show = [*range(24)]
     option_template_name = 'input_hour.html'
-    template_name='input_hour_radio.html'
+    template_name = 'input_hour_radio.html'
 
     def __init__(self, attrs=None, choices=()):
         super().__init__(attrs, choices)
-        self.use_fieldset=False
+        self.use_fieldset = False
 
     def set_data_attr(self, key, value):
         self.data_attrs[f'data-{key}', value]
@@ -105,10 +104,10 @@ class DayInputRadio(forms.RadioSelect):
         return option
 
     def set_hours_enable(self, hours):
-        self.hours_enable = hours;
+        self.hours_enable = hours
 
     def set_hours_show(self, hours):
-        self.hours_show = hours;
+        self.hours_show = hours
 
     def render(self, name, value, attrs=None, renderer=None):
         attrs |= self.data_attrs
@@ -116,8 +115,8 @@ class DayInputRadio(forms.RadioSelect):
 
 
 class IconSelectMultiple(forms.CheckboxSelectMultiple):
-    option_template_name='option_game.html'
-    use_fieldset=False
+    option_template_name = 'option_game.html'
+    use_fieldset = False
 
     def __init__(self, icons={}, *args, **kwargs):
         self.icons = icons
@@ -130,12 +129,12 @@ class IconSelectMultiple(forms.CheckboxSelectMultiple):
 
 
 class RadioSelect(forms.RadioSelect):
-    template_name='input_radio.html'
+    template_name = 'input_radio.html'
 
 
 class TabInput(forms.MultiWidget):
-    template_name='input_tab.html'
-    use_fieldset=False
+    template_name = 'input_tab.html'
+    use_fieldset = False
 
     def decompress(self, value):
         if value:
@@ -152,29 +151,29 @@ class TextInput(forms.TextInput):
 
 
 class WeekInput(forms.MultiWidget):
-    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
-    template_name='input_week.html'
-    use_fieldset=False
+    CHOICES = [(str(hr), str(hr)) for hr in range(24)]
+    template_name = 'input_week.html'
+    use_fieldset = False
 
     def __init__(
-            self,
-            hours_enable=[*range(24)],
-            hours_show=[*range(24)],
-            **kwargs
-        ):
+        self,
+        hours_enable=[*range(24)],
+        hours_show=[*range(24)],
+        **kwargs
+    ):
         widgets = [DayInputMulti(
-                choices = WeekInput.CHOICES,
-                hours_enable=hours_enable,
-                hours_show=hours_show,
-                label = weekday,
-            )
+            choices=WeekInput.CHOICES,
+            hours_enable=hours_enable,
+            hours_show=hours_show,
+            label=weekday,
+        )
             for weekday in WEEK_DAYS
         ]
         wd = 0
         for widget in widgets:
             widget.set_data_attr('weekday', wd)
             wd += 1
-        super().__init__( widgets = widgets)
+        super().__init__(widgets=widgets)
 
     def decompress(self, hours168=WEEK_NONE):
         return Hours24x7(hours168).as_days7()

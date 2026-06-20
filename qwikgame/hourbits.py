@@ -1,4 +1,5 @@
-import logging, math
+import logging
+import math
 from qwikgame.constants import ENDIAN, WEEK_DAYS
 
 DAY_ALL = b'\xff\xff\xff'
@@ -7,11 +8,14 @@ DAY_NONE = bytes(3)
 DAY_QWIK = b'\x03\xff\xf8'
 WEEK_ALL = b'\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff'
 WEEK_NONE = bytes(21)
-WEEK_QWIK = DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK
+WEEK_QWIK = DAY_QWIK + DAY_QWIK + DAY_QWIK + \
+    DAY_QWIK + DAY_QWIK + DAY_QWIK + DAY_QWIK
 
 logger = logging.getLogger(__file__)
 
 # represents 24 hours in 3 bytes
+
+
 class Hours24():
 
     bits = DAY_NONE
@@ -35,7 +39,7 @@ class Hours24():
             case int():
                 self.bits = DAY_NONE
                 logger.warn('failed to initialise Hours24: int out of range')
-            case list() if len(value)==24:    # interpretted as list(bool)
+            case list() if len(value) == 24:    # interpretted as list(bool)
                 integer = sum(v << i for i, v in enumerate(value[::-1]))
                 self.bits = integer.to_bytes(3, ENDIAN)
             case memoryview():
@@ -47,7 +51,8 @@ class Hours24():
                 if value.isdigit():
                     self.bits = int(value).to_bytes(3, ENDIAN)
                 else:
-                    logger.warn('failed to initialise Hours24: str not int - default DAY_NONE')
+                    logger.warn(
+                        'failed to initialise Hours24: str not int - default DAY_NONE')
                     self.bits = DAY_NONE
             case _:
                 self.bits = DAY_NONE
@@ -55,7 +60,7 @@ class Hours24():
 
     def __and__(self, other):
         if other and type(other) == type(self):
-            bits = bytes([a & b for a,b in zip(self.bits, other.bits)])
+            bits = bytes([a & b for a, b in zip(self.bits, other.bits)])
             return Hours24(bits)
         else:
             logger.warn('type mismatch: {}'.format(type(other)))
@@ -73,14 +78,14 @@ class Hours24():
         return hash(tuple(sorted(self.__dict__.items())))
 
     def __str__(self):
-    	return self.as_str()
+        return self.as_str()
 
     def as_bytes(self):
         return self.bits
 
     def as_bools(self):
         integer = self.as_int()
-        bools = [digit=='1' for digit in bin(integer)[2:]]
+        bools = [digit == '1' for digit in bin(integer)[2:]]
         if len(bools) < 24:
             pad = [False] * (24 - len(bools))
             return pad + bools
@@ -104,9 +109,9 @@ class Hours24():
         return int.from_bytes(self.bits, ENDIAN)
 
     def as_list(self):
-        return [i for i in range(0,24) if self.as_int() >> (23-i) & 1]
+        return [i for i in range(0, 24) if self.as_int() >> (23-i) & 1]
 
-    def as_str_raw(self, hours=range(0,24), day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0, 24), day_all=DAY_ALL):
         if self.bits == DAY_NONE:
             return ''
         if self.bits == day_all:
@@ -114,7 +119,7 @@ class Hours24():
         day = self.as_bools()
         start, end = None, None
         r_start, r_end = hours[0], hours[-1]
-        hour_blocks=[]
+        hour_blocks = []
         for h, hour in enumerate(day):
             if h in hours:
                 if hour and start is None:
@@ -127,10 +132,10 @@ class Hours24():
             end = r_end
             hour_blocks.append(str(start) if start == end else f"{start}-{end}")
             if start == r_start and end == r_end:
-                hour_blocks=['']
+                hour_blocks = ['']
         return ' '.join(hour_blocks)
 
-    def as_str(self, hours=range(0,24), day_all=DAY_ALL):
+    def as_str(self, hours=range(0, 24), day_all=DAY_ALL):
         raw = self.as_str_raw(hours, day_all)
         match raw:
             case '--':
@@ -139,7 +144,6 @@ class Hours24():
                 return 'All day (24hrs)'
             case _:
                 return f'{raw}h'
-
 
     def is_all(self):
         return self.bits == DAY_ALL
@@ -160,15 +164,15 @@ class Hours24():
         if self.is_none:
             return None
         i = self.as_int()
-        lsb = (i & -i) # least significant bit
+        lsb = (i & -i)  # least significant bit
         return 23-(lsb.bit_length()-1)
 
     # return a string of dip switches representing the active hours.
-    @property    
+    @property
     def to_dips(self):
         dips = ''
         hours = self.as_int()
-        for h in range(0,24):
+        for h in range(0, 24):
             dips += ('·' if (hours & 1) else '.')
             hours = hours >> 1
         return dips[::-1]
@@ -193,12 +197,12 @@ class Hours24x7():
                 self.bits = value.bits
             case bytes() if len(value) == 21:
                 self.bits = value
-            case list() if len(value)==7:      # interptretted as [hours24]
-                bites=bytearray()
+            case list() if len(value) == 7:      # interptretted as [hours24]
+                bites = bytearray()
                 for hours24 in value:
-                    bites+=hours24.as_bytes()
+                    bites += hours24.as_bytes()
                 self.bits = bytes(bites)
-            case list() if len(value)==168:    # interpretted as [bool]
+            case list() if len(value) == 168:    # interpretted as [bool]
                 bites = bytearray()
                 for day in range(len(WEEK_DAYS)):
                     offset = 24 * day
@@ -227,7 +231,7 @@ class Hours24x7():
 
     def __or__(self, other):
         if other and type(other) == type(self):
-            bits = bytes([a | b for a,b in zip(self.bits, other.bits)])
+            bits = bytes([a | b for a, b in zip(self.bits, other.bits)])
             return Hours24x7(bits)
         else:
             logger.warn('type mismatch: {}'.format(type(other)))
@@ -235,7 +239,7 @@ class Hours24x7():
 
     def __and__(self, other):
         if other and type(other) == type(self):
-            bits = bytes([a & b for a,b in zip(self.bits, other.bits)])
+            bits = bytes([a & b for a, b in zip(self.bits, other.bits)])
             return Hours24x7(bits)
         else:
             logger.warn('type mismatch: {}'.format(type(other)))
@@ -255,13 +259,13 @@ class Hours24x7():
     def as_bytes(self):
         return self.bits
 
-    def as_str_raw(self, hours=range(0,24), week_all=WEEK_ALL, day_all=DAY_ALL):
+    def as_str_raw(self, hours=range(0, 24), week_all=WEEK_ALL, day_all=DAY_ALL):
         if self.bits == WEEK_NONE:
             return ''
         if self.bits == week_all:
             return '24x7'
         r_start, r_end = hours[0], hours[-1]
-        day_blocks=[]
+        day_blocks = []
         for d, bytes3 in enumerate(self.as_days7()):
             hours_str = Hours24(bytes3).as_str_raw(day_all=day_all)
             if len(hours_str) > 0:
@@ -271,7 +275,7 @@ class Hours24x7():
                 day_blocks.append(day_block)
         return ' '.join(day_blocks)
 
-    def as_str(self, hours=range(0,24), week_all=WEEK_ALL, day_all=DAY_ALL):
+    def as_str(self, hours=range(0, 24), week_all=WEEK_ALL, day_all=DAY_ALL):
         raw = self.as_str_raw(hours, week_all, day_all)
         match raw:
             case '':

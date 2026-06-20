@@ -1,4 +1,5 @@
-import datetime, logging
+import datetime
+import logging
 from authenticate.forms import RegisterForm
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
@@ -22,19 +23,19 @@ logger = logging.getLogger(__file__)
 
 class FilterForm(QwikForm):
     game = ChoiceField(
-        choices = [('ANY',_('Any Game'))],
+        choices=[('ANY', _('Any Game'))],
         help_text=_('Only see invitations for a particular Game.'),
         label=_('game'),
         required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
-    place = ChoiceField() # place holder for dynamic assignment
+    place = ChoiceField()  # place holder for dynamic assignment
     hours = WeekField(
         help_text=_('Only see invitations at specific times in your week.'),
         label=_('time'),
-        hours_enable=[*range(6,21)],
-        hours_show=[*range(6,21)],
+        hours_enable=[*range(6, 21)],
+        hours_show=[*range(6, 21)],
         required=True,
     )
     lat = DecimalField(
@@ -97,7 +98,8 @@ class FilterForm(QwikForm):
     def clean_hours(self):
         hours = self.cleaned_data["hours"]
         if hours.as_bytes() == WEEK_NONE:
-            raise ValidationError("You must select at least one hour in the week.")
+            raise ValidationError(
+                "You must select at least one hour in the week.")
         return hours
 
     # Initializes an FilterForm for 'player'.
@@ -105,22 +107,22 @@ class FilterForm(QwikForm):
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, place='map', places=[]):
         form = klass(
-                initial = {
-                    'game': game,
-                    'hours': [
-                            Hours24(day).as_list()
-                            for day in Hours24x7(hours).as_7hr24()
-                        ],
-                    # 'strength': strength,
-                    'place': place,
-                },
-            )
+            initial={
+                'game': game,
+                'hours': [
+                    Hours24(day).as_list()
+                    for day in Hours24x7(hours).as_7hr24()
+                ],
+                # 'strength': strength,
+                'place': place,
+            },
+        )
         form.fields['game'].choices += Game.choices()
         form.fields['place'] = PlaceField(
-            choices = [('ANY',_('Any Place')), PlaceField.MAP_CHOICE],
+            choices=[('ANY', _('Any Place')), PlaceField.MAP_CHOICE],
             help_text=_('Only see invitations for a particular Place.'),
             label=_('place'),
-            places = places,
+            places=places,
             template_name='field.html',
         )
         region = player.region_favorite()
@@ -131,7 +133,7 @@ class FilterForm(QwikForm):
             form.fields['north'].initial = region.north
             form.fields['south'].initial = region.south
             form.fields['west'].initial = region.west
-        return { 'filter_form': form }
+        return {'filter_form': form}
 
     # Processes a FilterForm for 'player'.
     # Returns a context dict game, venue|placeid, hours
@@ -140,12 +142,12 @@ class FilterForm(QwikForm):
         form = klass(data=request_post)
         form.fields['game'].choices += Game.choices()
         form.fields['place'] = PlaceField(
-            choices = [('ANY',_('Any Place')), PlaceField.MAP_CHOICE],
+            choices=[('ANY', _('Any Place')), PlaceField.MAP_CHOICE],
             help_text=_('Only see invitations for a particular Place.'),
             label=_('place'),
-            places = places,
+            places=places,
         )
-        context = { 'filter_form': form }
+        context = {'filter_form': form}
         if form.is_valid():
             context = {
                 'game': form.cleaned_data['game'],
@@ -155,7 +157,7 @@ class FilterForm(QwikForm):
         else:
             logger.info(form)
         return context
-    
+
 
 class FiltersForm(QwikForm):
     filters = MultipleChoiceField(
@@ -168,16 +170,17 @@ class FiltersForm(QwikForm):
     def __init__(self, player, *args, **kwargs):
         super().__init__(*args, **kwargs)
         filters = Filter.objects.filter(player=player)
-        active = [ str(filter.id) for filter in filters.filter(active=True) ]
-        choices = { str(filter.id) : filter for filter in filters}
+        active = [str(filter.id) for filter in filters.filter(active=True)]
+        choices = {str(filter.id): filter for filter in filters}
         self.fields['filters'].choices = choices
-        self.fields['filters'].label=_("%(n)s active filters") % {'n': len(active)}
+        self.fields['filters'].label = _("%(n)s active filters") % {
+            'n': len(active)}
         self.fields['filters'].initial = active
         # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
 
     @classmethod
     def get(klass, player):
-        return { 'filters_form' : klass(player), }
+        return {'filters_form': klass(player), }
 
     @classmethod
     def post(klass, request_post, player):
@@ -195,16 +198,16 @@ class FriendForm(QwikForm):
     email = EmailField(
         label=_("friend's email address"),
         max_length=255,
-        required = True,
-        template_name = 'field.html',
-        widget = TextInput()
+        required=True,
+        template_name='field.html',
+        widget=TextInput()
     )
     name = CharField(
         label=_('name'),
         max_length=32,
         required=False,
-        template_name = 'field.html',
-        widget = TextInput()
+        template_name='field.html',
+        widget=TextInput()
     )
     strengths = MultipleChoiceField(
         choices=(),
@@ -212,7 +215,7 @@ class FriendForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs = {'class': 'negate_pending post'},
+            attrs={'class': 'negate_pending post'},
         )
     )
 
@@ -231,23 +234,26 @@ class FriendForm(QwikForm):
     @classmethod
     def get(klass, friend=None):
         form = klass(
-                strength_choices = klass._strength_choices(friend),
-            )
+            strength_choices=klass._strength_choices(friend),
+        )
         if friend:
             form.fields['email'].initial = friend.email
             form.fields['email'].pending = friend.email
             form.fields['name'].initial = friend.name
             form.fields['name'].pending = friend.name
-        form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
-        form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
-        form.fields['strengths'].widget.attrs['add_url'] = reverse('friend_strength', args=[friend.pk])
-        return { 'friend_form' : form, }
+        form.fields['email'].widget.attrs = {
+            'placeholder': _('Type email address')}
+        form.fields['name'].widget.attrs = {'placeholder': _(
+            'A screen name for your friend (optional)')}
+        form.fields['strengths'].widget.attrs['add_url'] = reverse(
+            'friend_strength', args=[friend.pk])
+        return {'friend_form': form, }
 
     @classmethod
     def post(klass, request_post, friend=None):
         form = klass(
-            data = request_post,
-            strength_choices = klass._strength_choices(friend),
+            data=request_post,
+            strength_choices=klass._strength_choices(friend),
         )
         context = {'friend_form': form}
         if form.is_valid():
@@ -268,13 +274,15 @@ class FriendAddForm(FriendForm):
     @classmethod
     def get(klass, friend=None):
         form = klass()
-        form.fields['email'].widget.attrs = { 'placeholder': _('Type email address')}
-        form.fields['name'].widget.attrs = { 'placeholder': _('A screen name for your friend (optional)')}
-        return { 'friend_form' : form, }
+        form.fields['email'].widget.attrs = {
+            'placeholder': _('Type email address')}
+        form.fields['name'].widget.attrs = {'placeholder': _(
+            'A screen name for your friend (optional)')}
+        return {'friend_form': form, }
 
     @classmethod
     def post(klass, request_post, friend=None):
-        form = klass( data=request_post )
+        form = klass(data=request_post)
         context = {'friend_form': form}
         if form.is_valid():
             context |= {
@@ -287,9 +295,9 @@ class FriendAddForm(FriendForm):
 class InviteForm(RegisterForm):
 
     def __init__(self, to_email, email_context, *args, **kwargs):
-        data={ 'email': to_email }
+        data = {'email': to_email}
         super().__init__(data, *args, **kwargs)
-        self.email_context=email_context
+        self.email_context = email_context
 
     def save(self, request):
         super().save(
@@ -307,19 +315,19 @@ class InviteForm(RegisterForm):
 
 class StrengthForm(QwikForm):
     game = ChoiceField(
-        choices = Game.choices(),
+        choices=Game.choices(),
         label=_('game'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
     strength = ChoiceField(
-        choices = Strength.SCALE,
-        initial = Strength.SCALE.get('m'),
+        choices=Strength.SCALE,
+        initial=Strength.SCALE.get('m'),
         label=_('rival skill level'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
 
     @classmethod
@@ -329,7 +337,7 @@ class StrengthForm(QwikForm):
         if strength:
             form.fields['game'].initial = strength.game.code
             form.fields['strength'].initial = strength.relative
-        return { 'strength_form' : form, }
+        return {'strength_form': form, }
 
     @classmethod
     def post(klass, request_post):

@@ -1,4 +1,5 @@
-import logging, subprocess
+import logging
+import subprocess
 from authenticate.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -56,7 +57,7 @@ class QwikView(BaseView):
 
     def request_init(self, request):
         super().request_init(request)
-        if hasattr(self, 'user'):   
+        if hasattr(self, 'user'):
             self.is_player = hasattr(self.user, "player")
             self.is_manager = hasattr(self.user, "manager")
 
@@ -185,16 +186,12 @@ class WelcomeView(BaseView):
             context['qwikname'] = self.user.person.qwikname
         return context
 
-
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect('/appeal')
         return super(WelcomeView, self).dispatch(request, *args, **kwargs)
 
-
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         return render(request, "welcome.html", context)
-
-

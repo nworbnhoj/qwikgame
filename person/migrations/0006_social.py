@@ -14,9 +14,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Social',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('url', models.URLField(max_length=255)),
-                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='person.person')),
+                ('person', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='person.person')),
             ],
         ),
     ]

@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='icon',
-            field=models.CharField(default=person.models.rnd_icon, max_length=32),
+            field=models.CharField(
+                default=person.models.rnd_icon, max_length=32),
         ),
     ]

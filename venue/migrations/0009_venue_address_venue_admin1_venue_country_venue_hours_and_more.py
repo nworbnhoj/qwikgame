@@ -28,17 +28,20 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venue',
             name='hours',
-            field=models.BinaryField(default=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'),
+            field=models.BinaryField(
+                default=b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'),
         ),
         migrations.AddField(
             model_name='venue',
             name='lat',
-            field=models.DecimalField(decimal_places=6, default=-36.449786, max_digits=9),
+            field=models.DecimalField(
+                decimal_places=6, default=-36.449786, max_digits=9),
         ),
         migrations.AddField(
             model_name='venue',
             name='lng',
-            field=models.DecimalField(decimal_places=6, default=146.430037, max_digits=9),
+            field=models.DecimalField(
+                decimal_places=6, default=146.430037, max_digits=9),
         ),
         migrations.AddField(
             model_name='venue',

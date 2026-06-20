@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='alert',
             name='context',
-            field=models.JSONField(default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
+            field=models.JSONField(
+                default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
         ),
     ]

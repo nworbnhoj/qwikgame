@@ -15,22 +15,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Block',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
             ],
         ),
         migrations.AddField(
             model_name='block',
             name='blocked',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blockee', to='person.person'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='blockee', to='person.person'),
         ),
         migrations.AddField(
             model_name='block',
             name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blocker', to='person.person'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='blocker', to='person.person'),
         ),
         migrations.AddField(
             model_name='person',
             name='block',
-            field=models.ManyToManyField(blank=True, through='person.Block', to='person.person'),
+            field=models.ManyToManyField(
+                blank=True, through='person.Block', to='person.person'),
         ),
     ]

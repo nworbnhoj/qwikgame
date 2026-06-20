@@ -16,25 +16,34 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Region',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('admin1', models.CharField(blank=True, max_length=64, null=True)),
                 ('country', models.CharField(max_length=2)),
-                ('east', models.DecimalField(decimal_places=6, default=180, max_digits=9)),
+                ('east', models.DecimalField(
+                    decimal_places=6, default=180, max_digits=9)),
                 ('name', models.CharField(blank=True, max_length=128)),
-                ('north', models.DecimalField(decimal_places=6, default=90, max_digits=9)),
-                ('south', models.DecimalField(decimal_places=6, default=-90, max_digits=9)),
-                ('west', models.DecimalField(decimal_places=6, default=-180, max_digits=9)),
+                ('north', models.DecimalField(
+                    decimal_places=6, default=90, max_digits=9)),
+                ('south', models.DecimalField(
+                    decimal_places=6, default=-90, max_digits=9)),
+                ('west', models.DecimalField(
+                    decimal_places=6, default=-180, max_digits=9)),
                 ('locality', models.CharField(blank=True, max_length=64, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='Mark',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('size', models.PositiveIntegerField(default=0)),
-                ('game', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='game.game')),
-                ('venue', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
-                ('region', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='api.region')),
+                ('game', models.ForeignKey(blank=True, null=True,
+                                           on_delete=django.db.models.deletion.CASCADE, to='game.game')),
+                ('venue', models.ForeignKey(blank=True, null=True,
+                                            on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
+                ('region', models.ForeignKey(blank=True, null=True,
+                                             on_delete=django.db.models.deletion.CASCADE, to='api.region')),
             ],
         ),
     ]

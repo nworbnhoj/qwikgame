@@ -1,4 +1,5 @@
-import datetime, logging
+import datetime
+import logging
 from django.db import models
 from qwikgame.constants import DELAY_MATCH_CHAT, DELAY_MATCH_PERISH_CHAT, DELAY_REVIEW_PERISH, SYSTEM_HASH, SYSTEM_NAME
 from qwikgame.log import Entry
@@ -57,10 +58,10 @@ class Match(models.Model):
     def from_bid(cls, bid):
         appeal = bid.appeal
         match = cls(
-            date = bid.datetime,
-            game = bid.appeal.game,
-            log = bid.appeal.log.copy(),
-            venue = bid.appeal.venue,
+            date=bid.datetime,
+            game=bid.appeal.game,
+            log=bid.appeal.log.copy(),
+            venue=bid.appeal.venue,
         )
         match.save()
         # important to add bid.appeal.player first to ensure lowest pk
@@ -89,7 +90,7 @@ class Match(models.Model):
                     type=type,
                     expires=self.date + datetime.timedelta(days=1),
                     context=context,
-                    url = f'/game/match/{self.pk}/',
+                    url=f'/game/match/{self.pk}/',
                 )
 
     def announce(self, instigator):
@@ -117,14 +118,14 @@ class Match(models.Model):
     def clear_conflicts(self, scheduled_appeal):
         from appeal.models import Bid, Appeal
         for bid in Bid.objects.filter(
-                appeal__date=self.date,
-                rival__in=self.competitors.all(),
-            ).exclude(appeal=scheduled_appeal):
+            appeal__date=self.date,
+            rival__in=self.competitors.all(),
+        ).exclude(appeal=scheduled_appeal):
             bid.withdraw()
         for appeal in Appeal.objects.filter(
-                player__in=self.competitors.all(),
-                date=self.date.date()
-            ).exclude(pk=scheduled_appeal.pk):
+            player__in=self.competitors.all(),
+            date=self.date.date()
+        ).exclude(pk=scheduled_appeal.pk):
             appeal.hour_withdraw(self.date.hour)
 
     def competitor_names(self):
@@ -137,7 +138,7 @@ class Match(models.Model):
     @property
     def datetime_aware(self):
         return self.date.astimezone(self.venue.tzinfo)
-    
+
     @property
     def datetime_str(self):
         return self.datetime_aware.strftime('%d %b %Y, %Hh')
@@ -162,7 +163,7 @@ class Match(models.Model):
         from player.models import Player
         pks = list(self.competitors.values_list('pk', flat=True))
         players = Player.objects.filter(pk__in=pks)
-        return {p.pk:p.icon for p in players}
+        return {p.pk: p.icon for p in players}
 
     def init_player(self):
         # return the competitor with the first pk
@@ -181,11 +182,11 @@ class Match(models.Model):
         person = user.person if user else None
         player = user.player if user else None
         entry = Entry(
-            hash = user.hash if user else SYSTEM_HASH,
-            id = player.pk if player else '',
-            klass = template,
-            name = person.qwikname if person else SYSTEM_NAME,
-            text = text if template == 'chat' else f'template_{template}',
+            hash=user.hash if user else SYSTEM_HASH,
+            id=player.pk if player else '',
+            klass=template,
+            name=person.qwikname if person else SYSTEM_NAME,
+            text=text if template == 'chat' else f'template_{template}',
         )
         self.log_entry(entry)
 
@@ -227,12 +228,15 @@ class Match(models.Model):
 class Review(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     meta = models.JSONField(default=dict)
-    player = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewer')
-    rival = models.ForeignKey("player.Player", on_delete=models.CASCADE, related_name='reviewee')
+    player = models.ForeignKey(
+        "player.Player", on_delete=models.CASCADE, related_name='reviewer')
+    rival = models.ForeignKey(
+        "player.Player", on_delete=models.CASCADE, related_name='reviewee')
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['match', 'player', 'rival'], name='unique_review')
+            models.UniqueConstraint(
+                fields=['match', 'player', 'rival'], name='unique_review')
         ]
 
     def __str__(self):
@@ -245,11 +249,11 @@ class Review(models.Model):
                 user = player.user
                 person = user.person
                 entry = Entry(
-                    hash = user.hash,
-                    id = self.player.pk,
-                    klass= 'reviewed',
-                    name = person.qwikname,
-                    text = f'template_{template}',
+                    hash=user.hash,
+                    id=self.player.pk,
+                    klass='reviewed',
+                    name=person.qwikname,
+                    text=f'template_{template}',
                 )
             case _:
                 logger.warn(f'unknown template: {template}')

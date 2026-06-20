@@ -14,10 +14,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Strength',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('relative', models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'), ('M', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1)),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
+                ('relative', models.CharField(choices=[('W', 'much-weaker'), ('w', 'weaker'), (
+                    'M', 'matched'), ('s', 'stronger'), ('S', 'much-stonger')], max_length=1)),
                 ('weight', models.PositiveSmallIntegerField()),
-                ('opinion', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='player.opinion')),
+                ('opinion', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='player.opinion')),
             ],
         ),
     ]

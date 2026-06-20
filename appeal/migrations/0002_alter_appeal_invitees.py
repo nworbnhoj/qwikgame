@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='appeal',
             name='invitees',
-            field=models.ManyToManyField(related_name='invitees', to='player.friend'),
+            field=models.ManyToManyField(
+                related_name='invitees', to='player.friend'),
         ),
     ]

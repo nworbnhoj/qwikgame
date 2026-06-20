@@ -1,4 +1,6 @@
-import datetime, logging, sys
+import datetime
+import logging
+import sys
 from bitfield import BitField
 from dateutil import zoneinfo, tz
 from django.db import models
@@ -24,8 +26,10 @@ class Place(models.Model):
     admin1 = models.CharField(max_length=64, blank=True, null=True)
     country = models.CharField(max_length=2, blank=True, null=True)
     name = models.CharField(max_length=128, blank=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=6, default=-36.449786)
-    lng = models.DecimalField(max_digits=9, decimal_places=6, default=146.430037)
+    lat = models.DecimalField(
+        max_digits=9, decimal_places=6, default=-36.449786)
+    lng = models.DecimalField(
+        max_digits=9, decimal_places=6, default=146.430037)
     placeid = models.TextField(blank=False, null=False)
     locality = models.CharField(max_length=64, blank=True, null=True)
 
@@ -64,7 +68,7 @@ class Region(Place):
             self.admin1 if self.admin1 else '',
             self.locality if self.locality else '',
             self.name,
-            )
+        )
 
     def save(self, **kwargs):
         super().save(**kwargs)
@@ -74,8 +78,8 @@ class Region(Place):
             try:
                 if self.locality:
                     region = Region.from_place(
-                        country = self.country,
-                        admin1 = self.admin1,
+                        country=self.country,
+                        admin1=self.admin1,
                     )
                     # On occasion a placeid exists as both admin1 and locality (eg Auckland & Wellington)
                     if Region.objects.filter(placeid=region.placeid).exists():
@@ -84,7 +88,7 @@ class Region(Place):
                     region.save()
                     logger.info(f'Region new: {region}')
                 elif self.admin1:
-                    region = Region.from_place(country = self.country)
+                    region = Region.from_place(country=self.country)
                     # On occasion a placeid exists as both country and admin1 (eg Vatican)
                     if Region.objects.filter(placeid=region.placeid).exists():
                         region.placeid += ':country'
@@ -93,7 +97,6 @@ class Region(Place):
                     logger.info(f'Region new: {region}')
             except:
                 logger.exception(f'failed to create Region: {self}')
-
 
     @classmethod
     def choices(klass):
@@ -113,24 +116,23 @@ class Region(Place):
                 northeast = viewport['northeast']
                 southwest = viewport['southwest']
                 region = cls(
-                    admin1 = admin1,
-                    country = country,
-                    east = float(northeast['lng']),
-                    lat = float(location['lat']),
-                    lng = float(location['lng']),
-                    locality = locality,
-                    name = geometry['names'][smallest][:128],
-                    north = float(northeast['lat']),
-                    placeid = geometry['placeid'],
-                    south = float(southwest['lat']),
-                    west = float(southwest['lng']),
-                    )
+                    admin1=admin1,
+                    country=country,
+                    east=float(northeast['lng']),
+                    lat=float(location['lat']),
+                    lng=float(location['lng']),
+                    locality=locality,
+                    name=geometry['names'][smallest][:128],
+                    north=float(northeast['lat']),
+                    placeid=geometry['placeid'],
+                    south=float(southwest['lat']),
+                    west=float(southwest['lng']),
+                )
                 return region
             except:
                 logger.warn(f'invalid geometry for: {country}|{admin1}|{locality}\n{geometry}')
         logger.warn(f'failed to get geometry for: {country}|{admin1}|{locality}')
         return None
-
 
     @classmethod
     def refresh_regions(klass):
@@ -160,7 +162,7 @@ class Region(Place):
             PLACEID: self.placeid,
             SOUTH: self.south,
             WEST: self.west,
-        }        
+        }
 
     # TODO add parent as a Region field
     @property
@@ -180,13 +182,12 @@ class Region(Place):
         return None
 
     def place_args(self):
-        kwargs = { COUNTRY: self.country }
+        kwargs = {COUNTRY: self.country}
         if self.admin1:
             kwargs[ADMIN1] = self.admin1
         if self.locality:
             kwargs[LOCALITY] = self.locality
         return kwargs
-
 
 
 class Venue(Place):
@@ -205,7 +206,7 @@ class Venue(Place):
     suburb = models.CharField(max_length=32, blank=True)
     url = models.URLField(max_length=256, blank=True)
     tz = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
-    
+
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     Mark(game=game, venue=self).save()
@@ -215,10 +216,10 @@ class Venue(Place):
         logger.debug(f'Venue save: {self}')
         # add Region if required
         if not Region.objects.filter(
-                country=self.country,
-                admin1=self.admin1,
-                locality=self.locality,
-            ).exists():
+            country=self.country,
+            admin1=self.admin1,
+            locality=self.locality,
+        ).exists():
             try:
                 region = Region.from_place(
                     country=self.country,
@@ -232,7 +233,6 @@ class Venue(Place):
                 logger.info(f'Region new: {region}')
             except:
                 logger.exception(f'failed to create Region: {self}')
-
 
     @classmethod
     def from_placeid(cls, placeid):
@@ -294,7 +294,7 @@ class Venue(Place):
             PHONE: self.phone,
             PLACEID: self.placeid,
             URL: self.url,
-            WEEKDAY: self.now().isoweekday() %7,
+            WEEKDAY: self.now().isoweekday() % 7,
         }
 
     def now(self):

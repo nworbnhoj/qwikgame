@@ -16,35 +16,35 @@ WEEK_DAYS = [
 ]
 
 # key constants
-ADDRESS   = 'address'
-ADMIN1    = 'admin1'
+ADDRESS = 'address'
+ADMIN1 = 'admin1'
 AVOIDABLE = 'avoidable'
-COUNTRY   = 'country'
-EAST      = 'e'
-ERRORS    = 'errors'
-GAME      = 'game'
-HOUR      = 'hour'
-HOURS     = 'hours'
-LOCALITY  = 'locality'
-LAT       = 'lat'
-LNG       = 'lng'
-MARKS     = 'marks'
-MSG       = 'msg'
-NAME      = 'name'
-NORTH     = 'n'
-NUM_PLAYER= 'num_player'
+COUNTRY = 'country'
+EAST = 'e'
+ERRORS = 'errors'
+GAME = 'game'
+HOUR = 'hour'
+HOURS = 'hours'
+LOCALITY = 'locality'
+LAT = 'lat'
+LNG = 'lng'
+MARKS = 'marks'
+MSG = 'msg'
+NAME = 'name'
+NORTH = 'n'
+NUM_PLAYER = 'num_player'
 NUM_VENUE = 'num_venue'
-PHONE     = 'phone'
-PLACEID   = 'placeid'
-OPEN      = 'open'
-POS       = 'pos'
-REGION    = 'region'
-SOUTH     = 's'
-STATUS    = 'status'
-URL       = 'url'
-VENUE     = 'venue'
-WEEKDAY   = 'weekday'
-WEST      = 'w'
+PHONE = 'phone'
+PLACEID = 'placeid'
+OPEN = 'open'
+POS = 'pos'
+REGION = 'region'
+SOUTH = 's'
+STATUS = 'status'
+URL = 'url'
+VENUE = 'venue'
+WEEKDAY = 'weekday'
+WEST = 'w'
 
 
 DELAY_MATCH_BANNER = timedelta(minutes=10)
@@ -54,7 +54,7 @@ DELAY_MATCHS_LIST = timedelta(minutes=10)
 DELAY_REVIEW_PERISH = timedelta(days=7)
 
 SYSTEM_HASH = Person.hash('facilitator@qwikgame.org')
-SYSTEM_NAME='facilitator'
+SYSTEM_NAME = 'facilitator'
 
 COUNTRIES = {
     'AF': _(_("Afghanistan")),
@@ -305,4 +305,4 @@ COUNTRIES = {
     'YE': _("Yemen"),
     'ZM': _("Zambia"),
     'ZW': _("Zimbabwe")
-    }
+}

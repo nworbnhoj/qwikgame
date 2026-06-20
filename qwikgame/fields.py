@@ -31,17 +31,17 @@ class DataSelect(RadioSelect):
 
 
 class DayMultiField(TypedMultipleChoiceField):
-    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
+    CHOICES = [(str(hr), str(hr)) for hr in range(24)]
     use_fieldset = False
 
     def __init__(
-            self,
-            hours_enable=[*range(24)],
-            hours_show=[*range(24)],
-            offsetday=None,
-            weekday=None,
-            **kwargs
-        ):
+        self,
+        hours_enable=[*range(24)],
+        hours_show=[*range(24)],
+        offsetday=None,
+        weekday=None,
+        **kwargs
+    ):
         self.widget = DayInputMulti(
             hours_enable=hours_enable,
             hours_show=hours_show,
@@ -51,18 +51,18 @@ class DayMultiField(TypedMultipleChoiceField):
         if weekday:
             self.widget.set_data_attr('weekday', weekday)
         super().__init__(
-            choices = DayMultiField.CHOICES,
+            choices=DayMultiField.CHOICES,
             coerce=int,
             empty_value=0,
             **kwargs)
 
 
 class DayRadioField(TypedChoiceField):
-    CHOICES = [(str(hr),str(hr)) for hr in range(24)]
+    CHOICES = [(str(hr), str(hr)) for hr in range(24)]
 
     def __init__(self, **kwargs):
         self.widget = DayInputRadio()
-        super().__init__(choices = DayRadioField.CHOICES, coerce=int, empty_value=0, **kwargs)
+        super().__init__(choices=DayRadioField.CHOICES, coerce=int, empty_value=0, **kwargs)
 
 
 class MultipleActionField(MultipleChoiceField):
@@ -71,8 +71,8 @@ class MultipleActionField(MultipleChoiceField):
     def __init__(self, action='delete:', *args, **kwargs):
         self.action = action
         super().__init__(*args, **kwargs)
-        self.widget.attrs={"class": "down left hidden"}
-        self.template_name='dropdown.html'
+        self.widget.attrs = {"class": "down left hidden"}
+        self.template_name = 'dropdown.html'
 
 
 class MultiTabField(MultiValueField):
@@ -94,7 +94,7 @@ class PlaceField(ChoiceField):
 
     def __init__(self, choices=[], data_attr=None, places=None, *args, **kwargs):
         if not choices:
-            choices=[PlaceField.MAP_CHOICE]
+            choices = [PlaceField.MAP_CHOICE]
         if places:
             choices += [(p.placeid, p.name) for p in places]
             if not data_attr:
@@ -106,8 +106,8 @@ class PlaceField(ChoiceField):
                     'now_hour': padding + ['' for p in places],
                 }
         super().__init__(
-            choices = choices,
-            widget = DataSelect(data_attr=data_attr),
+            choices=choices,
+            widget=DataSelect(data_attr=data_attr),
             **kwargs)
 
     def valid_value(self, value):
@@ -135,7 +135,7 @@ class VenueField(PlaceField):
             'url': [''] + [v.url for v in venues],
         }
         super().__init__(
-            choices = choices,
+            choices=choices,
             data_attr=data_attr,
             **kwargs
         )
@@ -144,7 +144,8 @@ class VenueField(PlaceField):
 class WeekField(MultiValueField):
 
     def __init__(self, hours_enable=[*range(24)], hours_show=[*range(24)], *args, **kwargs):
-        self.widget=WeekInput( hours_enable=hours_enable, hours_show=hours_show)
+        self.widget = WeekInput(
+            hours_enable=hours_enable, hours_show=hours_show)
         super().__init__(
             fields=(
                 [DayMultiField(
@@ -152,8 +153,8 @@ class WeekField(MultiValueField):
                     hours_show=hours_show,
                     label=name,
                     required=False,
-                    weekday=day) 
-                for day, name in enumerate(WEEK_DAYS)]
+                    weekday=day)
+                 for day, name in enumerate(WEEK_DAYS)]
             ),
             require_all_fields=False,
             template_name='field.html',

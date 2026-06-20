@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='alert',
             name='type',
-            field=models.CharField(choices=[(32, 'new_bid'), (33, 'cancel_bid'), (34, 'decline_bid'), (48, 'new_match'), (49, 'cancel_match'), (50, 'chat_match')], max_length=1),
+            field=models.CharField(choices=[(32, 'new_bid'), (33, 'cancel_bid'), (34, 'decline_bid'), (
+                48, 'new_match'), (49, 'cancel_match'), (50, 'chat_match')], max_length=1),
         ),
     ]

@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='appeal',
             name='status',
-            field=models.CharField(choices=[('A', 'active'), ('C', 'cancelled'), ('D', 'dormant'), ('X', 'expired')], default='A', max_length=1),
+            field=models.CharField(choices=[('A', 'active'), ('C', 'cancelled'), (
+                'D', 'dormant'), ('X', 'expired')], default='A', max_length=1),
         ),
     ]

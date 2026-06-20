@@ -3,7 +3,8 @@ from .models import Alert, Block, Person, Social
 
 
 class AlertAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'person', 'mode', 'type', 'priority', 'expires', 'repeats']
+    list_display = ['pk', 'person', 'mode',
+                    'type', 'priority', 'expires', 'repeats']
     list_filter = ['mode', 'type', 'priority', 'expires', 'repeats', 'person']
 
 

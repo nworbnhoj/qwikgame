@@ -23,7 +23,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mark',
             name='place',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='venue.place'),
+            field=models.ForeignKey(
+                default=1, on_delete=django.db.models.deletion.CASCADE, to='venue.place'),
             preserve_default=False,
         ),
         migrations.DeleteModel(

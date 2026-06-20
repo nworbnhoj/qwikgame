@@ -46,7 +46,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='region',
             name='place_ptr',
-            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='venue.place'),
+            field=models.OneToOneField(auto_created=True, default=1, on_delete=django.db.models.deletion.CASCADE,
+                                       parent_link=True, primary_key=True, serialize=False, to='venue.place'),
             preserve_default=False,
         ),
     ]

@@ -10,7 +10,8 @@ urlpatterns = [
     path("friend/", FriendsView.as_view(), name='friend'),
     path("friend/add/", FriendAddView.as_view(), name='friend_add'),
     path("friend/<int:friend>/", FriendView.as_view(), name='friend'),
-    path("friend/<int:friend>/strength/", FriendStrengthView.as_view(), name='friend_strength'),
+    path("friend/<int:friend>/strength/",
+         FriendStrengthView.as_view(), name='friend_strength'),
     path("rival/", RivalView.as_view(), name='rival'),
     path('sw.js', ServiceWorkerView.as_view(), name='sw'),
 ]

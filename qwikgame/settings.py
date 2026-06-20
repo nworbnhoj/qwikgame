@@ -1,4 +1,6 @@
-import django, logging, os
+import django
+import logging
+import os
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 from pathlib import Path
@@ -15,7 +17,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY','error: set environ variable DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY',
+                       'error: set environ variable DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,7 +98,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates', 
+            BASE_DIR / 'templates',
             django.__path__[0] + "/forms/templates",
         ],
         'APP_DIRS': True,
@@ -125,17 +128,14 @@ WSGI_APPLICATION = 'qwikgame.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE','error: set environ variable DATABASE_ENGINE'),
-        'NAME': os.getenv('DATABASE_NAME','error: set environ variable DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER','error: set environ variable DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD','error: set environ variable DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST','error: set environ variable DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT','error: set environ variable DATABASE_PORT'),
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'error: set environ variable DATABASE_ENGINE'),
+        'NAME': os.getenv('DATABASE_NAME', 'error: set environ variable DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER', 'error: set environ variable DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'error: set environ variable DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST', 'error: set environ variable DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT', 'error: set environ variable DATABASE_PORT'),
     }
 }
-
-
-
 
 
 # Password validation
@@ -158,9 +158,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # https://web-push-codelab.glitch.me/
 WEBPUSH_SETTINGS = {
-   "VAPID_PUBLIC_KEY":  os.getenv('VAPID_PUBLIC_KEY','error: set environ variable VAPID_PUBLIC_KEY'),
-   "VAPID_PRIVATE_KEY":  os.getenv('VAPID_PRIVATE_KEY','error: set environ variable VAPID_PRIVATE_KEY'),
-   "VAPID_ADMIN_EMAIL":  os.getenv('VAPID_ADMIN_EMAIL','error: set environ variable VAPID_ADMIN_EMAIL'),
+    "VAPID_PUBLIC_KEY":  os.getenv('VAPID_PUBLIC_KEY', 'error: set environ variable VAPID_PUBLIC_KEY'),
+    "VAPID_PRIVATE_KEY":  os.getenv('VAPID_PRIVATE_KEY', 'error: set environ variable VAPID_PRIVATE_KEY'),
+    "VAPID_ADMIN_EMAIL":  os.getenv('VAPID_ADMIN_EMAIL', 'error: set environ variable VAPID_ADMIN_EMAIL'),
 }
 
 
@@ -210,13 +210,16 @@ STATICFILES_DIRS = [
 ]
 
 CRONJOBS = [
-    ('* * * * *', 'person.cron.smtp_connection_close', '>> /var/log/django_cron_alpha.log'),
+    ('* * * * *', 'person.cron.smtp_connection_close',
+     '>> /var/log/django_cron_alpha.log'),
     ('1 * * * *', 'appeal.cron.appeal_perish', '>> /var/log/django_cron_alpha.log'),
     ('10 * * * *', 'appeal.cron.bid_perish', '>> /var/log/django_cron_alpha.log'),
-    ('15 * * * *', 'game.cron.match_review_init', '>> /var/log/django_cron_alpha.log'),
+    ('15 * * * *', 'game.cron.match_review_init',
+     '>> /var/log/django_cron_alpha.log'),
     ('50 * * * *', 'game.cron.match_disable', '>> /var/log/django_cron_alpha.log'),
     ('51 * * * *', 'game.cron.match_perish', '>> /var/log/django_cron_alpha.log'),
-    ('52 * * * *', 'game.cron.match_review_perish', '>> /var/log/django_cron_alpha.log'),
+    ('52 * * * *', 'game.cron.match_review_perish',
+     '>> /var/log/django_cron_alpha.log'),
 ]
 
 
@@ -253,14 +256,21 @@ LOGGING = {
 }
 
 # Email Settings
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND','django.core.mail.backends.console.EmailBackend')
-EMAIL_HOST = os.getenv('EMAIL_HOST','error: set environ variable EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT','587')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS','error: set environ variable EMAIL_USE_TLS') == "True"
-EMAIL_SMTP_TIMEOUT = int(os.getenv('EMAIL_SMTP_TIMEOUT', 'error: set environ variable EMAIL_SMTP_TIMEOUT'))
-EMAIL_ACCOUNT_USER = os.getenv('EMAIL_ACCOUNT_USER','error: set environ variable EMAIL_ACCOUNT_USER')
-EMAIL_ACCOUNT_PASSWORD = os.getenv('EMAIL_ACCOUNT_PASSWORD','error: set environ variable EMAIL_ACCOUNT_PASSWORD')
-EMAIL_ACCOUNT_NAME = os.getenv('EMAIL_ACCOUNT_NAME','QWIK ACCOUNTS')
-EMAIL_ALERT_USER = os.getenv('EMAIL_ALERT_USER','error: set environ variable EMAIL_ALERT_USER')
-EMAIL_ALERT_PASSWORD = os.getenv('EMAIL_ALERT_PASSWORD','error: set environ variable EMAIL_ALERT_PASSWORD')
-EMAIL_ALERT_NAME = os.getenv('EMAIL_ALERT_NAME','QWIK ALERTS')
+EMAIL_BACKEND = os.getenv(
+    'EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'error: set environ variable EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT', '587')
+EMAIL_USE_TLS = os.getenv(
+    'EMAIL_USE_TLS', 'error: set environ variable EMAIL_USE_TLS') == "True"
+EMAIL_SMTP_TIMEOUT = int(os.getenv(
+    'EMAIL_SMTP_TIMEOUT', 'error: set environ variable EMAIL_SMTP_TIMEOUT'))
+EMAIL_ACCOUNT_USER = os.getenv(
+    'EMAIL_ACCOUNT_USER', 'error: set environ variable EMAIL_ACCOUNT_USER')
+EMAIL_ACCOUNT_PASSWORD = os.getenv(
+    'EMAIL_ACCOUNT_PASSWORD', 'error: set environ variable EMAIL_ACCOUNT_PASSWORD')
+EMAIL_ACCOUNT_NAME = os.getenv('EMAIL_ACCOUNT_NAME', 'QWIK ACCOUNTS')
+EMAIL_ALERT_USER = os.getenv(
+    'EMAIL_ALERT_USER', 'error: set environ variable EMAIL_ALERT_USER')
+EMAIL_ALERT_PASSWORD = os.getenv(
+    'EMAIL_ALERT_PASSWORD', 'error: set environ variable EMAIL_ALERT_PASSWORD')
+EMAIL_ALERT_NAME = os.getenv('EMAIL_ALERT_NAME', 'QWIK ALERTS')

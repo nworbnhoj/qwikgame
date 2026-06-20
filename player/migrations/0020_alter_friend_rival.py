@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='friend',
             name='rival',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='usher', to='player.player'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='usher', to='player.player'),
         ),
     ]

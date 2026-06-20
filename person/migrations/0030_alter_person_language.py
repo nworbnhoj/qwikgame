@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='language',
-            field=models.CharField(choices=[('ar', 'اللغة العربية'), ('bg', 'български'), ('en', 'English'), ('it', 'italiano')], default='en', max_length=2),
+            field=models.CharField(choices=[('ar', 'اللغة العربية'), ('bg', 'български'), (
+                'en', 'English'), ('it', 'italiano')], default='en', max_length=2),
         ),
     ]

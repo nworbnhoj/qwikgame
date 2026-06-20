@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='alerts',
-            field=models.JSONField(default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
+            field=models.JSONField(
+                default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
         ),
     ]

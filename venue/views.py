@@ -23,14 +23,13 @@ class PlacesBulkView(QwikView):
         venue_qs = Venue.objects
         if game:
             venue_qs = venue_qs.filter(games__in=[game])
-        return { k:v for k,v in places.items() if not venue_qs.filter(placeid=k).exists()}
+        return {k: v for k, v in places.items() if not venue_qs.filter(placeid=k).exists()}
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         context |= self.search_form_class.get()
         return render(request, self.template_name, context)
-
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_admin:
@@ -43,7 +42,8 @@ class PlacesBulkView(QwikView):
                 game = Game.objects.filter(code=context.get('game')).first()
                 query = context.get('query')
                 if search_form.is_valid() and game and query:
-                    region = Region.objects.filter(pk=context.get('region')).first()
+                    region = Region.objects.filter(
+                        pk=context.get('region')).first()
                     if region:
                         places = Locate.get_places(query, region)
                         places = self.__new_places(places, game)
@@ -51,7 +51,8 @@ class PlacesBulkView(QwikView):
                         request.session['place_choices'] = places
                         request.session['query'] = query
                         request.session['region'] = region.pk
-                        context |= self.places_form_class.get(game.name, places)
+                        context |= self.places_form_class.get(
+                            game.name, places)
                 else:
                     context |= self.places_form_class.get(game.name)
         elif 'add' in request.POST:
@@ -62,7 +63,8 @@ class PlacesBulkView(QwikView):
             )
             places_form = context.get('places_form')
             if places_form:
-                game = Game.objects.filter(code=request.session['game']).first()
+                game = Game.objects.filter(
+                    code=request.session['game']).first()
                 place_ids = context.get('places')
                 if places_form.is_valid() and game and place_ids:
                     for placeid in place_ids:
@@ -73,7 +75,7 @@ class PlacesBulkView(QwikView):
                                 venue.save()
                                 logger.info(f'Venue new: {venue}')
                             else:
-                                logger.warn(f'Failed to create new Venue: {placeid}')                                
+                                logger.warn(f'Failed to create new Venue: {placeid}')
                         if venue and not Venue.objects.filter(games__in=game.pk):
                             venue.games.add(game)
                             logger.info(f'Venue add Game: {game}')
@@ -81,7 +83,8 @@ class PlacesBulkView(QwikView):
                             mark = Mark(game=game, place=venue)
                             mark.save()
                             logger.info(f'Mark new {mark}')
-                    places = self.__new_places(request.session['place_choices'])
+                    places = self.__new_places(
+                        request.session['place_choices'])
                     request.session['place_choices'] = places
                     context |= self.places_form_class.get(game.name, places)
             context |= self.search_form_class.get(
@@ -92,8 +95,6 @@ class PlacesBulkView(QwikView):
         else:
             return redirect('places_bulk')
         return render(request, self.template_name, context)
-
-
 
 
 class VenueAddView(QwikView):
@@ -128,8 +129,8 @@ class VenueAddView(QwikView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         context |= self.venue_add_form_class.get(
-            player = self.user.player,
-            game = kwargs.get('game'),
+            player=self.user.player,
+            game=kwargs.get('game'),
         )
         return render(request, self.venue_add_template, context)
 
@@ -137,12 +138,13 @@ class VenueAddView(QwikView):
         game = Game.objects.filter(pk=gameid).first()
         if not game:
             logger.warn(f'Game missing: {game}')
-        return game   
+        return game
 
     def _getVenue(self, placeid):
         place, venue = None, None
         if placeid:
-            place = Place.objects.filter(placeid=placeid, venue__isnull=False).first()
+            place = Place.objects.filter(
+                placeid=placeid, venue__isnull=False).first()
             if place:
                 venue = place.venue
             else:  # then it must be a new Venue from a google POI
@@ -157,7 +159,7 @@ class VenueAddView(QwikView):
 
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
-        player = self.user.player 
+        player = self.user.player
         context = self.venue_add_form_class.post(
             request.POST,
             player,
@@ -185,13 +187,13 @@ class VenuesView(QwikView):
             venue = Venue.objects.filter(pk=kwargs.get('venue')).first()
             if venue:
                 venue_qs.filter(
-                    country = venue.country,
-                    admin1 = venue.admin1,
+                    country=venue.country,
+                    admin1=venue.admin1,
                     # locality = venue.locality,
                 )
         if 'game' in kwargs:
             venue_qs.filter(venue__games__contains=kwargs.get(game))
-        kwargs['items'] = venue_qs.order_by(Lower('name'))            
+        kwargs['items'] = venue_qs.order_by(Lower('name'))
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('venue')
         context = super().context(request, *args, **kwargs)
@@ -207,7 +209,7 @@ class VenuesView(QwikView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         venue = kwargs.get('item')
-        if not venue: 
+        if not venue:
             return render(request, self.template_name, context)
 
 

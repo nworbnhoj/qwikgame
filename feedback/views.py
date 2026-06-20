@@ -1,4 +1,5 @@
-import logging, subprocess
+import logging
+import subprocess
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from feedback.forms import FeedbackForm
@@ -31,7 +32,7 @@ class FeedbackListView(QwikView):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         feedback = context.get('feedback')
-        if not feedback: 
+        if not feedback:
             return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -43,11 +44,13 @@ class FeedbackListView(QwikView):
         if form and not form.is_valid():
             return HttpResponseRedirect(f'/feedback/')
         feedback = Feedback.objects.create(
-            commit=subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode('ascii').strip(),
+            commit=subprocess.check_output(
+                ['git', 'rev-parse', 'HEAD']).decode('ascii').strip(),
             path=next,
             text=context['text'],
             type=context['type'],
-            version=subprocess.check_output(["git", "describe", "--always"]).strip().decode(),
+            version=subprocess.check_output(
+                ["git", "describe", "--always"]).strip().decode(),
         )
         return HttpResponseRedirect(f'/feedback/{feedback.id}/')
 
@@ -65,11 +68,9 @@ class FeedbackView(FeedbackListView):
         self._context = context
         return self._context
 
-
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
         context = self.context(request, *args, **kwargs)
         # feedback = context.get('feedback')
         # feedback.mark_seen([self.user.player.pk]).save()
         return render(request, self.template_name, context)
-

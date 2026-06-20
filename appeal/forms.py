@@ -1,4 +1,5 @@
-import datetime, logging
+import datetime
+import logging
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, CharField, CheckboxInput, CheckboxSelectMultiple, ChoiceField, DecimalField, EmailField, Form, HiddenInput, IntegerField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Textarea, TextInput, TypedChoiceField
 from django.utils.translation import gettext_lazy as _
@@ -56,7 +57,7 @@ class AcceptForm(QwikForm):
 class BidForm(QwikForm):
     hour = DayRadioField(
         help_text=_('When are you keen to play?'),
-        label =_ ('what time works for you?'),
+        label=_('what time works for you?'),
         required=False,
         template_name='field.html',
     )
@@ -81,7 +82,7 @@ class BidForm(QwikForm):
             # if there was only a single hour to select, then select it automatically
             options = self.fields['hour'].widget.hours_show
             if len(options) == 1:
-                hour =options[0]
+                hour = options[0]
         if not hour:
             raise ValidationError("You must select an hour.")
         return hour
@@ -91,11 +92,11 @@ class BidForm(QwikForm):
         if 'CANCEL' in request_post:
             cancel = request_post['CANCEL']
             try:
-                return {'CANCEL' : int(cancel) }
+                return {'CANCEL': int(cancel)}
             except:
                 logger.warn(f'failed to convert CANCEL: {cancel}')
         form = klass(appeal=appeal, data=request_post)
-        context = { 'bid_form': form }
+        context = {'bid_form': form}
         if form.is_valid():
             context |= {
                 'accept': appeal,
@@ -107,22 +108,22 @@ class BidForm(QwikForm):
 class KeenForm(QwikForm):
     game = ChoiceField(
         label=_('game'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
     venue = ChoiceField()    # placeholder for dynamic assignment below
     today = DayMultiField(
-        hours_enable=[*range(6,22)],
-        hours_show=[*range(6,22)],
+        hours_enable=[*range(6, 22)],
+        hours_show=[*range(6, 22)],
         label=_('today'),
         offsetday='0',
         required=False,
         template_name='field.html',
     )
     tomorrow = DayMultiField(
-        hours_enable=[*range(6,22)],
-        hours_show=[*range(6,22)],
+        hours_enable=[*range(6, 22)],
+        hours_show=[*range(6, 22)],
         label=_('tomorrow'),
         offsetday='1',
         required=False,
@@ -207,18 +208,19 @@ class KeenForm(QwikForm):
     def _init_fields(self, player):
         self._init_friends(player.friend_choices())
         self._init_game()
-        self._init_venue(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._init_venue(player.venue_suggestions(
+            20).order_by('name').all()[:20])
         self._init_today()
         self._init_tomorrow()
 
     def _init_friends(self, choices):
         self.fields['friends'] = MultipleChoiceField(
-            choices = choices,
+            choices=choices,
             # help_text=_('Invite your friends to play this qwikgame.'),
             label=_('notify friend by email'),
-            required = False,
-            template_name='field.html', 
-            widget = CheckboxSelectMultiple,
+            required=False,
+            template_name='field.html',
+            widget=CheckboxSelectMultiple,
         )
 
     def _init_game(self):
@@ -227,9 +229,9 @@ class KeenForm(QwikForm):
     def _init_venue(self, venues):
         self.fields['venue'] = VenueField(
             label=_('venue'),
-            required = True,
+            required=True,
             template_name='field.html',
-            venues = venues,
+            venues=venues,
         )
 
     def _init_regions(self):
@@ -244,7 +246,8 @@ class KeenForm(QwikForm):
     def _prep_fields(self, player, venue=None):
         self._prep_friends()
         self._prep_game()
-        self._prep_venue(player.venue_suggestions(20).order_by('name').all()[:20])
+        self._prep_venue(player.venue_suggestions(
+            20).order_by('name').all()[:20])
         self._prep_today(venue)
         self._prep_tomorrow(venue)
         self._prep_regions(player.region_favorite())
@@ -286,21 +289,21 @@ class KeenForm(QwikForm):
             hours = venue.open_date(tomorrow).as_list()
             self.fields['tomorrow'].widget.set_hours_show(hours)
             self.fields['tomorrow'].widget.set_hours_enable(hours)
-        
+
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):
         form = klass(
-                initial = {
-                    'game': game,
-                    # 'strength': strength,
-                    'today': DAY_NONE,       # TODO extract today from hours
-                    'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
-                    'venue': venue.placeid if venue else 'map',
-                },
-            )
+            initial={
+                'game': game,
+                # 'strength': strength,
+                'today': DAY_NONE,       # TODO extract today from hours
+                'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
+                'venue': venue.placeid if venue else 'map',
+            },
+        )
         form._init_fields(player)
         form._prep_fields(player, venue)
-        return { 'keen_form': form }
+        return {'keen_form': form}
 
     @classmethod
     def post(klass, request_post, player):
@@ -329,13 +332,14 @@ class KeenForm(QwikForm):
                     'today': today,
                     'tomorrow': tomorrow,
                     'placeid': form.cleaned_data['venue'],
-                    }
+                }
             except:
                 logger.exception('failed to parse KeenForm')
         else:
             logger.warn('invalid KeenForm')
             form._prep_fields(
                 player,
-                Venue.objects.filter(placeid=form.cleaned_data.get('venue')).first()
+                Venue.objects.filter(
+                    placeid=form.cleaned_data.get('venue')).first()
             )
         return context

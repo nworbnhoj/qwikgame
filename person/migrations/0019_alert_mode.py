@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='alert',
             name='mode',
-            field=models.CharField(choices=[('A', 'App'), ('E', 'Email'), ('S', 'SMS'), ('W', 'web')], default='E', max_length=1),
+            field=models.CharField(choices=[(
+                'A', 'App'), ('E', 'Email'), ('S', 'SMS'), ('W', 'web')], default='E', max_length=1),
             preserve_default=False,
         ),
     ]

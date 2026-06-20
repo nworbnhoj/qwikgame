@@ -16,15 +16,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Filter',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('hours', models.BinaryField()),
-                ('game', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='game.game')),
-                ('player', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='player.player')),
-                ('venue', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
+                ('game', models.ForeignKey(null=True,
+                                           on_delete=django.db.models.deletion.CASCADE, to='game.game')),
+                ('player', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.CASCADE, to='player.player')),
+                ('venue', models.ForeignKey(
+                    null=True, on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
             ],
         ),
         migrations.AddConstraint(
             model_name='filter',
-            constraint=models.UniqueConstraint(fields=('game', 'player', 'venue'), name='unique_filter'),
+            constraint=models.UniqueConstraint(
+                fields=('game', 'player', 'venue'), name='unique_filter'),
         ),
     ]

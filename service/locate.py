@@ -1,4 +1,8 @@
-import json, logging, requests, time, urllib.parse
+import json
+import logging
+import requests
+import time
+import urllib.parse
 from service.models import Service
 from qwikgame.constants import COUNTRIES
 from qwikgame.hourbits import Hours24x7, WEEK_ALL
@@ -11,9 +15,10 @@ GEOTIMEZONE = 'geotimezone'
 GEOCODE = 'geocode'
 GEOPLUGIN_CONTEXT = {"http": {"timeout": 1}}
 
+
 class Locate:
 
-    @staticmethod   
+    @staticmethod
     def geo(param, key, url):
         result = None
         param['key'] = key
@@ -24,7 +29,6 @@ class Locate:
         except:
             logger.exception("Google geocoding: {}?{}".format(url, param))
         return result
-
 
     @staticmethod
     def geoplace(text, country=None, region=None):
@@ -41,7 +45,6 @@ class Locate:
             geoplace.url
         )
 
-
     @staticmethod
     def geodetails(placeid):
         geodetails = Service.objects.get(pk=GEODETAILS)
@@ -56,7 +59,6 @@ class Locate:
         logger.warn('no result from geodetails: {geo}')
         return None
 
-
     @staticmethod
     def geotime(lat, lng):
         geotimezone = Service.objects.get(pk=GEOTIMEZONE)
@@ -66,7 +68,6 @@ class Locate:
             geotimezone.key,
             geotimezone.url
         )
-
 
     @staticmethod
     def geocode(address, country):
@@ -80,7 +81,6 @@ class Locate:
             return geo['result']
         logger.warn('no result from geocode: {geo}')
         return None
-
 
     @staticmethod
     def revgeocode(lat, lng):
@@ -96,7 +96,6 @@ class Locate:
         logger.warn('no result from revgeocode: {geo}')
         return None
 
-
     @staticmethod
     def get_place(description, country):
         placeid = None
@@ -106,15 +105,13 @@ class Locate:
             placeid = str(place['place_id'])
         return placeid
 
-
     @staticmethod
     def get_places(description, region=None):
         places = {}
         geoplace = Locate.geoplace(description, region=region)
         predictions = geoplace.get('predictions', None)
         logger.info(predictions)
-        return { str(place['place_id']): str(place['description']) for place in predictions}
-
+        return {str(place['place_id']): str(place['description']) for place in predictions}
 
     @staticmethod
     def get_details(placeid):
@@ -126,7 +123,8 @@ class Locate:
             details['name'] = result.get('name', '')
             details['address'] = result.get('formatted_address', '')
             details['url'] = result.get('website', '')
-            details['phone'] = result.get('international_phone_number', '').replace(' ','')
+            details['phone'] = result.get(
+                'international_phone_number', '').replace(' ', '')
             editorial_summary = result.get('editorial_summary', None)
             if editorial_summary:
                 details['note'] = editorial_summary.get('overview' '')
@@ -138,7 +136,8 @@ class Locate:
                     lng = location.get('lng', 0)
                     details['lat'] = lat
                     details['lng'] = lng
-                    details['tz'] = Locate.get_timezone(lat, lng)  # Replace with the actual class name
+                    # Replace with the actual class name
+                    details['tz'] = Locate.get_timezone(lat, lng)
             for comp in result.get('address_components', []):
                 types = comp.get('types', None)
                 if types:
@@ -150,7 +149,7 @@ class Locate:
                         # details['admin1_long'] = comp.get('long_name', '')
                     elif 'administrative_area_level_2' in types:
                         details['suburb'] = comp.get('short_name', '')
-                    elif 'locality' in types: 
+                    elif 'locality' in types:
                         details['locality'] = comp.get('short_name', '')
                         # details['locality_long'] = comp.get('short_name', '')
                     elif 'route' in types:
@@ -170,23 +169,24 @@ class Locate:
                             open_hour = int(open.get('time'))
                             close_day = int(close.get('day'))
                             close_hour = int(close.get('time'))
-                            first_hour = (open_hour // 100) if ((open_hour % 100) == 0) else ((open_hour // 100) + 1)
+                            first_hour = (
+                                open_hour // 100) if ((open_hour % 100) == 0) else ((open_hour // 100) + 1)
                             last_hour = (close_hour // 100)
-                            hours.set_period(open_day, first_hour, close_day, last_hour)
+                            hours.set_period(
+                                open_day, first_hour, close_day, last_hour)
                         except:
-                            logger.exception('Invalid opening hours period {period}')
+                            logger.exception(
+                                'Invalid opening hours period {period}')
                 details['hours'] = hours.as_bytes()
             else:
                 details['hours'] = WEEK_ALL
                 logger.warn(f'opening_hours unavailable ({placeid}) - default to 24x7')
         return details
 
-
     @staticmethod
     def get_timezone(lat, lng):
         geotime = Locate.geotime(lat, lng)
         return str(geotime['timeZoneId']) if 'timeZoneId' in geotime else ''
-
 
     @staticmethod
     def parse_address(address, country=None):
@@ -195,7 +195,6 @@ class Locate:
         if placeid is not None:
             parsed = Locate.get_details(placeid)
         return parsed
-
 
     @staticmethod
     def guess_timezone(location, admin1, country):
@@ -207,7 +206,6 @@ class Locate:
                 loc = details['geometry']['location']
                 tz = Locate.get_timezone(loc['lat'], loc['lng'])
         return tz
-
 
     @staticmethod
     def geolocate(key):
@@ -232,7 +230,6 @@ class Locate:
 
     def __init__(self):
         super().__init__()
-
 
     @staticmethod
     def geo_guess(input):
@@ -269,12 +266,12 @@ class Locate:
                     if type == 'country':
                         address['country'] = str(component['short_name'])
                     elif type == 'administrative_area_level_1':
-                        name = str(component['short_name']) or str(component['long_name']) or ' '
+                        name = str(component['short_name']) or str(
+                            component['long_name']) or ' '
                         address['admin1'] = name
                     elif type == 'locality':
                         address['locality'] = str(component['short_name'])
         return address
-
 
     @staticmethod
     def get_geometry(country, admin1, locality):

@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='match',
             name='venue',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venue.venue'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='venue.venue'),
         ),
     ]

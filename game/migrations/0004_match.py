@@ -16,11 +16,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Match',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateTimeField()),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='game.game')),
+                ('game', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='game.game')),
                 ('rivals', models.ManyToManyField(to='player.player')),
-                ('venue', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
+                ('venue', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='venue.venue')),
             ],
         ),
     ]

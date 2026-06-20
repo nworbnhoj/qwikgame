@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='match',
             name='appeal',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='player.appeal'),
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to='player.appeal'),
         ),
     ]

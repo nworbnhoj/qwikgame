@@ -24,10 +24,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='filter',
             name='place',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='venue.place'),
+            field=models.ForeignKey(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to='venue.place'),
         ),
         migrations.AddConstraint(
             model_name='filter',
-            constraint=models.UniqueConstraint(fields=('game', 'place', 'player'), name='unique_filter'),
+            constraint=models.UniqueConstraint(
+                fields=('game', 'place', 'player'), name='unique_filter'),
         ),
     ]

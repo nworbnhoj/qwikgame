@@ -13,10 +13,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='friend',
             name='email',
-            field=models.EmailField(max_length=255, verbose_name='email address'),
+            field=models.EmailField(
+                max_length=255, verbose_name='email address'),
         ),
         migrations.AddConstraint(
             model_name='friend',
-            constraint=models.UniqueConstraint(fields=('email', 'player'), name='unique_friend'),
+            constraint=models.UniqueConstraint(
+                fields=('email', 'player'), name='unique_friend'),
         ),
     ]

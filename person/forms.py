@@ -13,30 +13,29 @@ class BlockForm(QwikForm):
     block = IntegerField(
         label=_('person to block'),
         required=True,
-        )
+    )
 
     @classmethod
     def get(klass):
-        return { 'block_form': klass() }
-
+        return {'block_form': klass()}
 
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        context = { 'filter_form': form }
+        context = {'filter_form': form}
         if form.is_valid():
             context['block'] = form.cleaned_data['block']
         return context
-    
+
 
 class PrivateForm(QwikForm):
     email = EmailField(
         label=_("email address"),
         max_length=255,
-        required = False,
-        template_name = 'field.html',
+        required=False,
+        template_name='field.html',
         widget=TextInput(attrs={'disabled': 'disabled'}),
-    )   
+    )
     permissions = MultipleChoiceField(
         choices=[
             ('email', _('email notifications')),
@@ -50,20 +49,21 @@ class PrivateForm(QwikForm):
         widget=CheckboxSelectMultiple()
     )
     language = ChoiceField(
-        choices = [('', _("Browser default"))] + LANGUAGES, 
+        choices=[('', _("Browser default"))] + LANGUAGES,
         label=_('language'),
         required=False,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
     blocked = MultipleChoiceField(
         choices=(),
-        help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
+        help_text=_(
+            'When you block a person, neither of you will see the other on qwikgame.'),
         label=_('people you have blocked'),
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs = {'class': 'negate_pending post'},
+            attrs={'class': 'negate_pending post'},
         )
     )
 
@@ -79,23 +79,23 @@ class PrivateForm(QwikForm):
     @classmethod
     def get(klass, person):
         form = klass(
-            blocked_choices = klass._blocked_choices(person),
-            initial = {
+            blocked_choices=klass._blocked_choices(person),
+            initial={
                 'email': person.user.email,
                 'language': person.language,
                 'permissions': [
                     'email' if person.notify_email else '',
                     'push' if person.notify_push else '',
                     'location' if person.location_auto else ''
-                    ],
+                ],
             },
         )
-        return {'private_form': form }
+        return {'private_form': form}
 
     @classmethod
     def post(klass, request_post, person):
         form = klass(
-            blocked_choices = klass._blocked_choices(person),
+            blocked_choices=klass._blocked_choices(person),
             data=request_post
         )
         context = {'private_form': form}
@@ -117,7 +117,7 @@ class PublicForm(QwikForm):
         max_length=32,
         required=False,
         template_name='field.html',
-        widget = TextInput()
+        widget=TextInput()
     )
     socials = MultipleChoiceField(
         choices=(),
@@ -125,17 +125,19 @@ class PublicForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs = {'class': 'negate_pending post'},
+            attrs={'class': 'negate_pending post'},
         )
     )
 
     def __init__(self, *args, **kwargs):
         social_choices = kwargs.pop('social_choices')
         super(PublicForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs['placeholder'] = _('your qwikgame screen name')
+        self.fields['name'].widget.attrs['placeholder'] = _(
+            'your qwikgame screen name')
         self.fields['socials'].choices = social_choices
         if (len(social_choices) < 3):
-            self.fields['socials'].widget.attrs['add_url'] = reverse('social_add')
+            self.fields['socials'].widget.attrs['add_url'] = reverse(
+                'social_add')
 
     @classmethod
     def _social_choices(klass, user_id):
@@ -146,10 +148,10 @@ class PublicForm(QwikForm):
     @classmethod
     def get(klass, person):
         form = klass(
-            initial = { 'name': person.qwikname },
-            social_choices = klass._social_choices(person.user.id),
+            initial={'name': person.qwikname},
+            social_choices=klass._social_choices(person.user.id),
         )
-        return { 'public_form': form }
+        return {'public_form': form}
 
     # Initializes a PublicForm with 'request_post' for 'person'.
     # Returns a context dict including 'public_form' if form is not valid
@@ -158,9 +160,9 @@ class PublicForm(QwikForm):
         context = {}
         form = klass(
             data=request_post,
-            social_choices = klass._social_choices(person.user.id)
+            social_choices=klass._social_choices(person.user.id)
         )
-        context = { 'public_form': form }
+        context = {'public_form': form}
         if form.is_valid():
             context |= {
                 'name': form.cleaned_data['name'],
@@ -172,15 +174,15 @@ class PublicForm(QwikForm):
 class SocialForm(QwikForm):
     social = URLField(
         label=_('Add URL'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = TextInput(),
+        widget=TextInput(),
     )
 
     @classmethod
     def get(klass, strength=None):
         form = klass()
-        return { 'social_form' : form, }
+        return {'social_form': form, }
 
     @classmethod
     def post(klass, request_post):
@@ -195,16 +197,18 @@ class SocialForm(QwikForm):
 
 class UnblockForm(QwikForm):
     blocked = MultipleChoiceField(
-        help_text=_('When you block a person, neither of you will see the other on qwikgame.'),
+        help_text=_(
+            'When you block a person, neither of you will see the other on qwikgame.'),
         label=_('people you have blocked'),
         widget=CheckboxSelectMultiple,
     )
-        
+
     @classmethod
     def get(klass, person):
         form = klass()
         form.fields['blocked'].choices = klass.blocked_choices(person)
-        disabled = 'disabled' if len(form.fields['blocked'].choices) == 0 else ''
+        disabled = 'disabled' if len(
+            form.fields['blocked'].choices) == 0 else ''
         return {
             'blocked_form': form,
             'unblock_disabled': disabled,
@@ -221,14 +225,14 @@ class UnblockForm(QwikForm):
                 person.block.remove(unblock)
             person.save()
         else:
-            context = {  
+            context = {
                 'blocked_form': form,
             }
         return context
 
     @classmethod
     def blocked_choices(klass, person):
-        choices={}
+        choices = {}
         for block in person.block.all():
             choices[block.pk] = block.name
         return choices

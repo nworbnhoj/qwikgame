@@ -20,9 +20,9 @@ class AccountView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = super().context(request)
-        player = self.user.player        
+        player = self.user.player
         player.alert_del(type='')
-        context |= { 'account_tab': 'selected' }
+        context |= {'account_tab': 'selected'}
         if context['mobile_screen']:
             return render(request, "person/account.html", context)
         else:
@@ -45,7 +45,7 @@ class BlockView(QwikView):
             # invitations to unregistered Players, so logout immediately
             logout(self.request)
             block_player = block_person.user.player
-            context = { 'blocked_player': block_player }
+            context = {'blocked_player': block_player}
             return render(request, 'person/block_done.html', context)
         return HttpResponseRedirect("/appeal")
 
@@ -62,8 +62,8 @@ class NotifyEmailView(QwikView):
         # currently NotifyEmailForm.get() is only used to block unwelcome email
         # invitations to unregistered Players, so logout immediately
         logout(self.request)
-        context = {'site_name': get_current_site(request).name }
-        return render(request, 'person/notify_email_done.html', context )
+        context = {'site_name': get_current_site(request).name}
+        return render(request, 'person/notify_email_done.html', context)
 
 
 class PrivateView(QwikView):
@@ -165,7 +165,7 @@ class PWAView(QwikView):
     def get(self, request, *args, **kwargs):
         super().get(request)
         context = super().context(request)
-        context |= { 
+        context |= {
             'account_tab': 'selected',
             'pwa_checked': 'checked',
         }
@@ -197,8 +197,8 @@ class SocialView(QwikView):
         try:
             person = self.user.person
             social, created = Social.objects.update_or_create(
-                person = person,
-                url = context.get('social')
+                person=person,
+                url=context.get('social')
             )
             if created:
                 person.social.add(social)
@@ -214,4 +214,3 @@ class UpgradeView(QwikView):
         super().get(request)
         context = super().context(request)
         return render(request, "person/upgrade.html", context)
-

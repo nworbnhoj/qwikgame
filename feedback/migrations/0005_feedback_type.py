@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='feedback',
             name='type',
-            field=models.CharField(choices=[('_', ''), ('B', 'Bug'), ('U', 'Something is not clear'), ('D', 'Something is too dfficult'), ('G', 'Something is really good'), ('I', 'Suggestion for improvement'), ('O', 'Other')], default='_', max_length=1),
+            field=models.CharField(choices=[('_', ''), ('B', 'Bug'), ('U', 'Something is not clear'), ('D', 'Something is too dfficult'), (
+                'G', 'Something is really good'), ('I', 'Suggestion for improvement'), ('O', 'Other')], default='_', max_length=1),
         ),
     ]

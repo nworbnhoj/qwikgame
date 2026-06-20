@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Game',
             fields=[
-                ('code', models.CharField(max_length=3, primary_key=True, serialize=False)),
+                ('code', models.CharField(max_length=3,
+                                          primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=32)),
             ],
         ),

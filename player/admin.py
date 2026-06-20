@@ -3,14 +3,17 @@ from django.contrib import admin
 
 from .models import Filter, Friend, Player, Strength
 
+
 class FilterAdmin(admin.ModelAdmin):
     list_display = ['pk', 'active', 'player', 'place', 'game']
     list_filter = ['active', 'player', 'place', 'game']
     ordering = ['game']
 
+
 class FriendAdmin(admin.ModelAdmin):
     list_filter = ['player', 'rival']
     ordering = ['player']
+
 
 class PlayerAdmin(admin.ModelAdmin):
     fields = ['user', 'hash', 'games']
@@ -20,6 +23,7 @@ class PlayerAdmin(admin.ModelAdmin):
     list_filter = ['games']
     search_fields = ['email', 'hash']
     ordering = ['user']
+
 
 class StrengthAdmin(admin.ModelAdmin):
     fields = ['game', 'rival', 'relative', 'player', 'date', 'weight']

@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Service',
             fields=[
-                ('name', models.CharField(max_length=32, primary_key=True, serialize=False)),
+                ('name', models.CharField(max_length=32,
+                                          primary_key=True, serialize=False)),
                 ('url', models.URLField(max_length=64)),
                 ('key', models.CharField(max_length=64)),
             ],

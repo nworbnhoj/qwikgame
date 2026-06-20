@@ -24,7 +24,7 @@ logger = logging.getLogger(__file__)
 
 class FilterView(AppealsView):
     filter_form_class = FilterForm
-    hide=[]
+    hide = []
     template_name = 'player/filter.html'
 
     def context(self, request, *args, **kwargs):
@@ -67,9 +67,8 @@ class FilterView(AppealsView):
         )
         return render(request, self.template_name, context)
 
-
     def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)     
+        super().post(request, *args, **kwargs)
         player = self.user.player
         context = self.filter_form_class.post(
             request.POST,
@@ -134,7 +133,7 @@ class FiltersView(AppealsView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)     
+        super().post(request, *args, **kwargs)
         player = self.user.player
         context = self.filters_form_class.post(
             request.POST,
@@ -152,7 +151,8 @@ class FiltersView(AppealsView):
                     filter.active = str(filter.id) in activate
                     filter.save()
                 except:
-                    logger.exception('failed to activate filter: {} : {}'.format(player, filter.id))
+                    logger.exception(
+                        'failed to activate filter: {} : {}'.format(player, filter.id))
             return HttpResponseRedirect("/appeal/")
         if 'DELETE' in context:
             delete = context.get('DELETE', [])
@@ -163,7 +163,8 @@ class FiltersView(AppealsView):
                     logger.info(f'Deleting filter: {junk}')
                     junk.delete()
                 except:
-                    logger.exception('failed to delete filter: {} : {}'.format(player, filter_code))
+                    logger.exception(
+                        'failed to delete filter: {} : {}'.format(player, filter_code))
         return HttpResponseRedirect("/player/filters")
 
 
@@ -208,7 +209,8 @@ class FriendsView(QwikView):
     def context(self, request, *args, **kwargs):
         player = self.user.player
         player.alert_del(type='')
-        kwargs['items'] = Friend.objects.filter(player=player).order_by(Lower('name'))
+        kwargs['items'] = Friend.objects.filter(
+            player=player).order_by(Lower('name'))
         if kwargs['items'].first():
             kwargs['pk'] = kwargs.get('friend')
         context = super().context(request, *args, **kwargs)
@@ -263,21 +265,22 @@ class FriendAddView(FriendsView):
         email = context.get('email')
         name = context.get('name')
         try:
-            rival, created = Player.objects.get_or_create(hash=Person.hash(email))
+            rival, created = Player.objects.get_or_create(
+                hash=Person.hash(email))
             friend, created = Friend.objects.update_or_create(
-                email = email,
-                player = player,
-                rival = rival,
-                defaults = {"name" : context.get('name',email.split('@')[0])},
+                email=email,
+                player=player,
+                rival=rival,
+                defaults={"name": context.get('name', email.split('@')[0])},
             )
-            game = Game.objects.get(pk=context.get('game','squ'))
+            game = Game.objects.get(pk=context.get('game', 'squ'))
             strength, created = Strength.objects.update_or_create(
-                game = game,
-                player = player,
-                rival = friend.rival,
-                defaults = {
+                game=game,
+                player=player,
+                rival=friend.rival,
+                defaults={
                     'date': datetime.now(timezone.utc),
-                    'relative': context.get('strength','m'),
+                    'relative': context.get('strength', 'm'),
                     'weight': 3
                 }
             )
@@ -315,12 +318,13 @@ class FriendView(FriendsView):
         if menu_form and menu_form.is_valid():
             if 'DELETE' in context:
                 try:
-                    delete_pk = int(context.get('DELETE',-1))
+                    delete_pk = int(context.get('DELETE', -1))
                     junk = Friend.objects.get(pk=delete_pk)
                     logger.debug(f'Deleting friend: {junk}')
                     junk.delete()
                 except:
-                    logger.exception('failed to delete friend: {} : {}'.format(player, delete_pk))
+                    logger.exception(
+                        'failed to delete friend: {} : {}'.format(player, delete_pk))
                 return HttpResponseRedirect(f'/player/friend/')
         context = self.context(request, *args, **kwargs)
         friend = context.get('friend')
@@ -345,7 +349,8 @@ class FriendView(FriendsView):
             if email != friend.email:
                 friend.email = email
                 strengths = friend.strengths.all()
-                rival, created = Player.objects.get_or_create(hash=Person.hash(email))
+                rival, created = Player.objects.get_or_create(
+                    hash=Person.hash(email))
                 friend.rival = rival
                 friend.save()
                 for strength in strengths:
@@ -388,12 +393,12 @@ class FriendStrengthView(FriendsView):
             friend = Friend.objects.get(pk=friend_pk)
             game = Game.objects.get(pk=context.get('game', 'squ'))
             strength, created = Strength.objects.update_or_create(
-                game = game,
-                player = player,
-                rival = friend.rival,
-                defaults = {
+                game=game,
+                player=player,
+                rival=friend.rival,
+                defaults={
                     'date': datetime.now(timezone.utc),
-                    'relative': context.get('strength','m'),
+                    'relative': context.get('strength', 'm'),
                     'weight': 3
                 }
             )

@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='appeal',
             name='rivals',
-            field=models.ManyToManyField(related_name='rivals', through='player.Bid', to='player.player'),
+            field=models.ManyToManyField(
+                related_name='rivals', through='player.Bid', to='player.player'),
         ),
     ]

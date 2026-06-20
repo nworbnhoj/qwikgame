@@ -14,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='appeal',
             name='created',
-            field=models.DateTimeField(default=django.utils.timezone.now, editable=False),
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, editable=False),
         ),
     ]

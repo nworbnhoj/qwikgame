@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='place',
-            constraint=models.UniqueConstraint(fields=('placeid',), name='unique_placeid'),
+            constraint=models.UniqueConstraint(
+                fields=('placeid',), name='unique_placeid'),
         ),
     ]

@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='strength',
             name='game',
-            field=models.ForeignKey(default='squ', on_delete=django.db.models.deletion.CASCADE, to='game.game'),
+            field=models.ForeignKey(
+                default='squ', on_delete=django.db.models.deletion.CASCADE, to='game.game'),
             preserve_default=False,
         ),
     ]

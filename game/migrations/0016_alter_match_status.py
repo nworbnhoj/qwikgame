@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='match',
             name='status',
-            field=models.CharField(choices=[('A', 'active'), ('C', 'complete'), ('D', 'disabled'), ('X', 'cancelled')], default='A', max_length=1),
+            field=models.CharField(choices=[('A', 'active'), ('C', 'complete'), (
+                'D', 'disabled'), ('X', 'cancelled')], default='A', max_length=1),
         ),
     ]

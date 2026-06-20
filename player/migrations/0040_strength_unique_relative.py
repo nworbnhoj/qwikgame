@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='strength',
-            constraint=models.UniqueConstraint(fields=('game', 'player', 'rival'), name='unique_relative'),
+            constraint=models.UniqueConstraint(
+                fields=('game', 'player', 'rival'), name='unique_relative'),
         ),
     ]

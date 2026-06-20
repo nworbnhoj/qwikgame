@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='social',
-            constraint=models.UniqueConstraint(fields=('person', 'url'), name='unique_social'),
+            constraint=models.UniqueConstraint(
+                fields=('person', 'url'), name='unique_social'),
         ),
     ]

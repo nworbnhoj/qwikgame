@@ -15,32 +15,32 @@ class GoogleSearchForm(QwikForm):
     query = CharField(
         # help_text=_('Google Places search'),
         label=_('search'),
-        required = True,
+        required=True,
     )
     region = ChoiceField(
-        choices = Region.choices(),
+        choices=Region.choices(),
         help_text=_('restrict the search to a region'),
         label=_('region'),
-        required = True,
-        template_name='field.html', 
+        required=True,
+        template_name='field.html',
         widget=RadioSelect(attrs={"class": "down left hidden"})
     )
     game = ChoiceField(
-        choices = Game.choices(),
-        help_text = _('Specify the Game for these Qwikgame Venues'),
+        choices=Game.choices(),
+        help_text=_('Specify the Game for these Qwikgame Venues'),
         label=_('game'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
 
     @classmethod
     def get(klass, game=None, query=None, region=None):
         form = klass()
-        form.fields['game'].initial=game
-        form.fields['query'].initial=query
-        form.fields['region'].initial=region
-        return { 'search_form': form, }
+        form.fields['game'].initial = game
+        form.fields['query'].initial = query
+        form.fields['region'].initial = region
+        return {'search_form': form, }
 
     @classmethod
     def post(klass, request_post):
@@ -57,7 +57,7 @@ class GoogleSearchForm(QwikForm):
 
 class GooglePlacesForm(QwikForm):
     places = MultipleChoiceField(
-        choices = {},
+        choices={},
         help_text=_('Select Google Places to add as Qwikgame Venues'),
         label=_('google places'),
         required=True,
@@ -77,7 +77,7 @@ class GooglePlacesForm(QwikForm):
     def post(klass, request_post, game, places=[]):
         form = klass(data=request_post)
         form.fields['places'].choices = places
-        context = { 'places_form': form }
+        context = {'places_form': form}
         if form.is_valid():
             context |= {
                 'places': form.cleaned_data['places'],
@@ -87,11 +87,11 @@ class GooglePlacesForm(QwikForm):
 
 class VenueAddForm(QwikForm):
     game = ChoiceField(
-        choices = [(None, '')],
+        choices=[(None, '')],
         label=_('game'),
-        required = True,
+        required=True,
         template_name='field.html',
-        widget = RadioSelect,
+        widget=RadioSelect,
     )
     place = CharField(
         label=_('place'),
@@ -163,9 +163,9 @@ class VenueAddForm(QwikForm):
 
     @classmethod
     def get(klass, player, game=None, venue=None):
-        form = klass(initial = {'game': game,},)
+        form = klass(initial={'game': game, },)
         form.fields['game'].choices += Game.choices()
-        return { 'venue_add_form': form, }
+        return {'venue_add_form': form, }
 
     @classmethod
     def post(klass, request_post, player):
@@ -177,7 +177,7 @@ class VenueAddForm(QwikForm):
                 context = {
                     'game': form.cleaned_data['game'],
                     'placeid': form.cleaned_data['placeid'],
-                    }
+                }
             except:
                 logger.exception('failed to parse VenueAddForm')
         else:

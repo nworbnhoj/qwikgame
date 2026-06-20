@@ -13,17 +13,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Region',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False, verbose_name='ID')),
                 ('admin1', models.CharField(blank=True, max_length=64, null=True)),
                 ('country', models.CharField(max_length=2)),
-                ('east', models.DecimalField(decimal_places=6, default=180, max_digits=9)),
+                ('east', models.DecimalField(
+                    decimal_places=6, default=180, max_digits=9)),
                 ('name', models.CharField(blank=True, max_length=128)),
                 ('lat', models.DecimalField(decimal_places=6, default=0, max_digits=9)),
                 ('lng', models.DecimalField(decimal_places=6, default=0, max_digits=9)),
-                ('north', models.DecimalField(decimal_places=6, default=90, max_digits=9)),
+                ('north', models.DecimalField(
+                    decimal_places=6, default=90, max_digits=9)),
                 ('placeid', models.TextField()),
-                ('south', models.DecimalField(decimal_places=6, default=-90, max_digits=9)),
-                ('west', models.DecimalField(decimal_places=6, default=-180, max_digits=9)),
+                ('south', models.DecimalField(
+                    decimal_places=6, default=-90, max_digits=9)),
+                ('west', models.DecimalField(
+                    decimal_places=6, default=-180, max_digits=9)),
                 ('locality', models.CharField(blank=True, max_length=64, null=True)),
             ],
         ),

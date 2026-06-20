@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='match',
             name='status',
-            field=models.CharField(choices=[('A', 'active'), ('C', 'complete'), ('X', 'cancelled')], default='A', max_length=1),
+            field=models.CharField(choices=[(
+                'A', 'active'), ('C', 'complete'), ('X', 'cancelled')], default='A', max_length=1),
         ),
     ]

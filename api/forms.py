@@ -1,4 +1,5 @@
-import json, logging
+import json
+import logging
 from django.core.exceptions import ValidationError
 from qwikgame.forms import QwikForm
 from django.forms import CharField, ChoiceField, DecimalField
@@ -11,12 +12,13 @@ logger = logging.getLogger(__file__)
 
 REGION_KEYS = [COUNTRY, ADMIN1, LOCALITY]
 
+
 class VenueMarksJson(QwikForm):
     avoidable = CharField(
         required=False
     )
-    game = ChoiceField( 
-        choices = [('ANY','Any Game')] + Game.choices(),
+    game = ChoiceField(
+        choices=[('ANY', 'Any Game')] + Game.choices(),
         required=True,
     )
     lat = DecimalField(
@@ -35,10 +37,8 @@ class VenueMarksJson(QwikForm):
         required=False,
     )
 
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
     def clean(self):
         cleaned_data = super().clean()
@@ -56,10 +56,9 @@ class VenueMarksJson(QwikForm):
                     "Both lat and lng are required."
                 )
 
-
     @classmethod
     def post(klass, request_body):
-        context={
+        context = {
             AVOIDABLE: None,
             ERRORS: None,
             GAME: None,
@@ -70,12 +69,12 @@ class VenueMarksJson(QwikForm):
         values = json.loads(request_body.decode('utf8'))
         form = klass(data=values)
         if form.is_valid():
-            context[GAME]=form.cleaned_data[GAME]
+            context[GAME] = form.cleaned_data[GAME]
             context[AVOIDABLE] = form.cleaned_data.get(AVOIDABLE)
             lat = form.cleaned_data.get(LAT)
             lng = form.cleaned_data.get(LNG)
             if lat and lng:
-                context[POS] = {LAT:lat, LNG:lng}
+                context[POS] = {LAT: lat, LNG: lng}
             region = form.cleaned_data.get(REGION)
             if region:
                 regions = region.rsplit('|')

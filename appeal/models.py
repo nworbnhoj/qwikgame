@@ -1,4 +1,5 @@
-import datetime, logging
+import datetime
+import logging
 from django.db import models
 from django.utils.timezone import now
 from game.models import Match
@@ -27,14 +28,16 @@ class Appeal(models.Model):
     invitees = models.ManyToManyField(Friend, related_name='invitees')
     log = models.JSONField(default=list)
     meta = models.JSONField(default=dict)
-    rivals = models.ManyToManyField(Player, related_name='rivals', through='Bid')
+    rivals = models.ManyToManyField(
+        Player, related_name='rivals', through='Bid')
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     status = models.CharField(max_length=1, choices=STATUS, default='A')
     venue = models.ForeignKey('venue.Venue', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['date', 'game', 'player', 'venue'], name='unique_appeal')
+            models.UniqueConstraint(
+                fields=['date', 'game', 'player', 'venue'], name='unique_appeal')
         ]
 
     def __str__(self):
@@ -48,7 +51,7 @@ class Appeal(models.Model):
             recipients.append(self.player)
             recipients.remove(omit_player)
         for pk in recipients:
-            player=Player.objects.filter(pk=pk).first()
+            player = Player.objects.filter(pk=pk).first()
             if player:
                 player.user.person.alert(type='appeal', expires=self.last_hour)
 
@@ -118,11 +121,11 @@ class Appeal(models.Model):
         if hours24.is_hour(hour):
             self.set_hours(hours24.unset_hour(hour))
             entry = Entry(
-                hash = self.player.user.hash,
-                id = self.player.pk,
-                klass= 'event',
-                name = self.player.qwikname,
-                text = f'withdrew {hour}h'
+                hash=self.player.user.hash,
+                id=self.player.pk,
+                klass='event',
+                name=self.player.qwikname,
+                text=f'withdrew {hour}h'
             )
             self.log_entry(entry)
             hour_bytes = Hours24().set_hour(hour).as_bytes()
@@ -132,7 +135,7 @@ class Appeal(models.Model):
 
     @property
     def invitee_players(self):
-        return [ f.player for f in self.invitees.all() ]
+        return [f.player for f in self.invitees.all()]
 
     @property
     def is_open(self):
@@ -162,11 +165,11 @@ class Appeal(models.Model):
 
     def log_event(self, template):
         entry = Entry(
-            hash = self.player.user.hash,
-            id = self.player.pk,
-            klass= 'event',
-            name = self.player.qwikname,
-            text = f'template_{template}',
+            hash=self.player.user.hash,
+            id=self.player.pk,
+            klass='event',
+            name=self.player.qwikname,
+            text=f'template_{template}',
         )
         match template:
             case 'appeal':
@@ -203,12 +206,12 @@ class Appeal(models.Model):
                     self.save()
                 action = 'expired'
         logger.debug('Appeal{} {: <9} {} @ {} {}'.format(
-                ' (dry-run)' if dry_run else '',
-                action,
-                self.date.strftime('%a'),
-                now.strftime('%a %X'),
-                self.venue.name
-            )
+            ' (dry-run)' if dry_run else '',
+            action,
+            self.date.strftime('%a'),
+            now.strftime('%a %X'),
+            self.venue.name
+        )
         )
         return action
 
@@ -232,8 +235,10 @@ class Bid(models.Model):
     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
     hours = models.BinaryField(default=WEEK_NONE, null=True)
     rival = models.ForeignKey(Player, on_delete=models.CASCADE)
-    strength = models.CharField(max_length=1, choices=Strength.SCALEZ, default='m')
-    str_conf = models.CharField(max_length=1, choices=Strength.CONFIDENCE, default='z')
+    strength = models.CharField(
+        max_length=1, choices=Strength.SCALEZ, default='m')
+    str_conf = models.CharField(
+        max_length=1, choices=Strength.CONFIDENCE, default='z')
 
     def __str__(self):
         return "{} {} {}".format(self.rival.facet, self.appeal.game, self.appeal.venue)
@@ -254,9 +259,9 @@ class Bid(models.Model):
         }
         recipient.alert(
             type,
-            expires = self.appeal.last_hour,
-            context = context,
-            url = f'/appeal/{self.appeal.pk}/',
+            expires=self.appeal.last_hour,
+            context=context,
+            url=f'/appeal/{self.appeal.pk}/',
         )
 
     def announce(self, instigator):
@@ -306,10 +311,10 @@ class Bid(models.Model):
 
     def log_event(self, template):
         entry = Entry(
-            id = 'placeholder',
-            klass= 'event',
-            pk = self.pk,
-            text = f'template_{template}',
+            id='placeholder',
+            klass='event',
+            pk=self.pk,
+            text=f'template_{template}',
         )
         entry['hours'] = self.hours24().as_str()
         match template:
@@ -347,8 +352,8 @@ class Bid(models.Model):
         self.appeal.meta['seen'] = []
         self.delete()
 
-
     # Deletes the Bid if the Bid hours has passed.
+
     def perish(self, dry_run=False):
         action = 'noop'
         now = self.venue().now()
@@ -358,15 +363,14 @@ class Bid(models.Model):
                 self.delete()
             action = 'expired'
         logger.debug('Bid{} {: <9} {} @ {} {}'.format(
-                ' (dry-run)' if dry_run else '',
-                action,
-                self.datetime.strftime('%a %X'),
-                now.strftime('%a %X'),
-                self.venue().name
-            )
+            ' (dry-run)' if dry_run else '',
+            action,
+            self.datetime.strftime('%a %X'),
+            now.strftime('%a %X'),
+            self.venue().name
+        )
         )
         return action
-
 
     def save(self, *args, **kwargs):
         # TODO handle duplicate or partial-duplicate invitations

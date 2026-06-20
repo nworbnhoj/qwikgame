@@ -6,4 +6,9 @@
         <p class="name">{{ rival_name }}</p>  
         <p>{{ strength }}</p>
     {% include 'player/conduct_stars_snippet.html' with stars=rival.conduct_stars %}
+    {% for social in socials %}
+        <a class="" href="{{ social.0 }}" target="_blank">
+            {{ social.1 }}
+        </a>
+    {% endfor %}
     </div>

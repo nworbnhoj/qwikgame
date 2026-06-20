@@ -513,6 +513,7 @@ class RivalView(AppealsView):
                 'places': stats.get('places', {}),
                 'rival': rival,
                 'rival_name': player.name_rival(rival),
+                'socials': rival.socials(),
             }
             appeal = context.get('appeal')
             if appeal:

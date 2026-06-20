@@ -6,6 +6,7 @@ from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
 from pywebpush import WebPushException
+from urllib.parse import urlparse
 from webpush import send_user_notification
 
 
@@ -264,6 +265,13 @@ class Person(models.Model):
             case 'push':
                 keys = self.notify_push
         return Alert.str(on, keys, type, route)
+
+    def socials(self):
+        try:
+            socials = Social.objects.filter(person=self);
+            return [(social.url, urlparse(social.url).hostname) for social in socials]
+        except:
+            return []
 
     @property
     def qwikname(self):

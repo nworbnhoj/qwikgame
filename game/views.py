@@ -286,6 +286,7 @@ class RivalView(MatchesView):
                     'places': stats.get('places', {}),
                     'rival': rival,
                     'rival_name': player.name_rival(rival),
+                    'socials': rival.socials(),
                     'strength': player.strength_str(match.game, rival),
                 }
         self._context = context

@@ -196,7 +196,8 @@ class RivalView(AppealsView):
         context = super().context(request, *args, **kwargs)
         context |= {
             'review_tab': 'selected',
-            'rival_name': player.name_rival(rival)
+            'rival_name': player.name_rival(rival),
+            'socials': rival.socials(),
         }
         return render(request, "player/rival.html", context)
 

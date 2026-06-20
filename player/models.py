@@ -156,6 +156,9 @@ class Player(models.Model):
         places.sort(key=lambda x: x.name)
         return places
 
+    def socials(self):
+        return self.user.person.socials()
+
     def stats(self):
         stats = {}
         match_qs = Match.objects.filter(competitors__in=[self])

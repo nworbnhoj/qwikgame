@@ -7,7 +7,7 @@ from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
 from qwikgame.constants import SYSTEM_HASH
-from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, SelectRangeField, TabInput, VenueField, WeekField
+from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, RangeField, TabInput, VenueField, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry

@@ -133,24 +133,6 @@ class RangeField(ChoiceField):
         self.widget.attrs.update({'max':self.max_value, 'min':self.min_value})
 
 
-class SelectRangeField(RangeField):
-    widget=SelectRangeInput
-
-    def __init__(self, template_name='field.html',**kwargs):
-        super().__init__(
-            max_value=len(kwargs['choices'])-1,
-            min_value=0,
-            template_name = template_name,
-            **kwargs
-        )
-
-    def to_python(self, value):
-        try:
-            return list(self.choices)[int(value)][0]
-        except:
-            return None    
-
-
 class VenueField(PlaceField):
 
     def __init__(self, venues=[], *args, **kwargs):

@@ -1,7 +1,0 @@
-<!-- qwikgame/templates/range.html -->
-{% with id=widget.attrs.id %}
-<div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>
-{% include 'label_widget.html' %}
-{% include "django/forms/widgets/input.html" %}
-</div>
-{% endwith %}

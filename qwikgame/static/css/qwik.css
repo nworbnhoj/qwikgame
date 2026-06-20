@@ -125,16 +125,6 @@ input[type=radio] { display: none; }
 label:has(input[type=radio])::before { content: ''; border: 1px solid var(--color-grey-c); border-radius: 50%; color: #f3f3f3; display: inline-block; font-size: 2rem; height: 1.2rem; line-height: 1rem; margin: .2rem .4rem .2rem 0; text-align: center; width: 1.2rem; vertical-align: middle; }
 label:has(input[type=radio]:checked)::before { content: "\2022"; color: var(--color-qwik); content: "\2714"; }
 
-/* range slider */
-input[type=range] { align-self: stretch; accent-color: var(--color-qwik); display: flex; flex: 1 1 100%; height: 2rem; margin: 1rem 3rem; }
-div.range_options { align-self: stretch; flex-direction: row; gap: 1rem; justify-content: space-between; padding: 1rem 0 0 0; }
-div.range_options .option { text-align: center }
-div.select_range { align-self: stretch; }
-div.slider { background-color: var(--color-grey-c); border-radius: 2.5rem; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; width: 5.6rem; }
-div.slider:before { aspect-ratio: 1/1; background-color: #fff; border-radius: 50%; bottom: 0.2rem; content: ""; left: 0.2rem; position: absolute; transition: .4s; width: 2.2rem }
-div.slide_labels { gap: 1rem; justify-content: space-between; width: 100% }
-div.slide_label { text-align: center }
-
 /* --- Buttons --- */
 .btn { align-items: center; border: 1px solid var(--color-grey-3); border-radius: var(--dim-ease); color: black; cursor: pointer; display: flex; flex-direction: row; font-weight: 550; gap: 0.3rem; justify-content: center; margin: 0.3rem; min-height: 3rem; padding: 1.25rem 1.5rem; text-decoration: none; text-overflow: ellipsis; }
 

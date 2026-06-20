@@ -133,26 +133,6 @@ class RadioSelect(forms.RadioSelect):
     template_name='input_radio.html'
 
 
-class RangeInput(Input):
-    checked_attribute = {"checked": True}
-    input_type='range'
-    template_name='range.html'
-
-    def __init__(self, attrs=None, choices=()):
-        super().__init__(attrs)
-        self.attrs = {'oninput':'slide(this)'}
-        self.choices = choices
-
-    def get_context(self, name, value, attrs):
-        context = super().get_context(name, value, attrs)
-        context["widget"]["choices"] = self.choices
-        return context
-
-
-class SelectRangeInput(RangeInput):
-    template_name='select_range.html'
-
-
 class TabInput(forms.MultiWidget):
     template_name='input_tab.html'
     use_fieldset=False

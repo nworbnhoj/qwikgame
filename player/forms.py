@@ -9,7 +9,7 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, RangeField, SelectRangeField, TabInput, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, RangeField, TabInput, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -313,12 +313,13 @@ class StrengthForm(QwikForm):
         template_name='field.html',
         widget = RadioSelect,
     )
-    strength = SelectRangeField(
+    strength = ChoiceField(
         choices = Strength.SCALE,
         initial = Strength.SCALE.get('m'),
         label=_('rival skill level'),
         required = True,
         template_name='field.html',
+        widget = RadioSelect,
     )
 
     @classmethod

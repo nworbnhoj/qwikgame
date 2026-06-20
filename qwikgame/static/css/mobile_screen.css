@@ -5,7 +5,6 @@ div.head_back { order: 5 }
 div.head_icon { display: none }
 div.icon_caption { display: none }
 div.list_bar { flex: 1 1 auto }
-div.slide_labels { font-size: 0.94rem }
 h1 { font-size: 3rem }
 h2 { font-size: 1.14rem }
 h3 { font-size: 1.07rem }

@@ -377,7 +377,7 @@ class FriendStrengthView(FriendsView):
     def post(self, request, *args, **kwargs):
         super().post(request, *args, **kwargs)
         context = self.form_class.post(request.POST)
-        form = context.get('form')
+        form = context.get('strength_form')
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)

@@ -307,6 +307,7 @@ class InviteForm(RegisterForm):
 
 class StrengthForm(QwikForm):
     game = ChoiceField(
+        choices = Game.choices(),
         label=_('game'),
         required = True,
         template_name='field.html',
@@ -323,8 +324,7 @@ class StrengthForm(QwikForm):
     @classmethod
     def get(klass, strength=None):
         form = klass()
-        form.fields['game'].choices = Game.choices()
-        form.fields['strength'].pending = form.fields['strength'].initial
+        # form.fields['strength'].pending = form.fields['strength'].initial
         if strength:
             form.fields['game'].initial = strength.game.code
             form.fields['strength'].initial = strength.relative
@@ -333,10 +333,7 @@ class StrengthForm(QwikForm):
     @classmethod
     def post(klass, request_post):
         form = klass(data=request_post)
-        form.fields['game'].choices = Game.choices()
-        form.fields['game'].pending = form.fields['game'].initial
-        form.fields['strength'].pending = form.fields['strength'].initial
-        context = {'form': form}
+        context = {'strength_form': form}
         if form.is_valid():
             context |= {
                 'game': form.cleaned_data['game'],

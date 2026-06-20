@@ -24,7 +24,7 @@
         </div>
         <div class="post">
             <div class="form">
-                <form action="{% url 'friend_strength' friend=friend.pk %}" method="post">
+                <form action="{% url 'friend_strength' friend=friend.pk %}" method="post" novalidate>
 {% csrf_token %}
 {{ strength_form }}
                     <div class="pillar">

@@ -1,12 +1,12 @@
 import logging
 from django.forms import BooleanField, CheckboxSelectMultiple, ChoiceField, MultipleChoiceField, MultiValueField, MultiWidget, RadioSelect, Select, TypedChoiceField, TypedMultipleChoiceField
 from django.utils.translation import gettext_lazy as _
-from qwikgame.constants import WEEK_DAYS
+from qwikgame.constants import TWO_DAYS, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from service.locate import Locate
 from venue.models import Place
 from qwikgame.widgets import ActionMultiple
-from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TabInput, WeekInput, WEEK_ALL
+from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TabInput, TwodayInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 
@@ -119,6 +119,37 @@ class PlaceField(ChoiceField):
         if Locate.geodetails(value):
             return True
         return False
+
+
+class TwodayField(MultiValueField):
+
+    def __init__(self, hours_enable=[*range(24)], hours_show=[*range(24)], *args, **kwargs):
+        self.widget = TwodayInput(
+            hours_enable=hours_enable, hours_show=hours_show)
+        super().__init__(
+            fields=(
+                [DayMultiField(
+                    hours_enable=hours_enable,
+                    hours_show=hours_show,
+                    label=name,
+                    required=False,
+                    offsetday=day)
+                 for day, name in enumerate(TWO_DAYS)]
+            ),
+            require_all_fields=False,
+            *args,
+            **kwargs
+        )
+
+    def compress(self, data_list):
+        days = []
+        for data in data_list:
+            hours24 = Hours24()
+            if isinstance(data, list):
+                for hr in data:
+                    hours24.set_hour(hr)
+            days.append(hours24)
+        return days
 
 
 class VenueField(PlaceField):

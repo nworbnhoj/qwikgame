@@ -2,6 +2,12 @@
 {% load static %}
 {% load i18n %}
 
+<!-- hidden checkbox to trigger js field_label_update() -->
+
+<label class="two_day" hidden>
+    <input type="checkbox" name="two_day" hidden>
+</label>
+
 <div class="post">
 {% spaceless %}
 {% for widget in widget.subwidgets %}

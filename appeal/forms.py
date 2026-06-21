@@ -8,7 +8,7 @@ from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
 from qwikgame.constants import SYSTEM_HASH
-from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, TabInput, VenueField, WeekField
+from qwikgame.fields import ActionMultiple, DataSelect, DayRadioField, MultipleActionField, MultiTabField, TabInput, TwodayField, VenueField, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
@@ -113,20 +113,11 @@ class KeenForm(QwikForm):
         widget=RadioSelect,
     )
     venue = ChoiceField()    # placeholder for dynamic assignment below
-    today = DayMultiField(
+    time = TwodayField(
         hours_enable=[*range(6, 22)],
         hours_show=[*range(6, 22)],
-        label=_('today'),
-        offsetday='0',
-        required=False,
-        template_name='field.html',
-    )
-    tomorrow = DayMultiField(
-        hours_enable=[*range(6, 22)],
-        hours_show=[*range(6, 22)],
-        label=_('tomorrow'),
-        offsetday='1',
-        required=False,
+        label=_('time'),
+        required=True,
         template_name='field.html',
     )
     friends = MultipleChoiceField()    # placeholder for dynamic assignment below
@@ -197,21 +188,12 @@ class KeenForm(QwikForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        if not cleaned_data.get('today'):
-            if not cleaned_data.get('tomorrow'):
-                msg = _('Please select at least one hour in today or tomorrow.')
-                self.add_error('today', msg)
-                self.add_error('tomorrow', msg)
-
     def _init_fields(self, player):
         self._init_friends(player.friend_choices())
         self._init_game()
         self._init_venue(player.venue_suggestions(
             20).order_by('name').all()[:20])
-        self._init_today()
-        self._init_tomorrow()
+        self._init_time()
 
     def _init_friends(self, choices):
         self.fields['friends'] = MultipleChoiceField(
@@ -237,10 +219,7 @@ class KeenForm(QwikForm):
     def _init_regions(self):
         pass
 
-    def _init_today(self):
-        pass
-
-    def _init_tomorrow(self):
+    def _init_time(self):
         pass
 
     def _prep_fields(self, player, venue=None):
@@ -248,8 +227,7 @@ class KeenForm(QwikForm):
         self._prep_game()
         self._prep_venue(player.venue_suggestions(
             20).order_by('name').all()[:20])
-        self._prep_today(venue)
-        self._prep_tomorrow(venue)
+        self._prep_time(venue)
         self._prep_regions(player.region_favorite())
 
     def _prep_friends(self):
@@ -273,22 +251,15 @@ class KeenForm(QwikForm):
             self.fields['south'].initial = region.south
             self.fields['west'].initial = region.west
 
-    def _prep_today(self, venue=None):
+    def _prep_time(self, venue=None):
         if venue:
             today = venue.now()
-            self.fields['today'].pending = today.strftime('%A')
-            hours = venue.open_date(today).as_list()
-            self.fields['today'].widget.set_hours_show(hours)
-            hours = [h for h in hours if h > today.hour]
-            self.fields['today'].widget.set_hours_enable(hours)
-
-    def _prep_tomorrow(self, venue=None):
-        if venue:
             tomorrow = venue.now() + datetime.timedelta(days=1)
-            self.fields['tomorrow'].pending = tomorrow.strftime('%A')
-            hours = venue.open_date(tomorrow).as_list()
-            self.fields['tomorrow'].widget.set_hours_show(hours)
-            self.fields['tomorrow'].widget.set_hours_enable(hours)
+            self.fields['time'].pending = f"{today.strftime('%A')} & {tomorrow.strftime('%A')}"  
+            self.fields['time'].widget.set_hours_show(0, venue.open_date(today).as_list())
+            self.fields['time'].widget.set_hours_show(1, venue.open_date(tomorrow).as_list())
+            self.fields['time'].widget.set_hours_enable(0, [h for h in hours if h > today.hour])
+            self.fields['time'].widget.set_hours_enable(1, venue.open_date(tomorrow).as_list())
 
     @classmethod
     def get(klass, player, game=None, hours=WEEK_NONE, strength=None, venue=None):
@@ -296,8 +267,7 @@ class KeenForm(QwikForm):
             initial={
                 'game': game,
                 # 'strength': strength,
-                'today': DAY_NONE,       # TODO extract today from hours
-                'tomorrow': DAY_NONE,    # TODO extract tomorrow from hours
+                'time': [DAY_NONE, DAY_NONE],    # TODO extract tomorrow from hours
                 'venue': venue.placeid if venue else 'map',
             },
         )
@@ -312,14 +282,6 @@ class KeenForm(QwikForm):
         context = {'keen_form': form}
         if form.is_valid():
             try:
-                today = Hours24()
-                tomorrow = Hours24()
-                if isinstance(form.cleaned_data['today'], list):
-                    for hr in form.cleaned_data['today']:
-                        today.set_hour(hr)
-                if isinstance(form.cleaned_data['tomorrow'], list):
-                    for hr in form.cleaned_data['tomorrow']:
-                        tomorrow.set_hour(hr)
                 context = {
                     'friends': [
                         Friend.objects.get(
@@ -329,8 +291,8 @@ class KeenForm(QwikForm):
                         for f in form.cleaned_data['friends']
                     ],
                     'game': form.cleaned_data['game'],
-                    'today': today,
-                    'tomorrow': tomorrow,
+                    'today': form.cleaned_data['time'][0],
+                    'tomorrow': form.cleaned_data['time'][1],
                     'placeid': form.cleaned_data['venue'],
                 }
             except:

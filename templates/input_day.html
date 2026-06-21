@@ -4,21 +4,14 @@
 <script defer src="{% static 'js/input_day.js' %}"></script>
 <div class='post by_day'>
     <div class='post on_day'>
-        <div class="grid_2_col">
-            <div class="btn tertiary show-next-parent-sibling">
-                {% translate "Pick hours" %}
-            </div>
+        {% include 'input_hour_radio.html' %}
 {% with id=widget.attrs.id %}
-            <label class="btn secondary wide toggle all_day" 
-            {% if id %} for="{{ id }}_all"{% endif %}>
-                <input type="checkbox" name="all_day" {% if id %} id="{{ id }}_all"{% endif %}>
-                {% translate "All Day" %}
-            </label>
+        <label class="btn secondary wide toggle all_day" 
+        {% if id %} for="{{ id }}_all"{% endif %}>
+            <input type="checkbox" name="all_day" {% if id %} id="{{ id }}_all"{% endif %}>
+            {% translate "All Day" %}
+        </label>
 {% endwith %}
-        </div>
-        <div class="post hidden">
-    {% include 'input_hour_radio.html' %}
-        </div>
     </div>
     <div class="hidden no_day">
         <p>

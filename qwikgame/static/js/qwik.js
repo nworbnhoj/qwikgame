@@ -249,6 +249,13 @@ function field_label_update(event_or_element) {
                     PENDING.textContent = sum_strength_checkbox(CHECKBOXES);
                     break;
                 }
+            case 'two_day':
+                {
+                    sum_input_two_day(INPUT.closest('.two_day')).then((sum) => {
+                        PENDING.textContent = sum
+                    });
+                    break;
+                }
             default:
                 switch (INPUT.type) {
                     case 'checkbox':
@@ -334,30 +341,34 @@ function sum_input_by_week(by_week) {
         if (checked) {
             return ALL_WEEK.textContent.trim();
         } else {
-            const HAS_DIGITS = /\d/;
-            let allDayPromises = new Array(7);
-            let labels = new Array(7);
-            const DAY_BOX = by_week.nextElementSibling;
-            DAY_BOX.querySelectorAll('div.label').forEach((day_label, d) => {
-                labels[d] = day_label.textContent.trim();
-                let by_day = day_label.nextElementSibling.nextElementSibling;
-                allDayPromises[d] = sum_input_by_day(by_day);
-            });
-            return Promise.all(allDayPromises).then((sums) => {
-                let summary = ' ';
-                sums.forEach((sum, s) => {
-                    if (sum.trim().length == 0) {
-                        // noop
-                    } else if (HAS_DIGITS.test(sum)) {
-                        let ddd = labels[s].substring(0, 3);
-                        summary += ` ${ddd} (${sum}) `;
-                    } else {
-                        summary += labels[s] + ' ';
-                    }
-                });
-                return summary;
-            });
+            sum_input_of_days(by_week.nextElementSibling);
         }
+    });
+}
+
+function sum_input_of_days(day_box){
+    const HAS_DIGITS = /\d/;
+    let allDayPromises = new Array(7);
+    let labels = new Array(7);
+    day_box.querySelectorAll('div.label').forEach((day_label, d) => {
+        labels[d] = day_label.textContent.trim();
+        let by_day = day_label.nextElementSibling.nextElementSibling;
+        allDayPromises[d] = sum_input_by_day(by_day);
+    });
+    return Promise.all(allDayPromises).then((sums) => {
+        sums = sums.filter(sum => sum !== undefined);
+        let summary = ' ';
+        sums.forEach((sum, s) => {
+            if (sum.trim().length == 0) {
+                // noop
+            } else if (HAS_DIGITS.test(sum)) {
+                let ddd = labels[s].substring(0, 3);
+                summary += ` ${ddd} (${sum}) `;
+            } else {
+                summary += labels[s] + ' ';
+            }
+        });
+        return summary;
     });
 }
 
@@ -373,6 +384,14 @@ function sum_input_checkbox(checkboxes) {
         }
         return sum;
     }
+}
+
+function sum_input_two_day(two_day) {
+    if (!two_day || !two_day.classList.contains('two_day')) {
+        console.warn("sum_input_two_day() called with " + two_day);
+        return;
+    }
+    return sum_input_of_days(two_day.nextElementSibling);
 }
 
 function sum_strength_checkbox(checkboxes) {
@@ -685,9 +704,10 @@ function setDayFields(hours24x7, now_weekday, now_hour) {
         if (Number.isInteger(weekday) && Number.isInteger(offset)) {
             weekday = weekday % 7
             // set the week day in the DayField Field Label
-            label_sub = day.closest('div.field').querySelector('.label_sub')
-            if (label_sub) {
-                label_sub.innerText = WEEKDAY[(now_weekday + offset) % 7];
+            const DAY_LABEL = day.closest('.by_day').previousElementSibling.previousElementSibling; 
+            if (DAY_LABEL) {
+                DAY_LABEL.innerText = DAY_LABEL.innerText.split(' ')[0];
+                DAY_LABEL.innerText += ' ' + WEEKDAY[(now_weekday + offset) % 7];
             }
         }
         day.querySelectorAll(".hour_grid input").forEach(function(input) {

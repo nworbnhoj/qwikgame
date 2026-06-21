@@ -1,0 +1,13 @@
+<!-- qwikgame/templates/input_twoday.html -->
+{% load static %}
+{% load i18n %}
+
+<div class="post">
+{% spaceless %}
+{% for widget in widget.subwidgets %}
+    {% include 'label_widget.html' %}
+    {{ widget.errors }}
+    {% include widget.template_name %}
+{% endfor %}
+{% endspaceless %}
+</div>

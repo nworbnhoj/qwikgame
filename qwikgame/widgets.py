@@ -1,7 +1,7 @@
 import logging
 from django import forms
 from django.forms.widgets import Input, Select
-from qwikgame.constants import WEEK_DAYS
+from qwikgame.constants import TWO_DAYS, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 
 logger = logging.getLogger(__file__)
@@ -148,6 +148,41 @@ class TextArea(forms.Textarea):
 
 class TextInput(forms.TextInput):
     template_name = 'input_text.html'
+
+
+class TwodayInput(forms.MultiWidget):
+    CHOICES = [(str(hr), str(hr)) for hr in range(24)]
+    template_name = 'input_twoday.html'
+    use_fieldset = False
+
+    def __init__(
+        self,
+        hours_enable=[*range(24)],
+        hours_show=[*range(24)],
+        **kwargs
+    ):
+        widgets = [DayInputMulti(
+            choices=TwodayInput.CHOICES,
+            hours_enable=hours_enable,
+            hours_show=hours_show,
+            label=weekday,
+        )
+            for weekday in TWO_DAYS
+        ]
+        wd = 0
+        for widget in widgets:
+            widget.set_data_attr('offsetday', wd)
+            wd += 1
+        super().__init__(widgets=widgets)
+
+    def decompress(self, hours168=WEEK_NONE):
+        return Hours24x7(hours168).as_days7()
+
+    def set_hours_enable(self, offsetday, hours):
+        self.widgets[offsetday].hours_enable = hours
+
+    def set_hours_show(self, offsetday, hours):
+        self.widgets[offsetday].hours_show = hours
 
 
 class WeekInput(forms.MultiWidget):

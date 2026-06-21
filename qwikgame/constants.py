@@ -15,6 +15,11 @@ WEEK_DAYS = [
     _('SATURDAY'),
 ]
 
+TWO_DAYS = [
+    _('TODAY'),
+    _('TOMORROW'),
+]
+
 # key constants
 ADDRESS = 'address'
 ADMIN1 = 'admin1'

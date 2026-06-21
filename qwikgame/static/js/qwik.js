@@ -261,8 +261,6 @@ function field_label_update(event_or_element) {
                     case 'checkbox':
                         const CHECK = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
                         const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']" + CHECK);
-                        const OPTIONAL = REQUIRED ? '' : 'optional';
-                        PENDING.textContent = CHECKBOXES.length > 0 ? sum_input_checkbox(CHECKBOXES) : OPTIONAL;
                         break;
                     case 'radio':
                         const CHECKED = FIELD.querySelector("input[type='radio']:checked");

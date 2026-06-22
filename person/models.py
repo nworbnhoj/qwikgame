@@ -147,7 +147,7 @@ class Alert(models.Model):
         return True
 
     def _email(self):
-        logger.info(f'Alert.send_mail(): {self.person.hash}')
+        logger.info(f'Alert.send_mail(): {self.person.facet}')
         try:
             alert_type = Alert.TYPE[self.type]
             subject_template_name = f'person/{alert_type}_alert_email_subject.txt',

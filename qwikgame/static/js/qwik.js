@@ -351,7 +351,7 @@ function sum_input_of_days(day_box){
     let labels = new Array(7);
     day_box.querySelectorAll('div.label').forEach((day_label, d) => {
         labels[d] = day_label.textContent.trim();
-        let by_day = day_label.nextElementSibling.nextElementSibling;
+        let by_day = day_label.nextElementSibling;
         allDayPromises[d] = sum_input_by_day(by_day);
     });
     return Promise.all(allDayPromises).then((sums) => {

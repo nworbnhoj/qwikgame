@@ -909,6 +909,14 @@ function togglePreviousSibling(event) {
     let previous_sibling = toggle.previousElementSibling;
     previous_sibling.classList.toggle('hidden');
 }
+
+function updateSubmitState(event) {
+    const FORM = event.currentTarget;
+    FORM.querySelectorAll("input[type='submit']").forEach((submit) => {
+        submit.disabled = !event.currentTarget.checkValidity();
+    });
+}
+
 // https://stackoverflow.com/questions/43043113/how-to-force-reloading-a-page-when-using-browser-back-button
 // Handle page load from cache after Browser Forward / Back button
 window.onpageshow = function(event) {
@@ -1026,6 +1034,12 @@ docReady(event => {
     document.querySelectorAll("form fieldset").forEach(
         (fieldset) => {
             field_prompt_show(fieldset);
+        });
+    document.querySelectorAll('form').forEach(
+        (form) => {
+            form.addEventListener('change', updateSubmitState);
+            form.addEventListener('input', updateSubmitState);
+            form.dispatchEvent(new Event('change'));
         });
     dropInit();
     field_focus_first();

@@ -46,6 +46,18 @@ if (typeof toggleAllWeek == "undefined") {
             console.log(e);
         }
     }
+    // validate a required all_week field
+    function validateAllWeek(event) {
+        try {
+            const FIELD = event.currentTarget.closest('div.field, fieldset');
+            const ALL_WEEK = FIELD.querySelector("input[name='all_week']");
+            const REQUIRED = FIELD.closest('.required');
+            const CHECKED = FIELD.querySelector("input[type='checkbox']:not(:disabled):checked");
+            ALL_WEEK.setCustomValidity(REQUIRED && !CHECKED ? 'an hour is required' : '');
+        } catch (e) {
+            console.log(e);
+        }
+    }
     document.addEventListener("DOMContentLoaded", () => {
         // initialize all label.toggle.all_week
         document.querySelectorAll('label.toggle.all_week').forEach((all_week) => {
@@ -77,6 +89,14 @@ if (typeof toggleAllWeek == "undefined") {
                         updateAllDay(all_day).then(updateAllWeek(all_week));
                     });
                 });
+            });
+            // add validation to all_week fields
+            document.querySelectorAll('label.toggle.all_week').forEach((all_week) => {
+                const FIELD = all_week.closest('div.field, fieldset');
+                FIELD.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+                    checkbox.addEventListener('change', validateAllWeek);
+                });
+                all_week.dispatchEvent(new Event('change'));
             });
         });
     });

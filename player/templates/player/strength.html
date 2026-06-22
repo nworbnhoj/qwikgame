@@ -1,4 +1,4 @@
-<!-- qwikgame/player/templates/player/friends.html -->
+<!-- qwikgame/player/templates/player/strengths.html -->
 {% extends "player/friends.html" %}
 {% load i18n %}
 
@@ -28,7 +28,7 @@
 {% csrf_token %}
 {{ strength_form }}
                     <div class="pillar">
-                        <label class="btn secondary push_down">
+                        <label class="btn primary push_down">
                             <input hidden name="ADD" type="submit">
                             {% translate "Submit" %}
                         </label>

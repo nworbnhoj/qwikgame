@@ -5,29 +5,10 @@ from qwikgame.constants import TWO_DAYS, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 from service.locate import Locate
 from venue.models import Place
-from qwikgame.widgets import ActionMultiple
+from qwikgame.widgets import ActionMultiple, DataSelect
 from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TabInput, TwodayInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)
-
-
-class DataSelect(RadioSelect):
-    data_attr = {}
-
-    def __init__(self, *args, **kwargs):
-        self.data_attr = kwargs.pop("data_attr", {})
-        super().__init__(*args, **kwargs)
-
-    def create_option(
-        self, name, value, label, selected, index, subindex=None, attrs=None
-    ):
-        option = super().create_option(
-            name, value, label, selected, index, subindex=subindex, attrs=attrs
-        )
-        for key, data in self.data_attr.items():
-            if index < len(data):
-                option["attrs"]['data-'+key] = data[index]
-        return option
 
 
 class DayMultiField(TypedMultipleChoiceField):

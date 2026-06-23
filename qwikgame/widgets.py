@@ -22,7 +22,26 @@ class CheckboxList(forms.CheckboxSelectMultiple):
     option_template_name = "option_delete.html"
 
 
-class DayInputMulti(forms.CheckboxSelectMultiple):
+class DataSelect(RadioSelect):
+    data_attr = {}
+
+    def __init__(self, data_attr={}, *args, **kwargs):
+        self.data_attr = data_attr
+        super().__init__(*args, **kwargs)
+
+    def create_option(
+        self, name, value, label, selected, index, subindex=None, attrs=None
+    ):
+        option = super().create_option(
+            name, value, label, selected, index, subindex=subindex, attrs=attrs
+        )
+        for key, data in self.data_attr.items():
+            if index < len(data):
+                option["attrs"]['data-'+key] = data[index]
+        return option
+
+
+class DayInputMulti(CheckboxSelectMultiple):
     option_template_name = 'input_hour.html'
     template_name = 'input_day.html'
     use_fieldset = False

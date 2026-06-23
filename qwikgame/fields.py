@@ -40,6 +40,7 @@ class DayMultiField(TypedMultipleChoiceField):
         hours_show=[*range(24)],
         offsetday=None,
         weekday=None,
+        *args,
         **kwargs
     ):
         self.widget = DayInputMulti(
@@ -54,15 +55,16 @@ class DayMultiField(TypedMultipleChoiceField):
             choices=DayMultiField.CHOICES,
             coerce=int,
             empty_value=0,
+            *args,
             **kwargs)
 
 
 class DayRadioField(TypedChoiceField):
     CHOICES = [(str(hr), str(hr)) for hr in range(24)]
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.widget = DayInputRadio()
-        super().__init__(choices=DayRadioField.CHOICES, coerce=int, empty_value=0, **kwargs)
+        super().__init__(choices=DayRadioField.CHOICES, coerce=int, empty_value=0, *args, **kwargs)
 
 
 class MultipleActionField(MultipleChoiceField):
@@ -108,6 +110,7 @@ class PlaceField(ChoiceField):
         super().__init__(
             choices=choices,
             widget=DataSelect(data_attr=data_attr),
+            *args,
             **kwargs)
 
     def valid_value(self, value):
@@ -168,6 +171,7 @@ class VenueField(PlaceField):
         super().__init__(
             choices=choices,
             data_attr=data_attr,
+            *args,
             **kwargs
         )
 

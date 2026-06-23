@@ -151,16 +151,6 @@ class RadioSelect(forms.RadioSelect):
     template_name = 'input_radio.html'
 
 
-class TabInput(forms.MultiWidget):
-    template_name = 'input_tab.html'
-    use_fieldset = False
-
-    def decompress(self, value):
-        if value:
-            return [val for val in value]
-        return [True for tab in self.widgets]
-
-
 class TextArea(forms.Textarea):
     template_name = 'input_textarea.html'
 

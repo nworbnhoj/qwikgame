@@ -6,7 +6,7 @@ from qwikgame.hourbits import Hours24, Hours24x7
 from service.locate import Locate
 from venue.models import Place
 from qwikgame.widgets import ActionMultiple, DataSelect
-from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TabInput, TwodayInput, WeekInput, WEEK_ALL
+from qwikgame.widgets import ActionMultiple, DayInputMulti, DayInputRadio, TwodayInput, WeekInput, WEEK_ALL
 
 logger = logging.getLogger(__file__)
 

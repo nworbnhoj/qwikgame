@@ -717,7 +717,7 @@ function setDayFields(hours24x7, now_weekday, now_hour) {
         if (Number.isInteger(weekday) && Number.isInteger(offset)) {
             weekday = weekday % 7
             // set the week day in the DayField Field Label
-            const DAY_LABEL = day.closest('.by_day').previousElementSibling.previousElementSibling; 
+            const DAY_LABEL = day.closest('.by_day').previousElementSibling; 
             if (DAY_LABEL) {
                 DAY_LABEL.innerText = DAY_LABEL.innerText.split(' ')[0];
                 DAY_LABEL.innerText += ' ' + WEEKDAY[(now_weekday + offset) % 7];

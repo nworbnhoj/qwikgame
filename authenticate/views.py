@@ -123,7 +123,9 @@ class LoginSentView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["hash"] = Person.hash(self.request.GET['to_email'])
+        to_email = self.request.GET['to_email']
+        context["hash"] = Person.hash(to_email)
+        context["to_email"] = to_email
         return context
 
 
@@ -149,7 +151,9 @@ class RegisterSentView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["hash"] = Person.hash(self.request.GET['to_email'])
+        to_email = self.request.GET['to_email']
+        context["hash"] = Person.hash(to_email)
+        context["to_email"] = to_email
         return context
 
 

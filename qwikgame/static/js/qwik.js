@@ -374,13 +374,11 @@ function sum_input_of_days(days){
         sums = sums.filter(sum => sum !== undefined);
         let summary = ' ';
         sums.forEach((sum, s) => {
-            if (sum.trim().length == 0) {
-                // noop
-            } else if (HAS_DIGITS.test(sum)) {
-                let ddd = labels[s].substring(0, 3);
-                summary += ` ${ddd} (${sum}) `;
-            } else {
+            if (sum.trim().length > 0) {
                 summary += labels[s] + ' ';
+            }
+            if (HAS_DIGITS.test(sum)) {
+                summary += ` (${sum}) `;
             }
         });
         return summary;

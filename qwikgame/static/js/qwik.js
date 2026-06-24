@@ -319,13 +319,25 @@ function sum_input_by_day(by_day) {
         if (checked) {
             return ALL_DAY.textContent.trim();
         } else {
-            let hrs = '';
-            by_day.querySelectorAll('label.hour').forEach((label_hour) => {
-                label_hour.querySelectorAll("input[type='checkbox']:checked:not(:disabled)").forEach(() => {
-                    hrs += label_hour.textContent.trim() + ' ';
-                });
+            const HOURS = [];
+            let start = 99, end = 99;
+            by_day.querySelectorAll("input[type='checkbox']:not(.hidden):not(:disabled):checked").forEach((cb) => {
+                let hour = parseInt(cb.parentElement.textContent);
+                if (start > 23 && end > 23) {
+                    start = hour;
+                    end = hour;
+                } else if (hour === end + 1) {
+                  end = hour;
+                } else {
+                  HOURS.push(start === end ? `${start}` : `${start}-${end}`);
+                  start = hour;
+                  end = hour;
+                }
             });
-            return hrs;
+            if (start < 24 && end < 24){
+                HOURS.push(start === end ? `${start}` : `${start}-${end}`);
+                return HOURS.join(", ");
+            }
         }
     });
 }

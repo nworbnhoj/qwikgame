@@ -1,8 +1,8 @@
 import logging
-from django.forms import ModelForm
+from django.forms import ModelForm, RadioSelect
 from django.utils.translation import gettext_lazy as _
 from feedback.models import Feedback
-from qwikgame.widgets import TextArea, RadioSelect
+from qwikgame.widgets import TextArea
 
 
 logger = logging.getLogger(__file__)

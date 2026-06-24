@@ -146,10 +146,6 @@ class IconSelectMultiple(CheckboxSelectMultiple):
         return option
 
 
-class RadioSelect(RadioSelect):
-    template_name = 'input_radio.html'
-
-
 class TextArea(Textarea):
     template_name = 'input_textarea.html'
 

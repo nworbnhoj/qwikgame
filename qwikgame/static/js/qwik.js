@@ -251,7 +251,7 @@ function field_label_update(event_or_element) {
                 }
             case 'two_day':
                 {
-                    sum_input_two_day(INPUT.closest('.two_day')).then((sum) => {
+                    sum_input_two_day(INPUT.closest('div.two_day')).then((sum) => {
                         PENDING.textContent = sum
                     });
                     break;
@@ -340,16 +340,20 @@ function sum_input_by_week(by_week) {
         if (checked) {
             return ALL_WEEK.textContent.trim();
         } else {
-            sum_input_of_days(by_week.nextElementSibling);
+            return sum_input_of_days(by_week.nextElementSibling);
         }
     });
 }
 
-function sum_input_of_days(day_box){
+function sum_input_of_days(days){
+    if (!days || !days.classList.contains('days')) {
+        console.warn("sum_input_of_days() called with " + days);
+        return;
+    }
     const HAS_DIGITS = /\d/;
     let allDayPromises = new Array(7);
     let labels = new Array(7);
-    day_box.querySelectorAll('div.label').forEach((day_label, d) => {
+    days.querySelectorAll('div.label').forEach((day_label, d) => {
         labels[d] = day_label.textContent.trim();
         let by_day = day_label.nextElementSibling;
         allDayPromises[d] = sum_input_by_day(by_day);

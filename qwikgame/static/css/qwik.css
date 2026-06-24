@@ -208,11 +208,13 @@ label.reveal:has(input:checked) ~ div { display: flex; }
 
 /* --- Time Hour/Day/Week Inputs --- */
 .btn.hour { height: 3rem; width: 3rem; }
-div.by_day { margin: 0 0 3rem 0; }
+div.field div.days { align-items: stretch; justify-content: start; width: 100%; }
+div.by_day { align-items: stretch; justify-content: start; margin: 0 0 3rem 0; width: 100%; }
 div.by_hour { align-self: stretch; margin: 0.3rem; }
 div.day { flex: 0 0 auto; flex-grow: 4; height: 2rem; white-space: nowrap }
 div.hour_grid { grid-template-columns: repeat(auto-fit, minmax(3rem, max-content)); justify-content: left; overflow: visible; }
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
+div.two_day { align-items: stretch; justify-content: start; width: 100%; }
 
 /* --- classes --- */
 .align_center { align-self: center }

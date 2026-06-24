@@ -2,16 +2,15 @@
 {% load static %}
 {% load i18n %}
 
-<div class='by_day'>
+{% with id=widget.attrs.id %}
+<div {% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="by_day {{ widget.attrs.class }}"{% else %} class="by_day"{% endif %}>
     <div class='post on_day'>
         {% include 'input_hour_radio.html' %}
-{% with id=widget.attrs.id %}
         <label class="btn secondary wide toggle all_day" 
         {% if id %} for="{{ id }}_all"{% endif %}>
             <input type="checkbox" name="all_day" {% if id %} id="{{ id }}_all"{% endif %}>
             {% translate "All Day" %}
         </label>
-{% endwith %}
     </div>
     <div class="hidden no_day">
         <p>
@@ -19,4 +18,5 @@
         </p>
     </div>
 </div>
+{% endwith %}
 <script defer src="{% static 'js/input_day.js' %}"></script>

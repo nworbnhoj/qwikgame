@@ -113,13 +113,7 @@ class KeenForm(QwikForm):
         widget=RadioSelect,
     )
     venue = ChoiceField()    # placeholder for dynamic assignment below
-    time = TwodayField(
-        hours_enable=[*range(6, 22)],
-        hours_show=[*range(6, 22)],
-        label=_('time'),
-        required=True,
-        template_name='field.html',
-    )
+    time = ChoiceField()    # placeholder for dynamic assignment below
     friends = MultipleChoiceField()    # placeholder for dynamic assignment below
     lat = DecimalField(
         decimal_places=6,
@@ -220,7 +214,13 @@ class KeenForm(QwikForm):
         pass
 
     def _init_time(self):
-        pass
+        self.fields['time'] = TwodayField(
+            hours_enable=[*range(6, 22)],
+            hours_show=[*range(6, 22)],
+            label=_('time'),
+            required=True,
+            template_name='field.html',
+        )
 
     def _prep_fields(self, player, venue=None):
         self._prep_friends()
@@ -237,6 +237,7 @@ class KeenForm(QwikForm):
         pass
 
     def _prep_venue(self, venues):
+        self.fields['venue'].widget.attrs = {'class': 'prefaced',}
         self.fields['venue'].prompt = _('Check Venue Availability')
         self.fields['venue'].prompt_hash = SYSTEM_HASH
         self.fields['venue'].prompt_info = _('QWIKGAME does not book courts')
@@ -252,6 +253,7 @@ class KeenForm(QwikForm):
             self.fields['west'].initial = region.west
 
     def _prep_time(self, venue=None):
+        self.fields['time'].widget.attrs = {'class': 'prefaced',}
         if venue:
             today = venue.now()
             tomorrow = venue.now() + datetime.timedelta(days=1)

@@ -64,6 +64,7 @@ form > div { background-color: var(--color-stencil); box-shadow: 0 0 0.6rem 0.2r
 form > div:hover { background-color: var(--color-backdrop); }
 form > div:last-child { align-items: center; background-color: inherit; box-shadow: none; }
 form > div:with(field.naked) { background-color: inherit; box-shadow: none; }
+form > div:has(input:invalid) + div:has(input.prefaced) { background-color: var(--color-grey-c); }
 form.plank { flex-direction: row; }
 form.plank > div { background-color: inherit; box-shadow: none; flex-direction: row; gap: 0.3rem; flex-wrap: nowrap; justify-content: stretch; }
 

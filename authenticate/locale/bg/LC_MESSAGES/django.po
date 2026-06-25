@@ -7,22 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 18:14+1000\n"
-"PO-Revision-Date: 2026-06-12 00:00+0000"
-"Last-Translator: Bulgarian Localization Review"
-"Language-Team: Bulgarian"
-"Language: bg\n"
+"POT-Creation-Date: 2026-06-25 14:05+1000\n"
+"PO-Revision-Date: 2026-06-12 00:00+0000Last-Translator: Bulgarian "
+"Localization ReviewLanguage-Team: BulgarianLanguage: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "Акаунтът за %(e)s е деактивиран."
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -71,12 +69,11 @@ msgstr "Изпрати"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        Изпратен е имейл до %(request.GET.to_email)s с линк за "
+"        Изпратен е имейл до %(to_email)s с линк за "
 "потвърждение.\n"
 "    "
 
@@ -123,12 +120,11 @@ msgstr "Вход"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            Изпратен е имейл до %(request.GET.to_email)s с линк за вход. \n"
+"            Изпратен е имейл до %(to_email)s с линк за вход. \n"
 "    "
 
 #: authenticate/templates/authenticate/login_email_subject.txt:4
@@ -174,12 +170,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            Изпратен е имейл до %(request.GET.to_email)s с линк за "
+"            Изпратен е имейл до %(to_email)s с линк за "
 "регистрация.\n"
 "    "
 

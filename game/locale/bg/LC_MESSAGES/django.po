@@ -8,37 +8,35 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 18:14+1000\n"
-"PO-Revision-Date: 2026-06-12 00:00+0000"
-"Last-Translator: Bulgarian Localization Team"
-"Language-Team: Bulgarian"
-"Language: bg\n"
+"POT-Creation-Date: 2026-06-25 14:05+1000\n"
+"PO-Revision-Date: 2026-06-12 00:00+0000Last-Translator: Bulgarian "
+"Localization TeamLanguage-Team: BulgarianLanguage: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game/forms.py:31
+#: game/forms.py:32
 msgid "Chat here with your rival"
 msgstr "Чатете тук с вашия съперник"
 
-#: game/forms.py:57
+#: game/forms.py:58
 msgid "rival skill level"
 msgstr "Ниво на уменията на съперника"
 
-#: game/forms.py:62
+#: game/forms.py:65
 msgid "venue not suitable for game"
 msgstr "мястото не е подходящо за игра"
 
-#: game/forms.py:63
+#: game/forms.py:66
 msgid "rival showed poor sportsmanship"
 msgstr "съперникът показа неспорстменско поведение"
 
-#: game/forms.py:64
+#: game/forms.py:67
 msgid "rival did not show up"
 msgstr "съперникът не се появи"
 
-#: game/forms.py:66
+#: game/forms.py:69
 msgid "dissapointment"
 msgstr ""
 

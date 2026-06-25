@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 18:14+1000\n"
+"POT-Creation-Date: 2026-06-25 14:05+1000\n"
 "PO-Revision-Date: 2026-02-22 15:05+1100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,46 +25,47 @@ msgstr ""
 msgid "person to block"
 msgstr "Човек за блокиране"
 
-#: person/forms.py:34
+#: person/forms.py:33
 msgid "email address"
 msgstr "имейл адрес"
 
-#: person/forms.py:42
+#: person/forms.py:41
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "имейл покани от"
 
-#: person/forms.py:43
+#: person/forms.py:42
 msgid "push notifications"
 msgstr "push известия"
 
-#: person/forms.py:44
+#: person/forms.py:43
 msgid "location access"
 msgstr "достъп до местоположението"
 
-#: person/forms.py:46
+#: person/forms.py:45
 msgid "Your choice."
 msgstr "Вашият избор."
 
-#: person/forms.py:47
+#: person/forms.py:46
 msgid "permissions"
 msgstr "разрешения"
 
-#: person/forms.py:53
+#: person/forms.py:52
 msgid "Browser default"
 msgstr "По подразбиране на браузъра"
 
-#: person/forms.py:54
+#: person/forms.py:53
 msgid "language"
 msgstr "език"
 
-#: person/forms.py:61 person/forms.py:198
+#: person/forms.py:61 person/forms.py:201
 msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr "Когато блокирате човек, никой от вас няма да вижда другия в qwikgame."
-"Когато блокирате човек, нито един от вас няма да вижда другия в qwikgame."
+msgstr ""
+"Когато блокирате човек, никой от вас няма да вижда другия в qwikgame.Когато "
+"блокирате човек, нито един от вас няма да вижда другия в qwikgame."
 
-#: person/forms.py:62 person/forms.py:199
+#: person/forms.py:62 person/forms.py:202
 msgid "people you have blocked"
 msgstr "хора, които сте блокирали"
 
@@ -78,11 +79,11 @@ msgstr "QWIK име"
 msgid "website / social media"
 msgstr "добавете URL на социална мрежа"
 
-#: person/forms.py:135
+#: person/forms.py:136
 msgid "your qwikgame screen name"
 msgstr "вашето екранно име в qwikgame"
 
-#: person/forms.py:174
+#: person/forms.py:176
 msgid "Add URL"
 msgstr "Добави URL"
 

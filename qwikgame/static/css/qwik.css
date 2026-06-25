@@ -101,7 +101,7 @@ div.chat_input div { align-items: center; flex-direction: row; flex-grow: 1; pad
 
 /* required field */
 div.required span.reqd { color: var(--color-qwik); }
-span.reqd { color: var(--color-stencil);  font: 2rem bold; }
+span.reqd { color: transparent;  font: 2rem bold; }
 
 label p { flex: auto; }
 label.hidden { display: none }

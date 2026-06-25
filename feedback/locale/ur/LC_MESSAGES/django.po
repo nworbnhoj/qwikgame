@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 06:17+1000\n"
+"POT-Creation-Date: 2026-06-25 18:10+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: feedback/forms.py:16
+#: feedback/forms.py:17
 msgid "Description"
 msgstr "تفصیل"
 
-#: feedback/forms.py:20 feedback/forms.py:24
+#: feedback/forms.py:18
+msgid "Type"
+msgstr "قسم"
+
+#: feedback/forms.py:23 feedback/forms.py:27
 msgid "feedback"
 msgstr "رائے"
 
-#: feedback/forms.py:21
+#: feedback/forms.py:24
 msgid "thanks heaps for taking the time!"
 msgstr "وقت نکالنے کا بے حد شکریہ!"
 

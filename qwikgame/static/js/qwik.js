@@ -720,7 +720,7 @@ function setDayFields(hours24x7, now_weekday, now_hour) {
             if (DAY_LABEL) {
                 DAY_LABEL.innerText = DAY_LABEL.innerText.split(' ')[0];
                 const N = (now_weekday + offset) % 7;
-                const WEEK_DAY = document.getElementById('week_days').querySelector(`:nth-child(${N})`)
+                const WEEK_DAY = document.getElementById('week_days').querySelector(`:nth-child(${N+1})`)
                 DAY_LABEL.innerText += ' ' + WEEK_DAY.textContent;
             }
         }

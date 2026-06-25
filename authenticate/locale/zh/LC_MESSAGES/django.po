@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"POT-Creation-Date: 2026-06-25 16:28+1000\n"
 "PO-Revision-Date: 2026-06-17 00:00+0000\n"
 "Last-Translator: OpenAI ChatGPT\n"
 "Language-Team: Chinese (Simplified)\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "该账户已被禁用：%(e)s"
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -68,12 +68,11 @@ msgstr "提交"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        一封包含验证链接的邮件已发送至 %(request.GET.to_email)s。\n"
+"        一封包含验证链接的邮件已发送至 %(to_email)s。\n"
 "    "
 
 #: authenticate/templates/authenticate/email_validate_sent.html:15
@@ -118,12 +117,11 @@ msgstr "登录"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            一封包含登录链接的邮件已发送至 %(request.GET.to_email)s。 \n"
+"            一封包含登录链接的邮件已发送至 %(to_email)s。 \n"
 "    "
 
 #: authenticate/templates/authenticate/login_email_subject.txt:4
@@ -168,12 +166,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            一封包含注册链接的邮件已发送至 %(request.GET.to_email)s。\n"
+"            一封包含注册链接的邮件已发送至 %(to_email)s。\n"
 "    "
 
 #: authenticate/templates/authenticate/register_email_subject.txt:4

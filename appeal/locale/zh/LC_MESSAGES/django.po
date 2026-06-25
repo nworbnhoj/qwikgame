@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"POT-Creation-Date: 2026-06-25 16:28+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,43 +16,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: appeal/forms.py:58
+#: appeal/forms.py:59
 msgid "When are you keen to play?"
 msgstr "你什么时候想玩？"
 
-#: appeal/forms.py:59
+#: appeal/forms.py:60
 msgid "what time works for you?"
 msgstr "您什么时间方便？"
 
-#: appeal/forms.py:109
+#: appeal/forms.py:110
 msgid "game"
 msgstr "比赛"
 
-#: appeal/forms.py:118
-msgid "today"
-msgstr "今天"
-
-#: appeal/forms.py:126
-msgid "tomorrow"
-msgstr "明天"
-
-#: appeal/forms.py:203
-msgid "Please select at least one hour in today or tomorrow."
-msgstr "请在今天或明天至少选择一个小时。"
-
-#: appeal/forms.py:218
+#: appeal/forms.py:196
 msgid "notify friend by email"
 msgstr "通过电子邮件通知朋友"
 
-#: appeal/forms.py:229
+#: appeal/forms.py:207
 msgid "venue"
 msgstr "场地"
 
-#: appeal/forms.py:259
+#: appeal/forms.py:220
+msgid "time"
+msgstr ""
+
+#: appeal/forms.py:241
 msgid "Check Venue Availability"
 msgstr "检查场地可用性"
 
-#: appeal/forms.py:261
+#: appeal/forms.py:243
 msgid "QWIKGAME does not book courts"
 msgstr "QWIKGAME 不提供球场预订服务"
 
@@ -80,7 +72,6 @@ msgstr "动态"
 
 #: appeal/templates/appeal/appeals.html:24
 #: appeal/templates/appeal/appeals.html:156
-#| msgid "Cancel this Invitation?"
 msgid "New Invitation"
 msgstr "取消此邀请？"
 
@@ -137,14 +128,13 @@ msgid "Cancel this Offer?"
 msgstr "取消此出价？"
 
 #: appeal/templates/appeal/keen.html:51 appeal/templates/appeal/keen.html:86
-#| msgid "Cancel this Invitation?"
 msgid "Post Invitation"
 msgstr "取消此邀请？"
 
 #: appeal/templates/appeal/keen.html:72
-#| msgid "Keen To Play? Send Invitation?"
 msgid "Keen To Play? Post Invitation?"
 msgstr "想玩吗？发送邀请？"
+
 
 #~ msgid "WHAT TIME WORKS FOR YOU?"
 #~ msgstr "什么时间适合你？"

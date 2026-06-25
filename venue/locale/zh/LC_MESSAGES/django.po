@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"POT-Creation-Date: 2026-06-25 16:28+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,6 @@ msgid "GAMES"
 msgstr "运动项目"
 
 #: venue/templates/venue/venue_add.html:51
-#| msgid "Venues"
 msgid "Venue Add"
 msgstr "场地"
 

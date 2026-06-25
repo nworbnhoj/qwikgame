@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-17 04:29+1000\n"
+"POT-Creation-Date: 2026-06-25 16:28+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,48 +18,46 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: person/forms.py:14
-#| msgid "Person to block"
 msgid "person to block"
 msgstr "要屏蔽的用户"
 
-#: person/forms.py:34
+#: person/forms.py:33
 msgid "email address"
 msgstr "电子邮件地址"
 
-#: person/forms.py:42
-#| msgid "email invitations from"
+#: person/forms.py:41
 msgid "email notifications"
 msgstr "来自以下用户的邮件邀请"
 
-#: person/forms.py:43
+#: person/forms.py:42
 msgid "push notifications"
 msgstr "推送通知"
 
-#: person/forms.py:44
+#: person/forms.py:43
 msgid "location access"
 msgstr "位置访问权限"
 
-#: person/forms.py:46
+#: person/forms.py:45
 msgid "Your choice."
 msgstr "由您选择。"
 
-#: person/forms.py:47
+#: person/forms.py:46
 msgid "permissions"
 msgstr "权限"
 
-#: person/forms.py:53
+#: person/forms.py:52
 msgid "Browser default"
 msgstr "浏览器默认"
 
-#: person/forms.py:54
+#: person/forms.py:53
 msgid "language"
 msgstr "语言"
 
-#: person/forms.py:61 person/forms.py:198
+#: person/forms.py:61 person/forms.py:201
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr "当您屏蔽某人后，双方将无法在 qwikgame 上看到彼此。"
 
-#: person/forms.py:62 person/forms.py:199
+#: person/forms.py:62 person/forms.py:202
 msgid "people you have blocked"
 msgstr "您已屏蔽的用户"
 
@@ -68,15 +66,14 @@ msgid "QWIK name"
 msgstr "QWIK名称"
 
 #: person/forms.py:124
-#| msgid "add a social media url"
 msgid "website / social media"
 msgstr "添加社交媒体链接"
 
-#: person/forms.py:135
+#: person/forms.py:136
 msgid "your qwikgame screen name"
 msgstr "您的 qwikgame 显示名称"
 
-#: person/forms.py:174
+#: person/forms.py:176
 msgid "Add URL"
 msgstr "添加网址"
 
@@ -647,7 +644,6 @@ msgstr ""
 "%(game)s 邀请\n"
 
 #: person/templates/person/social.html:7
-#| msgid "add a social media url"
 msgid "Add Social media link"
 msgstr "添加社交媒体链接"
 

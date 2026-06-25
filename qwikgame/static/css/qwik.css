@@ -74,9 +74,13 @@ div.field.disabled, fieldset.disabled { background-color: var(--color-disabled-b
 div.field > div, fieldset > div { align-items: start; gap: 1rem; }
 div.field > div.label, fieldset > legend { display: block; font-size: 1.25rem; padding: 1.5rem; width: 100%; }
 div.field > *:not(div.label), fieldset > *:not(legend) { max-height: 0; overflow: hidden; padding: 0 2rem; transition: max-height 1s ease; }
-div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 100rem; padding: 2rem; }
+div.field.open > *:not(div.label), fieldset.open > *:not(legend) { max-height: 40rem; padding: 2rem; }
 div.field > div.label div, fieldset > legend div { flex-direction: row; gap: 0.5rem; }
 div.field span.label, fieldset span.label { font-weight: bold; text-transform: capitalize; }
+
+/* tuned open fields */
+div.field.open > div.days { max-height: 140rem }
+fieldset.open > div.friends { flex-wrap: wrap; }
 
 /* label.option used in CheckboxList Widget */
 label.option { align-items: center; display: flex; flex-direction: row; gap: 2rem; width: 100%; }

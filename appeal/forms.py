@@ -231,7 +231,7 @@ class KeenForm(QwikForm):
         self._prep_regions(player.region_favorite())
 
     def _prep_friends(self):
-        pass
+        self.fields['friends'].widget.attrs = {'class': 'friends',}
 
     def _prep_game(self):
         pass

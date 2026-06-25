@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 05:12+1000\n"
+"POT-Creation-Date: 2026-06-25 15:16+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,117 +18,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: player/forms.py:25 player/models.py:462
+#: player/forms.py:26 player/models.py:484
 msgid "Any Game"
 msgstr "Qualsiasi gioco"
 
-#: player/forms.py:26
+#: player/forms.py:27
 msgid "Only see invitations for a particular Game."
 msgstr "Visualizza solo gli inviti per un gioco specifico."
 
-#: player/forms.py:27 player/forms.py:310
+#: player/forms.py:28 player/forms.py:319
 #: player/templates/player/friends.html:46
 msgid "game"
 msgstr "gioco"
 
-#: player/forms.py:34
+#: player/forms.py:35
 msgid "Only see invitations at specific times in your week."
 msgstr "Visualizza solo gli inviti in orari specifici della settimana."
 
-#: player/forms.py:35
+#: player/forms.py:36
 msgid "time"
 msgstr "orario"
 
-#: player/forms.py:120 player/forms.py:143
+#: player/forms.py:122 player/forms.py:145
 #, fuzzy
 #| msgid "Any Game"
 msgid "Any Place"
 msgstr "Qualsiasi luogo"
 
-#: player/forms.py:121 player/forms.py:144
+#: player/forms.py:123 player/forms.py:146
 #, fuzzy
 #| msgid "Only see invitations for a particular Game."
 msgid "Only see invitations for a particular Place."
 msgstr "Visualizza solo gli inviti per un luogo specifico."
 
-#: player/forms.py:122 player/forms.py:145
+#: player/forms.py:124 player/forms.py:147
 msgid "place"
 msgstr "luogo"
 
-#: player/forms.py:162
+#: player/forms.py:164
 #, fuzzy
 #| msgid "Invitation Filters"
 msgid "no active filters"
 msgstr "Nessun filtro attivo"
 
-#: player/forms.py:174
+#: player/forms.py:176
 #, python-format
 msgid "%(n)s active filters"
 msgstr "%(n)s filtri attivi"
 
-#: player/forms.py:196
+#: player/forms.py:199
 #, fuzzy
 #| msgid "Type email address"
 msgid "friend's email address"
 msgstr "Indirizzo email dell'amico"
 
-#: player/forms.py:203
+#: player/forms.py:206
 msgid "name"
 msgstr "nome"
 
-#: player/forms.py:211 player/templates/player/rival_stats_snippet.html:10
+#: player/forms.py:214 player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
 msgstr "GIOCHI"
 
-#: player/forms.py:241 player/forms.py:271
+#: player/forms.py:245 player/forms.py:278
 msgid "Type email address"
 msgstr "Inserisci l’indirizzo email"
 
-#: player/forms.py:242 player/forms.py:272
+#: player/forms.py:247 player/forms.py:280
 msgid "A screen name for your friend (optional)"
 msgstr "Un nome visualizzato per il tuo amico (facoltativo)"
 
-#: player/forms.py:318
+#: player/forms.py:327
 msgid "rival skill level"
 msgstr "livello di abilità dell'avversario"
 
-#: player/models.py:392
+#: player/models.py:409
 msgid "probably"
 msgstr "probabilmente"
 
-#: player/models.py:393
+#: player/models.py:410
 msgid "maybe"
 msgstr "forse"
 
-#: player/models.py:394
+#: player/models.py:411
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: player/models.py:398
-msgid "much-weaker"
-msgstr "molto più debole"
-
-#: player/models.py:399
-msgid "weaker"
-msgstr "più debole"
-
-#: player/models.py:400
-msgid "matched"
-msgstr "alla pari"
-
-#: player/models.py:401
-msgid "stronger"
-msgstr "più forte"
-
-#: player/models.py:402
+#: player/models.py:415
 msgid "much-stronger"
 msgstr "molto più forte"
 
-#: player/models.py:463
+#: player/models.py:416
+msgid "stronger"
+msgstr "più forte"
+
+#: player/models.py:417
+msgid "matched"
+msgstr "alla pari"
+
+#: player/models.py:418
+msgid "weaker"
+msgstr "più debole"
+
+#: player/models.py:419
+msgid "much-weaker"
+msgstr "molto più debole"
+
+#: player/models.py:485
 msgid "Anywhere"
 msgstr "Ovunque"
 
-#: player/models.py:464
+#: player/models.py:486
 msgid "Any Time"
 msgstr "Qualsiasi orario"
 
@@ -151,7 +151,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"                Proposta per %(game)s presso %(venue)s, %(date)s alle %(time)s\n"
+"                Proposta per %(game)s presso %(venue)s, %(date)s alle "
+"%(time)s\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:25
@@ -185,8 +186,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"                %(name)s, contatta la struttura per verificare la disponibilità il "
-"%(date)s : %(phone)s : %(url)s\n"
+"                %(name)s, contatta la struttura per verificare la "
+"disponibilità il %(date)s : %(phone)s : %(url)s\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:43
@@ -224,12 +225,15 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"                Questa è la prima partita QWIKGAME di %(game)s in questa sede.\n"
+"                Questa è la prima partita QWIKGAME di %(game)s in questa "
+"sede.\n"
 "    "
 
 #: player/templates/player/chat_bubble_snippet.html:62
 msgid "Please check that the Venue has everything you need for the Match."
-msgstr "Si prega di controllare che la struttura abbia tutto il necessario per la partita."
+msgstr ""
+"Si prega di controllare che la struttura abbia tutto il necessario per la "
+"partita."
 
 #: player/templates/player/chat_bubble_snippet.html:65
 #, python-format

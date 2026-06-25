@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VERSIONE PACCHETTO\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:59+1000\n"
+"POT-Creation-Date: 2026-06-25 15:16+1000\n"
 "PO-Revision-Date: ANNO-ME-GI ORA:MI+ZONA\n"
 "Last-Translator: NOME COMPLETO <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <LL@li.org>\n"
@@ -50,23 +50,19 @@ msgstr "Benvenuto in Qwikgame"
 msgid "website"
 msgstr "sito web"
 
-#: templates/input_day.html:9
-msgid "Pick hours"
-msgstr "Scegli orari"
-
-#: templates/input_day.html:15
+#: templates/input_day.html:12
 msgid "All Day"
 msgstr "Tutto il giorno"
 
-#: templates/input_day.html:25
+#: templates/input_day.html:17
 msgid "The Venue is closed."
 msgstr "La sede è chiusa."
 
-#: templates/input_week.html:8
+#: templates/input_week.html:7
 msgid "Select Days and Time"
 msgstr "Seleziona giorni e orario"
 
-#: templates/input_week.html:13
+#: templates/input_week.html:12
 msgid "Any Time"
 msgstr "Qualsiasi orario"
 

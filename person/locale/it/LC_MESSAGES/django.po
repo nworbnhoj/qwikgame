@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:58+1000\n"
+"POT-Creation-Date: 2026-06-25 15:16+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,46 +24,46 @@ msgstr ""
 msgid "person to block"
 msgstr "Persona da bloccare"
 
-#: person/forms.py:34
+#: person/forms.py:33
 msgid "email address"
 msgstr "indirizzo email"
 
-#: person/forms.py:42
+#: person/forms.py:41
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "inviti via e-mail da"
 
-#: person/forms.py:43
+#: person/forms.py:42
 msgid "push notifications"
 msgstr "notifiche push"
 
-#: person/forms.py:44
+#: person/forms.py:43
 msgid "location access"
 msgstr "accesso alla posizione"
 
-#: person/forms.py:46
+#: person/forms.py:45
 msgid "Your choice."
 msgstr "La tua scelta."
 
-#: person/forms.py:47
+#: person/forms.py:46
 msgid "permissions"
 msgstr "permessi"
 
-#: person/forms.py:53
+#: person/forms.py:52
 msgid "Browser default"
 msgstr "Predefinito del browser"
 
-#: person/forms.py:54
+#: person/forms.py:53
 msgid "language"
 msgstr "lingua"
 
-#: person/forms.py:61 person/forms.py:198
+#: person/forms.py:61 person/forms.py:201
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr ""
 "Quando blocchi una persona, nessuno dei due potrà vedere l'altro su qwikgame."
 
-#: person/forms.py:62 person/forms.py:199
+#: person/forms.py:62 person/forms.py:202
 msgid "people you have blocked"
 msgstr "persone che hai bloccato"
 
@@ -77,11 +77,11 @@ msgstr "Nome QWIK"
 msgid "website / social media"
 msgstr "sito web / social media"
 
-#: person/forms.py:135
+#: person/forms.py:136
 msgid "your qwikgame screen name"
 msgstr "il tuo nome visualizzato su qwikgame"
 
-#: person/forms.py:174
+#: person/forms.py:176
 msgid "Add URL"
 msgstr "Aggiungi URL"
 

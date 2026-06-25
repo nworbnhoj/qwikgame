@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 05:12+1000\n"
+"POT-Creation-Date: 2026-06-25 15:16+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "L’account è disabilitato per %(e)s"
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -71,12 +71,11 @@ msgstr "Invia"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        È stata inviata un’email a %(request.GET.to_email)s con un link di "
+"        È stata inviata un’email a %(to_email)s con un link di "
 "verifica.\n"
 "    "
 
@@ -123,12 +122,11 @@ msgstr "Accedi"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            È stata inviata un’email a %(request.GET.to_email)s con un link "
+"            È stata inviata un’email a %(to_email)s con un link "
 "di accesso.\n"
 "    "
 
@@ -175,12 +173,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            È stata inviata un’email a %(request.GET.to_email)s con un link "
+"            È stata inviata un’email a %(to_email)s con un link "
 "di registrazione.\n"
 "    "
 

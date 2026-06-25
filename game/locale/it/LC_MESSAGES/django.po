@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 05:12+1000\n"
+"POT-Creation-Date: 2026-06-25 15:16+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game/forms.py:31
+#: game/forms.py:32
 msgid "Chat here with your rival"
 msgstr "Chatta qui con il tuo avversario"
 
-#: game/forms.py:57
+#: game/forms.py:58
 msgid "rival skill level"
-msgstr ""
+msgstr "livello di abilità del rivale"
 
-#: game/forms.py:62
+#: game/forms.py:65
 msgid "venue not suitable for game"
 msgstr "luogo non adatto al gioco"
 
-#: game/forms.py:63
+#: game/forms.py:66
 msgid "rival showed poor sportsmanship"
 msgstr "l'avversario ha mostrato scarso fair play"
 
-#: game/forms.py:64
+#: game/forms.py:67
 msgid "rival did not show up"
 msgstr "l'avversario non si è presentato"
 
-#: game/forms.py:66
+#: game/forms.py:69
 msgid "dissapointment"
-msgstr ""
+msgstr "delusione"
 
 #: game/templates/game/match.html:13 game/templates/game/matches.html:7
 msgid "Match"

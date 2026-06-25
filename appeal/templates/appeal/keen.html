@@ -92,6 +92,11 @@
         <div id="alert_detail_end" class="alert"></div>
     </div>
 
+<div id='week_days' hidden>
+{% for day in week_days %}
+    <div>{{day}}</div>
+{% endfor %}
+</div>
 {% include 'map.html' %}
 
 {% endblock detail %}

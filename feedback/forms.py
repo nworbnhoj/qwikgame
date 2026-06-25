@@ -13,7 +13,10 @@ class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
         fields = ['type', 'text']
-        labels = {'text': _('Description')}
+        labels = {
+            'text': _('Description'),
+            'type': _('Type'),
+        }
         localized_fields = ['__all__']
         widgets = {
             'text': TextArea(attrs={

@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from game.models import Game, Match
 from player.forms import FilterForm, FriendForm, FiltersForm, StrengthForm
 from player.models import Filter, Friend, Player, Strength
+from qwikgame.constants import TWO_DAYS, WEEK_DAYS
 from qwikgame.hourbits import DAY_NONE, Hours24x7
 from qwikgame.forms import MenuForm
 from qwikgame.log import Entry
@@ -316,6 +317,7 @@ class KeenView(AppealsView):
             'show_region_markers': 'true',
             'show_search_markers': 'true',
             'show_venue_markers': 'true',
+            'week_days': WEEK_DAYS,
         }
         self._context = context
         return self._context

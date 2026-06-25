@@ -713,14 +713,15 @@ function setDayFields(hours24x7, now_weekday, now_hour) {
             offset = parseInt(day.dataset.offsetday);
             weekday = Number.isInteger(offset) ? now_weekday + offset : now_weekday;
         }
-        const WEEKDAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         if (Number.isInteger(weekday) && Number.isInteger(offset)) {
             weekday = weekday % 7
             // set the week day in the DayField Field Label
-            const DAY_LABEL = day.closest('.by_day').previousElementSibling; 
+            const DAY_LABEL = day.closest('.by_day').previousElementSibling;
             if (DAY_LABEL) {
                 DAY_LABEL.innerText = DAY_LABEL.innerText.split(' ')[0];
-                DAY_LABEL.innerText += ' ' + WEEKDAY[(now_weekday + offset) % 7];
+                const N = (now_weekday + offset) % 7;
+                const WEEK_DAY = document.getElementById('week_days').querySelector(`:nth-child(${N})`)
+                DAY_LABEL.innerText += ' ' + WEEK_DAY.textContent;
             }
         }
         day.querySelectorAll(".hour_grid input").forEach(function(input) {

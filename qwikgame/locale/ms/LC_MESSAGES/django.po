@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -18,1025 +18,1033 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: qwikgame/constants.py:9
-msgid "SUNDAY"
+msgid "Sunday"
 msgstr "Ahad"
 
 #: qwikgame/constants.py:10
-msgid "MONDAY"
+msgid "Monday"
 msgstr "Isnin"
 
 #: qwikgame/constants.py:11
-msgid "TUESDAY"
+msgid "Tuesday"
 msgstr "Selasa"
 
 #: qwikgame/constants.py:12
-msgid "WEDNESDAY"
+msgid "Wednesday"
 msgstr "Rabu"
 
 #: qwikgame/constants.py:13
-msgid "THURSDAY"
+msgid "Thursday"
 msgstr "Khamis"
 
 #: qwikgame/constants.py:14
-msgid "FRIDAY"
+msgid "Friday"
 msgstr "Jumaat"
 
 #: qwikgame/constants.py:15
-msgid "SATURDAY"
+msgid "Saturday"
 msgstr "Sabtu"
 
-#: qwikgame/constants.py:60
+#: qwikgame/constants.py:19
+msgid "Today"
+msgstr "Hari ini"
+
+#: qwikgame/constants.py:20
+msgid "Tomorrow"
+msgstr "Esok"
+
+#: qwikgame/constants.py:65
 msgid "Afghanistan"
 msgstr "Afghanistan"
 
-#: qwikgame/constants.py:61
+#: qwikgame/constants.py:66
 msgid "Åland Islands"
 msgstr "Kepulauan Åland"
 
-#: qwikgame/constants.py:62
+#: qwikgame/constants.py:67
 msgid "Albania"
 msgstr "Albania"
 
-#: qwikgame/constants.py:63
+#: qwikgame/constants.py:68
 msgid "Algeria"
 msgstr "Algeria"
 
-#: qwikgame/constants.py:64
+#: qwikgame/constants.py:69
 msgid "American Samoa"
 msgstr "Samoa Amerika"
 
-#: qwikgame/constants.py:65
+#: qwikgame/constants.py:70
 msgid "Andorra"
 msgstr "Andorra"
 
-#: qwikgame/constants.py:66
+#: qwikgame/constants.py:71
 msgid "Angola"
 msgstr "Angola"
 
-#: qwikgame/constants.py:67
+#: qwikgame/constants.py:72
 msgid "Anguilla"
 msgstr "Anguilla"
 
-#: qwikgame/constants.py:68
+#: qwikgame/constants.py:73
 msgid "Antarctica"
 msgstr "Antartika"
 
-#: qwikgame/constants.py:69
+#: qwikgame/constants.py:74
 msgid "Antigua and Barbuda"
 msgstr "Antigua dan Barbuda"
 
-#: qwikgame/constants.py:70
+#: qwikgame/constants.py:75
 msgid "Argentina"
 msgstr "Argentina"
 
-#: qwikgame/constants.py:71
+#: qwikgame/constants.py:76
 msgid "Armenia"
 msgstr "Armenia"
 
-#: qwikgame/constants.py:72
+#: qwikgame/constants.py:77
 msgid "Aruba"
 msgstr "Aruba"
 
-#: qwikgame/constants.py:73
+#: qwikgame/constants.py:78
 msgid "Australia"
 msgstr "Australia"
 
-#: qwikgame/constants.py:74
+#: qwikgame/constants.py:79
 msgid "Austria"
 msgstr "Austria"
 
-#: qwikgame/constants.py:75
+#: qwikgame/constants.py:80
 msgid "Azerbaijan"
 msgstr "Azerbaijan"
 
-#: qwikgame/constants.py:76
+#: qwikgame/constants.py:81
 msgid "Bahamas"
 msgstr "Bahamas"
 
-#: qwikgame/constants.py:77
+#: qwikgame/constants.py:82
 msgid "Bahrain"
 msgstr "Bahrain"
 
-#: qwikgame/constants.py:78
+#: qwikgame/constants.py:83
 msgid "Bangladesh"
 msgstr "Bangladesh"
 
-#: qwikgame/constants.py:79
+#: qwikgame/constants.py:84
 msgid "Barbados"
 msgstr "Barbados"
 
-#: qwikgame/constants.py:80
+#: qwikgame/constants.py:85
 msgid "Belarus"
 msgstr "Belarus"
 
-#: qwikgame/constants.py:81
+#: qwikgame/constants.py:86
 msgid "Belgium"
 msgstr "Belgium"
 
-#: qwikgame/constants.py:82
+#: qwikgame/constants.py:87
 msgid "Belize"
 msgstr "Belize"
 
-#: qwikgame/constants.py:83
+#: qwikgame/constants.py:88
 msgid "Benin"
 msgstr "Benin"
 
-#: qwikgame/constants.py:84
+#: qwikgame/constants.py:89
 msgid "Bermuda"
 msgstr "Bermuda"
 
-#: qwikgame/constants.py:85
+#: qwikgame/constants.py:90
 msgid "Bhutan"
 msgstr "Bhutan"
 
-#: qwikgame/constants.py:86
+#: qwikgame/constants.py:91
 msgid "Bolivia, Plurinational State of"
 msgstr "Bolivia, Negeri Berbilang Bangsa"
 
-#: qwikgame/constants.py:87
+#: qwikgame/constants.py:92
 msgid "Bonaire, Sint Eustatius and Saba"
 msgstr "Bonaire, Sint Eustatius dan Saba"
 
-#: qwikgame/constants.py:88
+#: qwikgame/constants.py:93
 msgid "Bosnia and Herzegovina"
 msgstr "Bosnia dan Herzegovina"
 
-#: qwikgame/constants.py:89
+#: qwikgame/constants.py:94
 msgid "Botswana"
 msgstr "Botswana"
 
-#: qwikgame/constants.py:90
+#: qwikgame/constants.py:95
 msgid "Bouvet Island"
 msgstr "Pulau Bouvet"
 
-#: qwikgame/constants.py:91
+#: qwikgame/constants.py:96
 msgid "Brazil"
 msgstr "Brazil"
 
-#: qwikgame/constants.py:92
+#: qwikgame/constants.py:97
 msgid "British Indian Ocean Territory"
 msgstr "Wilayah Lautan Hindi British"
 
-#: qwikgame/constants.py:93
+#: qwikgame/constants.py:98
 msgid "Brunei Darussalam"
 msgstr "Brunei Darussalam"
 
-#: qwikgame/constants.py:94
+#: qwikgame/constants.py:99
 msgid "Bulgaria"
 msgstr "Bulgaria"
 
-#: qwikgame/constants.py:95
+#: qwikgame/constants.py:100
 msgid "Burkina Faso"
 msgstr "Burkina Faso"
 
-#: qwikgame/constants.py:96
+#: qwikgame/constants.py:101
 msgid "Burundi"
 msgstr "Burundi"
 
-#: qwikgame/constants.py:97
+#: qwikgame/constants.py:102
 msgid "Cambodia"
 msgstr "Kemboja"
 
-#: qwikgame/constants.py:98
+#: qwikgame/constants.py:103
 msgid "Cameroon"
 msgstr "Cameroon"
 
-#: qwikgame/constants.py:99
+#: qwikgame/constants.py:104
 msgid "Canada"
 msgstr "Kanada"
 
-#: qwikgame/constants.py:100
+#: qwikgame/constants.py:105
 msgid "Cape Verde"
 msgstr "Tanjung Verde"
 
-#: qwikgame/constants.py:101
+#: qwikgame/constants.py:106
 msgid "Cayman Islands"
 msgstr "Kepulauan Cayman"
 
-#: qwikgame/constants.py:102
+#: qwikgame/constants.py:107
 msgid "Central African Republic"
 msgstr "Republik Afrika Tengah"
 
-#: qwikgame/constants.py:103
+#: qwikgame/constants.py:108
 msgid "Chad"
 msgstr "Chad"
 
-#: qwikgame/constants.py:104
+#: qwikgame/constants.py:109
 msgid "Chile"
 msgstr "Chile"
 
-#: qwikgame/constants.py:105
+#: qwikgame/constants.py:110
 msgid "China"
 msgstr "China"
 
-#: qwikgame/constants.py:106
+#: qwikgame/constants.py:111
 msgid "Christmas Island"
 msgstr "Pulau Krismas"
 
-#: qwikgame/constants.py:107
+#: qwikgame/constants.py:112
 msgid "Cocos (Keeling) Islands"
 msgstr "Kepulauan Cocos (Keeling)"
 
-#: qwikgame/constants.py:108
+#: qwikgame/constants.py:113
 msgid "Colombia"
 msgstr "Colombia"
 
-#: qwikgame/constants.py:109
+#: qwikgame/constants.py:114
 msgid "Comoros"
 msgstr "Comoros"
 
-#: qwikgame/constants.py:110
+#: qwikgame/constants.py:115
 msgid "Congo"
 msgstr "Congo"
 
-#: qwikgame/constants.py:111
+#: qwikgame/constants.py:116
 msgid "Congo, the Democratic Republic of the"
 msgstr "Congo, Republik Demokratik"
 
-#: qwikgame/constants.py:112
+#: qwikgame/constants.py:117
 msgid "Cook Islands"
 msgstr "Kepulauan Cook"
 
-#: qwikgame/constants.py:113
+#: qwikgame/constants.py:118
 msgid "Costa Rica"
 msgstr "Costa Rica"
 
-#: qwikgame/constants.py:114
+#: qwikgame/constants.py:119
 msgid "Côte d'Ivoire"
 msgstr "Côte d'Ivoire"
 
-#: qwikgame/constants.py:115
+#: qwikgame/constants.py:120
 msgid "Croatia"
 msgstr "Croatia"
 
-#: qwikgame/constants.py:116
+#: qwikgame/constants.py:121
 msgid "Cuba"
 msgstr "Cuba"
 
-#: qwikgame/constants.py:117
+#: qwikgame/constants.py:122
 msgid "Curaçao"
 msgstr "Curaçao"
 
-#: qwikgame/constants.py:118
+#: qwikgame/constants.py:123
 msgid "Cyprus"
 msgstr "Cyprus"
 
-#: qwikgame/constants.py:119
+#: qwikgame/constants.py:124
 msgid "Czech Republic"
 msgstr "Republik Czech"
 
-#: qwikgame/constants.py:120
+#: qwikgame/constants.py:125
 msgid "Denmark"
 msgstr "Denmark"
 
-#: qwikgame/constants.py:121
+#: qwikgame/constants.py:126
 msgid "Djibouti"
 msgstr "Djibouti"
 
-#: qwikgame/constants.py:122
+#: qwikgame/constants.py:127
 msgid "Dominica"
 msgstr "Dominica"
 
-#: qwikgame/constants.py:123
+#: qwikgame/constants.py:128
 msgid "Dominican Republic"
 msgstr "Republik Dominican"
 
-#: qwikgame/constants.py:124
+#: qwikgame/constants.py:129
 msgid "Ecuador"
 msgstr "Ecuador"
 
-#: qwikgame/constants.py:125
+#: qwikgame/constants.py:130
 msgid "Egypt"
 msgstr "Mesir"
 
-#: qwikgame/constants.py:126
+#: qwikgame/constants.py:131
 msgid "El Salvador"
 msgstr "El Salvador"
 
-#: qwikgame/constants.py:127
+#: qwikgame/constants.py:132
 msgid "Equatorial Guinea"
 msgstr "Guinea Khatulistiwa"
 
-#: qwikgame/constants.py:128
+#: qwikgame/constants.py:133
 msgid "Eritrea"
 msgstr "Eritrea"
 
-#: qwikgame/constants.py:129
+#: qwikgame/constants.py:134
 msgid "Estonia"
 msgstr "Estonia"
 
-#: qwikgame/constants.py:130
+#: qwikgame/constants.py:135
 msgid "Ethiopia"
 msgstr "Habsyah"
 
-#: qwikgame/constants.py:131
+#: qwikgame/constants.py:136
 msgid "Falkland Islands (Malvinas)"
 msgstr "Kepulauan Falkland (Malvinas)"
 
-#: qwikgame/constants.py:132
+#: qwikgame/constants.py:137
 msgid "Faroe Islands"
 msgstr "Kepulauan Faroe"
 
-#: qwikgame/constants.py:133
+#: qwikgame/constants.py:138
 msgid "Fiji"
 msgstr "Fiji"
 
-#: qwikgame/constants.py:134
+#: qwikgame/constants.py:139
 msgid "Finland"
 msgstr "Finland"
 
-#: qwikgame/constants.py:135
+#: qwikgame/constants.py:140
 msgid "France"
 msgstr "Perancis"
 
-#: qwikgame/constants.py:136
+#: qwikgame/constants.py:141
 msgid "French Guiana"
 msgstr "Guiana Perancis"
 
-#: qwikgame/constants.py:137
+#: qwikgame/constants.py:142
 msgid "French Polynesia"
 msgstr "Polinesia Perancis"
 
-#: qwikgame/constants.py:138
+#: qwikgame/constants.py:143
 msgid "French Southern Territories"
 msgstr "Wilayah Selatan Perancis"
 
-#: qwikgame/constants.py:139
+#: qwikgame/constants.py:144
 msgid "Gabon"
 msgstr "Gabon"
 
-#: qwikgame/constants.py:140
+#: qwikgame/constants.py:145
 msgid "Gambia"
 msgstr "Gambia"
 
-#: qwikgame/constants.py:141
+#: qwikgame/constants.py:146
 msgid "Georgia"
 msgstr "Georgia"
 
-#: qwikgame/constants.py:142
+#: qwikgame/constants.py:147
 msgid "Germany"
 msgstr "Jerman"
 
-#: qwikgame/constants.py:143
+#: qwikgame/constants.py:148
 msgid "Ghana"
 msgstr "Ghana"
 
-#: qwikgame/constants.py:144
+#: qwikgame/constants.py:149
 msgid "Gibraltar"
 msgstr "Gibraltar"
 
-#: qwikgame/constants.py:145
+#: qwikgame/constants.py:150
 msgid "Greece"
 msgstr "Greece"
 
-#: qwikgame/constants.py:146
+#: qwikgame/constants.py:151
 msgid "Greenland"
 msgstr "Greenland"
 
-#: qwikgame/constants.py:147
+#: qwikgame/constants.py:152
 msgid "Grenada"
 msgstr "Grenada"
 
-#: qwikgame/constants.py:148
+#: qwikgame/constants.py:153
 msgid "Guadeloupe"
 msgstr "Guadeloupe"
 
-#: qwikgame/constants.py:149
+#: qwikgame/constants.py:154
 msgid "Guam"
 msgstr "Guam"
 
-#: qwikgame/constants.py:150
+#: qwikgame/constants.py:155
 msgid "Guatemala"
 msgstr "Guatemala"
 
-#: qwikgame/constants.py:151
+#: qwikgame/constants.py:156
 msgid "Guernsey"
 msgstr "Guernsey"
 
-#: qwikgame/constants.py:152
+#: qwikgame/constants.py:157
 msgid "Guinea"
 msgstr "Guinea"
 
-#: qwikgame/constants.py:153
+#: qwikgame/constants.py:158
 msgid "Guinea-Bissau"
 msgstr "Guinea-Bissau"
 
-#: qwikgame/constants.py:154
+#: qwikgame/constants.py:159
 msgid "Guyana"
 msgstr "Guyana"
 
-#: qwikgame/constants.py:155
+#: qwikgame/constants.py:160
 msgid "Haiti"
 msgstr "Haiti"
 
-#: qwikgame/constants.py:156
+#: qwikgame/constants.py:161
 msgid "Heard Island and McDonald Islands"
 msgstr "Pulau Heard dan Kepulauan McDonald"
 
-#: qwikgame/constants.py:157
+#: qwikgame/constants.py:162
 msgid "Holy See (Vatican City State)"
 msgstr "Takhta Suci (Negara Kota Vatican)"
 
-#: qwikgame/constants.py:158
+#: qwikgame/constants.py:163
 msgid "Honduras"
 msgstr "Honduras"
 
-#: qwikgame/constants.py:159
+#: qwikgame/constants.py:164
 msgid "Hong Kong"
 msgstr "Hong Kong"
 
-#: qwikgame/constants.py:160
+#: qwikgame/constants.py:165
 msgid "Hungary"
 msgstr "Hungary"
 
-#: qwikgame/constants.py:161
+#: qwikgame/constants.py:166
 msgid "Iceland"
 msgstr "Iceland"
 
-#: qwikgame/constants.py:162
+#: qwikgame/constants.py:167
 msgid "India"
 msgstr "India"
 
-#: qwikgame/constants.py:163
+#: qwikgame/constants.py:168
 msgid "Indonesia"
 msgstr "Indonesia"
 
-#: qwikgame/constants.py:164
+#: qwikgame/constants.py:169
 msgid "Iran, Islamic Republic of"
 msgstr "Iran, Republik Islam"
 
-#: qwikgame/constants.py:165
+#: qwikgame/constants.py:170
 msgid "Iraq"
 msgstr "Iraq"
 
-#: qwikgame/constants.py:166
+#: qwikgame/constants.py:171
 msgid "Ireland"
 msgstr "Ireland"
 
-#: qwikgame/constants.py:167
+#: qwikgame/constants.py:172
 msgid "Isle of Man"
 msgstr "Isle of Man"
 
-#: qwikgame/constants.py:168
+#: qwikgame/constants.py:173
 msgid "Israel"
 msgstr "Israel"
 
-#: qwikgame/constants.py:169
+#: qwikgame/constants.py:174
 msgid "Italy"
 msgstr "Itali"
 
-#: qwikgame/constants.py:170
+#: qwikgame/constants.py:175
 msgid "Jamaica"
 msgstr "Jamaica"
 
-#: qwikgame/constants.py:171
+#: qwikgame/constants.py:176
 msgid "Japan"
 msgstr "Jepun"
 
-#: qwikgame/constants.py:172
+#: qwikgame/constants.py:177
 msgid "Jersey"
 msgstr "Jersey"
 
-#: qwikgame/constants.py:173
+#: qwikgame/constants.py:178
 msgid "Jordan"
 msgstr "Jordan"
 
-#: qwikgame/constants.py:174
+#: qwikgame/constants.py:179
 msgid "Kazakhstan"
 msgstr "Kazakhstan"
 
-#: qwikgame/constants.py:175
+#: qwikgame/constants.py:180
 msgid "Kenya"
 msgstr "Kenya"
 
-#: qwikgame/constants.py:176
+#: qwikgame/constants.py:181
 msgid "Kiribati"
 msgstr "Kiribati"
 
-#: qwikgame/constants.py:177
+#: qwikgame/constants.py:182
 msgid "Korea, Democratic People's Republic of"
 msgstr "Korea, Republik Rakyat Demokratik"
 
-#: qwikgame/constants.py:178
+#: qwikgame/constants.py:183
 msgid "Korea, Republic of"
 msgstr "Korea, Republik"
 
-#: qwikgame/constants.py:179
+#: qwikgame/constants.py:184
 msgid "Kuwait"
 msgstr "Kuwait"
 
-#: qwikgame/constants.py:180
+#: qwikgame/constants.py:185
 msgid "Kyrgyzstan"
 msgstr "Kyrgyzstan"
 
-#: qwikgame/constants.py:181
+#: qwikgame/constants.py:186
 msgid "Lao People's Democratic Republic"
 msgstr "Republik Demokratik Rakyat Lao"
 
-#: qwikgame/constants.py:182
+#: qwikgame/constants.py:187
 msgid "Latvia"
 msgstr "Latvia"
 
-#: qwikgame/constants.py:183
+#: qwikgame/constants.py:188
 msgid "Lebanon"
 msgstr "Lubnan"
 
-#: qwikgame/constants.py:184
+#: qwikgame/constants.py:189
 msgid "Lesotho"
 msgstr "Lesotho"
 
-#: qwikgame/constants.py:185
+#: qwikgame/constants.py:190
 msgid "Liberia"
 msgstr "Liberia"
 
-#: qwikgame/constants.py:186
+#: qwikgame/constants.py:191
 msgid "Libya"
 msgstr "Libya"
 
-#: qwikgame/constants.py:187
+#: qwikgame/constants.py:192
 msgid "Liechtenstein"
 msgstr "Liechtenstein"
 
-#: qwikgame/constants.py:188
+#: qwikgame/constants.py:193
 msgid "Lithuania"
 msgstr "Lithuania"
 
-#: qwikgame/constants.py:189
+#: qwikgame/constants.py:194
 msgid "Luxembourg"
 msgstr "Luxembourg"
 
-#: qwikgame/constants.py:190
+#: qwikgame/constants.py:195
 msgid "Macao"
 msgstr "Macao"
 
-#: qwikgame/constants.py:191
+#: qwikgame/constants.py:196
 msgid "Macedonia, the former Yugoslav Republic of"
 msgstr "Macedonia, bekas Republik Yugoslavia"
 
-#: qwikgame/constants.py:192
+#: qwikgame/constants.py:197
 msgid "Madagascar"
 msgstr "Madagascar"
 
-#: qwikgame/constants.py:193
+#: qwikgame/constants.py:198
 msgid "Malawi"
 msgstr "Malawi"
 
-#: qwikgame/constants.py:194
+#: qwikgame/constants.py:199
 msgid "Malaysia"
 msgstr "Malaysia"
 
-#: qwikgame/constants.py:195
+#: qwikgame/constants.py:200
 msgid "Mali"
 msgstr "Mali"
 
-#: qwikgame/constants.py:196
+#: qwikgame/constants.py:201
 msgid "Malta"
 msgstr "Malta"
 
-#: qwikgame/constants.py:197
+#: qwikgame/constants.py:202
 msgid "Marshall Islands"
 msgstr "Kepulauan Marshall"
 
-#: qwikgame/constants.py:198
+#: qwikgame/constants.py:203
 msgid "Martinique"
 msgstr "Martinique"
 
-#: qwikgame/constants.py:199
+#: qwikgame/constants.py:204
 msgid "Mauritania"
 msgstr "Mauritania"
 
-#: qwikgame/constants.py:200
+#: qwikgame/constants.py:205
 msgid "Mauritius"
 msgstr "Mauritius"
 
-#: qwikgame/constants.py:201
+#: qwikgame/constants.py:206
 msgid "Mayotte"
 msgstr "Mayotte"
 
-#: qwikgame/constants.py:202
+#: qwikgame/constants.py:207
 msgid "Mexico"
 msgstr "Mexico"
 
-#: qwikgame/constants.py:203
+#: qwikgame/constants.py:208
 msgid "Micronesia, Federated States of"
 msgstr "Micronesia, Negeri Persekutuan"
 
-#: qwikgame/constants.py:204
+#: qwikgame/constants.py:209
 msgid "Moldova, Republic of"
 msgstr "Moldova, Republik"
 
-#: qwikgame/constants.py:205
+#: qwikgame/constants.py:210
 msgid "Monaco"
 msgstr "Monaco"
 
-#: qwikgame/constants.py:206
+#: qwikgame/constants.py:211
 msgid "Mongolia"
 msgstr "Mongolia"
 
-#: qwikgame/constants.py:207
+#: qwikgame/constants.py:212
 msgid "Montenegro"
 msgstr "Montenegro"
 
-#: qwikgame/constants.py:208
+#: qwikgame/constants.py:213
 msgid "Montserrat"
 msgstr "Montserrat"
 
-#: qwikgame/constants.py:209
+#: qwikgame/constants.py:214
 msgid "Morocco"
 msgstr "Maghribi"
 
-#: qwikgame/constants.py:210
+#: qwikgame/constants.py:215
 msgid "Mozambique"
 msgstr "Mozambik"
 
-#: qwikgame/constants.py:211
+#: qwikgame/constants.py:216
 msgid "Myanmar"
 msgstr "Myanmar"
 
-#: qwikgame/constants.py:212
+#: qwikgame/constants.py:217
 msgid "Namibia"
 msgstr "Namibia"
 
-#: qwikgame/constants.py:213
+#: qwikgame/constants.py:218
 msgid "Nauru"
 msgstr "Nauru"
 
-#: qwikgame/constants.py:214
+#: qwikgame/constants.py:219
 msgid "Nepal"
 msgstr "Nepal"
 
-#: qwikgame/constants.py:215
+#: qwikgame/constants.py:220
 msgid "Netherlands"
 msgstr "Belanda"
 
-#: qwikgame/constants.py:216
+#: qwikgame/constants.py:221
 msgid "New Caledonia"
 msgstr "New Caledonia"
 
-#: qwikgame/constants.py:217
+#: qwikgame/constants.py:222
 msgid "New Zealand"
 msgstr "New Zealand"
 
-#: qwikgame/constants.py:218
+#: qwikgame/constants.py:223
 msgid "Nicaragua"
 msgstr "Nicaragua"
 
-#: qwikgame/constants.py:219
+#: qwikgame/constants.py:224
 msgid "Niger"
 msgstr "Niger"
 
-#: qwikgame/constants.py:220
+#: qwikgame/constants.py:225
 msgid "Nigeria"
 msgstr "Nigeria"
 
-#: qwikgame/constants.py:221
+#: qwikgame/constants.py:226
 msgid "Niue"
 msgstr "Niue"
 
-#: qwikgame/constants.py:222
+#: qwikgame/constants.py:227
 msgid "Norfolk Island"
 msgstr "Pulau Norfolk"
 
-#: qwikgame/constants.py:223
+#: qwikgame/constants.py:228
 msgid "Northern Mariana Islands"
 msgstr "Kepulauan Mariana Utara"
 
-#: qwikgame/constants.py:224
+#: qwikgame/constants.py:229
 msgid "Norway"
 msgstr "Norwegia"
 
-#: qwikgame/constants.py:225
+#: qwikgame/constants.py:230
 msgid "Oman"
 msgstr "Oman"
 
-#: qwikgame/constants.py:226
+#: qwikgame/constants.py:231
 msgid "Pakistan"
 msgstr "Pakistan"
 
-#: qwikgame/constants.py:227
+#: qwikgame/constants.py:232
 msgid "Palau"
 msgstr "Palau"
 
-#: qwikgame/constants.py:228
+#: qwikgame/constants.py:233
 msgid "Palestinian Territory, Occupied"
 msgstr "Wilayah Palestin, Diduduki"
 
-#: qwikgame/constants.py:229
+#: qwikgame/constants.py:234
 msgid "Panama"
 msgstr "Panama"
 
-#: qwikgame/constants.py:230
+#: qwikgame/constants.py:235
 msgid "Papua New Guinea"
 msgstr "Papua New Guinea"
 
-#: qwikgame/constants.py:231
+#: qwikgame/constants.py:236
 msgid "Paraguay"
 msgstr "Paraguay"
 
-#: qwikgame/constants.py:232
+#: qwikgame/constants.py:237
 msgid "Peru"
 msgstr "Peru"
 
-#: qwikgame/constants.py:233
+#: qwikgame/constants.py:238
 msgid "Philippines"
 msgstr "Filipina"
 
-#: qwikgame/constants.py:234
+#: qwikgame/constants.py:239
 msgid "Pitcairn"
 msgstr "Pitcairn"
 
-#: qwikgame/constants.py:235
+#: qwikgame/constants.py:240
 msgid "Poland"
 msgstr "Poland"
 
-#: qwikgame/constants.py:236
+#: qwikgame/constants.py:241
 msgid "Portugal"
 msgstr "Portugal"
 
-#: qwikgame/constants.py:237
+#: qwikgame/constants.py:242
 msgid "Puerto Rico"
 msgstr "Puerto Rico"
 
-#: qwikgame/constants.py:238
+#: qwikgame/constants.py:243
 msgid "Qatar"
 msgstr "Qatar"
 
-#: qwikgame/constants.py:239
+#: qwikgame/constants.py:244
 msgid "Réunion"
 msgstr "Réunion"
 
-#: qwikgame/constants.py:240
+#: qwikgame/constants.py:245
 msgid "Romania"
 msgstr "Romania"
 
-#: qwikgame/constants.py:241
+#: qwikgame/constants.py:246
 msgid "Russian Federation"
 msgstr "Persekutuan Rusia"
 
-#: qwikgame/constants.py:242
+#: qwikgame/constants.py:247
 msgid "Rwanda"
 msgstr "Rwanda"
 
-#: qwikgame/constants.py:243
+#: qwikgame/constants.py:248
 msgid "Saint Barthélemy"
 msgstr "Saint Barthélemy"
 
-#: qwikgame/constants.py:244
+#: qwikgame/constants.py:249
 msgid "Saint Helena, Ascension and Tristan da Cunha"
 msgstr "Saint Helena, Ascension dan Tristan da Cunha"
 
-#: qwikgame/constants.py:245
+#: qwikgame/constants.py:250
 msgid "Saint Kitts and Nevis"
 msgstr "Saint Kitts dan Nevis"
 
-#: qwikgame/constants.py:246
+#: qwikgame/constants.py:251
 msgid "Saint Lucia"
 msgstr "Saint Lucia"
 
-#: qwikgame/constants.py:247
+#: qwikgame/constants.py:252
 msgid "Saint Martin (French part)"
 msgstr "Saint Martin (bahagian Perancis)"
 
-#: qwikgame/constants.py:248
+#: qwikgame/constants.py:253
 msgid "Saint Pierre and Miquelon"
 msgstr "Saint Pierre dan Miquelon"
 
-#: qwikgame/constants.py:249
+#: qwikgame/constants.py:254
 msgid "Saint Vincent and the Grenadines"
 msgstr "Saint Vincent dan Grenadines"
 
-#: qwikgame/constants.py:250
+#: qwikgame/constants.py:255
 msgid "Samoa"
 msgstr "Samoa"
 
-#: qwikgame/constants.py:251
+#: qwikgame/constants.py:256
 msgid "San Marino"
 msgstr "San Marino"
 
-#: qwikgame/constants.py:252
+#: qwikgame/constants.py:257
 msgid "Sao Tome and Principe"
 msgstr "São Tomé dan Príncipe"
 
-#: qwikgame/constants.py:253
+#: qwikgame/constants.py:258
 msgid "Saudi Arabia"
 msgstr "Arab Saudi"
 
-#: qwikgame/constants.py:254
+#: qwikgame/constants.py:259
 msgid "Senegal"
 msgstr "Senegal"
 
-#: qwikgame/constants.py:255
+#: qwikgame/constants.py:260
 msgid "Serbia"
 msgstr "Serbia"
 
-#: qwikgame/constants.py:256
+#: qwikgame/constants.py:261
 msgid "Seychelles"
 msgstr "Seychelles"
 
-#: qwikgame/constants.py:257
+#: qwikgame/constants.py:262
 msgid "Sierra Leone"
 msgstr "Sierra Leone"
 
-#: qwikgame/constants.py:258
+#: qwikgame/constants.py:263
 msgid "Singapore"
 msgstr "Singapura"
 
-#: qwikgame/constants.py:259
+#: qwikgame/constants.py:264
 msgid "Sint Maarten (Dutch part)"
 msgstr "Sint Maarten (bahagian Belanda)"
 
-#: qwikgame/constants.py:260
+#: qwikgame/constants.py:265
 msgid "Slovakia"
 msgstr "Slovakia"
 
-#: qwikgame/constants.py:261
+#: qwikgame/constants.py:266
 msgid "Slovenia"
 msgstr "Slovenia"
 
-#: qwikgame/constants.py:262
+#: qwikgame/constants.py:267
 msgid "Solomon Islands"
 msgstr "Kepulauan Solomon"
 
-#: qwikgame/constants.py:263
+#: qwikgame/constants.py:268
 msgid "Somalia"
 msgstr "Somalia"
 
-#: qwikgame/constants.py:264
+#: qwikgame/constants.py:269
 msgid "South Africa"
 msgstr "Afrika Selatan"
 
-#: qwikgame/constants.py:265
+#: qwikgame/constants.py:270
 msgid "South Georgia and the South Sandwich Islands"
 msgstr "Georgia Selatan dan Kepulauan Sandwich Selatan"
 
-#: qwikgame/constants.py:266
+#: qwikgame/constants.py:271
 msgid "South Sudan"
 msgstr "Sudan Selatan"
 
-#: qwikgame/constants.py:267
+#: qwikgame/constants.py:272
 msgid "Spain"
 msgstr "Sepanyol"
 
-#: qwikgame/constants.py:268
+#: qwikgame/constants.py:273
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
-#: qwikgame/constants.py:269
+#: qwikgame/constants.py:274
 msgid "Sudan"
 msgstr "Sudan"
 
-#: qwikgame/constants.py:270
+#: qwikgame/constants.py:275
 msgid "Suriname"
 msgstr "Surinam"
 
-#: qwikgame/constants.py:271
+#: qwikgame/constants.py:276
 msgid "Svalbard and Jan Mayen"
 msgstr "Svalbard dan Jan Mayen"
 
-#: qwikgame/constants.py:272
+#: qwikgame/constants.py:277
 msgid "Swaziland"
 msgstr "Eswatini"
 
-#: qwikgame/constants.py:273
+#: qwikgame/constants.py:278
 msgid "Sweden"
 msgstr "Sweden"
 
-#: qwikgame/constants.py:274
+#: qwikgame/constants.py:279
 msgid "Switzerland"
 msgstr "Swiss"
 
-#: qwikgame/constants.py:275
+#: qwikgame/constants.py:280
 msgid "Syrian Arab Republic"
 msgstr "Republik Arab Syria"
 
-#: qwikgame/constants.py:276
+#: qwikgame/constants.py:281
 msgid "Taiwan, Province of China"
 msgstr "Taiwan, Wilayah China"
 
-#: qwikgame/constants.py:277
+#: qwikgame/constants.py:282
 msgid "Tajikistan"
 msgstr "Tajikistan"
 
-#: qwikgame/constants.py:278
+#: qwikgame/constants.py:283
 msgid "Tanzania, United Republic of"
 msgstr "Tanzania, Republik Bersatu"
 
-#: qwikgame/constants.py:279
+#: qwikgame/constants.py:284
 msgid "Thailand"
 msgstr "Thailand"
 
-#: qwikgame/constants.py:280
+#: qwikgame/constants.py:285
 msgid "Timor-Leste"
 msgstr "Timor Leste"
 
-#: qwikgame/constants.py:281
+#: qwikgame/constants.py:286
 msgid "Togo"
 msgstr "Togo"
 
-#: qwikgame/constants.py:282
+#: qwikgame/constants.py:287
 msgid "Tokelau"
 msgstr "Tokelau"
 
-#: qwikgame/constants.py:283
+#: qwikgame/constants.py:288
 msgid "Tonga"
 msgstr "Tonga"
 
-#: qwikgame/constants.py:284
+#: qwikgame/constants.py:289
 msgid "Trinidad and Tobago"
 msgstr "Trinidad dan Tobago"
 
-#: qwikgame/constants.py:285
+#: qwikgame/constants.py:290
 msgid "Tunisia"
 msgstr "Tunisia"
 
-#: qwikgame/constants.py:286
+#: qwikgame/constants.py:291
 msgid "Turkey"
 msgstr "Turki"
 
-#: qwikgame/constants.py:287
+#: qwikgame/constants.py:292
 msgid "Turkmenistan"
 msgstr "Turkmenistan"
 
-#: qwikgame/constants.py:288
+#: qwikgame/constants.py:293
 msgid "Turks and Caicos Islands"
 msgstr "Kepulauan Turks dan Caicos"
 
-#: qwikgame/constants.py:289
+#: qwikgame/constants.py:294
 msgid "Tuvalu"
 msgstr "Tuvalu"
 
-#: qwikgame/constants.py:290
+#: qwikgame/constants.py:295
 msgid "Uganda"
 msgstr "Uganda"
 
-#: qwikgame/constants.py:291
+#: qwikgame/constants.py:296
 msgid "Ukraine"
 msgstr "Ukraine"
 
-#: qwikgame/constants.py:292
+#: qwikgame/constants.py:297
 msgid "United Arab Emirates"
 msgstr "Emiriah Arab Bersatu"
 
-#: qwikgame/constants.py:293
+#: qwikgame/constants.py:298
 msgid "United Kingdom"
 msgstr "United Kingdom"
 
-#: qwikgame/constants.py:294
+#: qwikgame/constants.py:299
 msgid "United States"
 msgstr "Amerika Syarikat"
 
-#: qwikgame/constants.py:295
+#: qwikgame/constants.py:300
 msgid "United States Minor Outlying Islands"
 msgstr "Kepulauan Terpencil Kecil Amerika Syarikat"
 
-#: qwikgame/constants.py:296
+#: qwikgame/constants.py:301
 msgid "Uruguay"
 msgstr "Uruguay"
 
-#: qwikgame/constants.py:297
+#: qwikgame/constants.py:302
 msgid "Uzbekistan"
 msgstr "Uzbekistan"
 
-#: qwikgame/constants.py:298
+#: qwikgame/constants.py:303
 msgid "Vanuatu"
 msgstr "Vanuatu"
 
-#: qwikgame/constants.py:299
+#: qwikgame/constants.py:304
 msgid "Venezuela, Bolivarian Republic of"
 msgstr "Venezuela, Republik Bolivar"
 
-#: qwikgame/constants.py:300
+#: qwikgame/constants.py:305
 msgid "Viet Nam"
 msgstr "Vietnam"
 
-#: qwikgame/constants.py:301
+#: qwikgame/constants.py:306
 msgid "Virgin Islands, British"
 msgstr "Kepulauan Virgin, British"
 
-#: qwikgame/constants.py:302
+#: qwikgame/constants.py:307
 msgid "Virgin Islands, U.S."
 msgstr "Kepulauan Virgin, A.S."
 
-#: qwikgame/constants.py:303
+#: qwikgame/constants.py:308
 msgid "Wallis and Futuna"
 msgstr "Wallis dan Futuna"
 
-#: qwikgame/constants.py:304
+#: qwikgame/constants.py:309
 msgid "Western Sahara"
 msgstr "Sahara Barat"
 
-#: qwikgame/constants.py:305
+#: qwikgame/constants.py:310
 msgid "Yemen"
 msgstr "Yaman"
 
-#: qwikgame/constants.py:306
+#: qwikgame/constants.py:311
 msgid "Zambia"
 msgstr "Zambia"
 
-#: qwikgame/constants.py:307
+#: qwikgame/constants.py:312
 msgid "Zimbabwe"
 msgstr "Zimbabwe"
 
-#: qwikgame/fields.py:93
+#: qwikgame/fields.py:76
 msgid "Select from map"
 msgstr "Pilih dari peta"

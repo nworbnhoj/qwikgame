@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "Akaun ini dinyahaktifkan untuk %(e)s"
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -69,12 +69,11 @@ msgstr "Hantar"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"        Emel telah dihantar ke %(to_email)s dengan pautan "
 "pengesahan.\n"
 "    "
 
@@ -121,12 +120,11 @@ msgstr "Log masuk"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"            Emel telah dihantar ke %(to_email)s dengan pautan "
 "log masuk. \n"
 "    "
 
@@ -172,12 +170,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            Emel telah dihantar ke %(request.GET.to_email)s dengan pautan "
+"            Emel telah dihantar ke %(to_email)s dengan pautan "
 "pendaftaran.\n"
 "    "
 

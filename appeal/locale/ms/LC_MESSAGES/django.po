@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -18,43 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: appeal/forms.py:58
+#: appeal/forms.py:59
 msgid "When are you keen to play?"
 msgstr "Bila anda berminat untuk bermain?"
 
-#: appeal/forms.py:59
+#: appeal/forms.py:60
 msgid "what time works for you?"
 msgstr "masa apa yang sesuai untuk anda?"
 
-#: appeal/forms.py:109
+#: appeal/forms.py:110
 msgid "game"
 msgstr "permainan"
 
-#: appeal/forms.py:118
-msgid "today"
-msgstr "hari ini"
-
-#: appeal/forms.py:126
-msgid "tomorrow"
-msgstr "esok"
-
-#: appeal/forms.py:203
-msgid "Please select at least one hour in today or tomorrow."
-msgstr "Sila pilih sekurang-kurangnya satu jam pada hari ini atau esok."
-
-#: appeal/forms.py:218
+#: appeal/forms.py:196
 msgid "notify friend by email"
 msgstr "maklumkan rakan melalui emel"
 
-#: appeal/forms.py:229
+#: appeal/forms.py:207
 msgid "venue"
 msgstr "lokasi"
 
-#: appeal/forms.py:259
+#: appeal/forms.py:220
+msgid "time"
+msgstr "masa"
+
+#: appeal/forms.py:241
 msgid "Check Venue Availability"
 msgstr "Semak Ketersediaan Lokasi"
 
-#: appeal/forms.py:261
+#: appeal/forms.py:243
 msgid "QWIKGAME does not book courts"
 msgstr "QWIKGAME tidak menempah gelanggang"
 
@@ -76,9 +68,8 @@ msgid ""
 "rival. Continue?"
 msgstr ""
 "Anda akan menjadualkan satu perlawanan. Sesi sembang akan dibuka dengan "
-"lawan anda. Teruskan?"
-"Anda akan menjadualkan satu perlawanan. Sesi sembang akan dibuka dengan "
-"lawan anda. Teruskan?"
+"lawan anda. Teruskan?Anda akan menjadualkan satu perlawanan. Sesi sembang "
+"akan dibuka dengan lawan anda. Teruskan?"
 
 #: appeal/templates/appeal/appeals.html:7
 msgid "Feed"
@@ -139,8 +130,7 @@ msgid ""
 msgstr ""
 "\n"
 "                Buka jemputan %(br)s atau hantar yang baharu!\n"
-"    "
-"\n"
+"    \n"
 "                Buka jemputan %(br)s atau hantar yang baharu!\n"
 "    "
 

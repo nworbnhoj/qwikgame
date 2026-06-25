@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 07:37+1100\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: 2026-06-15 08:00+0800\n"
 "Last-Translator: John Brown <john@qwikgame.org>\n"
 "Language-Team: Malay <ms>\n"
@@ -18,39 +18,44 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: venue/forms.py:17
-msgid "SEARCH"
-msgstr "CARI"
+msgid "search"
+msgstr "cari"
 
 #: venue/forms.py:22
 msgid "restrict the search to a region"
 msgstr "hadkan carian kepada satu kawasan"
 
 #: venue/forms.py:23
-msgid "REGION"
-msgstr "KAWASAN"
+msgid "region"
+msgstr "kawasan"
 
 #: venue/forms.py:30
 msgid "Specify the Game for these Qwikgame Venues"
 msgstr "Tentukan Permainan untuk Lokasi Qwikgame ini"
 
-#: venue/forms.py:31
-msgid "GAME"
-msgstr "PERMAINAN"
+#: venue/forms.py:31 venue/forms.py:91 venue/templates/venue/venues.html:44
+msgid "game"
+msgstr "permainan"
 
-#: venue/forms.py:60
+#: venue/forms.py:61
 msgid "Select Google Places to add as Qwikgame Venues"
 msgstr "Pilih Google Places untuk ditambah sebagai Lokasi Qwikgame"
 
-#: venue/forms.py:61
-msgid "GOOGLE PLACES"
-msgstr "GOOGLE PLACES"
+#: venue/forms.py:62
+msgid "google places"
+msgstr "tempat Google"
 
-#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:7
-#: venue/templates/venue/venues.html:33
+#: venue/forms.py:97
+msgid "place"
+msgstr "tempat"
+
+#: venue/templates/venue/venue.html:7 venue/templates/venue/venues.html:9
+#: venue/templates/venue/venues.html:35
 msgid "Venues"
 msgstr "Lokasi"
 
-#: venue/templates/venue/venue.html:40 venue/templates/venue/venues.html:91
+#: venue/templates/venue/venue.html:40 venue/templates/venue/venue_add.html:69
+#: venue/templates/venue/venues.html:94
 msgid "Add Venue"
 msgstr "Tambah Lokasi"
 
@@ -86,23 +91,23 @@ msgstr "PENGURUS"
 msgid "GAMES"
 msgstr "PERMAINAN"
 
-#: venue/templates/venue/venues.html:24
+#: venue/templates/venue/venue_add.html:51
+msgid "Venue Add"
+msgstr "Lokasi"
+
+#: venue/templates/venue/venue_add.html:79 venue/templates/venue/venues.html:26
 msgid "Add"
 msgstr "Tambah"
 
-#: venue/templates/venue/venues.html:36
+#: venue/templates/venue/venues.html:38
 msgid "Group by"
 msgstr "Kumpulkan mengikut"
 
-#: venue/templates/venue/venues.html:42
-msgid "game"
-msgstr "permainan"
-
-#: venue/templates/venue/venues.html:72
+#: venue/templates/venue/venues.html:74
 msgid "No venues :-("
 msgstr "Tiada lokasi :-("
 
-#: venue/templates/venue/venues.html:85
+#: venue/templates/venue/venues.html:88
 #, python-format
 msgid ""
 "\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: game/forms.py:31
+#: game/forms.py:32
 msgid "Chat here with your rival"
 msgstr "Sembang di sini dengan lawan anda"
 
-#: game/forms.py:57
+#: game/forms.py:58
 msgid "rival skill level"
 msgstr "tahap kemahiran lawan"
 
-#: game/forms.py:62
+#: game/forms.py:65
 msgid "venue not suitable for game"
 msgstr "lokasi tidak sesuai untuk permainan"
 
-#: game/forms.py:63
+#: game/forms.py:66
 msgid "rival showed poor sportsmanship"
 msgstr "lawan menunjukkan semangat kesukanan yang lemah"
 
-#: game/forms.py:64
+#: game/forms.py:67
 msgid "rival did not show up"
 msgstr "lawan tidak hadir"
 
-#: game/forms.py:66
+#: game/forms.py:69
 msgid "dissapointment"
 msgstr "kekecewaan"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,47 +23,48 @@ msgstr ""
 msgid "person to block"
 msgstr "Orang untuk disekat"
 
-#: person/forms.py:34
+#: person/forms.py:33
 msgid "email address"
 msgstr "alamat e-mel"
 
-#: person/forms.py:42
+#: person/forms.py:41
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "jemputan emel daripada"
 
-#: person/forms.py:43
+#: person/forms.py:42
 msgid "push notifications"
 msgstr "pemberitahuan tolak"
 
-#: person/forms.py:44
+#: person/forms.py:43
 msgid "location access"
 msgstr "akses lokasi"
 
-#: person/forms.py:46
+#: person/forms.py:45
 msgid "Your choice."
 msgstr "Pilihan anda."
 
-#: person/forms.py:47
+#: person/forms.py:46
 msgid "permissions"
 msgstr "Kebenaran"
 
-#: person/forms.py:53
+#: person/forms.py:52
 msgid "Browser default"
 msgstr "Tetapan lalai pelayar"
 
-#: person/forms.py:54
+#: person/forms.py:53
 msgid "language"
 msgstr "Bahasa"
 
-#: person/forms.py:61 person/forms.py:198
+#: person/forms.py:61 person/forms.py:201
 msgid "When you block a person, neither of you will see the other on qwikgame."
-msgstr "Apabila anda menyekat seseorang, anda berdua tidak akan dapat melihat satu sama lain di Qwikgame."
-"Apabila anda menyekat seseorang, anda berdua tidak akan melihat satu sama "
-"lain di qwikgame."
+msgstr ""
+"Apabila anda menyekat seseorang, anda berdua tidak akan dapat melihat satu "
+"sama lain di Qwikgame.Apabila anda menyekat seseorang, anda berdua tidak "
+"akan melihat satu sama lain di qwikgame."
 
-#: person/forms.py:62 person/forms.py:199
+#: person/forms.py:62 person/forms.py:202
 msgid "people you have blocked"
 msgstr "orang yang telah anda sekat"
 
@@ -77,11 +78,11 @@ msgstr "nama QWIK"
 msgid "website / social media"
 msgstr "tambah URL media sosial"
 
-#: person/forms.py:135
+#: person/forms.py:136
 msgid "your qwikgame screen name"
 msgstr "nama paparan qwikgame anda"
 
-#: person/forms.py:174
+#: person/forms.py:176
 msgid "Add URL"
 msgstr "Tambah URL"
 

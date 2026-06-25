@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 07:02+1000\n"
+"POT-Creation-Date: 2026-06-25 15:59+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malay <ms>\n"
@@ -17,117 +17,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: player/forms.py:25 player/models.py:462
+#: player/forms.py:26 player/models.py:484
 msgid "Any Game"
 msgstr "Sebarang Permainan"
 
-#: player/forms.py:26
+#: player/forms.py:27
 msgid "Only see invitations for a particular Game."
 msgstr "Hanya lihat jemputan untuk permainan tertentu."
 
-#: player/forms.py:27 player/forms.py:310
+#: player/forms.py:28 player/forms.py:319
 #: player/templates/player/friends.html:46
 msgid "game"
 msgstr "permainan"
 
-#: player/forms.py:34
+#: player/forms.py:35
 msgid "Only see invitations at specific times in your week."
 msgstr "Hanya lihat jemputan pada masa tertentu dalam minggu anda."
 
-#: player/forms.py:35
+#: player/forms.py:36
 msgid "time"
 msgstr "masa"
 
-#: player/forms.py:120 player/forms.py:143
+#: player/forms.py:122 player/forms.py:145
 #, fuzzy
 #| msgid "Any Game"
 msgid "Any Place"
 msgstr "Sebarang Permainan"
 
-#: player/forms.py:121 player/forms.py:144
+#: player/forms.py:123 player/forms.py:146
 #, fuzzy
 #| msgid "Only see invitations for a particular Game."
 msgid "Only see invitations for a particular Place."
 msgstr "Hanya lihat jemputan untuk permainan tertentu."
 
-#: player/forms.py:122 player/forms.py:145
+#: player/forms.py:124 player/forms.py:147
 msgid "place"
 msgstr "tempat"
 
-#: player/forms.py:162
+#: player/forms.py:164
 #, fuzzy
 #| msgid "Invitation Filters"
 msgid "no active filters"
 msgstr "Penapis Jemputan"
 
-#: player/forms.py:174
+#: player/forms.py:176
 #, python-format
 msgid "%(n)s active filters"
 msgstr "%(n)s penapis aktif"
 
-#: player/forms.py:196
+#: player/forms.py:199
 #, fuzzy
 #| msgid "Type email address"
 msgid "friend's email address"
 msgstr "Taip alamat emel"
 
-#: player/forms.py:203
+#: player/forms.py:206
 msgid "name"
 msgstr "nama"
 
-#: player/forms.py:211 player/templates/player/rival_stats_snippet.html:10
+#: player/forms.py:214 player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
 msgstr "PERMAINAN"
 
-#: player/forms.py:241 player/forms.py:271
+#: player/forms.py:245 player/forms.py:278
 msgid "Type email address"
 msgstr "Taip alamat emel"
 
-#: player/forms.py:242 player/forms.py:272
+#: player/forms.py:247 player/forms.py:280
 msgid "A screen name for your friend (optional)"
 msgstr "Nama paparan untuk rakan anda (pilihan)"
 
-#: player/forms.py:318
+#: player/forms.py:327
 msgid "rival skill level"
 msgstr "tahap kemahiran lawan"
 
-#: player/models.py:392
+#: player/models.py:409
 msgid "probably"
 msgstr "mungkin"
 
-#: player/models.py:393
+#: player/models.py:410
 msgid "maybe"
 msgstr "mungkin"
 
-#: player/models.py:394
+#: player/models.py:411
 msgid "unknown"
 msgstr "tidak diketahui"
 
-#: player/models.py:398
-msgid "much-weaker"
-msgstr "jauh lebih lemah"
-
-#: player/models.py:399
-msgid "weaker"
-msgstr "lebih lemah"
-
-#: player/models.py:400
-msgid "matched"
-msgstr "sepadan"
-
-#: player/models.py:401
-msgid "stronger"
-msgstr "lebih kuat"
-
-#: player/models.py:402
+#: player/models.py:415
 msgid "much-stronger"
 msgstr "jauh lebih kuat"
 
-#: player/models.py:463
+#: player/models.py:416
+msgid "stronger"
+msgstr "lebih kuat"
+
+#: player/models.py:417
+msgid "matched"
+msgstr "sepadan"
+
+#: player/models.py:418
+msgid "weaker"
+msgstr "lebih lemah"
+
+#: player/models.py:419
+msgid "much-weaker"
+msgstr "jauh lebih lemah"
+
+#: player/models.py:485
 msgid "Anywhere"
 msgstr "Di mana sahaja"
 
-#: player/models.py:464
+#: player/models.py:486
 msgid "Any Time"
 msgstr "Bila-bila Masa"
 
@@ -228,7 +228,8 @@ msgstr ""
 
 #: player/templates/player/chat_bubble_snippet.html:62
 msgid "Please check that the Venue has everything you need for the Match."
-msgstr "Sila pastikan lokasi mempunyai segala yang anda perlukan untuk perlawanan."
+msgstr ""
+"Sila pastikan lokasi mempunyai segala yang anda perlukan untuk perlawanan."
 "Sila pastikan lokasi mempunyai semua yang anda perlukan untuk perlawanan."
 
 #: player/templates/player/chat_bubble_snippet.html:65

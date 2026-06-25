@@ -6,18 +6,18 @@ from person.models import Person
 ENDIAN = 'big'
 
 WEEK_DAYS = [
-    _('SUNDAY'),
-    _('MONDAY'),
-    _('TUESDAY'),
-    _('WEDNESDAY'),
-    _('THURSDAY'),
-    _('FRIDAY'),
-    _('SATURDAY'),
+    _('Sunday'),
+    _('Monday'),
+    _('Tuesday'),
+    _('Wednesday'),
+    _('Thursday'),
+    _('Friday'),
+    _('Saturday'),
 ]
 
 TWO_DAYS = [
-    _('TODAY'),
-    _('TOMORROW'),
+    _('Today'),
+    _('Tomorrow'),
 ]
 
 # key constants
@@ -62,8 +62,8 @@ SYSTEM_HASH = Person.hash('facilitator@qwikgame.org')
 SYSTEM_NAME = 'facilitator'
 
 COUNTRIES = {
-    'AF': _(_("Afghanistan")),
-    'AX': _(_("Åland Islands")),
+    'AF': _("Afghanistan"),
+    'AX': _("Åland Islands"),
     'AL': _("Albania"),
     'DZ': _("Algeria"),
     'AS': _("American Samoa"),

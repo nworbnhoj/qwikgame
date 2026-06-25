@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:18+1000\n"
+"POT-Creation-Date: 2026-06-25 14:55+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,12 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "تم تعطيل الحساب الخاص بـ %(e)s"
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -72,12 +72,11 @@ msgstr "إرسال"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        تم إرسال بريد إلكتروني إلى %(request.GET.to_email)s يحتوي على رابط "
+"        تم إرسال بريد إلكتروني إلى %(to_email)s يحتوي على رابط "
 "تحقق.\n"
 "    "
 
@@ -125,12 +124,11 @@ msgstr "تسجيل الدخول"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            تم إرسال بريد إلكتروني إلى %(request.GET.to_email)s يحتوي على "
+"            تم إرسال بريد إلكتروني إلى %(to_email)s يحتوي على "
 "رابط تسجيل الدخول.\n"
 "    "
 
@@ -177,12 +175,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            تم إرسال بريد إلكتروني إلى %(request.GET.to_email)s يحتوي على "
+"            تم إرسال بريد إلكتروني إلى %(to_email)s يحتوي على "
 "رابط التسجيل.\n"
 "    "
 

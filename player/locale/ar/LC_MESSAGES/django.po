@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:18+1000\n"
+"POT-Creation-Date: 2026-06-25 14:55+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <ar@li.org>\n"
@@ -19,127 +19,127 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: player/forms.py:25 player/models.py:462
+#: player/forms.py:26 player/models.py:484
 msgid "Any Game"
 msgstr "أي لعبة"
 
-#: player/forms.py:26
+#: player/forms.py:27
 msgid "Only see invitations for a particular Game."
 msgstr "عرض الدعوات الخاصة بلعبة محددة فقط."
 
-#: player/forms.py:27 player/forms.py:310
+#: player/forms.py:28 player/forms.py:319
 #: player/templates/player/friends.html:46
 msgid "game"
 msgstr "اللعبة"
 
-#: player/forms.py:34
+#: player/forms.py:35
 msgid "Only see invitations at specific times in your week."
 msgstr "عرض الدعوات في أوقات محددة من أسبوعك فقط."
 
-#: player/forms.py:35
+#: player/forms.py:36
 msgid "time"
 msgstr "الوقت"
 
-#: player/forms.py:120 player/forms.py:143
+#: player/forms.py:122 player/forms.py:145
 #, fuzzy
 #| msgid "Any Game"
 msgid "Any Place"
 msgstr "أي مكان"
 
-#: player/forms.py:121 player/forms.py:144
+#: player/forms.py:123 player/forms.py:146
 #, fuzzy
 #| msgid "Only see invitations for a particular Game."
 msgid "Only see invitations for a particular Place."
 msgstr "عرض الدعوات الخاصة بمكان محدد فقط."
 
-#: player/forms.py:122 player/forms.py:145
+#: player/forms.py:124 player/forms.py:147
 msgid "place"
 msgstr "المكان"
 
-#: player/forms.py:162
+#: player/forms.py:164
 #, fuzzy
 #| msgid "Invitation Filters"
 msgid "no active filters"
 msgstr "لا توجد عوامل تصفية نشطة"
 
-#: player/forms.py:174
+#: player/forms.py:176
 #, python-format
 msgid "%(n)s active filters"
 msgstr "%(n)s عوامل تصفية نشطة"
 
-#: player/forms.py:196
+#: player/forms.py:199
 #, fuzzy
 #| msgid "Type email address"
 msgid "friend's email address"
 msgstr "عنوان البريد الإلكتروني للصديق"
 
-#: player/forms.py:203
+#: player/forms.py:206
 msgid "name"
 msgstr "الاسم"
 
-#: player/forms.py:211 player/templates/player/rival_stats_snippet.html:10
+#: player/forms.py:214 player/templates/player/rival_stats_snippet.html:10
 msgid "GAMES"
 msgstr "الألعاب"
 
-#: player/forms.py:241 player/forms.py:271
+#: player/forms.py:245 player/forms.py:278
 msgid "Type email address"
 msgstr "اكتب عنوان البريد الإلكتروني"
 
-#: player/forms.py:242 player/forms.py:272
+#: player/forms.py:247 player/forms.py:280
 msgid "A screen name for your friend (optional)"
 msgstr "اسم عرض لصديقك (اختياري)"
 
-#: player/forms.py:318
+#: player/forms.py:327
 msgid "rival skill level"
 msgstr "مستوى مهارة الخصم"
 
-#: player/models.py:392
+#: player/models.py:409
 msgid "probably"
 msgstr "على الأرجح"
 
-#: player/models.py:393
+#: player/models.py:410
 msgid "maybe"
 msgstr "ربما"
 
-#: player/models.py:394
+#: player/models.py:411
 msgid "unknown"
 msgstr "غير معروف"
 
-#: player/models.py:398
-#, fuzzy
-#| msgid "Much Weaker"
-msgid "much-weaker"
-msgstr "أضعف بكثير"
-
-#: player/models.py:399
-#, fuzzy
-#| msgid "Weaker"
-msgid "weaker"
-msgstr "أضعف"
-
-#: player/models.py:400
-#, fuzzy
-#| msgid "Well Matched"
-msgid "matched"
-msgstr "متكافئان"
-
-#: player/models.py:401
-#, fuzzy
-#| msgid "Stronger"
-msgid "stronger"
-msgstr "أقوى"
-
-#: player/models.py:402
+#: player/models.py:415
 #, fuzzy
 #| msgid "Much Stronger"
 msgid "much-stronger"
 msgstr "أقوى بكثير"
 
-#: player/models.py:463
+#: player/models.py:416
+#, fuzzy
+#| msgid "Stronger"
+msgid "stronger"
+msgstr "أقوى"
+
+#: player/models.py:417
+#, fuzzy
+#| msgid "Well Matched"
+msgid "matched"
+msgstr "متكافئان"
+
+#: player/models.py:418
+#, fuzzy
+#| msgid "Weaker"
+msgid "weaker"
+msgstr "أضعف"
+
+#: player/models.py:419
+#, fuzzy
+#| msgid "Much Weaker"
+msgid "much-weaker"
+msgstr "أضعف بكثير"
+
+#: player/models.py:485
 msgid "Anywhere"
 msgstr "في أي مكان"
 
-#: player/models.py:464
+#: player/models.py:486
 msgid "Any Time"
 msgstr "في أي وقت"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-12 17:18+1000\n"
+"POT-Creation-Date: 2026-06-25 14:55+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Arabic <LL@li.org>\n"
@@ -19,27 +19,27 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: game/forms.py:31
+#: game/forms.py:32
 msgid "Chat here with your rival"
 msgstr "تحدث هنا مع خصمك"
 
-#: game/forms.py:57
+#: game/forms.py:58
 msgid "rival skill level"
 msgstr "مستوى مهارة الخصم"
 
-#: game/forms.py:62
+#: game/forms.py:65
 msgid "venue not suitable for game"
 msgstr "المكان غير مناسب للعبة"
 
-#: game/forms.py:63
+#: game/forms.py:66
 msgid "rival showed poor sportsmanship"
 msgstr "أظهر المنافس سلوكًا رياضيًا سيئًا"
 
-#: game/forms.py:64
+#: game/forms.py:67
 msgid "rival did not show up"
 msgstr "لم يحضر المنافس"
 
-#: game/forms.py:66
+#: game/forms.py:69
 msgid "dissapointment"
 msgstr "خيبة الأمل"
 
@@ -151,8 +151,7 @@ msgstr ""
 "            لا توجد مباريات معلّقة%(br)sهل ترغب في اللعب؟\n"
 "        "
 
-#: game/templates/game/matches.html:158
-#: game/templates/game/reviews.html:110
+#: game/templates/game/matches.html:158 game/templates/game/reviews.html:110
 msgid "New Invitation"
 msgstr "دعوة جديدة"
 

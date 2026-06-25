@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 04:46+1000\n"
+"POT-Creation-Date: 2026-06-25 14:55+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,23 +51,19 @@ msgstr "مرحبًا بك في Qwikgame"
 msgid "website"
 msgstr "الموقع الإلكتروني"
 
-#: templates/input_day.html:9
-msgid "Pick hours"
-msgstr "اختر الساعات"
-
-#: templates/input_day.html:15
+#: templates/input_day.html:12
 msgid "All Day"
 msgstr "طوال اليوم"
 
-#: templates/input_day.html:25
+#: templates/input_day.html:17
 msgid "The Venue is closed."
 msgstr "المكان مغلق."
 
-#: templates/input_week.html:8
+#: templates/input_week.html:7
 msgid "Select Days and Time"
 msgstr "اختر الأيام والوقت"
 
-#: templates/input_week.html:13
+#: templates/input_week.html:12
 msgid "Any Time"
 msgstr "في أي وقت"
 
@@ -713,6 +709,9 @@ msgstr "تسجيل الدخول"
 #: templates/welcome_header_snippet.html:13
 msgid "Sign up"
 msgstr "إنشاء حساب"
+
+#~ msgid "Pick hours"
+#~ msgstr "اختر الساعات"
 
 #~ msgid "Pick time"
 #~ msgstr "اختر الوقت"

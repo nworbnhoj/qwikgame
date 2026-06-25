@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 06:17+1000\n"
+"POT-Creation-Date: 2026-06-25 16:22+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,47 +24,47 @@ msgstr ""
 msgid "person to block"
 msgstr "بلاک کرنے والا شخص"
 
-#: person/forms.py:34
+#: person/forms.py:33
 msgid "email address"
 msgstr "ای میل پتہ"
 
-#: person/forms.py:42
+#: person/forms.py:41
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "ای میل دعوتیں بذریعہ"
 
-#: person/forms.py:43
+#: person/forms.py:42
 msgid "push notifications"
 msgstr "پش نوٹیفکیشنز"
 
-#: person/forms.py:44
+#: person/forms.py:43
 msgid "location access"
 msgstr "مقام تک رسائی"
 
-#: person/forms.py:46
+#: person/forms.py:45
 msgid "Your choice."
 msgstr "آپ کی پسند۔"
 
-#: person/forms.py:47
+#: person/forms.py:46
 msgid "permissions"
 msgstr "اجازتیں"
 
-#: person/forms.py:53
+#: person/forms.py:52
 msgid "Browser default"
 msgstr "براؤزر کی طے شدہ ترتیب"
 
-#: person/forms.py:54
+#: person/forms.py:53
 msgid "language"
 msgstr "زبان"
 
-#: person/forms.py:61 person/forms.py:198
+#: person/forms.py:61 person/forms.py:201
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr ""
 "جب آپ کسی شخص کو بلاک کرتے ہیں تو آپ دونوں qwikgame پر ایک دوسرے کو نہیں "
 "دیکھ سکیں گے۔"
 
-#: person/forms.py:62 person/forms.py:199
+#: person/forms.py:62 person/forms.py:202
 msgid "people you have blocked"
 msgstr "جن لوگوں کو آپ نے بلاک کیا ہے"
 
@@ -78,11 +78,11 @@ msgstr "QWIK نام"
 msgid "website / social media"
 msgstr "سوشل میڈیا کا URL شامل کریں"
 
-#: person/forms.py:135
+#: person/forms.py:136
 msgid "your qwikgame screen name"
 msgstr "آپ کا qwikgame اسکرین نام"
 
-#: person/forms.py:174
+#: person/forms.py:176
 msgid "Add URL"
 msgstr "URL شامل کریں"
 

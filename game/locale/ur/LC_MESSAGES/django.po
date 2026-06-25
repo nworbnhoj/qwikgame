@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 06:17+1000\n"
+"POT-Creation-Date: 2026-06-25 16:22+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: game/forms.py:31
+#: game/forms.py:32
 msgid "Chat here with your rival"
 msgstr "اپنے حریف کے ساتھ یہاں چیٹ کریں"
 
-#: game/forms.py:57
+#: game/forms.py:58
 msgid "rival skill level"
 msgstr "حریف کی مہارت کی سطح"
 
-#: game/forms.py:62
+#: game/forms.py:65
 msgid "venue not suitable for game"
 msgstr "مقام کھیل کے لیے موزوں نہیں ہے۔"
 
-#: game/forms.py:63
+#: game/forms.py:66
 msgid "rival showed poor sportsmanship"
 msgstr "غیر کھیلانہ رویہ"
 
-#: game/forms.py:64
+#: game/forms.py:67
 msgid "rival did not show up"
 msgstr "حاضر نہیں ہوا"
 
-#: game/forms.py:66
+#: game/forms.py:69
 msgid "dissapointment"
 msgstr "مایوسی"
 
@@ -147,8 +147,7 @@ msgid ""
 msgstr ""
 "\n"
 "            کوئی زیر التواء میچ نہیں%(br)sکھیلنے کے خواہشمند ہیں؟\n"
-"        "
-"\n"
+"        \n"
 "            کوئی زیر التواء میچ نہیں%(br)sکھیلنے کے خواہشمند ہیں؟\n"
 "        "
 
@@ -176,9 +175,9 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"                تمام میچ جائزے مکمل ہو چکے ہیں — شکریہ%(br)sکھیلنے کے خواہشمند ہیں؟\n"
-"        "
-"\n"
+"                تمام میچ جائزے مکمل ہو چکے ہیں — شکریہ%(br)sکھیلنے کے "
+"خواہشمند ہیں؟\n"
+"        \n"
 "                تمام میچ جائزے مکمل ہو گئے - شکریہ%(br)sکھیلنے کے خواہشمند "
 "ہیں؟\n"
 "        "

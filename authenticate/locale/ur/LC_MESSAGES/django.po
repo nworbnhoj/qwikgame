@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-16 06:17+1000\n"
+"POT-Creation-Date: 2026-06-25 16:22+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: authenticate/forms.py:87
+#: authenticate/forms.py:91
 #, python-format
 msgid "The account is disabled for %(e)s"
 msgstr "%(e)s کے لیے اکاؤنٹ غیر فعال ہے"
 
-#: authenticate/forms.py:91
+#: authenticate/forms.py:95
 #, python-format
 msgid ""
 "There is no account for this email.%(br)sWould you like to "
@@ -71,12 +71,11 @@ msgstr "جمع کریں"
 #, python-format
 msgid ""
 "\n"
-"        An email has been sent to %(request.GET.to_email)s with a validation "
-"link.\n"
+"        An email has been sent to %(to_email)s with a validation link.\n"
 "    "
 msgstr ""
 "\n"
-"        %(request.GET.to_email)s پر ایک تصدیقی لنک کے ساتھ ای میل بھیج دی "
+"        %(to_email)s پر ایک تصدیقی لنک کے ساتھ ای میل بھیج دی "
 "گئی ہے۔\n"
 "    "
 
@@ -123,12 +122,11 @@ msgstr "لاگ ان"
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a login "
-"link. \n"
+"            An email has been sent to %(to_email)s with a login link. \n"
 "    "
 msgstr ""
 "\n"
-"            %(request.GET.to_email)s پر لاگ ان لنک کے ساتھ ایک ای میل بھیج "
+"            %(to_email)s پر لاگ ان لنک کے ساتھ ایک ای میل بھیج "
 "دی گئی ہے۔ \n"
 "    "
 
@@ -175,12 +173,12 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"            An email has been sent to %(request.GET.to_email)s with a "
-"registration link.\n"
+"            An email has been sent to %(to_email)s with a registration "
+"link.\n"
 "    "
 msgstr ""
 "\n"
-"            %(request.GET.to_email)s پر رجسٹریشن لنک کے ساتھ ایک ای میل بھیج "
+"            %(to_email)s پر رجسٹریشن لنک کے ساتھ ایک ای میل بھیج "
 "دی گئی ہے۔\n"
 "    "
 

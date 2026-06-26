@@ -38,7 +38,7 @@
             </div>
             <div class="post detail_body">
                 <div class="form">
-                    <form action="{% url 'private' %}" method="post" name="private" class="animate">
+                    <form action="{% url 'private' %}" method="post" name="private" class="animate" novalidate>
 {% csrf_token %}
 {{ private_form }}
                         <div>

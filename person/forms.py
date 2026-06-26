@@ -1,3 +1,4 @@
+import logging
 from django import forms
 from django.forms import BooleanField, CharField, CheckboxSelectMultiple, ChoiceField, EmailField, Form, IntegerField, MultipleChoiceField, RadioSelect, Select, URLField
 from django.urls import reverse
@@ -7,6 +8,8 @@ from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
 from qwikgame.widgets import CheckboxList, TextInput
+
+logger = logging.getLogger(__file__)
 
 
 class BlockForm(QwikForm):
@@ -32,7 +35,7 @@ class PrivateForm(QwikForm):
     email = EmailField(
         label=_("email address"),
         max_length=255,
-        required=True,
+        required=False,
         template_name='field.html',
         widget=TextInput(attrs={'disabled': 'disabled'}),
     )

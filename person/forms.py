@@ -32,7 +32,7 @@ class PrivateForm(QwikForm):
     email = EmailField(
         label=_("email address"),
         max_length=255,
-        required=False,
+        required=True,
         template_name='field.html',
         widget=TextInput(attrs={'disabled': 'disabled'}),
     )
@@ -51,7 +51,7 @@ class PrivateForm(QwikForm):
     language = ChoiceField(
         choices=[('', _("Browser default"))] + LANGUAGES,
         label=_('language'),
-        required=False,
+        required=True,
         template_name='field.html',
         widget=RadioSelect,
     )

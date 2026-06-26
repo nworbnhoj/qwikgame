@@ -243,7 +243,7 @@ function field_label_update(event_or_element) {
                 }
             case 'strengths':
                 {
-                    const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']");
+                    const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']:not(:checked)");
                     PENDING.textContent = sum_strength_checkbox(CHECKBOXES);
                     break;
                 }

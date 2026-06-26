@@ -147,15 +147,6 @@ function field_focus_first() {
                 }
             }
         };
-        // fallback if no field is required
-        const INPUT = FORM.querySelector("input:not([type='hidden']):first-of-type");
-        if (INPUT) {
-            let field = INPUT.closest('fieldset');
-            field = field ? field : INPUT.closest('div.field');
-            if (field) {
-                field_focus(field);
-            }
-        }
     }
 }
 // open one field in the form

@@ -124,7 +124,7 @@ function field_focus(field) {
 }
 
 function field_focus_first() {
-    const FORM = document.querySelector('div.detail form');
+    const FORM = document.querySelector('div.detail form.animate');
     if (FORM) {
         const ERROR = FORM.querySelector('span.error');
         if (ERROR) {
@@ -134,7 +134,8 @@ function field_focus_first() {
         for (const FIELD of FORM.querySelectorAll('div.required')) {
             const FIELDSET = FIELD.querySelector('fieldset')
             if (FIELDSET) {
-                if (!FIELDSET.querySelectorAll("input[type='checkbox']:checked, input[type='radio']:checked")) {
+                const CHECKED = FIELDSET.querySelectorAll("input[type='checkbox']:checked, input[type='radio']:checked")
+                if (CHECKED.length == 0) {
                     field_focus(FIELDSET);
                     return;
                 }
@@ -186,9 +187,9 @@ function form_shut(event_or_element) {
         element = event_or_element.currentTarget;
     }
     if (element instanceof HTMLElement) {
-        form = element.closest('form');
-        if (form) {
-            form.querySelectorAll('.open').forEach((open) => {
+        const FORM = element.closest('form.animate');
+        if (FORM) {
+            FORM.querySelectorAll('.open').forEach((open) => {
                 open.classList.remove('open');
                 field_label_update(open);
                 field_prompt_show(open);
@@ -468,18 +469,20 @@ function sum_input_text(text) {
 }
 // auto close Field when value is selected
 function form_input_auto(input) {
-    switch (input.type) {
-        case 'checkbox':
-            input.addEventListener('change', field_label_update);
-            break;
-        case 'radio':
-            input.addEventListener('click', form_shut);
-            break;
-        case 'text':
-            input.addEventListener('change', form_shut);
-            break;
-        default:
-            console.debug('INFO: no auto-close for input type: ' + input.type);
+    if (input && input.closest('form.animate')){
+        switch (input.type) {
+            case 'checkbox':
+                input.addEventListener('change', field_label_update);
+                break;
+            case 'radio':
+                input.addEventListener('click', form_shut);
+                break;
+            case 'text':
+                input.addEventListener('change', form_shut);
+                break;
+            default:
+                // console.debug('INFO: no auto-close for input type: ' + input.type);
+        }
     }
 }
 ////////////////  ////////////////////////////
@@ -1042,11 +1045,11 @@ docReady(event => {
                 field_focus(currentTarget.closest('fieldset'));
             });
         });
-    document.querySelectorAll("form input").forEach(
+    document.querySelectorAll("form.animate input").forEach(
         (input) => {
             form_input_auto(input);
         });
-    document.querySelectorAll("form fieldset").forEach(
+    document.querySelectorAll("form.animate fieldset").forEach(
         (fieldset) => {
             field_prompt_show(fieldset);
         });
@@ -1060,7 +1063,7 @@ docReady(event => {
     field_focus_first();
 });
 winReady(event => {
-    document.querySelectorAll("form fieldset, form div.field").forEach(
+    document.querySelectorAll("form.animate fieldset, form.animate div.field").forEach(
         (field) => {
             field_label_update(field);
         });

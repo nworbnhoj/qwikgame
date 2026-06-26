@@ -23,7 +23,7 @@
             <div class="post detail_body">
 {% include 'player/reputation_snippet.html' %}
                 <div class="form">
-                    <form action="{% url 'public' %}" method="post">
+                    <form action="{% url 'public' %}" method="post" class="animate">
 {% csrf_token %}
 {{ public_form }}
 {% include 'player/account_public_snippet.html' %}

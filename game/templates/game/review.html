@@ -65,7 +65,7 @@
                     <p>{{ review.rival.qwikname }}</p>
                 </div>
                 <div class="form">
-                    <form action="{% url target review=review.id %}" method="post">
+                    <form action="{% url target review=review.id %}" method="post" class="animate">
     {% csrf_token %}
     {{ review_form }}
                         <div>

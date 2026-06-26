@@ -75,7 +75,7 @@
         </div>
         <div class="form">
             <div id="alert_form_start" class="alert"></div>
-            <form action="{% url 'keen' %}" method="post"  novalidate>
+            <form action="{% url 'keen' %}" method="post" class="animate" novalidate>
 {% csrf_token %}
 {{ keen_form }}
                 <div>

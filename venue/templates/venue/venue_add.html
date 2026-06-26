@@ -70,7 +70,7 @@
         </div>
         <div class="post available_edit {{ hide_edit }}">
             <div class="form">
-                <form action="{% url 'venue_add' %}" method="post">
+                <form action="{% url 'venue_add' %}" method="post" class="animate">
 {% csrf_token %}
 {{ venue_add_form }}
                     <div>

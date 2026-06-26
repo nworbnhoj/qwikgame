@@ -25,7 +25,7 @@
         </div>
         <div class="post available_edit {{ hide_edit }}">
             <div class="form">
-                <form action="{% url 'friend_add' %}" method="post">
+                <form action="{% url 'friend_add' %}" method="post" class="animate">
 {% csrf_token %}
 {{ friend_form }}
 {{ strength_form }}

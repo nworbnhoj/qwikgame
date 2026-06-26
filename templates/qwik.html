@@ -56,7 +56,7 @@
         </label>
         <div class='post'>
             <div id="feedback_form_start" class="alert"></div>
-            <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post'>
+            <form id='feedback_form' action="{% url 'feedback' %}?next={{request.get_full_path}}" method='post' class="animate">
     {% csrf_token %}
     {{ feedback_form }}
                 <div>

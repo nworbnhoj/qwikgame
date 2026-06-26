@@ -29,7 +29,7 @@
                         <i class="fa-solid fa-ellipsis-vertical fa-2x"></i>
                     </div>
                     <div class="down right hidden">
-                        <form id="menu_form" action="{% url target friend=friend.pk %}" method="post">
+                        <form id="menu_form" action="{% url target friend=friend.pk %}" method="post" class="animate">
     {% csrf_token %}
                             <label class="btn tertiary">
                                 <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(
@@ -54,9 +54,9 @@
         <div class="form">
             <div id="alert_form_start" class="alert"></div>
 {% if friend %}
-            <form id="form" action="{% url target friend=friend.pk %}" method="post" novalidate>
+            <form id="form" action="{% url target friend=friend.pk %}" method="post" class="animate" novalidate>
 {% else %}
-            <form id="form" action="{% url 'friend_add' %}" method="post" novalidate>
+            <form id="form" action="{% url 'friend_add' %}" method="post" class="animate" novalidate>
 {% endif %}
 {% csrf_token %}
 {{ friend_form }}

@@ -69,7 +69,7 @@
 
         <div class="form">
             <div id="alert_form_start" class="alert"></div>
-            <form action="{% url 'filter' %}" method="post">
+            <form action="{% url 'filter' %}" method="post" class="animate">
 {% csrf_token %}
 {{ filter_form }}
                 <div>

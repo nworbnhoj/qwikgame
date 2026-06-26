@@ -235,6 +235,12 @@ function field_label_update(event_or_element) {
                     PENDING.textContent = sum_url_checkbox(CHECKBOXES);
                     break;
                 }
+            case 'permissions':
+                {
+                    const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']:checked");
+                    PENDING.textContent = sum_permission_checkbox(CHECKBOXES);
+                    break;
+                }
             case 'strengths':
                 {
                     const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']");
@@ -397,6 +403,20 @@ function sum_input_two_day(two_day) {
         return;
     }
     return sum_input_of_days(two_day.nextElementSibling);
+}
+
+function sum_permission_checkbox(checkboxes) {
+    if (checkboxes) {
+        sum = '';
+        if (checkboxes.length === 0) {
+            sum = "None";
+        } else {
+            checkboxes.forEach((checkbox) => {
+                sum += checkbox.labels[0].textContent.trim().split(' ')[0] + ', ';
+            });
+        }
+        return sum;
+    }
 }
 
 function sum_strength_checkbox(checkboxes) {

@@ -369,14 +369,15 @@ function sum_input_of_days(days){
         allDayPromises[d] = sum_input_by_day(by_day);
     });
     return Promise.all(allDayPromises).then((sums) => {
-        sums = sums.filter(sum => sum !== undefined);
         let summary = ' ';
         sums.forEach((sum, s) => {
-            if (sum.trim().length > 0) {
-                summary += labels[s] + ' ';
-            }
-            if (HAS_DIGITS.test(sum)) {
-                summary += ` (${sum}) `;
+            if (sum !== undefined) {
+                if (sum.trim().length > 0) {
+                    summary += labels[s] + ' ';
+                }
+                if (HAS_DIGITS.test(sum)) {
+                    summary += ` (${sum}) `;
+                }
             }
         });
         return summary;

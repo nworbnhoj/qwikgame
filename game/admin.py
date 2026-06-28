@@ -9,8 +9,8 @@ class GameAdmin(admin.ModelAdmin):
 
 
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'game', 'datetime_str', 'venue', 'competitor_names']
-    list_filter = ['game', 'date', 'venue__country',
+    list_display = ['pk', 'status', 'game', 'datetime_str', 'venue', 'competitor_names']
+    list_filter = ['status', 'game', 'date', 'venue__country',
                    'venue__admin1', 'venue__locality', 'venue', 'competitors']
     ordering = ['date', 'game']
 

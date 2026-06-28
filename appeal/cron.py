@@ -55,7 +55,7 @@ def murmur(appeal_min=50, bid_rate=0.06):
     while Appeal.objects.count() <= appeal_min and fail_count < FAIL_MAX:
         player = User.objects.get(pk=random.choice(CROWD_PKS)).player
         venue = Venue.objects.get(pk=random.choice(VENUE_PKS))
-        date = venue.now() + datetime.timedelta(days=random.choice([0, 1]))
+        date = venue.now + datetime.timedelta(days=random.choice([0, 1]))
         hours24 = Hours24(random.randint(0, DAY_MAX_INT)) & QWIK_DAY
         valid_hours = venue.open_date(date) & hours24
         if valid_hours.is_none:

@@ -144,7 +144,7 @@ class Match(models.Model):
         return self.datetime_aware.strftime('%d %b %Y, %Hh')
 
     def disable(self, dry_run=False):
-        now = self.venue.now()
+        now = self.venue.now
         if now > (self.date + DELAY_MATCH_CHAT):
             dry = 'dry_run' if dry_run else ''
             if not dry_run:
@@ -191,7 +191,7 @@ class Match(models.Model):
         self.log_entry(entry)
 
     def perish(self, dry_run=False):
-        now = self.venue.now()
+        now = self.venue.now
         if now > (self.date + DELAY_MATCH_PERISH_CHAT):
             dry = 'dry_run' if dry_run else ''
             if not dry_run:
@@ -267,7 +267,7 @@ class Review(models.Model):
 
     def perish(self, dry_run=False):
         action = 'noop'
-        now = self.match.venue.now()
+        now = self.match.venue.now
         if now > self.match.date + DELAY_REVIEW_PERISH:
             if not dry_run:
                 self.delete()

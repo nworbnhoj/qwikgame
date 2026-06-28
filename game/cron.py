@@ -53,7 +53,7 @@ def match_review_init():
                             'time': match.hour_str,
                             'venue': match.venue,
                         },
-                        expires=datetime.now() + timedelta(days=3),
+                        expires=match.venue.now + timedelta(days=3),
                         type='s',
                         url=f'/game/match/{match.pk}/',
                     )

@@ -467,7 +467,7 @@ class KeenView(AppealsView):
         game = self._getGame(context.get('game'))
         if not (game and venue):
             return HttpResponseRedirect('/appeal/')
-        venue_now = venue.now()
+        venue_now = venue.now
         invitees = context.get('friends', [])
         today_appeal = self._createAppeal(
             venue_now,

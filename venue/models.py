@@ -285,7 +285,7 @@ class Venue(Place):
     def mark(self):
         return {
             ADDRESS: self.address,
-            HOUR: self.now().hour,
+            HOUR: self.now.hour,
             HOURS: self.open_week.as_7int(),
             LAT: self.lat,
             LNG: self.lng,
@@ -294,9 +294,10 @@ class Venue(Place):
             PHONE: self.phone,
             PLACEID: self.placeid,
             URL: self.url,
-            WEEKDAY: self.now().isoweekday() % 7,
+            WEEKDAY: self.now.isoweekday() % 7,
         }
 
+    @property
     def now(self):
         return datetime.datetime.now(self.tzinfo)
 

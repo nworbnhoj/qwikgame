@@ -68,7 +68,7 @@ class BidForm(QwikForm):
         self.fields['hour'].widget.set_hours_show(appeal.hour_list())
         next_hour = 24
         if appeal.status == 'A':
-            venue_now = appeal.venue.now()
+            venue_now = appeal.venue.now
             if venue_now.day < appeal.date.day:
                 next_hour = 0
             else:
@@ -255,8 +255,8 @@ class KeenForm(QwikForm):
     def _prep_time(self, venue=None):
         self.fields['time'].widget.attrs = {'class': 'prefaced',}
         if venue:
-            today = venue.now()
-            tomorrow = venue.now() + datetime.timedelta(days=1)
+            today = venue.now
+            tomorrow = venue.now + datetime.timedelta(days=1)
             self.fields['time'].pending = f"{today.strftime('%A')} & {tomorrow.strftime('%A')}"  
             self.fields['time'].widget.set_hours_show(0, venue.open_date(today).as_list())
             self.fields['time'].widget.set_hours_show(1, venue.open_date(tomorrow).as_list())

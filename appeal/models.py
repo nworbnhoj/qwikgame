@@ -193,7 +193,7 @@ class Appeal(models.Model):
     # Deletes the Appeal at the end of the day.
     def perish(self, dry_run=False):
         action = 'noop'
-        now = self.venue.now()
+        now = self.venue.now
         if now.date() > self.date:
             if not dry_run:
                 self.delete()
@@ -356,7 +356,7 @@ class Bid(models.Model):
 
     def perish(self, dry_run=False):
         action = 'noop'
-        now = self.venue().now()
+        now = self.venue().now
         if now > self.datetime:
             if not dry_run:
                 self.log_event('expired')

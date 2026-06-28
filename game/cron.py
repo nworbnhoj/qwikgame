@@ -49,7 +49,7 @@ def match_review_init():
                             'date': match.date_str,
                             'domain': FQDN,
                             'game': match.game,
-                            'time': match.time_str,
+                            'time': match.hour_str,
                             'venue': match.venue,
                         },
                         expires=datetime.now() + timedelta(days=3),

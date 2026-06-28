@@ -296,7 +296,7 @@ class Player(models.Model):
         strength, discrepancy = self.strength_estimate(game, rival)
         confidence = Strength.confidence(discrepancy)
         if strength is not None:
-            strength = Strength.KEY[round(strength) + 2]
+            strength = Strength.KEY[2 - round(strength)]
         else:
             strength = 'z'
         return strength, confidence

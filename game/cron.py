@@ -49,6 +49,7 @@ def match_review_init():
                             'date': match.date_str,
                             'domain': FQDN,
                             'game': match.game,
+                            'match': match.pk,
                             'time': match.hour_str,
                             'venue': match.venue,
                         },

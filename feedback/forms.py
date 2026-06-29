@@ -1,39 +1,33 @@
 import logging
-from django.forms import ModelForm, RadioSelect
+from django.forms import CharField, ChoiceField, RadioSelect
 from django.utils.translation import gettext_lazy as _
 from feedback.models import Feedback
+from qwikgame.forms import QwikForm
 from qwikgame.widgets import TextArea
 
 
 logger = logging.getLogger(__file__)
 
 
-class FeedbackForm(ModelForm):
-
-    class Meta:
-        model = Feedback
-        fields = ['type', 'text']
-        labels = {
-            'text': _('Description'),
-            'type': _('Type'),
-        }
-        localized_fields = ['__all__']
-        widgets = {
-            'text': TextArea(attrs={
-                'class': _('feedback'),
-                'placeholder': _('thanks heaps for taking the time!')
-            }),
-            'type': RadioSelect(attrs={
-                'class': _('feedback')
-            }),
-        }
+class FeedbackForm(QwikForm):
+    type = ChoiceField(
+        choices=list(Feedback.TYPE.items()),
+        label=_('Type'),
+        required=True,
+        template_name='field.html',
+        widget=RadioSelect,
+    )
+    text = CharField(
+        label=_('Description'),
+        required=True,
+        template_name='field.html',
+        widget=TextArea(attrs={'placeholder': _(
+            'thanks heaps for taking the time!')}),
+    )
 
     @classmethod
     def get(klass):
-        form = klass()
-        form.fields['text'].template_name = 'field.html'
-        form.fields['type'].template_name = 'field.html'
-        return {'feedback_form': form}
+        return {'feedback_form': klass()}
 
     @classmethod
     def post(klass, request_post):

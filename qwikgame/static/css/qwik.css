@@ -223,6 +223,13 @@ div.hour_grid { align-self: stretch; grid-template-columns: repeat(auto-fit, min
 div.hrs { border: 1px solid black; height: 2rem; justify-content: center }
 div.two_day { align-items: stretch; justify-content: start; width: 100%; }
 
+/* --- leaders --- */
+ul.leaders { list-style: none; max-width: 40rem; overflow-x: hidden; padding: 2rem; width: 100%;
+  li { align-items: baseline; display: flex; justify-content: space-between; margin-bottom: 1rem; }
+  span:last-child { display: flex; flex-grow: 1; }
+  span:last-child::before { content: ''; border-bottom: 1px dashed var(--color-grey-3); margin: 0 0.5rem; flex-grow: 1; }
+}
+
 /* --- classes --- */
 .align_center { align-self: center }
 .align_end { justify-content: end; }
@@ -354,9 +361,5 @@ span.on { color: lightseagreen; }
 span.off { color: indianred; }
 span.qwik { color: var(--color-qwik); }
 time { color: var(--color-grey-c); font-size: small; text-align: right; }
-ul.leaders { line-height: 2rem; list-style: none; max-width: 40rem; overflow-x: hidden; padding: 0; width: 100%; }
-ul.leaders li:before { float: left; width: 0; white-space: nowrap; content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "; }
-ul.leaders span:first-child { background: white; padding-right: 0.33rem; }
-ul.leaders span + span { background: white; float: right; padding-left: 0.33rem; }
 #infowindow_mark_place { overflow: hidden; }
 #license { flex-shrink: 0; }

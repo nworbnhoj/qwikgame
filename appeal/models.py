@@ -144,7 +144,7 @@ class Appeal(models.Model):
     @property
     def last_hour(self):
         hour = self.hours24.last_hour() or 0
-        return datetime.datetime.combine(
+        return self.venue.datetime(
             self.date,
             datetime.time(hour=hour),
         )

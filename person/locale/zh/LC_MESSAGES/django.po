@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 16:28+1000\n"
+"POT-Creation-Date: 2026-07-01 07:49+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: person/forms.py:14
+#: person/forms.py:17
 msgid "person to block"
 msgstr "要屏蔽的用户"
 
-#: person/forms.py:33
+#: person/forms.py:36
 msgid "email address"
 msgstr "电子邮件地址"
 
-#: person/forms.py:41
+#: person/forms.py:45
 msgid "email notifications"
 msgstr "来自以下用户的邮件邀请"
 
-#: person/forms.py:42
+#: person/forms.py:46
 msgid "push notifications"
 msgstr "推送通知"
 
-#: person/forms.py:43
+#: person/forms.py:47
+msgid "push notifications (missing browser support)"
+msgstr "推送通知（缺少浏览器支持）"
+
+#: person/forms.py:48
+msgid "push notifications (missing browser permission)"
+msgstr "推送通知（缺少浏览器权限）"
+
+#: person/forms.py:49
 msgid "location access"
 msgstr "位置访问权限"
 
-#: person/forms.py:45
+#: person/forms.py:51
 msgid "Your choice."
 msgstr "由您选择。"
 
-#: person/forms.py:46
+#: person/forms.py:52
 msgid "permissions"
 msgstr "权限"
 
-#: person/forms.py:52
+#: person/forms.py:58
 msgid "Browser default"
 msgstr "浏览器默认"
 
-#: person/forms.py:53
+#: person/forms.py:59
 msgid "language"
 msgstr "语言"
 
-#: person/forms.py:61 person/forms.py:201
+#: person/forms.py:67 person/forms.py:207
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr "当您屏蔽某人后，双方将无法在 qwikgame 上看到彼此。"
 
-#: person/forms.py:62 person/forms.py:202
+#: person/forms.py:68 person/forms.py:208
 msgid "people you have blocked"
 msgstr "您已屏蔽的用户"
 
-#: person/forms.py:116
+#: person/forms.py:122
 msgid "QWIK name"
 msgstr "QWIK名称"
 
-#: person/forms.py:124
+#: person/forms.py:130
 msgid "website / social media"
 msgstr "添加社交媒体链接"
 
-#: person/forms.py:136
+#: person/forms.py:142
 msgid "your qwikgame screen name"
 msgstr "您的 qwikgame 显示名称"
 
-#: person/forms.py:176
+#: person/forms.py:182
 msgid "Add URL"
 msgstr "添加网址"
 

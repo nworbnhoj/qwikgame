@@ -40,9 +40,12 @@ class PrivateForm(QwikForm):
         widget=TextInput(attrs={'disabled': 'disabled'}),
     )
     permissions = MultipleChoiceField(
+        # three i18n push choices are made available for js to show/hide on client 
         choices=[
             ('email', _('email notifications')),
             ('push', _('push notifications')),
+            ('push', _('push notifications (missing browser support)')),
+            ('push', _('push notifications (missing browser permission)')),
             ('location', _('location access'))
         ],
         help_text=_('Your choice.'),

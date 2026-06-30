@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 15:59+1000\n"
+"POT-Creation-Date: 2026-07-01 07:49+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,72 +17,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: person/forms.py:14
+#: person/forms.py:17
 #, fuzzy
 #| msgid "Person to block"
 msgid "person to block"
 msgstr "Orang untuk disekat"
 
-#: person/forms.py:33
+#: person/forms.py:36
 msgid "email address"
 msgstr "alamat e-mel"
 
-#: person/forms.py:41
+#: person/forms.py:45
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "jemputan emel daripada"
 
-#: person/forms.py:42
+#: person/forms.py:46
 msgid "push notifications"
 msgstr "pemberitahuan tolak"
 
-#: person/forms.py:43
+#: person/forms.py:47
+msgid "push notifications (missing browser support)"
+msgstr "pemberitahuan tolak (sokongan pelayar tiada)"
+
+#: person/forms.py:48
+msgid "push notifications (missing browser permission)"
+msgstr "pemberitahuan tolak (kebenaran pelayar tiada)"
+
+#: person/forms.py:49
 msgid "location access"
 msgstr "akses lokasi"
 
-#: person/forms.py:45
+#: person/forms.py:51
 msgid "Your choice."
 msgstr "Pilihan anda."
 
-#: person/forms.py:46
+#: person/forms.py:52
 msgid "permissions"
 msgstr "Kebenaran"
 
-#: person/forms.py:52
+#: person/forms.py:58
 msgid "Browser default"
 msgstr "Tetapan lalai pelayar"
 
-#: person/forms.py:53
+#: person/forms.py:59
 msgid "language"
 msgstr "Bahasa"
 
-#: person/forms.py:61 person/forms.py:201
+#: person/forms.py:67 person/forms.py:207
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr ""
 "Apabila anda menyekat seseorang, anda berdua tidak akan dapat melihat satu "
 "sama lain di Qwikgame.Apabila anda menyekat seseorang, anda berdua tidak "
 "akan melihat satu sama lain di qwikgame."
 
-#: person/forms.py:62 person/forms.py:202
+#: person/forms.py:68 person/forms.py:208
 msgid "people you have blocked"
 msgstr "orang yang telah anda sekat"
 
-#: person/forms.py:116
+#: person/forms.py:122
 msgid "QWIK name"
 msgstr "nama QWIK"
 
-#: person/forms.py:124
+#: person/forms.py:130
 #, fuzzy
 #| msgid "add a social media url"
 msgid "website / social media"
 msgstr "tambah URL media sosial"
 
-#: person/forms.py:136
+#: person/forms.py:142
 msgid "your qwikgame screen name"
 msgstr "nama paparan qwikgame anda"
 
-#: person/forms.py:176
+#: person/forms.py:182
 msgid "Add URL"
 msgstr "Tambah URL"
 

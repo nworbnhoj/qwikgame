@@ -2,42 +2,57 @@ const HIDDEN_WEBPUSH_BTN = document.getElementById('webpush-subscribe-button');
 const LANGUAGE_SEL = document.getElementById('id_language');
 const PRIVATE_FRM = document.forms["private"];
 const PUSH_SUPPORT = 'serviceWorker' in navigator && 'PushManager' in window && "Notification" in window;
-const WEBPUSH_CKB = document.querySelector("input[type='checkbox'][value='push']");
+// the three i18n webpush checkboxes all equivalently represent the Players server preference for Push notifications
+const WEBPUSH_CHECKBOXES = document.querySelectorAll("input[type='checkbox'][value='push']");
+const WEBPUSH_CKB = WEBPUSH_CHECKBOXES.item(0);
+const WEBPUSH_CKB_UNSUPPORTED = WEBPUSH_CHECKBOXES.item(1);
+const WEBPUSH_CKB_UNPERMITTED = WEBPUSH_CHECKBOXES.item(2);
+let webpush_ckb = WEBPUSH_CKB;
 var webpush_clicked = false;
+
 docReady(event => {
-    initPage();
-    WEBPUSH_CKB.addEventListener("click", (event) => {
+    pickWebpushCheckbox();
+    webpush_ckb.addEventListener("click", (event) => {
         HIDDEN_WEBPUSH_BTN.click();
     });
 });
+
 winReady(event => {});
+
 const observer = new MutationObserver((event) => {
-    WEBPUSH_CKB.disabled = HIDDEN_WEBPUSH_BTN.disabled
-    updateNotifyPush()
+    pickWebpushCheckbox();
 });
+
 observer.observe(HIDDEN_WEBPUSH_BTN, {
     childList: true,
 });
 
-function initPage() {
-    if (PUSH_SUPPORT) {
-        updateNotifyPush()
-    } else {
-        console.log('WARN: Push not supported.');
-        console.log('ServiceWorker: ' + 'serviceWorker' in navigator);
-        console.log('PushManager: ' + 'PushManager' in window);
-        console.log('Notification: ' + 'Notification' in window);
-        WEBPUSH_CKB.disabled = true;
-    }
-}
-// update the visible qwikgame UI to reflect the hidden WebPush UI
-function updateNotifyPush() {
-    const WAS_CHECKED = WEBPUSH_CKB.checked;
-    const granted = Notification.permission === 'granted';
-    const subscribed = HIDDEN_WEBPUSH_BTN.innerText.includes('Unsubscribe');
-    WEBPUSH_CKB.checked = granted && subscribed;
-    const CHANGED = !(WEBPUSH_CKB.checked === WAS_CHECKED);
-    console.log('Notification permission: ' + granted);
-    console.log('WebPush subscribed: ' + subscribed);
-    return CHANGED;
+// Show a single webpush checkbox that represents the current browser support/permission status
+function pickWebpushCheckbox() {
+    const CHECKED = document.querySelector("input[type='checkbox'][value='push']:checked");
+    document.querySelectorAll("input[type='checkbox'][value='push']").forEach((cb) => {
+        cb.checked = false;
+        cb.closest('div').hidden = true;
+    })
+    if (!PUSH_SUPPORT) {
+        webpush_ckb = WEBPUSH_CKB_UNSUPPORTED;
+        console.log('INFO: Push not supported.');
+    } else if (Notification.permission === 'denied') {
+        webpush_ckb = WEBPUSH_CKB_UNPERMITTED;
+        console.log('INFO: Push permission denied.');
+    } else if (Notification.permission === 'granted'){
+        webpush_ckb = WEBPUSH_CKB;
+    } else if (Notification.permission === 'default') {
+        webpush_ckb = WEBPUSH_CKB;
+        if (CHECKED) {
+            Notification.requestPermission().then((permission) => {
+                if (permission !== 'default'){
+                    pickWebpushCheckbox();
+                }
+            })
+        }
+    } 
+    webpush_ckb.closest('div').removeAttribute('hidden');
+    webpush_ckb.checked = CHECKED;
+    updateNotifyPush()
 }

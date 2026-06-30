@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 14:55+1000\n"
+"POT-Creation-Date: 2026-07-01 07:49+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,65 +19,73 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: person/forms.py:14
+#: person/forms.py:17
 #, fuzzy
 #| msgid "Person to block"
 msgid "person to block"
 msgstr "الشخص المراد حظره"
 
-#: person/forms.py:33
+#: person/forms.py:36
 msgid "email address"
 msgstr "عنوان البريد الإلكتروني"
 
-#: person/forms.py:41
+#: person/forms.py:45
 msgid "email notifications"
 msgstr "إشعارات البريد الإلكتروني"
 
-#: person/forms.py:42
+#: person/forms.py:46
 msgid "push notifications"
 msgstr "الإشعارات الفورية"
 
-#: person/forms.py:43
+#: person/forms.py:47
+msgid "push notifications (missing browser support)"
+msgstr "إشعارات الدفع (لا يدعم المتصفحات)"
+
+#: person/forms.py:48
+msgid "push notifications (missing browser permission)"
+msgstr "إشعارات الدفع (إذن المتصفح مفقود)"
+
+#: person/forms.py:49
 msgid "location access"
 msgstr "الوصول إلى الموقع"
 
-#: person/forms.py:45
+#: person/forms.py:51
 msgid "Your choice."
 msgstr "خيارك."
 
-#: person/forms.py:46
+#: person/forms.py:52
 msgid "permissions"
 msgstr "الأذونات"
 
-#: person/forms.py:52
+#: person/forms.py:58
 msgid "Browser default"
 msgstr "الإعداد الافتراضي للمتصفح"
 
-#: person/forms.py:53
+#: person/forms.py:59
 msgid "language"
 msgstr "اللغة"
 
-#: person/forms.py:61 person/forms.py:201
+#: person/forms.py:67 person/forms.py:207
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr "عند حظر شخص، لن يتمكن أي منكما من رؤية الآخر على qwikgame."
 
-#: person/forms.py:62 person/forms.py:202
+#: person/forms.py:68 person/forms.py:208
 msgid "people you have blocked"
 msgstr "الأشخاص الذين قمت بحظرهم"
 
-#: person/forms.py:116
+#: person/forms.py:122
 msgid "QWIK name"
 msgstr "اسم QWIK"
 
-#: person/forms.py:124
+#: person/forms.py:130
 msgid "website / social media"
 msgstr "الموقع الإلكتروني / وسائل التواصل الاجتماعي"
 
-#: person/forms.py:136
+#: person/forms.py:142
 msgid "your qwikgame screen name"
 msgstr "اسم العرض الخاص بك في qwikgame"
 
-#: person/forms.py:176
+#: person/forms.py:182
 msgid "Add URL"
 msgstr "إضافة رابط"
 

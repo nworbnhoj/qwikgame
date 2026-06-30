@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 16:22+1000\n"
+"POT-Creation-Date: 2026-07-01 07:49+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,71 +18,79 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: person/forms.py:14
+#: person/forms.py:17
 #, fuzzy
 #| msgid "Person to block"
 msgid "person to block"
 msgstr "بلاک کرنے والا شخص"
 
-#: person/forms.py:33
+#: person/forms.py:36
 msgid "email address"
 msgstr "ای میل پتہ"
 
-#: person/forms.py:41
+#: person/forms.py:45
 #, fuzzy
 #| msgid "email invitations from"
 msgid "email notifications"
 msgstr "ای میل دعوتیں بذریعہ"
 
-#: person/forms.py:42
+#: person/forms.py:46
 msgid "push notifications"
 msgstr "پش نوٹیفکیشنز"
 
-#: person/forms.py:43
+#: person/forms.py:47
+msgid "push notifications (missing browser support)"
+msgstr "پش اطلاعات (براؤزر سپورٹ غائب)"
+
+#: person/forms.py:48
+msgid "push notifications (missing browser permission)"
+msgstr "پش اطلاعات (براؤزر کی اجازت غائب)"
+
+#: person/forms.py:49
 msgid "location access"
 msgstr "مقام تک رسائی"
 
-#: person/forms.py:45
+#: person/forms.py:51
 msgid "Your choice."
 msgstr "آپ کی پسند۔"
 
-#: person/forms.py:46
+#: person/forms.py:52
 msgid "permissions"
 msgstr "اجازتیں"
 
-#: person/forms.py:52
+#: person/forms.py:58
 msgid "Browser default"
 msgstr "براؤزر کی طے شدہ ترتیب"
 
-#: person/forms.py:53
+#: person/forms.py:59
 msgid "language"
 msgstr "زبان"
 
-#: person/forms.py:61 person/forms.py:201
+#: person/forms.py:67 person/forms.py:207
 msgid "When you block a person, neither of you will see the other on qwikgame."
 msgstr ""
 "جب آپ کسی شخص کو بلاک کرتے ہیں تو آپ دونوں qwikgame پر ایک دوسرے کو نہیں "
 "دیکھ سکیں گے۔"
 
-#: person/forms.py:62 person/forms.py:202
+#: person/forms.py:68 person/forms.py:208
 msgid "people you have blocked"
 msgstr "جن لوگوں کو آپ نے بلاک کیا ہے"
 
-#: person/forms.py:116
+#: person/forms.py:122
 msgid "QWIK name"
 msgstr "QWIK نام"
 
-#: person/forms.py:124
+#: person/forms.py:130
 #, fuzzy
 #| msgid "add a social media url"
 msgid "website / social media"
 msgstr "سوشل میڈیا کا URL شامل کریں"
 
-#: person/forms.py:136
+#: person/forms.py:142
 msgid "your qwikgame screen name"
 msgstr "آپ کا qwikgame اسکرین نام"
 
-#: person/forms.py:176
+#: person/forms.py:182
 msgid "Add URL"
 msgstr "URL شامل کریں"
 

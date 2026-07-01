@@ -147,7 +147,7 @@ class VenueMarksJson(QwikView):
         elif len(regions) == 1:
             for k, v in regions[0].place_args().items():
                 response[k] = v
-        else:
+        elif pos:
             closest = None
             min_distance = 1000  # arbitrary big number > 360
             for region in regions:

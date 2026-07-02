@@ -1,8 +1,16 @@
 <!-- qwikgame/templates/option_delete.html -->
-<label class="option" {% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}>
+
+<div class="option">
     {{ widget.label }}
-    <div class="btn naked push_right">
-        <i class="fa-solid fa-trash"></i>
+{% if widget.value != None %}    
+    <div class="option push_right">
+        <button type="submit" name="DELETE" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
+    {% if widget.attrs.confirm %}
+                onclick="return confirm('{{ widget.attrs.confirm }}')"
+    {% endif %}
+            >
+            <i class="fa-solid fa-trash"></i>
+        </button>
     </div>
-    <input {% if widget.attrs.id %} id="{{ widget.attrs.id }}"{% endif %} type="{{ widget.type }}" name="{{ widget.name }}" {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}/>
-</label>
+{% endif %}
+</div>

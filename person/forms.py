@@ -69,7 +69,7 @@ class PrivateForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs={'class': 'negate_pending post'},
+            attrs={'class': 'post', 'confirm': _('delete this block?')},
         )
     )
 
@@ -106,6 +106,8 @@ class PrivateForm(QwikForm):
         )
         context = {'private_form': form}
         if form.is_valid():
+            if 'DELETE' in request_post:
+                context['DELETE'] = request_post['DELETE']
             permissions = form.cleaned_data['permissions']
             context |= {
                 'del_blocked': form.cleaned_data["blocked"],
@@ -131,7 +133,7 @@ class PublicForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs={'class': 'negate_pending post'},
+            attrs={'class': 'post', 'confirm': _('delete this url?')},
         )
     )
 
@@ -170,6 +172,8 @@ class PublicForm(QwikForm):
         )
         context = {'public_form': form}
         if form.is_valid():
+            if 'DELETE' in request_post:
+                context['DELETE'] = request_post['DELETE']
             context |= {
                 'name': form.cleaned_data['name'],
                 'del_social': form.cleaned_data['socials']

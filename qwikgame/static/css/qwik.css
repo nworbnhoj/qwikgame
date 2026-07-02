@@ -145,6 +145,7 @@ label.btn:has(input[type=checkbox])::before { content: none; }
 label.btn:has(input[type=radio])::before { content: none; }
 
 /*.btn:focus { outline: 0.2rem solid #fffb00; }*/
+button { background-color: transparent; }
 .btn:active { box-shadow: inset 1px 2px 5px #777; transform: translateY(1px); }
 .btn:active:has(input:disabled) { box-shadow: none; transform: none; }
 .btn:has(input.hidden) { display: none }
@@ -311,7 +312,7 @@ div.log_entry.event { }
 div.log_entry.match { }
 div.logo { font-size: 1.27rem; font-family: AstroSpace; font-weight: bold; padding: 0.1rem; }
 div.nextup { align-items: center; flex: auto; justify-content: start; margin: 4rem 0 0 0; padding: 1rem }
-div.option { flex-direction: row; justify-content: space-between; }
+div.option { align-items: center; flex-direction: row; justify-content: space-between; }
 div.options { background-color: white; border: 1px solid var(--color-grey-c); border-radius: var(--dim-ease); justify-content: flex-start; opacity: 1.0; padding: 0.3rem; position: relative; width: 100% }
 div.paver { flex: auto; flex-direction: row; gap: 2rem; justify-content: center; padding: 1rem; }
 div.pillar { align-items: center; justify-content: start; padding: 1rem }

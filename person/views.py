@@ -97,14 +97,15 @@ class PrivateView(QwikView):
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
-        # delete blocked
-        for del_pk in context.get('del_blocked'):
-            junk = Block.objects.get(pk=del_pk)
-            if junk:
-                logger.info(f'Deleting block: {junk}')
+        if 'DELETE' in context:
+            try:
+                delete_pk = int(context.get('DELETE', -1))
+                junk = Block.objects.get(pk=delete_pk)
+                logger.debug(f'Deleting block: {junk}')
                 junk.delete()
-            else:
+            except:
                 logger.warn(f'failed to delete block: {person} : {del_pk}')
+            return HttpResponseRedirect(f'/account/private/')
         person.notify_email = context["notify_email"]
         person.notify_push = context["notify_push"]
         person.location_auto = context["location_auto"]
@@ -147,17 +148,18 @@ class PublicView(QwikView):
         if form and not form.is_valid():
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
+        if 'DELETE' in context:
+            try:
+                delete_pk = int(context.get('DELETE', -1))
+                junk = Social.objects.get(pk=delete_pk)
+                logger.debug(f'Deleting social: {junk}')
+                junk.delete()
+            except:
+                logger.warn(f'failed to delete social: {player} : {del_pk}')
+            return HttpResponseRedirect(f'/account/public/')
         person = context['person']
         person.name = context['name']
         person.save()
-        for del_pk in context.get('del_social'):
-            junk = Social.objects.get(pk=del_pk)
-            if junk:
-                logger.info(f'Deleting social: {junk}')
-                junk.delete()
-            else:
-                logger.warn(f'failed to delete social: {player} : {del_pk}')
-        return render(request, self.template_name, context)
 
 
 class PWAView(QwikView):

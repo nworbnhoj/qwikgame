@@ -25,10 +25,6 @@
                 <i class="fa-solid fa-filter fa-2x"></i>
             </div>
             <h2>{% translate "Invitation Filters" %}</h2>
-            <a class="btn secondary" href="{% url 'filter' %}">
-                <i class="fa-solid fa-plus fa-xl"></i>
-                {% translate "Add" %}
-            </a>
         </div>
 
         <div class="form">
@@ -36,20 +32,10 @@
             <form action="{% url 'filters' %}" method="post">
 {% csrf_token %}
 {{ filters_form }}
-                <div class="grid_2_col">
-                    <div id="alert_form_submit" class="alert"></div>
-                    <label class="btn tertiary push_down">
-                        <input hidden name="DELETE" type="submit"
-                        onclick="return confirm(
-                            '{% translate 'Delete these Filters?' %}'
-                        )">
-                        {% translate "Remove" %}
-                    </label>
-                    <label class="btn primary push_down">
-                        <input hidden name="ACTIVATE" type="submit">
-                        {% translate "Apply" %}
-                    </label>
-                </div>
+                <label class="btn primary push_down">
+                    <input hidden name="ACTIVATE" type="submit">
+                    {% translate "Apply" %}
+                </label>
             </form>
             <div id="alert_form_end" class="alert"></div>
         </div>

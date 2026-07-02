@@ -1,0 +1,16 @@
+<!-- qwikgame/templates/option_multi.html -->
+
+<div class="option">
+    {% include "django/forms/widgets/input_option.html" %}
+    <div class="option push_right">
+{% for action in widget.attrs.actions %}
+        <button type="submit" name="{{ action.0 }}" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
+            {% if action.2 %}
+                onclick="return confirm('{{ action.2 }}')"
+            {% endif %}
+            >
+            <i class="{{ action.1 }}"></i>
+        </button>
+{% endfor %}
+    </div>
+</div>

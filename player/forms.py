@@ -10,13 +10,13 @@ from game.models import Game, Match
 from person.models import Person
 from player.models import Filter, Friend, Player, Strength
 from venue.models import Venue
-from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultiTabField, DataSelect, PlaceField, WeekField
+from qwikgame.fields import ActionMultiple, DayRadioField, DayMultiField, MultipleActionField, MultiTabField, DataSelect, PlaceField, WeekField
 from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
 from qwikgame.settings import EMAIL_ALERT_USER
 from qwikgame.utils import str_to_hours24
-from qwikgame.widgets import CheckboxList, DAY_ALL, DAY_NONE, TextInput, WEEK_ALL, WEEK_NONE
+from qwikgame.widgets import ActionMultiple, CheckboxList, DAY_ALL, DAY_NONE, TextInput, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
 
@@ -160,11 +160,13 @@ class FilterForm(QwikForm):
 
 
 class FiltersForm(QwikForm):
-    filters = MultipleChoiceField(
+    filters = MultipleActionField(
         label=_('no active filters'),
         required=False,
         template_name='field.html',
-        widget=CheckboxSelectMultiple,
+        widget=ActionMultiple(
+            attrs={'class': 'post'},
+        )
     )
 
     def __init__(self, player, *args, **kwargs):
@@ -176,7 +178,10 @@ class FiltersForm(QwikForm):
         self.fields['filters'].label = _("%(n)s active filters") % {
             'n': len(active)}
         self.fields['filters'].initial = active
-        # form.fields['filters'].widget.option_template_name = 'django/forms/widgets/checkbox_option.html'
+        self.fields['filters'].widget.attrs['add_url'] = reverse('filter')
+        self.fields['filters'].widget.attrs['actions'] = [
+                ('DELETE', 'fa-solid fa-trash', _('delete this item?')),
+            ]
 
     @classmethod
     def get(klass, player):

@@ -4,7 +4,6 @@ from django.forms import BooleanField, CharField, CheckboxSelectMultiple, Choice
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from person.models import ALERT_EMAIL_DEFAULT, ALERT_PUSH_DEFAULT, Alert, Block, Person, Social
-from qwikgame.fields import MultipleActionField
 from qwikgame.forms import QwikForm
 from qwikgame.settings import LANGUAGES
 from qwikgame.widgets import CheckboxList, TextInput

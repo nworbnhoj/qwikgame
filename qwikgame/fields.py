@@ -51,12 +51,6 @@ class DayRadioField(TypedChoiceField):
 class MultipleActionField(MultipleChoiceField):
     widget = ActionMultiple
 
-    def __init__(self, action='delete:', *args, **kwargs):
-        self.action = action
-        super().__init__(*args, **kwargs)
-        self.widget.attrs = {"class": "down left hidden"}
-        self.template_name = 'dropdown.html'
-
 
 class MultiTabField(MultiValueField):
     widget = MultiWidget

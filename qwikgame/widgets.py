@@ -12,8 +12,8 @@ WEEK_NONE = bytes(21)
 
 
 class ActionMultiple(CheckboxSelectMultiple):
-    attrs = {"class": "down left hidden"}
-    use_fieldset = False
+    template_name = "checkbox_list.html"
+    option_template_name = "option_multi.html"
 
 
 class CheckboxList(CheckboxSelectMultiple):

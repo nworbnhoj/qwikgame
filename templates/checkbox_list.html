@@ -1,9 +1,22 @@
 <!-- qwikgame/templates/checkbox_list.html -->
-{% with id=widget.attrs.id %}<div{% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>{% for group, options, index in widget.optgroups %}{% if group %}
-  <div><label>{{ group }}</label>{% endif %}{% for option in options %}<div>
-    {% include option.template_name with widget=option %}</div>{% endfor %}{% if group %}
-  </div>{% endif %}{% endfor %}
+{% load i18n %}
+
+{% with id=widget.attrs.id %}
+<div {% if id %} id="{{ id }}"{% endif %}{% if widget.attrs.class %} class="{{ widget.attrs.class }}"{% endif %}>
   {% if widget.attrs.add_url %}
-    <a class="btn naked push_right" href="{{ widget.attrs.add_url }}"><i class="fa-solid fa-plus"></i></a>
+  <a class="btn push_right" href="{{ widget.attrs.add_url }}">{% translate 'Add' %}<i class="fa-solid fa-plus"></i></a>
   {% endif %}
-</div>{% endwith %}
+  {% for group, options, index in widget.optgroups %}
+    {% if group %}
+  <div>
+    <label>{{ group }}</label>
+    {% endif %}
+    {% for option in options %}
+      {% include option.template_name with widget=option %}
+    {% endfor %}
+    {% if group %}
+  </div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% endwith %}

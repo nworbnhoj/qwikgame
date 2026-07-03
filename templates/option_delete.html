@@ -5,6 +5,7 @@
 {% if widget.value != None %}
     {% with action=widget.attrs.action %}
     <div class="push_right">
+        <!-- <input hidden onclick=''> is inherently disabled, so use <button> but retain <input hidden> for field_label_update() -->
         <input hidden type="submit" name="{{ widget.name }}">
         <button type="submit" name="{{ action.0 }}" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
     {% if action.2 %}

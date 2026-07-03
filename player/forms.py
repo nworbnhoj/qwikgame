@@ -227,6 +227,9 @@ class FriendForm(QwikForm):
     def __init__(self, *args, **kwargs):
         strength_choices = kwargs.pop('strength_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs['placeholder'] = _('friends email address')
+        self.fields['name'].widget.attrs['placeholder'] = _(
+            'a private on-screen name for your friend')
         self.fields['strengths'].choices = strength_choices
         self.fields['strengths'].widget.attrs['action'] = (
                 'DELETE_STRENGTH', 'fa-solid fa-trash', _('delete this game strength?')
@@ -249,10 +252,6 @@ class FriendForm(QwikForm):
             form.fields['email'].pending = friend.email
             form.fields['name'].initial = friend.name
             form.fields['name'].pending = friend.name
-        form.fields['email'].widget.attrs = {
-            'placeholder': _('Type email address')}
-        form.fields['name'].widget.attrs = {'placeholder': _(
-            'A screen name for your friend (optional)')}
         form.fields['strengths'].widget.attrs['add_url'] = reverse(
             'friend_strength', args=[friend.pk])
         return {'friend_form': form, }
@@ -286,10 +285,6 @@ class FriendAddForm(FriendForm):
     @classmethod
     def get(klass, friend=None):
         form = klass()
-        form.fields['email'].widget.attrs = {
-            'placeholder': _('Type email address')}
-        form.fields['name'].widget.attrs = {'placeholder': _(
-            'A screen name for your friend (optional)')}
         return {'friend_form': form, }
 
     @classmethod

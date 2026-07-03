@@ -143,7 +143,7 @@ class PublicForm(QwikForm):
         social_choices = kwargs.pop('social_choices')
         super(PublicForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs['placeholder'] = _(
-            'your qwikgame screen name')
+            'for both on-screen and real-world')
         self.fields['socials'].choices = social_choices
         self.fields['socials'].widget.attrs['action'] = (
                 'DELETE', 'fa-solid fa-trash', _('delete this url?')

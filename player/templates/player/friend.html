@@ -31,12 +31,11 @@
                     <div class="down right hidden">
                         <form id="menu_form" action="{% url target friend=friend.pk %}" method="post" class="animate">
     {% csrf_token %}
-                            <label class="btn tertiary">
-                                <input hidden name="DELETE" type="submit" value='{{ friend.pk }}' onclick="return confirm(
+                            <button hidden name="DELETE_FRIEND" type="submit" class="btn tertiary" value='{{ friend.pk }}' onclick="return confirm(
                                     '{% translate 'Delete this Friend?' %}'
                                 )">
                                 {% translate "delete" %}
-                            </label>
+                            </button>
                         </form>
                     </div>
                 </div>

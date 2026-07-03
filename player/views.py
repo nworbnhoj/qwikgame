@@ -316,9 +316,9 @@ class FriendView(FriendsView):
         context = self.menu_form_class.post(request.POST)
         menu_form = context.get('menu_form')
         if menu_form and menu_form.is_valid():
-            if 'DELETE' in context:
+            if 'DELETE_FRIEND' in context:
                 try:
-                    delete_pk = int(context.get('DELETE', -1))
+                    delete_pk = int(context.get('DELETE_FRIEND', -1))
                     junk = Friend.objects.get(pk=delete_pk)
                     logger.debug(f'Deleting friend: {junk}')
                     junk.delete()
@@ -334,14 +334,15 @@ class FriendView(FriendsView):
             context |= self.context(request, *args, **kwargs)
             return render(request, self.template_name, context)
         friend_pk = kwargs.get('friend')
-        # delete strengths
-        for del_pk in context.get('del_strength'):
-            junk = Strength.objects.get(pk=del_pk)
-            if junk:
+        if 'DELETE_STRENGTH' in context:
+            try:
+                delete_pk = int(context.get('DELETE_STRENGTH', -1))
+                junk = Strength.objects.get(pk=delete_pk)
                 logger.info(f'Deleting strength: {junk}')
                 junk.delete()
-            else:
-                logger.warn(f'failed to delete strength: {player} : {del_pk}')
+            except:
+                logger.warn(f'failed to delete strength: {player} : {delete_pk}')
+            return HttpResponseRedirect(f'/player/friend/{friend_pk}/')
         email = context.get('email')
         name = context.get('name')
         try:

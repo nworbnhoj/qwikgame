@@ -220,7 +220,7 @@ class FriendForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs={'class': 'negate_pending post'},
+            attrs={'class': 'post'},
         )
     )
 
@@ -228,6 +228,9 @@ class FriendForm(QwikForm):
         strength_choices = kwargs.pop('strength_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['strengths'].choices = strength_choices
+        self.fields['strengths'].widget.attrs['action'] = (
+                'DELETE_STRENGTH', 'fa-solid fa-trash', _('delete this game strength?')
+            )
 
     @classmethod
     def _strength_choices(klass, friend):
@@ -262,6 +265,10 @@ class FriendForm(QwikForm):
         )
         context = {'friend_form': form}
         if form.is_valid():
+            if 'DELETE_FRIEND' in request_post:
+                context['DELETE_FRIEND'] = request_post['DELETE_FRIEND']
+            if 'DELETE_STRENGTH' in request_post:
+                context['DELETE_STRENGTH'] = request_post['DELETE_STRENGTH']
             context |= {
                 'email': form.cleaned_data['email'],
                 'name': form.cleaned_data['name'],

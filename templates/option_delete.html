@@ -4,7 +4,8 @@
     {{ widget.label }}
 {% if widget.value != None %}
     {% with action=widget.attrs.action %}
-    <div class="option push_right">
+    <div class="push_right">
+        <input hidden type="submit" name="{{ widget.name }}">
         <button type="submit" name="{{ action.0 }}" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
     {% if action.2 %}
                 onclick="return confirm('{{ action.2 }}')"

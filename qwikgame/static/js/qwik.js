@@ -230,9 +230,8 @@ function field_label_update(event_or_element) {
                 }
             case 'socials':
                 {
-                    const CHECK = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
-                    const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']" + CHECK);
-                    PENDING.textContent = sum_url_checkbox(CHECKBOXES);
+                    const BUTTONS = FIELD.querySelectorAll("button");
+                    PENDING.textContent = sum_url_checkbox(BUTTONS);
                     break;
                 }
             case 'permissions':
@@ -243,8 +242,8 @@ function field_label_update(event_or_element) {
                 }
             case 'strengths':
                 {
-                    const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']:not(:checked)");
-                    PENDING.textContent = sum_strength_checkbox(CHECKBOXES);
+                    const BUTTONS = FIELD.querySelectorAll("button");
+                    PENDING.textContent = sum_strength_checkbox(BUTTONS);
                     break;
                 }
             case 'two_day':
@@ -257,8 +256,7 @@ function field_label_update(event_or_element) {
             default:
                 switch (INPUT.type) {
                     case 'checkbox':
-                        const CHECK = INPUT.closest('.negate_pending') ? ':not(:checked)' : ':checked';
-                        const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']" + CHECK);
+                        const CHECKBOXES = FIELD.querySelectorAll("input[type='checkbox']:checked");
                         PENDING.textContent = sum_input_checkbox(CHECKBOXES);
                         break;
                     case 'radio':
@@ -272,6 +270,10 @@ function field_label_update(event_or_element) {
                     case 'range':
                         const RANGE = FIELD.querySelector("input[type='range']");
                         PENDING.textContent = sum_input_range(RANGE);
+                        break;
+                    case 'submit':
+                        const BUTTONS = FIELD.querySelectorAll("button");
+                        PENDING.textContent = sum_input_button(BUTTONS);
                         break;
                     case 'text':
                         const TEXT = FIELD.querySelector("input[type='text']");
@@ -384,6 +386,20 @@ function sum_input_of_days(days){
     });
 }
 
+function sum_input_button(buttons) {
+    if (buttons) {
+        sum = '';
+        if (buttons.length === 0) {
+            sum = "";
+        } else {
+            buttons.forEach((button) => {
+                sum += button.closest('.option').textContent + ', ';
+            });
+        }
+        return sum;
+    }
+}
+
 function sum_input_checkbox(checkboxes) {
     if (checkboxes) {
         sum = '';
@@ -420,14 +436,14 @@ function sum_permission_checkbox(checkboxes) {
     }
 }
 
-function sum_strength_checkbox(checkboxes) {
-    if (checkboxes) {
+function sum_strength_checkbox(buttons) {
+    if (buttons) {
         sum = '';
-        if (checkboxes.length === 0) {
+        if (buttons.length === 0) {
             sum = "None";
         } else {
-            checkboxes.forEach((checkbox) => {
-                sum += checkbox.labels[0].textContent.trim() + ', ';
+            buttons.forEach((button) => {
+                sum += button.closest('.option').textContent.trim() + ', ';
                 // sum += '|' +checkbox.labels[0].textContent.trim();
             });
         }
@@ -441,14 +457,14 @@ function sum_strength_checkbox(checkboxes) {
     }
 }
 
-function sum_url_checkbox(checkboxes) {
-    if (checkboxes) {
+function sum_url_checkbox(buttons) {
+    if (buttons) {
         sum = '';
-        if (checkboxes.length === 0) {
+        if (buttons.length === 0) {
             sum = "None";
         } else {
-            checkboxes.forEach((checkbox) => {
-                url = new URL(checkbox.labels[0].textContent);
+            buttons.forEach((button) => {
+                url = new URL(button.closest('.option').textContent);
                 sum += url.host + ' ';
             });
         }

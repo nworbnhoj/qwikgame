@@ -2,15 +2,17 @@
 
 <div class="option">
     {{ widget.label }}
-{% if widget.value != None %}    
+{% if widget.value != None %}
+    {% with action=widget.attrs.action %}
     <div class="option push_right">
-        <button type="submit" name="DELETE" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
-    {% if widget.attrs.confirm %}
-                onclick="return confirm('{{ widget.attrs.confirm }}')"
+        <button type="submit" name="{{ action.0 }}" class="btn naked" value="{{ widget.value|stringformat:'s' }}"
+    {% if action.2 %}
+                onclick="return confirm('{{ action.2 }}')"
     {% endif %}
             >
-            <i class="fa-solid fa-trash"></i>
+            <i class="{{ action.1 }}"></i>
         </button>
     </div>
+    {% endwith %}
 {% endif %}
 </div>

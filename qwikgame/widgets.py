@@ -1,5 +1,6 @@
 import logging
 from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, Input, MultiWidget, RadioSelect, Select, Textarea, TextInput
+from django.utils.translation import gettext_lazy as _
 from qwikgame.constants import TWO_DAYS, WEEK_DAYS
 from qwikgame.hourbits import Hours24, Hours24x7
 
@@ -20,6 +21,10 @@ class CheckboxList(CheckboxSelectMultiple):
     template_name = "checkbox_list.html"
     option_template_name = "option_delete.html"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if not 'action' in self.attrs:
+            self.attrs['action'] = ('DELETE', 'fa-solid fa-trash', _('delete this item?'))
 
 class DataSelect(RadioSelect):
     data_attr = {}

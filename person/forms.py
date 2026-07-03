@@ -68,7 +68,7 @@ class PrivateForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs={'class': 'post', 'confirm': _('delete this block?')},
+            attrs={'class': 'post'},
         )
     )
 
@@ -76,6 +76,9 @@ class PrivateForm(QwikForm):
         blocked_choices = kwargs.pop('blocked_choices')
         super(QwikForm, self).__init__(*args, **kwargs)
         self.fields['blocked'].choices = blocked_choices
+        self.fields['blocked'].widget.attrs['action'] = (
+                'DELETE', 'fa-solid fa-trash', _('delete this block?')
+            )
 
     @classmethod
     def _blocked_choices(klass, person):
@@ -132,7 +135,7 @@ class PublicForm(QwikForm):
         required=False,
         template_name='field.html',
         widget=CheckboxList(
-            attrs={'class': 'post', 'confirm': _('delete this url?')},
+            attrs={'class': 'post'},
         )
     )
 
@@ -142,6 +145,9 @@ class PublicForm(QwikForm):
         self.fields['name'].widget.attrs['placeholder'] = _(
             'your qwikgame screen name')
         self.fields['socials'].choices = social_choices
+        self.fields['socials'].widget.attrs['action'] = (
+                'DELETE', 'fa-solid fa-trash', _('delete this url?')
+            )
         if (len(social_choices) < 3):
             self.fields['socials'].widget.attrs['add_url'] = reverse(
                 'social_add')

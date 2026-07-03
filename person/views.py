@@ -160,6 +160,7 @@ class PublicView(QwikView):
         person = context['person']
         person.name = context['name']
         person.save()
+        return render(request, self.template_name, context)
 
 
 class PWAView(QwikView):

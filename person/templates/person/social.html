@@ -24,7 +24,7 @@
         </div>
         <div class="post">
             <div class="form">
-                <form action="{% url 'social_add' %}" method="post" class="animate">
+                <form action="{% url 'social_add' %}" method="post">
 {% csrf_token %}
 {{ social_form }}
                     <div>

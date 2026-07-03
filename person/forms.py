@@ -74,7 +74,7 @@ class PrivateForm(QwikForm):
 
     def __init__(self, *args, **kwargs):
         blocked_choices = kwargs.pop('blocked_choices')
-        super(QwikForm, self).__init__(*args, **kwargs)
+        super(PrivateForm, self).__init__(*args, **kwargs)
         self.fields['blocked'].choices = blocked_choices
         self.fields['blocked'].widget.attrs['action'] = (
                 'DELETE', 'fa-solid fa-trash', _('delete this block?')

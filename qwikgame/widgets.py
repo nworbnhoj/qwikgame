@@ -23,8 +23,7 @@ class CheckboxList(CheckboxSelectMultiple):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if not 'action' in self.attrs:
-            self.attrs['action'] = ('DELETE', 'fa-solid fa-trash', _('delete this item?'))
+        self.attrs.setdefault('action', ('DELETE', 'fa-solid fa-trash', _('delete this item?')))
 
 class DataSelect(RadioSelect):
     data_attr = {}

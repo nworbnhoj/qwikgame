@@ -225,7 +225,7 @@ class FriendForm(QwikForm):
     )
 
     def __init__(self, *args, **kwargs):
-        strength_choices = kwargs.pop('strength_choices') if 'strength_choices' in args else []
+        strength_choices = kwargs.pop('strength_choices', [])
         super(FriendForm, self).__init__(*args, **kwargs)
         self.fields['email'].widget.attrs['placeholder'] = _('friends email address')
         self.fields['name'].widget.attrs['placeholder'] = _(

@@ -10,6 +10,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from authenticate.models import User
 from qwikgame.settings import EMAIL_ACCOUNT_NAME, EMAIL_ACCOUNT_PASSWORD, EMAIL_ACCOUNT_USER
+from qwikgame.utils import validate_email_deliverability
 
 
 logger = logging.getLogger(__file__)
@@ -38,7 +39,8 @@ class EmailValidateForm(PasswordResetForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['placeholder'] = 'Email address'
+        self.fields['email'].validators.append(validate_email_deliverability)
+        self.fields['email'].widget.attrs['placeholder'] = _('email address')
 
     def clean_password(self):
         honeypot = self.cleaned_data['password']

@@ -9,7 +9,7 @@
         {% translate "Already have an account?" %}
         <a href="{% url 'login' %}">{% translate "login" %}</a>
     </p>
-    <div class="post push_down">
+    <div class="pillar push_down">
         <form method="post">
   {% csrf_token %}
   {{ form.email.errors }}

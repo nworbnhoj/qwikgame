@@ -15,7 +15,7 @@ from qwikgame.forms import QwikForm
 from qwikgame.hourbits import Hours24, Hours24x7
 from qwikgame.log import Entry
 from qwikgame.settings import EMAIL_ALERT_USER
-from qwikgame.utils import str_to_hours24
+from qwikgame.utils import str_to_hours24, validate_email_deliverability
 from qwikgame.widgets import ActionMultiple, CheckboxList, DAY_ALL, DAY_NONE, TextInput, WEEK_ALL, WEEK_NONE
 
 logger = logging.getLogger(__file__)
@@ -201,10 +201,12 @@ class FiltersForm(QwikForm):
 
 class FriendForm(QwikForm):
     email = EmailField(
+        error_messages={'invalid':_('please submit a valid email address')},
         label=_("friend's email address"),
         max_length=255,
         required=True,
         template_name='field.html',
+        validators=[validate_email_deliverability],
         widget=TextInput()
     )
     name = CharField(

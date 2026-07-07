@@ -284,7 +284,7 @@ function field_label_update(event_or_element) {
                 }
         }
         const ERROR = FIELD.querySelector('span.error');
-        if (ERROR && (PENDING.textContent !== PRETEXT)) {
+        if (ERROR && PRETEXT && (PENDING.textContent !== PRETEXT)) {
             ERROR.textContent = '';
         }
     }

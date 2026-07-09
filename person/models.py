@@ -2,8 +2,7 @@ import logging
 import hashlib
 import random
 from datetime import datetime, timedelta
-from django.core.mail import EmailMultiAlternatives, get_connection
-from qwikgame.settings import FQDN, EMAIL_ALERT_NAME, EMAIL_ALERT_PASSWORD, EMAIL_ALERT_USER, EMAIL_SMTP_TIMEOUT, LANGUAGES
+from qwikgame.settings import FQDN, LANGUAGES
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -21,49 +20,6 @@ def rnd_icon():
 
 ALERT_EMAIL_DEFAULT = 'bkmpqs'
 ALERT_PUSH_DEFAULT = 'bcklmpqrs'
-
-
-class AlertEmail(EmailMultiAlternatives):
-
-    _open_connection = None
-    _timeout_connection = datetime.now()
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.get_connection()
-        self.from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER)
-
-    def get_connection(self, fail_silently=False):
-        if AlertEmail._open_connection:
-            self.connection = AlertEmail._open_connection
-        else:
-            self.connection = get_connection(
-                username=EMAIL_ALERT_USER,
-                password=EMAIL_ALERT_PASSWORD,
-            )
-            if self.connection.open():
-                AlertEmail._open_connection = self.connection
-                logger.info(f'SMTP connection opened')
-            else:
-                logger.warn(f'SMTP connection open failed')
-        AlertEmail.prolong_connection()
-        return self.connection
-
-    @classmethod
-    def prolong_connection(klass):
-        extention = timedelta(seconds=EMAIL_SMTP_TIMEOUT)
-        AlertEmail._timeout_connection = datetime.now() + extention
-
-    @classmethod
-    @property
-    def timeout(klass):
-        connection = AlertEmail._open_connection
-        if connection and now() > AlertEmail._timeout_connection:
-            AlertEmail._open_connection = None
-            connection.close()
-            logger.info(f'SMTP connection closed')
-            return True
-        return False
 
 
 class Alert(models.Model):

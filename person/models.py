@@ -2,7 +2,8 @@ import logging
 import hashlib
 import random
 from datetime import datetime, timedelta
-from qwikgame.settings import FQDN, LANGUAGES
+from qwikgame.settings import EMAIL_ALERT_NAME, EMAIL_ALERT_USER, FQDN, LANGUAGES
+from qwikgame.tasks import send_email
 from django.template import loader
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import models
@@ -113,17 +114,13 @@ class Alert(models.Model):
                 subject_template_name, self.context)
             # Email subject *must not* contain newlines
             subject = "".join(subject.splitlines())
-            email_message = AlertEmail(
-                subject,
-                loader.render_to_string(email_template_name, self.context),
-                EMAIL_ALERT_USER,
-                [self.context.get('to_email')]
+            send_email(
+                subject=subject,
+                body=loader.render_to_string(email_template_name, self.context),
+                from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER),
+                to=[self.context.get('to_email')],
             )
-            # if html_email_template_name is not None:
-            #     logger.info(html_email_template_name)
-            #     html_email = loader.render_to_string(html_email_template_name, self.context)
-            #     email_message.attach_alternative(html_email, "text/html")
-            return email_message.send() > 0
+            return True
         except Exception:
             logger.exception(f'Failed to send Alert email: {self}')
         return False

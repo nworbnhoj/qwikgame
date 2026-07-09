@@ -114,7 +114,7 @@ class Alert(models.Model):
                 subject_template_name, self.context)
             # Email subject *must not* contain newlines
             subject = "".join(subject.splitlines())
-            send_email(
+            send_email.delay(
                 subject=subject,
                 body=loader.render_to_string(email_template_name, self.context),
                 from_email = "{}<{}>".format(EMAIL_ALERT_NAME, EMAIL_ALERT_USER),

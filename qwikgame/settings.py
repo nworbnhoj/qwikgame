@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'venue.apps.VenueConfig',
     'django_user_agents',
     'modeltranslation',    # must be before admin
+    'django_celery_results',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -274,3 +275,13 @@ EMAIL_ALERT_USER = os.getenv(
 EMAIL_ALERT_PASSWORD = os.getenv(
     'EMAIL_ALERT_PASSWORD', 'error: set environ variable EMAIL_ALERT_PASSWORD')
 EMAIL_ALERT_NAME = os.getenv('EMAIL_ALERT_NAME', 'QWIK ALERTS')
+
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = {'application/json'}
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_RESULT_BACKEND = 'django-db'
+
